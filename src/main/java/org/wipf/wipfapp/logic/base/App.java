@@ -32,11 +32,11 @@ import io.quarkus.runtime.StartupEvent;
  *
  */
 @ApplicationScoped
-public class Wipfapp {
+public class App {
 
-	private static final Logger LOGGER = Logger.getLogger("newapp");
+	private static final Logger LOGGER = Logger.getLogger("jasmarty");
 	public static final String VERSION = "1.00";
-	public static final String DB_PATH = System.getProperty("user.home") + "/newapp/" + "app.db";
+	public static final String DB_PATH = System.getProperty("user.home") + "/jasmarty/" + "jasmarty.db";
 
 	/**
 	 * @param ev

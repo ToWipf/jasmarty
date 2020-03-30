@@ -62,8 +62,8 @@ public class MsqlLite {
 		try {
 			if (connection != null)
 				return;
-			LOGGER.info("Connect to Database '" + Wipfapp.DB_PATH + "'");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + Wipfapp.DB_PATH);
+			LOGGER.info("Connect to Database '" + App.DB_PATH + "'");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + App.DB_PATH);
 			if (!connection.isClosed())
 				LOGGER.info("Connection OK");
 		} catch (SQLException e) {

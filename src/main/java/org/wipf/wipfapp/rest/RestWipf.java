@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.wipf.wipfapp.logic.base.Wipfapp;
+import org.wipf.wipfapp.logic.base.App;
 
 /**
  * @author wipf
@@ -18,7 +18,7 @@ public class RestWipf {
 	@Path("/ver")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getver() {
-		return "{\"ver\":\"" + Wipfapp.VERSION + "\"}";
+		return "{\"ver\":\"" + App.VERSION + "\"}";
 	}
 
 }
