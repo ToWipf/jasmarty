@@ -6,13 +6,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 
 import org.jboss.logging.Logger;
-import org.wipf.wipfapp.logic.telegram.apps.MEssen;
-import org.wipf.wipfapp.logic.telegram.apps.MMumel;
-import org.wipf.wipfapp.logic.telegram.apps.MTicTacToe;
-import org.wipf.wipfapp.logic.telegram.apps.MTodoList;
-import org.wipf.wipfapp.logic.telegram.system.MTeleMsg;
-import org.wipf.wipfapp.logic.telegram.system.MTelegram;
-import org.wipf.wipfapp.logic.telegram.task.MStartTelegramTask;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -41,32 +34,21 @@ import io.quarkus.runtime.StartupEvent;
 @ApplicationScoped
 public class Wipfapp {
 
-	private static final Logger LOGGER = Logger.getLogger("wipfapp");
-	public static final String VERSION = "2.84";
-	public static final String DB_PATH = System.getProperty("user.home") + "/wipfapp/" + "wipfapp.db";
-	public static final String ELCD_PATH = "http://192.168.2.242/";
-	public static final String sKey = "superKey42";
-
-	public static Integer FailCountElcd;
-	public static Integer FailCountTelegram;
-	public static Boolean RunLock = false;
-	public static Integer TelegramOffsetID;
-	public static String BOTKEY;
+	private static final Logger LOGGER = Logger.getLogger("newapp");
+	public static final String VERSION = "1.00";
+	public static final String DB_PATH = System.getProperty("user.home") + "/newapp/" + "app.db";
 
 	/**
 	 * @param ev
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		System.out.println("_________________________");
-		LOGGER.info("Starte WipfApp " + VERSION);
+		LOGGER.info("Starte " + VERSION);
 
 		MsqlLite.startDB();
 		initDBs();
-		if (MTelegram.loadConfig()) {
-			MStartTelegramTask.startTelegramTask();
-		}
-		System.gc();
-		LOGGER.info("Wipfapp ist gestartet");
+
+		LOGGER.info("gestartet");
 	}
 
 	/**
@@ -74,21 +56,12 @@ public class Wipfapp {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("The application is stopping...");
-		// System.exit(0);
-		// TODO funktioniert nicht
-		// https://github.com/quarkusio/quarkus/issues/2150
 	}
 
 	/**
 	 * Tabellen anlegen
 	 */
 	private static void initDBs() {
-		MTicTacToe.initDB();
-		MTelegram.initDB();
-		MTeleMsg.initDB();
-		MMumel.initDB();
-		MEssen.initDB();
-		MTodoList.initDB();
 
 		try {
 			Statement stmt = MsqlLite.getDB();
