@@ -2,6 +2,8 @@ package org.wipf.wipfapp.logic.base;
 
 import java.io.IOException;
 
+import javax.enterprise.context.RequestScoped;
+
 import com.fazecast.jSerialComm.SerialPort;
 
 /**
@@ -12,9 +14,11 @@ import com.fazecast.jSerialComm.SerialPort;
  * http://www.mschoeffler.de/2017/12/29/tutorial-serial-connection-between-java-application-and-arduino-uno/
  *
  */
+
+@RequestScoped
 public class Serial {
-	public static void test() throws IOException, InterruptedException {
-		SerialPort sp = SerialPort.getCommPort("/dev/ttyACM1"); // device name TODO: must be changed
+	public String test() throws IOException, InterruptedException {
+		SerialPort sp = SerialPort.getCommPort("COM10"); // device name TODO: must be changed
 		sp.setComPortParameters(9600, 8, 1, 0); // default connection settings for Arduino
 		sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
 
@@ -22,8 +26,9 @@ public class Serial {
 			System.out.println("Port is open :)");
 		} else {
 			System.out.println("Failed to open port :(");
-			return;
+			return "fail";
 		}
+		Thread.sleep(1000);
 
 		for (Integer i = 0; i < 5; ++i) {
 			sp.getOutputStream().write(i.byteValue());
@@ -32,12 +37,19 @@ public class Serial {
 			Thread.sleep(1000);
 		}
 
+		System.out.println("mytest");
+		byte[] buffer = "4".getBytes();
+		long bytesToWrite = 8;
+		sp.writeBytes(buffer, bytesToWrite);
+
 		if (sp.closePort()) {
 			System.out.println("Port is closed :)");
 		} else {
 			System.out.println("Failed to close port :(");
-			return;
+			return "fail2";
 		}
+
+		return "ok";
 
 	}
 }
