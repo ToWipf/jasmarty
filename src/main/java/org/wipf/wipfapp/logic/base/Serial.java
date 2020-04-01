@@ -42,6 +42,9 @@ public class Serial {
 		long bytesToWrite = 8;
 		sp.writeBytes(buffer, bytesToWrite);
 
+		byte[] buffer2 = "Ein Test String - Wipf".getBytes();
+		sp.writeBytes(buffer2, buffer2.length);
+
 		if (sp.closePort()) {
 			System.out.println("Port is closed :)");
 		} else {
