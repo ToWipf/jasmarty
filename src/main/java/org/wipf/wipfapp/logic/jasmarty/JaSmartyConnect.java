@@ -11,7 +11,7 @@ import com.fazecast.jSerialComm.SerialPort;
  *
  */
 @ApplicationScoped
-public class jasmarty {
+public class JaSmartyConnect {
 
 	private SerialPort sp;
 
