@@ -1,23 +1,34 @@
 package org.wipf.wipfapp.logic.base;
 
-import java.io.IOException;
-
 import javax.enterprise.context.RequestScoped;
 
 import com.fazecast.jSerialComm.SerialPort;
 
 /**
- * Simple application that is part of an tutorial. The tutorial shows how to
- * establish a serial connection between a Java and Arduino program.
- * 
- * 
- * http://www.mschoeffler.de/2017/12/29/tutorial-serial-connection-between-java-application-and-arduino-uno/
+ * @author wipf
  *
  */
-
 @RequestScoped
-public class Serial {
-	public String test() throws IOException, InterruptedException {
+public class TestsSerial {
+
+	/**
+	 * @return
+	 */
+	public String test() {
+		try {
+			return doTest();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "fail";
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String doTest() throws Exception {
 		SerialPort sp = SerialPort.getCommPort("COM10"); // device name TODO: must be changed
 		sp.setComPortParameters(9600, 8, 1, 0); // default connection settings for Arduino
 		sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
@@ -55,4 +66,5 @@ public class Serial {
 		return "ok";
 
 	}
+
 }

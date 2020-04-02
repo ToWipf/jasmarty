@@ -1,7 +1,5 @@
 package org.wipf.wipfapp.rest;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.wipf.wipfapp.logic.base.App;
-import org.wipf.wipfapp.logic.base.Serial;
+import org.wipf.wipfapp.logic.base.TestsSerial;
 
 /**
  * @author wipf
@@ -19,7 +17,7 @@ import org.wipf.wipfapp.logic.base.Serial;
 public class RestWipf {
 
 	@Inject
-	Serial serial;
+	TestsSerial serial;
 
 	@GET
 	@Path("/ver")
@@ -31,7 +29,7 @@ public class RestWipf {
 	@GET
 	@Path("/test")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String test() throws IOException, InterruptedException {
+	public String test() {
 		return "{\"test\":\"" + serial.test() + "\"}";
 	}
 
