@@ -49,7 +49,6 @@ public class JaSmartyConnect {
 						setCursor(x, y);
 						for (int writePosX = x; x < lc.getWidh() - writePosX; writePosX++) {
 							char c = lc.getCacheSoll(writePosX, y);
-							System.out.println("chn in Line:" + y + " at pos: " + writePosX + " -> '" + c + "'");
 							writeChar(c);
 							lc.setToCacheIst(writePosX, y, c);
 						}

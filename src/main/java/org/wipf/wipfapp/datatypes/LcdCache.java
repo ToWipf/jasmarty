@@ -16,7 +16,7 @@ public class LcdCache {
 		for (int x = 0; x < nWidh; x++) {
 			for (int y = 0; y < nHight; y++) {
 				this.cacheIst[x][y] = ' ';
-				this.cacheSoll[x][y] = '.';
+				this.cacheSoll[x][y] = ' ';
 			}
 		}
 	}
