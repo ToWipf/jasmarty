@@ -15,11 +15,4 @@ public class JaSmartySend {
 
 	}
 
-	public void writeLineToCache(Integer x, Integer y, String s) {
-		jaSmartyConnect.lc.writeLine(x, y, s);
-	}
-
-	public void writeToCache(Integer x, Integer y, char c) {
-		jaSmartyConnect.lc.write(x, y, c);
-	}
 }

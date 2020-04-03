@@ -16,22 +16,40 @@ import com.fazecast.jSerialComm.SerialPort;
 public class JaSmartyConnect {
 
 	private SerialPort sp;
-	public LcdCache lc;
+	private LcdCache lc;
+
+	public void writeLineToCache(Integer x, Integer y, String s) {
+		lc.writeLine(x, y, s);
+	}
+
+	public void writeToCache(Integer x, Integer y, char c) {
+		lc.write(x, y, c);
+	}
+
+	public String getCachIst() {
+		return lc.toStringIst();
+	}
+
+	public String getCachSoll() {
+		return lc.toStringSoll();
+	}
 
 	/**
 	 * 
 	 */
 	public void refreshDisplay() {
+		System.out.println("in");
 		if (lc.hasChanges()) {
+			System.out.println("upd");
 			for (int y = 1; y <= lc.getHight(); y++) {
 				for (int x = 1; x <= lc.getWidh(); x++) {
-					if (lc.getCacheOld(x, y) != lc.getCacheNew(x, y)) {
+					if (lc.getCacheIst(x, y) != lc.getCacheSoll(x, y)) {
 						// Schreibe Zeile immer zu ende
 						setCursor(x, y);
 						for (int writePosX = x; x < lc.getWidh(); writePosX++) {
-							char c = lc.getCacheNew(writePosX, y);
+							char c = lc.getCacheSoll(writePosX, y);
 							writeChar(c);
-							lc.setToCacheOld(writePosX, y, c);
+							lc.setToCacheIst(writePosX, y, c);
 						}
 						break;
 					}

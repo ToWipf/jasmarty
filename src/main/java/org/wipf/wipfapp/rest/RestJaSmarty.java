@@ -76,19 +76,35 @@ public class RestJaSmarty {
 	}
 
 	@GET
-	@Path("/cacheLine/{x}/{y}/{str}")
+	@Path("/cl/{x}/{y}/{str}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String cacheWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		jaSmartySend.writeLineToCache(x, y, s);
+	public String cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
+		jaSmartyConnect.writeLineToCache(x, y, s);
 		return "{}";
 	}
 
 	@GET
-	@Path("/cache/{x}/{y}/{c}")
+	@Path("/c/{x}/{y}/{c}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String cacheWrite(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("c") char c) {
-		jaSmartySend.writeToCache(x, y, c);
+	public String cWrite(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("c") char c) {
+		jaSmartyConnect.writeToCache(x, y, c);
 		return "{}";
+	}
+
+	@GET
+	@Path("/chIst")
+	@Produces(MediaType.TEXT_HTML)
+	public String chIst() {
+		return jaSmartyConnect.getCachIst();
+
+	}
+
+	@GET
+	@Path("/chSoll")
+	@Produces(MediaType.TEXT_HTML)
+	public String chSoll() {
+		return jaSmartyConnect.getCachSoll();
+
 	}
 
 }
