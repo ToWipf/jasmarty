@@ -10,8 +10,16 @@ public class JaSmartySend {
 	JaSmartyConnect jaSmartyConnect;
 
 	public void sendString(String s) {
-		for (char ch : s.toCharArray()) {
-			jaSmartyConnect.send((int) ch);
-		}
+
+		jaSmartyConnect.writeString(s);
+
+	}
+
+	public void writeLineToCache(Integer x, Integer y, String s) {
+		jaSmartyConnect.lc.writeLine(x, y, s);
+	}
+
+	public void writeToCache(Integer x, Integer y, char c) {
+		jaSmartyConnect.lc.write(x, y, c);
 	}
 }

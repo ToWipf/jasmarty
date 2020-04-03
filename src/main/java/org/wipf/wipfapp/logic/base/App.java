@@ -35,7 +35,7 @@ import io.quarkus.runtime.StartupEvent;
 public class App {
 
 	private static final Logger LOGGER = Logger.getLogger("jasmarty");
-	public static final String VERSION = "0.05";
+	public static final String VERSION = "0.08";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**

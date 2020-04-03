@@ -23,10 +23,26 @@ public class RestJaSmarty {
 	JaSmartySend jaSmartySend;
 
 	@GET
-	@Path("/send/{int}")
+	@Path("/writeAscii/{int}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String testSerial(@PathParam("int") Integer n) {
-		return "{\"test\":\"" + jaSmartyConnect.send(n) + "\"}";
+	public String writeAscii(@PathParam("int") Integer n) {
+		return "{\"test\":\"" + jaSmartyConnect.writeAscii(n) + "\"}";
+	}
+
+	@GET
+	@Path("/pos/{x}/{y}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		jaSmartyConnect.setCursor(x, y);
+		return "{}";
+	}
+
+	@GET
+	@Path("/cls")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String cls() {
+		jaSmartyConnect.clearScreen();
+		return "{}";
 	}
 
 	@GET
@@ -48,6 +64,30 @@ public class RestJaSmarty {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String close(@PathParam("s") String s) {
 		jaSmartySend.sendString(s);
+		return "{}";
+	}
+
+	@GET
+	@Path("/refresh")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String refreshDisplay() {
+		jaSmartyConnect.refreshDisplay();
+		return "{}";
+	}
+
+	@GET
+	@Path("/cacheLine/{x}/{y}/{str}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String cacheWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
+		jaSmartySend.writeLineToCache(x, y, s);
+		return "{}";
+	}
+
+	@GET
+	@Path("/cache/{x}/{y}/{c}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String cacheWrite(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("c") char c) {
+		jaSmartySend.writeToCache(x, y, c);
 		return "{}";
 	}
 
