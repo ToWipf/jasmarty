@@ -4,8 +4,10 @@ import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -34,8 +36,11 @@ import io.quarkus.runtime.StartupEvent;
 @ApplicationScoped
 public class App {
 
+	@Inject
+	JaSmartyConnect jaSmartyConnect;
+
 	private static final Logger LOGGER = Logger.getLogger("jasmarty");
-	public static final String VERSION = "0.11";
+	public static final String VERSION = "0.21";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -47,8 +52,10 @@ public class App {
 
 		MsqlLite.startDB();
 		initDBs();
+		if (jaSmartyConnect.open()) {
+			LOGGER.info("gestartet");
+		}
 
-		LOGGER.info("gestartet");
 	}
 
 	/**
@@ -56,6 +63,9 @@ public class App {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("The application is stopping...");
+		if (jaSmartyConnect.close()) {
+			LOGGER.info("stopped");
+		}
 	}
 
 	/**

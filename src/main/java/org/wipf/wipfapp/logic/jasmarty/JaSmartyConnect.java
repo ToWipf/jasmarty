@@ -41,13 +41,15 @@ public class JaSmartyConnect {
 		System.out.println("in");
 		if (lc.hasChanges()) {
 			System.out.println("upd");
-			for (int y = 1; y <= lc.getHight(); y++) {
-				for (int x = 1; x <= lc.getWidh(); x++) {
+			for (int y = 0; y < lc.getHight(); y++) {
+				for (int x = 0; x < lc.getWidh(); x++) {
 					if (lc.getCacheIst(x, y) != lc.getCacheSoll(x, y)) {
+						System.out.println("chn in Line:" + y);
 						// Schreibe Zeile immer zu ende
 						setCursor(x, y);
-						for (int writePosX = x; x < lc.getWidh(); writePosX++) {
+						for (int writePosX = x; x < lc.getWidh() - writePosX; writePosX++) {
 							char c = lc.getCacheSoll(writePosX, y);
+							System.out.println("chn in Line:" + y + " at pos: " + writePosX + " -> '" + c + "'");
 							writeChar(c);
 							lc.setToCacheIst(writePosX, y, c);
 						}
@@ -65,8 +67,9 @@ public class JaSmartyConnect {
 	public void setCursor(int x, int y) {
 		writeAscii(254);
 		writeAscii(71);
-		writeAscii(x);
-		writeAscii(y);
+		// Arduino 0/0 ist 1/1
+		writeAscii(x + 1);
+		writeAscii(y + 1);
 	}
 
 	/**

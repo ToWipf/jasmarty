@@ -11,11 +11,12 @@ public class LcdCache {
 		this.nWidh = nWidh;
 		this.nHight = nHight;
 		this.cacheIst = new char[nWidh][nHight];
+		this.cacheSoll = new char[nWidh][nHight];
 
 		for (int x = 0; x < nWidh; x++) {
 			for (int y = 0; y < nHight; y++) {
 				this.cacheIst[x][y] = ' ';
-				this.cacheSoll[x][y] = ' ';
+				this.cacheSoll[x][y] = '.';
 			}
 		}
 	}
@@ -72,11 +73,11 @@ public class LcdCache {
 	private String arrToString(char[][] arr) {
 		StringBuilder sb = new StringBuilder();
 		for (int y = 0; y < nHight; y++) {
+			sb.append("\n");
 			sb.append("Line: " + y + ": ");
-			for (int x = 0; x < nHight; x++) {
+			for (int x = 0; x < nWidh; x++) {
 				sb.append(arr[x][y]);
 			}
-			sb.append("\n");
 		}
 		return sb.toString();
 	}
