@@ -1,10 +1,12 @@
 package org.wipf.wipfapp.logic.jasmarty;
 
 import java.io.IOException;
-import java.util.Timer;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.jboss.logging.Logger;
 import org.wipf.wipfapp.datatypes.LcdCache;
 import org.wipf.wipfapp.datatypes.LcdConfig;
 
@@ -17,10 +19,13 @@ import com.fazecast.jSerialComm.SerialPort;
 @ApplicationScoped
 public class JaSmartyConnect {
 
+	private static final Logger LOGGER = Logger.getLogger("jasmarty");
+
 	private SerialPort sp;
 	private LcdCache lcache;
 	private LcdConfig lconf;
 	private boolean bLcdOk;
+	private boolean bRefreshRun;
 
 	/**
 	 * @param lconfig
@@ -102,20 +107,51 @@ public class JaSmartyConnect {
 	}
 
 	/**
+	 * @throws InterruptedException
 	 * 
 	 */
-	@Schedule
-	private void startRefreshDisplay() {
-		Timer t = new Timer();
-		RefreshTask mTask = new RefreshTask();
+	public void startRefreshDisplay() {
 
-		t.scheduleAtFixedRate(mTask, 0, this.lconf.getRefreshRate());
+		if (!bRefreshRun) {
+			bRefreshRun = true;
+			LOGGER.info("Refresh an");
+		} else {
+			LOGGER.warn("Refresh bereits aktiv");
+			return;
+		}
+
+		ExecutorService service = Executors.newFixedThreadPool(1);
+		service.submit(new Runnable() {
+			@Override
+			public void run() {
+
+				while (bLcdOk) {
+					try {
+						refreshDisplay();
+
+						Thread.sleep(lconf.getRefreshRate());
+					} catch (InterruptedException e) {
+
+						LOGGER.warn(e);
+						break;
+					}
+				}
+				bRefreshRun = false;
+				LOGGER.info("Refresh aus");
+			}
+		});
+	}
+
+	public void stopRefreshDisplay() {
+		this.bLcdOk = false;
 	}
 
 	/**
 	 * @return
 	 */
 	public Boolean close() {
+		// refresh ausschalten
+		bLcdOk = false;
 		return (sp.closePort());
 	}
 
@@ -123,19 +159,19 @@ public class JaSmartyConnect {
 	 * 
 	 */
 	public void refreshDisplay() {
-		System.out.println("F");
 		if (lcache.hasChanges()) {
 			for (int y = 0; y < lcache.getHight(); y++) {
 				for (int x = 0; x < lcache.getWidh(); x++) {
 					if (lcache.getCacheIst(x, y) != lcache.getCacheSoll(x, y)) {
 						// Schreibe Zeile immer zu ende
 						setCursor(x, y);
-						for (int writePosX = x; x < lcache.getWidh() - writePosX; writePosX++) {
+						for (int writePosX = x; writePosX < lcache.getWidh(); writePosX++) {
 							char c = lcache.getCacheSoll(writePosX, y);
 							writeChar(c);
 							lcache.setToCacheIst(writePosX, y, c);
 						}
 						break;
+						// x = max
 					}
 				}
 			}

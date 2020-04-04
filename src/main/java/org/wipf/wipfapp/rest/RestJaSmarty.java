@@ -19,6 +19,76 @@ public class RestJaSmarty {
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
 
+	@GET
+	@Path("/open")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String open() {
+		return "{\"open\":\"" + jaSmartyConnect.startPort() + "\"}";
+	}
+
+	@GET
+	@Path("/close")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String close() {
+		return "{\"close\":\"" + jaSmartyConnect.close() + "\"}";
+	}
+
+	@GET
+	@Path("/refreshNOW")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String refreshDisplay() {
+		jaSmartyConnect.refreshDisplay();
+		return "{}";
+	}
+
+	@GET
+	@Path("/refreshON")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String refreshDisplayON() {
+		jaSmartyConnect.startRefreshDisplay();
+		return "{}";
+	}
+
+	@GET
+	@Path("/refreshOFF")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String refreshDisplayOFF() {
+		jaSmartyConnect.stopRefreshDisplay();
+		return "{}";
+	}
+
+	@GET
+	@Path("/resetFail")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String resetLcdFaild() {
+		jaSmartyConnect.resetLcdFaild();
+		return "{}";
+	}
+
+	@GET
+	@Path("/write/{x}/{y}/{str}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
+		jaSmartyConnect.writeLineToCache(x, y, s);
+		return "{}";
+	}
+
+	@GET
+	@Path("/chIst")
+	@Produces(MediaType.TEXT_HTML)
+	public String chIst() {
+		return jaSmartyConnect.getCachIstAsString();
+
+	}
+
+	@GET
+	@Path("/chSoll")
+	@Produces(MediaType.TEXT_HTML)
+	public String chSoll() {
+		return jaSmartyConnect.getCachSollAsString();
+
+	}
+
 //	@GET
 //	@Path("/writeAscii/{int}")
 //	@Produces(MediaType.APPLICATION_JSON)
@@ -42,20 +112,6 @@ public class RestJaSmarty {
 //		return "{}";
 //	}
 
-	@GET
-	@Path("/open")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String open() {
-		return "{\"open\":\"" + jaSmartyConnect.startPort() + "\"}";
-	}
-
-	@GET
-	@Path("/close")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String close() {
-		return "{\"close\":\"" + jaSmartyConnect.close() + "\"}";
-	}
-
 //	@GET
 //	@Path("/write/{s}")
 //	@Produces(MediaType.APPLICATION_JSON)
@@ -63,45 +119,5 @@ public class RestJaSmarty {
 //		jaSmartySend.sendString(s);
 //		return "{}";
 //	}
-
-	@GET
-	@Path("/refresh")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String refreshDisplay() {
-		jaSmartyConnect.refreshDisplay();
-		return "{}";
-	}
-
-	@GET
-	@Path("/cl/{x}/{y}/{str}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		jaSmartyConnect.writeLineToCache(x, y, s);
-		return "{}";
-	}
-
-	@GET
-	@Path("/c/{x}/{y}/{c}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String cWrite(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("c") char c) {
-		jaSmartyConnect.writeCharToCache(x, y, c);
-		return "{}";
-	}
-
-	@GET
-	@Path("/chIst")
-	@Produces(MediaType.TEXT_HTML)
-	public String chIst() {
-		return jaSmartyConnect.getCachIstAsString();
-
-	}
-
-	@GET
-	@Path("/chSoll")
-	@Produces(MediaType.TEXT_HTML)
-	public String chSoll() {
-		return jaSmartyConnect.getCachSollAsString();
-
-	}
 
 }

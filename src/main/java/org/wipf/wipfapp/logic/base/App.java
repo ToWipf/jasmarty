@@ -40,8 +40,8 @@ public class App {
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
 
-	private static final Logger LOGGER = Logger.getLogger("jasmarty");
-	public static final String VERSION = "0.25";
+	private static final Logger LOGGER = Logger.getLogger("app");
+	public static final String VERSION = "0.041";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -62,6 +62,8 @@ public class App {
 
 		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
+		} else {
+			LOGGER.info("fail");
 		}
 
 	}
