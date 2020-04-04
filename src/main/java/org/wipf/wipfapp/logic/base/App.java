@@ -27,7 +27,7 @@ public class App {
 	PageVerwaltung pageVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.042";
+	public static final String VERSION = "0.044";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -47,9 +47,12 @@ public class App {
 
 		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
+
 		} else {
 			LOGGER.info("fail");
 		}
+
+		pageVerwaltung.test();
 
 	}
 
@@ -71,8 +74,6 @@ public class App {
 			Statement stmt = MsqlLite.getDB();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS settings (id, val);");
 			pageVerwaltung.initDB();
-
-			pageVerwaltung.test();
 
 		} catch (Exception e) {
 			LOGGER.warn("createDBs " + e);

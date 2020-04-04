@@ -1,21 +1,21 @@
 package org.wipf.wipfapp.datatypes;
 
 /**
- * @author wipf
- *
+ * @author wipf Achtung ARR x und y sind vertauscht!
  */
 public class LcdPage {
 
 	private char[][] page;
 	private String sName;
+	private int nId;
 
 	public LcdPage(int nWidh, int nHight) {
 
-		this.page = new char[nWidh][nHight];
+		this.page = new char[nHight][nWidh];
 
 		for (int x = 0; x < nWidh; x++) {
 			for (int y = 0; y < nHight; y++) {
-				this.page[x][y] = ' ';
+				this.page[y][x] = ' ';
 			}
 		}
 	}
@@ -47,9 +47,28 @@ public class LcdPage {
 	public String getPageAsDBString() {
 		StringBuilder sb = new StringBuilder();
 		for (char[] line : page) {
+			if (sb.length() != 0) {
+				sb.append('\n');
+			}
 			sb.append(line);
-			sb.append('\n');
 		}
 		return sb.toString();
+	}
+
+	public int getId() {
+		return nId;
+	}
+
+	public void setId(int nId) {
+		this.nId = nId;
+	}
+
+	public void stringToPage(String sInput) {
+		String[] sAr = sInput.split("\n", -1);
+		int nLine = 0;
+		for (String s : sAr) {
+			this.page[nLine] = s.toCharArray();
+			nLine++;
+		}
 	}
 }
