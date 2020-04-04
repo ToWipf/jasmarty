@@ -7,6 +7,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.wipfapp.datatypes.LcdConfig;
 import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
 
 import io.quarkus.runtime.ShutdownEvent;
@@ -40,7 +41,7 @@ public class App {
 	JaSmartyConnect jaSmartyConnect;
 
 	private static final Logger LOGGER = Logger.getLogger("jasmarty");
-	public static final String VERSION = "0.22";
+	public static final String VERSION = "0.25";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -52,7 +53,14 @@ public class App {
 
 		MsqlLite.startDB();
 		initDBs();
-		if (jaSmartyConnect.open()) {
+
+		LcdConfig lconf = new LcdConfig();
+		lconf.setPort("COM10");
+		lconf.setHight(4);
+		lconf.setWidth(20);
+		jaSmartyConnect.setConfig(lconf);
+
+		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
 		}
 

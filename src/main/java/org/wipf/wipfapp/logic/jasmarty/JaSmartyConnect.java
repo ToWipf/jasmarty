@@ -1,10 +1,12 @@
 package org.wipf.wipfapp.logic.jasmarty;
 
 import java.io.IOException;
+import java.util.Timer;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.wipf.wipfapp.datatypes.LcdCache;
+import org.wipf.wipfapp.datatypes.LcdConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -16,41 +18,122 @@ import com.fazecast.jSerialComm.SerialPort;
 public class JaSmartyConnect {
 
 	private SerialPort sp;
-	private LcdCache lc;
+	private LcdCache lcache;
+	private LcdConfig lconf;
+	private boolean bLcdOk;
 
+	/**
+	 * @param lconfig
+	 */
+	public void setConfig(LcdConfig lconfig) {
+		this.lconf = lconfig;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isLcdOk() {
+		return bLcdOk;
+	}
+
+	/**
+	 * 
+	 */
+	public void resetLcdFaild() {
+		this.bLcdOk = true;
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param s
+	 */
 	public void writeLineToCache(Integer x, Integer y, String s) {
-		lc.writeLine(x, y, s);
+		lcache.writeLine(x, y, s);
 	}
 
-	public void writeToCache(Integer x, Integer y, char c) {
-		lc.write(x, y, c);
+	/**
+	 * @param x
+	 * @param y
+	 * @param c
+	 */
+	public void writeCharToCache(Integer x, Integer y, char c) {
+		lcache.write(x, y, c);
 	}
 
-	public String getCachIst() {
-		return lc.toStringIst();
+	/**
+	 * @return
+	 */
+	public String getCachIstAsString() {
+		return lcache.toStringIst();
 	}
 
-	public String getCachSoll() {
-		return lc.toStringSoll();
+	/**
+	 * @return
+	 */
+	public String getCachSollAsString() {
+		return lcache.toStringSoll();
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean startPort() {
+		try {
+			sp = SerialPort.getCommPort(lconf.getPort());
+			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
+			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
+
+			if (!sp.openPort()) {
+				return false;
+			}
+
+			// Warten bis LCD bereit ist
+			lcache = new LcdCache(lconf.getWidth(), lconf.getHight());
+			bLcdOk = true;
+			Thread.sleep(5000);
+			clearScreen();
+			startRefreshDisplay();
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
+	 * 
+	 */
+	@Schedule
+	private void startRefreshDisplay() {
+		Timer t = new Timer();
+		RefreshTask mTask = new RefreshTask();
+
+		t.scheduleAtFixedRate(mTask, 0, this.lconf.getRefreshRate());
+	}
+
+	/**
+	 * @return
+	 */
+	public Boolean close() {
+		return (sp.closePort());
 	}
 
 	/**
 	 * 
 	 */
 	public void refreshDisplay() {
-		System.out.println("in");
-		if (lc.hasChanges()) {
-			System.out.println("upd");
-			for (int y = 0; y < lc.getHight(); y++) {
-				for (int x = 0; x < lc.getWidh(); x++) {
-					if (lc.getCacheIst(x, y) != lc.getCacheSoll(x, y)) {
-						System.out.println("chn in Line:" + y);
+		System.out.println("F");
+		if (lcache.hasChanges()) {
+			for (int y = 0; y < lcache.getHight(); y++) {
+				for (int x = 0; x < lcache.getWidh(); x++) {
+					if (lcache.getCacheIst(x, y) != lcache.getCacheSoll(x, y)) {
 						// Schreibe Zeile immer zu ende
 						setCursor(x, y);
-						for (int writePosX = x; x < lc.getWidh() - writePosX; writePosX++) {
-							char c = lc.getCacheSoll(writePosX, y);
+						for (int writePosX = x; x < lcache.getWidh() - writePosX; writePosX++) {
+							char c = lcache.getCacheSoll(writePosX, y);
 							writeChar(c);
-							lc.setToCacheIst(writePosX, y, c);
+							lcache.setToCacheIst(writePosX, y, c);
 						}
 						break;
 					}
@@ -63,7 +146,7 @@ public class JaSmartyConnect {
 	 * @param x
 	 * @param y
 	 */
-	public void setCursor(int x, int y) {
+	private void setCursor(int x, int y) {
 		writeAscii(254);
 		writeAscii(71);
 		// Arduino 0/0 ist 1/1
@@ -75,24 +158,24 @@ public class JaSmartyConnect {
 	 * @param c
 	 * @return
 	 */
-	public Boolean writeChar(char c) {
-		return writeAscii((int) c);
+	private void writeChar(char c) {
+		writeAscii((int) c);
 	}
 
-	/**
-	 * @param s
-	 */
-	public void writeString(String s) {
-		for (char ch : s.toCharArray()) {
-			writeChar(ch);
-		}
-	}
+//	/**
+//	 * @param s
+//	 */
+//	public void writeString(String s) {
+//		for (char ch : s.toCharArray()) {
+//			writeChar(ch);
+//		}
+//	}
 
 	/**
 	 * @param s
 	 * @return
 	 */
-	public Boolean writeAscii(Integer n) {
+	private void writeAscii(Integer n) {
 		System.out.println("write: " + n);
 
 		try {
@@ -100,58 +183,17 @@ public class JaSmartyConnect {
 			sp.getOutputStream().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			this.bLcdOk = false;
 			e.printStackTrace();
-			return false;
 		}
-		return true;
 	}
 
 	/**
 	 * 
 	 */
-	public void clearScreen() {
+	private void clearScreen() {
 		writeAscii(254);
 		writeAscii(88);
 	}
 
-	/**
-	 * @return
-	 */
-	public Boolean open() {
-		sp = SerialPort.getCommPort("COM10");
-		sp.setComPortParameters(9600, 8, 1, 0); // default connection settings for Arduino
-		sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
-
-		if (sp.openPort()) {
-			System.out.println("Port is open");
-		} else {
-			System.out.println("Failed to open port");
-			return false;
-		}
-
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			;
-		}
-
-		clearScreen();
-
-		lc = new LcdCache(20, 4);
-
-		return true;
-	}
-
-	/**
-	 * @return
-	 */
-	public Boolean close() {
-		if (sp.closePort()) {
-			System.out.println("Port is closed");
-		} else {
-			System.out.println("Failed to close port");
-			return false;
-		}
-		return true;
-	}
 }
