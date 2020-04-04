@@ -1,5 +1,9 @@
 package org.wipf.wipfapp.datatypes;
 
+/**
+ * @author wipf
+ *
+ */
 public class LcdConfig {
 
 	private String sPort;

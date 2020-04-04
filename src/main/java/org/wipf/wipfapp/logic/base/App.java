@@ -9,26 +9,10 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.wipfapp.datatypes.LcdConfig;
 import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
+import org.wipf.wipfapp.logic.jasmarty.PageVerwaltung;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
-
-// TODO:
-/*
- * //@formatter:off
- * stringclass
- * alle confs in db
- * 4 gewinnt
- * add to motd for id
- * set a new admin ?
- * sende in Stunden nachricht
- * rechner tage in stunden
- * zeitgeplante nachrichten z.B send 10m Hallo Test
- * motd für bestimmte Tage
- * admin tabelle (Telegram ids nicht in code)
- * sammelen aller user in tabelle mit rechten
- * //@formatter:on
- */
 
 /**
  * @author wipf
@@ -39,6 +23,8 @@ public class App {
 
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
+	@Inject
+	PageVerwaltung pageVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
 	public static final String VERSION = "0.041";
@@ -48,7 +34,6 @@ public class App {
 	 * @param ev
 	 */
 	void onStart(@Observes StartupEvent ev) {
-		System.out.println("_________________________");
 		LOGGER.info("Starte " + VERSION);
 
 		MsqlLite.startDB();
@@ -81,11 +66,13 @@ public class App {
 	/**
 	 * Tabellen anlegen
 	 */
-	private static void initDBs() {
-
+	private void initDBs() {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS settings (id, val);");
+			pageVerwaltung.initDB();
+
+			pageVerwaltung.test();
 
 		} catch (Exception e) {
 			LOGGER.warn("createDBs " + e);

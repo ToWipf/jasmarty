@@ -1,5 +1,9 @@
 package org.wipf.wipfapp.datatypes;
 
+/**
+ * @author wipf
+ *
+ */
 public class LcdCache {
 
 	private int nHight;
@@ -10,6 +14,9 @@ public class LcdCache {
 	public LcdCache(int nWidh, int nHight) {
 		this.nWidh = nWidh;
 		this.nHight = nHight;
+
+		// this.nWidh = nWidh;
+		// this.nHight = nHight;
 		this.cacheIst = new char[nWidh][nHight];
 		this.cacheSoll = new char[nWidh][nHight];
 
@@ -53,9 +60,9 @@ public class LcdCache {
 		this.cacheSoll[x][y] = c;
 	}
 
-	public void writeLine(Integer x, Integer y, String sString) {
+	public void writeLine(Integer x, Integer y, char[] cArr) {
 		int nOffset = 0;
-		for (char c : sString.toCharArray()) {
+		for (char c : cArr) {
 			write(x + nOffset, y, c);
 			nOffset++;
 		}

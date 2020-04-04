@@ -28,6 +28,20 @@ public class JaSmartyConnect {
 	private boolean bRefreshRun;
 
 	/**
+	 * @return
+	 */
+	public int getHight() {
+		return lconf.getHight();
+	}
+
+	/**
+	 * @return
+	 */
+	public int getWidth() {
+		return lconf.getWidth();
+	}
+
+	/**
 	 * @param lconfig
 	 */
 	public void setConfig(LcdConfig lconfig) {
@@ -53,8 +67,8 @@ public class JaSmartyConnect {
 	 * @param y
 	 * @param s
 	 */
-	public void writeLineToCache(Integer x, Integer y, String s) {
-		lcache.writeLine(x, y, s);
+	public void writeLineToCache(Integer x, Integer y, char[] cArr) {
+		lcache.writeLine(x, y, cArr);
 	}
 
 	/**
@@ -90,6 +104,7 @@ public class JaSmartyConnect {
 			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
 
 			if (!sp.openPort()) {
+				LOGGER.warn("LCD Port nicht gefunden");
 				return false;
 			}
 
@@ -102,6 +117,7 @@ public class JaSmartyConnect {
 			return true;
 
 		} catch (Exception e) {
+			LOGGER.warn("LCD Start: " + e);
 			return false;
 		}
 	}
@@ -197,15 +213,6 @@ public class JaSmartyConnect {
 	private void writeChar(char c) {
 		writeAscii((int) c);
 	}
-
-//	/**
-//	 * @param s
-//	 */
-//	public void writeString(String s) {
-//		for (char ch : s.toCharArray()) {
-//			writeChar(ch);
-//		}
-//	}
 
 	/**
 	 * @param s

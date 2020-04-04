@@ -14,7 +14,7 @@ import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
  *
  */
 @Path("/lcd")
-public class RestJaSmarty {
+public class lcd {
 
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
@@ -35,7 +35,7 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/refreshNOW")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String refreshDisplay() {
 		jaSmartyConnect.refreshDisplay();
 		return "{}";
@@ -43,7 +43,7 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/refreshON")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String refreshDisplayON() {
 		jaSmartyConnect.startRefreshDisplay();
 		return "{}";
@@ -51,7 +51,7 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/refreshOFF")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String refreshDisplayOFF() {
 		jaSmartyConnect.stopRefreshDisplay();
 		return "{}";
@@ -59,7 +59,7 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/resetFail")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String resetLcdFaild() {
 		jaSmartyConnect.resetLcdFaild();
 		return "{}";
@@ -67,15 +67,15 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/write/{x}/{y}/{str}")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		jaSmartyConnect.writeLineToCache(x, y, s);
+		jaSmartyConnect.writeLineToCache(x, y, s.toCharArray());
 		return "{}";
 	}
 
 	@GET
 	@Path("/chIst")
-	@Produces(MediaType.TEXT_HTML)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String chIst() {
 		return jaSmartyConnect.getCachIstAsString();
 
@@ -83,7 +83,7 @@ public class RestJaSmarty {
 
 	@GET
 	@Path("/chSoll")
-	@Produces(MediaType.TEXT_HTML)
+	@Produces(MediaType.TEXT_PLAIN)
 	public String chSoll() {
 		return jaSmartyConnect.getCachSollAsString();
 
