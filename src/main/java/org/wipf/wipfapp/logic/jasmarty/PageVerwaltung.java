@@ -26,7 +26,8 @@ public class PageVerwaltung {
 	 */
 	public void newPageToDB(LcdPage page) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT INTO pages (name, page) VALUES ('" + page.getName() + "','" + page.getPage() + "')");
+		stmt.execute(
+				"INSERT INTO pages (name, page) VALUES ('" + page.getName() + "','" + page.getPageAsDBString() + "')");
 	}
 
 	/**
@@ -47,15 +48,13 @@ public class PageVerwaltung {
 	}
 
 	public void test() {
-		LcdPage p = new LcdPage();
-		char[][] page = new char[20][4];
-		page[0] = "TestPageInhalt".toCharArray();
-		page[1] = "LineZwei".toCharArray();
-		page[2] = "Line3".toCharArray();
-		page[3] = "EndeDerTestSeite".toCharArray();
+		LcdPage p = new LcdPage(20, 4);
 
 		p.setName("testpage");
-		p.setPage(page);
+		p.setLine(0, "Line!1!".toCharArray());
+		p.setLine(1, "    HIER".toCharArray());
+		p.setLine(2, "ZEILE 3".toCharArray());
+		p.setLine(3, "Ende der Page !!!".toCharArray());
 
 		try {
 			newPageToDB(p);

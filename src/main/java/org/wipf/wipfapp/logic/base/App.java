@@ -27,7 +27,7 @@ public class App {
 	PageVerwaltung pageVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.041";
+	public static final String VERSION = "0.042";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
