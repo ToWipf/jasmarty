@@ -11,6 +11,7 @@ public class LcdPage {
 	private List<String> saLines;
 	private String sName;
 	private int nId;
+	private int nOptions;
 
 	public LcdPage() {
 		this.saLines = new ArrayList<String>();
@@ -37,7 +38,11 @@ public class LcdPage {
 	 * @return
 	 */
 	public String getLine(int nLine) {
-		return this.saLines.get(nLine);
+		try {
+			return this.saLines.get(nLine);
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	/**
@@ -56,6 +61,12 @@ public class LcdPage {
 	public void setLine(int nLine, String sLine) {
 		this.saLines.add(nLine, sLine);
 	}
+
+//	public void setLine(int nLine, String sLine, boolean bMittig, int nLength) {
+//		int spaces = nLength-sLine.length();
+//		
+//		this.saLines.add(nLine, sLine);
+//	}
 
 	/**
 	 * @return
@@ -81,5 +92,13 @@ public class LcdPage {
 			this.saLines.add(nLine, s);
 			nLine++;
 		}
+	}
+
+	public int getOptions() {
+		return nOptions;
+	}
+
+	public void setOptions(int nOptions) {
+		this.nOptions = nOptions;
 	}
 }

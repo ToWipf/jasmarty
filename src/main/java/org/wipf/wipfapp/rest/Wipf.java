@@ -12,7 +12,7 @@ import org.wipf.wipfapp.logic.base.App;
  *
  */
 @Path("/wipf")
-public class wipf {
+public class Wipf {
 
 	@GET
 	@Path("/ver")

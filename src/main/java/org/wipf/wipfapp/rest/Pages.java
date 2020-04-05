@@ -18,18 +18,19 @@ import org.wipf.wipfapp.logic.jasmarty.PageVerwaltung;
  *
  */
 @Path("/pages")
-public class pages {
+public class Pages {
 
 	@Inject
 	PageVerwaltung pageVerwaltung;
 
 	@GET
 	@PUT
-	@Path("/new/{name}/{page}")
+	@Path("/new/{name}/{page}/{options}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String newPage(@PathParam("name") String sName, @PathParam("page") String sPage) {
+	public String newPageOpt(@PathParam("name") String sName, @PathParam("page") String sPage,
+			@PathParam("options") int nOptions) {
 		try {
-			pageVerwaltung.newPageToDB(sName, sPage);
+			pageVerwaltung.newPageToDB(sName, sPage, nOptions);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

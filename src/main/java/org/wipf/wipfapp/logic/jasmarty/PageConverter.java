@@ -3,6 +3,7 @@ package org.wipf.wipfapp.logic.jasmarty;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.wipfapp.datatypes.LcdPage;
 
 /**
@@ -12,18 +13,29 @@ import org.wipf.wipfapp.datatypes.LcdPage;
 @ApplicationScoped
 public class PageConverter {
 
+	private static final Logger LOGGER = Logger.getLogger("jasmarty PageConverter");
+
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
+
+	LcdPage selectedPage;
 
 	/**
 	 * @param page
 	 */
-	public void convertPage(LcdPage page) {
+	public void selectToNewPage(LcdPage page) {
 		// TODO Platzhalter ersetzen
-		for (int nLine = 0; nLine < jaSmartyConnect.getHight(); nLine++) {
+		jaSmartyConnect.clearScreen();
+		this.selectedPage = page;
+	}
 
-			// System.out.print("line " + nLine + ": ");
-			// System.out.println(page.getLine(nLine, jaSmartyConnect.getWidth()));
+	public void refreshCache() {
+		convertPage(selectedPage);
+	}
+
+	public void convertPage(LcdPage page) {
+		// TODO replace date, options ...
+		for (int nLine = 0; nLine < jaSmartyConnect.getHight(); nLine++) {
 
 			jaSmartyConnect.writeLineToCache(0, nLine, page.getLine(nLine, jaSmartyConnect.getWidth()));
 		}

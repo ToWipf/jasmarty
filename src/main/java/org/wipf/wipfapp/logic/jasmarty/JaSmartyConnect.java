@@ -1,8 +1,6 @@
 package org.wipf.wipfapp.logic.jasmarty;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -19,13 +17,12 @@ import com.fazecast.jSerialComm.SerialPort;
 @ApplicationScoped
 public class JaSmartyConnect {
 
-	private static final Logger LOGGER = Logger.getLogger("jasmarty");
+	private static final Logger LOGGER = Logger.getLogger("jasmarty Connect");
 
 	private SerialPort sp;
 	private LcdCache lcache;
 	private LcdConfig lconf;
 	private boolean bLcdOk;
-	private boolean bRefreshRun;
 
 	/**
 	 * @return
@@ -49,6 +46,13 @@ public class JaSmartyConnect {
 	}
 
 	/**
+	 * @param b
+	 */
+	public void setLcdOk(boolean b) {
+		this.bLcdOk = b;
+	}
+
+	/**
 	 * @return
 	 */
 	public boolean isLcdOk() {
@@ -56,10 +60,10 @@ public class JaSmartyConnect {
 	}
 
 	/**
-	 * 
+	 * @return
 	 */
-	public void resetLcdFaild() {
-		this.bLcdOk = true;
+	public int getRefreshRate() {
+		return this.lconf.getRefreshRate();
 	}
 
 	/**
@@ -116,7 +120,6 @@ public class JaSmartyConnect {
 			bLcdOk = true;
 			Thread.sleep(5000);
 			clearScreen();
-			startRefreshDisplay();
 			return true;
 
 		} catch (Exception e) {
@@ -126,52 +129,21 @@ public class JaSmartyConnect {
 	}
 
 	/**
-	 * @throws InterruptedException
-	 * 
-	 */
-	public void startRefreshDisplay() {
-
-		if (!bRefreshRun) {
-			bRefreshRun = true;
-			LOGGER.info("Refresh an");
-		} else {
-			LOGGER.warn("Refresh bereits aktiv");
-			return;
-		}
-
-		ExecutorService service = Executors.newFixedThreadPool(1);
-		service.submit(new Runnable() {
-			@Override
-			public void run() {
-
-				while (bLcdOk) {
-					try {
-						refreshDisplay();
-
-						Thread.sleep(lconf.getRefreshRate());
-					} catch (InterruptedException e) {
-
-						LOGGER.warn(e);
-						break;
-					}
-				}
-				bRefreshRun = false;
-				LOGGER.info("Refresh aus");
-			}
-		});
-	}
-
-	public void stopRefreshDisplay() {
-		this.bLcdOk = false;
-	}
-
-	/**
 	 * @return
 	 */
 	public Boolean close() {
 		// refresh ausschalten
 		bLcdOk = false;
 		return (sp.closePort());
+	}
+
+	/**
+	 * 
+	 */
+	public void clearScreen() {
+		lcache.clearCacheFull();
+		writeAscii(254);
+		writeAscii(88);
 	}
 
 	/**
@@ -232,14 +204,6 @@ public class JaSmartyConnect {
 			this.bLcdOk = false;
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 
-	 */
-	private void clearScreen() {
-		writeAscii(254);
-		writeAscii(88);
 	}
 
 }

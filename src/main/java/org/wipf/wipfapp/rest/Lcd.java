@@ -14,7 +14,7 @@ import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
  *
  */
 @Path("/lcd")
-public class lcd {
+public class Lcd {
 
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
@@ -34,34 +34,10 @@ public class lcd {
 	}
 
 	@GET
-	@Path("/refreshNOW")
+	@Path("/refresh")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String refreshDisplay() {
 		jaSmartyConnect.refreshDisplay();
-		return "{}";
-	}
-
-	@GET
-	@Path("/refreshON")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String refreshDisplayON() {
-		jaSmartyConnect.startRefreshDisplay();
-		return "{}";
-	}
-
-	@GET
-	@Path("/refreshOFF")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String refreshDisplayOFF() {
-		jaSmartyConnect.stopRefreshDisplay();
-		return "{}";
-	}
-
-	@GET
-	@Path("/resetFail")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String resetLcdFaild() {
-		jaSmartyConnect.resetLcdFaild();
 		return "{}";
 	}
 
