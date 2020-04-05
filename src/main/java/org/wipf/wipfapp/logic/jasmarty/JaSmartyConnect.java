@@ -99,6 +99,10 @@ public class JaSmartyConnect {
 	 */
 	public Boolean startPort() {
 		try {
+			// Cache vorbereiten
+			lcache = new LcdCache(lconf.getWidth(), lconf.getHight());
+
+			// LCD Connect
 			sp = SerialPort.getCommPort(lconf.getPort());
 			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
 			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
@@ -109,7 +113,6 @@ public class JaSmartyConnect {
 			}
 
 			// Warten bis LCD bereit ist
-			lcache = new LcdCache(lconf.getWidth(), lconf.getHight());
 			bLcdOk = true;
 			Thread.sleep(5000);
 			clearScreen();

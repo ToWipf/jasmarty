@@ -64,7 +64,7 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public LcdPage getPageFromDB(int nPid) throws SQLException {
-		LcdPage page = new LcdPage(20, 4);
+		LcdPage page = new LcdPage();
 
 		Statement stmt = MsqlLite.getDB();
 		ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nPid + "';");
@@ -92,13 +92,13 @@ public class PageVerwaltung {
 
 	public void test() {
 		try {
-			LcdPage p = new LcdPage(20, 4);
+			LcdPage p = new LcdPage();
 
 			p.setName("testpage");
-			p.setLine(0, "Line!1!".toCharArray());
-			p.setLine(1, "    HIER".toCharArray());
-			p.setLine(2, "ZEILE 3".toCharArray());
-			p.setLine(3, "Ende der Page !!!".toCharArray());
+			p.setLine(0, "Line!1!");
+			p.setLine(1, "    HIER");
+			p.setLine(2, "ZEILE 3");
+			p.setLine(3, "Ende der Page !!!");
 
 			System.out.println("Schreibe:");
 			System.out.println(p.getPageAsDBString());
