@@ -22,11 +22,24 @@ public class pages {
 	PageVerwaltung pageVerwaltung;
 
 	@GET
-	@Path("/write/{x}/{y}/{str}")
+	@Path("/new/{name}/{page}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String newPage(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
+	public String newPage(@PathParam("name") String sName, @PathParam("page") String sPage) {
 		try {
-			pageVerwaltung.newPageToDB(null);
+			pageVerwaltung.newPageToDB(sName, sPage);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "{}";
+	}
+
+	@GET
+	@Path("/select/{pid}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String newPage(@PathParam("pid") int nPid) {
+		try {
+			pageVerwaltung.selectPage(nPid);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.wipf.wipfapp.datatypes.LcdPage;
@@ -14,7 +14,7 @@ import org.wipf.wipfapp.logic.base.MsqlLite;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class PageVerwaltung {
 
 	@Inject
@@ -40,6 +40,16 @@ public class PageVerwaltung {
 	}
 
 	/**
+	 * @param sName
+	 * @param sPage
+	 * @throws SQLException
+	 */
+	public void newPageToDB(String sName, String sPage) throws SQLException {
+		Statement stmt = MsqlLite.getDB();
+		stmt.execute("INSERT INTO pages (name, page) VALUES ('" + sName + "','" + sPage + "')");
+	}
+
+	/**
 	 * @param nPid
 	 * @throws SQLException
 	 */
@@ -53,11 +63,11 @@ public class PageVerwaltung {
 	 * @return
 	 * @throws SQLException
 	 */
-	public LcdPage getPageFromDB(int nId) throws SQLException {
+	public LcdPage getPageFromDB(int nPid) throws SQLException {
 		LcdPage page = new LcdPage(20, 4);
 
 		Statement stmt = MsqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nId + "';");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nPid + "';");
 		page.setId(rs.getInt("pid"));
 		page.setName(rs.getString("name"));
 		page.stringToPage(rs.getString("page"));
@@ -70,6 +80,14 @@ public class PageVerwaltung {
 	 */
 	public void writePage(LcdPage page) throws SQLException {
 		pageConverter.convertPage(page);
+	}
+
+	/**
+	 * @param nPid
+	 * @throws SQLException
+	 */
+	public void selectPage(int nPid) throws SQLException {
+		writePage(getPageFromDB(nPid));
 	}
 
 	public void test() {
