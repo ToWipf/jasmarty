@@ -14,6 +14,10 @@ import org.wipf.wipfapp.logic.base.MsqlLite;
 
 /**
  * @author wipf
+ * 
+ *         Seiten Speichern, Löschen, Auswählen
+ *
+ * 
  *
  */
 @RequestScoped
@@ -30,17 +34,20 @@ public class PageVerwaltung {
 	public void initDB() throws SQLException {
 		Statement stmt = MsqlLite.getDB();
 		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options INTEGER);");
+				"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options TEXT);");
 	}
 
 	public void writeDefaultPage() {
 		try {
 			LcdPage p = new LcdPage();
+			p.setId(0);
+			p.setOptions("1102");
 			p.setLine(0, "jaSmarty");
 			p.setLine(1, "by Wipf");
 			p.setLine(2, "");
-			p.setLine(3, "Version:" + App.VERSION);
+			p.setLine(3, "Version: " + App.VERSION);
 			writePage(p);
+			// TODO save this page to db
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -64,10 +71,10 @@ public class PageVerwaltung {
 	 * @param sPage
 	 * @throws SQLException
 	 */
-	public void newPageToDB(String sName, String sPage, int nOptions) throws SQLException {
+	public void newPageToDB(String sName, String sPage, String sOptions) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
 		stmt.execute(
-				"INSERT INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','" + nOptions + "')");
+				"INSERT INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','" + sOptions + "')");
 	}
 
 	/**

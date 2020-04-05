@@ -28,9 +28,9 @@ public class Pages {
 	@Path("/new/{name}/{page}/{options}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String newPageOpt(@PathParam("name") String sName, @PathParam("page") String sPage,
-			@PathParam("options") int nOptions) {
+			@PathParam("options") String sOptions) {
 		try {
-			pageVerwaltung.newPageToDB(sName, sPage, nOptions);
+			pageVerwaltung.newPageToDB(sName, sPage, sOptions);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

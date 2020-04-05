@@ -10,8 +10,8 @@ public class LcdPage {
 
 	private List<String> saLines;
 	private String sName;
+	private String sOptions;
 	private int nId;
-	private int nOptions;
 
 	public LcdPage() {
 		this.saLines = new ArrayList<String>();
@@ -49,9 +49,9 @@ public class LcdPage {
 	 * @param nLine
 	 * @return
 	 */
-	public char[] getLine(int nLine, int lengh) {
+	public String getLine(int nLine, int lengh) {
 		String sOut = getLine(nLine);
-		return sOut.substring(0, Math.min(sOut.length(), lengh)).toCharArray();
+		return sOut.substring(0, Math.min(sOut.length(), lengh));
 	}
 
 	/**
@@ -94,11 +94,11 @@ public class LcdPage {
 		}
 	}
 
-	public int getOptions() {
-		return nOptions;
+	public String getOptions() {
+		return sOptions;
 	}
 
-	public void setOptions(int nOptions) {
-		this.nOptions = nOptions;
+	public void setOptions(String sOptions) {
+		this.sOptions = sOptions;
 	}
 }

@@ -52,7 +52,6 @@ public class RefreshLoop {
 			public void run() {
 
 				while (bLoopActive && jaSmartyConnect.isLcdOk()) {
-					System.out.println("LOOP");
 					try {
 						pageConverter.refreshCache();
 						jaSmartyConnect.refreshDisplay();
