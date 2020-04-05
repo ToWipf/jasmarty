@@ -57,13 +57,7 @@ public class Pages {
 	@Path("/get/{pid}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getPage(@PathParam("pid") int nPid) {
-		try {
-			return pageVerwaltung.getPageFromDB(nPid).getPageAsDBString();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "F";
+		return pageVerwaltung.getPageFromDB(nPid).getPageAsDBString();
 	}
 
 	@GET

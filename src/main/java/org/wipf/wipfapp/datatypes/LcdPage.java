@@ -85,7 +85,7 @@ public class LcdPage {
 	/**
 	 * @param sInput
 	 */
-	public void stringToPage(String sInput) {
+	public void setStringToPage(String sInput) {
 		String[] sAr = sInput.split("\n", -1);
 		int nLine = 0;
 		for (String s : sAr) {

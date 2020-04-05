@@ -7,6 +7,7 @@ import java.sql.Statement;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.wipfapp.datatypes.LcdPage;
 import org.wipf.wipfapp.logic.base.App;
 import org.wipf.wipfapp.logic.base.MsqlLite;
@@ -17,6 +18,8 @@ import org.wipf.wipfapp.logic.base.MsqlLite;
  */
 @RequestScoped
 public class PageVerwaltung {
+
+	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
 
 	@Inject
 	PageConverter pageConverter;
@@ -30,7 +33,7 @@ public class PageVerwaltung {
 				"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options INTEGER);");
 	}
 
-	public void startDefaultPage() {
+	public void writeDefaultPage() {
 		try {
 			LcdPage p = new LcdPage();
 			p.setLine(0, "jaSmarty");
@@ -81,15 +84,20 @@ public class PageVerwaltung {
 	 * @return
 	 * @throws SQLException
 	 */
-	public LcdPage getPageFromDB(int nPid) throws SQLException {
-		LcdPage page = new LcdPage();
+	public LcdPage getPageFromDB(int nPid) {
+		try {
+			LcdPage page = new LcdPage();
 
-		Statement stmt = MsqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nPid + "';");
-		page.setId(rs.getInt("pid"));
-		page.setName(rs.getString("name"));
-		page.stringToPage(rs.getString("page"));
-		return page;
+			Statement stmt = MsqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nPid + "';");
+			page.setId(rs.getInt("pid"));
+			page.setName(rs.getString("name"));
+			page.setStringToPage(rs.getString("page"));
+			return page;
+		} catch (Exception e) {
+			LOGGER.warn("Page not found: " + nPid);
+			return null;
+		}
 	}
 
 	/**

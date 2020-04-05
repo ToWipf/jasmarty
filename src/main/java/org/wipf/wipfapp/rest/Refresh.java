@@ -21,7 +21,7 @@ public class Refresh {
 	@GET
 	@Path("/on")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String refreshDisplayON() {
+	public String on() {
 		refreshLoop.start();
 		return "{}";
 	}
@@ -29,7 +29,7 @@ public class Refresh {
 	@GET
 	@Path("/off")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String refreshDisplayOFF() {
+	public String off() {
 		refreshLoop.stop();
 		return "{}";
 	}

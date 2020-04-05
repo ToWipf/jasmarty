@@ -17,43 +17,53 @@ public class RefreshLoop {
 	JaSmartyConnect jaSmartyConnect;
 
 	private static final Logger LOGGER = Logger.getLogger("RefreshLoop");
+	private boolean bLoopActive = false;
 
 	/**
 	 * 
 	 */
 	public void start() {
-		jaSmartyConnect.setLcdOk(true);
-		refresh();
+		jaSmartyConnect.resetLcdOK();
+		refreshloop();
 	}
 
 	/**
 	 * 
 	 */
 	public void stop() {
-		jaSmartyConnect.setLcdOk(false);
+		bLoopActive = false;
 	}
 
 	/**
 	 * 
 	 */
-	private void refresh() {
+	private void refreshloop() {
+		if (!bLoopActive) {
+			bLoopActive = true;
+			LOGGER.info("Refresh an");
+		} else {
+			LOGGER.info("Refresh bereits an");
+			return;
+		}
+
 		ExecutorService service = Executors.newFixedThreadPool(1);
 		service.submit(new Runnable() {
 			@Override
 			public void run() {
 
-				while (jaSmartyConnect.isLcdOk()) {
+				while (bLoopActive && jaSmartyConnect.isLcdOk()) {
+					System.out.println("LOOP");
 					try {
 						pageConverter.refreshCache();
 						jaSmartyConnect.refreshDisplay();
-
 						Thread.sleep(jaSmartyConnect.getRefreshRate());
-					} catch (InterruptedException e) {
 
+					} catch (InterruptedException e) {
 						LOGGER.warn(e);
 						break;
 					}
 				}
+				bLoopActive = false;
 				LOGGER.info("Refresh aus");
 			}
 		});

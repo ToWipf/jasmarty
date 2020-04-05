@@ -22,7 +22,7 @@ public class JaSmartyConnect {
 	private SerialPort sp;
 	private LcdCache lcache;
 	private LcdConfig lconf;
-	private boolean bLcdOk;
+	private boolean bLcdIsOk = false;
 
 	/**
 	 * @return
@@ -46,17 +46,17 @@ public class JaSmartyConnect {
 	}
 
 	/**
-	 * @param b
-	 */
-	public void setLcdOk(boolean b) {
-		this.bLcdOk = b;
-	}
-
-	/**
 	 * @return
 	 */
 	public boolean isLcdOk() {
-		return bLcdOk;
+		return bLcdIsOk;
+	}
+
+	/**
+	 * 
+	 */
+	public void resetLcdOK() {
+		bLcdIsOk = true;
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class JaSmartyConnect {
 			}
 
 			// Warten bis LCD bereit ist
-			bLcdOk = true;
+			bLcdIsOk = true;
 			Thread.sleep(5000);
 			clearScreen();
 			return true;
@@ -133,7 +133,7 @@ public class JaSmartyConnect {
 	 */
 	public Boolean close() {
 		// refresh ausschalten
-		bLcdOk = false;
+		bLcdIsOk = false;
 		return (sp.closePort());
 	}
 
@@ -201,7 +201,7 @@ public class JaSmartyConnect {
 			sp.getOutputStream().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			this.bLcdOk = false;
+			this.bLcdIsOk = false;
 			e.printStackTrace();
 		}
 	}

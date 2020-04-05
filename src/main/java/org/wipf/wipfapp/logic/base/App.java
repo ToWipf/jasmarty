@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 import org.wipf.wipfapp.datatypes.LcdConfig;
 import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
 import org.wipf.wipfapp.logic.jasmarty.PageVerwaltung;
+import org.wipf.wipfapp.logic.jasmarty.RefreshLoop;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -25,9 +26,11 @@ public class App {
 	JaSmartyConnect jaSmartyConnect;
 	@Inject
 	PageVerwaltung pageVerwaltung;
+	@Inject
+	RefreshLoop refreshLoop;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.048";
+	public static final String VERSION = "0.059";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -48,6 +51,9 @@ public class App {
 		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
 
+			pageVerwaltung.writeDefaultPage();
+			refreshLoop.start();
+
 		} else {
 			LOGGER.info("fail");
 		}
@@ -58,6 +64,7 @@ public class App {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("The application is stopping...");
+		refreshLoop.stop();
 		if (jaSmartyConnect.close()) {
 			LOGGER.info("stopped");
 		}

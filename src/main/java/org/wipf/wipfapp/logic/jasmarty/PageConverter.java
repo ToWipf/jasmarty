@@ -29,10 +29,20 @@ public class PageConverter {
 		this.selectedPage = page;
 	}
 
+	/**
+	 * 
+	 */
 	public void refreshCache() {
-		convertPage(selectedPage);
+		try {
+			convertPage(selectedPage);
+		} catch (Exception e) {
+			LOGGER.warn("refreshCache: " + e);
+		}
 	}
 
+	/**
+	 * @param page
+	 */
 	public void convertPage(LcdPage page) {
 		// TODO replace date, options ...
 		for (int nLine = 0; nLine < jaSmartyConnect.getHight(); nLine++) {
