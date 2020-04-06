@@ -91,12 +91,26 @@ public class PageConverter {
 				cOut[nSpacesPerSite + nZaehler] = c;
 				nZaehler++;
 			}
-
-			cOut[nSpacesPerSite] = ' ';
 			return cOut;
 
 		case '2':
 			// linksbündig
+			int nSpaces = (sMaxWidth - sLine.length());
+
+			for (char c : sLine.toCharArray()) {
+				cOut[nSpaces + nZaehler] = c;
+				nZaehler++;
+			}
+			return cOut;
+
+		case '3':
+			// weierlauf auf nächste Zeile
+		case '4':
+			// hat weiterlauf
+		case '5':
+			// auto scroll line
+		case '6':
+			// flash line?
 
 		default:
 			return ("Fail 1: " + nOption).toCharArray();

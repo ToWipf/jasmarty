@@ -37,7 +37,31 @@ public class PageVerwaltung {
 				"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options TEXT);");
 	}
 
-	public void writeDefaultPage() {
+	/**
+	 * 
+	 */
+	public void writeStartPage() {
+		try {
+			LcdPage p = new LcdPage();
+			p.setId(0);
+			p.setOptions("1102");
+			p.setLine(0, "jaSmarty");
+			p.setLine(1, "");
+			p.setLine(2, "by Wipf");
+			p.setLine(3, "V: " + App.VERSION);
+			writePage(p);
+			// TODO save this page to db
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void writeExitPage() {
 		try {
 			LcdPage p = new LcdPage();
 			p.setId(0);
@@ -53,7 +77,6 @@ public class PageVerwaltung {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**

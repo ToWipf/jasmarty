@@ -30,7 +30,7 @@ public class App {
 	RefreshLoop refreshLoop;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.059";
+	public static final String VERSION = "0.060";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -51,7 +51,7 @@ public class App {
 		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
 
-			pageVerwaltung.writeDefaultPage();
+			pageVerwaltung.writeStartPage();
 			refreshLoop.start();
 
 		} else {
@@ -64,6 +64,7 @@ public class App {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("The application is stopping...");
+		pageVerwaltung.writeExitPage(); // TODO reich die zeit?
 		refreshLoop.stop();
 		if (jaSmartyConnect.close()) {
 			LOGGER.info("stopped");
