@@ -28,9 +28,11 @@ public class App {
 	PageVerwaltung pageVerwaltung;
 	@Inject
 	RefreshLoop refreshLoop;
+	@Inject
+	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.060";
+	public static final String VERSION = "0.065";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -63,11 +65,12 @@ public class App {
 	 * @param ev
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
-		LOGGER.info("The application is stopping...");
-		pageVerwaltung.writeExitPage(); // TODO reich die zeit?
+		LOGGER.info("stoppe ...");
+		pageVerwaltung.writeExitPage();
+		wipf.sleep(jaSmartyConnect.getRefreshRate() + 50);
 		refreshLoop.stop();
 		if (jaSmartyConnect.close()) {
-			LOGGER.info("stopped");
+			LOGGER.info("gestoppt");
 		}
 	}
 

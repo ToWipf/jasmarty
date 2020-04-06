@@ -47,15 +47,6 @@ public class LcdPage {
 
 	/**
 	 * @param nLine
-	 * @return
-	 */
-	public String getLine(int nLine, int lengh) {
-		String sOut = getLine(nLine);
-		return sOut.substring(0, Math.min(sOut.length(), lengh));
-	}
-
-	/**
-	 * @param nLine
 	 * @param sLine
 	 */
 	public void setLine(int nLine, String sLine) {

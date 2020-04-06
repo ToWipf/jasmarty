@@ -44,7 +44,7 @@ public class PageVerwaltung {
 		try {
 			LcdPage p = new LcdPage();
 			p.setId(0);
-			p.setOptions("1102");
+			p.setOptions("1012");
 			p.setLine(0, "jaSmarty");
 			p.setLine(1, "");
 			p.setLine(2, "by Wipf");
@@ -65,11 +65,11 @@ public class PageVerwaltung {
 		try {
 			LcdPage p = new LcdPage();
 			p.setId(0);
-			p.setOptions("1102");
-			p.setLine(0, "jaSmarty");
-			p.setLine(1, "by Wipf");
+			p.setOptions("1001");
+			p.setLine(0, "Beendet");
+			p.setLine(1, "");
 			p.setLine(2, "");
-			p.setLine(3, "Version: " + App.VERSION);
+			p.setLine(3, "-wipf-");
 			writePage(p);
 			// TODO save this page to db
 

@@ -1,5 +1,8 @@
 package org.wipf.wipfapp.logic.jasmarty;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -57,19 +60,33 @@ public class PageConverter {
 			this.dynPageCache = page;
 		}
 
-		// TODO replace date, options ...
 		for (int nLine = 0; nLine < jaSmartyConnect.getHight(); nLine++) {
 
-			char[] sLiout = lineOptions(page.getLine(nLine, jaSmartyConnect.getWidth()), nLine);
+			String sL1 = varConverter(page.getLine(nLine));
+			String sL2 = sL1.substring(0, Math.min(sL1.length(), jaSmartyConnect.getWidth()));
+			char[] sLiout = lineOptions(sL2, nLine);
 
 			jaSmartyConnect.writeLineToCache(0, nLine, sLiout);
 		}
 	}
 
+	/**
+	 * @param sLine
+	 * @param nLine
+	 * @return
+	 */
 	private char[] lineOptions(String sLine, int nLine) {
+		int sMaxWidth = jaSmartyConnect.getWidth();
+		if (sLine.length() == sMaxWidth || sLine.length() == 0) {
+			return sLine.toCharArray();
+		}
+		String sOptions = selectedPage.getOptions();
+		if (sOptions == null || sOptions.length() != jaSmartyConnect.getHight()) {
+			return sLine.toCharArray();
+		}
+
 		char nOption = selectedPage.getOptions().charAt(nLine);
 
-		int sMaxWidth = jaSmartyConnect.getWidth();
 		int nZaehler = 0;
 		char[] cOut = new char[jaSmartyConnect.getWidth()];
 		// Pauschal mit Leerzeichen init
@@ -117,8 +134,46 @@ public class PageConverter {
 		}
 	}
 
-	private void replaceVaiables() {
+	/**
+	 * @param sLine
+	 * @return
+	 */
+	private String varConverter(String sLine) {
+		if (sLine.length() < 3) {
+			return sLine;
+		}
+		Integer nIndexStart = sLine.indexOf("$");
+		if (nIndexStart == -1) {
+			return sLine;
+		}
+		Integer nIndexMiddle = sLine.indexOf("(");
+		if (nIndexMiddle == -1) {
+			return sLine;
+		}
+		Integer nIndexEnd = sLine.indexOf(")");
+		if (nIndexEnd == -1) {
+			return sLine;
+		}
+		String sBefore = sLine.substring(0, nIndexStart);
+		String sCommand = sLine.substring(nIndexStart + 1, nIndexMiddle);
+		String sParameter = sLine.substring(nIndexMiddle + 1, nIndexEnd);
+		// String sAfter = sLine.substring(nIndexEnd, sLine.length());
 
+		switch (sCommand) {
+		case "time":
+			return sBefore + varTime(sParameter);
+
+		default:
+			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public static String varTime(String sVar) {
+		SimpleDateFormat time = new SimpleDateFormat(sVar);
+		return time.format(new Date());
 	}
 
 }

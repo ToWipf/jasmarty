@@ -119,7 +119,7 @@ public class JaSmartyConnect {
 			// Warten bis LCD bereit ist
 			bLcdIsOk = true;
 			Thread.sleep(5000);
-			clearScreen();
+			// clearScreen(); nicht nötig
 			return true;
 
 		} catch (Exception e) {
