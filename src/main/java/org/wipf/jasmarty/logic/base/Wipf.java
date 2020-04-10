@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.base;
+package org.wipf.jasmarty.logic.base;
 
 import javax.enterprise.context.RequestScoped;
 

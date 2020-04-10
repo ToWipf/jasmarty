@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

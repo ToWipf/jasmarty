@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.base;
+package org.wipf.jasmarty.logic.base;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

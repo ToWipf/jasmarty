@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.datatypes;
+package org.wipf.jasmarty.datatypes;
 
 import java.util.ArrayList;
 import java.util.List;

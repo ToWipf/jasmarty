@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.rest;
+package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
@@ -11,7 +11,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.wipf.wipfapp.logic.jasmarty.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 
 /**
  * @author wipf

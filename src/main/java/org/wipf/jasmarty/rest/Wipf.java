@@ -1,11 +1,11 @@
-package org.wipf.wipfapp.rest;
+package org.wipf.jasmarty.rest;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.wipf.wipfapp.logic.base.App;
+import org.wipf.jasmarty.logic.base.App;
 
 /**
  * @author wipf

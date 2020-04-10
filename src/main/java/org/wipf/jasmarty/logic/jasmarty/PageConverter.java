@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.wipfapp.datatypes.LcdPage;
+import org.wipf.jasmarty.datatypes.LcdPage;
 
 /**
  * @author wipf

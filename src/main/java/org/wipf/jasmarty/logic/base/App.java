@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.base;
+package org.wipf.jasmarty.logic.base;
 
 import java.sql.Statement;
 
@@ -7,10 +7,10 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.wipfapp.datatypes.LcdConfig;
-import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
-import org.wipf.wipfapp.logic.jasmarty.PageVerwaltung;
-import org.wipf.wipfapp.logic.jasmarty.RefreshLoop;
+import org.wipf.jasmarty.datatypes.LcdConfig;
+import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
+import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;

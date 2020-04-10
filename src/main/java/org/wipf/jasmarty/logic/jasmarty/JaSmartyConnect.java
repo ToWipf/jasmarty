@@ -1,12 +1,12 @@
-package org.wipf.wipfapp.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty;
 
 import java.io.IOException;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-import org.wipf.wipfapp.datatypes.LcdCache;
-import org.wipf.wipfapp.datatypes.LcdConfig;
+import org.wipf.jasmarty.datatypes.LcdCache;
+import org.wipf.jasmarty.datatypes.LcdConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
 

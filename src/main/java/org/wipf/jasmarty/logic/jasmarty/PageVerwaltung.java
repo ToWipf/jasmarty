@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +8,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.wipfapp.datatypes.LcdPage;
-import org.wipf.wipfapp.logic.base.App;
-import org.wipf.wipfapp.logic.base.MsqlLite;
+import org.wipf.jasmarty.datatypes.LcdPage;
+import org.wipf.jasmarty.logic.base.App;
+import org.wipf.jasmarty.logic.base.MsqlLite;
 
 /**
  * @author wipf

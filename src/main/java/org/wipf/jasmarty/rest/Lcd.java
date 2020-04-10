@@ -1,4 +1,4 @@
-package org.wipf.wipfapp.rest;
+package org.wipf.jasmarty.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -7,7 +7,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.wipf.wipfapp.logic.jasmarty.JaSmartyConnect;
+import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 
 /**
  * @author wipf
