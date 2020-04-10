@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html lang="de">
+<head>
+    <title>Essenswürfel</title>
+	<meta charset="utf-8">
+	<link type="text/css" id="dark-mode" rel="stylesheet" href="">
+    <style type="text/css" id="dark-mode-custom-style"></style>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <!--link rel="stylesheet" type="text/css" href="../style.css"-->
+    <link rel="stylesheet" type="text/css" href="essen.css">
+	<!--style>
+	body {
+		font-family: Verdana, Helvetica, sans-serif;
+	}
+	</style-->
+<script>
+function bauPhrasen() {
+    var Hauptgericht = ["Bauernhacktopf", "Bratwürste", "Camembert", "Fischstäbchen", "Fleischküchle", "Frühlingsrollen", 
+                        "Gemüsesuppe", "Gyros", "Käsenudeln","Kräuter Baguette", "Lasagne","Leberkäse","Nudelauflauf",
+                        "Pfannkuchen","Pizza","Putenfleisch","Schinkennudeln","Schnitzel ","Spagetti","Spiegelei",
+                        "Wienerle","Wienerle im Blätterteig","Pfannkuchen", "Apfelauflauf", "Ofenknödel", "Apfelstrudel",
+                        "Grießbrei","Zwetschenmännchen","Arme Ritter","Baggers","Käsespätzle","Leberknödelsuppe","Fischdose",
+                        "Nudeln"];
+    var Beilage = ["Bratkartoffeln", "Hackfleischsoße", "Kartoffelsalat", "Kloss", "Kroketten","Pommes","Spinat",
+                    "Vaniellesoße","Brot","Kraut","Reis"];
+    var Nachspeise = ["Eisschokolade", "Pudding", "Joghurt", "Kekse"];
+
+    var zufall1 = Math.floor(Math.random() * Hauptgericht.length);
+    var zufall2 = Math.floor(Math.random() * Beilage.length);
+    var zufall3 = Math.floor(Math.random() * Nachspeise.length);
+
+    var satz = 'Hauptgericht: ' + Hauptgericht[zufall1] + ' mit ' + Beilage[zufall2] + '<br><br> Als Nachspeiße: ' + Nachspeise[zufall3]+".";
+    var phrasenElement = document.getElementById("satz");
+    phrasenElement.innerHTML = satz;
+}
+window.onload = bauPhrasen;
+</script>
+</head>
+<body>
+    <h1>Heute gibt es:</h1>
+    <p id="satz"></p>
+
+	<th><a href="/webseite" class="button_std">Doch was anderes</a></th>
+ 	<!--FORM>
+	<INPUT TYPE="button" onClick="history.go(0)" VALUE="Doch was anderes">
+	</FORM-->
+</body>
+</html>

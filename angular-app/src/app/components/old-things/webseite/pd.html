@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <title>Phrasendrescher</title>
+<meta charset="utf-8">
+<style>
+body {
+    font-family: Verdana, Helvetica, sans-serif;
+}
+</style>
+<script>
+function bauPhrasen() {
+    var worte1 = ["Rund um die Uhr ", "Mehrstufige ", "10 km ", "B-to-B-", "Win-Win-"];
+    var worte2 = ["effiziente ", "wertschöpfende ", "orientierte ", "gerichtete "];
+    var worte3 = ["Entwicklung", "Lösung", "Trendwende", "Strategie", "Vision"];
+
+    var zufall1 = Math.floor(Math.random() * worte1.length);
+    var zufall2 = Math.floor(Math.random() * worte2.length);
+    var zufall3 = Math.floor(Math.random() * worte3.length);
+
+    var satz = worte1[zufall1] + worte2[zufall2] + worte3[zufall3]+".";
+    var phrasenElement = document.getElementById("satz");
+    phrasenElement.innerHTML = satz;
+}
+window.onload = bauPhrasen;
+</script>
+</head>
+<body>
+    <h1>Der Phrasendrescher sagt:</h1>
+    <p id="satz"></p>
+</body>
+</html>

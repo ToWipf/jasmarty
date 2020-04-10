@@ -1,0 +1,38 @@
+<ng-sidebar-container style="height: 100vh;">
+    <ng-sidebar [(opened)]="opened" position="left">
+        <div class="sidebar">
+            <ul class="menueli">
+                <li (click)="selectSite('default')">Hauptseite</li>
+                <li (click)="selectSite('todol')">ToDoListe</li>
+                <li (click)="selectSite('elcd')">E-Lcd</li>
+                <li (click)="selectSite('telegram')">Telegram</li>
+                <button (click)="toggleSidebar()">Schließen</button>
+            </ul>
+        </div>
+    </ng-sidebar>
+
+    <!-- Haupt Page content -->
+    <div ng-sidebar-content class="fullsite">
+
+        <button class="mainMenueButton" (click)="toggleSidebar()">Menü Öffnen</button>
+
+        <div class="maincontainer">
+            <ng-container *ngIf="selectedSite==='default'">
+                <h1>TODO</h1>
+                >
+                <!-- TODO: -->
+            </ng-container>
+            <ng-container *ngIf="selectedSite==='elcd'">
+                <app-elcd></app-elcd>
+            </ng-container>
+            <ng-container *ngIf="selectedSite==='todol'">
+                <app-todoli></app-todoli>
+            </ng-container>
+            <ng-container *ngIf="selectedSite==='telegram'">
+                <app-telegram></app-telegram>
+            </ng-container>
+        </div>
+
+        <app-footer class="myfooter"></app-footer>
+    </div>
+</ng-sidebar-container>

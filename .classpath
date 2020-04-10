@@ -45,15 +45,5 @@
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/wipf/.m2/repository/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre.jar" sourcepath="/home/wipf/.m2/repository/com/google/guava/guava/27.0.1-jre/guava-27.0.1-jre-sources.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
-			<attribute name="maven.groupId" value="com.google.guava"/>
-			<attribute name="maven.artifactId" value="guava"/>
-			<attribute name="maven.version" value="27.0.1-jre"/>
-			<attribute name="maven.scope" value="test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
