@@ -135,8 +135,29 @@ public class PageConverter {
 	 * @param sLine
 	 * @return
 	 */
-	private String varConverter(String sLine) {
+	private String varConverter(String sLine) { // TODO genaues Testen
 		// loop -> suche anzhal $
+		String sOut = sLine;
+
+		int lastIndex = 0;
+
+		while (lastIndex != -1) {
+			lastIndex = sLine.indexOf("$", lastIndex);
+
+			if (lastIndex != -1) {
+				lastIndex += 1;
+
+				sOut = lineReplace(sOut);
+			}
+		}
+		return sOut;
+	}
+
+	/**
+	 * @param sLine
+	 * @return
+	 */
+	private String lineReplace(String sLine) {
 
 		if (sLine.length() < 3) {
 			return sLine;
@@ -187,12 +208,17 @@ public class PageConverter {
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
-		int nProzent = (nVal * 100 / nMax);
-		int nStand = (nWidth * nProzent / 100);
+		int PW = nWidth;
+
+		int nProzent = (nVal * PW / nMax);
+		int nStand = (nWidth * nProzent / PW);
 		String sProzent = String.valueOf(nProzent);
 		int nKommastelle = sProzent.charAt(sProzent.length() - 1);
-		System.out.println("val:" + nVal + " max:" + nMax + " width:" + nWidth + " stand: " + nStand + " pozentKomma "
+
+		System.out.println("val:" + nVal + " max:" + nMax + " width:" + nWidth + "stand: " + nStand + " pozentKomma "
 				+ sProzent + " komma:" + nKommastelle);
+
+		System.out.println("Prozent " + nProzent + " komma " + nKommastelle);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -203,6 +229,7 @@ public class PageConverter {
 		switch (nKommastelle) {
 		case '0':
 			sb.append(JaSmartyConnect.BLOCK_0_3);
+			break;
 		case '1':
 		case '2':
 		case '3':
