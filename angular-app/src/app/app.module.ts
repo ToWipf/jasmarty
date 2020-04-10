@@ -1,13 +1,11 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
-import { ElcdComponent } from "./components/elcd/elcd.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FooterComponent } from "./components/footer/footer.component";
-import { TelegramComponent } from "./components/telegram/telegram.component";
+import { JasmartyComponent } from "./components/jasmarty/jasmarty.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from "ng-sidebar";
-import { ToDoLiComponent } from "./components/todolist/todol.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { MatNativeDateModule, MatRippleModule } from "@angular/material/core";
 import { A11yModule } from "@angular/cdk/a11y";
@@ -49,14 +47,14 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { JasmartyConfigComponent } from './components/jasmartyConfig/jasmartyConfig.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TelegramComponent,
+    JasmartyComponent,
     FooterComponent,
-    ElcdComponent,
-    ToDoLiComponent
+    JasmartyConfigComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export class FooterComponent implements OnInit {
    }
 
   private getVersion(): void {
-    this.http.get("http://192.168.2.10:8080/wipf/ver")
+    this.http.get("http://localhost:8080/wipf/ver")
       .subscribe((resdata: any) => {
         this.sVersion = resdata.ver.toString();
       });

@@ -2,11 +2,11 @@ import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: "app-telegram",
-  templateUrl: "./telegram.component.html",
-  styleUrls: ["./telegram.component.less"]
+  selector: "app-jasmartyConfig",
+  templateUrl: "./jasmartyConfig.component.html",
+  styleUrls: ["./jasmartyConfig.component.less"]
 })
-export class TelegramComponent {
+export class JasmartyConfigComponent {
   constructor(private http: HttpClient) {}
 
   public sText: string;
