@@ -135,18 +135,16 @@ public class PageConverter {
 	 * @param sLine
 	 * @return
 	 */
-	private String varConverter(String sLine) { // TODO genaues Testen
-		// loop -> suche anzhal $
+	private String varConverter(String sLine) {
+		// Alle Variablen finden
 		String sOut = sLine;
 
 		int lastIndex = 0;
-
 		while (lastIndex != -1) {
 			lastIndex = sLine.indexOf("$", lastIndex);
 
 			if (lastIndex != -1) {
 				lastIndex += 1;
-
 				sOut = lineReplace(sOut);
 			}
 		}
@@ -159,18 +157,19 @@ public class PageConverter {
 	 */
 	private String lineReplace(String sLine) {
 
+		// Sucht von hinen alle $var() und ersetzt diese
 		if (sLine.length() < 3) {
 			return sLine;
 		}
-		Integer nIndexStart = sLine.indexOf("$");
+		Integer nIndexStart = sLine.lastIndexOf('$');
 		if (nIndexStart == -1) {
 			return sLine;
 		}
-		Integer nIndexParaStart = sLine.indexOf("(");
+		Integer nIndexParaStart = sLine.lastIndexOf('(');
 		if (nIndexParaStart == -1) {
 			return sLine;
 		}
-		Integer nIndexEnd = sLine.indexOf(")");
+		Integer nIndexEnd = sLine.indexOf(')', nIndexParaStart);
 		if (nIndexEnd == -1) {
 			return sLine;
 		}
