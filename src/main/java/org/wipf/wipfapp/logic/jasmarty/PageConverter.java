@@ -12,8 +12,6 @@ import org.wipf.wipfapp.datatypes.LcdPage;
 /**
  * @author wipf
  * 
- *         Seite umbauen und Vaiablen anpassen
- *
  */
 @ApplicationScoped
 public class PageConverter {
@@ -94,8 +92,6 @@ public class PageConverter {
 			cOut[i] = ' ';
 		}
 
-		// if sLine = len 20 -> tue nichts TODO
-
 		switch (nOption) {
 		case '0':
 			// rechtsbündig
@@ -139,6 +135,8 @@ public class PageConverter {
 	 * @return
 	 */
 	private String varConverter(String sLine) {
+		// loop -> suche anzhal $
+
 		if (sLine.length() < 3) {
 			return sLine;
 		}
@@ -146,22 +144,25 @@ public class PageConverter {
 		if (nIndexStart == -1) {
 			return sLine;
 		}
-		Integer nIndexMiddle = sLine.indexOf("(");
-		if (nIndexMiddle == -1) {
+		Integer nIndexParaStart = sLine.indexOf("(");
+		if (nIndexParaStart == -1) {
 			return sLine;
 		}
 		Integer nIndexEnd = sLine.indexOf(")");
 		if (nIndexEnd == -1) {
 			return sLine;
 		}
+
 		String sBefore = sLine.substring(0, nIndexStart);
-		String sCommand = sLine.substring(nIndexStart + 1, nIndexMiddle);
-		String sParameter = sLine.substring(nIndexMiddle + 1, nIndexEnd);
-		// String sAfter = sLine.substring(nIndexEnd, sLine.length());
+		String sCommand = sLine.substring(nIndexStart + 1, nIndexParaStart);
+		String sParameter = sLine.substring(nIndexParaStart + 1, nIndexEnd);
+		String sAfter = sLine.substring(nIndexEnd + 1, sLine.length());
 
 		switch (sCommand) {
 		case "time":
-			return sBefore + varTime(sParameter);
+			return sBefore + varTime(sParameter) + sAfter;
+		case "bar":
+			return sBefore + varBar(sParameter) + sAfter;
 
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
@@ -171,9 +172,45 @@ public class PageConverter {
 	/**
 	 * @return
 	 */
-	public static String varTime(String sVar) {
-		SimpleDateFormat time = new SimpleDateFormat(sVar);
+	private String varTime(String sPara) {
+		SimpleDateFormat time = new SimpleDateFormat(sPara);
 		return time.format(new Date());
+	}
+
+	/**
+	 * @param sPara
+	 * @return
+	 */
+	private String varBar(String sPara) {
+		int nVal = Integer.valueOf(sPara.substring(0, sPara.indexOf(',')));
+		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
+		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
+
+		int nStand = (nVal * nMax / nWidth);
+		System.out.println(nStand + " " + nVal + " " + nMax + " " + nWidth);
+		System.out.println("a" + nVal + nMax + nWidth);
+		System.out.println("b" + nVal * nMax * nWidth);
+		System.out.println("c" + nVal / nMax * nWidth);
+		System.out.println("d" + nVal * nMax / nWidth);
+
+		StringBuilder sb = new StringBuilder();
+		sb.append(repeat(JaSmartyConnect.BLOCK_3_3, nStand));
+
+		// TODO komma auswerten
+		//
+		sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nWidth - nStand));
+
+		System.out.println(nStand + sb.toString());
+		return sb.toString();
+	}
+
+	/**
+	 * @param c
+	 * @param times
+	 * @return
+	 */
+	private String repeat(char c, int times) {
+		return new String(new char[times]).replace('\0', c);
 	}
 
 }

@@ -4,6 +4,10 @@ import javax.enterprise.context.RequestScoped;
 
 @RequestScoped
 public class Wipf {
+
+	/**
+	 * @param ms
+	 */
 	public void sleep(int ms) {
 		try {
 			Thread.sleep(ms);
