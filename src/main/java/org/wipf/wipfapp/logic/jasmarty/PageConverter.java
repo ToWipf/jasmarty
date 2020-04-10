@@ -187,10 +187,12 @@ public class PageConverter {
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
-		int fStandx10 = (nVal * nMax / nWidth) * 10;
-		int nStand = (fStandx10 / 10);
-		int nKommastelle = String.valueOf(fStandx10).charAt(1);// TODO pos
-		System.out.println(nKommastelle);
+		int nProzent = (nVal * 100 / nMax);
+		int nStand = (nWidth * nProzent / 100);
+		String sProzent = String.valueOf(nProzent);
+		int nKommastelle = sProzent.charAt(sProzent.length() - 1);
+		System.out.println("val:" + nVal + " max:" + nMax + " width:" + nWidth + " stand: " + nStand + " pozentKomma "
+				+ sProzent + " komma:" + nKommastelle);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -199,26 +201,29 @@ public class PageConverter {
 
 		// komma auswerten
 		switch (nKommastelle) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-			sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nStand));
+		case '0':
+			sb.append(JaSmartyConnect.BLOCK_0_3);
+		case '1':
+		case '2':
+		case '3':
+			sb.append(JaSmartyConnect.BLOCK_1_3);
 			break;
-		case 4:
-		case 5:
-		case 6:
-			sb.append(repeat(JaSmartyConnect.BLOCK_1_3, nStand));
+		case '4':
+		case '5':
+		case '6':
+			sb.append(JaSmartyConnect.BLOCK_2_3);
 			break;
-		case 7:
-		case 8:
-		case 9:
-			sb.append(repeat(JaSmartyConnect.BLOCK_2_3, nStand));
+		case '7':
+		case '8':
+		case '9':
+			sb.append(JaSmartyConnect.BLOCK_3_3);
 			break;
 		}
 
 		// Leere Blöcke
 		sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nWidth - nStand - 1));
+
+		System.out.println(sb.toString());
 
 		return sb.toString();
 	}

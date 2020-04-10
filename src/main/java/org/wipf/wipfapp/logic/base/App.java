@@ -32,7 +32,7 @@ public class App {
 	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.070";
+	public static final String VERSION = "0.071";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
