@@ -50,7 +50,7 @@ public class Lcd {
 	}
 
 	@GET
-	@Path("/chIst")
+	@Path("/ist")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String chIst() {
 		return jaSmartyConnect.getCachIstAsString();
@@ -58,7 +58,7 @@ public class Lcd {
 	}
 
 	@GET
-	@Path("/chSoll")
+	@Path("/soll")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String chSoll() {
 		return jaSmartyConnect.getCachSollAsString();

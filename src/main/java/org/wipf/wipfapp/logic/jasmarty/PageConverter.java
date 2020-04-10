@@ -40,7 +40,8 @@ public class PageConverter {
 		try {
 			convertPage(selectedPage);
 		} catch (Exception e) {
-			LOGGER.warn("refreshCache: " + e);
+			LOGGER.warn("refreshCache: ");
+			e.printStackTrace();
 		}
 	}
 
@@ -186,21 +187,39 @@ public class PageConverter {
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
-		int nStand = (nVal * nMax / nWidth);
-		System.out.println(nStand + " " + nVal + " " + nMax + " " + nWidth);
-		System.out.println("a" + nVal + nMax + nWidth);
-		System.out.println("b" + nVal * nMax * nWidth);
-		System.out.println("c" + nVal / nMax * nWidth);
-		System.out.println("d" + nVal * nMax / nWidth);
+		int fStandx10 = (nVal * nMax / nWidth) * 10;
+		int nStand = (fStandx10 / 10);
+		int nKommastelle = String.valueOf(fStandx10).charAt(1);// TODO pos
+		System.out.println(nKommastelle);
 
 		StringBuilder sb = new StringBuilder();
-		sb.append(repeat(JaSmartyConnect.BLOCK_3_3, nStand));
 
-		// TODO komma auswerten
-		//
-		sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nWidth - nStand));
+		// Gefüllte Blöcke:
+		sb.append(repeat(JaSmartyConnect.BLOCK_3_3, nStand - 1));
 
-		System.out.println(nStand + sb.toString());
+		// komma auswerten
+		switch (nKommastelle) {
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+			sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nStand));
+			break;
+		case 4:
+		case 5:
+		case 6:
+			sb.append(repeat(JaSmartyConnect.BLOCK_1_3, nStand));
+			break;
+		case 7:
+		case 8:
+		case 9:
+			sb.append(repeat(JaSmartyConnect.BLOCK_2_3, nStand));
+			break;
+		}
+
+		// Leere Blöcke
+		sb.append(repeat(JaSmartyConnect.BLOCK_0_3, nWidth - nStand - 1));
+
 		return sb.toString();
 	}
 
@@ -210,6 +229,9 @@ public class PageConverter {
 	 * @return
 	 */
 	private String repeat(char c, int times) {
+		if (times < 1) {
+			return "";
+		}
 		return new String(new char[times]).replace('\0', c);
 	}
 
