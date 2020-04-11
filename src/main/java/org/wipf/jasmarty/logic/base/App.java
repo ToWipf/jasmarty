@@ -48,7 +48,7 @@ public class App {
 
 		LcdConfig lconf = new LcdConfig();
 		lconf.setPort("COM10");
-		lconf.setHight(4);
+		lconf.setHeight(4);
 		lconf.setWidth(20);
 		jaSmartyConnect.setConfig(lconf);
 

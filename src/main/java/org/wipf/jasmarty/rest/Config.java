@@ -6,6 +6,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
@@ -29,8 +30,8 @@ public class Config {
 	@PUT
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getconfig(String jnRoot) {
-		return serialConfig.setConfig(jnRoot);
+	public Response getconfig(String jnRoot) {
+		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 
 	}
 

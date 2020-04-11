@@ -6,26 +6,26 @@ package org.wipf.jasmarty.datatypes;
  */
 public class LcdCache {
 
-	private int nHight;
-	private int nWidh;
+	private int nHeight;
+	private int nWidth;
 	private char[][] cacheIst;
 	private char[][] cacheSoll;
 
 	/**
-	 * @param nWidh
-	 * @param nHight
+	 * @param nWidth
+	 * @param nHeight
 	 */
-	public LcdCache(int nWidh, int nHight) {
-		this.nWidh = nWidh;
-		this.nHight = nHight;
+	public LcdCache(int nWidth, int nHeight) {
+		this.nWidth = nWidth;
+		this.nHeight = nHeight;
 
-		// this.nWidh = nWidh;
-		// this.nHight = nHight;
-		this.cacheIst = new char[nWidh][nHight];
-		this.cacheSoll = new char[nWidh][nHight];
+		// this.nWidth = nWidth;
+		// this.nHeight = nHeight;
+		this.cacheIst = new char[nWidth][nHeight];
+		this.cacheSoll = new char[nWidth][nHeight];
 
-		for (int x = 0; x < nWidh; x++) {
-			for (int y = 0; y < nHight; y++) {
+		for (int x = 0; x < nWidth; x++) {
+			for (int y = 0; y < nHeight; y++) {
 				this.cacheIst[x][y] = ' ';
 				this.cacheSoll[x][y] = ' ';
 			}
@@ -35,15 +35,15 @@ public class LcdCache {
 	/**
 	 * @return
 	 */
-	public int getWidh() {
-		return nWidh;
+	public int getWidth() {
+		return nWidth;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getHight() {
-		return nHight;
+	public int getHeight() {
+		return nHeight;
 	}
 
 	/**
@@ -127,10 +127,10 @@ public class LcdCache {
 	 */
 	private String arrToString(char[][] arr) {
 		StringBuilder sb = new StringBuilder();
-		for (int y = 0; y < nHight; y++) {
+		for (int y = 0; y < nHeight; y++) {
 			sb.append("\n");
 			sb.append("Line: " + y + ": ");
-			for (int x = 0; x < nWidh; x++) {
+			for (int x = 0; x < nWidth; x++) {
 				sb.append(arr[x][y]);
 			}
 		}
@@ -141,8 +141,8 @@ public class LcdCache {
 	 * Leert cache Ist und soll
 	 */
 	public void clearCacheFull() {
-		for (int x = 0; x < nWidh; x++) {
-			for (int y = 0; y < nHight; y++) {
+		for (int x = 0; x < nWidth; x++) {
+			for (int y = 0; y < nHeight; y++) {
 				this.cacheSoll[x][y] = ' ';
 				this.cacheIst[x][y] = ' ';
 			}

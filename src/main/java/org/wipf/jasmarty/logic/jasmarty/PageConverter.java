@@ -59,7 +59,7 @@ public class PageConverter {
 			this.dynPageCache = page;
 		}
 
-		for (int nLine = 0; nLine < jaSmartyConnect.getHight(); nLine++) {
+		for (int nLine = 0; nLine < jaSmartyConnect.getHeight(); nLine++) {
 
 			String sL1 = varConverter(page.getLine(nLine));
 			String sL2 = sL1.substring(0, Math.min(sL1.length(), jaSmartyConnect.getWidth()));
@@ -80,7 +80,7 @@ public class PageConverter {
 			return sLine.toCharArray();
 		}
 		String sOptions = selectedPage.getOptions();
-		if (sOptions == null || sOptions.length() != jaSmartyConnect.getHight()) {
+		if (sOptions == null || sOptions.length() != jaSmartyConnect.getHeight()) {
 			return sLine.toCharArray();
 		}
 

@@ -30,13 +30,6 @@ public class JaSmartyConnect {
 	private boolean bLcdIsOk = false;
 
 	/**
-	 * @return
-	 */
-	public LcdConfig getConfig() {
-		return lconf;
-	}
-
-	/**
 	 * @param lconfig
 	 */
 	public void setConfig(LcdConfig lconfig) {
@@ -46,8 +39,8 @@ public class JaSmartyConnect {
 	/**
 	 * @return
 	 */
-	public int getHight() {
-		return lconf.getHight();
+	public int getHeight() {
+		return lconf.getHeight();
 	}
 
 	/**
@@ -116,7 +109,7 @@ public class JaSmartyConnect {
 	public Boolean startPort() {
 		try {
 			// Cache vorbereiten
-			lcache = new LcdCache(lconf.getWidth(), lconf.getHight());
+			lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
 
 			// LCD Connect
 			sp = SerialPort.getCommPort(lconf.getPort());
@@ -163,12 +156,12 @@ public class JaSmartyConnect {
 	 */
 	public void refreshDisplay() {
 		if (lcache.hasChanges()) {
-			for (int y = 0; y < lcache.getHight(); y++) {
-				for (int x = 0; x < lcache.getWidh(); x++) {
+			for (int y = 0; y < lcache.getHeight(); y++) {
+				for (int x = 0; x < lcache.getWidth(); x++) {
 					if (lcache.getCacheIst(x, y) != lcache.getCacheSoll(x, y)) {
 						// Schreibe Zeile immer zu ende
 						setCursor(x, y);
-						for (int writePosX = x; writePosX < lcache.getWidh(); writePosX++) {
+						for (int writePosX = x; writePosX < lcache.getWidth(); writePosX++) {
 							char c = lcache.getCacheSoll(writePosX, y);
 							writeChar(c);
 							lcache.setToCacheIst(writePosX, y, c);

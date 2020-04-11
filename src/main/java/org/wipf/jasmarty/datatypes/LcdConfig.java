@@ -12,10 +12,44 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LcdConfig {
 
 	private String sPort;
-	private Integer nHight;
+	private Integer nheight;
 	private Integer nWidth;
 	private Integer nBaudRate = 9600;
 	private int nRefreshRate = 200;
+
+	/**
+	 * @return
+	 */
+	public String toJson() {
+		JSONObject jo = new JSONObject();
+		jo.put("port", sPort);
+		jo.put("width", nWidth);
+		jo.put("height", nheight);
+		jo.put("baudrate", nBaudRate);
+		jo.put("refreshrate", nRefreshRate);
+		return jo.toString();
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public LcdConfig setByJson(String sJson) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jn;
+			jn = mapper.readTree(sJson);
+
+			this.sPort = jn.get("port").asText();
+			this.nWidth = jn.get("width").asInt();
+			this.nheight = jn.get("height").asInt();
+			this.nBaudRate = jn.get("baudrate").asInt();
+			this.nRefreshRate = jn.get("refreshrate").asInt();
+			return this;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	public String getPort() {
 		return sPort;
@@ -25,12 +59,12 @@ public class LcdConfig {
 		this.sPort = sPort;
 	}
 
-	public Integer getHight() {
-		return nHight;
+	public Integer getHeight() {
+		return nheight;
 	}
 
-	public void setHight(Integer nHight) {
-		this.nHight = nHight;
+	public void setHeight(Integer nheight) {
+		this.nheight = nheight;
 	}
 
 	public Integer getWidth() {
@@ -55,41 +89,6 @@ public class LcdConfig {
 
 	public void setRefreshRate(int nRefreshRate) {
 		this.nRefreshRate = nRefreshRate;
-	}
-
-	/**
-	 * @return
-	 */
-	public String toJson() {
-		JSONObject jo = new JSONObject();
-		jo.put("port", sPort);
-		jo.put("width", nWidth);
-		jo.put("hight", nHight);
-		jo.put("baudrate", nBaudRate);
-		jo.put("refreshrate", nRefreshRate);
-		return jo.toString();
-	}
-
-	/**
-	 * @param sJson
-	 * @return ok
-	 */
-	public boolean setByJson(String sJson) {
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sJson);
-
-			this.sPort = jn.get("port").asText();
-			this.nWidth = jn.get("width").asInt();
-			this.nHight = jn.get("hight").asInt();
-			this.nBaudRate = jn.get("baudrate").asInt();
-			this.nRefreshRate = jn.get("refreshrate").asInt();
-			return true;
-
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 }
