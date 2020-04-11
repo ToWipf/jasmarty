@@ -63,8 +63,15 @@ export class JasmartyComponent implements OnInit {
   private getSite(): void {
     this.http.get("http://localhost:8080/pages/get/" + this.selectedSite).subscribe((resdata: japage) => {
       this.japage = resdata;
-      this.lines = this.japage.lines.substring(1, this.japage.lines.length - 1).split("\n");
+      this.lines = this.japage.lines.substring(0, this.japage.lines.length).split("\n");
     });
-    //this.lines = []; load sizes
+  }
+  
+  public newPage() {
+    this.lines = [];
+    this.japage = {};
+    for (let index = 0; index < this.jaconfig.height; index++) {
+      this.lines.push("");
+    }
   }
 }

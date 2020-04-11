@@ -1,5 +1,5 @@
 <div class="jalist">
-    <perfect-scrollbar style="max-width: 600px; max-height: 400px;">
+    <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
 
         <div>
 
@@ -7,6 +7,7 @@
             <button type="button" class="btn btn-primary inbutton" (click)="save()">Save</button>
             <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button> {{selectedSite}}
         </div>
+        <button type="button" class="btn btn-primary inbutton" (click)="newPage()">NewPage</button>
 
         <div>
             <ng-container *ngIf="japage">
