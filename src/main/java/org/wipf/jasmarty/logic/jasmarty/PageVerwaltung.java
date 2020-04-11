@@ -128,7 +128,7 @@ public class PageVerwaltung {
 			page.setOptions(rs.getString("options"));
 			return page;
 		} catch (Exception e) {
-			LOGGER.warn("Page not found: " + nPid);
+			// LOGGER.warn("Page not found: " + nPid);
 			return new LcdPage();
 		}
 	}

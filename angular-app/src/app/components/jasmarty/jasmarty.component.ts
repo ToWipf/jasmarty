@@ -83,13 +83,19 @@ export class JasmartyComponent implements OnInit {
     this.lines = [];
     this.japage = {};
     this.japage.id = this.selectedPage;
-    this.japage.options = "00000000"; //TODO: automatisch ermitteln
+    this.japage.options = "";
     for (let index = 0; index < this.jaconfig.height; index++) {
+      this.japage.options = this.japage.options + "0"; // Option 0 automatisch wählen
       this.lines.push("");
     }
   }
 
   public trackByIndex(index: number, obj: any): any {
     return index;
+  }
+
+  public setOptionForLine(line: number, option: number){
+    const opt = this.japage.options.substr(0, line) + option + this.japage.options.substr(line + this.japage.options.length);
+    this.japage.options = opt;
   }
 }

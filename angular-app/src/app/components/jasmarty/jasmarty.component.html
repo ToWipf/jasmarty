@@ -17,6 +17,7 @@
                 <label for="formGroupExampleInput2">Zeilen</label>
                 <div *ngFor="let line of lines; let i = index; trackBy:trackByIndex;">
                     <input type="string" class="form-control inbutton" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
+                    <input type="checkbox" ng-model="options">
                 </div>
 
                 <div>
