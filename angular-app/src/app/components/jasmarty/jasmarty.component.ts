@@ -14,7 +14,7 @@ export class JasmartyComponent implements OnInit {
   public sStatus: string;
   public jaconfig: jaconfig = {};
   public japage: japage = {};
-  public selectedSite: number = 0;
+  public selectedPage: number = 0;
   public lines: string[] = [];
 
   ngOnInit() {
@@ -28,13 +28,13 @@ export class JasmartyComponent implements OnInit {
   }
 
   public next(): void {
-    this.selectedSite++;
+    this.selectedPage++;
     this.getSite();
   }
 
   public last(): void {
-    if (this.selectedSite > 0) {
-      this.selectedSite--;
+    if (this.selectedPage > 0) {
+      this.selectedPage--;
     }
     this.getSite();
   }
@@ -61,15 +61,23 @@ export class JasmartyComponent implements OnInit {
   }
 
   private getSite(): void {
-    this.http.get("http://localhost:8080/pages/get/" + this.selectedSite).subscribe((resdata: japage) => {
+    this.http.get("http://localhost:8080/pages/get/" + this.selectedPage).subscribe((resdata: japage) => {
       this.japage = resdata;
       this.lines = this.japage.lines.substring(0, this.japage.lines.length).split("\n");
     });
   }
-  
+
+  public selectPage(): void {
+    this.http.get("http://localhost:8080/pages/select/" + this.selectedPage).subscribe((resdata) => {
+      console.log(resdata);
+    });
+  }
+
   public newPage() {
     this.lines = [];
     this.japage = {};
+    this.japage.id = this.selectedPage;
+    this.japage.options = "00000000"; //TODO: automatisch ermitteln
     for (let index = 0; index < this.jaconfig.height; index++) {
       this.lines.push("");
     }

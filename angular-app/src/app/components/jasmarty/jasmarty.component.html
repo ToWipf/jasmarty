@@ -2,12 +2,12 @@
     <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
 
         <div>
-
             <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
             <button type="button" class="btn btn-primary inbutton" (click)="save()">Save</button>
-            <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button> {{selectedSite}}
+            <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button> {{selectedPage}}
         </div>
         <button type="button" class="btn btn-primary inbutton" (click)="newPage()">NewPage</button>
+        <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">SelectPage</button>
 
         <div>
             <ng-container *ngIf="japage">
@@ -19,7 +19,7 @@
 
                 <label for="formGroupExampleInput2">Zeilen</label>
                 <div *ngFor="let line of lines; let i = index">
-                    <input type="string" class="form-control inbutton" [(ngModel)]="lines[i]" placeholder="Bitte eintragen">
+                    <input type="string" class="form-control inbutton" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
                 </div>
 
                 <div>

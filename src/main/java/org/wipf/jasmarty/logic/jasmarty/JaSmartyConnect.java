@@ -117,7 +117,7 @@ public class JaSmartyConnect {
 			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
 
 			if (!sp.openPort()) {
-				LOGGER.warn("LCD Port nicht gefunden");
+				LOGGER.warn("LCD Port " + lconf.getPort() + " nicht gefunden");
 				return false;
 			}
 

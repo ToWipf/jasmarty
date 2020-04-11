@@ -39,7 +39,6 @@ public class SerialConfig {
 			conf.setBaudRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'baudrate';").getInt("val"));
 			return conf;
 		} catch (Exception e) {
-			e.printStackTrace();
 			LOGGER.warn("Config nicht gefunden > default Config erstellen");
 			return defaultConfig();
 		}

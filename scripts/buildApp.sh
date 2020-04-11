@@ -5,7 +5,7 @@ if [ $? -eq 0 ];
 then
   echo 'build app OK'
 else 
-  exit 0 
+  exit 1
 fi
 
 cd ..
@@ -16,5 +16,5 @@ if [ $? -eq 0 ];
 then
 	echo "move OK"
 else
-	exit 0 
+	exit 1
 fi

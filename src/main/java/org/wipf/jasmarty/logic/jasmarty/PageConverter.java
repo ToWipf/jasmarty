@@ -28,8 +28,9 @@ public class PageConverter {
 	 * @param page
 	 */
 	public void selectToNewPage(LcdPage page) {
-		// TODO Platzhalter ersetzen
-		jaSmartyConnect.clearScreen();
+		if (jaSmartyConnect.isLcdOk()) {
+			jaSmartyConnect.clearScreen();
+		}
 		this.selectedPage = page;
 	}
 
