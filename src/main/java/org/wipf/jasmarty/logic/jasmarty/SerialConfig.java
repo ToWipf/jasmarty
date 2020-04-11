@@ -88,7 +88,6 @@ public class SerialConfig {
 	 * @return
 	 */
 	public boolean setConfig(String jnRoot) {
-		System.out.println(jnRoot);
 		return setConfig(new LcdConfig().setByJson(jnRoot));
 	}
 

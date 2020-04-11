@@ -1,1 +1,39 @@
-main
+<div class="jalist">
+    <perfect-scrollbar style="max-width: 600px; max-height: 400px;">
+
+        <div>
+
+            <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="save()">Save</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button> {{selectedSite}}
+        </div>
+
+        <div>
+            <ng-container *ngIf="japage">
+                Seite {{japage.id}}
+                <div>
+                    <label for="formGroupExampleInput2">Name</label>
+                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
+                </div>
+
+                <!-- <table class="table table-striped">
+                    <tbody *ngFor="let line of toarry">
+                        {{line}}
+                    </tbody>
+                </table> -->
+
+                <div>
+                    <label for="formGroupExampleInput2">line</label>
+                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.lines" placeholder="Bitte eintragen">
+                </div>
+
+                <div>
+                    <label for="formGroupExampleInput2">options</label>
+                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
+                </div>
+
+            </ng-container>
+        </div>
+
+    </perfect-scrollbar>
+</div>

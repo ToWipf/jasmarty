@@ -5,3 +5,11 @@ export interface jaconfig {
   refreshrate?: number;
   baudrate?: number;
 }
+
+export interface japage {
+    id?: number;
+    name?: string;
+    options?: string;
+    lines?: string;
+  }
+  

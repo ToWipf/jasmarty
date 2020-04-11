@@ -123,10 +123,11 @@ public class PageVerwaltung {
 			page.setId(rs.getInt("pid"));
 			page.setName(rs.getString("name"));
 			page.setStringToPage(rs.getString("page"));
+			page.setOptions(rs.getString("options"));
 			return page;
 		} catch (Exception e) {
 			LOGGER.warn("Page not found: " + nPid);
-			return null;
+			return new LcdPage();
 		}
 	}
 

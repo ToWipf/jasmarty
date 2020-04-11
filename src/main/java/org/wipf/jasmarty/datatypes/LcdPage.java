@@ -3,6 +3,8 @@ package org.wipf.jasmarty.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author wipf Achtung ARR x und y sind vertauscht!
  */
@@ -17,47 +19,11 @@ public class LcdPage {
 		this.saLines = new ArrayList<String>();
 	}
 
-	public int getId() {
-		return nId;
-	}
-
-	public void setId(int nId) {
-		this.nId = nId;
-	}
-
-	public String getName() {
-		return sName;
-	}
-
-	public void setName(String sPagename) {
-		this.sName = sPagename;
-	}
-
-	/**
-	 * @param nLine
-	 * @return
-	 */
-	public String getLine(int nLine) {
-		try {
-			return this.saLines.get(nLine);
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
-	/**
-	 * @param nLine
-	 * @param sLine
-	 */
-	public void setLine(int nLine, String sLine) {
-		this.saLines.add(nLine, sLine);
-	}
-
 //	public void setLine(int nLine, String sLine, boolean bMittig, int nLength) {
-//		int spaces = nLength-sLine.length();
-//		
-//		this.saLines.add(nLine, sLine);
-//	}
+//	int spaces = nLength-sLine.length();
+//	
+//	this.saLines.add(nLine, sLine);
+//}
 
 	/**
 	 * @return
@@ -85,6 +51,34 @@ public class LcdPage {
 		}
 	}
 
+	/**
+	 * @return
+	 */
+	public String toJson() {
+		JSONObject jo = new JSONObject();
+		jo.put("name", sName);
+		jo.put("id", nId);
+		jo.put("options", sOptions);
+		jo.put("lines", getPageAsDBString());
+		return jo.toString();
+	}
+
+	public int getId() {
+		return nId;
+	}
+
+	public void setId(int nId) {
+		this.nId = nId;
+	}
+
+	public String getName() {
+		return sName;
+	}
+
+	public void setName(String sPagename) {
+		this.sName = sPagename;
+	}
+
 	public String getOptions() {
 		return sOptions;
 	}
@@ -92,4 +86,25 @@ public class LcdPage {
 	public void setOptions(String sOptions) {
 		this.sOptions = sOptions;
 	}
+
+	/**
+	 * @param nLine
+	 * @return
+	 */
+	public String getLine(int nLine) {
+		try {
+			return this.saLines.get(nLine);
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	/**
+	 * @param nLine
+	 * @param sLine
+	 */
+	public void setLine(int nLine, String sLine) {
+		this.saLines.add(nLine, sLine);
+	}
+
 }

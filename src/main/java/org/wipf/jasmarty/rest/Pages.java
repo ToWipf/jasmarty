@@ -57,6 +57,14 @@ public class Pages {
 	@Path("/get/{pid}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getPage(@PathParam("pid") int nPid) {
+		return pageVerwaltung.getPageFromDB(nPid).toJson();
+	}
+
+	@GET
+	@PUT
+	@Path("/getRaw/{pid}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String getPageRaw(@PathParam("pid") int nPid) {
 		return pageVerwaltung.getPageFromDB(nPid).getPageAsDBString();
 	}
 

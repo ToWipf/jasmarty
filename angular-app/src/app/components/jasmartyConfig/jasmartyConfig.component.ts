@@ -24,8 +24,13 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public save(): void {
-    this.http.post("http://localhost:8080/config/set", JSON.stringify(this.jaconfig) ).subscribe((resdata) => {
-      console.log(resdata);
+    this.http.post("http://localhost:8080/config/set", JSON.stringify(this.jaconfig) ).subscribe((resdata: any) => {
+      if(resdata.save){
+        console.log("saved");
+      }else{
+        //TODO: Meldung Fehler
+        console.log("fehler");
+      }
     });
   }
 }

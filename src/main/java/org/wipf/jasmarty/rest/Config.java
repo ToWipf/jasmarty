@@ -34,7 +34,6 @@ public class Config {
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setconfig(String jnRoot) {
-		System.out.println(jnRoot);
 		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 
 	}
