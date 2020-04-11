@@ -199,7 +199,7 @@ public class JaSmartyConnect {
 	 * @return
 	 */
 	private void writeAscii(Integer n) {
-		System.out.println("write: " + n);
+		// System.out.println("write: " + n);
 
 		try {
 			sp.getOutputStream().write(n.byteValue());
