@@ -48,13 +48,13 @@ public class App {
 		jaSmartyConnect.setConfig(serialConfig.getConfig());
 
 		if (jaSmartyConnect.startPort()) {
-			LOGGER.info("gestartet");
+			LOGGER.info("Port geöffnet");
 
 			pageVerwaltung.writeStartPage();
 			refreshLoop.start();
 
 		} else {
-			LOGGER.info("fail");
+			LOGGER.warn("Port nicht geöffnet!");
 		}
 	}
 
@@ -63,11 +63,13 @@ public class App {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("stoppe ...");
-		pageVerwaltung.writeExitPage();
-		wipf.sleep(jaSmartyConnect.getRefreshRate() + 50);
-		refreshLoop.stop();
-		if (jaSmartyConnect.close()) {
-			LOGGER.info("gestoppt");
+		if (jaSmartyConnect.isLcdOk()) {
+			pageVerwaltung.writeExitPage();
+			wipf.sleep(jaSmartyConnect.getRefreshRate() + 50);
+			refreshLoop.stop();
+			if (jaSmartyConnect.close()) {
+				LOGGER.info("Port geschlossen");
+			}
 		}
 	}
 

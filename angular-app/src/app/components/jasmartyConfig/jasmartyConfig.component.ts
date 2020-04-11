@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { jaconfig } from "src/app/datatypes";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { serviceRest } from "src/app/service/serviceRest";
+import { jaconfig } from 'src/app/datatypes';
 
 @Component({
   selector: "app-jasmartyConfig",
@@ -17,18 +17,15 @@ export class JasmartyConfigComponent implements OnInit {
     this.load();
   }
 
-  public save(): void {
-    console.log(this.jaconfig);
-    this.http.post("http://localhost:8080/config/set", this.jaconfig).subscribe((resdata) => {
-      console.log(resdata);
+  public load(): void {
+    this.http.get("http://localhost:8080/config/get").subscribe((resdata) => {
+      this.jaconfig = resdata;
     });
   }
 
-  public load(): void {
-    console.log(this.jaconfig);
-    this.http.get("http://localhost:8080/config/get").subscribe((resdata) => {
+  public save(): void {
+    this.http.post("http://localhost:8080/config/set", JSON.stringify(this.jaconfig) ).subscribe((resdata) => {
       console.log(resdata);
-      this.jaconfig = resdata;
     });
   }
 }

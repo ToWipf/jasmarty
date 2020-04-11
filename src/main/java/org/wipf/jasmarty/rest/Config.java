@@ -2,6 +2,8 @@ package org.wipf.jasmarty.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.OPTIONS;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -28,11 +30,21 @@ public class Config {
 	}
 
 	@PUT
+	@POST
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response setconfig(String jnRoot) {
+		System.out.println(jnRoot);
 		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 
+	}
+
+	@OPTIONS
+	@Path("/set")
+	public Response setOptions() {
+		return Response.ok().header("Access-Control-Allow-Origin", "*")
+				.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+				.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With").build();
 	}
 
 }
