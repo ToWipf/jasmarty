@@ -1,29 +1,31 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { jaconfig } from "src/app/datatypes";
+import { serviceRest } from "src/app/service/serviceRest";
 
 @Component({
   selector: "app-jasmartyConfig",
   templateUrl: "./jasmartyConfig.component.html",
-  styleUrls: ["./jasmartyConfig.component.less"]
+  styleUrls: ["./jasmartyConfig.component.less"],
 })
 export class JasmartyConfigComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private rest: serviceRest) {}
 
-  public sText: string;
-  public sStatus: string;
+  public jaconfig: jaconfig = {};
 
-  public sendMsgToGroup(): void {
-    if (this.sText) {
-      //TODO: escape String
-      this.http
-        .post(
-          "http://192.168.2.10:8080/telegram/sendMsgToGroup/" + this.sText,
-          null
-        )
-        .subscribe(resdata => {
-          this.sStatus = resdata.toString();
-          this.sText = null;
-        });
-    }
+  public save(): void {
+    console.log(this.jaconfig);
+    this.http.post("http://localhost:8080/lcd/config", this.jaconfig).subscribe((resdata) => {
+      console.log(resdata);
+    });
+  }
+
+  public load(): void { // TODO: oninit
+    console.log(this.jaconfig);
+    this.http.get("http://localhost:8080/lcd/config").subscribe((resdata) => {
+      console.log(resdata);
+      // TODO:
+      this.jaconfig = {baudrate:9600}
+    });
   }
 }

@@ -2,7 +2,33 @@
 <hr>
 
 <div class="form-group">
-    <label for="formGroupExampleInput2">Nachricht: {{sText}}</label>
-    <input type="text" class="form-control inbutton" [(ngModel)]="sText" placeholder="Nachrichten Text">
-    <button type="button" class="btn btn-primary inbutton" (click)="sendMsgToGroup()">Senden</button>
+    <ng-container *ngIf="jaconfig">
+        <div>
+            <label for="formGroupExampleInput2">Port</label>
+            <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="COM10">
+        </div>
+
+        <div>
+            <label for="formGroupExampleInput2">Baud Rate</label>
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="9600">
+        </div>
+
+
+        <div>
+            <label for="formGroupExampleInput2">Refesh Rate</label>
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="200">
+        </div>
+
+        <div>
+            <label for="formGroupExampleInput2">Breite</label>
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="20">
+        </div>
+
+        <div>
+            <label for="formGroupExampleInput2">Höhe</label>
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.hight" placeholder="4">
+        </div>
+    </ng-container>
+
+    <button type="button" class="btn btn-primary inbutton" (click)="save()">Save</button>
 </div>
