@@ -16,15 +16,9 @@
                     <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
                 </div>
 
-                <!-- <table class="table table-striped">
-                    <tbody *ngFor="let line of toarry">
-                        {{line}}
-                    </tbody>
-                </table> -->
-
-                <div>
-                    <label for="formGroupExampleInput2">line</label>
-                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.lines" placeholder="Bitte eintragen">
+                <label for="formGroupExampleInput2">Zeilen</label>
+                <div *ngFor="let line of lines; let i = index">
+                    <input type="string" class="form-control inbutton" [(ngModel)]="lines[i]" placeholder="Bitte eintragen">
                 </div>
 
                 <div>

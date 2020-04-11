@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -53,20 +54,27 @@ public class Pages {
 	}
 
 	@GET
-	@PUT
 	@Path("/get/{pid}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String getPage(@PathParam("pid") int nPid) {
 		return pageVerwaltung.getPageFromDB(nPid).toJson();
 	}
 
-	@GET
-	@PUT
-	@Path("/getRaw/{pid}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getPageRaw(@PathParam("pid") int nPid) {
-		return pageVerwaltung.getPageFromDB(nPid).getPageAsDBString();
+	@POST
+	@Path("/save")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String save(String jnRoot) {
+		pageVerwaltung.newPageToDB(jnRoot);
+		return "{}";
 	}
+
+//	@GET
+//	@PUT
+//	@Path("/getRaw/{pid}")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public String getPageRaw(@PathParam("pid") int nPid) {
+//		return pageVerwaltung.getPageFromDB(nPid).getPageAsDBString();
+//	}
 
 	@GET
 	@DELETE

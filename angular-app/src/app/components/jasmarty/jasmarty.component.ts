@@ -15,6 +15,7 @@ export class JasmartyComponent implements OnInit {
   public jaconfig: jaconfig = {};
   public japage: japage = {};
   public selectedSite: number = 0;
+  public lines: string[] = [];
 
   ngOnInit() {
     this.load();
@@ -38,11 +39,32 @@ export class JasmartyComponent implements OnInit {
     this.getSite();
   }
 
-  public save(): void {}
+  public save(): void {
+    var sLines: string = "";
+    this.lines.forEach((line) => {
+      if (sLines.length != 0) {
+        sLines = sLines + "\n";
+      }
+      sLines = sLines + line;
+    });
+
+    this.japage.lines = sLines;
+
+    this.http.post("http://localhost:8080/pages/save", JSON.stringify(this.japage)).subscribe((resdata: any) => {
+      if (resdata.save) {
+        console.log("saved");
+      } else {
+        //TODO: Meldung Fehler
+        console.log("fehler");
+      }
+    });
+  }
 
   private getSite(): void {
     this.http.get("http://localhost:8080/pages/get/" + this.selectedSite).subscribe((resdata: japage) => {
       this.japage = resdata;
+      this.lines = this.japage.lines.substring(1, this.japage.lines.length - 1).split("\n");
     });
+    //this.lines = []; load sizes
   }
 }

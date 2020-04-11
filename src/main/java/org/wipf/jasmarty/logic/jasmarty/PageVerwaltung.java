@@ -31,7 +31,7 @@ public class PageVerwaltung {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options TEXT);");
+					"CREATE TABLE IF NOT EXISTS pages (pid INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
 		} catch (Exception e) {
 			LOGGER.error("init DB");
 		}
@@ -83,21 +83,23 @@ public class PageVerwaltung {
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void newPageToDB(LcdPage page) throws SQLException {
+	public void pageToDB(LcdPage page) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT INTO pages (name, page, options) VALUES ('" + page.getName() + "','"
-				+ page.getPageAsDBString() + "','" + page.getOptions() + "')");
+		stmt.execute("INSERT OR REPLACE INTO pages (pid, name, page, options) VALUES ('" + page.getId() + "','"
+				+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
 	}
 
 	/**
+	 * TODO löschen
+	 * 
 	 * @param sName
 	 * @param sPage
 	 * @throws SQLException
 	 */
 	public void newPageToDB(String sName, String sPage, String sOptions) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute(
-				"INSERT INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','" + sOptions + "')");
+		stmt.execute("INSERT OR REPLACE INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','"
+				+ sOptions + "')");
 	}
 
 	/**
@@ -145,5 +147,16 @@ public class PageVerwaltung {
 	 */
 	public void selectPage(int nPid) throws SQLException {
 		writePage(getPageFromDB(nPid));
+	}
+
+	/**
+	 * @param jnRoot
+	 */
+	public void newPageToDB(String jnRoot) {
+		try {
+			pageToDB(new LcdPage().setByJson(jnRoot));
+		} catch (Exception e) {
+			LOGGER.warn("Convert Page fehler");
+		}
 	}
 }

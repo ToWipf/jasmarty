@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 /**
  * @author wipf Achtung ARR x und y sind vertauscht!
  */
@@ -24,6 +27,26 @@ public class LcdPage {
 //	
 //	this.saLines.add(nLine, sLine);
 //}
+
+	/**
+	 * @param jnRoot
+	 * @return
+	 */
+	public LcdPage setByJson(String jnRoot) {
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			JsonNode jn;
+			jn = mapper.readTree(jnRoot);
+
+			this.sName = jn.get("name").asText();
+			this.sOptions = jn.get("options").asText();
+			this.nId = jn.get("id").asInt();
+			setStringToPage(jn.get("lines").asText());
+			return this;
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 	/**
 	 * @return
