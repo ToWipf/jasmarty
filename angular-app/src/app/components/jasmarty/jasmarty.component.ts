@@ -84,6 +84,7 @@ export class JasmartyComponent implements OnInit {
     this.japage = {};
     this.japage.id = this.selectedPage;
     this.japage.options = "";
+    this.japage.name = "neue Seite";
     for (let index = 0; index < this.jaconfig.height; index++) {
       this.japage.options = this.japage.options + "0"; // Option 0 automatisch wählen
       this.lines.push("");

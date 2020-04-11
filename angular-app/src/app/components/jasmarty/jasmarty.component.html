@@ -2,27 +2,27 @@
     <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
 
         <div>
-            <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button> {{selectedPage}}
             <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
         </div>
 
         <div>
             <ng-container *ngIf="japage">
-                Seite {{japage.id}}
+                ID: {{japage.id}}
                 <div>
-                    <label for="formGroupExampleInput2">Name</label>
+                    <h5>Name</h5>
                     <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
                 </div>
 
-                <label for="formGroupExampleInput2">Zeilen</label>
+                <h5>Zeilen</h5>
                 <div *ngFor="let line of lines; let i = index; trackBy:trackByIndex;">
-                    <input type="string" class="form-control inbutton" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
-                    <input type="checkbox" ng-model="options">
+                    <input type="string" class="form-control inputText" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
+                    <!-- <input type="checkbox" ng-model="options"> -->
                 </div>
 
                 <div>
-                    <label for="formGroupExampleInput2">options</label>
-                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
+                    <h5>options</h5>
+                    <input type="string" class="form-control inputText" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
                 </div>
 
             </ng-container>
