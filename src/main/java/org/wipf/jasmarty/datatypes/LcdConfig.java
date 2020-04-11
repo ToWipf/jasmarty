@@ -14,8 +14,8 @@ public class LcdConfig {
 	private String sPort;
 	private Integer nheight;
 	private Integer nWidth;
-	private Integer nBaudRate = 9600;
-	private int nRefreshRate = 200;
+	private Integer nBaudRate;
+	private int nRefreshRate;
 
 	/**
 	 * @return

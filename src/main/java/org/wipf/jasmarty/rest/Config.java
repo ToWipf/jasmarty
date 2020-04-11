@@ -23,14 +23,14 @@ public class Config {
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getPage() {
+	public String getconfig() {
 		return serialConfig.getConfig().toJson();
 	}
 
 	@PUT
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getconfig(String jnRoot) {
+	public Response setconfig(String jnRoot) {
 		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 
 	}

@@ -5,7 +5,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.LcdConfig;
 import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
@@ -46,11 +45,7 @@ public class App {
 		pageVerwaltung.initDB();
 		serialConfig.initDB();
 
-		LcdConfig lconf = new LcdConfig();
-		lconf.setPort("COM10");
-		lconf.setHeight(4);
-		lconf.setWidth(20);
-		jaSmartyConnect.setConfig(lconf);
+		jaSmartyConnect.setConfig(serialConfig.getConfig());
 
 		if (jaSmartyConnect.startPort()) {
 			LOGGER.info("gestartet");
