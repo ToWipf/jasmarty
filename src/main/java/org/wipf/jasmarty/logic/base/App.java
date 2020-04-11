@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.base;
 
-import java.sql.Statement;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -11,6 +9,7 @@ import org.wipf.jasmarty.datatypes.LcdConfig;
 import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
+import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
@@ -30,9 +29,11 @@ public class App {
 	RefreshLoop refreshLoop;
 	@Inject
 	Wipf wipf;
+	@Inject
+	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.072";
+	public static final String VERSION = "0.091";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -42,7 +43,8 @@ public class App {
 		LOGGER.info("Starte " + VERSION);
 
 		MsqlLite.startDB();
-		initDBs();
+		pageVerwaltung.initDB();
+		serialConfig.initDB();
 
 		LcdConfig lconf = new LcdConfig();
 		lconf.setPort("COM10");
@@ -74,17 +76,4 @@ public class App {
 		}
 	}
 
-	/**
-	 * Tabellen anlegen
-	 */
-	private void initDBs() {
-		try {
-			Statement stmt = MsqlLite.getDB();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS settings (id, val);");
-			pageVerwaltung.initDB();
-
-		} catch (Exception e) {
-			LOGGER.warn("createDBs " + e);
-		}
-	}
 }

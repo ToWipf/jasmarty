@@ -8,6 +8,10 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class RefreshLoop {
 

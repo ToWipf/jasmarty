@@ -32,6 +32,20 @@ public class JaSmartyConnect {
 	/**
 	 * @return
 	 */
+	public LcdConfig getConfig() {
+		return lconf;
+	}
+
+	/**
+	 * @param lconfig
+	 */
+	public void setConfig(LcdConfig lconfig) {
+		this.lconf = lconfig;
+	}
+
+	/**
+	 * @return
+	 */
 	public int getHight() {
 		return lconf.getHight();
 	}
@@ -41,13 +55,6 @@ public class JaSmartyConnect {
 	 */
 	public int getWidth() {
 		return lconf.getWidth();
-	}
-
-	/**
-	 * @param lconfig
-	 */
-	public void setConfig(LcdConfig lconfig) {
-		this.lconf = lconfig;
 	}
 
 	/**

@@ -15,10 +15,6 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
 /**
  * @author wipf
  * 
- *         Seiten Speichern, Löschen, Auswählen
- *
- * 
- *
  */
 @RequestScoped
 public class PageVerwaltung {
@@ -31,10 +27,14 @@ public class PageVerwaltung {
 	/**
 	 * @throws SQLException
 	 */
-	public void initDB() throws SQLException {
-		Statement stmt = MsqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options TEXT);");
+	public void initDB() {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.executeUpdate(
+					"CREATE TABLE IF NOT EXISTS pages (pid INTEGER primary key autoincrement, name TEXT, page TEXT, options TEXT);");
+		} catch (Exception e) {
+			LOGGER.error("init DB");
+		}
 	}
 
 	/**
