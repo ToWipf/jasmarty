@@ -7,9 +7,15 @@ export interface jaconfig {
 }
 
 export interface japage {
-    id?: number;
-    name?: string;
-    options?: string;
-    lines?: string;
-  }
-  
+  id?: number;
+  name?: string;
+  options?: string;
+  lines?: string;
+}
+
+export interface buttonaction {
+  id?: number;
+  button?: number;
+  active?: boolean;
+  action?: string;
+}

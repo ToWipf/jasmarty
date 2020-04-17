@@ -7,6 +7,8 @@ import java.sql.Statement;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.ButtonAction;
 import org.wipf.jasmarty.logic.base.MsqlLite;
 
@@ -38,7 +40,7 @@ public class ActionVerwaltung {
 	 */
 	public void actionToDB(ButtonAction ba) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO pages (id, button, active, action) VALUES ('" + ba.getId() + "','"
+		stmt.execute("INSERT OR REPLACE INTO actions (id, button, active, action) VALUES ('" + ba.getId() + "','"
 				+ ba.getButton() + "','" + ba.isActive() + "','" + ba.getAction() + "')");
 	}
 
@@ -51,7 +53,7 @@ public class ActionVerwaltung {
 			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE id = '" + nId + "';");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
 			ba.setId(rs.getInt("id"));
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));
@@ -64,6 +66,32 @@ public class ActionVerwaltung {
 	}
 
 	/**
+	 * @return
+	 */
+	public String getAllFromDBAsJson() {
+		try {
+			JSONArray json = new JSONArray();
+
+			Statement stmt = MsqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("select * from actions;");
+			while (rs.next()) {
+				JSONObject entry = new JSONObject();
+				entry.put("id", rs.getInt("id"));
+				entry.put("button", rs.getInt("button"));
+				entry.put("active", rs.getBoolean("active"));
+				entry.put("action", rs.getString("action"));
+				json.put(entry);
+			}
+			rs.close();
+			return json.toString();
+
+		} catch (Exception e) {
+			LOGGER.warn("getAll json" + e);
+		}
+		return "{}";
+	}
+
+	/**
 	 * @param nId
 	 * @return
 	 */
@@ -72,7 +100,7 @@ public class ActionVerwaltung {
 			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE button = '" + nButton + "' AND active = 1;");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE button = '" + nButton + "' AND active = 1;");
 			ba.setId(rs.getInt("id"));
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));

@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
  * @author wipf
  *
  */
-@Path("/action")
+@Path("/actions")
 public class ActionRest {
 
 	@Inject
@@ -27,6 +27,13 @@ public class ActionRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getAction(@PathParam("id") Integer nId) {
 		return actionVerwaltung.getActionFromDbByButton(nId).toJson();
+	}
+
+	@GET
+	@Path("/getall")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAll() {
+		return actionVerwaltung.getAllFromDBAsJson();
 	}
 
 	@POST
