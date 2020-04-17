@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FooterComponent } from "./components/footer/footer.component";
-import { JasmartyComponent } from "./components/jasmarty/jasmarty.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from "ng-sidebar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
@@ -48,11 +47,14 @@ import { MatTreeModule } from "@angular/material/tree";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { JasmartyConfigComponent } from './components/jasmartyConfig/jasmartyConfig.component';
+import { JasmartyPagesComponent } from './components/jasmartyPages/jasmartyPages.component';
+import { JasmartyActionsComponent } from './components/jasmartyActions/jasmartyActions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    JasmartyComponent,
+    JasmartyPagesComponent,
+    JasmartyActionsComponent,
     FooterComponent,
     JasmartyConfigComponent,
   ],

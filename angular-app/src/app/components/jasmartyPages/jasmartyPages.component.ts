@@ -3,11 +3,11 @@ import { HttpClient } from "@angular/common/http";
 import { jaconfig, japage } from "src/app/datatypes";
 
 @Component({
-  selector: "app-jasmarty",
-  templateUrl: "./jasmarty.component.html",
-  styleUrls: ["./jasmarty.component.less"],
+  selector: "app-jasmartyPages",
+  templateUrl: "./jasmartyPages.component.html",
+  styleUrls: ["./jasmartyPages.component.less"],
 })
-export class JasmartyComponent implements OnInit {
+export class JasmartyPagesComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   public sText: string;

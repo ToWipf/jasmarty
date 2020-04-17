@@ -2,7 +2,8 @@
     <ng-sidebar [(opened)]="opened" position="left">
         <div class="sidebar">
             <ul class="menueli">
-                <li (click)="selectSite('default')">JaSmarty</li>
+                <li (click)="selectSite('pages')">Seiten</li>
+                <li (click)="selectSite('actions')">Actions</li>
                 <li (click)="selectSite('config')">Config</li>
                 <button (click)="toggleSidebar()">Schließen</button>
             </ul>
@@ -14,8 +15,11 @@
 
         <button class="mainMenueButton" (click)="toggleSidebar()">Menü Öffnen</button>
         <div class="maincontainer">
-            <ng-container *ngIf="selectedSite==='default'">
-                <app-jasmarty></app-jasmarty>
+            <ng-container *ngIf="selectedSite==='pages'">
+                <app-jasmartyPages></app-jasmartyPages>
+            </ng-container>
+            <ng-container *ngIf="selectedSite==='actions'">
+                <app-jasmartyActions></app-jasmartyActions>
             </ng-container>
             <ng-container *ngIf="selectedSite==='config'">
                 <app-jasmartyConfig></app-jasmartyConfig>
