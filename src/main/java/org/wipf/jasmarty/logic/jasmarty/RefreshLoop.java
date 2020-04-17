@@ -20,7 +20,7 @@ public class RefreshLoop {
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
 	@Inject
-	Actions actions;
+	ActionVerwaltung actionVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("RefreshLoop");
 	private boolean bLoopActive = false;
@@ -60,8 +60,7 @@ public class RefreshLoop {
 
 				while (bLoopActive && jaSmartyConnect.isLcdOk()) {
 					try {
-
-						actions.doAction(jaSmartyConnect.readButton()); // TODO evtl. in eingen run auslagern
+						actionVerwaltung.doAction(jaSmartyConnect.readButton()); // TODO evtl. in eingen run auslagern
 
 						pageConverter.refreshCache();
 						jaSmartyConnect.refreshDisplay();

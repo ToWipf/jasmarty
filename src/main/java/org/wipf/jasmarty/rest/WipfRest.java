@@ -12,7 +12,7 @@ import org.wipf.jasmarty.logic.base.App;
  *
  */
 @Path("/wipf")
-public class Wipf {
+public class WipfRest {
 
 	@GET
 	@Path("/ver")

@@ -13,7 +13,7 @@ import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
  *
  */
 @Path("/refresh")
-public class Refresh {
+public class RefreshRest {
 
 	@Inject
 	RefreshLoop refreshLoop;

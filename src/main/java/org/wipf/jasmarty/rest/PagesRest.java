@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
  *
  */
 @Path("/pages")
-public class Pages {
+public class PagesRest {
 
 	@Inject
 	PageVerwaltung pageVerwaltung;

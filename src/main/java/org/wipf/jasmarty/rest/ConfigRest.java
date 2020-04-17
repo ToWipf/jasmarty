@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  *
  */
 @Path("/config")
-public class Config {
+public class ConfigRest {
 
 	@Inject
 	SerialConfig serialConfig;
@@ -24,14 +24,14 @@ public class Config {
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getconfig() {
+	public String getConfig() {
 		return serialConfig.getConfig().toJson();
 	}
 
 	@POST
 	@Path("/set")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response setconfig(String jnRoot) {
+	public Response setConfig(String jnRoot) {
 		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 
 	}

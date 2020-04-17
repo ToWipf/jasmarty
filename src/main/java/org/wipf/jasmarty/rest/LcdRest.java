@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 
@@ -14,7 +15,7 @@ import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
  *
  */
 @Path("/lcd")
-public class Lcd {
+public class LcdRest {
 
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
@@ -36,17 +37,17 @@ public class Lcd {
 	@GET
 	@Path("/refresh")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String refreshDisplay() {
+	public Response refreshDisplay() {
 		jaSmartyConnect.refreshDisplay();
-		return "{}";
+		return Response.ok("{\"TODO\":\"TODO\"}").build(); // TODO
 	}
 
 	@GET
 	@Path("/write/{x}/{y}/{str}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
+	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
 		jaSmartyConnect.writeLineToCache(x, y, s.toCharArray());
-		return "{}";
+		return Response.ok("{\"save\":\"TODO\"}").build(); // TODO
 	}
 
 	@GET

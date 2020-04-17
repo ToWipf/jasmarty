@@ -5,6 +5,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
@@ -25,6 +26,8 @@ public class App {
 	@Inject
 	PageVerwaltung pageVerwaltung;
 	@Inject
+	ActionVerwaltung actionVerwaltung;
+	@Inject
 	RefreshLoop refreshLoop;
 	@Inject
 	Wipf wipf;
@@ -32,7 +35,7 @@ public class App {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.106";
+	public static final String VERSION = "0.107";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -44,6 +47,7 @@ public class App {
 		MsqlLite.startDB();
 		pageVerwaltung.initDB();
 		serialConfig.initDB();
+		actionVerwaltung.initDB();
 
 		jaSmartyConnect.setConfig(serialConfig.getConfig());
 

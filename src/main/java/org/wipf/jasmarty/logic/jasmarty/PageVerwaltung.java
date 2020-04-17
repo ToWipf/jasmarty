@@ -31,7 +31,7 @@ public class PageVerwaltung {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS pages (pid INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
+					"CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
 		} catch (Exception e) {
 			LOGGER.error("init DB");
 		}
@@ -85,7 +85,7 @@ public class PageVerwaltung {
 	 */
 	public void pageToDB(LcdPage page) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO pages (pid, name, page, options) VALUES ('" + page.getId() + "','"
+		stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
 				+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
 	}
 
@@ -103,12 +103,12 @@ public class PageVerwaltung {
 	}
 
 	/**
-	 * @param nPid
+	 * @param nId
 	 * @throws SQLException
 	 */
-	public void delPageFromDB(Integer nPid) throws SQLException {
+	public void delPageFromDB(Integer nId) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
-		stmt.execute("DELETE FROM pages WHERE id = " + nPid);
+		stmt.execute("DELETE FROM pages WHERE id = " + nId);
 	}
 
 	/**
@@ -116,19 +116,19 @@ public class PageVerwaltung {
 	 * @return
 	 * @throws SQLException
 	 */
-	public LcdPage getPageFromDB(int nPid) {
+	public LcdPage getPageFromDB(int nId) {
 		try {
 			LcdPage page = new LcdPage();
 
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE pid = '" + nPid + "';");
-			page.setId(rs.getInt("pid"));
+			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE id = '" + nId + "';");
+			page.setId(rs.getInt("id"));
 			page.setName(rs.getString("name"));
 			page.setStringToPage(rs.getString("page"));
 			page.setOptions(rs.getString("options"));
 			return page;
 		} catch (Exception e) {
-			// LOGGER.warn("Page not found: " + nPid);
+			// LOGGER.warn("Page not found: " + nId);
 			return new LcdPage();
 		}
 	}
@@ -142,11 +142,11 @@ public class PageVerwaltung {
 	}
 
 	/**
-	 * @param nPid
+	 * @param nId
 	 * @throws SQLException
 	 */
-	public void selectPage(int nPid) throws SQLException {
-		writePage(getPageFromDB(nPid));
+	public void selectPage(int nId) throws SQLException {
+		writePage(getPageFromDB(nId));
 	}
 
 	/**

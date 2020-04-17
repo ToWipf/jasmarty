@@ -86,6 +86,26 @@ public class LcdPage {
 		return jo.toString();
 	}
 
+	/**
+	 * @param nLine
+	 * @return
+	 */
+	public String getLine(int nLine) {
+		try {
+			return this.saLines.get(nLine);
+		} catch (Exception e) {
+			return "";
+		}
+	}
+
+	/**
+	 * @param nLine
+	 * @param sLine
+	 */
+	public void setLine(int nLine, String sLine) {
+		this.saLines.add(nLine, sLine);
+	}
+
 	public int getId() {
 		return nId;
 	}
@@ -108,26 +128,6 @@ public class LcdPage {
 
 	public void setOptions(String sOptions) {
 		this.sOptions = sOptions;
-	}
-
-	/**
-	 * @param nLine
-	 * @return
-	 */
-	public String getLine(int nLine) {
-		try {
-			return this.saLines.get(nLine);
-		} catch (Exception e) {
-			return "";
-		}
-	}
-
-	/**
-	 * @param nLine
-	 * @param sLine
-	 */
-	public void setLine(int nLine, String sLine) {
-		this.saLines.add(nLine, sLine);
 	}
 
 }

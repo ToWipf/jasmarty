@@ -33,17 +33,31 @@ public class LcdCache {
 	}
 
 	/**
+	 * @param arr
 	 * @return
 	 */
-	public int getWidth() {
-		return nWidth;
+	private String arrToString(char[][] arr) {
+		StringBuilder sb = new StringBuilder();
+		for (int y = 0; y < nHeight; y++) {
+			sb.append("\n");
+			sb.append("Line: " + y + ": ");
+			for (int x = 0; x < nWidth; x++) {
+				sb.append(arr[x][y]);
+			}
+		}
+		return sb.toString();
 	}
 
 	/**
-	 * @return
+	 * Leert cache Ist und soll
 	 */
-	public int getHeight() {
-		return nHeight;
+	public void clearCacheFull() {
+		for (int x = 0; x < nWidth; x++) {
+			for (int y = 0; y < nHeight; y++) {
+				this.cacheSoll[x][y] = ' ';
+				this.cacheIst[x][y] = ' ';
+			}
+		}
 	}
 
 	/**
@@ -122,31 +136,17 @@ public class LcdCache {
 	}
 
 	/**
-	 * @param arr
 	 * @return
 	 */
-	private String arrToString(char[][] arr) {
-		StringBuilder sb = new StringBuilder();
-		for (int y = 0; y < nHeight; y++) {
-			sb.append("\n");
-			sb.append("Line: " + y + ": ");
-			for (int x = 0; x < nWidth; x++) {
-				sb.append(arr[x][y]);
-			}
-		}
-		return sb.toString();
+	public int getWidth() {
+		return nWidth;
 	}
 
 	/**
-	 * Leert cache Ist und soll
+	 * @return
 	 */
-	public void clearCacheFull() {
-		for (int x = 0; x < nWidth; x++) {
-			for (int y = 0; y < nHeight; y++) {
-				this.cacheSoll[x][y] = ' ';
-				this.cacheIst[x][y] = ' ';
-			}
-		}
+	public int getHeight() {
+		return nHeight;
 	}
 
 }
