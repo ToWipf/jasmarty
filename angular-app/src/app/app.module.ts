@@ -48,17 +48,22 @@ import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { JasmartyConfigComponent } from './components/jasmartyConfig/jasmartyConfig.component';
 import { JasmartyPagesComponent } from './components/jasmartyPages/jasmartyPages.component';
-import { JasmartyActionsComponent } from './components/jasmartyActions/jasmartyActions.component';
+import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/jasmartyActions/jasmartyActions.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     JasmartyPagesComponent,
     JasmartyActionsComponent,
+    JasmartyActionsComponentDialog,
     FooterComponent,
     JasmartyConfigComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
@@ -106,9 +111,12 @@ import { JasmartyActionsComponent } from './components/jasmartyActions/jasmartyA
     MatTooltipModule,
     MatTreeModule,
     PortalModule,
-    ScrollingModule
+    ScrollingModule,
+    MatStepperModule,
+    MatDatepickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule {}
