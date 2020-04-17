@@ -30,11 +30,9 @@ public class App {
 	Wipf wipf;
 	@Inject
 	SerialConfig serialConfig;
-	@Inject
-	Audio audio;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.105";
+	public static final String VERSION = "0.106";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -42,16 +40,6 @@ public class App {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		LOGGER.info("Starte " + VERSION);
-
-//		System.out.println("voltest");
-
-//		List<Mixer> x = audio.getMixers();
-//		for (Mixer xy : x) {
-//			System.out.println(xy);
-//		}
-//		System.out.println(audio.getHierarchyInfo());
-//
-//		audio.setMasterOutputVolume(0.42f);
 
 		MsqlLite.startDB();
 		pageVerwaltung.initDB();

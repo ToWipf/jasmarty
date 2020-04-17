@@ -19,6 +19,8 @@ public class RefreshLoop {
 	PageConverter pageConverter;
 	@Inject
 	JaSmartyConnect jaSmartyConnect;
+	@Inject
+	Actions actions;
 
 	private static final Logger LOGGER = Logger.getLogger("RefreshLoop");
 	private boolean bLoopActive = false;
@@ -42,6 +44,7 @@ public class RefreshLoop {
 	 * 
 	 */
 	private void refreshloop() {
+
 		if (!bLoopActive) {
 			bLoopActive = true;
 			LOGGER.info("Refresh an");
@@ -57,6 +60,9 @@ public class RefreshLoop {
 
 				while (bLoopActive && jaSmartyConnect.isLcdOk()) {
 					try {
+
+						actions.doAction(jaSmartyConnect.readButton()); // TODO evtl. in eingen run auslagern
+
 						pageConverter.refreshCache();
 						jaSmartyConnect.refreshDisplay();
 						Thread.sleep(jaSmartyConnect.getRefreshRate());

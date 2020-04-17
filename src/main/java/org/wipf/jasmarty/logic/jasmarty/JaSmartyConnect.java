@@ -1,6 +1,8 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -172,6 +174,25 @@ public class JaSmartyConnect {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer readButton() {
+		try {
+			char[] in = new char[1];
+
+			BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()));
+
+			input.read(in);
+			return (int) in[0];
+
+		} catch (Exception e) {
+			// Kein input,
+			return null;
+		}
+
 	}
 
 	/**
