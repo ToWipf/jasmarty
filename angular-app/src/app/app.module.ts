@@ -53,11 +53,16 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
-import { DialogDataExample, DialogDataExampleDialog } from "./components/demo/demo";
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
-  declarations: [AppComponent, JasmartyPagesComponent, JasmartyActionsComponent, JasmartyActionsComponentDialog, FooterComponent, JasmartyConfigComponent, DialogDataExample, DialogDataExampleDialog],
+  declarations: [
+    AppComponent,
+    JasmartyPagesComponent,
+    JasmartyActionsComponent,
+    JasmartyActionsComponentDialog,
+    FooterComponent,
+    JasmartyConfigComponent,
+  ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -112,7 +117,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     MatDatepickerModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: "fill" } }],
-  bootstrap: [AppComponent, DialogDataExample],
-  entryComponents: [AppComponent, JasmartyActionsComponentDialog, DialogDataExample, DialogDataExampleDialog],
+  bootstrap: [AppComponent],
+  entryComponents: [AppComponent, JasmartyActionsComponentDialog],
 })
 export class AppModule {}
