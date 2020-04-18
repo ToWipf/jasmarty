@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -16,10 +16,11 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
  * @author wipf
  * 
  */
-@RequestScoped
+@ApplicationScoped
 public class PageVerwaltung {
 
 	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
+	private Integer nSelectedSite;
 
 	@Inject
 	PageConverter pageConverter;
@@ -146,7 +147,20 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void selectPage(int nId) throws SQLException {
+		nSelectedSite = nId;
 		writePage(getPageFromDB(nId));
+	}
+
+	/**
+	 * @param sId
+	 */
+	public void selectPage(String sId) {
+		try {
+			selectPage(Integer.valueOf(sId));
+		} catch (Exception e) {
+			LOGGER.warn(sId + " ist keine SeitenId");
+		}
+
 	}
 
 	/**
@@ -159,4 +173,40 @@ public class PageVerwaltung {
 			LOGGER.warn("Convert Page fehler");
 		}
 	}
+
+	/**
+	 * 
+	 */
+	public void nextPage() {
+		try {
+			selectPage(nSelectedSite + 1);
+		} catch (SQLException e) {
+			// Seite nicht möglich
+			this.nSelectedSite--;
+			try {
+				selectPage(nSelectedSite);
+			} catch (SQLException e1) {
+				LOGGER.warn("nextPage fail");
+			}
+		}
+
+	}
+
+	/**
+	 * 
+	 */
+	public void lastPage() {
+		try {
+			selectPage(nSelectedSite - 1);
+		} catch (SQLException e) {
+			this.nSelectedSite++;
+			// Nicht möglich
+			try {
+				selectPage(nSelectedSite);
+			} catch (SQLException e1) {
+				LOGGER.warn("lastPage fail");
+			}
+		}
+	}
+
 }

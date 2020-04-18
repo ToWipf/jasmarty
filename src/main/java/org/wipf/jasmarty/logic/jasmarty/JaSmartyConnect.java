@@ -30,6 +30,38 @@ public class JaSmartyConnect {
 	private LcdCache lcache;
 	private LcdConfig lconf;
 	private boolean bLcdIsOk = false;
+	private boolean bLed = false;
+
+	/**
+	 * 
+	 */
+	public void ledToggle() {
+		if (bLed) {
+			ledOff();
+		} else {
+			ledOn();
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void ledOn() {
+		this.bLed = true;
+		writeAscii(254);
+		writeAscii(71);
+		writeAscii(66);
+	}
+
+	/**
+	 * 
+	 */
+	public void ledOff() {
+		this.bLed = false;
+		writeAscii(254);
+		writeAscii(71);
+		writeAscii(70);
+	}
 
 	/**
 	 * @param lconfig

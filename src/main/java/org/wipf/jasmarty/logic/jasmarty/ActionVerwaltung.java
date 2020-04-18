@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
@@ -21,6 +22,12 @@ public class ActionVerwaltung {
 
 	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
 	private Integer currentPressed;
+
+	@Inject
+	JaSmartyConnect jaSmartyConnect;
+
+	@Inject
+	PageVerwaltung pageVerwaltung;
 
 	/**
 	 * @throws SQLException
@@ -124,10 +131,61 @@ public class ActionVerwaltung {
 			ButtonAction ba = getActionFromDbByButton(nButton);
 			if (ba != null) {
 				System.out.println("DO:" + ba.getAction());
+
+				Integer nTrennlineFirst = ba.getAction().indexOf('|');
+				Integer nTrennlineLast = ba.getAction().lastIndexOf('|');
+
+				String sParameter1 = ba.getAction().substring(0, nTrennlineFirst);
+				String sParameter2 = null;
+				String sParameter3 = null;
+
+				if (nTrennlineFirst != nTrennlineLast) {
+					// es gibt einen 3. Parameter
+					sParameter2 = ba.getAction().substring(nTrennlineFirst, nTrennlineLast);
+				} else {
+					// Es gibt nur 2 Parameter
+					sParameter2 = ba.getAction().substring(nTrennlineFirst);
+				}
+
+				switch (sParameter1) {
+				case "led":
+					switch (sParameter2) {
+					case "on":
+						jaSmartyConnect.ledOn();
+						return;
+					case "off":
+						jaSmartyConnect.ledOff();
+						return;
+					case "toggle":
+						jaSmartyConnect.ledToggle();
+						return;
+					}
+					return;
+				case "page":
+					switch (sParameter2) {
+					case "next":
+						pageVerwaltung.nextPage();
+						return;
+					case "last":
+						pageVerwaltung.lastPage();
+						return;
+					case "number":
+						pageVerwaltung.selectPage(sParameter3);
+						return;
+					}
+					return;
+
+				default:
+					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
+					;
+				}
 			}
 		}
 	}
 
+	/**
+	 * @param jnRoot
+	 */
 	public void setAction(String jnRoot) {
 		try {
 			actionToDB(new ButtonAction().setByJson(jnRoot));
@@ -143,4 +201,5 @@ public class ActionVerwaltung {
 		// TODO Auto-generated method stub
 		return currentPressed;
 	}
+
 }
