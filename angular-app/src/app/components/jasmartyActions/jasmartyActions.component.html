@@ -1,42 +1,42 @@
+<h3>Funktionen</h3>
+<hr>
 <div>
-    <h3>ActionButtons</h3>
-
     Derzeit gedrückt: {{currentPressed}}
+</div>
 
-    <div class="list">
+<div class="list">
 
-        <perfect-scrollbar class="pscroll">
-            <table mat-table [dataSource]="tableDataSource" matSort class="mat-elevation-z8">
+    <perfect-scrollbar class="pscroll">
+        <table mat-table [dataSource]="tableDataSource" matSort class="mat-elevation-z8">
 
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-                </ng-container>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="button">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> button </th>
-                    <td mat-cell *matCellDef="let element"> {{element.button}} </td>
-                </ng-container>
+            <ng-container matColumnDef="button">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> button </th>
+                <td mat-cell *matCellDef="let element"> {{element.button}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="active">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                    <td mat-cell *matCellDef="let element"> {{element.active}} </td>
-                </ng-container>
+            <ng-container matColumnDef="active">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.active}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
-                    <td mat-cell *matCellDef="let element"> {{element.action}} </td>
-                </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> action </th>
+                <td mat-cell *matCellDef="let element"> {{element.action}} </td>
+            </ng-container>
 
-                <ng-container matColumnDef="edit">
-                    <th mat-header-cell *matHeaderCellDef> <button class="btn editb" (click)="newItem()">Neu</button> </th>
-                    <td mat-cell *matCellDef="let element"> <button class="btn editb" (click)="editItem(element)">Edit</button> </td>
-                </ng-container>
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef> <button class="btn editb" (click)="newItem()">Neu</button> </th>
+                <td mat-cell *matCellDef="let element"> <button class="btn editb" (click)="editItem(element)">Edit</button> </td>
+            </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </perfect-scrollbar>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </perfect-scrollbar>
 
-    </div>
 </div>

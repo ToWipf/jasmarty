@@ -1,33 +1,35 @@
 <h3>Config</h3>
 <hr>
+<div class="settings">
+    <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
+        <div class="form-group">
+            <ng-container *ngIf="jaconfig">
+                <div>
+                    <h5>Port</h5>
+                    <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
+                </div>
 
-<div class="form-group">
-    <ng-container *ngIf="jaconfig">
-        <div>
-            <h5>Port</h5>
-            <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
+                <div>
+                    <h5>Baud Rate</h5>
+                    <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
+                </div>
+
+                <div>
+                    <h5>Refesh Rate</h5>
+                    <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
+                </div>
+
+                <div>
+                    <h5>Breite</h5>
+                    <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
+                </div>
+
+                <div>
+                    <h5>Höhe</h5>
+                    <input type="number " class="form-control inbutton " [(ngModel)]="jaconfig.height " placeholder="Bitte eintragen ">
+                </div>
+            </ng-container>
         </div>
-
-        <div>
-            <h5>Baud Rate</h5>
-            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
-        </div>
-
-        <div>
-            <h5>Refesh Rate</h5>
-            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
-        </div>
-
-        <div>
-            <h5>Breite</h5>
-            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
-        </div>
-
-        <div>
-            <h5>Höhe</h5>
-            <input type="number " class="form-control inbutton " [(ngModel)]="jaconfig.height " placeholder="Bitte eintragen ">
-        </div>
-    </ng-container>
-
+    </perfect-scrollbar>
     <button type="button " class="btn btn-primary inbutton " (click)="save() ">Save</button>
 </div>
