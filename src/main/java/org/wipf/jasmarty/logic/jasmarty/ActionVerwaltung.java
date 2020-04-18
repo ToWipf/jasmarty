@@ -20,6 +20,7 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
 public class ActionVerwaltung {
 
 	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
+	private Integer currentPressed;
 
 	/**
 	 * @throws SQLException
@@ -116,6 +117,7 @@ public class ActionVerwaltung {
 	 * @param nButton
 	 */
 	public void doAction(Integer nButton) {
+		this.currentPressed = nButton;
 		if (nButton != null) {
 			System.out.println("Action: " + nButton);
 			ButtonAction ba = getActionFromDbByButton(nButton);
@@ -131,5 +133,13 @@ public class ActionVerwaltung {
 		} catch (Exception e) {
 			LOGGER.warn("Convert Page fehler");
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCurrentPressed() {
+		// TODO Auto-generated method stub
+		return currentPressed;
 	}
 }

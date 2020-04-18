@@ -19,9 +19,16 @@ export class JasmartyActionsComponent implements OnInit {
   public buttonactions: buttonaction[];
   public tableDataSource: any;
   public displayedColumns: string[] = ["id", "button", "active", "action", "edit"];
+  public currentPressed: number = null;
+  public loopStop: boolean = false;
 
   ngOnInit() {
     this.load();
+    this.loopLoadButton();
+  }
+
+  public ngOnDestroy(): void {
+    this.loopStop = true;
   }
 
   public new(): void {
@@ -63,6 +70,23 @@ export class JasmartyActionsComponent implements OnInit {
       this.buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.buttonactions);
       this.tableDataSource.sort = this.sort;
+    });
+  }
+
+  private loopLoadButton(): void {
+    if (!this.loopStop) {
+      // get current button
+      setTimeout(() => {
+        this.loopLoadButton();
+      }, 1000);
+      this.getCurrentPressed();
+    }
+  }
+
+  private getCurrentPressed(): void {
+    this.http.get("http://localhost:8080/actions/currentPressed").subscribe((resdata: any) => {
+      console.log(resdata.btn);
+      this.currentPressed = resdata.btn;
     });
   }
 }

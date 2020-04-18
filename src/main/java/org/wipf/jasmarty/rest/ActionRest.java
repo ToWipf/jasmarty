@@ -23,6 +23,13 @@ public class ActionRest {
 	ActionVerwaltung actionVerwaltung;
 
 	@GET
+	@Path("/currentPressed")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response CurrentPressed() {
+		return Response.ok("{\"btn\":" + actionVerwaltung.getCurrentPressed() + "}").build();
+	}
+
+	@GET
 	@Path("/get/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getAction(@PathParam("id") Integer nId) {
