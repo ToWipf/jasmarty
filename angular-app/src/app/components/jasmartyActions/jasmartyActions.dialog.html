@@ -1,19 +1,20 @@
-<h1 mat-dialog-title>Id: {{data.id}}</h1>
+<h1 mat-dialog-title>Aktion: {{data.id}}</h1>
 <div mat-dialog-content>
-    <p>Button Config</p>
+    <p>Button Einstellugen</p>
     <mat-form-field>
-        <mat-label>Button</mat-label>
-        <input matInput [(ngModel)]="data.button">
+        <mat-label>Eingang</mat-label>
+        <input type="number" matInput [(ngModel)]="data.button">
     </mat-form-field>
+    <br>
+    <!-- TODO: LESS -->
     <mat-form-field>
-        <mat-label>Aktiv</mat-label>
-        <input matInput [(ngModel)]="data.active">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Action</mat-label>
+        <mat-label>Aktion</mat-label>
         <input matInput [(ngModel)]="data.action">
     </mat-form-field>
 </div>
+
+Aktiv:
+<input type="checkbox" [(ngModel)]="data.active">
 
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Abbrechen</button>

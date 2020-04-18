@@ -31,12 +31,13 @@ export class JasmartyActionsComponent implements OnInit {
     this.loopStop = true;
   }
 
-  public new(): void {
-    const empty: buttonaction = { id: 5365, active: false, button: 55, action: "" };
-    this.edit(empty);
+  public newItem(): void {
+    const nextid = this.buttonactions.length + 1;
+    const empty: buttonaction = { id: nextid, active: false, button: this.currentPressed, action: "nichts" };
+    this.editItem(empty);
   }
 
-  public edit(item: buttonaction): void {
+  public editItem(item: buttonaction): void {
     let edititem: buttonaction;
 
     edititem = this.serviceWipf.deepCopy(item);
@@ -48,7 +49,9 @@ export class JasmartyActionsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.save(result);
+      if (result) {
+        this.save(result);
+      }
     });
   }
 
