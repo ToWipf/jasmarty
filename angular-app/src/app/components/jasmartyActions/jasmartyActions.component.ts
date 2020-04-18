@@ -4,6 +4,7 @@ import { buttonaction } from "src/app/datatypes";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { ServiceWipf } from "src/app/service/serviceWipf";
 
 @Component({
   selector: "app-jasmartyActions",
@@ -11,7 +12,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dial
   styleUrls: ["./jasmartyActions.component.less"],
 })
 export class JasmartyActionsComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -23,27 +24,45 @@ export class JasmartyActionsComponent implements OnInit {
     this.load();
   }
 
-  public load(): void {
+  public new(): void {
+    const empty: buttonaction = { id: 5365, active: false, button: 55, action: "" };
+    this.edit(empty);
+  }
+
+  public edit(item: buttonaction): void {
+    let edititem: buttonaction;
+
+    edititem = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(JasmartyActionsComponentDialog, {
+      width: "500px",
+      height: "400px",
+      data: edititem,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.save(result);
+    });
+  }
+
+  private save(item: buttonaction): void {
+    this.http.post("http://localhost:8080/actions/set", JSON.stringify(item)).subscribe((resdata: any) => {
+      if (resdata.save) {
+        console.log("saved");
+        this.load();
+      } else {
+        //TODO: Meldung Fehler
+        console.log("fehler");
+      }
+    });
+  }
+
+  private load(): void {
     this.http.get("http://localhost:8080/actions/getall").subscribe((resdata: any) => {
       console.log(resdata);
       this.buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.buttonactions);
       this.tableDataSource.sort = this.sort;
-    });
-  }
-
-  public edit(item: buttonaction): void {
-    console.log(item);
-
-    const dialogRef = this.dialog.open(JasmartyActionsComponentDialog, {
-      width: "400px",
-      height: "300px",
-      data: item,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
-      console.log(result); //save TODO:
     });
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { serviceRest } from "src/app/service/serviceRest";
 import { jaconfig } from 'src/app/datatypes';
 
 @Component({
@@ -9,7 +8,7 @@ import { jaconfig } from 'src/app/datatypes';
   styleUrls: ["./jasmartyConfig.component.less"],
 })
 export class JasmartyConfigComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: serviceRest) {}
+  constructor(private http: HttpClient) {}
 
   public jaconfig: jaconfig = {};
 

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
 
 // Vault Userverwaltung
-export class serviceRest {
+export class ServiceRest {
 
-    public get (path: string): string{
-        return "xc";
-    }
-
+  public get(path: string): string {
+    return "xc";
+  }
+  
 }
