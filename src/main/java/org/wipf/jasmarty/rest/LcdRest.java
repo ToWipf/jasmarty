@@ -8,7 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
+import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
 /**
  * @author wipf
@@ -18,27 +18,27 @@ import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
 public class LcdRest {
 
 	@Inject
-	JaSmartyConnect jaSmartyConnect;
+	LcdConnect lcdConnect;
 
 	@GET
 	@Path("/open")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String open() {
-		return "{\"open\":\"" + jaSmartyConnect.startPort() + "\"}";
+		return "{\"open\":\"" + lcdConnect.startPort() + "\"}";
 	}
 
 	@GET
 	@Path("/close")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String close() {
-		return "{\"close\":\"" + jaSmartyConnect.close() + "\"}";
+		return "{\"close\":\"" + lcdConnect.close() + "\"}";
 	}
 
 	@GET
 	@Path("/refresh")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response refreshDisplay() {
-		jaSmartyConnect.refreshDisplay();
+		lcdConnect.refreshDisplay();
 		return Response.ok("{\"TODO\":\"TODO\"}").build(); // TODO
 	}
 
@@ -46,7 +46,7 @@ public class LcdRest {
 	@Path("/write/{x}/{y}/{str}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		jaSmartyConnect.writeLineToCache(x, y, s.toCharArray());
+		lcdConnect.writeLineToCache(x, y, s.toCharArray());
 		return Response.ok("{\"save\":\"TODO\"}").build(); // TODO
 	}
 
@@ -54,7 +54,7 @@ public class LcdRest {
 	@Path("/ist")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String chIst() {
-		return jaSmartyConnect.getCachIstAsString();
+		return lcdConnect.getCachIstAsString();
 
 	}
 
@@ -62,7 +62,7 @@ public class LcdRest {
 	@Path("/soll")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String chSoll() {
-		return jaSmartyConnect.getCachSollAsString();
+		return lcdConnect.getCachSollAsString();
 
 	}
 

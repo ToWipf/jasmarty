@@ -20,7 +20,7 @@ public class PageConverter {
 	private LcdPage dynPageCache = new LcdPage();
 
 	@Inject
-	JaSmartyConnect jaSmartyConnect;
+	LcdConnect lcdConnect;
 
 	LcdPage selectedPage;
 
@@ -28,8 +28,8 @@ public class PageConverter {
 	 * @param page
 	 */
 	public void selectToNewPage(LcdPage page) {
-		if (jaSmartyConnect.isLcdOk()) {
-			jaSmartyConnect.clearScreen();
+		if (lcdConnect.isLcdOk()) {
+			lcdConnect.clearScreen();
 		}
 		this.selectedPage = page;
 	}
@@ -60,13 +60,13 @@ public class PageConverter {
 			this.dynPageCache = page;
 		}
 
-		for (int nLine = 0; nLine < jaSmartyConnect.getHeight(); nLine++) {
+		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
 
 			String sL1 = varConverter(page.getLine(nLine));
-			String sL2 = sL1.substring(0, Math.min(sL1.length(), jaSmartyConnect.getWidth()));
+			String sL2 = sL1.substring(0, Math.min(sL1.length(), lcdConnect.getWidth()));
 			char[] sLiout = lineOptions(sL2, nLine);
 
-			jaSmartyConnect.writeLineToCache(0, nLine, sLiout);
+			lcdConnect.writeLineToCache(0, nLine, sLiout);
 		}
 	}
 
@@ -76,19 +76,19 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] lineOptions(String sLine, int nLine) {
-		int sMaxWidth = jaSmartyConnect.getWidth();
+		int sMaxWidth = lcdConnect.getWidth();
 		if (sLine.length() == sMaxWidth || sLine.length() == 0) {
 			return sLine.toCharArray();
 		}
 		String sOptions = selectedPage.getOptions();
-		if (sOptions == null || sOptions.length() != jaSmartyConnect.getHeight()) {
+		if (sOptions == null || sOptions.length() != lcdConnect.getHeight()) {
 			return sLine.toCharArray();
 		}
 
 		char nOption = selectedPage.getOptions().charAt(nLine);
 
 		int nZaehler = 0;
-		char[] cOut = new char[jaSmartyConnect.getWidth()];
+		char[] cOut = new char[lcdConnect.getWidth()];
 		// Pauschal mit Leerzeichen init
 		for (int i = 0; i < cOut.length; i++) {
 			cOut[i] = ' ';
@@ -213,26 +213,26 @@ public class PageConverter {
 		StringBuilder sb = new StringBuilder();
 
 		// Gefüllte Blöcke:
-		sb.append(repeat(JaSmartyConnect.BLOCK_3_3, nFillBis / 3));
+		sb.append(repeat(LcdConnect.BLOCK_3_3, nFillBis / 3));
 
 		// komma auswerten
 		switch (nFillBis % 3) {
 		case 0:
-			sb.append(JaSmartyConnect.BLOCK_0_3);
+			sb.append(LcdConnect.BLOCK_0_3);
 			break;
 		case 1:
-			sb.append(JaSmartyConnect.BLOCK_1_3);
+			sb.append(LcdConnect.BLOCK_1_3);
 			break;
 		case 2:
-			sb.append(JaSmartyConnect.BLOCK_2_3);
+			sb.append(LcdConnect.BLOCK_2_3);
 			break;
 		case 3:
-			sb.append(JaSmartyConnect.BLOCK_3_3);
+			sb.append(LcdConnect.BLOCK_3_3);
 			break;
 		}
 
 		// Leere Blöcke:
-		sb.append(repeat(JaSmartyConnect.BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
+		sb.append(repeat(LcdConnect.BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
 		return sb.toString();
 	}
 

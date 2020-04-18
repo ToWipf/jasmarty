@@ -24,7 +24,7 @@ public class ActionVerwaltung {
 	private Integer currentPressed;
 
 	@Inject
-	JaSmartyConnect jaSmartyConnect;
+	LcdConnect lcdConnect;
 
 	@Inject
 	PageVerwaltung pageVerwaltung;
@@ -151,13 +151,13 @@ public class ActionVerwaltung {
 				case "led":
 					switch (sParameter2) {
 					case "on":
-						jaSmartyConnect.ledOn();
+						lcdConnect.ledOn();
 						return;
 					case "off":
-						jaSmartyConnect.ledOff();
+						lcdConnect.ledOff();
 						return;
 					case "toggle":
-						jaSmartyConnect.ledToggle();
+						lcdConnect.ledToggle();
 						return;
 					}
 					return;

@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
-import org.wipf.jasmarty.logic.jasmarty.JaSmartyConnect;
+import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
@@ -22,7 +22,7 @@ import io.quarkus.runtime.StartupEvent;
 public class App {
 
 	@Inject
-	JaSmartyConnect jaSmartyConnect;
+	LcdConnect lcdConnect;
 	@Inject
 	PageVerwaltung pageVerwaltung;
 	@Inject
@@ -35,7 +35,7 @@ public class App {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.200";
+	public static final String VERSION = "0.201";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -49,9 +49,9 @@ public class App {
 		serialConfig.initDB();
 		actionVerwaltung.initDB();
 
-		jaSmartyConnect.setConfig(serialConfig.getConfig());
+		lcdConnect.setConfig(serialConfig.getConfig());
 
-		if (jaSmartyConnect.startPort()) {
+		if (lcdConnect.startPort()) {
 			LOGGER.info("Port geöffnet");
 
 			pageVerwaltung.writeStartPage();
@@ -67,11 +67,11 @@ public class App {
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("stoppe ...");
-		if (jaSmartyConnect.isLcdOk()) {
+		if (lcdConnect.isLcdOk()) {
 			pageVerwaltung.writeExitPage();
-			wipf.sleep(jaSmartyConnect.getRefreshRate() + 50);
+			wipf.sleep(lcdConnect.getRefreshRate() + 50);
 			refreshLoop.stop();
-			if (jaSmartyConnect.close()) {
+			if (lcdConnect.close()) {
 				LOGGER.info("Port geschlossen");
 			}
 		}

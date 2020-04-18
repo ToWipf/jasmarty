@@ -18,7 +18,7 @@ public class RefreshLoop {
 	@Inject
 	PageConverter pageConverter;
 	@Inject
-	JaSmartyConnect jaSmartyConnect;
+	LcdConnect lcdConnect;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 
@@ -29,7 +29,7 @@ public class RefreshLoop {
 	 * 
 	 */
 	public void start() {
-		jaSmartyConnect.resetLcdOK();
+		lcdConnect.resetLcdOK();
 		refreshloop();
 	}
 
@@ -58,13 +58,13 @@ public class RefreshLoop {
 			@Override
 			public void run() {
 
-				while (bLoopActive && jaSmartyConnect.isLcdOk()) {
+				while (bLoopActive && lcdConnect.isLcdOk()) {
 					try {
-						actionVerwaltung.doAction(jaSmartyConnect.readButton()); // TODO evtl. in eingen run auslagern
+						actionVerwaltung.doAction(lcdConnect.readButton()); // TODO evtl. in eingen run auslagern
 
 						pageConverter.refreshCache();
-						jaSmartyConnect.refreshDisplay();
-						Thread.sleep(jaSmartyConnect.getRefreshRate());
+						lcdConnect.refreshDisplay();
+						Thread.sleep(lcdConnect.getRefreshRate());
 
 					} catch (InterruptedException e) {
 						LOGGER.warn(e);

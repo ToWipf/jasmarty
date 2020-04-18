@@ -17,7 +17,7 @@ import com.fazecast.jSerialComm.SerialPort;
  *
  */
 @ApplicationScoped
-public class JaSmartyConnect {
+public class LcdConnect {
 
 	public static char BLOCK_0_3 = '_';
 	public static char BLOCK_1_3 = 0x02;
