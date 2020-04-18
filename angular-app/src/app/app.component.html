@@ -1,4 +1,10 @@
-<ng-sidebar-container style="height: 100vh;">
+<div>
+    <dialog-data-example>loading</dialog-data-example>
+</div>
+<span class="version-info">Current build: 9.2.1</span>
+
+
+<!-- <ng-sidebar-container class="sidebarcontainer">
     <ng-sidebar [(opened)]="opened" position="left">
         <div class="sidebar">
             <ul class="menueli">
@@ -10,11 +16,12 @@
         </div>
     </ng-sidebar>
 
-    <!-- Haupt Page content -->
     <div ng-sidebar-content class="fullsite">
 
         <button class="mainMenueButton" (click)="toggleSidebar()">Menü Öffnen</button>
         <div class="maincontainer">
+            <ng-container *ngIf="selectedSite==='default'">
+            </ng-container>
             <ng-container *ngIf="selectedSite==='pages'">
                 <app-jasmartyPages></app-jasmartyPages>
             </ng-container>
@@ -28,4 +35,4 @@
 
         <app-footer class="myfooter"></app-footer>
     </div>
-</ng-sidebar-container>
+</ng-sidebar-container> -->

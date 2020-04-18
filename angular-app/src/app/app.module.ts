@@ -46,22 +46,18 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatTreeModule } from "@angular/material/tree";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
-import { JasmartyConfigComponent } from './components/jasmartyConfig/jasmartyConfig.component';
-import { JasmartyPagesComponent } from './components/jasmartyPages/jasmartyPages.component';
-import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/jasmartyActions/jasmartyActions.component';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { JasmartyConfigComponent } from "./components/jasmartyConfig/jasmartyConfig.component";
+import { JasmartyPagesComponent } from "./components/jasmartyPages/jasmartyPages.component";
+import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from "./components/jasmartyActions/jasmartyActions.component";
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+import { DialogDataExample, DialogDataExampleDialog } from "./components/demo/demo";
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    JasmartyPagesComponent,
-    JasmartyActionsComponent,
-    JasmartyActionsComponentDialog,
-    FooterComponent,
-    JasmartyConfigComponent,
-  ],
+  declarations: [AppComponent, JasmartyPagesComponent, JasmartyActionsComponent, JasmartyActionsComponentDialog, FooterComponent, JasmartyConfigComponent, DialogDataExample, DialogDataExampleDialog],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -115,8 +111,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatStepperModule,
     MatDatepickerModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
-  
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: "fill" } }],
+  bootstrap: [AppComponent, DialogDataExample],
+  entryComponents: [AppComponent, JasmartyActionsComponentDialog, DialogDataExample, DialogDataExampleDialog],
 })
 export class AppModule {}
