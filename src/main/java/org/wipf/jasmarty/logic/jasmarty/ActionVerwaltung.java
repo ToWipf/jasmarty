@@ -117,7 +117,7 @@ public class ActionVerwaltung {
 			return ba;
 		} catch (Exception e) {
 			LOGGER.warn("BA not found by BNR: " + nButton);
-			return new ButtonAction();
+			return null;
 		}
 	}
 
@@ -127,10 +127,9 @@ public class ActionVerwaltung {
 	public void doAction(Integer nButton) {
 		this.currentPressed = nButton;
 		if (nButton != null) {
-			System.out.println("Action: " + nButton);
+
 			ButtonAction ba = getActionFromDbByButton(nButton);
 			if (ba != null) {
-				System.out.println("DO:" + ba.getAction());
 
 				Integer nTrennlineFirst = ba.getAction().indexOf('|');
 				Integer nTrennlineLast = ba.getAction().lastIndexOf('|');
@@ -141,10 +140,11 @@ public class ActionVerwaltung {
 
 				if (nTrennlineFirst != nTrennlineLast) {
 					// es gibt einen 3. Parameter
-					sParameter2 = ba.getAction().substring(nTrennlineFirst, nTrennlineLast);
+					sParameter2 = ba.getAction().substring(nTrennlineFirst + 1, nTrennlineLast);
+					sParameter3 = ba.getAction().substring(nTrennlineLast + 1);
 				} else {
 					// Es gibt nur 2 Parameter
-					sParameter2 = ba.getAction().substring(nTrennlineFirst);
+					sParameter2 = ba.getAction().substring(nTrennlineFirst + 1);
 				}
 
 				switch (sParameter1) {
@@ -170,6 +170,8 @@ public class ActionVerwaltung {
 						pageVerwaltung.lastPage();
 						return;
 					case "number":
+					case "select":
+					case "to":
 						pageVerwaltung.selectPage(sParameter3);
 						return;
 					}
@@ -177,7 +179,7 @@ public class ActionVerwaltung {
 
 				default:
 					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
-					;
+					return;
 				}
 			}
 		}

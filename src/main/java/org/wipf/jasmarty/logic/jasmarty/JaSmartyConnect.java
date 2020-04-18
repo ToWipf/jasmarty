@@ -49,7 +49,6 @@ public class JaSmartyConnect {
 	public void ledOn() {
 		this.bLed = true;
 		writeAscii(254);
-		writeAscii(71);
 		writeAscii(66);
 	}
 
@@ -59,7 +58,6 @@ public class JaSmartyConnect {
 	public void ledOff() {
 		this.bLed = false;
 		writeAscii(254);
-		writeAscii(71);
 		writeAscii(70);
 	}
 

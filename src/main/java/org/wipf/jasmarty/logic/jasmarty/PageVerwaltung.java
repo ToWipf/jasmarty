@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
 public class PageVerwaltung {
 
 	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
-	private Integer nSelectedSite;
+	private Integer nSelectedSite = 1;
 
 	@Inject
 	PageConverter pageConverter;
@@ -44,18 +44,20 @@ public class PageVerwaltung {
 	public void writeStartPage() {
 		try {
 			LcdPage p = new LcdPage();
-			p.setId(0);
+			p.setId(1);
 			p.setOptions("1012");
 			p.setLine(0, "jaSmarty");
 			p.setLine(1, "");
 			p.setLine(2, "by Wipf");
-			p.setLine(3, "V: " + App.VERSION);
+			p.setLine(3, "V" + App.VERSION);
 			writePage(p);
-			// TODO save this page to db
+
+			// TODO save this page to db ever?
+
+			pageToDB(p);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			LOGGER.warn("writeStartPage" + e);
 		}
 	}
 
@@ -97,19 +99,27 @@ public class PageVerwaltung {
 	 * @param sPage
 	 * @throws SQLException
 	 */
-	public void newPageToDB(String sName, String sPage, String sOptions) throws SQLException {
-		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','"
-				+ sOptions + "')");
+	public void newPageToDB(String sName, String sPage, String sOptions) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.execute("INSERT OR REPLACE INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','"
+					+ sOptions + "')");
+		} catch (SQLException e) {
+			LOGGER.warn("newPageToDB " + e);
+		}
 	}
 
 	/**
 	 * @param nId
 	 * @throws SQLException
 	 */
-	public void delPageFromDB(Integer nId) throws SQLException {
-		Statement stmt = MsqlLite.getDB();
-		stmt.execute("DELETE FROM pages WHERE id = " + nId);
+	public void delPageFromDB(Integer nId) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.execute("DELETE FROM pages WHERE id = " + nId);
+		} catch (SQLException e) {
+			LOGGER.warn("delPageFromDB " + e);
+		}
 	}
 
 	/**
@@ -146,21 +156,20 @@ public class PageVerwaltung {
 	 * @param nId
 	 * @throws SQLException
 	 */
-	public void selectPage(int nId) throws SQLException {
+	public void selectPage(int nId) {
 		nSelectedSite = nId;
-		writePage(getPageFromDB(nId));
+		try {
+			writePage(getPageFromDB(nId));
+		} catch (SQLException e) {
+			LOGGER.warn("selectPage " + e);
+		}
 	}
 
 	/**
 	 * @param sId
 	 */
 	public void selectPage(String sId) {
-		try {
-			selectPage(Integer.valueOf(sId));
-		} catch (Exception e) {
-			LOGGER.warn(sId + " ist keine SeitenId");
-		}
-
+		selectPage(Integer.valueOf(sId));
 	}
 
 	/**
@@ -178,17 +187,7 @@ public class PageVerwaltung {
 	 * 
 	 */
 	public void nextPage() {
-		try {
-			selectPage(nSelectedSite + 1);
-		} catch (SQLException e) {
-			// Seite nicht möglich
-			this.nSelectedSite--;
-			try {
-				selectPage(nSelectedSite);
-			} catch (SQLException e1) {
-				LOGGER.warn("nextPage fail");
-			}
-		}
+		selectPage(nSelectedSite + 1);
 
 	}
 
@@ -196,17 +195,8 @@ public class PageVerwaltung {
 	 * 
 	 */
 	public void lastPage() {
-		try {
-			selectPage(nSelectedSite - 1);
-		} catch (SQLException e) {
-			this.nSelectedSite++;
-			// Nicht möglich
-			try {
-				selectPage(nSelectedSite);
-			} catch (SQLException e1) {
-				LOGGER.warn("lastPage fail");
-			}
-		}
+		selectPage(nSelectedSite - 1);
+
 	}
 
 }
