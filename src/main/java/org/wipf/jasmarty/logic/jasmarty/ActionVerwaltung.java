@@ -181,6 +181,8 @@ public class ActionVerwaltung {
 					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
 					return;
 				}
+			} else {
+				LOGGER.warn("Eingang nicht definert: " + currentPressed);
 			}
 		}
 	}
