@@ -101,7 +101,8 @@ public class ActionVerwaltung {
 			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE button = '" + nButton + "' AND active = 1;");
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM actions WHERE button = '" + nButton + "' AND active = 'true';");
 			ba.setId(rs.getInt("id"));
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));
