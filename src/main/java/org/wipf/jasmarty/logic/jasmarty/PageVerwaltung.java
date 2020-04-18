@@ -45,6 +45,7 @@ public class PageVerwaltung {
 		try {
 			LcdPage p = new LcdPage();
 			p.setId(1);
+			p.setName("Startseite");
 			p.setOptions("1012");
 			p.setLine(0, "jaSmarty");
 			p.setLine(1, "");
