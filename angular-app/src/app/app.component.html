@@ -1,33 +1,53 @@
-<ng-sidebar-container class="sidebarcontainer">
-    <ng-sidebar [(opened)]="opened" position="left">
+<mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
+
+
+    <mat-drawer #drawer [mode]="mode.value">
         <div class="sidebar">
             <div class="titlemenue">Hauptmenü</div>
             <ul class="menueli">
                 <li (click)="selectSite('pages')">Seiten</li>
                 <li (click)="selectSite('actions')">Funktionen</li>
                 <li (click)="selectSite('config')">Einstellungen</li>
-                <button (click)="toggleSidebar()">Schließen</button>
             </ul>
         </div>
-    </ng-sidebar>
+    </mat-drawer>
 
-    <div ng-sidebar-content class="fullsite">
+    <mat-drawer-content>
 
-        <button class="mainMenueButton" (click)="toggleSidebar()">Menü Öffnen</button>
-        <div class="maincontainer">
-            <ng-container *ngIf="selectedSite==='default'">
-            </ng-container>
-            <ng-container *ngIf="selectedSite==='pages'">
-                <app-jasmartyPages></app-jasmartyPages>
-            </ng-container>
-            <ng-container *ngIf="selectedSite==='actions'">
-                <app-jasmartyActions></app-jasmartyActions>
-            </ng-container>
-            <ng-container *ngIf="selectedSite==='config'">
-                <app-jasmartyConfig></app-jasmartyConfig>
-            </ng-container>
+        <div class="hide">
+            <mat-form-field>
+                <mat-select #mode value="push"></mat-select>
+                <mat-select #hasBackdrop value="false"></mat-select>
+            </mat-form-field>
         </div>
-
+        <div class="fullsite">
+            <button class="mainMenueButton" (click)="drawer.toggle()">Menü Öffnen</button>
+            <div class="maincontainer">
+                <ng-container *ngIf="selectedSite==='default'">
+                    Willkommen
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='pages'">
+                    <app-jasmartyPages></app-jasmartyPages>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='actions'">
+                    <app-jasmartyActions></app-jasmartyActions>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='config'">
+                    <app-jasmartyConfig></app-jasmartyConfig>
+                </ng-container>
+            </div>
+        </div>
         <app-footer class="myfooter"></app-footer>
-    </div>
-</ng-sidebar-container>
+
+
+
+        <!-- <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button> -->
+
+    </mat-drawer-content>
+
+</mat-drawer-container>
+
+
+<!-- <ng-sidebar [(opened)]="opened" position="left">
+        
+    </ng-sidebar> -->

@@ -35,7 +35,7 @@ public class App {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("app");
-	public static final String VERSION = "0.201";
+	public static final String VERSION = "0.204";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
