@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.LcdPage;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
  * @author wipf
@@ -17,12 +18,13 @@ import org.wipf.jasmarty.datatypes.LcdPage;
 public class PageConverter {
 
 	private static final Logger LOGGER = Logger.getLogger("jasmarty PageConverter");
-	private LcdPage dynPageCache = new LcdPage();
+	private LcdPage selectedPage;
 
 	@Inject
 	LcdConnect lcdConnect;
 
-	LcdPage selectedPage;
+	@Inject
+	Wipf wipf;
 
 	/**
 	 * @param page
@@ -50,49 +52,38 @@ public class PageConverter {
 	 * @param page
 	 */
 	public void convertPage(LcdPage page) {
-
-		// Wenn sich die Seite nicht geändet hat
-		if (this.dynPageCache.getId() == page.getId()) {
-			// ob sich Vaiablen geändet haben
-
-		} else {
-			// Seite wurde geändert
-			this.dynPageCache = page;
-		}
-
 		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
+			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 
-			String sL1 = varConverter(page.getLine(nLine));
-			String sL2 = sL1.substring(0, Math.min(sL1.length(), lcdConnect.getWidth()));
-			char[] sLiout = lineOptions(sL2, nLine);
-
-			lcdConnect.writeLineToCache(0, nLine, sLiout);
+			// Zeile in Cache schreiben und auf maximale Zeichenanzahl kürzen
+			lcdConnect.writeLineToCache(0, nLine,
+					lineOptions(
+							sLineAfterConvert.substring(0, Math.min(sLineAfterConvert.length(), lcdConnect.getWidth())),
+							nLine));
 		}
 	}
 
 	/**
+	 * Die Optionen der entsprechenden Zeilen beachten z.B. mittig, linksbündig,
+	 * rechtsbündig
+	 * 
 	 * @param sLine
 	 * @param nLine
 	 * @return
 	 */
 	private char[] lineOptions(String sLine, int nLine) {
-		int sMaxWidth = lcdConnect.getWidth();
-		if (sLine.length() == sMaxWidth || sLine.length() == 0) {
-			return sLine.toCharArray();
-		}
+
 		String sOptions = selectedPage.getOptions();
-		if (sOptions == null || sOptions.length() != lcdConnect.getHeight()) {
+
+		// Wenn die Zeile voll oder leer ist -> nichts machen
+		// Wenn keine Options vorhanden sind -> nichts machen
+
+		if (sLine.length() == 0 || sLine.length() == lcdConnect.getWidth() || sOptions == null) {
 			return sLine.toCharArray();
 		}
 
+		// Zeilenoption bestimmen
 		char nOption = selectedPage.getOptions().charAt(nLine);
-
-		int nZaehler = 0;
-		char[] cOut = new char[lcdConnect.getWidth()];
-		// Pauschal mit Leerzeichen init
-		for (int i = 0; i < cOut.length; i++) {
-			cOut[i] = ' ';
-		}
 
 		switch (nOption) {
 		case '0':
@@ -100,24 +91,10 @@ public class PageConverter {
 			return sLine.toCharArray();
 		case '1':
 			// mittig
-			int nSpacesPerSite = (sMaxWidth - sLine.length()) / 2;
-
-			for (char c : sLine.toCharArray()) {
-				cOut[nSpacesPerSite + nZaehler] = c;
-				nZaehler++;
-			}
-			return cOut;
-
+			return lineMittig(sLine);
 		case '2':
 			// linksbündig
-			int nSpaces = (sMaxWidth - sLine.length());
-
-			for (char c : sLine.toCharArray()) {
-				cOut[nSpaces + nZaehler] = c;
-				nZaehler++;
-			}
-			return cOut;
-
+			return lineLinks(sLine);
 		case '3':
 			// weierlauf auf nächste Zeile
 		case '4':
@@ -136,8 +113,49 @@ public class PageConverter {
 	 * @param sLine
 	 * @return
 	 */
-	private String varConverter(String sLine) {
-		// Alle Variablen finden
+	private char[] lineLinks(String sLine) {
+		// Ausgabezeile vorbereiten -> Pauschal mit Leerzeichen init
+		char[] cOut = new char[lcdConnect.getWidth()];
+		for (int i = 0; i < cOut.length; i++) {
+			cOut[i] = ' ';
+		}
+		int nZaehler = 0;
+		int nSpaces = (lcdConnect.getWidth() - sLine.length());
+
+		for (char c : sLine.toCharArray()) {
+			cOut[nSpaces + nZaehler] = c;
+			nZaehler++;
+		}
+		return cOut;
+	}
+
+	/**
+	 * @param sLine
+	 * @return
+	 */
+	private char[] lineMittig(String sLine) {
+		// Ausgabezeile vorbereiten -> Pauschal mit Leerzeichen init
+		char[] cOut = new char[lcdConnect.getWidth()];
+		for (int i = 0; i < cOut.length; i++) {
+			cOut[i] = ' ';
+		}
+		int nZaehler = 0;
+		int nSpacesPerSite = (lcdConnect.getWidth() - sLine.length()) / 2;
+
+		for (char c : sLine.toCharArray()) {
+			cOut[nSpacesPerSite + nZaehler] = c;
+			nZaehler++;
+		}
+		return cOut;
+	}
+
+	/**
+	 * Alle Variablen finden und und ersetzen
+	 * 
+	 * @param sLine
+	 * @return
+	 */
+	private String searchAndReplaceVars(String sLine) {
 		String sOut = sLine;
 
 		int lastIndex = 0;
@@ -146,19 +164,21 @@ public class PageConverter {
 
 			if (lastIndex != -1) {
 				lastIndex += 1;
-				sOut = lineReplace(sOut);
+				sOut = lineReplaceVars(sOut);
 			}
 		}
 		return sOut;
 	}
 
 	/**
+	 * Sucht von hinen alle $var() und ersetzt diese
+	 * 
 	 * @param sLine
 	 * @return
 	 */
-	private String lineReplace(String sLine) {
+	private String lineReplaceVars(String sLine) {
 
-		// Sucht von hinen alle $var() und ersetzt diese
+		// Positionen bestimmen
 		if (sLine.length() < 3) {
 			return sLine;
 		}
@@ -175,6 +195,7 @@ public class PageConverter {
 			return sLine;
 		}
 
+		// Werte ermittelen
 		String sBefore = sLine.substring(0, nIndexStart);
 		String sCommand = sLine.substring(nIndexStart + 1, nIndexParaStart);
 		String sParameter = sLine.substring(nIndexParaStart + 1, nIndexEnd);
@@ -204,7 +225,8 @@ public class PageConverter {
 	 * @return
 	 */
 	private String varBar(String sPara) {
-		int nVal = Integer.valueOf(sPara.substring(0, sPara.indexOf(',')));
+		// Parameter kann 'Mathe' haben
+		int nVal = (int) (wipf.doMathByString(sPara.substring(0, sPara.indexOf(','))));
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
@@ -213,7 +235,7 @@ public class PageConverter {
 		StringBuilder sb = new StringBuilder();
 
 		// Gefüllte Blöcke:
-		sb.append(repeat(LcdConnect.BLOCK_3_3, nFillBis / 3));
+		sb.append(wipf.repeat(LcdConnect.BLOCK_3_3, nFillBis / 3));
 
 		// komma auswerten
 		switch (nFillBis % 3) {
@@ -232,20 +254,8 @@ public class PageConverter {
 		}
 
 		// Leere Blöcke:
-		sb.append(repeat(LcdConnect.BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
+		sb.append(wipf.repeat(LcdConnect.BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
 		return sb.toString();
-	}
-
-	/**
-	 * @param c
-	 * @param times
-	 * @return
-	 */
-	private String repeat(char c, int times) {
-		if (times < 1) {
-			return "";
-		}
-		return new String(new char[times]).replace('\0', c);
 	}
 
 }
