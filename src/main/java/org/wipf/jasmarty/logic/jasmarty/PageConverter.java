@@ -230,6 +230,10 @@ public class PageConverter {
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
+		if (nVal < 1) {
+			nVal = 0;
+		}
+
 		int nFillBis = (nVal * nWidth * 3 / nMax);
 
 		StringBuilder sb = new StringBuilder();

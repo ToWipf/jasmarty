@@ -53,6 +53,7 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
+import { Globals } from './datatypes';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
     MatStepperModule,
     MatDatepickerModule,
   ],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: "fill" } }],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: "fill" } }, Globals],
   bootstrap: [AppComponent],
   entryComponents: [AppComponent, JasmartyActionsComponentDialog],
 })

@@ -19,7 +19,7 @@ export class JasmartyActionsComponent implements OnInit {
   public buttonactions: buttonaction[];
   public tableDataSource: any;
   public displayedColumns: string[] = ["id", "button", "active", "action", "edit"];
-  public currentPressed: number = null;
+  public lastPressed: number = null;
   public loopStop: boolean = false;
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class JasmartyActionsComponent implements OnInit {
 
   public newItem(): void {
     const nextid = this.buttonactions.length + 1;
-    const empty: buttonaction = { id: nextid, active: false, button: this.currentPressed, action: "nichts" };
+    const empty: buttonaction = { id: nextid, active: false, button: this.lastPressed, action: "nichts" };
     this.editItem(empty);
   }
 
@@ -89,7 +89,9 @@ export class JasmartyActionsComponent implements OnInit {
   private getCurrentPressed(): void {
     this.http.get("http://localhost:8080/actions/currentPressed").subscribe((resdata: any) => {
       console.log(resdata.btn);
-      this.currentPressed = resdata.btn;
+      if (resdata.btn){
+        this.lastPressed = resdata.btn;
+      }
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Globals } from 'src/app/datatypes';
 
 @Component({
   selector: 'app-footer',
@@ -10,9 +11,11 @@ export class FooterComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
+    public globals: Globals,
   ) { }
 
-  public sVersion: string = "<Laden ...>";
+  public sAppVersion: string = this.globals.version;
+  public sJavaVersion: string = "<Laden ...>";
 
   ngOnInit() {
     this.getVersion();
@@ -21,7 +24,7 @@ export class FooterComponent implements OnInit {
   private getVersion(): void {
     this.http.get("http://localhost:8080/wipf/ver")
       .subscribe((resdata: any) => {
-        this.sVersion = resdata.ver.toString();
+        this.sJavaVersion = resdata.ver.toString();
       });
   }
 }

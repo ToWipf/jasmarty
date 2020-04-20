@@ -42,55 +42,49 @@ public class PageVerwaltung {
 	 * 
 	 */
 	public void writeStartPage() {
-		try {
-			LcdPage p = new LcdPage();
-			p.setId(1);
-			p.setName("Startseite");
-			p.setOptions("1012");
-			p.setLine(0, "jaSmarty");
-			p.setLine(1, "");
-			p.setLine(2, "by Wipf");
-			p.setLine(3, "V" + App.VERSION);
-			writePage(p);
+		LcdPage p = new LcdPage();
+		p.setId(1);
+		p.setName("Startseite");
+		p.setOptions("1012");
+		p.setLine(0, "jaSmarty");
+		p.setLine(1, "");
+		p.setLine(2, "by Wipf");
+		p.setLine(3, "V" + App.VERSION);
+		writePage(p);
 
-			// TODO save this page to db ever?
+		// TODO save this page to db ever?
 
-			pageToDB(p);
-
-		} catch (SQLException e) {
-			LOGGER.warn("writeStartPage" + e);
-		}
+		pageToDB(p);
 	}
 
 	/**
 	 * 
 	 */
 	public void writeExitPage() {
-		try {
-			LcdPage p = new LcdPage();
-			p.setId(0);
-			p.setOptions("1001");
-			p.setLine(0, "Beendet");
-			p.setLine(1, "");
-			p.setLine(2, "");
-			p.setLine(3, "-wipf-");
-			writePage(p);
-			// TODO save this page to db
+		LcdPage p = new LcdPage();
+		p.setId(0);
+		p.setOptions("1001");
+		p.setLine(0, "Beendet");
+		p.setLine(1, "");
+		p.setLine(2, "");
+		p.setLine(3, "-wipf-");
+		writePage(p);
+		// TODO load this page from db
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void pageToDB(LcdPage page) throws SQLException {
-		Statement stmt = MsqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
-				+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
+	public void pageToDB(LcdPage page) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
+					+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
+		} catch (SQLException e) {
+			LOGGER.warn("pageToDB " + e);
+		}
 	}
 
 	/**
@@ -149,7 +143,7 @@ public class PageVerwaltung {
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void writePage(LcdPage page) throws SQLException {
+	public void writePage(LcdPage page) {
 		pageConverter.selectToNewPage(page);
 	}
 
@@ -159,11 +153,7 @@ public class PageVerwaltung {
 	 */
 	public void selectPage(int nId) {
 		nSelectedSite = nId;
-		try {
-			writePage(getPageFromDB(nId));
-		} catch (SQLException e) {
-			LOGGER.warn("selectPage " + e);
-		}
+		writePage(getPageFromDB(nId));
 	}
 
 	/**
