@@ -250,15 +250,13 @@ public class LcdConnect {
 	 * @return
 	 */
 	private void writeAscii(Integer n) {
-		// System.out.println("write: " + n);
-
 		try {
 			sp.getOutputStream().write(n.byteValue());
 			sp.getOutputStream().flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			this.bLcdIsOk = false;
-			e.printStackTrace();
+			LOGGER.warn("writeAscii: " + e);
 		}
 	}
 
