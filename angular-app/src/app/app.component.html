@@ -5,6 +5,12 @@
         <div class="sidebar">
             <div class="titlemenue">Hauptmenü</div>
             <ul class="menueli">
+                <li (click)="selectSite('default')">Startseite</li>
+                <li (click)="selectSite('live')">Live-Daten</li>
+            </ul>
+
+            <div class="titlemenue">Konfiguration</div>
+            <ul class="menueli">
                 <li (click)="selectSite('pages')">Seiten</li>
                 <li (click)="selectSite('actions')">Funktionen</li>
                 <li (click)="selectSite('config')">Einstellungen</li>
@@ -34,6 +40,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='config'">
                     <app-jasmartyConfig></app-jasmartyConfig>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='live'">
+                    <app-jasmartyLive></app-jasmartyLive>
                 </ng-container>
             </div>
         </div>

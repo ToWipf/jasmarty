@@ -124,15 +124,8 @@ public class LcdConnect {
 	/**
 	 * @return
 	 */
-	public String getCachIstAsString() {
-		return lcache.toStringIst();
-	}
-
-	/**
-	 * @return
-	 */
-	public String getCachSollAsString() {
-		return lcache.toStringSoll();
+	public LcdCache getCache() {
+		return lcache;
 	}
 
 	/**

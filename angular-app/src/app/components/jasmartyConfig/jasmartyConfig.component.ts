@@ -45,12 +45,6 @@ export class JasmartyConfigComponent implements OnInit {
     });
   }
 
-  public refresh(): void {
-    this.http.get("http://localhost:8080/lcd/refresh").subscribe((resdata: any) => {
-      console.log(resdata);
-    });
-  }
-
   public refreshOn(): void {
     this.http.get("http://localhost:8080/refresh/on").subscribe((resdata: any) => {
       console.log(resdata);

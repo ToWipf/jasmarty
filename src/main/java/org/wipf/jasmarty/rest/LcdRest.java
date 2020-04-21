@@ -35,14 +35,6 @@ public class LcdRest {
 	}
 
 	@GET
-	@Path("/refresh")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response refreshDisplay() {
-		lcdConnect.refreshDisplay();
-		return Response.ok("{\"TODO\":\"TODO\"}").build(); // TODO
-	}
-
-	@GET
 	@Path("/write/{x}/{y}/{str}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
@@ -53,18 +45,25 @@ public class LcdRest {
 	@GET
 	@Path("/ist")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String chIst() {
-		return lcdConnect.getCachIstAsString();
+	public Response chIst() {
+		return Response.ok(lcdConnect.getCache().toIstJson().toString()).build();
 
 	}
 
 	@GET
 	@Path("/soll")
 	@Produces(MediaType.TEXT_PLAIN)
-	public String chSoll() {
-		return lcdConnect.getCachSollAsString();
-
+	public Response chSoll() {
+		return Response.ok(lcdConnect.getCache().toSollJson().toString()).build();
 	}
+
+//	@GET
+//	@Path("/refresh")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public Response refreshDisplay() {
+//		lcdConnect.refreshDisplay();
+//		return Response.ok("{\"TODO\":\"TODO\"}").build(); // TODO
+//	}
 
 //	@GET
 //	@Path("/writeAscii/{int}")

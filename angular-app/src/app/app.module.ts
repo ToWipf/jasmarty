@@ -54,6 +54,7 @@ import { MatDatepickerModule } from "@angular/material/datepicker";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { Globals } from './datatypes';
+import { JasmartyLiveComponent } from './components/jasmartyLive/jasmartyLive.component';
 
 @NgModule({
   declarations: [
@@ -61,8 +62,9 @@ import { Globals } from './datatypes';
     JasmartyPagesComponent,
     JasmartyActionsComponent,
     JasmartyActionsComponentDialog,
-    FooterComponent,
     JasmartyConfigComponent,
+    JasmartyLiveComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserAnimationsModule,

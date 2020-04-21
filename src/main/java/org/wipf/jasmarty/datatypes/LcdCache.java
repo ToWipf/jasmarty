@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.datatypes;
 
+import org.json.JSONObject;
+
 /**
  * @author wipf
  *
@@ -30,22 +32,6 @@ public class LcdCache {
 				this.cacheSoll[x][y] = ' ';
 			}
 		}
-	}
-
-	/**
-	 * @param arr
-	 * @return
-	 */
-	private String arrToString(char[][] arr) {
-		StringBuilder sb = new StringBuilder();
-		for (int y = 0; y < nHeight; y++) {
-			sb.append("\n");
-			sb.append("Line: " + y + ": ");
-			for (int x = 0; x < nWidth; x++) {
-				sb.append(arr[x][y]);
-			}
-		}
-		return sb.toString();
 	}
 
 	/**
@@ -124,15 +110,35 @@ public class LcdCache {
 	/**
 	 * @return
 	 */
-	public String toStringIst() {
-		return arrToString(this.cacheIst);
+	public JSONObject toSollJson() {
+		JSONObject jo = new JSONObject();
+
+		for (int y = 0; y < nHeight; y++) {
+			StringBuilder sb = new StringBuilder();
+
+			for (int x = 0; x < nWidth; x++) {
+				sb.append(this.cacheSoll[x][y]);
+				jo.put("\"" + x + "\"", sb.toString());
+			}
+		}
+		return jo;
 	}
 
 	/**
 	 * @return
 	 */
-	public String toStringSoll() {
-		return arrToString(this.cacheSoll);
+	public JSONObject toIstJson() {
+		JSONObject jo = new JSONObject();
+
+		for (int y = 0; y < nHeight; y++) {
+			StringBuilder sb = new StringBuilder();
+
+			for (int x = 0; x < nWidth; x++) {
+				sb.append(this.cacheIst[x][y]);
+				jo.put("\"" + x + "\"", sb.toString());
+			}
+		}
+		return jo;
 	}
 
 	/**
