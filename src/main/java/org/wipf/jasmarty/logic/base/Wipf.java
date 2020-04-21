@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.base;
 
+import java.util.Random;
+
 import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
@@ -14,6 +16,27 @@ public class Wipf {
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * @param nMax
+	 * @return
+	 */
+	public int getRandomInt(int nMax) {
+		Random wuerfel = new Random();
+		return wuerfel.nextInt(nMax);
+	}
+
+	/**
+	 * @param sMax
+	 * @return
+	 */
+	public int getRandomInt(String sMax) {
+		try {
+			return getRandomInt(Integer.valueOf(sMax));
+		} catch (Exception e) {
+			return 42;
 		}
 	}
 
@@ -33,7 +56,22 @@ public class Wipf {
 	 * @param str
 	 * @return
 	 */
-	public double doMathByString(final String str) {
+	public double doMathByString(String str) {
+		try {
+			return doMath(str);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
+
+	/**
+	 * Von:
+	 * https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
+	 * 
+	 * @param str
+	 * @return
+	 */
+	private double doMath(final String str) {
 		return new Object() {
 			int pos = -1, ch;
 
@@ -97,9 +135,9 @@ public class Wipf {
 
 				double x;
 				int startPos = this.pos;
-				if (eat('(')) { // parentheses
+				if (eat('[')) { // parentheses
 					x = parseExpression();
-					eat(')');
+					eat(']');
 				} else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
 					while ((ch >= '0' && ch <= '9') || ch == '.')
 						nextChar();

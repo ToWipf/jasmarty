@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import { Component, OnInit, ViewChild, Inject, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { buttonaction } from "src/app/datatypes";
 import { MatTableDataSource } from "@angular/material/table";
@@ -11,7 +11,7 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
   templateUrl: "./jasmartyActions.component.html",
   styleUrls: ["./jasmartyActions.component.less"],
 })
-export class JasmartyActionsComponent implements OnInit {
+export class JasmartyActionsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;

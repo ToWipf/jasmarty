@@ -99,4 +99,11 @@ export class JasmartyPagesComponent implements OnInit {
     const opt = this.japage.options.substr(0, line) + option + this.japage.options.substr(line + this.japage.options.length);
     this.japage.options = opt;
   }
+
+  public saveAndSelectPage(){
+    this.save();
+    setTimeout(() => {
+      this.selectPage();
+     }, 1000);
+  }
 }

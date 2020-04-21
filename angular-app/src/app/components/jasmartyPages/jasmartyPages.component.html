@@ -2,38 +2,81 @@
 <hr>
 
 <div class="jalist">
-    <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
 
-        <div>
-            <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button> {{selectedPage}}
-            <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
-        </div>
+    <div class="gridRow">
+        <div class="gridCol">
+            <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
 
-        <div>
-            <ng-container *ngIf="japage">
-                ID: {{japage.id}}
                 <div>
-                    <h5>Name</h5>
-                    <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
-                </div>
-
-                <h5>Zeilen</h5>
-                <div *ngFor="let line of lines; let i = index; trackBy:trackByIndex;">
-                    <input type="string" class="form-control inputText" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
-                    <!-- <input type="checkbox" ng-model="options"> -->
+                    <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button> {{selectedPage}}
+                    <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
                 </div>
 
                 <div>
-                    <h5>options</h5>
-                    <input type="string" class="form-control inputText" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
+                    <ng-container *ngIf="japage">
+                        ID: {{japage.id}}
+                        <div>
+                            <h5>Name</h5>
+                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
+                        </div>
+
+                        <h5>Zeilen</h5>
+                        <div *ngFor="let line of lines; let i = index; trackBy:trackByIndex;">
+                            <input type="string" class="form-control inputText" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
+                            <!-- <input type="checkbox" ng-model="options"> -->
+                        </div>
+
+                        <div>
+                            <h5>options</h5>
+                            <input type="string" class="form-control inputText" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
+                        </div>
+
+                    </ng-container>
                 </div>
 
-            </ng-container>
+                <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button>
+                <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button>
+                <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
+                    Zeigen</button>
+            </perfect-scrollbar>
         </div>
 
-        <button type="button" class="btn btn-primary inbutton" (click)="save()">Save</button>
-        <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">SelectPage</button>
+        <div class="gridCol">
+            <h4>Funktionen</h4>
+            <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
+                <h5>Zeit</h5>
+
+                <ul>
+                    <li><code>$time(Parameter mit Trennzeichen)</code></li>
+                    <li><code>$time(HH:mm:ss)</code></li>
+                    <li><code>$time(dd MMMM yyyy)</code></li>
+                    <li><code>$time(dd.MM.yy)</code></li>
+                    <li><a target="blank" href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
+                    </li>
+                </ul>
+
+                <h5>Balken</h5>
+                <ul>
+                    <li><code>$bar(Variable|Maximaler Wert|Länge)</code></li>
+                    <li><code>$bar($time(ss),60,20))</code></li>
+                    <li><code>$bar($time(ss)+10,60,20))</code></li>
+                </ul>
+
+                <h5>Mathe</h5>
+                <ul>
+                    <li><code>$math(Rechnung)</code></li>
+                    <li><code>$math([[4 - 2^3 + 1] * -sqrt[3*3+4*4]] / 2)</code></li>
+                    Als Klammer kann <code>[]</code> verwendet werden
+                </ul>
+
+                <h5>Zufall</h5>
+                <ul>
+                    <li><code>$rnd(MaxZahl)</code></li>
+                    <li><code>$rnd(42)</code></li>
+                </ul>
 
 
-    </perfect-scrollbar>
+            </perfect-scrollbar>
+        </div>
+    </div>
 </div>

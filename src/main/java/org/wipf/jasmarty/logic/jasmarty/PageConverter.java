@@ -206,6 +206,10 @@ public class PageConverter {
 			return sBefore + varTime(sParameter) + sAfter;
 		case "bar":
 			return sBefore + varBar(sParameter) + sAfter;
+		case "math":
+			return sBefore + wipf.doMathByString(sParameter) + sAfter;
+		case "rnd":
+			return sBefore + wipf.getRandomInt(sParameter) + sAfter;
 
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
@@ -216,8 +220,12 @@ public class PageConverter {
 	 * @return
 	 */
 	private String varTime(String sPara) {
-		SimpleDateFormat time = new SimpleDateFormat(sPara);
-		return time.format(new Date());
+		try {
+			SimpleDateFormat time = new SimpleDateFormat(sPara);
+			return time.format(new Date());
+		} catch (Exception e) {
+			return "Parameter ungültig";
+		}
 	}
 
 	/**
