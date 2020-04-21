@@ -118,7 +118,7 @@ public class LcdCache {
 
 			for (int x = 0; x < nWidth; x++) {
 				sb.append(this.cacheSoll[x][y]);
-				jo.put("\"" + x + "\"", sb.toString());
+				jo.put("\"" + y + "\"", sb.toString());
 			}
 		}
 		return jo;
@@ -135,7 +135,7 @@ public class LcdCache {
 
 			for (int x = 0; x < nWidth; x++) {
 				sb.append(this.cacheIst[x][y]);
-				jo.put("\"" + x + "\"", sb.toString());
+				jo.put("\"" + y + "\"", sb.toString());
 			}
 		}
 		return jo;

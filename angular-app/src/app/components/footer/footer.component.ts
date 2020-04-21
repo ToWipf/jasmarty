@@ -15,7 +15,7 @@ export class FooterComponent implements OnInit {
   ) { }
 
   public sAppVersion: string = this.globals.version;
-  public sJavaVersion: string = "<Laden ...>";
+  public sJavaVersion: string = "0.0";
 
   ngOnInit() {
     this.getVersion();
