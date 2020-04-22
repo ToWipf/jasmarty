@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.datatypes;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -104,7 +105,6 @@ public class LcdCache {
 			write(x + nOffset, y, c);
 			nOffset++;
 		}
-
 	}
 
 	/**
@@ -112,15 +112,20 @@ public class LcdCache {
 	 */ // TODO
 	public JSONObject toSollJson() {
 		JSONObject jo = new JSONObject();
+		JSONArray ja = new JSONArray();
 
 		for (int y = 0; y < nHeight; y++) {
-			StringBuilder sb = new StringBuilder();
 
+			JSONObject jLine = new JSONObject();
+			JSONArray jaChars = new JSONArray();
 			for (int x = 0; x < nWidth; x++) {
-				sb.append(this.cacheSoll[x][y]);
-				jo.put("\"l" + y + "\"", sb.toString());
+				jaChars.put(this.cacheSoll[x][y]);
 			}
+
+			jLine.put("line_" + y, jaChars);
+			ja.put(jLine);
 		}
+		jo.put("list", ja);
 		return jo;
 	}
 

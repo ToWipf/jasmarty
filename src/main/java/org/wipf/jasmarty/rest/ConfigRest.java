@@ -24,8 +24,8 @@ public class ConfigRest {
 	@GET
 	@Path("/get")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getConfig() {
-		return serialConfig.getConfig().toJson();
+	public Response getConfig() {
+		return Response.ok(serialConfig.getConfig().toJson()).build();
 	}
 
 	@POST

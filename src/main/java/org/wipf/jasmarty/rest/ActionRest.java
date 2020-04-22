@@ -32,15 +32,15 @@ public class ActionRest {
 	@GET
 	@Path("/get/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAction(@PathParam("id") Integer nId) {
-		return actionVerwaltung.getActionFromDbByButton(nId).toJson();
+	public Response getAction(@PathParam("id") Integer nId) {
+		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson()).build();
 	}
 
 	@GET
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getAll() {
-		return actionVerwaltung.getAllFromDBAsJson();
+	public Response getAll() {
+		return Response.ok(actionVerwaltung.getAllFromDBAsJson()).build();
 	}
 
 	@POST

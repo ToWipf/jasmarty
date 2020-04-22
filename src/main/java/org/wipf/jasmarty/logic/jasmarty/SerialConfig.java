@@ -5,8 +5,12 @@ import java.sql.Statement;
 import javax.enterprise.context.RequestScoped;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdConfig;
 import org.wipf.jasmarty.logic.base.MsqlLite;
+
+import com.fazecast.jSerialComm.SerialPort;
 
 @RequestScoped
 public class SerialConfig {
@@ -88,6 +92,24 @@ public class SerialConfig {
 	 */
 	public boolean setConfig(String jnRoot) {
 		return setConfig(new LcdConfig().setByJson(jnRoot));
+	}
+
+	/**
+	 * @return
+	 */
+	public JSONObject getPorts() {
+		SerialPort[] spa = SerialPort.getCommPorts();
+
+		JSONObject jo = new JSONObject();
+		JSONArray ja = new JSONArray();
+		for (SerialPort item : spa) {
+			JSONObject jItem = new JSONObject();
+
+			jItem.put("name", item.getDescriptivePortName());
+			ja.put(jItem);
+		}
+		jo.put("list", ja);
+		return jo;
 	}
 
 }

@@ -38,7 +38,6 @@ public class PagesRest {
 	@Path("/select/{pid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response newPage(@PathParam("pid") int nPid) {
-
 		pageVerwaltung.selectPage(nPid);
 		return Response.ok("{}").build();
 	}

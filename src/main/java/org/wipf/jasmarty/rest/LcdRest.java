@@ -23,15 +23,15 @@ public class LcdRest {
 	@GET
 	@Path("/open")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String open() {
-		return "{\"open\":\"" + lcdConnect.startPort() + "\"}";
+	public Response open() {
+		return Response.ok("{\"open\":\"" + lcdConnect.startPort() + "\"}").build();
 	}
 
 	@GET
 	@Path("/close")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String close() {
-		return "{\"close\":\"" + lcdConnect.close() + "\"}";
+	public Response close() {
+		return Response.ok("{\"close\":\"" + lcdConnect.close() + "\"}").build();
 	}
 
 	@GET

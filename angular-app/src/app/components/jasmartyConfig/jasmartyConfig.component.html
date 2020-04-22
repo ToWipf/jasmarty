@@ -30,6 +30,13 @@
             <button type="button" class="btn btn-primary inbutton" (click)="save() ">Save</button>
         </div>
         <div class="gridCol">
+            verfügbare Ports:
+            <div *ngFor="let p of ports;">
+                <code>{{p.name}}</code>
+            </div>
+
+        </div>
+        <div class="gridCol">
             <h4>Hauptfunktionen</h4>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
                 <button type="button" class="btn btn-primary inbutton" (click)="start() ">Starte Verbindung</button>

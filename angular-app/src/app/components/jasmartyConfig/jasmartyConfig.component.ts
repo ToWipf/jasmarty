@@ -11,9 +11,11 @@ export class JasmartyConfigComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   public jaconfig: jaconfig = {};
+  public ports: [{ item: string }];
 
   ngOnInit() {
     this.load();
+    this.getPorts();
   }
 
   public load(): void {
@@ -30,6 +32,13 @@ export class JasmartyConfigComponent implements OnInit {
         //TODO: Meldung Fehler
         console.log("fehler");
       }
+    });
+  }
+
+  public getPorts(): void {
+    this.http.get("http://localhost:8080/wipf/ports").subscribe((resdata: any) => {
+      console.log(resdata);
+      this.ports = resdata.list;
     });
   }
 
