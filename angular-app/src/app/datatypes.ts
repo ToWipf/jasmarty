@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Globals {
-   version:string = "54";
+  version: string = "54";
 }
 
 export interface jaconfig {
@@ -25,4 +25,10 @@ export interface buttonaction {
   button?: number;
   active?: boolean;
   action?: string;
+}
+
+export interface displayLcd {
+  width?: number;
+  height?: number;
+  display?: [{ line: number; data: string }];
 }

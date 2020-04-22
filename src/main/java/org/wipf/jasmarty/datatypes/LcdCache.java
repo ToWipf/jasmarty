@@ -109,23 +109,26 @@ public class LcdCache {
 
 	/**
 	 * @return
-	 */ // TODO
+	 */
 	public JSONObject toSollJson() {
 		JSONObject jo = new JSONObject();
 		JSONArray ja = new JSONArray();
 
-		for (int y = 0; y < nHeight; y++) {
+		for (int y = 0; y < this.nHeight; y++) {
 
 			JSONObject jLine = new JSONObject();
-			JSONArray jaChars = new JSONArray();
+			StringBuilder sb = new StringBuilder();
 			for (int x = 0; x < nWidth; x++) {
-				jaChars.put(this.cacheSoll[x][y]);
+				sb.append(this.cacheSoll[x][y]);
 			}
 
-			jLine.put("line_" + y, jaChars);
+			jLine.put("line", y);
+			jLine.put("data", sb.toString());
 			ja.put(jLine);
 		}
-		jo.put("list", ja);
+		jo.put("display", ja);
+		jo.put("height", this.nHeight);
+		jo.put("width", this.nWidth);
 		return jo;
 	}
 

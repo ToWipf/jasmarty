@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { displayLcd } from 'src/app/datatypes';
 
 @Component({
   selector: "app-jasmartyLive",
@@ -9,8 +10,9 @@ import { HttpClient } from "@angular/common/http";
 export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   constructor(private http: HttpClient) {}
 
-  public display: any;
+  public displayLive: displayLcd;
   public loopStop: boolean = false;
+  public display: string[] = [];
 
   ngOnInit() {
     this.loopLoadNew();
@@ -32,8 +34,13 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
 
   private getLcdSoll(): void {
     this.http.get("http://localhost:8080/lcd/soll").subscribe((resdata: any) => {
-      console.log(resdata);
-      this.display = resdata;
+      this.displayLive = resdata;
+
+      this.displayLive.display.forEach((line) =>{
+        this.display[line.line] = line.data;
+      })
+      console.log(this.display);
+            
     });
   }
 }

@@ -34,6 +34,8 @@ public class PageConverter {
 			lcdConnect.clearScreen();
 		}
 		this.selectedPage = page;
+		// Manuellen Refresh anstoßen
+		this.refreshCache();
 	}
 
 	/**

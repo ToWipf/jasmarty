@@ -53,13 +53,12 @@ public class App {
 
 		if (lcdConnect.startPort()) {
 			LOGGER.info("Port geöffnet");
-
-			pageVerwaltung.writeStartPage();
 			refreshLoop.start();
 
 		} else {
 			LOGGER.warn("Port nicht geöffnet!");
 		}
+		pageVerwaltung.writeStartPage();
 	}
 
 	/**

@@ -1,3 +1,5 @@
-{{display.l0}}<br> {{display.l1}}
-<br> {{display.l2}}
-<br> {{display.l3}} TODO:
+<div class="liveview" *ngFor="let line of display;">
+    <div class="liveline">
+        |{{line}}|
+    </div>
+</div>

@@ -132,10 +132,10 @@ public class LcdConnect {
 	 * @return
 	 */
 	public Boolean startPort() {
-		try {
-			// Cache vorbereiten
-			lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
+		// Cache vorbereiten
+		lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
 
+		try {
 			// LCD Connect
 			sp = SerialPort.getCommPort(lconf.getPort());
 			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
