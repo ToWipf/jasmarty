@@ -120,7 +120,6 @@ public class PageVerwaltung {
 	/**
 	 * @param nId
 	 * @return
-	 * @throws SQLException
 	 */
 	public LcdPage getPageFromDB(int nId) {
 		try {
@@ -141,7 +140,6 @@ public class PageVerwaltung {
 
 	/**
 	 * @param page
-	 * @throws SQLException
 	 */
 	public void writePage(LcdPage page) {
 		pageConverter.selectToNewPage(page);
@@ -149,7 +147,6 @@ public class PageVerwaltung {
 
 	/**
 	 * @param nId
-	 * @throws SQLException
 	 */
 	public void selectPage(int nId) {
 		nSelectedSite = nId;

@@ -29,7 +29,6 @@ public class RefreshLoop {
 	 * 
 	 */
 	public void start() {
-		lcdConnect.resetLcdOK();
 		refreshloop();
 	}
 
@@ -72,7 +71,7 @@ public class RefreshLoop {
 					}
 				}
 				bLoopActive = false;
-				LOGGER.info("Refresh aus");
+				LOGGER.info("Refresh Fehler -> Refresh aus");
 			}
 		});
 	}

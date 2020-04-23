@@ -92,6 +92,7 @@ public class LcdConnect {
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unused")
 	public void resetLcdOK() {
 		bLcdIsOk = true;
 	}
@@ -144,13 +145,13 @@ public class LcdConnect {
 			if (!sp.openPort()) {
 				LOGGER.warn("LCD Port " + lconf.getPort() + " nicht gefunden");
 				return false;
+			} else {
+				// Warten bis LCD bereit ist
+				bLcdIsOk = true;
+				Thread.sleep(5000);
+				// clearScreen(); nicht nötig
+				return true;
 			}
-
-			// Warten bis LCD bereit ist
-			bLcdIsOk = true;
-			Thread.sleep(5000);
-			// clearScreen(); nicht nötig
-			return true;
 
 		} catch (Exception e) {
 			LOGGER.warn("LCD Start: " + e);

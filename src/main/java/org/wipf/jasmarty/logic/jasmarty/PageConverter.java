@@ -35,6 +35,7 @@ public class PageConverter {
 		}
 		this.selectedPage = page;
 		// Manuellen Refresh anstoßen
+
 		this.refreshCache();
 	}
 
@@ -42,18 +43,13 @@ public class PageConverter {
 	 * 
 	 */
 	public void refreshCache() {
-		try {
-			convertPage(selectedPage);
-		} catch (Exception e) {
-			LOGGER.warn("refreshCache: ");
-			e.printStackTrace();
-		}
+		convertPage(selectedPage);
 	}
 
 	/**
 	 * @param page
 	 */
-	public void convertPage(LcdPage page) {
+	private void convertPage(LcdPage page) {
 		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 
