@@ -36,7 +36,11 @@ public class RefreshLoop {
 	 * 
 	 */
 	public void stop() {
-		bLoopActive = false;
+		if (bLoopActive) {
+			bLoopActive = false;
+		} else {
+			LOGGER.info("Refresh bereits aus");
+		}
 	}
 
 	/**
@@ -71,7 +75,7 @@ public class RefreshLoop {
 					}
 				}
 				bLoopActive = false;
-				LOGGER.info("Refresh Fehler -> Refresh aus");
+				LOGGER.info("Refresh aus");
 			}
 		});
 	}
