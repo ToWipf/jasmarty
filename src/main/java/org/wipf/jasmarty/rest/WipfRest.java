@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -15,6 +16,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  *
  */
 @Path("/wipf")
+@ApplicationScoped
 public class WipfRest {
 
 	@Inject

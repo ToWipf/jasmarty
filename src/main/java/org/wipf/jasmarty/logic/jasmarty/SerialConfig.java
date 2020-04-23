@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.jasmarty;
 
 import java.sql.Statement;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
@@ -12,7 +12,7 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
 
 import com.fazecast.jSerialComm.SerialPort;
 
-@RequestScoped
+@ApplicationScoped
 public class SerialConfig {
 
 	private static final Logger LOGGER = Logger.getLogger("SerialConfig");

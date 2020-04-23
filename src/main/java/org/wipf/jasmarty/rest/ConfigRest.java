@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.OPTIONS;
@@ -16,6 +17,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  *
  */
 @Path("/config")
+@ApplicationScoped
 public class ConfigRest {
 
 	@Inject
