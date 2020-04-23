@@ -60,7 +60,7 @@ public class Wipf {
 		try {
 			return doMath(str);
 		} catch (Exception e) {
-			return -1;
+			return -1.0;
 		}
 	}
 
