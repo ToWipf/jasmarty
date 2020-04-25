@@ -173,15 +173,17 @@ public class LcdConnect {
 	 */
 	public void clearScreen() {
 		lcache.clearCacheFull();
-		writeAscii(254);
-		writeAscii(88);
+		if (isLcdOk()) {
+			writeAscii(254);
+			writeAscii(88);
+		}
 	}
 
 	/**
 	 * 
 	 */
 	public void refreshDisplay() {
-		if (lcache.hasChanges()) {
+		if (lcache.hasChanges() && isLcdOk()) {
 			for (int y = 0; y < lcache.getHeight(); y++) {
 				for (int x = 0; x < lcache.getWidth(); x++) {
 					if (lcache.getCacheIst(x, y) != lcache.getCacheSoll(x, y)) {

@@ -22,6 +22,12 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
     this.loopStop = true;
   }
 
+  public refreshNow(): void {
+    this.http.get("http://localhost:8080/refresh/refreshNow" ).subscribe((res: any) => {
+          console.log(res);      
+    });
+  }
+
   private loopLoadNew(): void {
     if (!this.loopStop) {
       // get current button

@@ -30,9 +30,9 @@ public class PageConverter {
 	 * @param page
 	 */
 	public void selectToNewPage(LcdPage page) {
-		if (lcdConnect.isLcdOk()) {
-			lcdConnect.clearScreen();
-		}
+
+		lcdConnect.clearScreen();
+
 		this.selectedPage = page;
 		// Manuellen Refresh anstoßen
 

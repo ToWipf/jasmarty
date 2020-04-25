@@ -37,4 +37,12 @@ public class RefreshRest {
 		return Response.ok("{}").build();
 	}
 
+	@GET
+	@Path("/refreshNow")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response refreshNow() {
+		refreshLoop.doRefreshLcd();
+		return Response.ok("{}").build();
+	}
+
 }
