@@ -18,7 +18,8 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   public buttonactions: buttonaction[];
   public tableDataSource: any;
-  public displayedColumns: string[] = ["id", "button", "active", "action", "edit"];
+  //public displayedColumns: string[] = ["id", "button", "active", "action", "edit"];
+  public displayedColumns: string[] = ["button", "active", "action", "edit"];
   public lastPressed: number = null;
   public loopStop: boolean = false;
 

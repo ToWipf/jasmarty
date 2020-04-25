@@ -11,7 +11,7 @@ export class JasmartyConfigComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   public jaconfig: jaconfig = {};
-  public ports: [{ item: string }];
+  public ports: [{ name: string }];
 
   ngOnInit() {
     this.load();
