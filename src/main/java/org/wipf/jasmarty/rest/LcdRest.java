@@ -49,7 +49,6 @@ public class LcdRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response chIst() {
 		return Response.ok(lcdConnect.getCache().toIstJson().toString()).build();
-
 	}
 
 	@GET

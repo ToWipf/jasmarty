@@ -2,7 +2,6 @@
 <hr>
 
 <div class="jalist">
-
     <div class="gridRow">
         <div class="gridCol">
             <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
@@ -21,14 +20,15 @@
                         </div>
 
                         <h5>Zeilen</h5>
-                        <div *ngFor="let line of lines; let i = index; trackBy:trackByIndex;">
-                            <input type="string" class="form-control inputText" [(ngModel)]="lines[i]" placeholder="Zeile {{i}}">
+                        <div *ngFor="let line of japage.lines; let i = index; trackBy:trackByIndex;">
+                            <input type="string" class="form-control inputText" [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
                             <!-- <input type="checkbox" ng-model="options"> -->
-                        </div>
-
-                        <div>
-                            <h5>options</h5>
-                            <input type="string" class="form-control inputText" [(ngModel)]="japage.options" placeholder="Bitte eintragen">
+                            <mat-form-field>
+                                <!-- <mat-label>Option</mat-label> -->
+                                <mat-select [(ngModel)]="japage.lines[i].option" name="option">
+                                  <mat-option *ngFor="let option of options" [value]="option">{{option.val}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
                         </div>
 
                     </ng-container>
@@ -74,7 +74,6 @@
                     <li><code>$rnd(MaxZahl)</code></li>
                     <li><code>$rnd(42)</code></li>
                 </ul>
-
 
             </perfect-scrollbar>
         </div>

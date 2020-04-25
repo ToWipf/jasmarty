@@ -128,24 +128,32 @@ public class LcdCache {
 		}
 		jo.put("display", ja);
 		jo.put("height", this.nHeight);
-		jo.put("width", this.nWidth);
+		jo.put("width", this.nWidth); // TODO nicht nötig
 		return jo;
 	}
 
 	/**
 	 * @return
-	 */// TODO
+	 */
 	public JSONObject toIstJson() {
 		JSONObject jo = new JSONObject();
+		JSONArray ja = new JSONArray();
 
-		for (int y = 0; y < nHeight; y++) {
+		for (int y = 0; y < this.nHeight; y++) {
+
+			JSONObject jLine = new JSONObject();
 			StringBuilder sb = new StringBuilder();
-
 			for (int x = 0; x < nWidth; x++) {
 				sb.append(this.cacheIst[x][y]);
-				jo.put("\"l" + y + "\"", sb.toString());
 			}
+
+			jLine.put("line", y);
+			jLine.put("data", sb.toString());
+			ja.put(jLine);
 		}
+		jo.put("display", ja);
+		jo.put("height", this.nHeight);
+		jo.put("width", this.nWidth);
 		return jo;
 	}
 

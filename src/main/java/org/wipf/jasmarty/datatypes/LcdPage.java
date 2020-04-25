@@ -3,13 +3,14 @@ package org.wipf.jasmarty.datatypes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * @author wipf Achtung ARR x und y sind vertauscht!
+ * @author wipf
  */
 public class LcdPage {
 
@@ -22,11 +23,36 @@ public class LcdPage {
 		this.saLines = new ArrayList<String>();
 	}
 
-//	public void setLine(int nLine, String sLine, boolean bMittig, int nLength) {
-//	int spaces = nLength-sLine.length();
-//	
-//	this.saLines.add(nLine, sLine);
-//}
+	/**
+	 * @return
+	 */
+	public String toJson() {
+		JSONObject jo = new JSONObject();
+		jo.put("name", sName);
+		jo.put("id", nId);
+		// jo.put("options", sOptions);
+		jo.put("lines", linesToJson());
+		return jo.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	private JSONArray linesToJson() {
+		JSONArray ja = new JSONArray();
+
+		int nLine = 0;
+		for (String line : saLines) {
+			JSONObject jo = new JSONObject();
+
+			jo.put("line", nLine);
+			jo.put("data", line);
+			jo.put("option", sOptions.charAt(nLine));
+			ja.put(jo);
+			nLine++;
+		}
+		return ja;
+	}
 
 	/**
 	 * @param jnRoot
@@ -39,7 +65,7 @@ public class LcdPage {
 			jn = mapper.readTree(jnRoot);
 
 			this.sName = jn.get("name").asText();
-			this.sOptions = jn.get("options").asText();
+			this.sOptions = jn.get("options").asText(); // TODO get id reicht nicht -> options Table
 			this.nId = jn.get("id").asInt();
 			setStringToPage(jn.get("lines").asText());
 			return this;
@@ -72,18 +98,6 @@ public class LcdPage {
 			this.saLines.add(nLine, s);
 			nLine++;
 		}
-	}
-
-	/**
-	 * @return
-	 */
-	public String toJson() {
-		JSONObject jo = new JSONObject();
-		jo.put("name", sName);
-		jo.put("id", nId);
-		jo.put("options", sOptions);
-		jo.put("lines", getPageAsDBString());
-		return jo.toString();
 	}
 
 	/**

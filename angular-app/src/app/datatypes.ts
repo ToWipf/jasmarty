@@ -16,9 +16,9 @@ export interface jaconfig {
 export interface japage {
   id?: number;
   name?: string;
-  options?: string;
-  lines?: string;
+  lines?: [{ line?: number; data?: string, option?: idtext }?];
 }
+
 
 export interface buttonaction {
   id?: number;
@@ -31,4 +31,9 @@ export interface displayLcd {
   width?: number;
   height?: number;
   display?: [{ line: number; data: string }];
+}
+
+export interface idtext {
+  id?: number;
+  val?: string;
 }
