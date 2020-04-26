@@ -8,6 +8,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdPage;
 import org.wipf.jasmarty.logic.base.App;
 import org.wipf.jasmarty.logic.base.MsqlLite;
@@ -176,6 +178,7 @@ public class PageVerwaltung {
 	 */
 	public void nextPage() {
 		selectPage(nSelectedSite + 1);
+		// TODO limit
 
 	}
 
@@ -184,7 +187,27 @@ public class PageVerwaltung {
 	 */
 	public void lastPage() {
 		selectPage(nSelectedSite - 1);
+		// TODO limit
+	}
 
+	/**
+	 * @return
+	 */
+	public JSONArray getAllPages() {
+		JSONArray ja = new JSONArray();
+		try {
+			Statement stmt = MsqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("SELECT id, name FROM pages");
+			while (rs.next()) {
+				JSONObject entry = new JSONObject();
+				entry.put("id", rs.getInt("id"));
+				entry.put("name", rs.getString("name"));
+				ja.put(entry);
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getAllPages" + e);
+		}
+		return ja;
 	}
 
 }

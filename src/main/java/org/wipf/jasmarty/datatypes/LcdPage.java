@@ -69,7 +69,7 @@ public class LcdPage {
 			sOptions = "";
 
 			for (JsonNode jLine : jn.get("lines")) {
-				sOptions = sOptions + " ";
+				sOptions = sOptions + " "; // TODO nicht sicher -> könnte alles verschieben
 				int nLine = jLine.get("line").asInt();
 				saLines.add(nLine, jLine.get("data").asText());
 				StringBuilder sb = new StringBuilder(sOptions);

@@ -68,4 +68,11 @@ public class PagesRest {
 		return Response.ok("{}").build();
 	}
 
+	@GET
+	@Path("/getAllPages")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllPages() {
+		return pageVerwaltung.getAllPages().toString();
+	}
+
 }

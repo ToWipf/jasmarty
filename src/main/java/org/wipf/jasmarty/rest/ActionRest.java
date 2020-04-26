@@ -41,7 +41,7 @@ public class ActionRest {
 	@Path("/getall")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
-		return Response.ok(actionVerwaltung.getAllFromDBAsJson()).build();
+		return Response.ok(actionVerwaltung.getAllFromDBAsJson().toString()).build();
 	}
 
 	@POST

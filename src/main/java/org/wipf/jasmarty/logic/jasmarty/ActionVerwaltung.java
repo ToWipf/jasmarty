@@ -76,10 +76,9 @@ public class ActionVerwaltung {
 	/**
 	 * @return
 	 */
-	public String getAllFromDBAsJson() {
+	public JSONArray getAllFromDBAsJson() {
+		JSONArray ja = new JSONArray();
 		try {
-			JSONArray json = new JSONArray();
-
 			Statement stmt = MsqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from actions;");
 			while (rs.next()) {
@@ -88,15 +87,13 @@ public class ActionVerwaltung {
 				entry.put("button", rs.getInt("button"));
 				entry.put("active", rs.getBoolean("active"));
 				entry.put("action", rs.getString("action"));
-				json.put(entry);
+				ja.put(entry);
 			}
 			rs.close();
-			return json.toString();
-
 		} catch (Exception e) {
-			LOGGER.warn("getAll json" + e);
+			LOGGER.warn("getAllFromDBAsJson" + e);
 		}
-		return "{}";
+		return ja;
 	}
 
 	/**
