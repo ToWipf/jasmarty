@@ -16,11 +16,7 @@ export class JasmartyPagesComponent implements OnInit {
   public selectedPage: number = 1;
   public japage: japage = {};
 
-  public options: idtext[] = [
-    { id: 0, val: "Linksbündig" },
-    { id: 1, val: "Mittig" },
-    { id: 2, val: "Rechtsbünding" },
-  ];
+  public optionnumbers: number[] = [48,49,50];
 
   ngOnInit() {
     this.load();
@@ -97,7 +93,7 @@ export class JasmartyPagesComponent implements OnInit {
       this.japage.lines.push({
         data: "",
         line: index,
-        option: { id: 0, val: "Linksbündig" },
+        option: 0,
       });
     }
   }

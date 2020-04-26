@@ -26,7 +26,20 @@
                             <mat-form-field>
                                 <!-- <mat-label>Option</mat-label> -->
                                 <mat-select [(ngModel)]="japage.lines[i].option" name="option">
-                                  <mat-option *ngFor="let option of options" [value]="option">{{option.val}}</mat-option>
+                                  <mat-option *ngFor="let option of optionnumbers" [value]="option">
+                                      <ng-container *ngIf="option == 48">
+                                        Linksbündig
+                                      </ng-container>
+                                      <ng-container *ngIf="option == 49">
+                                        Mittig
+                                      </ng-container>
+                                      <ng-container *ngIf="option == 50">
+                                        Rechtsbündig
+                                      </ng-container>
+
+                                    
+                                
+                                </mat-option>
                                 </mat-select>
                               </mat-form-field>
                         </div>

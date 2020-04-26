@@ -65,9 +65,17 @@ public class LcdPage {
 			jn = mapper.readTree(jnRoot);
 
 			this.sName = jn.get("name").asText();
-			this.sOptions = jn.get("options").asText(); // TODO get id reicht nicht -> options Table
 			this.nId = jn.get("id").asInt();
-			setStringToPage(jn.get("lines").asText());
+			sOptions = "";
+
+			for (JsonNode jLine : jn.get("lines")) {
+				sOptions = sOptions + " ";
+				int nLine = jLine.get("line").asInt();
+				saLines.add(nLine, jLine.get("data").asText());
+				StringBuilder sb = new StringBuilder(sOptions);
+				sb.setCharAt(nLine, (char) jLine.get("option").asInt());
+				sOptions = sb.toString();
+			}
 			return this;
 		} catch (Exception e) {
 			return null;
