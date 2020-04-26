@@ -6,3 +6,9 @@
     </div>
 </div>
 <button class="btn btn-primary" (click)="refreshNow()">Display Aktualisieren</button>
+
+<div class="sitebuttonlist">
+    <div *ngFor="let page of pagelist;">
+        <button class="btn btn-primary sitebutton" (click)="selectSite(page)">{{page.name}}</button>
+    </div>
+</div>

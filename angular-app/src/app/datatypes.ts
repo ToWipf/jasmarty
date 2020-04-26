@@ -32,3 +32,8 @@ export interface displayLcd {
   height?: number;
   display?: [{ line: number; data: string }];
 }
+
+export interface japageForList {
+  id?: number;
+  name?: string;
+}

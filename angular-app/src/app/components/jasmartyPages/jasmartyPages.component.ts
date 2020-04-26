@@ -78,7 +78,6 @@ export class JasmartyPagesComponent implements OnInit {
   private getSite(): void {
     if (this.selectedPage > 2147483647 || this.selectedPage < 1) {
       this.selectedPage = 1;
-      return;
     }
 
     this.http

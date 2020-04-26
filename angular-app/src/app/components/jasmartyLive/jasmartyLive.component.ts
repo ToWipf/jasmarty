@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { displayLcd } from 'src/app/datatypes';
+import { displayLcd, japageForList } from 'src/app/datatypes';
 
 @Component({
   selector: "app-jasmartyLive",
@@ -13,9 +13,11 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   public displayLive: displayLcd;
   public loopStop: boolean = false;
   public display: string[] = [];
+  public pagelist: japageForList[] = [];
 
   ngOnInit() {
     this.loopLoadNew();
+    this.getAllPages();
   }
 
   public ngOnDestroy(): void {
@@ -28,6 +30,14 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
     });
   }
 
+  public selectSite(item: japageForList): void{
+      this.http
+        .get("http://localhost:8080/pages/select/" + item.id)
+        .subscribe((resdata) => {
+          console.log(resdata);
+        });
+    }
+
   private loopLoadNew(): void {
     if (!this.loopStop) {
       // get current button
@@ -39,14 +49,20 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   }
 
   private getLcdSoll(): void {
-    this.http.get("http://localhost:8080/lcd/soll").subscribe((resdata: any) => {
+    this.http.get("http://localhost:8080/lcd/soll").subscribe((resdata: displayLcd) => {
       this.displayLive = resdata;
 
       this.displayLive.display.forEach((line) =>{
         this.display[line.line] = line.data;
       })
-      console.log(this.display);
-            
+      console.log(this.display);       
+    });
+  }
+
+  private getAllPages(): void {
+    this.http.get("http://localhost:8080/pages/getAllPages").subscribe((resdata: japageForList[]) => {
+      this.pagelist = resdata;
+      console.log(this.pagelist);    
     });
   }
 }

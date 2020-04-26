@@ -1,4 +1,4 @@
-<h3>Seiten</h3>
+<h3>Seite {{selectedPage}}: {{japage.name}}</h3>
 <hr>
 
 <div class="jalist">
@@ -6,9 +6,8 @@
         <div class="gridCol">
             <div>
                 <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
-                {{selectedPage}}
-                <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
                 <button type="button" class="btn btn-primary inbutton" (click)="openDialogGoToPage()">gehe zu Seite</button>
+                <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
             </div>
 
             <perfect-scrollbar class="pscroll">
