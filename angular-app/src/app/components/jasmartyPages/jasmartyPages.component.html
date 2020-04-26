@@ -4,54 +4,67 @@
 <div class="jalist">
     <div class="gridRow">
         <div class="gridCol">
+            <div>
+                <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
+                {{selectedPage}}
+                <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
+            </div>
             <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
-
-                <div>
-                    <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button> {{selectedPage}}
-                    <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
-                </div>
-
                 <div>
                     <ng-container *ngIf="japage">
-                        ID: {{japage.id}}
+
                         <div>
                             <h5>Name</h5>
-                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name" placeholder="Bitte eintragen">
+                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name"
+                                placeholder="Bitte eintragen">
                         </div>
 
                         <h5>Zeilen</h5>
                         <div *ngFor="let line of japage.lines; let i = index; trackBy:trackByIndex;">
-                            <input type="string" class="form-control inputText" [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
-                            <!-- <input type="checkbox" ng-model="options"> -->
-                            <mat-form-field>
-                                <!-- <mat-label>Option</mat-label> -->
-                                <mat-select [(ngModel)]="japage.lines[i].option" name="option">
-                                  <mat-option *ngFor="let option of optionnumbers" [value]="option">
-                                      <ng-container *ngIf="option == 48">
-                                        Linksbündig
-                                      </ng-container>
-                                      <ng-container *ngIf="option == 49">
-                                        Mittig
-                                      </ng-container>
-                                      <ng-container *ngIf="option == 50">
-                                        Rechtsbündig
-                                      </ng-container>
+                            <div class="lineconfig">
 
-                                    
-                                
-                                </mat-option>
-                                </mat-select>
-                              </mat-form-field>
+                                <mat-form-field class="lineInputData">
+                                    <mat-label>Zeile {{i}}</mat-label>
+                                    <input matInput type="string" class="form-control inputText"
+                                        [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
+                                </mat-form-field>
+
+                                <mat-form-field class="lineInputOption">
+                                    <mat-label>Option</mat-label>
+                                    <mat-select [(ngModel)]="japage.lines[i].option" name="option">
+                                        <mat-option *ngFor="let option of optionnumbers" [value]="option">
+                                            <ng-container *ngIf="option == 48">
+                                                Linksbündig
+                                            </ng-container>
+                                            <ng-container *ngIf="option == 49">
+                                                Mittig
+                                            </ng-container>
+                                            <ng-container *ngIf="option == 50">
+                                                Rechtsbündig
+                                            </ng-container>
+                                            <ng-container *ngIf="option == 51">
+                                                Weierlauf auf nächste Zeile
+                                            </ng-container>
+                                            <ng-container *ngIf="option == 52">
+                                                hat Weierlauf
+                                            </ng-container>
+                                            <ng-container *ngIf="option == 53">
+                                                scroll
+                                            </ng-container>
+
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
                         </div>
-
                     </ng-container>
                 </div>
 
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button> -->
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button> -->
-                <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
-                    Zeigen</button>
             </perfect-scrollbar>
+            <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
+                Zeigen</button>
         </div>
 
         <div class="gridCol">
@@ -64,7 +77,8 @@
                     <li><code>$time(HH:mm:ss)</code></li>
                     <li><code>$time(dd MMMM yyyy)</code></li>
                     <li><code>$time(dd.MM.yy)</code></li>
-                    <li><a target="blank" href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
+                    <li><a target="blank"
+                            href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
                     </li>
                 </ul>
 

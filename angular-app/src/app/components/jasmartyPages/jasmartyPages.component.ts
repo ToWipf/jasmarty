@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { jaconfig, japage, idtext } from "src/app/datatypes";
+import { jaconfig, japage } from "src/app/datatypes";
 
 @Component({
   selector: "app-jasmartyPages",
@@ -93,7 +93,7 @@ export class JasmartyPagesComponent implements OnInit {
       this.japage.lines.push({
         data: "",
         line: index,
-        option: 0,
+        option: 48,
       });
     }
   }

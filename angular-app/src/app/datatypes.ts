@@ -32,8 +32,3 @@ export interface displayLcd {
   height?: number;
   display?: [{ line: number; data: string }];
 }
-
-export interface idtext {
-  id?: number;
-  val?: string;
-}
