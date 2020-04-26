@@ -33,8 +33,8 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   public selectSite(item: japageForList): void{
       this.http
         .get("http://localhost:8080/pages/select/" + item.id)
-        .subscribe((resdata) => {
-          console.log(resdata);
+        .subscribe(() => {
+          this.refreshNow();
         });
     }
 
@@ -62,7 +62,7 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   private getAllPages(): void {
     this.http.get("http://localhost:8080/pages/getAllPages").subscribe((resdata: japageForList[]) => {
       this.pagelist = resdata;
-      console.log(this.pagelist);    
+      this.pagelist.sort((a,b) => a.name.localeCompare(b.name));
     });
   }
 }
