@@ -47,7 +47,7 @@ import { MatTreeModule } from "@angular/material/tree";
 import { PortalModule } from "@angular/cdk/portal";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { JasmartyConfigComponent } from "./components/jasmartyConfig/jasmartyConfig.component";
-import { JasmartyPagesComponent } from "./components/jasmartyPages/jasmartyPages.component";
+import { JasmartyPagesComponent, JasmartyPagesComponentGoToDialog } from "./components/jasmartyPages/jasmartyPages.component";
 import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from "./components/jasmartyActions/jasmartyActions.component";
 import { MatStepperModule } from "@angular/material/stepper";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -60,6 +60,7 @@ import { JasmartyLiveComponent } from './components/jasmartyLive/jasmartyLive.co
   declarations: [
     AppComponent,
     JasmartyPagesComponent,
+    JasmartyPagesComponentGoToDialog,
     JasmartyActionsComponent,
     JasmartyActionsComponentDialog,
     JasmartyConfigComponent,

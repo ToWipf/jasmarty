@@ -8,6 +8,7 @@
                 <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
                 {{selectedPage}}
                 <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
+                <button type="button" class="btn btn-primary inbutton" (click)="openDialogGoToPage()">gehe zu Seite</button>
             </div>
 
             <perfect-scrollbar class="pscroll">
@@ -16,8 +17,7 @@
 
                         <div>
                             <h5>Name</h5>
-                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name"
-                                placeholder="Bitte eintragen">
+                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name">
                         </div>
 
                         <h5>Zeilen</h5>
@@ -64,6 +64,8 @@
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button> -->
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button> -->
             </perfect-scrollbar>
+
+            <button type="button" class="btn btn-danger inbutton" (click)="deletePage()">Löschen</button>
 
             <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
                 Zeigen</button>

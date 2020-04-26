@@ -60,7 +60,7 @@ public class PagesRest {
 	}
 
 	@GET
-	@DELETE
+	@DELETE // DELETE not work TODO
 	@Path("/delete/{pid}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response delete(@PathParam("pid") int nPid) {
