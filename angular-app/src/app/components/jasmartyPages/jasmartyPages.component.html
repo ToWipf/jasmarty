@@ -9,7 +9,8 @@
                 {{selectedPage}}
                 <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
             </div>
-            <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
+
+            <perfect-scrollbar class="pscroll">
                 <div>
                     <ng-container *ngIf="japage">
 
@@ -63,13 +64,14 @@
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button> -->
                 <!-- <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button> -->
             </perfect-scrollbar>
+
             <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
                 Zeigen</button>
         </div>
 
         <div class="gridCol">
             <h4>Funktionen</h4>
-            <perfect-scrollbar style="max-width: 600px; max-height: 500px;">
+            <perfect-scrollbar class="pscroll">
                 <h5>Zeit</h5>
 
                 <ul>
