@@ -56,7 +56,7 @@ public class PageVerwaltung {
 
 		// TODO save this page to db ever?
 
-		pageToDB(p);
+		pageToDb(p);
 	}
 
 	/**
@@ -76,10 +76,21 @@ public class PageVerwaltung {
 	}
 
 	/**
+	 * @param jnRoot
+	 */
+	public void pageToDb(String jnRoot) {
+		try {
+			pageToDb(new LcdPage().setByJson(jnRoot));
+		} catch (Exception e) {
+			LOGGER.warn("Convert Page fehler");
+		}
+	}
+
+	/**
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void pageToDB(LcdPage page) {
+	public void pageToDb(LcdPage page) {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
@@ -90,27 +101,10 @@ public class PageVerwaltung {
 	}
 
 	/**
-	 * TODO löschen
-	 * 
-	 * @param sName
-	 * @param sPage
-	 * @throws SQLException
-	 */
-	public void newPageToDB(String sName, String sPage, String sOptions) {
-		try {
-			Statement stmt = MsqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO pages (name, page, options) VALUES ('" + sName + "','" + sPage + "','"
-					+ sOptions + "')");
-		} catch (SQLException e) {
-			LOGGER.warn("newPageToDB " + e);
-		}
-	}
-
-	/**
 	 * @param nId
 	 * @throws SQLException
 	 */
-	public void delPageFromDB(Integer nId) {
+	public void delPageFromDb(Integer nId) {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.execute("DELETE FROM pages WHERE id = " + nId);
@@ -123,7 +117,7 @@ public class PageVerwaltung {
 	 * @param nId
 	 * @return
 	 */
-	public LcdPage getPageFromDB(int nId) {
+	public LcdPage getPageFromDb(int nId) {
 		try {
 			LcdPage page = new LcdPage();
 
@@ -152,7 +146,7 @@ public class PageVerwaltung {
 	 */
 	public void selectPage(int nId) {
 		nSelectedSite = nId;
-		writePage(getPageFromDB(nId));
+		writePage(getPageFromDb(nId));
 	}
 
 	/**
@@ -160,17 +154,6 @@ public class PageVerwaltung {
 	 */
 	public void selectPage(String sId) {
 		selectPage(Integer.valueOf(sId));
-	}
-
-	/**
-	 * @param jnRoot
-	 */
-	public void newPageToDB(String jnRoot) {
-		try {
-			pageToDB(new LcdPage().setByJson(jnRoot));
-		} catch (Exception e) {
-			LOGGER.warn("Convert Page fehler");
-		}
 	}
 
 	/**

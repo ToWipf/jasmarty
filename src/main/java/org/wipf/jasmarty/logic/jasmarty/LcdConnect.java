@@ -220,7 +220,7 @@ public class LcdConnect {
 	 * @param x
 	 * @param y
 	 */
-	private void setCursor(int x, int y) {
+	public void setCursor(int x, int y) {
 		writeAscii(254);
 		writeAscii(71);
 		// Arduino 0/0 ist 1/1
@@ -240,12 +240,11 @@ public class LcdConnect {
 	 * @param s
 	 * @return
 	 */
-	private void writeAscii(Integer n) {
+	public void writeAscii(Integer n) {
 		try {
 			sp.getOutputStream().write(n.byteValue());
 			sp.getOutputStream().flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			this.bLcdIsOk = false;
 			LOGGER.warn("writeAscii: " + e);
 		}

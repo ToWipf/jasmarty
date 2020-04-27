@@ -27,16 +27,6 @@ public class PagesRest {
 
 	@GET
 	@PUT
-	@Path("/new/{name}/{page}/{options}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response newPageOpt(@PathParam("name") String sName, @PathParam("page") String sPage,
-			@PathParam("options") String sOptions) {
-		pageVerwaltung.newPageToDB(sName, sPage, sOptions);
-		return Response.ok("{}").build();
-	}
-
-	@GET
-	@PUT
 	@Path("/select/{pid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response newPage(@PathParam("pid") int nPid) {
@@ -48,23 +38,23 @@ public class PagesRest {
 	@Path("/get/{pid}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getPage(@PathParam("pid") int nPid) {
-		return pageVerwaltung.getPageFromDB(nPid).toJson();
+		return pageVerwaltung.getPageFromDb(nPid).toJson();
 	}
 
 	@POST
 	@Path("/save")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(String jnRoot) {
-		pageVerwaltung.newPageToDB(jnRoot);
+		pageVerwaltung.pageToDb(jnRoot);
 		return Response.ok("{}").build();
 	}
 
 	@GET
 	@DELETE // DELETE not work TODO
 	@Path("/delete/{pid}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("pid") int nPid) {
-		pageVerwaltung.delPageFromDB(nPid);
+		pageVerwaltung.delPageFromDb(nPid);
 		return Response.ok("{}").build();
 	}
 

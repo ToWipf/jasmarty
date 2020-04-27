@@ -23,7 +23,7 @@ public class RefreshRest {
 
 	@GET
 	@Path("/on")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response on() {
 		refreshLoop.start();
 		return Response.ok("{}").build();
@@ -31,7 +31,7 @@ public class RefreshRest {
 
 	@GET
 	@Path("/off")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response off() {
 		refreshLoop.stop();
 		return Response.ok("{}").build();
@@ -39,7 +39,7 @@ public class RefreshRest {
 
 	@GET
 	@Path("/refreshCache")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response refreshCache() {
 		refreshLoop.doRefreshCacheManuell();
 		return Response.ok("{}").build();

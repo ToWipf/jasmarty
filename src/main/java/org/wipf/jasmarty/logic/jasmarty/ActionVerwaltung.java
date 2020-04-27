@@ -197,7 +197,6 @@ public class ActionVerwaltung {
 	 * @return
 	 */
 	public Integer getCurrentPressed() {
-		// TODO Auto-generated method stub
 		return currentPressed;
 	}
 

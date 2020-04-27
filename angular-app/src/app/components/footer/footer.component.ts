@@ -17,6 +17,7 @@ export class FooterComponent implements OnInit {
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = "0.0";
   public bOldVersionWarn: boolean = false;
+  public bCantLoad: boolean = true;
 
   ngOnInit() {
     this.getVersion();
@@ -25,6 +26,7 @@ export class FooterComponent implements OnInit {
   private getVersion(): void {
     this.http.get("http://localhost:8080/wipf/ver")
       .subscribe((resdata: any) => {
+        this.bCantLoad = false;
         this.sJavaVersion = resdata.ver.toString();
         if (this.sAppVersion < this.sJavaVersion){
           this.bOldVersionWarn = true;
