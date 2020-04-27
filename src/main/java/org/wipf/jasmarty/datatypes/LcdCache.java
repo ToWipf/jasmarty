@@ -119,7 +119,20 @@ public class LcdCache {
 			JSONObject jLine = new JSONObject();
 			StringBuilder sb = new StringBuilder();
 			for (int x = 0; x < nWidth; x++) {
-				sb.append(this.cacheSoll[x][y]);
+				char c = (this.cacheSoll[x][y]);
+
+				switch (c) {
+				case 0xFF:
+					c = '█';
+					break;
+				case 0x02:
+					c = '░';
+					break;
+				case 0x03:
+					c = '▓';
+					break;
+				}
+				sb.append(c);
 			}
 
 			jLine.put("line", y);

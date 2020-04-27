@@ -16,6 +16,7 @@ export class FooterComponent implements OnInit {
 
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = "0.0";
+  public bOldVersionWarn: boolean = false;
 
   ngOnInit() {
     this.getVersion();
@@ -25,6 +26,9 @@ export class FooterComponent implements OnInit {
     this.http.get("http://localhost:8080/wipf/ver")
       .subscribe((resdata: any) => {
         this.sJavaVersion = resdata.ver.toString();
+        if (this.sAppVersion < this.sJavaVersion){
+          this.bOldVersionWarn = true;
+        }
       });
   }
 }

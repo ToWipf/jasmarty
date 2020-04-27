@@ -1,5 +1,6 @@
 <footer class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">
-        JaSmarty | Version: {{sJavaVersion}}{{sAppVersion}}
+        <div *ngIf="bOldVersionWarn" class="warn">Seite bitte neu Laden. Java: {{sJavaVersion}} Angular: {{sAppVersion}}</div>
+        <div *ngIf="!bOldVersionWarn">JaSmarty | Version: {{sJavaVersion}}</div>
     </div>
 </footer>

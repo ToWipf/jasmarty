@@ -19,11 +19,6 @@ import com.fazecast.jSerialComm.SerialPort;
 @ApplicationScoped
 public class LcdConnect {
 
-	public static char BLOCK_0_3 = '_';
-	public static char BLOCK_1_3 = 0x02;
-	public static char BLOCK_2_3 = 0x03;
-	public static char BLOCK_3_3 = 0xFF;
-
 	private static final Logger LOGGER = Logger.getLogger("jasmarty Connect");
 
 	private SerialPort sp;

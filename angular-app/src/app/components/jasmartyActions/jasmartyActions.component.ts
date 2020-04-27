@@ -44,7 +44,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     edititem = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(JasmartyActionsComponentDialog, {
-      width: "500px",
+      width: "700px",
       height: "400px",
       data: edititem,
     });
@@ -100,6 +100,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 @Component({
   selector: "app-jasmartyActions-dialog",
   templateUrl: "./jasmartyActions.dialog.html",
+  styleUrls: ["./jasmartyActions.component.less"],
 })
 export class JasmartyActionsComponentDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: buttonaction) {}

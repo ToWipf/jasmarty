@@ -1,22 +1,44 @@
-<h1 mat-dialog-title>Aktion: {{data.id}}</h1>
-<div mat-dialog-content>
-    <p>Button Einstellugen</p>
-    <mat-form-field>
-        <mat-label>Eingang</mat-label>
-        <input type="number" matInput [(ngModel)]="data.button">
-    </mat-form-field>
-    <br>
-    <!-- TODO: LESS -->
-    <mat-form-field>
-        <mat-label>Aktion</mat-label>
-        <input matInput [(ngModel)]="data.action">
-    </mat-form-field>
-</div>
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- // TODO: LESS DATEI + Scrollbar -->
+        <h1 mat-dialog-title>Aktion: {{data.id}}</h1>
+        <div mat-dialog-content>
+            <p>Button Einstellugen</p>
+            <mat-form-field>
+                <mat-label>Eingang</mat-label>
+                <input type="number" matInput [(ngModel)]="data.button">
+            </mat-form-field>
+            <br>
+            <!-- TODO: LESS -->
+            <mat-form-field>
+                <mat-label>Aktion</mat-label>
+                <input matInput [(ngModel)]="data.action">
+            </mat-form-field>
+        </div>
 
-Aktiv:
-<input type="checkbox" [(ngModel)]="data.active">
+        Aktiv:
+        <input type="checkbox" [(ngModel)]="data.active">
 
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Abbrechen</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <h3>Funktionen</h3>
+
+        <h5>LED</h5>
+        <ul>
+            <li><code>led|on</code></li>
+            <li><code>led|off</code></li>
+            <li><code>led|toggle</code></li>
+        </ul>
+
+        <h5>Page</h5>
+        <ul>
+            <li><code>page|next</code></li>
+            <li><code>page|last</code></li>
+            <li><code>page|select|NR</code></li>
+        </ul>
+    </div>
 </div>

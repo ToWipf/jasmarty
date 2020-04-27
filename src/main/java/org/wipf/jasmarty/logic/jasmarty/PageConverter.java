@@ -17,6 +17,11 @@ import org.wipf.jasmarty.logic.base.Wipf;
 @ApplicationScoped
 public class PageConverter {
 
+	public static char BLOCK_0_3 = '_';
+	public static char BLOCK_1_3 = 0x02;
+	public static char BLOCK_2_3 = 0x03;
+	public static char BLOCK_3_3 = 0xFF;
+
 	private static final Logger LOGGER = Logger.getLogger("jasmarty PageConverter");
 	private LcdPage selectedPage;
 
@@ -245,26 +250,26 @@ public class PageConverter {
 		StringBuilder sb = new StringBuilder();
 
 		// Gefüllte Blöcke:
-		sb.append(wipf.repeat(LcdConnect.BLOCK_3_3, nFillBis / 3));
+		sb.append(wipf.repeat(BLOCK_3_3, nFillBis / 3));
 
 		// komma auswerten
 		switch (nFillBis % 3) {
 		case 0:
-			sb.append(LcdConnect.BLOCK_0_3);
+			sb.append(BLOCK_0_3);
 			break;
 		case 1:
-			sb.append(LcdConnect.BLOCK_1_3);
+			sb.append(BLOCK_1_3);
 			break;
 		case 2:
-			sb.append(LcdConnect.BLOCK_2_3);
+			sb.append(BLOCK_2_3);
 			break;
 		case 3:
-			sb.append(LcdConnect.BLOCK_3_3);
+			sb.append(BLOCK_3_3);
 			break;
 		}
 
 		// Leere Blöcke:
-		sb.append(wipf.repeat(LcdConnect.BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
+		sb.append(wipf.repeat(BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
 		return sb.toString();
 	}
 

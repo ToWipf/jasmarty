@@ -166,9 +166,7 @@ public class ActionVerwaltung {
 					case "last":
 						pageVerwaltung.lastPage();
 						return;
-					case "number":
 					case "select":
-					case "to":
 						pageVerwaltung.selectPage(sParameter3);
 						return;
 					}
