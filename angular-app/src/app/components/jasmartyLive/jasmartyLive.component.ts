@@ -25,7 +25,7 @@ export class JasmartyLiveComponent implements OnInit, OnDestroy  {
   }
 
   public refreshNow(): void {
-    this.http.get("http://localhost:8080/refresh/refreshNow" ).subscribe((res: any) => {
+    this.http.get("http://localhost:8080/refresh/refreshCache" ).subscribe((res: any) => {
           console.log(res);      
     });
   }

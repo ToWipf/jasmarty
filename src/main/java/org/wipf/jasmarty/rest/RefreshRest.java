@@ -38,10 +38,10 @@ public class RefreshRest {
 	}
 
 	@GET
-	@Path("/refreshNow")
+	@Path("/refreshCache")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response refreshNow() {
-		refreshLoop.doRefreshLcd();
+	public Response refreshCache() {
+		refreshLoop.doRefreshCacheManuell();
 		return Response.ok("{}").build();
 	}
 

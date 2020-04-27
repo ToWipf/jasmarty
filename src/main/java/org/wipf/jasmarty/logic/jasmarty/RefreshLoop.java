@@ -43,10 +43,11 @@ public class RefreshLoop {
 		}
 	}
 
-	public void doRefreshLcd() {
-		actionVerwaltung.doAction(lcdConnect.readButton());
+	/**
+	 * 
+	 */
+	public void doRefreshCacheManuell() {
 		pageConverter.refreshCache();
-		lcdConnect.refreshDisplay();
 	}
 
 	/**
@@ -69,7 +70,9 @@ public class RefreshLoop {
 
 				while (bLoopActive && lcdConnect.isLcdOk()) {
 					try {
-						doRefreshLcd();
+						actionVerwaltung.doAction(lcdConnect.readButton());
+						pageConverter.refreshCache();
+						lcdConnect.refreshDisplay();
 						Thread.sleep(lcdConnect.getRefreshRate());
 
 					} catch (InterruptedException e) {
