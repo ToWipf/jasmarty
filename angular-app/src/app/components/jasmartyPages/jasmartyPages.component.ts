@@ -110,7 +110,7 @@ export class JasmartyPagesComponent implements OnInit {
   private newPage() {
     this.japage = {};
     this.japage.id = this.selectedPage;
-    this.japage.name = "neue Seite";
+    this.japage.name = "Seite " + this.selectedPage;
     this.japage.lines = [];
     for (let index = 0; index < this.jaconfig.height; index++) {
       this.japage.lines.push({

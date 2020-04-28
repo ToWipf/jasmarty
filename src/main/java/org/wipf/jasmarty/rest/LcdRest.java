@@ -37,7 +37,6 @@ public class LcdRest {
 	}
 
 	@GET
-	@Metered
 	@Path("/ist")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response chIst() {
@@ -45,6 +44,7 @@ public class LcdRest {
 	}
 
 	@GET
+	@Metered
 	@Path("/soll")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response chSoll() {
