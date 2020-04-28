@@ -48,34 +48,58 @@ public class ButtonAction {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public int getId() {
 		return nId;
 	}
 
+	/**
+	 * @param nId
+	 */
 	public void setId(int nId) {
 		this.nId = nId;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getButton() {
 		return nButton;
 	}
 
+	/**
+	 * @param nButton
+	 */
 	public void setButton(int nButton) {
 		this.nButton = nButton;
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isActive() {
 		return bActive;
 	}
 
+	/**
+	 * @param bActive
+	 */
 	public void setActive(boolean bActive) {
 		this.bActive = bActive;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getAction() {
 		return sAction;
 	}
 
+	/**
+	 * @param sAction
+	 */
 	public void setAction(String sAction) {
 		this.sAction = sAction;
 	}

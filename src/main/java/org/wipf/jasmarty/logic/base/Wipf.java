@@ -4,6 +4,10 @@ import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class Wipf {
 

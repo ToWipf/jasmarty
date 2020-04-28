@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LcdConfig {
 
 	private String sPort;
-	private Integer nheight;
+	private Integer nHeight;
 	private Integer nWidth;
 	private Integer nBaudRate;
 	private int nRefreshRate;
@@ -24,7 +24,7 @@ public class LcdConfig {
 		JSONObject jo = new JSONObject();
 		jo.put("port", sPort);
 		jo.put("width", nWidth);
-		jo.put("height", nheight);
+		jo.put("height", nHeight);
 		jo.put("baudrate", nBaudRate);
 		jo.put("refreshrate", nRefreshRate);
 		return jo.toString();
@@ -42,7 +42,7 @@ public class LcdConfig {
 
 			this.sPort = jn.get("port").asText();
 			this.nWidth = jn.get("width").asInt();
-			this.nheight = jn.get("height").asInt();
+			this.nHeight = jn.get("height").asInt();
 			this.nBaudRate = jn.get("baudrate").asInt();
 			this.nRefreshRate = jn.get("refreshrate").asInt();
 			return this;
@@ -51,42 +51,72 @@ public class LcdConfig {
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public String getPort() {
 		return sPort;
 	}
 
+	/**
+	 * @param sPort
+	 */
 	public void setPort(String sPort) {
 		this.sPort = sPort;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getHeight() {
-		return nheight;
+		return nHeight;
 	}
 
+	/**
+	 * @param nheight
+	 */
 	public void setHeight(Integer nheight) {
-		this.nheight = nheight;
+		this.nHeight = nheight;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getWidth() {
 		return nWidth;
 	}
 
+	/**
+	 * @param nWidth
+	 */
 	public void setWidth(Integer nWidth) {
 		this.nWidth = nWidth;
 	}
 
+	/**
+	 * @return
+	 */
 	public Integer getBaudRate() {
 		return nBaudRate;
 	}
 
+	/**
+	 * @param nBaudRate
+	 */
 	public void setBaudRate(Integer nBaudRate) {
 		this.nBaudRate = nBaudRate;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getRefreshRate() {
 		return nRefreshRate;
 	}
 
+	/**
+	 * @param nRefreshRate
+	 */
 	public void setRefreshRate(int nRefreshRate) {
 		this.nRefreshRate = nRefreshRate;
 	}

@@ -19,6 +19,9 @@ public class LcdPage {
 	private String sOptions;
 	private int nId;
 
+	/**
+	 * 
+	 */
 	public LcdPage() {
 		this.saLines = new ArrayList<String>();
 	}
@@ -128,26 +131,44 @@ public class LcdPage {
 		this.saLines.add(nLine, sLine);
 	}
 
+	/**
+	 * @return
+	 */
 	public int getId() {
 		return nId;
 	}
 
+	/**
+	 * @param nId
+	 */
 	public void setId(int nId) {
 		this.nId = nId;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return sName;
 	}
 
+	/**
+	 * @param sPagename
+	 */
 	public void setName(String sPagename) {
 		this.sName = sPagename;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getOptions() {
 		return sOptions;
 	}
 
+	/**
+	 * @param sOptions
+	 */
 	public void setOptions(String sOptions) {
 		this.sOptions = sOptions;
 	}

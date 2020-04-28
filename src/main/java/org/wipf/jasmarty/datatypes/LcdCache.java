@@ -122,14 +122,14 @@ public class LcdCache {
 				char c = (this.cacheSoll[x][y]);
 
 				switch (c) {
-				case 0xFF:
-					c = '█';
-					break;
 				case 0x02:
 					c = '░';
 					break;
 				case 0x03:
 					c = '▓';
+					break;
+				case 0xFF:
+					c = '█';
 					break;
 				}
 				sb.append(c);

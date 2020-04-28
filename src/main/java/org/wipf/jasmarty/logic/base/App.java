@@ -34,7 +34,7 @@ public class App {
 	@Inject
 	SerialConfig serialConfig;
 
-	private static final Logger LOGGER = Logger.getLogger("app");
+	private static final Logger LOGGER = Logger.getLogger("App");
 	public static final String VERSION = "0.44";
 	public static final String DB_PATH = "jasmarty.db";
 
