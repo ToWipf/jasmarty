@@ -6,7 +6,6 @@ import java.util.Date;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.LcdPage;
 import org.wipf.jasmarty.logic.base.Wipf;
 
@@ -22,7 +21,6 @@ public class PageConverter {
 	public static char BLOCK_2_3 = 0x03;
 	public static char BLOCK_3_3 = 0xFF;
 
-	private static final Logger LOGGER = Logger.getLogger("jasmarty PageConverter");
 	private LcdPage selectedPage;
 
 	@Inject
@@ -35,12 +33,9 @@ public class PageConverter {
 	 * @param page
 	 */
 	public void selectToNewPage(LcdPage page) {
-
 		lcdConnect.clearScreen();
-
 		this.selectedPage = page;
-		// Manuellen Refresh anstoßen
-
+		// Manuellen Refresh des caches anstoßen
 		this.refreshCache();
 	}
 

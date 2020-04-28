@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
 /**
@@ -36,6 +37,7 @@ public class LcdRest {
 	}
 
 	@GET
+	@Metered
 	@Path("/ist")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response chIst() {
