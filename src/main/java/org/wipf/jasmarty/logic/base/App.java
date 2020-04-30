@@ -11,15 +11,18 @@ import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
+import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import io.quarkus.runtime.annotations.QuarkusMain;
 
 /**
  * @author wipf
  *
  */
+@QuarkusMain
 @ApplicationScoped
-public class App {
+public class App implements QuarkusApplication {
 
 	@Inject
 	LcdConnect lcdConnect;
@@ -35,8 +38,28 @@ public class App {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("App");
-	public static final String VERSION = "0.45";
+	public static final String VERSION = "0.46";
 	public static final String DB_PATH = "jasmarty.db";
+	private boolean bShutdown = false;
+
+	@Override
+	public int run(String... args) throws Exception {
+		LOGGER.info("Alles gestartet");
+		while (true) {
+			Thread.sleep(1000);
+			if (bShutdown) {
+				LOGGER.info("Beende Programm");
+				return 0;
+			}
+		}
+	}
+
+	/**
+	 * Beende Server
+	 */
+	public void stopApp() {
+		this.bShutdown = true;
+	}
 
 	/**
 	 * @param ev

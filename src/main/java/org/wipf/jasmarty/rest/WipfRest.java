@@ -21,6 +21,8 @@ public class WipfRest {
 
 	@Inject
 	SerialConfig serialConfig;
+	@Inject
+	App app;
 
 	@GET
 	@Path("/ver")
@@ -34,6 +36,14 @@ public class WipfRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response ports() {
 		return Response.ok(serialConfig.getPorts().toString()).build();
+	}
+
+	@GET
+	@Path("/stop")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response stopAll() {
+		app.stopApp();
+		return Response.ok().build();
 	}
 
 }

@@ -65,4 +65,10 @@ export class JasmartyConfigComponent implements OnInit {
       console.log(resdata);
     });
   }
+
+  public stopApp(): void {
+    this.http.get("http://localhost:8080/wipf/stop").subscribe((resdata: any) => {
+      console.log(resdata);
+    });
+  }
 }
