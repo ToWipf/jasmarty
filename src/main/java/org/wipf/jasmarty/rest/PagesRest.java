@@ -19,6 +19,8 @@ import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
  *
  */
 @Path("/pages")
+@Produces(MediaType.APPLICATION_JSON)
+// @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
 @ApplicationScoped
 public class PagesRest {
 
@@ -28,7 +30,6 @@ public class PagesRest {
 	@GET
 	@PUT
 	@Path("/select/{pid}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response newPage(@PathParam("pid") int nPid) {
 		pageVerwaltung.selectPage(nPid);
 		return Response.ok("{}").build();
@@ -36,14 +37,12 @@ public class PagesRest {
 
 	@GET
 	@Path("/get/{pid}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public String getPage(@PathParam("pid") int nPid) {
 		return pageVerwaltung.getPageFromDb(nPid).toJson();
 	}
 
 	@POST
 	@Path("/save")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response save(String jnRoot) {
 		pageVerwaltung.pageToDb(jnRoot);
 		return Response.ok("{}").build();
@@ -52,7 +51,6 @@ public class PagesRest {
 	@GET
 	@DELETE // DELETE not work TODO
 	@Path("/delete/{pid}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("pid") int nPid) {
 		pageVerwaltung.delPageFromDb(nPid);
 		return Response.ok("{}").build();
@@ -60,7 +58,6 @@ public class PagesRest {
 
 	@GET
 	@Path("/getAllPages")
-	@Produces(MediaType.APPLICATION_JSON)
 	public String getAllPages() {
 		return pageVerwaltung.getAllPages().toString();
 	}

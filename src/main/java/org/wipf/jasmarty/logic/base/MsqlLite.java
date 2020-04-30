@@ -5,12 +5,15 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.jboss.logging.Logger;
 
 /**
  * @author wipf
  *
  */
+@ApplicationScoped
 public class MsqlLite {
 
 	private static final Logger LOGGER = Logger.getLogger("MsqlLite");
@@ -23,13 +26,6 @@ public class MsqlLite {
 	public static void startDB() {
 		MsqlLite dbc = MsqlLite.getInstance();
 		dbc.initDBConnection();
-	}
-
-	/**
-	 * @return
-	 */
-	public static MsqlLite getInstance() {
-		return dbcontroller;
 	}
 
 	/**
@@ -56,18 +52,25 @@ public class MsqlLite {
 	}
 
 	/**
+	 * @return
+	 */
+	private static MsqlLite getInstance() {
+		return dbcontroller;
+	}
+
+	/**
 	 * 
 	 */
 	private void initDBConnection() {
 		try {
 			if (connection != null)
 				return;
-			LOGGER.info("Connect to Database '" + App.DB_PATH + "'");
+			LOGGER.info("Verbinde zu Datenbank '" + App.DB_PATH + "'");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + App.DB_PATH);
 			if (!connection.isClosed())
 				LOGGER.info("Connection OK");
 		} catch (SQLException e) {
-			LOGGER.warn("initDBConnectionA " + e);
+			LOGGER.warn("initDBConnection A " + e);
 			throw new RuntimeException(e);
 		}
 
@@ -81,7 +84,7 @@ public class MsqlLite {
 							LOGGER.warn("Connection to Database closed");
 					}
 				} catch (SQLException e) {
-					LOGGER.warn("initDBConnectionB " + e);
+					LOGGER.warn("initDBConnection B " + e);
 				}
 			}
 		});

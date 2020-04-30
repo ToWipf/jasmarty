@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,6 +16,8 @@ import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
  *
  */
 @Path("/refresh")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class RefreshRest {
 
@@ -23,7 +26,6 @@ public class RefreshRest {
 
 	@GET
 	@Path("/on")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response on() {
 		refreshLoop.start();
 		return Response.ok("{}").build();
@@ -31,7 +33,6 @@ public class RefreshRest {
 
 	@GET
 	@Path("/off")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response off() {
 		refreshLoop.stop();
 		return Response.ok("{}").build();
@@ -39,7 +40,6 @@ public class RefreshRest {
 
 	@GET
 	@Path("/refreshCache")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response refreshCache() {
 		refreshLoop.doRefreshCacheManuell();
 		return Response.ok("{}").build();

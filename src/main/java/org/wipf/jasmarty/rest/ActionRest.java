@@ -17,6 +17,8 @@ import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
  *
  */
 @Path("/actions")
+@Produces(MediaType.APPLICATION_JSON)
+// @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
 @ApplicationScoped
 public class ActionRest {
 
@@ -25,28 +27,24 @@ public class ActionRest {
 
 	@GET
 	@Path("/currentPressed")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response CurrentPressed() {
 		return Response.ok("{\"btn\":" + actionVerwaltung.getCurrentPressed() + "}").build();
 	}
 
 	@GET
 	@Path("/get/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAction(@PathParam("id") Integer nId) {
 		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson()).build();
 	}
 
 	@GET
 	@Path("/getall")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAll() {
 		return Response.ok(actionVerwaltung.getAllFromDBAsJson().toString()).build();
 	}
 
 	@POST
 	@Path("/set")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response setAction(String jnRoot) {
 		actionVerwaltung.setAction(jnRoot);
 		return Response.ok("{\"save\":\"TODO\"}").build();

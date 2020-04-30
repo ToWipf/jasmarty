@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,6 +17,8 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  *
  */
 @Path("/config")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ConfigRest {
 
@@ -24,14 +27,12 @@ public class ConfigRest {
 
 	@GET
 	@Path("/get")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response getConfig() {
 		return Response.ok(serialConfig.getConfig().toJson()).build();
 	}
 
 	@POST
 	@Path("/set")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response setConfig(String jnRoot) {
 		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
 

@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -16,6 +17,8 @@ import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
  *
  */
 @Path("/lcddebug")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class LcdDebugRest {
 
@@ -24,7 +27,6 @@ public class LcdDebugRest {
 
 	@GET
 	@Path("/write/{x}/{y}/{str}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
 		lcdConnect.writeLineToCache(x, y, s.toCharArray());
 		return Response.ok("{}").build();
@@ -32,7 +34,6 @@ public class LcdDebugRest {
 
 	@GET
 	@Path("/refresh")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response refreshDisplay() {
 		lcdConnect.refreshDisplay();
 		return Response.ok("{\"TODO\":\"TODO\"}").build();
@@ -40,7 +41,6 @@ public class LcdDebugRest {
 
 	@GET
 	@Path("/writeAscii/{int}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response writeAscii(@PathParam("int") Integer n) {
 		lcdConnect.writeAscii(n);
 		return Response.ok("{}").build();
@@ -48,7 +48,6 @@ public class LcdDebugRest {
 
 	@GET
 	@Path("/pos/{x}/{y}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
 		lcdConnect.setCursor(x, y);
 		return Response.ok("{}").build();
@@ -56,7 +55,6 @@ public class LcdDebugRest {
 
 	@GET
 	@Path("/cls")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response cls() {
 		lcdConnect.clearScreen();
 		return Response.ok("{}").build();
