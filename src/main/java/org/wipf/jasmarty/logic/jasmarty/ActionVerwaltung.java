@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.ButtonAction;
 import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.jasmarty.actions.Tastatur;
 
 /**
  * @author wipf
@@ -25,9 +26,10 @@ public class ActionVerwaltung {
 
 	@Inject
 	LcdConnect lcdConnect;
-
 	@Inject
 	PageVerwaltung pageVerwaltung;
+	@Inject
+	Tastatur tastatur;
 
 	/**
 	 * @throws SQLException
@@ -119,6 +121,24 @@ public class ActionVerwaltung {
 	}
 
 	/**
+	 * @param jnRoot
+	 */
+	public void setAction(String jnRoot) {
+		try {
+			actionToDB(new ButtonAction().setByJson(jnRoot));
+		} catch (Exception e) {
+			LOGGER.warn("Convert Page fehler");
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCurrentPressed() {
+		return currentPressed;
+	}
+
+	/**
 	 * @param nButton
 	 */
 	public void doAction(Integer nButton) {
@@ -171,6 +191,13 @@ public class ActionVerwaltung {
 						return;
 					}
 					return;
+				case "write":
+					tastatur.write(sParameter3, 100);
+					return;
+				case "exec":
+				case "system":
+				case "media":
+				case "volume":
 
 				default:
 					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
@@ -180,24 +207,6 @@ public class ActionVerwaltung {
 				LOGGER.warn("Eingang nicht definert: " + currentPressed);
 			}
 		}
-	}
-
-	/**
-	 * @param jnRoot
-	 */
-	public void setAction(String jnRoot) {
-		try {
-			actionToDB(new ButtonAction().setByJson(jnRoot));
-		} catch (Exception e) {
-			LOGGER.warn("Convert Page fehler");
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getCurrentPressed() {
-		return currentPressed;
 	}
 
 }

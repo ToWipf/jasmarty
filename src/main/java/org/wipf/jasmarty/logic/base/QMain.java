@@ -22,7 +22,7 @@ import io.quarkus.runtime.annotations.QuarkusMain;
  */
 @QuarkusMain
 @ApplicationScoped
-public class App implements QuarkusApplication {
+public class QMain implements QuarkusApplication {
 
 	@Inject
 	LcdConnect lcdConnect;

@@ -11,8 +11,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdPage;
-import org.wipf.jasmarty.logic.base.App;
 import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.QMain;
 
 /**
  * @author wipf
@@ -51,7 +51,7 @@ public class PageVerwaltung {
 		p.setLine(0, "jaSmarty");
 		p.setLine(1, "");
 		p.setLine(2, "by Wipf");
-		p.setLine(3, "V" + App.VERSION);
+		p.setLine(3, "V" + QMain.VERSION);
 		writePage(p);
 
 		// TODO save this page to db ever?

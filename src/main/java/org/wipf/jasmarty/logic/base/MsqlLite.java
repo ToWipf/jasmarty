@@ -65,8 +65,8 @@ public class MsqlLite {
 		try {
 			if (connection != null)
 				return;
-			LOGGER.info("Verbinde zu Datenbank '" + App.DB_PATH + "'");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + App.DB_PATH);
+			LOGGER.info("Verbinde zu Datenbank '" + QMain.DB_PATH + "'");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + QMain.DB_PATH);
 			if (!connection.isClosed())
 				LOGGER.info("Connection OK");
 		} catch (SQLException e) {

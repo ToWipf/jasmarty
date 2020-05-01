@@ -85,14 +85,6 @@ public class LcdConnect {
 	}
 
 	/**
-	 * 
-	 */
-	@SuppressWarnings("unused")
-	public void resetLcdOK() {
-		bLcdIsOk = true;
-	}
-
-	/**
 	 * @return
 	 */
 	public int getRefreshRate() {
@@ -133,6 +125,7 @@ public class LcdConnect {
 
 		try {
 			// LCD Connect
+			sp = null;
 			sp = SerialPort.getCommPort(lconf.getPort());
 			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
 			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
