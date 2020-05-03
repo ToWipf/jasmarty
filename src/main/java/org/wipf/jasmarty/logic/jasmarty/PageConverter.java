@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.LcdPage;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
 
 /**
  * @author wipf
@@ -25,9 +26,10 @@ public class PageConverter {
 
 	@Inject
 	LcdConnect lcdConnect;
-
 	@Inject
 	Wipf wipf;
+	@Inject
+	Winamp winamp;
 
 	/**
 	 * @param page
@@ -208,6 +210,8 @@ public class PageConverter {
 			return sBefore + wipf.doMathByString(sParameter) + sAfter;
 		case "rnd":
 			return sBefore + wipf.getRandomInt(sParameter) + sAfter;
+		case "winamp":
+			return sBefore + winamp.getInfos(sParameter) + sAfter;
 
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile

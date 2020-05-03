@@ -5,6 +5,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -25,16 +26,16 @@ public class WinampRest {
 	Winamp winamp;
 
 	@GET
-	@Path("/title")
-	public Response open() {
-		try {
-			System.out.println(winamp.getTitle());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Path("/control/{s}")
+	public Response control(@PathParam("s") String s) {
+		winamp.control(s);
 		return Response.ok("{}").build();
+	}
+
+	@GET
+	@Path("/info/{s}")
+	public Response info(@PathParam("s") String s) {
+		return Response.ok("{\"info\":\"" + winamp.getInfos(s) + "\"}").build();
 	}
 
 }
