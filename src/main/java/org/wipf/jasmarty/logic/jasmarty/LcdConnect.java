@@ -196,9 +196,7 @@ public class LcdConnect {
 	public Integer readButton() {
 		try {
 			char[] in = new char[1];
-
 			BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()));
-
 			input.read(in);
 			return (int) in[0];
 
@@ -206,7 +204,6 @@ public class LcdConnect {
 			// Kein input,
 			return null;
 		}
-
 	}
 
 	/**
