@@ -53,6 +53,14 @@
 			<version>2.6.0</version>
 		</dependency>
 		<!-- end -->
+		<dependency>
+			<groupId>com.roufid.tutorials</groupId>
+			<artifactId>example-app</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/JavaWinampAPI.jar</systemPath>
+		</dependency>
+		<!--  -->
 	</dependencies>
 	<build>
 		<plugins>

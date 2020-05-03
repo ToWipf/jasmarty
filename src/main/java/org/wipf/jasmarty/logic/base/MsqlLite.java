@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
@@ -15,6 +16,9 @@ import org.jboss.logging.Logger;
  */
 @ApplicationScoped
 public class MsqlLite {
+
+	@Inject
+	QMain qMain;
 
 	private static final Logger LOGGER = Logger.getLogger("MsqlLite");
 	private static final MsqlLite dbcontroller = new MsqlLite();
@@ -80,8 +84,10 @@ public class MsqlLite {
 				try {
 					if (!connection.isClosed() && connection != null) {
 						connection.close();
-						if (connection.isClosed())
+						if (connection.isClosed()) {
 							LOGGER.warn("Connection to Database closed");
+							qMain.stopApp();
+						}
 					}
 				} catch (SQLException e) {
 					LOGGER.warn("initDBConnection B " + e);
