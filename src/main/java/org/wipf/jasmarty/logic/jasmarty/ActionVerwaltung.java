@@ -118,7 +118,6 @@ public class ActionVerwaltung {
 			ba.setAction(rs.getString("action"));
 			return ba;
 		} catch (Exception e) {
-			LOGGER.warn("BA not found by BNR: " + nButton);
 			return null;
 		}
 	}

@@ -19,7 +19,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   public buttonactions: buttonaction[];
   public tableDataSource: any;
   //public displayedColumns: string[] = ["id", "button", "active", "action", "edit"];
-  public displayedColumns: string[] = ["button", "active", "action", "edit"];
+  public displayedColumns: string[] = ["button", "active", "action", "edit", "test"];
   public lastPressed: number = null;
   public loopStop: boolean = false;
 
@@ -53,6 +53,12 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
       if (result) {
         this.save(result);
       }
+    });
+  }
+
+  public testAction(item: buttonaction): void{
+    this.http.get("http://localhost:8080/actions/doaction/" + item.button).subscribe((resdata: any) => {
+      console.log(resdata);
     });
   }
 

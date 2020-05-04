@@ -39,17 +39,17 @@ public class Winamp {
 			case "previoustrack":
 				WinampController.previousTrack();
 				break;
-			case "increasevolume":
+			case "volumeup":
 				WinampController.increaseVolume();
 				break;
-			case "decreaseVolume":
+			case "volumedown":
 				WinampController.decreaseVolume();
 				break;
 			default:
 				break;
 			}
 		} catch (Exception e) {
-			LOGGER.warn("control " + e);
+			LOGGER.warn("control " + sInput + " -> " + e);
 		}
 	}
 
@@ -64,10 +64,13 @@ public class Winamp {
 				return WinampController.getFileNamePlaying();
 			case "title":
 				return WinampController.getTitle();
-			case "timeRem":
-				return ((Integer) WinampController.getTime(WinampController.TIMELENGTH)).toString();
+			case "timefull":
+				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
 			case "time":
-				return ((Integer) WinampController.getTime(WinampController.CURRENTTIME)).toString();
+				return ((Integer) (WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
+			case "timerem":
+				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH)
+						- WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
 			case "status":
 				return ((Integer) WinampController.getStatus()).toString();
 			default:

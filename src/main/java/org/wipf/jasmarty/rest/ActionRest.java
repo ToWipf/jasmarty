@@ -43,6 +43,13 @@ public class ActionRest {
 		return Response.ok(actionVerwaltung.getAllFromDBAsJson().toString()).build();
 	}
 
+	@GET
+	@Path("/doaction/{id}")
+	public Response doaction(@PathParam("id") Integer nId) {
+		actionVerwaltung.doAction(nId);
+		return Response.ok().build();
+	}
+
 	@POST
 	@Path("/set")
 	public Response setAction(String jnRoot) {
