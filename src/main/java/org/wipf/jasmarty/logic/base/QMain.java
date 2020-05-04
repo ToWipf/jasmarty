@@ -38,9 +38,9 @@ public class QMain implements QuarkusApplication {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("App");
-	public static final String VERSION = "0.46";
+	public static final String VERSION = "0.49";
 	public static final String DB_PATH = "jasmarty.db";
-	private boolean bShutdown = false;
+	private static boolean bShutdown = false;
 
 	@Override
 	public int run(String... args) throws Exception {
@@ -55,10 +55,10 @@ public class QMain implements QuarkusApplication {
 	}
 
 	/**
-	 * Beende Server
+	 * Stop App
 	 */
-	public void stopApp() {
-		this.bShutdown = true;
+	public static void stopApp() {
+		bShutdown = true;
 	}
 
 	/**

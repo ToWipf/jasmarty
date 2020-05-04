@@ -24,8 +24,6 @@ public class WipfRest {
 
 	@Inject
 	SerialConfig serialConfig;
-	@Inject
-	QMain qMain;
 
 	@GET
 	@Path("/ver")
@@ -42,7 +40,7 @@ public class WipfRest {
 	@GET
 	@Path("/stop")
 	public Response stopAll() {
-		qMain.stopApp();
+		QMain.stopApp();
 		return Response.ok().build();
 	}
 

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
@@ -16,9 +15,6 @@ import org.jboss.logging.Logger;
  */
 @ApplicationScoped
 public class MsqlLite {
-
-	@Inject
-	QMain qMain;
 
 	private static final Logger LOGGER = Logger.getLogger("MsqlLite");
 	private static final MsqlLite dbcontroller = new MsqlLite();
@@ -72,9 +68,9 @@ public class MsqlLite {
 			LOGGER.info("Verbinde zu Datenbank '" + QMain.DB_PATH + "'");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + QMain.DB_PATH);
 			if (!connection.isClosed())
-				LOGGER.info("Connection OK");
+				LOGGER.info("Datenbank Ok");
 		} catch (SQLException e) {
-			LOGGER.warn("initDBConnection A " + e);
+			LOGGER.warn("initDBConnection Fail A " + e);
 			throw new RuntimeException(e);
 		}
 
@@ -85,12 +81,12 @@ public class MsqlLite {
 					if (!connection.isClosed() && connection != null) {
 						connection.close();
 						if (connection.isClosed()) {
-							LOGGER.warn("Connection to Database closed");
-							qMain.stopApp();
+							LOGGER.info("Connection to Database closed");
+							QMain.stopApp();
 						}
 					}
 				} catch (SQLException e) {
-					LOGGER.warn("initDBConnection B " + e);
+					LOGGER.warn("initDBConnection Fail B " + e);
 				}
 			}
 		});

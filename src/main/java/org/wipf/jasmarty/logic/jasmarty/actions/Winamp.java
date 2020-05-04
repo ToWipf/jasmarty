@@ -64,9 +64,12 @@ public class Winamp {
 				return WinampController.getFileNamePlaying();
 			case "title":
 				return WinampController.getTitle();
+			case "timeRem":
+				return ((Integer) WinampController.getTime(WinampController.TIMELENGTH)).toString();
 			case "time":
-				return ((Integer) WinampController.getTime(0)).toString();
-
+				return ((Integer) WinampController.getTime(WinampController.CURRENTTIME)).toString();
+			case "status":
+				return ((Integer) WinampController.getStatus()).toString();
 			default:
 				return "Fehler W1";
 			}
