@@ -212,6 +212,8 @@ public class PageConverter {
 			return sBefore + wipf.getRandomInt(sParameter) + sAfter;
 		case "winamp":
 			return sBefore + winamp.getInfos(sParameter) + sAfter;
+		case "pos":
+			return sBefore + wipf.repeat(' ', Integer.valueOf(sParameter) - nIndexStart) + sAfter;
 
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile

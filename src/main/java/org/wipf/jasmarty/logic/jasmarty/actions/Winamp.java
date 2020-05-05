@@ -64,6 +64,8 @@ public class Winamp {
 				return WinampController.getFileNamePlaying();
 			case "title":
 				return WinampController.getTitle();
+			case "titlename":
+				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.'));
 			case "timefull":
 				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
 			case "time":
