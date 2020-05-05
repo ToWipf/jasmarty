@@ -17,8 +17,9 @@ public class Winamp {
 
 	/**
 	 * @param sInput
+	 * @param sParameter
 	 */
-	public void control(String sInput) {
+	public void control(String sInput, String sParameter) {
 		try {
 			switch (sInput.toLowerCase()) {
 			case "play":
@@ -45,6 +46,15 @@ public class Winamp {
 			case "volumedown":
 				WinampController.decreaseVolume();
 				break;
+			case "volumeupproz":
+				WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
+				break;
+			case "volumedownproz":
+				WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
+				break;
+			case "volumeset":
+				WinampController.setVolume(Integer.valueOf(sParameter));
+				break;
 			default:
 				break;
 			}
@@ -65,7 +75,7 @@ public class Winamp {
 			case "title":
 				return WinampController.getTitle();
 			case "titlename":
-				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.'));
+				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
 			case "timefull":
 				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
 			case "time":

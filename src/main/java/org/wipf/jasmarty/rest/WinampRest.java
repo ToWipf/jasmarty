@@ -26,9 +26,9 @@ public class WinampRest {
 	Winamp winamp;
 
 	@GET
-	@Path("/control/{s}")
-	public Response control(@PathParam("s") String s) {
-		winamp.control(s);
+	@Path("/control/{s}/{s2}")
+	public Response control(@PathParam("s") String s, @PathParam("s") String s2) {
+		winamp.control(s, s2);
 		return Response.ok("{}").build();
 	}
 

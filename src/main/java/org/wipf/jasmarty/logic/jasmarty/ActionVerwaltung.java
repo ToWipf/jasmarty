@@ -90,13 +90,19 @@ public class ActionVerwaltung {
 				JSONObject entry = new JSONObject();
 				entry.put("id", rs.getInt("id"));
 				entry.put("button", rs.getInt("button"));
-				entry.put("active", rs.getBoolean("active"));
+
+				if (rs.getString("active").equals("true")) {
+					entry.put("active", true);
+				} else {
+					entry.put("active", false);
+				}
+
 				entry.put("action", rs.getString("action"));
 				ja.put(entry);
 			}
 			rs.close();
 		} catch (Exception e) {
-			LOGGER.warn("getAllFromDBAsJson" + e);
+			LOGGER.warn("getAllFromDBAsJson: " + e);
 		}
 		return ja;
 	}
@@ -194,10 +200,10 @@ public class ActionVerwaltung {
 					}
 					return;
 				case "write":
-					tastatur.write(sParameter3, 100);
+					tastatur.write(sParameter2, sParameter3);
 					return;
 				case "winamp":
-					winamp.control(sParameter3);
+					winamp.control(sParameter2, sParameter3);
 					return;
 				case "exec":
 				case "system":

@@ -38,7 +38,7 @@ public class QMain implements QuarkusApplication {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("App");
-	public static final String VERSION = "0.51";
+	public static final String VERSION = "0.52";
 	public static final String DB_PATH = "jasmarty.db";
 	private static boolean bShutdown = false;
 
@@ -49,6 +49,7 @@ public class QMain implements QuarkusApplication {
 			Thread.sleep(1000);
 			if (bShutdown) {
 				LOGGER.info("Beende Programm");
+				System.exit(0);
 				return 0;
 			}
 		}

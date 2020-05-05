@@ -21,6 +21,18 @@ public class Tastatur {
 
 	/**
 	 * @param sText
+	 * @param sTimeout
+	 */
+	public void write(String sText, String sTimeout) {
+		try {
+			write(sText, Integer.valueOf(sTimeout));
+		} catch (Exception e) {
+			write(sText, 100);
+		}
+	}
+
+	/**
+	 * @param sText
 	 * @param nTimeout
 	 */
 	public void write(String sText, int nTimeout) {
