@@ -148,8 +148,9 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param nButton
+	 * @throws Exception
 	 */
-	public void doAction(Integer nButton) {
+	public void doAction(Integer nButton) throws Exception {
 		this.currentPressed = nButton;
 		if (nButton != null) {
 
@@ -217,6 +218,19 @@ public class ActionVerwaltung {
 				LOGGER.warn("Eingang nicht definert: " + currentPressed);
 			}
 		}
+	}
+
+	/**
+	 * @param nButton
+	 */
+	public void testAction(Integer nButton) {
+		// TODO hier nicht button sondern id nehemen
+		try {
+			doAction(nButton);
+		} catch (Exception e) {
+			LOGGER.warn("testAction fehler: " + e);
+		}
+
 	}
 
 }

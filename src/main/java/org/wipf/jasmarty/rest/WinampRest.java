@@ -14,7 +14,8 @@ import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
 
 /**
  * @author wipf
- *
+ * 
+ *         TODO löschen oder nach debug
  */
 @Path("/winamp")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,7 +28,7 @@ public class WinampRest {
 
 	@GET
 	@Path("/control/{s}/{s2}")
-	public Response control(@PathParam("s") String s, @PathParam("s") String s2) {
+	public Response control(@PathParam("s") String s, @PathParam("s") String s2) throws Exception {
 		winamp.control(s, s2);
 		return Response.ok("{}").build();
 	}

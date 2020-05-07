@@ -22,11 +22,13 @@ public class Tastatur {
 	/**
 	 * @param sText
 	 * @param sTimeout
+	 * @throws AWTException
 	 */
-	public void write(String sText, String sTimeout) {
-		try {
-			write(sText, Integer.valueOf(sTimeout));
-		} catch (Exception e) {
+	public void write(String sText, String sTimeout) throws AWTException {
+		Integer nTime = Integer.valueOf(sTimeout);
+		if (nTime != null) {
+			write(sText, nTime);
+		} else {
 			write(sText, 100);
 		}
 	}
@@ -34,29 +36,26 @@ public class Tastatur {
 	/**
 	 * @param sText
 	 * @param nTimeout
+	 * @throws AWTException
 	 */
-	public void write(String sText, int nTimeout) {
-		try {
-			Robot r = new Robot();
-			int i = 0;
-			char[] buchstaben = sText.toCharArray();
-			while (i < sText.length()) {
-				System.out.println("KeyEvent ist: " + buchstaben[i]);
-				if (Character.isUpperCase(buchstaben[i])) {
-					r.keyPress(KeyEvent.VK_SHIFT);
-				}
-				synchronized (r) {
-					r.keyPress(Character.toUpperCase(buchstaben[i]));
-					r.delay(nTimeout);
-					r.keyRelease(Character.toUpperCase(buchstaben[i]));
-				}
-				if (Character.isUpperCase(buchstaben[i])) {
-					r.keyRelease(KeyEvent.VK_SHIFT);
-				}
-				i++;
+	public void write(String sText, int nTimeout) throws AWTException {
+		Robot r = new Robot();
+		int i = 0;
+		char[] buchstaben = sText.toCharArray();
+		while (i < sText.length()) {
+			System.out.println("KeyEvent ist: " + buchstaben[i]);
+			if (Character.isUpperCase(buchstaben[i])) {
+				r.keyPress(KeyEvent.VK_SHIFT);
 			}
-		} catch (AWTException e) {
-			System.err.println(e);
+			synchronized (r) {
+				r.keyPress(Character.toUpperCase(buchstaben[i]));
+				r.delay(nTimeout);
+				r.keyRelease(Character.toUpperCase(buchstaben[i]));
+			}
+			if (Character.isUpperCase(buchstaben[i])) {
+				r.keyRelease(KeyEvent.VK_SHIFT);
+			}
+			i++;
 		}
 	}
 

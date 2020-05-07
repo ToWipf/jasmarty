@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Globals {
-  version: string = "0.54";
+  version: string = "0.55";
 }
 
 export interface jaconfig {
@@ -16,9 +16,8 @@ export interface jaconfig {
 export interface japage {
   id?: number;
   name?: string;
-  lines?: [{ line?: number; data?: string, option?: number }?];
+  lines?: [{ line?: number; data?: string; option?: number }?];
 }
-
 
 export interface buttonaction {
   id?: number;

@@ -2,8 +2,6 @@ package org.wipf.jasmarty.logic.jasmarty.actions;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.jboss.logging.Logger;
-
 import com.qotsa.jni.controller.WinampController;
 
 /**
@@ -13,53 +11,46 @@ import com.qotsa.jni.controller.WinampController;
 @ApplicationScoped
 public class Winamp {
 
-	private static final Logger LOGGER = Logger.getLogger("Winamp");
-
 	/**
 	 * @param sInput
 	 * @param sParameter
+	 * @throws Exception
 	 */
-	public void control(String sInput, String sParameter) {
-		try {
-			switch (sInput.toLowerCase()) {
-			case "play":
-				WinampController.play();
-				break;
-			case "pause":
-				WinampController.pause();
-				break;
-			case "stop":
-				WinampController.stop();
-				break;
-			case "resume":
-				WinampController.resume();
-				break;
-			case "nexttrack":
-				WinampController.nextTrack();
-				break;
-			case "previoustrack":
-				WinampController.previousTrack();
-				break;
-			case "volumeup":
-				WinampController.increaseVolume();
-				break;
-			case "volumedown":
-				WinampController.decreaseVolume();
-				break;
-			case "volumeupproz":
-				WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
-				break;
-			case "volumedownproz":
-				WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
-				break;
-			case "volumeset":
-				WinampController.setVolume(Integer.valueOf(sParameter));
-				break;
-			default:
-				break;
-			}
-		} catch (Exception e) {
-			LOGGER.warn("control " + sInput + " -> " + e);
+	public void control(String sInput, String sParameter) throws Exception {
+		switch (sInput.toLowerCase()) {
+		case "play":
+			WinampController.play();
+			break;
+		case "pause":
+			WinampController.pause();
+			break;
+		case "stop":
+			WinampController.stop();
+			break;
+		case "resume":
+			WinampController.resume();
+			break;
+		case "nexttrack":
+			WinampController.nextTrack();
+			break;
+		case "previoustrack":
+			WinampController.previousTrack();
+			break;
+		case "volumeup":
+			WinampController.increaseVolume();
+			break;
+		case "volumedown":
+			WinampController.decreaseVolume();
+			break;
+		case "volumeupproz":
+			WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
+			break;
+		case "volumedownproz":
+			WinampController.decreaseVolumePercent(Integer.valueOf(sParameter));
+			break;
+		case "volumeset":
+			WinampController.setVolume(Integer.valueOf(sParameter));
+			break;
 		}
 	}
 
