@@ -34,7 +34,7 @@ public class WinampRest {
 
 	@GET
 	@Path("/info/{s}")
-	public Response info(@PathParam("s") String s) {
+	public Response info(@PathParam("s") String s) throws Exception {
 		return Response.ok("{\"info\":\"" + winamp.getInfos(s) + "\"}").build();
 	}
 

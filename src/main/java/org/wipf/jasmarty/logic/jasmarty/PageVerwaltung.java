@@ -138,7 +138,12 @@ public class PageVerwaltung {
 	 * @param page
 	 */
 	public void writePage(LcdPage page) {
-		pageConverter.selectToNewPage(page);
+		try {
+			pageConverter.selectToNewPage(page);
+		} catch (Exception e) {
+			LOGGER.warn("Seiten init fehlgeschlagen. Seiten id: '" + page.getId() + "' name: '" + page.getName()
+					+ "' fehler: " + e);
+		}
 	}
 
 	/**

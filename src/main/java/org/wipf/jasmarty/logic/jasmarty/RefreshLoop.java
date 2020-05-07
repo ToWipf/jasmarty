@@ -44,10 +44,15 @@ public class RefreshLoop {
 	}
 
 	/**
+	 * @throws Exception
 	 * 
 	 */
 	public void doRefreshCacheManuell() {
-		pageConverter.refreshCache();
+		try {
+			pageConverter.refreshCache();
+		} catch (Exception e) {
+			LOGGER.warn("doRefreshCacheManuell fehlgeschlagen. Seite ist fehlerhaft." + e);
+		}
 	}
 
 	/**
@@ -75,8 +80,8 @@ public class RefreshLoop {
 						lcdConnect.refreshDisplay();
 						Thread.sleep(lcdConnect.getRefreshRate());
 
-					} catch (InterruptedException e) {
-						LOGGER.warn(e);
+					} catch (Exception e) {
+						LOGGER.warn("Refreshloop fehler: " + e);
 						break;
 					}
 				}

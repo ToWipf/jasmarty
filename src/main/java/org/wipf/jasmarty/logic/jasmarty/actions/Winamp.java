@@ -66,32 +66,29 @@ public class Winamp {
 	/**
 	 * @param sInput
 	 * @return
+	 * @throws Exception
 	 */
-	public String getInfos(String sInput) {
-		try {
-			switch (sInput.toLowerCase()) {
-			case "filename":
-				return WinampController.getFileNamePlaying();
-			case "title":
-				return WinampController.getTitle();
-			case "titlename":
-				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
-			case "timefull":
-				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
-			case "time":
-				return ((Integer) (WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
-			case "timerem":
-				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH)
-						- WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
-			case "status":
-				return ((Integer) WinampController.getStatus()).toString();
-			default:
-				return "Fehler W1";
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getInfos " + e);
-			return "";
+	public String getInfos(String sInput) throws Exception {
+		switch (sInput.toLowerCase()) {
+		case "filename":
+			return WinampController.getFileNamePlaying();
+		case "title":
+			return WinampController.getTitle();
+		case "titlename":
+			return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
+		case "timefull":
+			return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
+		case "time":
+			return ((Integer) (WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
+		case "timerem":
+			return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH)
+					- WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
+		case "status":
+			return ((Integer) WinampController.getStatus()).toString();
+		default:
+			return "Fehler W1";
 		}
+
 	}
 
 }

@@ -33,8 +33,9 @@ public class PageConverter {
 
 	/**
 	 * @param page
+	 * @throws Exception
 	 */
-	public void selectToNewPage(LcdPage page) {
+	public void selectToNewPage(LcdPage page) throws Exception {
 		lcdConnect.clearScreen();
 		this.selectedPage = page;
 		// Manuellen Refresh des caches anstoßen
@@ -42,16 +43,18 @@ public class PageConverter {
 	}
 
 	/**
+	 * @throws Exception
 	 * 
 	 */
-	public void refreshCache() {
+	public void refreshCache() throws Exception {
 		convertPage(selectedPage);
 	}
 
 	/**
 	 * @param page
+	 * @throws Exception
 	 */
-	private void convertPage(LcdPage page) {
+	private void convertPage(LcdPage page) throws Exception {
 		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 
@@ -154,8 +157,9 @@ public class PageConverter {
 	 * 
 	 * @param sLine
 	 * @return
+	 * @throws Exception
 	 */
-	private String searchAndReplaceVars(String sLine) {
+	private String searchAndReplaceVars(String sLine) throws Exception {
 		String sOut = sLine;
 
 		int lastIndex = 0;
@@ -175,8 +179,9 @@ public class PageConverter {
 	 * 
 	 * @param sLine
 	 * @return
+	 * @throws Exception
 	 */
-	private String lineReplaceVars(String sLine) {
+	private String lineReplaceVars(String sLine) throws Exception {
 
 		// Positionen bestimmen
 		if (sLine.length() < 3) {

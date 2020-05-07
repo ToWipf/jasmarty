@@ -36,11 +36,7 @@ public class Wipf {
 	 * @return
 	 */
 	public int getRandomInt(String sMax) {
-		try {
-			return getRandomInt(Integer.valueOf(sMax));
-		} catch (Exception e) {
-			return 42;
-		}
+		return getRandomInt(Integer.valueOf(sMax));
 	}
 
 	/**
@@ -60,11 +56,7 @@ public class Wipf {
 	 * @return
 	 */
 	public double doMathByString(String str) {
-		try {
-			return doMath(str);
-		} catch (Exception e) {
-			return -1.0;
-		}
+		return doMath(str);
 	}
 
 	/**
