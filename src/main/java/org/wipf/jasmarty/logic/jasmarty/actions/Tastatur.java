@@ -16,6 +16,10 @@ import javax.enterprise.context.ApplicationScoped;
 //import javax.sound.sampled.Port;
 //import javax.sound.sampled.SourceDataLine;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class Tastatur {
 

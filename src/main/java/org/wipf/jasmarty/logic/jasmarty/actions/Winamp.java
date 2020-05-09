@@ -5,7 +5,7 @@ import javax.enterprise.context.ApplicationScoped;
 import com.qotsa.jni.controller.WinampController;
 
 /**
- * @author user
+ * @author wipf
  *
  */
 @ApplicationScoped
