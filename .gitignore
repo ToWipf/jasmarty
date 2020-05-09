@@ -2,3 +2,4 @@
 /angular-app/node_modules/
 /angular-app/dist/
 /src/main/resources/META-INF/resources/app/
+*jasmarty.db
