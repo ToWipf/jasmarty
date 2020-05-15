@@ -45,7 +45,7 @@ public class PageVerwaltung {
 	 */
 	public void writeStartPage() {
 		LcdPage p = getPageFromDb(1);
-		if (p.getName().equals("Startseite")) {
+		if (!p.getName().equals("Startseite")) {
 			// Wenn es keine Startseite gibt -> schreiben
 			LOGGER.info("Keine Startseite gefunden -> Schreibe neu");
 			p = new LcdPage();

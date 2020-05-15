@@ -51,7 +51,6 @@ public class QMain {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		LOGGER.info("Starte " + VERSION);
-		wipf.printLogo();
 
 		MsqlLite.startDB();
 		pageVerwaltung.initDB();
@@ -73,12 +72,13 @@ public class QMain {
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("Stoppe");
 		if (lcdConnect.isLcdOk()) {
+			refreshLoop.stop();
 			pageVerwaltung.writeExitPage();
 			wipf.sleep(lcdConnect.getRefreshRate() + 50);
-			refreshLoop.stop();
 			lcdConnect.closeSerialLcdPort();
 		}
 		LOGGER.info("Gestoppt");
+		wipf.printLogo();
 	}
 
 }
