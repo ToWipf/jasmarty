@@ -52,6 +52,21 @@ public class Wipf {
 	}
 
 	/**
+	 * 
+	 */
+	public void printLogo() {
+		System.out.println("__          ___        __");
+		System.out.println("\\ \\        / (_)      / _|");
+		System.out.println(" \\ \\  /\\  / / _ _ __ | |");
+		System.out.println("  \\ \\/  \\/ / | | '_ \\|  _|");
+		System.out.println("   \\  /\\  /  | | |_) | |");
+		System.out.println("    \\/  \\/   |_| .__/|_|");
+		System.out.println("               | |");
+		System.out.println("               |_|");
+
+	}
+
+	/**
 	 * @param str
 	 * @return
 	 */

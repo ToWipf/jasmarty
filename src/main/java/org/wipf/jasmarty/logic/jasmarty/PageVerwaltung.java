@@ -44,35 +44,37 @@ public class PageVerwaltung {
 	 * 
 	 */
 	public void writeStartPage() {
-		LcdPage p = new LcdPage();
-		p.setId(1);
-		p.setName("Startseite");
-		p.setOptions("1012");
-		p.setLine(0, "jaSmarty");
-		p.setLine(1, "");
-		p.setLine(2, "by Wipf");
-		p.setLine(3, "V" + QMain.VERSION);
+		LcdPage p = getPageFromDb(1);
+		if (p.getName().equals("Startseite")) {
+			// Wenn es keine Startseite gibt -> schreiben
+			LOGGER.info("Keine Startseite gefunden -> Schreibe neu");
+			p = new LcdPage();
+			p.setId(1);
+			p.setName("Startseite");
+			p.setOptions("1012");
+			p.setLine(0, "jaSmarty");
+			p.setLine(1, "");
+			p.setLine(2, "by Wipf");
+			p.setLine(3, "V$ver()");
+			pageToDb(p);
+		}
+		LOGGER.info("Startseite laden");
 		writePage(p);
-
-		// TODO save this page to db ever?
-
-		pageToDb(p);
 	}
 
 	/**
 	 * 
 	 */
 	public void writeExitPage() {
+		// Seite nicht aus der db laden -> Fester inhalt
 		LcdPage p = new LcdPage();
 		p.setId(0);
-		p.setOptions("1001");
+		p.setOptions("1102");
 		p.setLine(0, "Beendet");
-		p.setLine(1, "");
+		p.setLine(1, "-wipf-");
 		p.setLine(2, "");
-		p.setLine(3, "-wipf-");
+		p.setLine(3, "V" + QMain.VERSION);
 		writePage(p);
-		// TODO load this page from db
-
 	}
 
 	/**

@@ -36,7 +36,7 @@ public class QMain {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
-	public static final String VERSION = "0.57";
+	public static final String VERSION = "0.58";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -51,6 +51,7 @@ public class QMain {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		LOGGER.info("Starte " + VERSION);
+		wipf.printLogo();
 
 		MsqlLite.startDB();
 		pageVerwaltung.initDB();

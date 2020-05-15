@@ -7,11 +7,14 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.LcdPage;
+import org.wipf.jasmarty.logic.base.QMain;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
 
 /**
  * @author wipf
+ * 
+ *         TODO scroll
  * 
  */
 @ApplicationScoped
@@ -219,7 +222,8 @@ public class PageConverter {
 			return sBefore + winamp.getInfos(sParameter) + sAfter;
 		case "pos":
 			return sBefore + wipf.repeat(' ', Integer.valueOf(sParameter) - nIndexStart) + sAfter;
-
+		case "ver":
+			return sBefore + QMain.VERSION + sAfter;
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
 		}

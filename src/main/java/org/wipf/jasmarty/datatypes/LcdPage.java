@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LcdPage {
 
 	private List<String> saLines;
-	private String sName;
+	private String sName = "";
 	private String sOptions;
 	private int nId;
 

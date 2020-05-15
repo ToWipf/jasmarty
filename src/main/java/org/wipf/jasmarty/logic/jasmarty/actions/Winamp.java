@@ -2,6 +2,7 @@ package org.wipf.jasmarty.logic.jasmarty.actions;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import com.qotsa.exception.InvalidHandle;
 import com.qotsa.jni.controller.WinampController;
 
 /**
@@ -60,24 +61,29 @@ public class Winamp {
 	 * @throws Exception
 	 */
 	public String getInfos(String sInput) throws Exception {
-		switch (sInput.toLowerCase()) {
-		case "filename":
-			return WinampController.getFileNamePlaying();
-		case "title":
-			return WinampController.getTitle();
-		case "titlename":
-			return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
-		case "timefull":
-			return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
-		case "time":
-			return ((Integer) (WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
-		case "timerem":
-			return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH)
-					- WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
-		case "status":
-			return ((Integer) WinampController.getStatus()).toString();
-		default:
-			return "Fehler W1";
+		try {
+			switch (sInput.toLowerCase()) {
+			case "filename":
+				return WinampController.getFileNamePlaying();
+			case "title":
+				return WinampController.getTitle();
+			case "titlename":
+				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
+			case "timefull":
+				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
+			case "time":
+				return ((Integer) (WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
+			case "timerem":
+				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH)
+						- WinampController.getTime(WinampController.CURRENTTIME) / 1000)).toString();
+			case "status":
+				return ((Integer) WinampController.getStatus()).toString();
+			default:
+				return "Fehler W1";
+			}
+		} catch (InvalidHandle e) {
+			// Bei Winamp fehlern nichts anzeigen -> Winamp läuft nicht
+			return "";
 		}
 
 	}
