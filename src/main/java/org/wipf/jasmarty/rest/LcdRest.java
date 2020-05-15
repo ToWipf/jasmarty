@@ -28,13 +28,13 @@ public class LcdRest {
 	@GET
 	@Path("/open")
 	public Response open() {
-		return Response.ok("{\"open\":\"" + lcdConnect.startPort() + "\"}").build();
+		return Response.ok("{\"open\":\"" + lcdConnect.startSerialLcdPort() + "\"}").build();
 	}
 
 	@GET
 	@Path("/close")
 	public Response close() {
-		return Response.ok("{\"close\":\"" + lcdConnect.close() + "\"}").build();
+		return Response.ok("{\"close\":\"" + lcdConnect.closeSerialLcdPort() + "\"}").build();
 	}
 
 	@GET

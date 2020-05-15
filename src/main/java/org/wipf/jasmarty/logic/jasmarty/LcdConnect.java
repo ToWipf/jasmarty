@@ -119,30 +119,12 @@ public class LcdConnect {
 	/**
 	 * @return
 	 */
-	public Boolean startPort() {
-		// Cache vorbereiten
-		lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
-
-		try {
-			// LCD Connect
-			sp = null;
-			sp = SerialPort.getCommPort(lconf.getPort());
-			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
-			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
-
-			if (!sp.openPort()) {
-				LOGGER.warn("LCD Port " + lconf.getPort() + " nicht gefunden");
-				return false;
-			} else {
-				// Warten bis LCD bereit ist
-				bLcdIsOk = true;
-				Thread.sleep(5000);
-				// clearScreen(); nicht nötig
-				return true;
-			}
-
-		} catch (Exception e) {
-			LOGGER.warn("LCD Start: " + e);
+	public Boolean startSerialLcdPort() {
+		if (startPort()) {
+			LOGGER.info("Port geöffnet");
+			return true;
+		} else {
+			LOGGER.warn("Port nicht geöffnet!");
 			return false;
 		}
 	}
@@ -150,10 +132,16 @@ public class LcdConnect {
 	/**
 	 * @return
 	 */
-	public Boolean close() {
+	public Boolean closeSerialLcdPort() {
 		// refresh ausschalten
 		bLcdIsOk = false;
-		return (sp.closePort());
+		if (sp.closePort()) {
+			LOGGER.info("Port geschlossen");
+			return true;
+		} else {
+			LOGGER.warn("Port nicht geschlossen!");
+			return false;
+		}
 	}
 
 	/**
@@ -219,14 +207,6 @@ public class LcdConnect {
 	}
 
 	/**
-	 * @param c
-	 * @return
-	 */
-	private void writeChar(char c) {
-		writeAscii((int) c);
-	}
-
-	/**
 	 * @param s
 	 * @return
 	 */
@@ -237,6 +217,45 @@ public class LcdConnect {
 		} catch (IOException e) {
 			this.bLcdIsOk = false;
 			LOGGER.warn("writeAscii: " + e);
+		}
+	}
+
+	/**
+	 * @param c
+	 * @return
+	 */
+	private void writeChar(char c) {
+		writeAscii((int) c);
+	}
+
+	/**
+	 * @return
+	 */
+	private Boolean startPort() {
+		// Cache vorbereiten
+		lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
+
+		try {
+			// LCD Connect
+			sp = null;
+			sp = SerialPort.getCommPort(lconf.getPort());
+			sp.setComPortParameters(lconf.getBaudRate(), 8, 1, 0); // default connection settings for Arduino
+			sp.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_BLOCKING, 0, 0); // block until bytes can be written
+
+			if (!sp.openPort()) {
+				LOGGER.warn("LCD Port " + lconf.getPort() + " nicht gefunden");
+				return false;
+			} else {
+				// Warten bis LCD bereit ist
+				bLcdIsOk = true;
+				Thread.sleep(5000);
+				// clearScreen(); nicht nötig
+				return true;
+			}
+
+		} catch (Exception e) {
+			LOGGER.warn("LCD Start: " + e);
+			return false;
 		}
 	}
 

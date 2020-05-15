@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Globals {
-  version: string = "0.56";
+  version: string = "0.57";
 }
 
 export interface jaconfig {

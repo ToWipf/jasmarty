@@ -36,7 +36,7 @@ public class QMain {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
-	public static final String VERSION = "0.56";
+	public static final String VERSION = "0.57";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -59,27 +59,23 @@ public class QMain {
 
 		lcdConnect.setConfig(serialConfig.getConfig());
 
-		if (lcdConnect.startPort()) {
-			LOGGER.info("Port geöffnet");
-		} else {
-			LOGGER.warn("Port nicht geöffnet!");
-		}
+		lcdConnect.startSerialLcdPort();
+
 		pageVerwaltung.writeStartPage();
 		refreshLoop.start();
+		LOGGER.info("Gestartet");
 	}
 
 	/**
 	 * @param ev
 	 */
 	void onStop(@Observes ShutdownEvent ev) {
-		LOGGER.info("stoppe ...");
+		LOGGER.info("Stoppe");
 		if (lcdConnect.isLcdOk()) {
 			pageVerwaltung.writeExitPage();
 			wipf.sleep(lcdConnect.getRefreshRate() + 50);
 			refreshLoop.stop();
-			if (lcdConnect.close()) {
-				LOGGER.info("Port geschlossen");
-			}
+			lcdConnect.closeSerialLcdPort();
 		}
 	}
 
