@@ -121,10 +121,10 @@ public class LcdConnect {
 	 */
 	public Boolean startSerialLcdPort() {
 		if (startPort()) {
-			LOGGER.info("Port geöffnet");
+			LOGGER.info("Port " + lconf.getPort() + " geöffnet");
 			return true;
 		} else {
-			LOGGER.warn("Port nicht geöffnet!");
+			LOGGER.warn("Port " + lconf.getPort() + " nicht geöffnet!");
 			return false;
 		}
 	}
@@ -136,10 +136,10 @@ public class LcdConnect {
 		// refresh ausschalten
 		bLcdIsOk = false;
 		if (sp.closePort()) {
-			LOGGER.info("Port geschlossen");
+			LOGGER.info("Port " + lconf.getPort() + " geschlossen");
 			return true;
 		} else {
-			LOGGER.warn("Port nicht geschlossen!");
+			LOGGER.warn("Port " + lconf.getPort() + " nicht geschlossen!");
 			return false;
 		}
 	}

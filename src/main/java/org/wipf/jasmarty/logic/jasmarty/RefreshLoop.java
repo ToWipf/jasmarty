@@ -22,7 +22,7 @@ public class RefreshLoop {
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 
-	private static final Logger LOGGER = Logger.getLogger("RefreshLoop");
+	private static final Logger LOGGER = Logger.getLogger("LCD RefreshLoop");
 	private boolean bLoopActive = false;
 
 	/**
