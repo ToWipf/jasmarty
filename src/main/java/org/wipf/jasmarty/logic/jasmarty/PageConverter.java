@@ -62,10 +62,7 @@ public class PageConverter {
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 
 			// Zeile in Cache schreiben und auf maximale Zeichenanzahl kürzen
-			lcdConnect.writeLineToCache(0, nLine,
-					lineOptions(
-							sLineAfterConvert.substring(0, Math.min(sLineAfterConvert.length(), lcdConnect.getWidth())),
-							nLine));
+			lcdConnect.writeLineToCache(0, nLine, lineOptions(sLineAfterConvert, nLine));
 		}
 	}
 
@@ -78,12 +75,10 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] lineOptions(String sLine, int nLine) {
-
 		String sOptions = selectedPage.getOptions();
 
 		// Wenn die Zeile voll oder leer ist -> nichts machen
 		// Wenn keine Options vorhanden sind -> nichts machen
-
 		if (sLine.length() == 0 || sLine.length() == lcdConnect.getWidth() || sOptions == null) {
 			return sLine.toCharArray();
 		}
@@ -94,7 +89,7 @@ public class PageConverter {
 		switch (nOption) {
 		case '0':
 			// rechtsbündig
-			return sLine.toCharArray();
+			return lineRechts(sLine);
 		case '1':
 			// mittig
 			return lineMittig(sLine);
@@ -123,13 +118,27 @@ public class PageConverter {
 	private char[] scrollLine(String sLine, int nLine) {
 		int nLength = sLine.length();
 		if (nLength > lcdConnect.getWidth()) {
-			char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);
-
-			return "TODO".toCharArray();
-
+			// char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);
+			int nState = lcdConnect.getCache().getScrollStateForLine(nLine);
+			if (nState < nLength) {
+				lcdConnect.getCache().setScrollStateForLine(nLine, nState + 1);
+			} else {
+				lcdConnect.getCache().setScrollStateForLine(nLine, 0);
+			}
+			System.out.println(nState);
+			return lineRechts(sLine.substring(nState));
 		} else {
-			return sLine.toCharArray();
+			// Nicht nötig zu scrollen -> Rechtsbündig
+			return lineRechts(sLine);
 		}
+	}
+
+	/**
+	 * @param sLine
+	 * @return
+	 */
+	private char[] lineRechts(String sLine) {
+		return sLine.substring(0, Math.min(sLine.length(), lcdConnect.getWidth())).toCharArray();
 	}
 
 	/**

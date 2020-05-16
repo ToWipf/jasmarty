@@ -22,7 +22,7 @@ export class JasmartyPagesComponent implements OnInit {
   public selectedPage: number = 1;
   public japage: japage = {};
 
-  public optionnumbers: number[] = [48, 49, 50];
+  public optionnumbers: number[] = [48, 49, 50, 53];
 
   ngOnInit() {
     this.loadConfig();
@@ -53,16 +53,6 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public save(): void {
-    // var sLines: string = "";
-    // this.lines.forEach((line) => {
-    //   if (sLines.length != 0) {
-    //     sLines = sLines + "\n";
-    //   }
-    //   sLines = sLines + line;
-    // });
-
-    // this.japage.lines = sLines;
-
     this.http
       .post("http://localhost:8080/pages/save", JSON.stringify(this.japage))
       .subscribe((resdata: any) => {

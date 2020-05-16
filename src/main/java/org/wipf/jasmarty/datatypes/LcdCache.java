@@ -13,6 +13,7 @@ public class LcdCache {
 	private int nWidth;
 	private char[][] cacheIst;
 	private char[][] cacheSoll;
+	private int nScrollState[];
 
 	/**
 	 * @param nWidth
@@ -26,13 +27,31 @@ public class LcdCache {
 		// this.nHeight = nHeight;
 		this.cacheIst = new char[nWidth][nHeight];
 		this.cacheSoll = new char[nWidth][nHeight];
+		this.nScrollState = new int[nHeight];
 
-		for (int x = 0; x < nWidth; x++) {
-			for (int y = 0; y < nHeight; y++) {
+		for (int y = 0; y < nHeight; y++) {
+			for (int x = 0; x < nWidth; x++) {
 				this.cacheIst[x][y] = ' ';
 				this.cacheSoll[x][y] = ' ';
 			}
+			this.nScrollState[y] = 0;
 		}
+	}
+
+	/**
+	 * @param nLine
+	 * @return
+	 */
+	public int getScrollStateForLine(int nLine) {
+		return this.nScrollState[nLine];
+	}
+
+	/**
+	 * @param nLine
+	 * @param nState
+	 */
+	public void setScrollStateForLine(int nLine, int nState) {
+		this.nScrollState[nLine] = nState;
 	}
 
 	/**
