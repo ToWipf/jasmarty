@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.logic.jasmarty.PageConverter;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 
 /**
@@ -26,6 +27,8 @@ public class PagesRest {
 
 	@Inject
 	PageVerwaltung pageVerwaltung;
+	@Inject
+	PageConverter pageConverter;
 
 	@GET
 	@PUT
@@ -37,8 +40,8 @@ public class PagesRest {
 
 	@GET
 	@Path("/get/{pid}")
-	public String getPage(@PathParam("pid") int nPid) {
-		return pageVerwaltung.getPageFromDb(nPid).toJson();
+	public Response getPage(@PathParam("pid") int nPid) {
+		return Response.ok(pageVerwaltung.getPageFromDb(nPid).toJson()).build();
 	}
 
 	@POST
@@ -58,8 +61,14 @@ public class PagesRest {
 
 	@GET
 	@Path("/getAllPages")
-	public String getAllPages() {
-		return pageVerwaltung.getAllPages().toString();
+	public Response getAllPages() {
+		return Response.ok(pageVerwaltung.getAllPages().toString()).build();
+	}
+
+	@GET
+	@Path("/current")
+	public Response getCurrent() {
+		return Response.ok(pageConverter.getCurrentSite().toJson()).build();
 	}
 
 }

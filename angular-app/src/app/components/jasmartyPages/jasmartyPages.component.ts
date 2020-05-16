@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { jaconfig, japage, buttonaction } from "src/app/datatypes";
+import { jaconfig, japage } from "src/app/datatypes";
 import {
   MatDialogRef,
   MAT_DIALOG_DATA,
@@ -19,14 +19,23 @@ export class JasmartyPagesComponent implements OnInit {
   public sText: string;
   public sStatus: string;
   public jaconfig: jaconfig = {};
-  public selectedPage: number = 1;
+  public selectedPage: number;
   public japage: japage = {};
 
   public optionnumbers: number[] = [48, 49, 50, 53];
 
   ngOnInit() {
+    this.getCurrentSelectedSite();
     this.loadConfig();
     this.getSite();
+  }
+
+  public getCurrentSelectedSite(): void {
+    this.http
+      .get("http://localhost:8080/pages/current").subscribe((resdata: japage) => {
+        this.selectedPage = resdata.id;
+        this.japage = resdata;
+      });
   }
 
   public loadConfig(): void {

@@ -46,6 +46,13 @@ public class PageConverter {
 	}
 
 	/**
+	 * @return
+	 */
+	public LcdPage getCurrentSite() {
+		return selectedPage;
+	}
+
+	/**
 	 * @throws Exception
 	 * 
 	 */
@@ -77,7 +84,7 @@ public class PageConverter {
 	private char[] lineOptions(String sLine, int nLine) {
 		String sOptions = selectedPage.getOptions();
 
-		// Wenn die Zeile voll oder leer ist -> nichts machen
+		// Wenn die Zeile genau voll oder leer ist -> nichts machen
 		// Wenn keine Options vorhanden sind -> nichts machen
 		if (sLine.length() == 0 || sLine.length() == lcdConnect.getWidth() || sOptions == null) {
 			return sLine.toCharArray();
@@ -98,12 +105,16 @@ public class PageConverter {
 			return lineLinks(sLine);
 		case '3':
 			// weierlauf auf nächste Zeile
+			return "Fehler 13".toCharArray();
 		case '4':
 			// hat weiterlauf
+			return "Fehler 14".toCharArray();
 		case '5':
+			// Scroll
 			return scrollLine(sLine, nLine);
 		case '6':
 			// flash line?
+			return "Fehler 16".toCharArray();
 
 		default:
 			return ("Fail 1: " + nOption).toCharArray();
@@ -116,16 +127,25 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] scrollLine(String sLine, int nLine) {
+		System.out.println(sLine + "   " + nLine);
 		int nLength = sLine.length();
 		if (nLength > lcdConnect.getWidth()) {
 			// char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);
 			int nState = lcdConnect.getCache().getScrollStateForLine(nLine);
-			if (nState < nLength) {
-				lcdConnect.getCache().setScrollStateForLine(nLine, nState + 1);
-			} else {
-				lcdConnect.getCache().setScrollStateForLine(nLine, 0);
+			lcdConnect.getCache().setScrollStateForLine(nLine, nState + 1);
+
+			if (nState > nLength) {
+				lcdConnect.getCache().setScrollStateForLine(nLine, 2);
 			}
-			System.out.println(nState);
+
+			System.out.println("state: " + nState);
+
+			if (nLength - nState < lcdConnect.getWidth()) {
+				// Zeile erneut hinten anhängen
+				System.out.println("anh");
+				sLine = sLine + sLine;
+			}
+
 			return lineRechts(sLine.substring(nState));
 		} else {
 			// Nicht nötig zu scrollen -> Rechtsbündig
