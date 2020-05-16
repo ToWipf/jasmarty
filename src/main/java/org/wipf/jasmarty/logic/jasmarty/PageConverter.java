@@ -138,11 +138,8 @@ public class PageConverter {
 				lcdConnect.getCache().setScrollStateForLine(nLine, 2);
 			}
 
-			System.out.println("state: " + nState);
-
 			if (nLength - nState < lcdConnect.getWidth()) {
 				// Zeile erneut hinten anhängen
-				System.out.println("anh");
 				sLine = sLine + sLine;
 			}
 

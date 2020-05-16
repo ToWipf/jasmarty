@@ -1,121 +1,120 @@
 <h3>Seite {{selectedPage}}: '{{japage.name}}'</h3>
 <hr>
 
-<div class="jalist">
-    <div class="gridRow">
-        <div class="gridCol">
+<div class="gridRow">
+    <div class="gridCol pages">
+        <div>
+            <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="openDialogGoToPage()">gehe zu Seite</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
+        </div>
+
+        <perfect-scrollbar class="pscroll">
             <div>
-                <button type="button" class="btn btn-primary inbutton" (click)="last()">Seite zurück</button>
-                <button type="button" class="btn btn-primary inbutton" (click)="openDialogGoToPage()">gehe zu Seite</button>
-                <button type="button" class="btn btn-primary inbutton" (click)="next()">nächste Seite</button>
+                <ng-container *ngIf="japage">
+
+                    <div>
+                        <h5>Name</h5>
+                        <input type="string" class="form-control inbutton" [(ngModel)]="japage.name">
+                    </div>
+
+                    <h5>Zeilen</h5>
+                    <div *ngFor="let line of japage.lines; let i = index; trackBy:trackByIndex;">
+                        <div class="lineconfig">
+
+                            <mat-form-field class="lineInputData">
+                                <mat-label>Zeile {{i}}</mat-label>
+                                <input matInput type="string" class="form-control inputText"
+                                    [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
+                            </mat-form-field>
+
+                            <mat-form-field class="lineInputOption">
+                                <mat-label>Option</mat-label>
+                                <mat-select [(ngModel)]="japage.lines[i].option" name="option">
+                                    <mat-option *ngFor="let option of optionnumbers" [value]="option">
+                                        <ng-container *ngIf="option == 48">
+                                            Linksbündig
+                                        </ng-container>
+                                        <ng-container *ngIf="option == 49">
+                                            Mittig
+                                        </ng-container>
+                                        <ng-container *ngIf="option == 50">
+                                            Rechtsbündig
+                                        </ng-container>
+                                        <ng-container *ngIf="option == 51">
+                                            Weierlauf auf nächste Zeile
+                                        </ng-container>
+                                        <ng-container *ngIf="option == 52">
+                                            hat Weierlauf
+                                        </ng-container>
+                                        <ng-container *ngIf="option == 53">
+                                            Zeile Scrollen
+                                        </ng-container>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
 
-            <perfect-scrollbar class="pscroll">
-                <div>
-                    <ng-container *ngIf="japage">
+            <!-- <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button> -->
+            <!-- <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button> -->
+        </perfect-scrollbar>
 
-                        <div>
-                            <h5>Name</h5>
-                            <input type="string" class="form-control inbutton" [(ngModel)]="japage.name">
-                        </div>
+        <button type="button" class="btn btn-danger inbutton" (click)="deletePage()">Löschen</button>
 
-                        <h5>Zeilen</h5>
-                        <div *ngFor="let line of japage.lines; let i = index; trackBy:trackByIndex;">
-                            <div class="lineconfig">
+        <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und Zeigen</button>
+    </div>
 
-                                <mat-form-field class="lineInputData">
-                                    <mat-label>Zeile {{i}}</mat-label>
-                                    <input matInput type="string" class="form-control inputText" [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
-                                </mat-form-field>
+    <div class="gridCol">
+        <h4>Funktionen</h4>
+        <perfect-scrollbar class="pscroll">
+            <h5>Zeit</h5>
 
-                                <mat-form-field class="lineInputOption">
-                                    <mat-label>Option</mat-label>
-                                    <mat-select [(ngModel)]="japage.lines[i].option" name="option">
-                                        <mat-option *ngFor="let option of optionnumbers" [value]="option">
-                                            <ng-container *ngIf="option == 48">
-                                                Linksbündig
-                                            </ng-container>
-                                            <ng-container *ngIf="option == 49">
-                                                Mittig
-                                            </ng-container>
-                                            <ng-container *ngIf="option == 50">
-                                                Rechtsbündig
-                                            </ng-container>
-                                            <ng-container *ngIf="option == 51">
-                                                Weierlauf auf nächste Zeile
-                                            </ng-container>
-                                            <ng-container *ngIf="option == 52">
-                                                hat Weierlauf
-                                            </ng-container>
-                                            <ng-container *ngIf="option == 53">
-                                                Zeile Scrollen
-                                            </ng-container>
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </ng-container>
-                </div>
+            <ul>
+                <li><code>$time(Parameter mit Trennzeichen)</code></li>
+                <li><code>$time(HH:mm:ss)</code></li>
+                <li><code>$time(dd MMMM yyyy)</code></li>
+                <li><code>$time(dd.MM.yy)</code></li>
+                <li><a target="blank"
+                        href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
+                </li>
+            </ul>
 
-                <!-- <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button> -->
-                <!-- <button type="button" class="btn btn-primary inbutton" (click)="selectPage()">Zeigen</button> -->
-            </perfect-scrollbar>
+            <h5>Balken</h5>
+            <ul>
+                <li><code>$bar(Variable|Maximaler Wert|Länge)</code></li>
+                <li><code>$bar($time(ss),60,20))</code></li>
+                <li><code>$bar($time(ss)+10,60,20))</code></li>
+            </ul>
 
-            <button type="button" class="btn btn-danger inbutton" (click)="deletePage()">Löschen</button>
+            <h5>Rechnen</h5>
+            <ul>
+                <li><code>$math(Rechnung)</code></li>
+                <li><code>$math([[4 - 2^3 + 1] * -sqrt[3*3+4*4]] / 2)</code></li>
+                Als Klammer kann <code>[]</code> verwendet werden
+            </ul>
 
-            <button type="button" class="btn btn-primary inbutton" (click)="saveAndSelectPage()">Speichern und
-                Zeigen</button>
-        </div>
+            <h5>Grundlegendes</h5>
+            <ul>
+                <li><code>$rnd(MaxZahl)</code></li>
+                <li><code>$rnd(42)</code></li>
+                <li><code>$pos(4)</code></li>
+                <li><code>$ver()</code></li>
+            </ul>
 
-        <div class="gridCol">
-            <h4>Funktionen</h4>
-            <perfect-scrollbar class="pscroll">
-                <h5>Zeit</h5>
+            <h5>Winamp</h5>
+            <ul>
+                <li><code>$winamp(filename)</code></li>
+                <li><code>$winamp(title)</code></li>
+                <li><code>$winamp(titlename)</code></li>
+                <li><code>$winamp(time)</code></li>
+                <li><code>$winamp(timeFull)</code></li>
+                <li><code>$winamp(timeRem)</code></li>
+                <li><code>$winamp(status)</code></li>
+            </ul>
 
-                <ul>
-                    <li><code>$time(Parameter mit Trennzeichen)</code></li>
-                    <li><code>$time(HH:mm:ss)</code></li>
-                    <li><code>$time(dd MMMM yyyy)</code></li>
-                    <li><code>$time(dd.MM.yy)</code></li>
-                    <li><a target="blank" href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
-                    </li>
-                </ul>
-
-                <h5>Balken</h5>
-                <ul>
-                    <li><code>$bar(Variable|Maximaler Wert|Länge)</code></li>
-                    <li><code>$bar($time(ss),60,20))</code></li>
-                    <li><code>$bar($time(ss)+10,60,20))</code></li>
-                </ul>
-
-                <h5>Rechnen</h5>
-                <ul>
-                    <li><code>$math(Rechnung)</code></li>
-                    <li><code>$math([[4 - 2^3 + 1] * -sqrt[3*3+4*4]] / 2)</code></li>
-                    Als Klammer kann <code>[]</code> verwendet werden
-                </ul>
-
-                <h5>Grundlegendes</h5>
-                <ul>
-                    <li><code>$rnd(MaxZahl)</code></li>
-                    <li><code>$rnd(42)</code></li>
-                    <li><code>$pos(4)</code></li>
-                    <li><code>$ver()</code></li>
-                </ul>
-
-                <h5>Winamp</h5>
-                <ul>
-                    <li><code>$winamp(filename)</code></li>
-                    <li><code>$winamp(title)</code></li>
-                    <li><code>$winamp(titlename)</code></li>
-                    <li><code>$winamp(time)</code></li>
-                    <li><code>$winamp(timeFull)</code></li>
-                    <li><code>$winamp(timeRem)</code></li>
-                    <li><code>$winamp(status)</code></li>
-                </ul>
-
-            </perfect-scrollbar>
-        </div>
+        </perfect-scrollbar>
     </div>
 </div>

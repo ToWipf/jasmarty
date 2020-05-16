@@ -19,7 +19,7 @@ export class JasmartyPagesComponent implements OnInit {
   public sText: string;
   public sStatus: string;
   public jaconfig: jaconfig = {};
-  public selectedPage: number;
+  public selectedPage: number = 1;
   public japage: japage = {};
 
   public optionnumbers: number[] = [48, 49, 50, 53];
@@ -27,7 +27,6 @@ export class JasmartyPagesComponent implements OnInit {
   ngOnInit() {
     this.getCurrentSelectedSite();
     this.loadConfig();
-    this.getSite();
   }
 
   public getCurrentSelectedSite(): void {
