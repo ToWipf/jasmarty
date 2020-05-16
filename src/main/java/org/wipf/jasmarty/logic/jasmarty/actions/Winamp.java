@@ -79,7 +79,7 @@ public class Winamp {
 			case "status":
 				return ((Integer) WinampController.getStatus()).toString();
 			default:
-				return "Fehler W1";
+				return "Fail 4";
 			}
 		} catch (InvalidHandle e) {
 			// Bei Winamp fehlern nichts anzeigen -> Winamp läuft nicht

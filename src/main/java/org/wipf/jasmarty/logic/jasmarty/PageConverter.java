@@ -106,12 +106,29 @@ public class PageConverter {
 		case '4':
 			// hat weiterlauf
 		case '5':
-			// auto scroll line
+			return scrollLine(sLine, nLine);
 		case '6':
 			// flash line?
 
 		default:
 			return ("Fail 1: " + nOption).toCharArray();
+		}
+	}
+
+	/**
+	 * @param sLine
+	 * @param nLine
+	 * @return
+	 */
+	private char[] scrollLine(String sLine, int nLine) {
+		int nLength = sLine.length();
+		if (nLength > lcdConnect.getWidth()) {
+			char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);
+
+			return "TODO".toCharArray();
+
+		} else {
+			return sLine.toCharArray();
 		}
 	}
 
@@ -237,7 +254,7 @@ public class PageConverter {
 			SimpleDateFormat time = new SimpleDateFormat(sPara);
 			return time.format(new Date());
 		} catch (Exception e) {
-			return "Parameter ungültig";
+			return "Fail 5";
 		}
 	}
 

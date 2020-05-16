@@ -48,6 +48,18 @@ public class LcdCache {
 	}
 
 	/**
+	 * @param nLine
+	 * @return
+	 */
+	public char[] getCacheSollLine(int nLine) {
+		char[] ca = new char[nWidth];
+		for (int x = 0; x < nWidth; x++) {
+			ca[x] = this.cacheSoll[x][nLine];
+		}
+		return ca;
+	}
+
+	/**
 	 * @param x
 	 * @param y
 	 * @return
