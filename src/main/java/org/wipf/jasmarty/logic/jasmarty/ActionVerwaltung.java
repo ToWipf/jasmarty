@@ -12,8 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.ButtonAction;
 import org.wipf.jasmarty.logic.base.MsqlLite;
-import org.wipf.jasmarty.logic.jasmarty.actions.Tastatur;
-import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
+import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
+import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
 /**
  * @author wipf

@@ -36,7 +36,7 @@ public class QMain {
 	SerialConfig serialConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
-	public static final String VERSION = "0.59";
+	public static final String VERSION = "0.60";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -44,6 +44,13 @@ public class QMain {
 	 */
 	public static void stopApp() {
 		Quarkus.asyncExit();
+	}
+
+	/**
+	 * 
+	 */
+	public void startAgain() {
+		onStart(null);
 	}
 
 	/**
@@ -73,8 +80,10 @@ public class QMain {
 		LOGGER.info("Stoppe");
 		if (lcdConnect.isLcdOk()) {
 			refreshLoop.stop();
+			wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
 			pageVerwaltung.writeExitPage();
-			wipf.sleep(lcdConnect.getRefreshRate() + 50);
+			refreshLoop.doRefreshCacheManuell();
+			lcdConnect.refreshDisplay();
 			lcdConnect.closeSerialLcdPort();
 		}
 		LOGGER.info("Gestoppt");

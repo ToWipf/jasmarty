@@ -24,6 +24,8 @@ public class WipfRest {
 
 	@Inject
 	SerialConfig serialConfig;
+	@Inject
+	QMain qMain;
 
 	@GET
 	@Path("/ver")
@@ -35,6 +37,13 @@ public class WipfRest {
 	@Path("/ports")
 	public Response ports() {
 		return Response.ok(serialConfig.getPorts().toString()).build();
+	}
+
+	@GET
+	@Path("/startAgain")
+	public Response startAgain() {
+		qMain.startAgain();
+		return Response.ok().build();
 	}
 
 	@GET

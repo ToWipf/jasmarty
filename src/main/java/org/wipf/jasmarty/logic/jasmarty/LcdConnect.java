@@ -64,6 +64,16 @@ public class LcdConnect {
 	}
 
 	/**
+	 * @param conf
+	 */
+	public void resetConfigLive(LcdConfig conf) {
+		System.out.println("l");
+		this.lconf.setRefreshRate(conf.getRefreshRate());
+		this.lconf.setHeight(conf.getHeight());
+		this.lconf.setWidth(conf.getWidth());
+	}
+
+	/**
 	 * @return
 	 */
 	public int getHeight() {
@@ -120,12 +130,17 @@ public class LcdConnect {
 	 * @return
 	 */
 	public Boolean startSerialLcdPort() {
-		if (startPort()) {
-			LOGGER.info("Port " + lconf.getPort() + " geöffnet");
-			return true;
+		if (!bLcdIsOk) {
+			if (startPort()) {
+				LOGGER.info("Port " + lconf.getPort() + " geöffnet");
+				return true;
+			} else {
+				LOGGER.warn("Port " + lconf.getPort() + " nicht geöffnet!");
+				return false;
+			}
 		} else {
-			LOGGER.warn("Port " + lconf.getPort() + " nicht geöffnet!");
-			return false;
+			LOGGER.info("Port " + lconf.getPort() + " bereits geöffnet");
+			return true;
 		}
 	}
 

@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
-import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
+import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
 /**
  * @author wipf

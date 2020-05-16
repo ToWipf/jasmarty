@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty.actions;
+package org.wipf.jasmarty.logic.jasmarty.extensions;
 
 import java.awt.AWTException;
 import java.awt.Robot;

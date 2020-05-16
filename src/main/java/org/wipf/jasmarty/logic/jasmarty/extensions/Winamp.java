@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty.actions;
+package org.wipf.jasmarty.logic.jasmarty.extensions;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -68,7 +68,8 @@ public class Winamp {
 			case "title":
 				return WinampController.getTitle();
 			case "titlename":
-				return WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
+				String s = WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
+				return s.substring(0, s.length() - 8);
 			case "timefull":
 				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
 			case "time":

@@ -28,10 +28,17 @@ export class JasmartyConfigComponent implements OnInit {
     this.http.post("http://localhost:8080/config/set", JSON.stringify(this.jaconfig)).subscribe((resdata: any) => {
       if (resdata.save) {
         console.log("saved");
+        this.startLcdAgain();
       } else {
         //TODO: Meldung Fehler
         console.log("fehler");
       }
+    });
+  }
+
+  public startLcdAgain(): void {
+    this.http.get("http://localhost:8080/wipf/startAgain").subscribe((resdata: any) => {
+      console.log(resdata);
     });
   }
 

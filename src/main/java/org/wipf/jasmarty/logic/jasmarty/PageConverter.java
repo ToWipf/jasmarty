@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.LcdPage;
 import org.wipf.jasmarty.logic.base.QMain;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.jasmarty.actions.Winamp;
+import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
 /**
  * @author wipf
@@ -127,7 +127,6 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] scrollLine(String sLine, int nLine) {
-		System.out.println(sLine + "   " + nLine);
 		int nLength = sLine.length();
 		if (nLength > lcdConnect.getWidth()) {
 			// char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);

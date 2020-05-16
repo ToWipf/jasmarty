@@ -71,8 +71,8 @@ public class PageVerwaltung {
 		p.setId(0);
 		p.setOptions("1102");
 		p.setLine(0, "Beendet");
-		p.setLine(1, "-wipf-");
-		p.setLine(2, "");
+		p.setLine(1, "");
+		p.setLine(2, "-wipf-");
 		p.setLine(3, "V" + QMain.VERSION);
 		writePage(p);
 	}
