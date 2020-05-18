@@ -40,13 +40,6 @@ public class QMain {
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
-	 * Stop App
-	 */
-	public static void stopApp() {
-		Quarkus.asyncExit();
-	}
-
-	/**
 	 * 
 	 */
 	public void startAgain() {
@@ -71,6 +64,13 @@ public class QMain {
 		pageVerwaltung.writeStartPage();
 		refreshLoop.start();
 		LOGGER.info("Gestartet");
+	}
+
+	/**
+	 * Stop App
+	 */
+	public static void stopApp() {
+		Quarkus.asyncExit();
 	}
 
 	/**
