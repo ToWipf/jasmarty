@@ -1,1 +1,3 @@
-# TODO: npm install usw.
+#!/bin/bash
+cd ../angular-app
+npm install
