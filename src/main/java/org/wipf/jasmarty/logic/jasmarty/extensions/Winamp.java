@@ -52,6 +52,9 @@ public class Winamp {
 		case "volumeset":
 			WinampController.setVolume(Integer.valueOf(sParameter));
 			break;
+		case "start":
+			WinampController.run();
+			break;
 		}
 	}
 
