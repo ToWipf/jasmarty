@@ -1,8 +1,5 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -253,7 +250,7 @@ public class PageConverter {
 
 		switch (sCommand) {
 		case "time":
-			return sBefore + varTime(sParameter) + sAfter;
+			return sBefore + wipf.time(sParameter) + sAfter;
 		case "bar":
 			return sBefore + varBar(sParameter) + sAfter;
 		case "math":
@@ -268,18 +265,6 @@ public class PageConverter {
 			return sBefore + QMain.VERSION + sAfter;
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	private String varTime(String sPara) {
-		try {
-			SimpleDateFormat time = new SimpleDateFormat(sPara);
-			return time.format(new Date());
-		} catch (Exception e) {
-			return "Fail 5";
 		}
 	}
 

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import javax.crypto.Cipher;
@@ -192,12 +194,16 @@ public class Wipf {
 	 * @return
 	 * @throws IOException
 	 */
-	public String getExternalIp() throws IOException {
-		URL whatismyip = new URL("http://checkip.amazonaws.com");
-		BufferedReader in;
-		in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
-		String ip = in.readLine(); // you get the IP as a String
-		return ip;
+	public String getExternalIp() {
+		try {
+			URL whatismyip = new URL("http://checkip.amazonaws.com");
+			BufferedReader in;
+			in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
+			String ip = in.readLine(); // you get the IP as a String
+			return ip;
+		} catch (Exception e) {
+			return "Fehler 21a";
+		}
 	}
 
 	/**
@@ -286,4 +292,17 @@ public class Wipf {
 			return "fail";
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	public String time(String sPara) {
+		try {
+			SimpleDateFormat time = new SimpleDateFormat(sPara);
+			return time.format(new Date());
+		} catch (Exception e) {
+			return "Fail 5";
+		}
+	}
+
 }

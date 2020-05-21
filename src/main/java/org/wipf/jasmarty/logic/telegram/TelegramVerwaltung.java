@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,6 +14,9 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MsqlLite;
 import org.wipf.jasmarty.logic.base.QMain;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.telegram.apps.TAppOthers;
+import org.wipf.jasmarty.logic.telegram.apps.TAppTODOList;
+import org.wipf.jasmarty.logic.telegram.apps.TAppTicTacToe;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,6 +38,12 @@ public class TelegramVerwaltung {
 
 	@Inject
 	Wipf wipf;
+	@Inject
+	TAppOthers appOthers;
+	@Inject
+	TAppTicTacToe appTicTacToe;
+	@Inject
+	TAppTODOList appTODOList;
 
 	/**
 	 * 
@@ -359,7 +367,7 @@ public class TelegramVerwaltung {
 		case "r":
 		case "rnd":
 		case "zufall":
-			return MOthers.zufall(t.getMessageStringPart(1), t.getMessageStringPart(2));
+			return TAppOthers.zufall(t.getMessageStringPart(1), t.getMessageStringPart(2));
 		case "c":
 		case "cr":
 		case "en":
@@ -377,7 +385,7 @@ public class TelegramVerwaltung {
 		case "tictactoe":
 		case "play":
 		case "game":
-			return MTicTacToe.input(t);
+			return appTicTacToe.input(t);
 		case "time":
 		case "date":
 		case "datum":
@@ -385,18 +393,18 @@ public class TelegramVerwaltung {
 		case "zeit":
 		case "clock":
 		case "z":
-			return MWipf.dateTime();
+			return wipf.time("dd.MM.yyyy HH:mm:ss");
 		case "witz":
 		case "fun":
 		case "w":
 		case "joke":
-			return MOthers.getWitz();
+			return TAppOthers.getWitz();
 		case "countmsg":
 			return countMsg();
 		case "countsend":
 			return contSend();
 		case "telestats":
-			return MWipf.dateTime() + "\n" + countMsg() + "\n" + contSend();
+			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + countMsg() + "\n" + contSend();
 		case "getmyid":
 		case "id":
 		case "whoami":
@@ -405,12 +413,9 @@ public class TelegramVerwaltung {
 		case "i":
 			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
 					+ t.getMid();
-		case "essen":
-		case "e":
-			return MEssen.menueEssen(t);
 		case "to":
 		case "todo":
-			return MTodoList.menueTodoList(t);
+			return appTODOList.menueTodoList(t);
 		default:
 			// Alle db aktionen
 			t = getMsg(t, 0);
@@ -645,8 +650,8 @@ public class TelegramVerwaltung {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(MWipf.dateTimeMs() + "\n" + countMsg() + "\n" + countMotd() + "\n" + contSend() + "\n\nVersion:"
-				+ QMain.VERSION);
+		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + countMsg() + "\n" + countMotd() + "\n" + contSend()
+				+ "\n\nVersion:" + QMain.VERSION);
 		t.setChatID(798200105);
 
 		saveTelegramToDB(t);
@@ -683,11 +688,7 @@ public class TelegramVerwaltung {
 	 */
 	public void sendExtIp() {
 		Telegram t = new Telegram();
-		try {
-			t.setAntwort("Neue IP: " + wipf.getExternalIp());
-		} catch (IOException e) {
-			t.setAntwort("Fehler t23");
-		}
+		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
 
 		saveTelegramToDB(t);
