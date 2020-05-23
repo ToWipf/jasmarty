@@ -274,7 +274,7 @@ public class PageConverter {
 	 */
 	private String varBar(String sPara) {
 		// Parameter kann 'Mathe' haben
-		int nVal = (int) (wipf.doMathByString(sPara.substring(0, sPara.indexOf(','))));
+		int nVal = Integer.valueOf(sPara.substring(0, sPara.indexOf(',')));
 		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 

@@ -24,8 +24,7 @@
 
                             <mat-form-field class="lineInputData">
                                 <mat-label>Zeile {{i}}</mat-label>
-                                <input matInput type="string" class="form-control inputText"
-                                    [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
+                                <input matInput type="string" class="form-control inputText" [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
                             </mat-form-field>
 
                             <mat-form-field class="lineInputOption">
@@ -77,8 +76,7 @@
                 <li><code>$time(HH:mm:ss)</code></li>
                 <li><code>$time(dd MMMM yyyy)</code></li>
                 <li><code>$time(dd.MM.yy)</code></li>
-                <li><a target="blank"
-                        href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
+                <li><a target="blank" href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
                 </li>
             </ul>
 
@@ -86,7 +84,6 @@
             <ul>
                 <li><code>$bar(Variable|Maximaler Wert|Länge)</code></li>
                 <li><code>$bar($time(ss),60,20))</code></li>
-                <li><code>$bar($time(ss)+10,60,20))</code></li>
             </ul>
 
             <h5>Rechnen</h5>
