@@ -142,7 +142,9 @@ public class PageConverter {
 			return lineRechts(sLine.substring(nState));
 		} else {
 			// Nicht nötig zu scrollen -> Rechtsbündig
-			return lineRechts(sLine);
+			// TODO ineffizient
+			return (lineRechts(sLine).toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length()))
+					.toCharArray();
 		}
 	}
 
