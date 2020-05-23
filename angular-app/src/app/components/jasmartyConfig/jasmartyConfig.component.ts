@@ -37,7 +37,7 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public startLcdAgain(): void {
-    this.http.get("http://localhost:8080/wipf/startAgain").subscribe((resdata: any) => {
+    this.http.get("http://localhost:8080/debug/jasmarty/restart").subscribe((resdata: any) => {
       console.log(resdata);
     });
   }

@@ -18,13 +18,12 @@ public class TelegramTask extends TimerTask {
 	 */
 	@Override
 	public void run() {
-		if (telegramVerwaltung.getFailCount() > 6) {
-			// Bei viele Fehlern länger warten aber erneut versuchen (2 Minuten fehlerhaft)
+		if (telegramVerwaltung.getFailCount() > 1) {
+			// Bei viele Fehlern länger warten und später erneut versuchen
 			telegramVerwaltung.setFailCountPlusPlus();
-			LOGGER.warn("Task Telegram wartet nun " + telegramVerwaltung.getFailCount() + "/12");
+			LOGGER.warn("Telegram Task wartet nun " + telegramVerwaltung.getFailCount() + "/12");
 			if (telegramVerwaltung.getFailCount() > 12) {
-				// 4 Minuten warten
-				LOGGER.warn("Task Telegram erneuter Verbindungsversuch");
+				LOGGER.warn("Telegram Task probiert erneuten Verbindungsversuch");
 				telegramVerwaltung.setFailCount(1);
 			}
 			return;

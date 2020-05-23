@@ -10,6 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
@@ -27,6 +28,8 @@ public class DebugRest {
 	LcdConnect lcdConnect;
 	@Inject
 	Winamp winamp;
+	@Inject
+	JasmartyHome jHome;
 
 	@GET
 	@Path("/lcd/write/{x}/{y}/{str}")
@@ -74,5 +77,12 @@ public class DebugRest {
 	@Path("/winamp/info/{s}")
 	public Response info(@PathParam("s") String s) throws Exception {
 		return Response.ok("{\"info\":\"" + winamp.getInfos(s) + "\"}").build();
+	}
+
+	@GET
+	@Path("/jasmarty/restart")
+	public Response startAgain() {
+		jHome.jasmartyRestart();
+		return Response.ok().build();
 	}
 }

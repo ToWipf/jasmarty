@@ -40,13 +40,6 @@ public class WipfRest {
 	}
 
 	@GET
-	@Path("/startAgain")
-	public Response startAgain() {
-		qMain.startAgain();
-		return Response.ok().build();
-	}
-
-	@GET
 	@Path("/stop")
 	public Response stopAll() {
 		QMain.stopApp();
