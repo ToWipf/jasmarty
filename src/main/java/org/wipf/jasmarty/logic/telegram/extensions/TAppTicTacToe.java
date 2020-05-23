@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram.apps;
+package org.wipf.jasmarty.logic.telegram.extensions;
 
 import java.sql.ResultSet;
 import java.sql.Statement;

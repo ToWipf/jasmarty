@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram.apps;
+package org.wipf.jasmarty.logic.telegram.extensions;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;

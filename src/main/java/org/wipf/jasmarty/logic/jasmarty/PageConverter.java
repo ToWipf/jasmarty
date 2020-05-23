@@ -36,6 +36,7 @@ public class PageConverter {
 	 * @throws Exception
 	 */
 	public void selectToNewPage(LcdPage page) throws Exception {
+		// TODO cls noch nötig?
 		lcdConnect.clearScreen();
 		this.selectedPage = page;
 		// Manuellen Refresh des caches anstoßen
@@ -143,8 +144,7 @@ public class PageConverter {
 		} else {
 			// Nicht nötig zu scrollen -> Rechtsbündig
 			// TODO ineffizient
-			return (lineRechts(sLine).toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length()))
-					.toCharArray();
+			return lineRechts(sLine);
 		}
 	}
 
@@ -153,7 +153,13 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] lineRechts(String sLine) {
-		return sLine.substring(0, Math.min(sLine.length(), lcdConnect.getWidth())).toCharArray();
+		// sLine = sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() -
+		// sLine.length());
+		// return sLine.substring(0, Math.min(sLine.length(),
+		// lcdConnect.getWidth())).toCharArray();
+
+		// Den rest mit Leerzeichen fuellen -> Lösche alte zeichen
+		return (sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length())).toCharArray();
 	}
 
 	/**

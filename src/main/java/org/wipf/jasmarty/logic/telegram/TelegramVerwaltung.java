@@ -14,9 +14,9 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MsqlLite;
 import org.wipf.jasmarty.logic.base.QMain;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.telegram.apps.TAppOthers;
-import org.wipf.jasmarty.logic.telegram.apps.TAppTODOList;
-import org.wipf.jasmarty.logic.telegram.apps.TAppTicTacToe;
+import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
+import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
+import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +32,8 @@ public class TelegramVerwaltung {
 
 	private static final Logger LOGGER = Logger.getLogger("MTelegram");
 
-	private Integer FailCountTelegram;
-	private Integer TelegramOffsetID;
+	private Integer nFailCount;
+	private Integer nOffsetID;
 	private String BOTKEY;
 
 	@Inject
@@ -43,7 +43,7 @@ public class TelegramVerwaltung {
 	@Inject
 	TAppTicTacToe appTicTacToe;
 	@Inject
-	TAppTODOList appTODOList;
+	TAppTodoList appTodoList;
 
 	/**
 	 * 
@@ -64,11 +64,32 @@ public class TelegramVerwaltung {
 	}
 
 	/**
+	 * @param n
+	 */
+	public void setFailCount(Integer n) {
+		this.nFailCount = n;
+	}
+
+	/**
+	 * @param n
+	 */
+	public void setFailCountPlusPlus() {
+		this.nFailCount++;
+	}
+
+	/**
+	 * @param n
+	 */
+	public Integer getFailCount() {
+		return this.nFailCount;
+	}
+
+	/**
 	 * 
 	 */
 	public boolean loadConfig() {
 		// Auf 0 setzen -> definierter zustand
-		this.TelegramOffsetID = 0;
+		this.nOffsetID = 0;
 		// Load bot config
 		try {
 			Statement stmt = MsqlLite.getDB();
@@ -135,11 +156,10 @@ public class TelegramVerwaltung {
 	public void readUpdateFromTelegram() {
 		try {
 			String sJson;
-			if (this.TelegramOffsetID == 0) {
+			if (this.nOffsetID == 0) {
 				sJson = Unirest.post("https://api.telegram.org/" + this.BOTKEY + "/getUpdates").asString().getBody();
 			} else {
-				sJson = Unirest
-						.post("https://api.telegram.org/" + this.BOTKEY + "/getUpdates?offset=" + this.TelegramOffsetID)
+				sJson = Unirest.post("https://api.telegram.org/" + this.BOTKEY + "/getUpdates?offset=" + this.nOffsetID)
 						.asString().getBody();
 			}
 			// parse josn
@@ -150,7 +170,7 @@ public class TelegramVerwaltung {
 
 			if (!jn.get("ok").asBoolean()) {
 				LOGGER.warn("API fail:" + sJson);
-				this.FailCountTelegram++;
+				this.nFailCount++;
 				return;
 			}
 
@@ -159,7 +179,7 @@ public class TelegramVerwaltung {
 					Telegram t = new Telegram();
 					try {
 						// Nachricht gelesen -> löschen am Telegram server
-						this.TelegramOffsetID = nn.get("update_id").asInt() + 1;
+						this.nOffsetID = nn.get("update_id").asInt() + 1;
 						JsonNode msg = nn.get("message");
 						t.setMid(msg.get("message_id").asInt());
 						t.setMessage(msg.get("text").asText());
@@ -176,7 +196,7 @@ public class TelegramVerwaltung {
 
 			// Maximal 5 MSG abarbeiten
 			if (li.size() > 5) {
-				this.TelegramOffsetID = this.TelegramOffsetID - li.size() + 5;
+				this.nOffsetID = this.nOffsetID - li.size() + 5;
 			}
 
 			// ids zu db
@@ -193,17 +213,17 @@ public class TelegramVerwaltung {
 					}
 				}
 			}
-			if (this.FailCountTelegram != 0) {
+			if (this.nFailCount != 0) {
 				// Wenn Telegram wieder erreichbar ist
 				sendExtIp();
 			}
-			this.FailCountTelegram = 0;
+			this.nFailCount = 0;
 
 		} catch (
 
 		Exception e) {
-			this.FailCountTelegram++;
-			LOGGER.warn("readUpdateFromTelegram fails: " + this.FailCountTelegram + " " + e);
+			this.nFailCount++;
+			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
 		}
 	}
 
@@ -415,7 +435,7 @@ public class TelegramVerwaltung {
 					+ t.getMid();
 		case "to":
 		case "todo":
-			return appTODOList.menueTodoList(t);
+			return appTodoList.menueTodoList(t);
 		default:
 			// Alle db aktionen
 			t = getMsg(t, 0);
