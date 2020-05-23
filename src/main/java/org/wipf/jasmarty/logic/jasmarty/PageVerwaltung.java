@@ -54,7 +54,7 @@ public class PageVerwaltung {
 			p.setOptions("1012");
 			p.setLine(0, "jaSmarty");
 			p.setLine(1, "");
-			p.setLine(2, "by Wipf");
+			p.setLine(2, "von Wipf");
 			p.setLine(3, "V$ver()");
 			pageToDb(p);
 		}
@@ -69,7 +69,7 @@ public class PageVerwaltung {
 		// Seite nicht aus der db laden -> Fester inhalt
 		LcdPage p = new LcdPage();
 		p.setId(0);
-		p.setOptions("1102");
+		p.setOptions("1012");
 		p.setLine(0, "Beendet");
 		p.setLine(1, "");
 		p.setLine(2, "-wipf-");

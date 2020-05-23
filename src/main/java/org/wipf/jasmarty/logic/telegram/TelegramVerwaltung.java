@@ -51,13 +51,13 @@ public class TelegramVerwaltung {
 	public void initDB() {
 		try {
 			Statement stmt = MsqlLite.getDB();
+			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);");
-
 		} catch (Exception e) {
 			LOGGER.warn("initDB Telegram " + e);
 		}
@@ -93,7 +93,7 @@ public class TelegramVerwaltung {
 		// Load bot config
 		try {
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT val FROM settings WHERE id = 'telegrambot';");
+			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
 			this.BOTKEY = (rs.getString("val"));
 			rs.close();
 			return true;
@@ -111,8 +111,7 @@ public class TelegramVerwaltung {
 	public Boolean setbot(String sBot) {
 		try {
 			Statement stmt = MsqlLite.getDB();
-			stmt.execute("DELETE FROM settings WHERE id = 'telegrambot'");
-			stmt.execute("INSERT INTO settings (id, val) VALUES ('telegrambot','" + sBot + "')");
+			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + sBot + "')");
 			this.BOTKEY = sBot;
 			LOGGER.info("Bot Key: " + this.BOTKEY);
 
