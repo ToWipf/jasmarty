@@ -4,7 +4,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.base.QMain;
 import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
@@ -41,8 +40,7 @@ public class JasmartyHome {
 	 * 
 	 */
 	public void jasmartyStart() {
-		LOGGER.info("Starte " + QMain.VERSION);
-
+		LOGGER.info("Starte jasmarty");
 		pageVerwaltung.initDB();
 		serialConfig.initDB();
 		actionVerwaltung.initDB();

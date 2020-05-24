@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.util.Arrays;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -67,8 +69,17 @@ public class PageConverter {
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 
 			// Zeile in Cache schreiben und auf maximale Zeichenanzahl kürzen
+
 			lcdConnect.writeLineToCache(0, nLine, lineOptions(sLineAfterConvert, nLine));
 		}
+	}
+
+	/**
+	 * @param ca
+	 * @return
+	 */
+	private char[] shortArrayToLengh(char[] ca) {
+		return Arrays.copyOfRange(ca, 0, lcdConnect.getWidth());
 	}
 
 	/**
@@ -153,13 +164,9 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] lineRechts(String sLine) {
-		// sLine = sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() -
-		// sLine.length());
-		// return sLine.substring(0, Math.min(sLine.length(),
-		// lcdConnect.getWidth())).toCharArray();
-
 		// Den rest mit Leerzeichen fuellen -> Lösche alte zeichen
-		return (sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length())).toCharArray();
+		return shortArrayToLengh(
+				(sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length())).toCharArray());
 	}
 
 	/**
