@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -19,6 +20,19 @@ public class TodoListRest {
 
 	@Inject
 	TAppTodoList todoList;
+
+//	@GET TODO
+//	@Path("/get")
+//	public Response getConfig() {
+//		return Response.ok(todoList.getConfig().toJson()).build();
+//	}
+
+	@POST
+	@Path("/set")
+	public Response setConfig(String jnRoot) {
+		return Response.ok("{\"save\":\"" + todoList.setTodo(jnRoot) + "\"}").build();
+
+	}
 
 	@GET
 	@Path("/getAll")

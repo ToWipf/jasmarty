@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class RefreshRest {
+public class TelegramRefreshRest {
 
 	@Inject
 	RefreshLoop refreshLoop;

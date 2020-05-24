@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TodoEntry;
 import org.wipf.jasmarty.logic.base.MsqlLite;
 
 /**
@@ -34,6 +35,14 @@ public class TAppTodoList {
 		} catch (Exception e) {
 			LOGGER.warn("initDB todolist " + e);
 		}
+	}
+
+	/**
+	 * @param jnRoot
+	 * @return
+	 */
+	public boolean setTodo(String jnRoot) {
+		return addEntry(new TodoEntry().setByJson(jnRoot));
 	}
 
 	/**
@@ -224,6 +233,28 @@ public class TAppTodoList {
 			LOGGER.warn("get all json todolist" + e);
 		}
 		return "Fehler";
+	}
+
+	/**
+	 * @param tE
+	 * @return
+	 */
+	public boolean addEntry(TodoEntry tE) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			//@formatter:off
+			stmt.execute("INSERT OR REPLACE INTO todolist (data, editby, date, active) VALUES " +
+					"('" + tE.getData() +
+					"','" + tE.getEditBy() +
+					"','"+ tE.getDate() +
+					"','"+ tE.getActive() +
+					"')");
+			//@formatter:on
+			return true;
+		} catch (Exception e) {
+			LOGGER.warn("add todo " + e);
+			return false;
+		}
 	}
 
 	/**
