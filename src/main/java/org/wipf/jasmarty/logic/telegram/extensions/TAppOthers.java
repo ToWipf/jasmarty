@@ -5,10 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.jboss.logging.Logger;
 
 import com.mashape.unirest.http.Unirest;
 
+/**
+ * @author wipf
+ *
+ */
+@ApplicationScoped
 public class TAppOthers {
 
 	private static final Logger LOGGER = Logger.getLogger("MOthers");

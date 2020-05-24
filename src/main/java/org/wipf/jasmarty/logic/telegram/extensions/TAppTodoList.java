@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
  * @author wipf
  *
  */
+@ApplicationScoped
 public class TAppTodoList {
 
 	// TODO: edit entry

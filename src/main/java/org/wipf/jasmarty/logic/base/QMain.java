@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
+import org.wipf.jasmarty.logic.telegram.TelegramHome;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
@@ -21,7 +22,7 @@ public class QMain {
 	@Inject
 	JasmartyHome jHome;
 	@Inject
-	Wipf wipf;
+	TelegramHome tHome;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
 	public static final String VERSION = "0.62";
@@ -35,6 +36,7 @@ public class QMain {
 		MsqlLite.startDB();
 
 		jHome.jasmartyStart();
+		tHome.telegramStart();
 
 		LOGGER.info("Gestartet");
 	}
@@ -53,9 +55,9 @@ public class QMain {
 		LOGGER.info("Stoppe");
 
 		jHome.jasmartyStop();
+		tHome.telegramStop();
 
 		LOGGER.info("Gestoppt");
-		wipf.printLogo();
 	}
 
 }

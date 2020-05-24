@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Random;
 
+import javax.enterprise.context.ApplicationScoped;
+
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TicTacToe;
@@ -13,6 +15,7 @@ import org.wipf.jasmarty.logic.base.MsqlLite;
  * @author wipf
  *
  */
+@ApplicationScoped
 public class TAppTicTacToe {
 
 	private static final Logger LOGGER = Logger.getLogger("MTicTacToe");

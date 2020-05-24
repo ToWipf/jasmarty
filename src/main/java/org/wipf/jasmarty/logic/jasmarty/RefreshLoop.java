@@ -59,7 +59,6 @@ public class RefreshLoop {
 	 * 
 	 */
 	private void refreshloop() {
-
 		if (!bLoopActive) {
 			bLoopActive = true;
 			LOGGER.info("Refresh an");
@@ -70,6 +69,7 @@ public class RefreshLoop {
 
 		ExecutorService service = Executors.newFixedThreadPool(1);
 		service.submit(new Runnable() {
+
 			@Override
 			public void run() {
 

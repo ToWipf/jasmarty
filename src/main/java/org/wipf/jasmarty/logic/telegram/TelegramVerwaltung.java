@@ -34,7 +34,7 @@ public class TelegramVerwaltung {
 
 	private Integer nFailCount;
 	private Integer nOffsetID;
-	private String BOTKEY;
+	private String sBotKey;
 
 	@Inject
 	Wipf wipf;
@@ -73,13 +73,6 @@ public class TelegramVerwaltung {
 	/**
 	 * @param n
 	 */
-	public void setFailCountPlusPlus() {
-		this.nFailCount++;
-	}
-
-	/**
-	 * @param n
-	 */
 	public Integer getFailCount() {
 		return this.nFailCount;
 	}
@@ -94,7 +87,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
-			this.BOTKEY = (rs.getString("val"));
+			this.sBotKey = (rs.getString("val"));
 			rs.close();
 			return true;
 		} catch (Exception e) {
@@ -112,8 +105,8 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + sBot + "')");
-			this.BOTKEY = sBot;
-			LOGGER.info("Bot Key: " + this.BOTKEY);
+			this.sBotKey = sBot;
+			LOGGER.info("Bot Key: " + this.sBotKey);
 
 			return true;
 		} catch (Exception e) {
@@ -133,7 +126,7 @@ public class TelegramVerwaltung {
 				sAntwort = "Leere%20Antwort";
 			}
 
-			String sResJson = Unirest.post("https://api.telegram.org/" + this.BOTKEY + "/sendMessage?chat_id="
+			String sResJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/sendMessage?chat_id="
 					+ t.getChatID() + "&text=" + sAntwort).asString().getBody();
 
 			// parse josn
@@ -156,9 +149,9 @@ public class TelegramVerwaltung {
 		try {
 			String sJson;
 			if (this.nOffsetID == 0) {
-				sJson = Unirest.post("https://api.telegram.org/" + this.BOTKEY + "/getUpdates").asString().getBody();
+				sJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates").asString().getBody();
 			} else {
-				sJson = Unirest.post("https://api.telegram.org/" + this.BOTKEY + "/getUpdates?offset=" + this.nOffsetID)
+				sJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
 						.asString().getBody();
 			}
 			// parse josn
@@ -218,9 +211,7 @@ public class TelegramVerwaltung {
 			}
 			this.nFailCount = 0;
 
-		} catch (
-
-		Exception e) {
+		} catch (Exception e) {
 			this.nFailCount++;
 			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
 		}
