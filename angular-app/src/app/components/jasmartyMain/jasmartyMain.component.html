@@ -1,0 +1,19 @@
+<h3>Display</h3>
+<hr>
+<div class="displayfull" *ngFor="let line of display;">
+    <div class="display">
+        <span class="line">{{line}}</span>
+    </div>
+</div>
+
+<div class="gotopagelist">
+    <h3>Seiten</h3>
+    <hr>
+    <div class="sitebuttonlist">
+        <div *ngFor="let page of pagelist;">
+            <button class="btn btn-primary sitebutton" (click)="selectSite(page)">{{page.name}}</button>
+        </div>
+    </div>
+</div>
+
+<button class="btn btn-primary" (click)="refreshNow()">Display Aktualisieren</button>
