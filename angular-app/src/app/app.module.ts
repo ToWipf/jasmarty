@@ -56,6 +56,7 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { Globals } from './datatypes';
 import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmartyFullView.component';
 import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
+import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.co
     JasmartyConfigComponent,
     JasmartyMainComponent,
     JasmartyFullViewComponent,
+    TelegramConfigComponent,
     FooterComponent,
   ],
   imports: [

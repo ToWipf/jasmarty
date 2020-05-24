@@ -9,11 +9,16 @@
                 <li (click)="selectSite('liveFull')">Live Display</li>
             </ul>
 
-            <div class="titlemenue">Konfiguration</div>
+            <div class="titlemenue">Konfiguration LCD</div>
             <ul class="menueli">
                 <li (click)="selectSite('pages')">Seiten</li>
                 <li (click)="selectSite('actions')">Funktionen</li>
                 <li (click)="selectSite('config')">Einstellungen</li>
+            </ul>
+
+            <div class="titlemenue">Konfiguration Telegram</div>
+            <ul class="menueli">
+                <li (click)="selectSite('configtele')">Einstellungen</li>
             </ul>
         </div>
     </mat-drawer>
@@ -43,6 +48,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='main'">
                     <app-jasmartyMain></app-jasmartyMain>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='configtele'">
+                    <app-telegramConfig></app-telegramConfig>
                 </ng-container>
             </div>
         </div>
