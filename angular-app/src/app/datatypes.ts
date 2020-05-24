@@ -36,3 +36,11 @@ export interface japageForList {
   id?: number;
   name?: string;
 }
+
+export interface todoEntry {
+  id?: number;
+  data?: string;
+  active?: string;
+  editby?: string;
+  date?: number;
+}
