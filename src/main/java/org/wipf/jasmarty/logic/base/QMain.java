@@ -24,7 +24,7 @@ public class QMain {
 	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
-	public static final String VERSION = "0.61";
+	public static final String VERSION = "0.62";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -32,7 +32,6 @@ public class QMain {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		LOGGER.info("Starte " + VERSION);
-
 		MsqlLite.startDB();
 
 		jHome.jasmartyStart();

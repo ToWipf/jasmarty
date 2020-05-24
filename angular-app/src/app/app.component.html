@@ -5,8 +5,8 @@
         <div class="sidebar">
             <div class="titlemenue">Hauptmenü</div>
             <ul class="menueli">
-                <li (click)="selectSite('default')">Startseite</li>
-                <li (click)="selectSite('live')">Live-Daten</li>
+                <li (click)="selectSite('main')">Startseite</li>
+                <li (click)="selectSite('liveFull')">Live Display</li>
             </ul>
 
             <div class="titlemenue">Konfiguration</div>
@@ -29,11 +29,11 @@
         <div class="fullsite">
             <button class="mainMenueButton" (click)="drawer.toggle()">Menü Öffnen</button>
             <div class="maincontainer">
-                <ng-container *ngIf="selectedSite==='default'">
-                    Willkommen
-                </ng-container>
                 <ng-container *ngIf="selectedSite==='pages'">
                     <app-jasmartyPages></app-jasmartyPages>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='liveFull'">
+                    <app-jasmartyFullView></app-jasmartyFullView>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='actions'">
                     <app-jasmartyActions></app-jasmartyActions>
@@ -41,8 +41,8 @@
                 <ng-container *ngIf="selectedSite==='config'">
                     <app-jasmartyConfig></app-jasmartyConfig>
                 </ng-container>
-                <ng-container *ngIf="selectedSite==='live'">
-                    <app-jasmartyLive></app-jasmartyLive>
+                <ng-container *ngIf="selectedSite==='main'">
+                    <app-jasmartyMain></app-jasmartyMain>
                 </ng-container>
             </div>
         </div>

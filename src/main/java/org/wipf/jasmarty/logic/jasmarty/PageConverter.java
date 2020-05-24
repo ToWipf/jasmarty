@@ -297,17 +297,21 @@ public class PageConverter {
 			nVal = 0;
 		}
 
-		int nFillBis = (nVal * nWidth * 3 / nMax);
+		// mal 3 weil es 3 Füllstände gibt
+		int nFillBis = (nVal * nWidth * 4 / nMax);
 
 		StringBuilder sb = new StringBuilder();
 
 		// Gefüllte Blöcke:
-		sb.append(wipf.repeat(BLOCK_3_3, nFillBis / 3));
+		sb.append(wipf.repeat(BLOCK_3_3, nFillBis / 4));
 
 		// komma auswerten
-		switch (nFillBis % 3) {
+		switch (nFillBis % 4) {
 		case 0:
-			sb.append(BLOCK_0_3);
+			if (nVal != nMax) {
+				// Verhindern das bei einer Vollen Zeile nicht noch ein Char angehängt wird
+				sb.append(BLOCK_0_3);
+			}
 			break;
 		case 1:
 			sb.append(BLOCK_1_3);
@@ -321,7 +325,8 @@ public class PageConverter {
 		}
 
 		// Leere Blöcke:
-		sb.append(wipf.repeat(BLOCK_0_3, (nWidth - (nFillBis / 3)) - 1));
+		sb.append(wipf.repeat(BLOCK_0_3, (nWidth - (nFillBis / 4)) - 1));
+
 		return sb.toString();
 	}
 
