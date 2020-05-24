@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
@@ -20,7 +21,6 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.inject.Inject;
 import com.mashape.unirest.http.Unirest;
 
 /**
@@ -92,7 +92,7 @@ public class TelegramVerwaltung {
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("telegrambot nicht in db gefunden."
-					+ " Setzen mit 'curl -X POST localhost:8080/setbot/bot2343242:ABCDEF348590247354352343345'");
+					+ " Setzen mit 'curl -X POST localhost:8080/telegram/setbot/bot2343242:ABCDEF348590247354352343345'");
 			return false;
 		}
 	}
@@ -151,7 +151,8 @@ public class TelegramVerwaltung {
 			if (this.nOffsetID == 0) {
 				sJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates").asString().getBody();
 			} else {
-				sJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
+				sJson = Unirest
+						.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
 						.asString().getBody();
 			}
 			// parse josn

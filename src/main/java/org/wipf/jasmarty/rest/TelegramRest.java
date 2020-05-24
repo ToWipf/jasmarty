@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -9,33 +10,48 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import org.wipf.jasmarty.logic.telegram.TelegramVerwaltung;
-
-import com.google.inject.Inject;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
 @Path("/telegram")
+@Produces(MediaType.APPLICATION_JSON)
+@ApplicationScoped
 public class TelegramRest {
 
 	@Inject
 	TelegramVerwaltung telegramVerwaltung;
+	@Inject
+	TelegramHome tHome;
 
+	@GET
+	@Path("/on")
+	public Response on() {
+		tHome.telegramStart();
+		return Response.ok("{}").build();
+	}
+
+	@GET
+	@Path("/off")
+	public Response off() {
+		tHome.telegramStop();
+		return Response.ok("{}").build();
+	}
+
+	@GET
 	@POST
 	@Path("/setbot/{bot}")
-	@Produces(MediaType.TEXT_PLAIN)
 	public Response setbot(@PathParam("bot") String sBot) {
-		return Response.ok(telegramVerwaltung.setbot(sBot)).build();
+		return Response.ok("{\"state\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
 	}
 
 	@POST
 	@Path("/sendMsgToGroup/{msg}")
-	@Produces(MediaType.TEXT_PLAIN)
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
-		return Response.ok(telegramVerwaltung.sendMsgToGroup(sMsg)).build();
+		return Response.ok("{\"state\":\"" + telegramVerwaltung.sendMsgToGroup(sMsg) + "\"}").build();
 	}
 
 	@GET
@@ -49,6 +65,7 @@ public class TelegramRest {
 	@Path("/telelogtf")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtf() {
+		// TODO id form db
 		return Response.ok(telegramVerwaltung.getTelegramLog("798200105")).build();
 	}
 

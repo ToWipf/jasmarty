@@ -25,6 +25,8 @@ public class ActionRest {
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 
+	// TODO mv lcd action ?
+
 	@GET
 	@Path("/currentPressed")
 	public Response CurrentPressed() {

@@ -228,7 +228,7 @@ public class Wipf {
 		return "todo";
 		/*
 		 * ProcessBuilder processBuilder = new ProcessBuilder(); // Windows //
-		 * processBuilder.command("cmd.exe", "/c", "ping -n 3 google.com"); // Linux
+		 * processBuilder.command("cmd.exe", "/c", "ping -n 3 test.com"); // Linux
 		 * processBuilder.command(sCommand); StringBuilder sb = new StringBuilder();
 		 * 
 		 * try { Process process = processBuilder.start(); BufferedReader reader = new

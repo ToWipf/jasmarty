@@ -35,7 +35,7 @@ public class TelegramHome {
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();
-			LOGGER.info("Testartet");
+			LOGGER.info("Gestartet");
 		} else {
 			LOGGER.warn("nicht gestartet");
 		}
