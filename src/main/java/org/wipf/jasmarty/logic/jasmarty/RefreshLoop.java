@@ -73,11 +73,13 @@ public class RefreshLoop {
 			@Override
 			public void run() {
 
-				while (bLoopActive && lcdConnect.isLcdOk()) {
+				while (bLoopActive) {
 					try {
-						actionVerwaltung.doAction(lcdConnect.readButton());
 						pageConverter.refreshCache();
-						lcdConnect.refreshDisplay();
+						if (lcdConnect.isLcdOk()) {
+							actionVerwaltung.doAction(lcdConnect.readButton());
+							lcdConnect.refreshDisplay();
+						}
 						Thread.sleep(lcdConnect.getRefreshRate());
 
 					} catch (Exception e) {

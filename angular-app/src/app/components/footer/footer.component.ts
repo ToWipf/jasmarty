@@ -10,19 +10,20 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dial
   styleUrls: ["./footer.component.less"],
 })
 export class FooterComponent implements OnInit {
-  constructor(private http: HttpClient,public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) {}
 
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = "0.0";
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;
+  private sHost: string = this.rest.gethost();
 
   ngOnInit() {
     this.getVersion();
   }
 
   private getVersion(): void {
-    this.http.get(this.rest.gethost() + "wipf/ver").subscribe((resdata: any) => {
+    this.http.get(this.sHost + "wipf/ver").subscribe((resdata: any) => {
       this.bCantLoad = false;
       this.sJavaVersion = resdata.ver.toString();
       if (this.sAppVersion < this.sJavaVersion) {
@@ -32,17 +33,19 @@ export class FooterComponent implements OnInit {
   }
 
   public openSetServer(): void {
-    var server: string = this.rest.gethost();
+
 
     const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
       width: "250px",
       height: "250px",
-      data: server,
+      data: this.sHost,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        this.sHost = result;
         this.rest.sethost(result);
+        this.getVersion();
       }
     });
   }
