@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Globals } from 'src/app/datatypes';
+import { Component, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Globals } from "src/app/datatypes";
+import { ServiceRest } from "src/app/service/serviceRest";
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.less']
+  selector: "app-footer",
+  templateUrl: "./footer.component.html",
+  styleUrls: ["./footer.component.less"],
 })
 export class FooterComponent implements OnInit {
-
-  constructor(
-    private http: HttpClient,
-    public globals: Globals,
-  ) { }
+  constructor(private http: HttpClient, public globals: Globals, private rest: ServiceRest) {}
 
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = "0.0";
@@ -21,16 +18,15 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.getVersion();
-   }
+  }
 
   private getVersion(): void {
-    this.http.get("http://localhost:8080/wipf/ver")
-      .subscribe((resdata: any) => {
-        this.bCantLoad = false;
-        this.sJavaVersion = resdata.ver.toString();
-        if (this.sAppVersion < this.sJavaVersion){
-          this.bOldVersionWarn = true;
-        }
-      });
+    this.http.get(this.rest.gethost() + "wipf/ver").subscribe((resdata: any) => {
+      this.bCantLoad = false;
+      this.sJavaVersion = resdata.ver.toString();
+      if (this.sAppVersion < this.sJavaVersion) {
+        this.bOldVersionWarn = true;
+      }
+    });
   }
 }

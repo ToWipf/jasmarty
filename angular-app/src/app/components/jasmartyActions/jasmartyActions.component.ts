@@ -5,6 +5,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { ServiceWipf } from "src/app/service/serviceWipf";
+import { ServiceRest } from "src/app/service/serviceRest";
 
 @Component({
   selector: "app-jasmartyActions",
@@ -12,7 +13,7 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
   styleUrls: ["./jasmartyActions.component.less"],
 })
 export class JasmartyActionsComponent implements OnInit, OnDestroy {
-  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -56,14 +57,14 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public testAction(item: buttonaction): void{
-    this.http.get("http://localhost:8080/actions/doaction/" + item.button).subscribe((resdata: any) => {
+  public testAction(item: buttonaction): void {
+    this.http.get(this.rest.gethost() + "actions/doaction/" + item.button).subscribe((resdata: any) => {
       console.log(resdata);
     });
   }
 
   private save(item: buttonaction): void {
-    this.http.post("http://localhost:8080/actions/set", JSON.stringify(item)).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + "actions/set", JSON.stringify(item)).subscribe((resdata: any) => {
       if (resdata.save) {
         console.log("saved");
         this.load();
@@ -75,7 +76,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private load(): void {
-    this.http.get("http://localhost:8080/actions/getall").subscribe((resdata: any) => {
+    this.http.get(this.rest.gethost() + "actions/getall").subscribe((resdata: any) => {
       console.log(resdata);
       this.buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.buttonactions);
@@ -94,9 +95,9 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.http.get("http://localhost:8080/actions/currentPressed").subscribe((resdata: any) => {
+    this.http.get(this.rest.gethost() + "actions/currentPressed").subscribe((resdata: any) => {
       console.log(resdata.btn);
-      if (resdata.btn){
+      if (resdata.btn) {
         this.lastPressed = resdata.btn;
       }
     });

@@ -7,8 +7,8 @@ import { Injectable } from "@angular/core";
 // Vault Userverwaltung
 export class ServiceRest {
 
-  public get(path: string): string {
-    return "xc";
+  public gethost(): string {
+    return "http://localhost:8080/";
   }
   
 }

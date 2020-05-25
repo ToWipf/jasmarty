@@ -1,12 +1,9 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { jaconfig, japage } from "src/app/datatypes";
-import {
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatDialog,
-} from "@angular/material/dialog";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 import { JasmartyActionsComponentDialog } from "../jasmartyActions/jasmartyActions.component";
+import { ServiceRest } from "src/app/service/serviceRest";
 
 @Component({
   selector: "app-jasmartyPages",
@@ -14,7 +11,7 @@ import { JasmartyActionsComponentDialog } from "../jasmartyActions/jasmartyActio
   styleUrls: ["./jasmartyPages.component.less"],
 })
 export class JasmartyPagesComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
 
   public sText: string;
   public sStatus: string;
@@ -30,15 +27,14 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public getCurrentSelectedSite(): void {
-    this.http
-      .get("http://localhost:8080/pages/current").subscribe((resdata: japage) => {
-        this.selectedPage = resdata.id;
-        this.japage = resdata;
-      });
+    this.http.get(this.rest.gethost() + "pages/current").subscribe((resdata: japage) => {
+      this.selectedPage = resdata.id;
+      this.japage = resdata;
+    });
   }
 
   public loadConfig(): void {
-    this.http.get("http://localhost:8080/config/get").subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + "config/get").subscribe((resdata) => {
       this.jaconfig = resdata;
     });
   }
@@ -61,16 +57,14 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public save(): void {
-    this.http
-      .post("http://localhost:8080/pages/save", JSON.stringify(this.japage))
-      .subscribe((resdata: any) => {
-        if (resdata.save) {
-          console.log("saved");
-        } else {
-          //TODO: Meldung Fehler
-          console.log("fehler");
-        }
-      });
+    this.http.post(this.rest.gethost() + "pages/save", JSON.stringify(this.japage)).subscribe((resdata: any) => {
+      if (resdata.save) {
+        console.log("saved");
+      } else {
+        //TODO: Meldung Fehler
+        console.log("fehler");
+      }
+    });
   }
 
   private getSite(): void {
@@ -78,31 +72,25 @@ export class JasmartyPagesComponent implements OnInit {
       this.selectedPage = 1;
     }
 
-    this.http
-      .get("http://localhost:8080/pages/get/" + this.selectedPage)
-      .subscribe((resdata: japage) => {
-        this.japage = resdata;
+    this.http.get("http://localhost:8080/pages/get/" + this.selectedPage).subscribe((resdata: japage) => {
+      this.japage = resdata;
 
-        if (this.japage.id == 0) {
-          this.newPage();
-        }
-      });
+      if (this.japage.id == 0) {
+        this.newPage();
+      }
+    });
   }
 
   public selectPage(): void {
-    this.http
-      .get("http://localhost:8080/pages/select/" + this.selectedPage)
-      .subscribe((resdata) => {
-        console.log(resdata);
-      });
+    this.http.get("http://localhost:8080/pages/select/" + this.selectedPage).subscribe((resdata) => {
+      console.log(resdata);
+    });
   }
 
   public deletePage(): void {
-    this.http
-      .get("http://localhost:8080/pages/delete/" + this.selectedPage)
-      .subscribe((resdata) => {
-        this.getSite();
-      });
+    this.http.get("http://localhost:8080/pages/delete/" + this.selectedPage).subscribe((resdata) => {
+      this.getSite();
+    });
   }
 
   private newPage() {
@@ -152,10 +140,7 @@ export class JasmartyPagesComponent implements OnInit {
   templateUrl: "./jasmartyPages.goToDialog.html",
 })
 export class JasmartyPagesComponentGoToDialog {
-  constructor(
-    public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: number
-  ) {}
+  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: number) {}
 
   onNoClick(): void {
     this.dialogRef.close();

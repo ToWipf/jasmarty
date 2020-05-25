@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { displayLcd } from "src/app/datatypes";
+import { ServiceRest } from "src/app/service/serviceRest";
 
 @Component({
   selector: "app-jasmartyFullView",
@@ -8,7 +9,7 @@ import { displayLcd } from "src/app/datatypes";
   styleUrls: ["./jasmartyFullView.component.less"],
 })
 export class JasmartyFullViewComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private rest: ServiceRest) {}
 
   public displayLive: displayLcd;
   public loopStop: boolean = false;
@@ -33,15 +34,13 @@ export class JasmartyFullViewComponent implements OnInit {
   }
 
   private getLcdSoll(): void {
-    this.http.get("http://localhost:8080/lcd/soll").subscribe((resdata: displayLcd) => {
+    this.http.get(this.rest.gethost() + "lcd/soll").subscribe((resdata: displayLcd) => {
       this.displayLive = resdata;
 
-      this.displayLive.display.forEach((line) =>{
+      this.displayLive.display.forEach((line) => {
         this.display[line.line] = line.data;
-      })
-      console.log(this.display);       
+      });
+      console.log(this.display);
     });
   }
-  
 }
-
