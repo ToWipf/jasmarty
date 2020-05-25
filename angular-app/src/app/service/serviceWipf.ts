@@ -4,7 +4,6 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 
-// Vault Userverwaltung
 export class ServiceWipf {
 
   public deepCopy(oldObj: any) {

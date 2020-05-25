@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Globals } from "src/app/datatypes";
 import { ServiceRest } from "src/app/service/serviceRest";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-footer",
@@ -9,7 +10,7 @@ import { ServiceRest } from "src/app/service/serviceRest";
   styleUrls: ["./footer.component.less"],
 })
 export class FooterComponent implements OnInit {
-  constructor(private http: HttpClient, public globals: Globals, private rest: ServiceRest) {}
+  constructor(private http: HttpClient,public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) {}
 
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = "0.0";
@@ -28,5 +29,33 @@ export class FooterComponent implements OnInit {
         this.bOldVersionWarn = true;
       }
     });
+  }
+
+  public openSetServer(): void {
+    var server: string = this.rest.gethost();
+
+    const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
+      width: "250px",
+      height: "250px",
+      data: server,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.rest.sethost(result);
+      }
+    });
+  }
+}
+
+@Component({
+  selector: "app-footer-setServer",
+  templateUrl: "./footer.setServer.html",
+})
+export class FooterComponentSetServerDialog {
+  constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

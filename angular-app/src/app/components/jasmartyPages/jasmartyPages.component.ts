@@ -2,7 +2,6 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { jaconfig, japage } from "src/app/datatypes";
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
-import { JasmartyActionsComponentDialog } from "../jasmartyActions/jasmartyActions.component";
 import { ServiceRest } from "src/app/service/serviceRest";
 
 @Component({
@@ -140,7 +139,7 @@ export class JasmartyPagesComponent implements OnInit {
   templateUrl: "./jasmartyPages.goToDialog.html",
 })
 export class JasmartyPagesComponentGoToDialog {
-  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: number) {}
+  constructor(public dialogRef: MatDialogRef<JasmartyPagesComponentGoToDialog>, @Inject(MAT_DIALOG_DATA) public data: number) {}
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -2,7 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from "@angular/common/http";
-import { FooterComponent } from "./components/footer/footer.component";
+import { FooterComponent, FooterComponentSetServerDialog } from "./components/footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from "ng-sidebar";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
@@ -71,6 +71,7 @@ import { todolistComponent } from './components/todolist/todolist.component';
     JasmartyFullViewComponent,
     TelegramConfigComponent,
     FooterComponent,
+    FooterComponentSetServerDialog,
     todolistComponent,
   ],
   imports: [

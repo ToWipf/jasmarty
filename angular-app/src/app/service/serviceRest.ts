@@ -4,11 +4,16 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 
-// Vault Userverwaltung
 export class ServiceRest {
 
+  private host: string = "http://localhost:8080/";
+
   public gethost(): string {
-    return "http://localhost:8080/";
+    return this.host;
+  }
+
+  public sethost(host: string): void {
+    this.host = host;
   }
   
 }
