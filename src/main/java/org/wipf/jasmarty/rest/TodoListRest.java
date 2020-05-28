@@ -28,8 +28,8 @@ public class TodoListRest {
 //	}
 
 	@POST
-	@Path("/set")
-	public Response setConfig(String jnRoot) {
+	@Path("/new")
+	public Response saveTodo(String jnRoot) {
 		return Response.ok("{\"save\":\"" + todoList.setTodo(jnRoot) + "\"}").build();
 
 	}

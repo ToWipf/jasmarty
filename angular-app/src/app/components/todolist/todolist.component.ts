@@ -16,7 +16,7 @@ export class todolistComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ["id", "data", "active", "date", "editby"];
+  public displayedColumns: string[] = ["id", "data", "active", "date", "editby", "button"];
   public toarry: todoEntry[] = [];
 
   ngOnInit() {
@@ -25,6 +25,25 @@ export class todolistComponent implements OnInit {
 
   private getAll(): void {
     this.http.get(this.rest.gethost() + "todolist/getAllJson").subscribe((resdata: any) => {
+      this.toarry = resdata;
+      this.dataSource = new MatTableDataSource(this.toarry);
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  public new(): void {
+    // TODO:
+  }
+
+  public delete(item: todoEntry): void {
+    this.http.get(this.rest.gethost() + "todolist/delete/" + item.id).subscribe((resdata: any) => {
+      this.toarry = resdata;
+      this.dataSource = new MatTableDataSource(this.toarry);
+      this.dataSource.sort = this.sort;
+    });
+  }
+  private saveTodo(item: todoEntry): void {
+    this.http.post(this.rest.gethost() + "todolist/saveTodo", item).subscribe((resdata: any) => {
       this.toarry = resdata;
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
