@@ -42,7 +42,7 @@ public class DebugRest {
 	@Path("/lcd/refresh")
 	public Response refreshDisplay() {
 		lcdConnect.refreshDisplay();
-		return Response.ok("{\"TODO\":\"TODO\"}").build();
+		return Response.ok("{}").build();
 	}
 
 	@GET
