@@ -129,6 +129,26 @@ public class ActionVerwaltung {
 	}
 
 	/**
+	 * @param nId
+	 * @return
+	 */
+	public ButtonAction getActionFromDbById(int nId) {
+		try {
+			ButtonAction ba = new ButtonAction();
+
+			Statement stmt = MsqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
+			ba.setId(rs.getInt("id"));
+			ba.setButton(rs.getInt("button"));
+			ba.setActive(rs.getBoolean("active"));
+			ba.setAction(rs.getString("action"));
+			return ba;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
 	 * @param jnRoot
 	 */
 	public void setAction(String jnRoot) {
@@ -148,101 +168,119 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param nButton
-	 * @throws Exception
 	 */
-	public void doAction(Integer nButton) throws Exception {
-		this.currentPressed = nButton;
-		if (nButton != null) {
-
-			ButtonAction ba = getActionFromDbByButton(nButton);
-			if (ba != null) {
-
-				Integer nTrennlineFirst = ba.getAction().indexOf('|');
-				Integer nTrennlineLast = ba.getAction().lastIndexOf('|');
-
-				String sParameter1 = ba.getAction().substring(0, nTrennlineFirst);
-				String sParameter2 = null;
-				String sParameter3 = null;
-
-				if (nTrennlineFirst != nTrennlineLast) {
-					// es gibt einen 3. Parameter
-					sParameter2 = ba.getAction().substring(nTrennlineFirst + 1, nTrennlineLast);
-					sParameter3 = ba.getAction().substring(nTrennlineLast + 1);
-				} else {
-					// Es gibt nur 2 Parameter
-					sParameter2 = ba.getAction().substring(nTrennlineFirst + 1);
-				}
-
-				switch (sParameter1) {
-				case "led":
-					switch (sParameter2) {
-					case "on":
-						lcdConnect.ledOn();
-						return;
-					case "off":
-						lcdConnect.ledOff();
-						return;
-					case "toggle":
-						lcdConnect.ledToggle();
-						return;
-					}
-					return;
-				case "page":
-					switch (sParameter2) {
-					case "next":
-						pageVerwaltung.nextPage();
-						return;
-					case "last":
-						pageVerwaltung.lastPage();
-						return;
-					case "select":
-						pageVerwaltung.selectPage(sParameter3);
-						return;
-					}
-					return;
-				case "write":
-					tastatur.write(sParameter2, sParameter3);
-					return;
-				case "winamp":
-					winamp.control(sParameter2, sParameter3);
-					return;
-				case "volume":
-					switch (sParameter2) {
-					case "up":
-						lcdConnect.commandVolUp();
-						return;
-					case "down":
-						lcdConnect.commandVolDown();
-						return;
-					case "mute":
-						lcdConnect.commandVolMute();
-						return;
-					}
-					return;
-				case "exec":
-				case "system":
-
-				default:
-					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
-					return;
-				}
-			} else {
-				LOGGER.warn("Eingang nicht definert: " + currentPressed);
-			}
-		}
-	}
-
-	/**
-	 * @param nButton
-	 */
-	public void testAction(Integer nButton) {
+	public void testActionById(Integer nButtonId) {
 		// TODO hier nicht button sondern id nehemen
 		try {
-			doAction(nButton);
+			doActionById(22);
 		} catch (Exception e) {
 			LOGGER.warn("testAction fehler: " + e);
 		}
 
+	}
+
+	/**
+	 * @param nButton
+	 * @throws Exception
+	 */
+	public void doActionByButtonNr(Integer nButton) throws Exception {
+		this.currentPressed = nButton;
+		if (nButton != null) {
+			ButtonAction ba = getActionFromDbByButton(nButton);
+			doActionByButton(ba);
+		}
+	}
+
+	/**
+	 * @param nButtonId
+	 * @throws Exception
+	 */
+	public void doActionById(Integer nButtonId) throws Exception {
+		if (nButtonId != null) {
+			ButtonAction ba = getActionFromDbById(nButtonId);
+			doActionByButton(ba);
+		}
+	}
+
+	/**
+	 * @param ba
+	 * @throws Exception
+	 */
+	private void doActionByButton(ButtonAction ba) throws Exception {
+		if (ba != null) {
+
+			Integer nTrennlineFirst = ba.getAction().indexOf('|');
+			Integer nTrennlineLast = ba.getAction().lastIndexOf('|');
+
+			String sParameter1 = ba.getAction().substring(0, nTrennlineFirst);
+			String sParameter2 = null;
+			String sParameter3 = null;
+
+			if (nTrennlineFirst != nTrennlineLast) {
+				// es gibt einen 3. Parameter
+				sParameter2 = ba.getAction().substring(nTrennlineFirst + 1, nTrennlineLast);
+				sParameter3 = ba.getAction().substring(nTrennlineLast + 1);
+			} else {
+				// Es gibt nur 2 Parameter
+				sParameter2 = ba.getAction().substring(nTrennlineFirst + 1);
+			}
+
+			switch (sParameter1) {
+			case "led":
+				switch (sParameter2) {
+				case "on":
+					lcdConnect.ledOn();
+					return;
+				case "off":
+					lcdConnect.ledOff();
+					return;
+				case "toggle":
+					lcdConnect.ledToggle();
+					return;
+				}
+				return;
+			case "page":
+				switch (sParameter2) {
+				case "next":
+					pageVerwaltung.nextPage();
+					return;
+				case "last":
+					pageVerwaltung.lastPage();
+					return;
+				case "select":
+					pageVerwaltung.selectPage(sParameter3);
+					return;
+				}
+				return;
+			case "write":
+				tastatur.write(sParameter2, sParameter3);
+				return;
+			case "winamp":
+				winamp.control(sParameter2, sParameter3);
+				return;
+			case "volume":
+				switch (sParameter2) {
+				case "up":
+					lcdConnect.commandVolUp();
+					return;
+				case "down":
+					lcdConnect.commandVolDown();
+					return;
+				case "mute":
+					lcdConnect.commandVolMute();
+					return;
+				}
+				return;
+			case "exec":
+			case "system":
+
+			default:
+				LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
+				return;
+			}
+		} else {
+			LOGGER.warn("Eingang nicht definert: " + currentPressed);
+		}
 	}
 
 }

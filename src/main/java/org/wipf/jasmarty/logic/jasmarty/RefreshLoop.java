@@ -77,7 +77,7 @@ public class RefreshLoop {
 					try {
 						pageConverter.refreshCache();
 						if (lcdConnect.isLcdOk()) {
-							actionVerwaltung.doAction(lcdConnect.readButton());
+							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcdConnect.refreshDisplay();
 						}
 						Thread.sleep(lcdConnect.getRefreshRate());

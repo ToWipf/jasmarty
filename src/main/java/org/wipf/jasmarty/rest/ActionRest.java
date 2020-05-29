@@ -48,7 +48,7 @@ public class ActionRest {
 	@GET
 	@Path("/doaction/{id}")
 	public Response doaction(@PathParam("id") Integer nId) {
-		actionVerwaltung.testAction(nId);
+		actionVerwaltung.testActionById(nId);
 		return Response.ok().build();
 	}
 
