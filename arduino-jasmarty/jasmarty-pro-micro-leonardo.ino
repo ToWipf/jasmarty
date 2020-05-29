@@ -285,7 +285,7 @@ void loop() {
   }
 }
 
-void taster(void) {
+void taster() {
     for (int nPin: in_buttons) {
       nIn = digitalRead(nPin);
       if (nIn == LOW) {

@@ -57,6 +57,30 @@ public class LcdConnect {
 	}
 
 	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolUp() {
+		writeAscii(254);
+		writeAscii(40);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolDown() {
+		writeAscii(254);
+		writeAscii(41);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolMute() {
+		writeAscii(254);
+		writeAscii(42);
+	}
+
+	/**
 	 * @param lconfig
 	 */
 	public void setConfig(LcdConfig lconfig) {

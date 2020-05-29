@@ -206,9 +206,21 @@ public class ActionVerwaltung {
 				case "winamp":
 					winamp.control(sParameter2, sParameter3);
 					return;
+				case "volume":
+					switch (sParameter2) {
+					case "up":
+						lcdConnect.commandVolUp();
+						return;
+					case "down":
+						lcdConnect.commandVolDown();
+						return;
+					case "mute":
+						lcdConnect.commandVolMute();
+						return;
+					}
+					return;
 				case "exec":
 				case "system":
-				case "volume":
 
 				default:
 					LOGGER.warn("Aktion nicht verfügbar: " + sParameter1);
