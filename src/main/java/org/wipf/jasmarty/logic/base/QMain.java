@@ -29,6 +29,13 @@ public class QMain {
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
+	 * Stop App
+	 */
+	public static void stopApp() {
+		Quarkus.asyncExit();
+	}
+
+	/**
 	 * @param ev
 	 */
 	void onStart(@Observes StartupEvent ev) {
@@ -39,13 +46,6 @@ public class QMain {
 		tHome.telegramStart();
 
 		LOGGER.info("Gestartet");
-	}
-
-	/**
-	 * Stop App
-	 */
-	public static void stopApp() {
-		Quarkus.asyncExit();
 	}
 
 	/**

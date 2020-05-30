@@ -170,9 +170,8 @@ public class ActionVerwaltung {
 	 * @param nButton
 	 */
 	public void testActionById(Integer nButtonId) {
-		// TODO hier nicht button sondern id nehemen
 		try {
-			doActionById(22);
+			doActionById(nButtonId);
 		} catch (Exception e) {
 			LOGGER.warn("testAction fehler: " + e);
 		}
