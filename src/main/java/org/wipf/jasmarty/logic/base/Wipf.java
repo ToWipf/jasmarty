@@ -224,7 +224,7 @@ public class Wipf {
 	 * @param sCommand
 	 */
 	public String shell(String sCommand) {
-		// TODO timeout
+		// TODO
 		return "todo";
 		/*
 		 * ProcessBuilder processBuilder = new ProcessBuilder(); // Windows //
@@ -267,7 +267,6 @@ public class Wipf {
 			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
 			byte[] hasil = cipher.doFinal(sIn.getBytes());
 			// return Base64.getEncoder().encodeToString(hasil);
-
 			Base32 base32 = new Base32();
 			return (base32.encodeAsString(hasil));
 		} catch (Exception e) {
@@ -289,7 +288,7 @@ public class Wipf {
 			byte[] hasil = cipher.doFinal(base32.decode(sIn));
 			return new String(hasil);
 		} catch (Exception e) {
-			return "fail";
+			return "Fail";
 		}
 	}
 

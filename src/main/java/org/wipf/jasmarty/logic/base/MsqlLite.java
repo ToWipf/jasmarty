@@ -63,12 +63,15 @@ public class MsqlLite {
 	 */
 	private void initDBConnection() {
 		try {
-			if (connection != null)
+			if (connection != null) {
+				LOGGER.warn("initDBConnection Fail C ");
 				return;
+			}
 			LOGGER.info("Verbinde zu Datenbank '" + QMain.DB_PATH + "'");
 			connection = DriverManager.getConnection("jdbc:sqlite:" + QMain.DB_PATH);
-			if (!connection.isClosed())
+			if (!connection.isClosed()) {
 				LOGGER.info("Datenbank Ok");
+			}
 		} catch (SQLException e) {
 			LOGGER.warn("initDBConnection Fail A " + e);
 			throw new RuntimeException(e);
