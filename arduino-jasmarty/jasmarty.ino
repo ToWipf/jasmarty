@@ -1,41 +1,68 @@
 /*
-  Arduino Mini/Nano
+   Wipf           12.06.2016 Init
+                  14.07.2016
+                  07.11.2016
+                  20.01.2017 V4 Laufzeitverbesserungeng
+                  23.01.2017 int zu byte
+                  27.01.2017 Tasterverhalten optimiert
+                  09.02.2017
+               15/18.02.2017 V5 Funktionsaufteilung - Taster gehen nun nicht nur bei der Bildschirmaktualisierung
+                  07.06.2017 Kleine Aenderungen - weniger Speicher noetig
+                  08.06.2017 Grosser Umbau auf Arduino Mini - negative Eingaenge
+                  17.07.2017 Offlinemenue
+                  22.10.2017 Bug gefunden bei þ zeichen
+                  01.02.2019 LCD Display von 0X3F auf 0X27
+                  30.06.2019 customCharLoad1
+                  02.04.2020 ueberarbeiten
+                  29.05.2020 Pro-Micro sonderfunktionen
+                  30.05.2020 customChars senden
+
+    Arduino Mini/Nano/Uno oder Pro-Micro/Leonardo
 */
+// SETTINGS
+#define VERSION " v2.0"
+#define ADDRESS 0X3F
 
+//#define PROMICRO
+//#define LED_A 4
+//#define LED_B 5
+//#define PINS_BUTTONS {6,7,8,9,10,16,14,15,18,19,20,21} // Pro-Micro
+
+#define NANO_UNO_MINI
+#define LED_A 13
+#define LED_B A0
+#define PINS_BUTTONS {2,3,4,5,6,7,8,9,10,11,12} // Nano
+
+// CODE
 #include <LiquidCrystal_I2C.h>
+#if defined(PROMICRO)
+#include "HID-Project.h"
+#endif
 
-#define ADDRESS 0X27
-#define VERSION " V105"
-#define TASTERANZAHL 9 //Anzahl der externen Taster
-#define LED A0          // PIN mit der Led -Hintergrund beleuchtung + Start / Gelbe LED
-#define ROTLED A1       //Zeigt ob spezial aktiv ist
-#define SPEZIN A2       // Eingang spezial
-#define SPEZONOFF A3    //Wenn der eingang aktiv ist wird nach den zweiten spezialeingang geschaut, dieser sendet dann dein 'S' an den PC falls dieser aktiv ist
-#define PAUSE 50000     //Wartezeit zwischen den eingaben
-
-unsigned int warten = 0;
-byte i = 0;
 byte pin;
-byte IN;
+byte nIn;
 byte incoming;
 byte rxbyte;
 byte col;
 byte row;
 int wartespezial = 0;
+int in_buttons[] = PINS_BUTTONS;
 
 LiquidCrystal_I2C lcd(ADDRESS, 20, 4);
 
 void setup() {
-  pinMode(LED, OUTPUT);
-  digitalWrite(LED, HIGH);
+  pinMode(LED_A, OUTPUT);
+  digitalWrite(LED_A, HIGH);
+  pinMode(LED_B, OUTPUT);
+  
   Serial.begin(9600);
-  for (pin = 2; pin < TASTERANZAHL + 2; pin++) {
-    pinMode(pin, INPUT_PULLUP);
+  #if defined(PROMICRO)
+  Consumer.begin();
+  #endif
+  
+  for (int nPin: in_buttons) {
+    pinMode(nPin, INPUT_PULLUP);
   }
-  pinMode(13, OUTPUT);
-  pinMode(ROTLED, OUTPUT);
-  pinMode(SPEZIN, INPUT);
-  pinMode(SPEZONOFF, INPUT_PULLUP);
 
   lcd.begin();
   lcd.clear();
@@ -61,61 +88,74 @@ void setup() {
     B11111,
     B11100
   };
-  // customChar 2 - 7 nicht genutzt
 
   lcd.createChar(0, customCharLoad0);
   lcd.createChar(1, customCharLoad1);
 
   lcd.setCursor(2, 0);
   lcd.print("Smartie by Wipf");
-  lcd.setCursor(0, 3);
-  lcd.print(TASTERANZAHL);
-  lcd.print(" Tasten ");
   lcd.setCursor(15, 3);
   lcd.print(VERSION);
-  digitalWrite(LED, LOW);
+  digitalWrite(LED_A, LOW);
 }
 
 byte serial_getch() {
   while (Serial.available() == 0) {
-    if (digitalRead(SPEZONOFF) == LOW) {
-      spzial();
-    }
     taster();
   }
   incoming = Serial.read(); // read the incoming byte:
   return (byte)(incoming & 0xff);
 }
 
-
-void loop()
-{
+void loop() {
   //Auswertung
-  {
     rxbyte = serial_getch();
-    if (rxbyte == 254) //Matrix Orbital uses 254 prefix for commands
-    {
-      switch (serial_getch())
-      {
-        case 66: //backlight on (at previously set brightness)
-          digitalWrite(LED, HIGH);
+    if (rxbyte == 254) { // use 254 prefix for commands
+      switch (serial_getch()) { 
+        case 21:
+          createCustomChar(2);
+          break;
+        case 22:
+          createCustomChar(3);
+          break;
+        case 23:
+          createCustomChar(4);
+          break;
+        case 24:
+          createCustomChar(5);
+          break;
+        case 25:
+          createCustomChar(6);
+          break;
+        case 26:
+          createCustomChar(7);
+          break;
+        #if defined(PROMICRO)
+        // Sonderfunktionen Pro Micro Leonardo
+        case 40:
+          Consumer.write(MEDIA_VOL_UP);
+          break;
+        case 41:
+          Consumer.write(MEDIA_VOL_DOWN);
+          break;
+        case 42:
+          Consumer.write(MEDIA_VOL_MUTE);
+          break;
+        #endif
+        case 66: // backlight on (at previously set brightness)
+          digitalWrite(LED_B, HIGH);
           break;
         case 70:
-          digitalWrite(LED, LOW);
+          digitalWrite(LED_B, LOW);
           break;
-        case 71:                      //set cursor position
-          col = (serial_getch() - 1); //get column byte
+        case 71:                      // set cursor position
+          col = (serial_getch() - 1); // get column byte
           row = (serial_getch());
           lcd.setCursor(col, row - 1);
           break;
-        case 72: //cursor home (reset display position)
+        case 72: // cursor home (reset display position)
           lcd.setCursor(0, 0);
           break;
-        //      case 86: //BEENDEN Des Programmes
-        //        lcd.clear();
-        //        lcd.setCursor(0, 0);
-        //        lcd.print("Smartie wurde Beendet");
-        //        delay(5000);
         case 88: //clear display, cursor home
           lcd.clear();
           lcd.setCursor(0, 0);
@@ -124,30 +164,34 @@ void loop()
       return;
     }
 
-    switch (rxbyte) //Zeichen anpassen
-    {
-      case 0x02:
-        //rxbyte = 0xC6; //  1/3  Block Altanativ: 0xA4
-        rxbyte = 0;
-        break;
-      case 0x03:
-        rxbyte = 1;
-        //rxbyte = 0xDB; // 2/3 Block
-        break;
+    // Zeichen anpassen
+    switch (rxbyte) { 
       case 0x01:
         rxbyte = 0xFF; // 3/3 block
         break;
-      /////////////LEERZEICHEN das alle Chars defined sind;
-      case 0x04:
-      case 0x05:
-      case 0x06:
-      case 0x07:
-      case 0x08:
-        //   rxbyte = NULL;
-        rxbyte = 0x20;
+      case 0x02:
+        // rxbyte = 0xC6; //  1/3  Block Altanativ: 0xA4
+        rxbyte = 0; // customChar 0
         break;
-      //////////Ende Leerzeichen
-
+      case 0x03:
+        rxbyte = 1; // customChar 1
+        //rxbyte = 0xDB; // 2/3 Block
+        break;
+      case 0x04:
+        rxbyte = 2; // customChar 2
+        break;
+      case 0x05:
+        rxbyte = 3; // customChar 3
+        break;
+      case 0x06:
+        rxbyte = 4; // customChar 4
+        break;
+      case 0x07:
+        rxbyte = 5; // customChar 5
+        break;
+      case 0x08:
+        rxbyte = 6; // customChar 6
+        break;
       case 0xE4: //ASCII "a" umlaut
         rxbyte = 0xE1;
         break;
@@ -256,54 +300,34 @@ void loop()
       case 0xFB:
         rxbyte = 0x75;
         break;
-      default:
-        // FEHLERHAFTE AUSGABEN !
-        break;
     }
     lcd.write(rxbyte); //otherwise a plain char so we print it to lcd
     // lcd.print(rxbyte);
-  }
 }
 
-void spzial(void) {
-  if (digitalRead(SPEZIN) == LOW) {
-    digitalWrite(ROTLED, HIGH);
-    if (wartespezial % 10000 == 0) {
-      Serial.write(83);
-      wartespezial = 0;
-    }
-  } else {
-    digitalWrite(ROTLED, LOW);
-  }
-  if (wartespezial > 10005) {
-    digitalWrite(ROTLED, HIGH);
-    wartespezial = 0;
-  }
-  wartespezial++;
+void createCustomChar(int nr) {
+  // info: Nach dem schreiben eines customChars muss der curser neu gesetzt werden
+  byte customChar[7];
+  customChar[0] = serial_getch();
+  customChar[1] = serial_getch();
+  customChar[2] = serial_getch();
+  customChar[3] = serial_getch();
+  customChar[4] = serial_getch();
+  customChar[5] = serial_getch();
+  customChar[6] = serial_getch();
+  customChar[7] = serial_getch();
+  lcd.createChar(nr, customChar);
 }
 
-void taster(void)
-{
-  if (warten > PAUSE) { // Damit nicht der tastendruck zu oft angenommen wird
-    for (i = 2; i < TASTERANZAHL + 2; i++) {
-      IN = digitalRead(i);
-      if (IN == LOW) {
-        digitalWrite(13, HIGH);
-        Serial.write(i + 47); //pin 2 == 50 == ASCII "2"
-        //       delay(1);
+void taster() {
+    for (int nPin: in_buttons) {
+      nIn = digitalRead(nPin);
+      if (nIn == LOW) {
+        digitalWrite(LED_A, HIGH);
+        Serial.write(nPin + 47); //pin 2 == 50 == ASCII "2"
         Serial.flush();
-        warten = 0;
+        digitalWrite(LED_A, LOW);
         break;
       }
     }
-    //  Serial.flush();
-
-    if (warten > PAUSE + 10000) {
-      warten = PAUSE;
-    }
-  }
-  if (warten == PAUSE) {
-    digitalWrite(13, LOW);
-  }
-  warten++;
 }
