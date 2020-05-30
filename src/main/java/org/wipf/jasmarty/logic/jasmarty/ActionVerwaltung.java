@@ -51,7 +51,7 @@ public class ActionVerwaltung {
 	 * @param ba
 	 * @throws SQLException
 	 */
-	public void actionToDB(ButtonAction ba) throws SQLException {
+	public void saveToDB(ButtonAction ba) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO actions (id, button, active, action) VALUES ('" + ba.getId() + "','"
 				+ ba.getButton() + "','" + ba.isActive() + "','" + ba.getAction() + "')");
@@ -153,7 +153,7 @@ public class ActionVerwaltung {
 	 */
 	public void setAction(String jnRoot) {
 		try {
-			actionToDB(new ButtonAction().setByJson(jnRoot));
+			saveToDB(new ButtonAction().setByJson(jnRoot));
 		} catch (Exception e) {
 			LOGGER.warn("Convert Page fehler");
 		}

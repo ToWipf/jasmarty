@@ -21,10 +21,10 @@ public class ButtonAction {
 	 */
 	public String toJson() {
 		JSONObject jo = new JSONObject();
-		jo.put("id", nId);
-		jo.put("button", nButton);
-		jo.put("active", bActive);
-		jo.put("action", sAction);
+		jo.put("id", this.nId);
+		jo.put("button", this.nButton);
+		jo.put("active", this.bActive);
+		jo.put("action", this.sAction);
 		return jo.toString();
 	}
 

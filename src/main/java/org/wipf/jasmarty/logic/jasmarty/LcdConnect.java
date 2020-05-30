@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.CustomChar;
 import org.wipf.jasmarty.datatypes.LcdCache;
 import org.wipf.jasmarty.datatypes.LcdConfig;
 
@@ -81,20 +82,22 @@ public class LcdConnect {
 	}
 
 	/**
+	 * @param ca
+	 * @param nIndex
+	 */
+	public void writeCustomChar(CustomChar cc, int nIndex) {
+		writeAscii(254);
+		writeAscii(20 + nIndex);
+		for (int i = 0; i <= 8; i++) {
+			writeAscii((int) cc.getLine(i));
+		}
+	}
+
+	/**
 	 * @param lconfig
 	 */
 	public void setConfig(LcdConfig lconfig) {
 		this.lconf = lconfig;
-	}
-
-	/**
-	 * @param conf
-	 */
-	public void resetConfigLive(LcdConfig conf) {
-		System.out.println("l");
-		this.lconf.setRefreshRate(conf.getRefreshRate());
-		this.lconf.setHeight(conf.getHeight());
-		this.lconf.setWidth(conf.getWidth());
 	}
 
 	/**
