@@ -35,42 +35,42 @@ public class DebugRest {
 	@Path("/lcd/write/{x}/{y}/{str}")
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
 		lcdConnect.writeLineToCache(x, y, s.toCharArray());
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/lcd/refresh")
 	public Response refreshDisplay() {
 		lcdConnect.refreshDisplay();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/lcd/writeAscii/{int}")
 	public Response writeAscii(@PathParam("int") Integer n) {
 		lcdConnect.writeAscii(n);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/lcd/pos/{x}/{y}")
 	public Response pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
 		lcdConnect.setCursor(x, y);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/lcd/cls")
 	public Response cls() {
 		lcdConnect.clearScreen();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/winamp/control/{s}/{s2}")
 	public Response control(@PathParam("s") String s, @PathParam("s") String s2) throws Exception {
 		winamp.control(s, s2);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET

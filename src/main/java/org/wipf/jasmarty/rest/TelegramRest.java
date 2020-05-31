@@ -31,14 +31,14 @@ public class TelegramRest {
 	@Path("/on")
 	public Response on() {
 		tHome.telegramStart();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/off")
 	public Response off() {
 		tHome.telegramStop();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET

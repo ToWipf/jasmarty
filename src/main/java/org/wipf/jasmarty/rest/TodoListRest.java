@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,22 +17,25 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
  *
  */
 @Path("/todolist")
+@Produces(MediaType.APPLICATION_JSON)
+@ApplicationScoped
 public class TodoListRest {
 
 	@Inject
 	TAppTodoList todoList;
 
-//	@GET TODO
-//	@Path("/get")
-//	public Response getConfig() {
-//		return Response.ok(todoList.getConfig().toJson()).build();
-//	}
-
 	@POST
-	@Path("/new")
+	@Path("/saveTodo")
 	public Response saveTodo(String jnRoot) {
 		return Response.ok("{\"save\":\"" + todoList.setTodo(jnRoot) + "\"}").build();
+	}
 
+	@GET
+	@Path("/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response delete(@PathParam("id") Integer nId) {
+		todoList.delete(nId);
+		return Response.ok().build();
 	}
 
 	@GET
@@ -61,14 +65,4 @@ public class TodoListRest {
 	public Response getAllJson() {
 		return Response.ok(todoList.getAllAsJson()).build();
 	}
-
-//	
-//	// TODO
-//	@POST
-//	@Path("/addTodo/{msg}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public Response addTodo(@PathParam("msg") String sMsg) {
-//		return MWipf.genResponse(MTeleMsg.sendMsgToGroup(sMsg));
-//	}
-
 }

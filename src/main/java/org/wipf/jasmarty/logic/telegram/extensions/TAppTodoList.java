@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.telegram.extensions;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
@@ -30,8 +31,9 @@ public class TAppTodoList {
 	public void initDB() {
 		try {
 			Statement stmt = MsqlLite.getDB();
+			// stmt.executeUpdate("DROP TABLE todolist;");
 			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS todolist (id integer primary key autoincrement, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);");
+					"CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);");
 		} catch (Exception e) {
 			LOGGER.warn("initDB todolist " + e);
 		}
@@ -42,7 +44,7 @@ public class TAppTodoList {
 	 * @return
 	 */
 	public boolean setTodo(String jnRoot) {
-		return addEntry(new TodoEntry().setByJson(jnRoot));
+		return saveEntry(new TodoEntry().setByJson(jnRoot));
 	}
 
 	/**
@@ -239,12 +241,17 @@ public class TAppTodoList {
 	 * @param tE
 	 * @return
 	 */
-	public boolean addEntry(TodoEntry tE) {
+	public boolean saveEntry(TodoEntry tE) {
 		try {
+			if (tE.getId() == null) {
+				// id automatisch vergeben
+				tE.setId(countItems() + 1);
+			}
 			Statement stmt = MsqlLite.getDB();
 			//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO todolist (data, editby, date, active) VALUES " +
-					"('" + tE.getData() +
+			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, active) VALUES " +
+					"('" + tE.getId() +
+					"'" + tE.getData() +
 					"','" + tE.getEditBy() +
 					"','"+ tE.getDate() +
 					"','"+ tE.getActive() +
@@ -254,6 +261,18 @@ public class TAppTodoList {
 		} catch (Exception e) {
 			LOGGER.warn("add todo " + e);
 			return false;
+		}
+	}
+
+	/**
+	 * @param nId
+	 */
+	public void delete(Integer nId) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.execute("DELETE FROM todolist WHERE id LIKE '" + nId + "';");
+		} catch (Exception e) {
+			LOGGER.warn("del todo " + e);
 		}
 	}
 
@@ -281,12 +300,20 @@ public class TAppTodoList {
 
 	/**
 	 * @return
+	 * @throws SQLException
+	 */
+	private Integer countItems() throws SQLException {
+		Statement stmt = MsqlLite.getDB();
+		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist;");
+		return rs.getInt("COUNT(*)");
+	}
+
+	/**
+	 * @return
 	 */
 	private String countAll() {
 		try {
-			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist;");
-			return rs.getString("COUNT(*)") + " Einträge in der DB";
+			return countItems() + " Einträge in der DB";
 		} catch (Exception e) {
 			LOGGER.warn("count todolist " + e);
 			return null;

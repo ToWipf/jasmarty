@@ -38,6 +38,13 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     this.editItem(empty);
   }
 
+  public deleteItem(item: buttonaction): void {
+    // TODO: ADD nachfragen dialog
+    this.http.get(this.rest.gethost() + "actions/delete/" + item.id).subscribe((resdata: any) => {
+      this.load();
+    });
+  }
+
   public editItem(item: buttonaction): void {
     let edititem: buttonaction;
 
@@ -52,6 +59,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.save(result);
+        this.load();
       }
     });
   }

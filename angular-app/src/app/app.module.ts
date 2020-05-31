@@ -57,7 +57,7 @@ import { Globals } from './datatypes';
 import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmartyFullView.component';
 import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
-import { todolistComponent } from './components/todolist/todolist.component';
+import { todolistComponent, todolistComponentDialog } from './components/todolist/todolist.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +73,7 @@ import { todolistComponent } from './components/todolist/todolist.component';
     FooterComponent,
     FooterComponentSetServerDialog,
     todolistComponent,
+    todolistComponentDialog,
   ],
   imports: [
     BrowserAnimationsModule,

@@ -25,7 +25,7 @@ public class QMain {
 	TelegramHome tHome;
 
 	private static final Logger LOGGER = Logger.getLogger("QMain");
-	public static final String VERSION = "0.68";
+	public static final String VERSION = "0.69";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**

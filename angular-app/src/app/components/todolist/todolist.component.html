@@ -30,8 +30,11 @@
                 </ng-container>
 
                 <ng-container matColumnDef="button">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header><button class="btn btn-default" (click)="new()">Neu</button></th>
-                    <td mat-cell *matCellDef="let element"><button class="btn btn-default" (click)="delete(element)">Löschen</button></td>
+                    <th mat-header-cell *matHeaderCellDef><button class="btn btn-default" (click)="newItem()">Neu</button></th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="btn btn-default" (click)="openDialog(element)">Edit</button>
+                        <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -56,8 +56,15 @@ public class ActionRest {
 	@Path("/set")
 	public Response setAction(String jnRoot) {
 		actionVerwaltung.setAction(jnRoot);
-		return Response.ok("{\"save\":\"TODO\"}").build();
+		return Response.ok().build();
+	}
 
+	@GET
+	@Path("/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response delete(@PathParam("id") Integer nId) {
+		actionVerwaltung.delete(nId);
+		return Response.ok().build();
 	}
 
 }

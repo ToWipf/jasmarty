@@ -35,7 +35,7 @@ public class PagesRest {
 	@Path("/select/{pid}")
 	public Response newPage(@PathParam("pid") int nPid) {
 		pageVerwaltung.selectPage(nPid);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
@@ -48,7 +48,7 @@ public class PagesRest {
 	@Path("/save")
 	public Response save(String jnRoot) {
 		pageVerwaltung.pageToDb(jnRoot);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
@@ -56,7 +56,7 @@ public class PagesRest {
 	@Path("/delete/{pid}")
 	public Response delete(@PathParam("pid") int nPid) {
 		pageVerwaltung.delPageFromDb(nPid);
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET

@@ -30,21 +30,21 @@ public class TelegramRefreshRest {
 	@Path("/on")
 	public Response on() {
 		refreshLoop.start();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/off")
 	public Response off() {
 		refreshLoop.stop();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/refreshCache")
 	public Response refreshCache() {
 		refreshLoop.doRefreshCacheManuell();
-		return Response.ok("{}").build();
+		return Response.ok().build();
 	}
 
 }

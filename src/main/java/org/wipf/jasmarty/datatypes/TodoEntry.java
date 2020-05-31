@@ -15,6 +15,7 @@ public class TodoEntry {
 	private String sEditBy;
 	private String sDate;
 	private String sActive;
+	private Integer nId;
 
 	/**
 	 * @return
@@ -102,6 +103,20 @@ public class TodoEntry {
 	 */
 	public void setActive(String sActive) {
 		this.sActive = sActive;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getId() {
+		return nId;
+	}
+
+	/**
+	 * @param nId
+	 */
+	public void setId(int nId) {
+		this.nId = nId;
 	}
 
 }

@@ -59,6 +59,18 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param nId
+	 */
+	public void delete(Integer nId) {
+		try {
+			Statement stmt = MsqlLite.getDB();
+			stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
+		} catch (Exception e) {
+			LOGGER.warn("del" + e);
+		}
+	}
+
+	/**
+	 * @param nId
 	 * @return
 	 */
 	public ButtonAction getActionFromDbByID(int nId) {

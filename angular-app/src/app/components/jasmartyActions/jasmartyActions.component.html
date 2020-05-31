@@ -20,7 +20,10 @@
 
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef> <button class="btn editb" (click)="newItem()">Neu</button> </th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'notactive': !element.active}"> <button class="btn editb" (click)="editItem(element)">Edit</button> </td>
+                <td mat-cell *matCellDef="let element" [ngClass]="{'notactive': !element.active}">
+                    <button class="btn editb" (click)="editItem(element)">Edit</button>
+                    <button class="btn editb" (click)="deleteItem(element)">Löschen</button>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="test">
