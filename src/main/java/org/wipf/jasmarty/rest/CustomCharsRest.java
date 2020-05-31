@@ -35,16 +35,15 @@ public class CustomCharsRest {
 	@Path("/set")
 	public Response setC(String jnRoot) {
 		customChars.setCustomChar(jnRoot);
-		return Response.ok("{\"save\":\"TODO\"}").build();
+		return Response.ok().build();
 
 	}
 
 	@POST
-	@Path("/test")
-	public Response test() {
-		customChars.test();
-		return Response.ok("{}").build();
-
+	@Path("/loadCharToLcdFromDB/{id}")
+	public Response loadCharToLcdFromDB(@PathParam("id") Integer nId) {
+		customChars.loadCharToLcdFromDB(nId);
+		return Response.ok().build();
 	}
 
 }

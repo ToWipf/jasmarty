@@ -85,12 +85,13 @@ public class LcdConnect {
 	 * @param ca
 	 * @param nIndex
 	 */
-	public void writeCustomChar(CustomChar cc, int nIndex) {
+	public void writeCustomChar(CustomChar cc) {
 		writeAscii(254);
-		writeAscii(20 + nIndex);
+		writeAscii(21);
 		for (int i = 0; i < 8; i++) {
-			writeAscii((int) cc.getLine(i));
+			writeAscii((int) cc.getBytesForLine(i));
 		}
+		writeAscii(cc.getPosition());
 	}
 
 	/**

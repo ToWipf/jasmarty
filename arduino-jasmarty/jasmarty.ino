@@ -15,12 +15,12 @@
                   30.06.2019 customCharLoad1
                   02.04.2020 ueberarbeiten
                   29.05.2020 Pro-Micro sonderfunktionen
-                  30.05.2020 customChars senden
+               30/31.05.2020 customChars senden
 
     Arduino Mini/Nano/Uno oder Pro-Micro/Leonardo
 */
 // SETTINGS
-#define VERSION " v2.0"
+#define VERSION " v2.1"
 #define ADDRESS 0X3F
 
 //#define PROMICRO
@@ -31,6 +31,7 @@
 #define NANO_UNO_MINI
 #define LED_A 13
 #define LED_B A0
+#define LED_C A1
 #define PINS_BUTTONS {2,3,4,5,6,7,8,9,10,11,12} // Nano
 
 // CODE
@@ -54,6 +55,7 @@ void setup() {
   pinMode(LED_A, OUTPUT);
   digitalWrite(LED_A, HIGH);
   pinMode(LED_B, OUTPUT);
+  pinMode(LED_C, OUTPUT);
   
   Serial.begin(9600);
   #if defined(PROMICRO)
@@ -113,22 +115,7 @@ void loop() {
     if (rxbyte == 254) { // use 254 prefix for commands
       switch (serial_getch()) { 
         case 21:
-          createCustomChar(2);
-          break;
-        case 22:
-          createCustomChar(3);
-          break;
-        case 23:
-          createCustomChar(4);
-          break;
-        case 24:
-          createCustomChar(5);
-          break;
-        case 25:
-          createCustomChar(6);
-          break;
-        case 26:
-          createCustomChar(7);
+          createCustomChar();
           break;
         #if defined(PROMICRO)
         // Sonderfunktionen Pro Micro Leonardo
@@ -305,9 +292,10 @@ void loop() {
     // lcd.print(rxbyte);
 }
 
-void createCustomChar(int nr) {
+void createCustomChar() {
+  digitalWrite(LED_C, HIGH);
   // info: Nach dem schreiben eines customChars muss der curser neu gesetzt werden
-  byte customChar[7];
+  byte customChar[7]; 
   customChar[0] = serial_getch();
   customChar[1] = serial_getch();
   customChar[2] = serial_getch();
@@ -316,7 +304,9 @@ void createCustomChar(int nr) {
   customChar[5] = serial_getch();
   customChar[6] = serial_getch();
   customChar[7] = serial_getch();
-  lcd.createChar(nr, customChar);
+  // Position, data
+  lcd.createChar(serial_getch(), customChar);
+  digitalWrite(LED_C, LOW);
 }
 
 void taster() {

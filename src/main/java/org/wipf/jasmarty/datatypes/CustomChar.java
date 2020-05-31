@@ -12,8 +12,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomChar {
 
 	private int nId;
+	private int nPosition;
 	private String sName;
-	private char[] aChar;
+	private String sData;
 
 	/**
 	 * @param sJson
@@ -27,14 +28,8 @@ public class CustomChar {
 
 			this.nId = jn.get("id").asInt();
 			this.sName = jn.get("name").asText();
-			this.setLine(0, (char) jn.get("part0").asInt());
-			this.setLine(1, (char) jn.get("part1").asInt());
-			this.setLine(2, (char) jn.get("part2").asInt());
-			this.setLine(3, (char) jn.get("part3").asInt());
-			this.setLine(4, (char) jn.get("part4").asInt());
-			this.setLine(5, (char) jn.get("part5").asInt());
-			this.setLine(6, (char) jn.get("part6").asInt());
-			this.setLine(7, (char) jn.get("part7").asInt());
+			this.nPosition = jn.get("position").asInt();
+			this.sData = jn.get("data").asText();
 			return this;
 		} catch (Exception e) {
 			return null;
@@ -48,50 +43,67 @@ public class CustomChar {
 		JSONObject jo = new JSONObject();
 		jo.put("id", this.nId);
 		jo.put("name", this.sName);
-		jo.put("part0", this.getLine(0));
-		jo.put("part1", this.getLine(1));
-		jo.put("part2", this.getLine(2));
-		jo.put("part3", this.getLine(3));
-		jo.put("part4", this.getLine(4));
-		jo.put("part5", this.getLine(5));
-		jo.put("part6", this.getLine(6));
-		jo.put("part7", this.getLine(7));
+		jo.put("position", this.nPosition);
+		jo.put("data", this.sData);
 		return jo.toString();
-	}
-
-	/**
-	 * 
-	 */
-	public CustomChar() {
-		this.aChar = new char[8];
-
-		for (int x = 0; x < 8; x++) {
-			this.aChar[x] = 0;
-		}
 	}
 
 	/**
 	 * @param nLine
 	 * @return
 	 */
-	public char getLine(int nLine) {
-		return this.aChar[nLine];
-	}
+	public char getBytesForLine(int nLine) {
+		char c = this.sData.charAt(nLine);
+		switch (c) {
+		// 0 - 9 gehen so
+		case 'a':
+			return 10;
+		case 'b':
+			return 11;
+		case 'c':
+			return 12;
+		case 'd':
+			return 13;
+		case 'e':
+			return 14;
+		case 'f':
+			return 15;
+		case 'g':
+			return 16;
+		case 'h':
+			return 17;
+		case 'i':
+			return 18;
+		case 'j':
+			return 19;
+		case 'k':
+			return 20;
+		case 'l':
+			return 21;
+		case 'm':
+			return 22;
+		case 'n':
+			return 23;
+		case 'o':
+			return 24;
+		case 'p':
+			return 25;
+		case 'q':
+			return 26;
+		case 'r':
+			return 27;
+		case 's':
+			return 28;
+		case 't':
+			return 29;
+		case 'u':
+			return 30;
+		case 'v':
+			return 31;
+		default:
+			return c;
 
-	/**
-	 * @param nLine
-	 * @param aChar
-	 */
-	public void setLine(int nLine, char aChar) {
-		this.aChar[nLine] = aChar;
-	}
-
-	/**
-	 * @param nLine
-	 * @param nChar
-	 */
-	public void setLine(int nLine, int nChar) {
-		this.aChar[nLine] = (char) nChar;
+		}
 	}
 
 	/**
@@ -120,6 +132,34 @@ public class CustomChar {
 	 */
 	public void setId(int id) {
 		this.nId = id;
+	}
+
+	/**
+	 * @return
+	 */
+	public int getPosition() {
+		return nPosition;
+	}
+
+	/**
+	 * @param nPosition
+	 */
+	public void setPosition(int nPosition) {
+		this.nPosition = nPosition;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getData() {
+		return sData;
+	}
+
+	/**
+	 * @param sData
+	 */
+	public void setData(String sData) {
+		this.sData = sData;
 	}
 
 }
