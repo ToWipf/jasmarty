@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.jasmarty.CustomChars;
  * @author wipf
  *
  */
-@Path("/actions")
+@Path("/customchars")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
 @ApplicationScoped
@@ -27,15 +27,23 @@ public class CustomCharsRest {
 
 	@GET
 	@Path("/get/{id}")
-	public Response getAction(@PathParam("id") Integer nId) {
+	public Response getC(@PathParam("id") Integer nId) {
 		return Response.ok(customChars.getFromDB(nId).toJson()).build();
 	}
 
 	@POST
 	@Path("/set")
-	public Response setAction(String jnRoot) {
+	public Response setC(String jnRoot) {
 		customChars.setCustomChar(jnRoot);
 		return Response.ok("{\"save\":\"TODO\"}").build();
+
+	}
+
+	@POST
+	@Path("/test")
+	public Response test() {
+		customChars.test();
+		return Response.ok("{}").build();
 
 	}
 

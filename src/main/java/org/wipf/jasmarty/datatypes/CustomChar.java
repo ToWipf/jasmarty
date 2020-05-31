@@ -87,6 +87,14 @@ public class CustomChar {
 	}
 
 	/**
+	 * @param nLine
+	 * @param nChar
+	 */
+	public void setLine(int nLine, int nChar) {
+		this.aChar[nLine] = (char) nChar;
+	}
+
+	/**
 	 * @return
 	 */
 	public String getName() {

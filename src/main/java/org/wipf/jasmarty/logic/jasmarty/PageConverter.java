@@ -278,9 +278,21 @@ public class PageConverter {
 			return sBefore + wipf.repeat(' ', Integer.valueOf(sParameter) - nIndexStart) + sAfter;
 		case "ver":
 			return sBefore + QMain.VERSION + sAfter;
+		case "char":
+			return sBefore + charByPara(sParameter) + sAfter;
 		default:
 			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
 		}
+	}
+
+	/**
+	 * @param sParameter
+	 * @return
+	 * @throws Exception
+	 */
+	private char charByPara(String sParameter) throws Exception {
+		char c = (char) (int) Integer.valueOf(sParameter);
+		return c;
 	}
 
 	/**

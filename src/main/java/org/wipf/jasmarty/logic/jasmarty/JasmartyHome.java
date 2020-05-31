@@ -25,6 +25,8 @@ public class JasmartyHome {
 	Wipf wipf;
 	@Inject
 	SerialConfig serialConfig;
+	@Inject
+	CustomChars customChars;
 
 	private static final Logger LOGGER = Logger.getLogger("JasmartyHome");
 
@@ -44,6 +46,7 @@ public class JasmartyHome {
 		pageVerwaltung.initDB();
 		serialConfig.initDB();
 		actionVerwaltung.initDB();
+		customChars.initDB();
 
 		lcdConnect.setConfig(serialConfig.getConfig());
 		lcdConnect.startSerialLcdPort();

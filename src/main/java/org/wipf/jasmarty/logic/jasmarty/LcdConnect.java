@@ -20,7 +20,7 @@ import com.fazecast.jSerialComm.SerialPort;
 @ApplicationScoped
 public class LcdConnect {
 
-	private static final Logger LOGGER = Logger.getLogger("jasmarty Connect");
+	private static final Logger LOGGER = Logger.getLogger("Jasmarty Connect");
 
 	private SerialPort sp;
 	private LcdCache lcache;
@@ -88,7 +88,7 @@ public class LcdConnect {
 	public void writeCustomChar(CustomChar cc, int nIndex) {
 		writeAscii(254);
 		writeAscii(20 + nIndex);
-		for (int i = 0; i <= 8; i++) {
+		for (int i = 0; i < 8; i++) {
 			writeAscii((int) cc.getLine(i));
 		}
 	}
