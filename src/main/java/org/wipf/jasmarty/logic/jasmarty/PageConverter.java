@@ -300,16 +300,16 @@ public class PageConverter {
 	 * @return
 	 */
 	private String varBar(String sPara) {
-		// Parameter kann 'Mathe' haben
-		int nVal = Integer.valueOf(sPara.substring(0, sPara.indexOf(',')));
-		int nMax = Integer.valueOf(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
+		int nVal = (int) Double.parseDouble(sPara.substring(0, sPara.indexOf(',')));
+		int nMax = (int) Double.parseDouble(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
 		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
 		if (nVal < 1) {
+			// negative werte ignorieren
 			nVal = 0;
 		}
 
-		// mal 3 weil es 3 Füllstände gibt
+		// mal 4, da es 4 Füllstände gibt
 		int nFillBis = (nVal * nWidth * 4 / nMax);
 
 		StringBuilder sb = new StringBuilder();

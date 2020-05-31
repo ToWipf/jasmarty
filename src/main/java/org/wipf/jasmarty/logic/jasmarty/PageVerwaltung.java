@@ -145,6 +145,7 @@ public class PageVerwaltung {
 		} catch (Exception e) {
 			LOGGER.warn("Seiten init fehlgeschlagen. Seiten id: '" + page.getId() + "' name: '" + page.getName()
 					+ "' fehler: " + e);
+			e.printStackTrace();
 		}
 	}
 
