@@ -107,6 +107,44 @@ public class CustomChar {
 	}
 
 	/**
+	 * @param b0
+	 * @param b1
+	 * @param b2
+	 * @param b3
+	 * @param b4
+	 * @param nLine
+	 */
+	public void setLine(boolean b0, boolean b1, boolean b2, boolean b3, boolean b4, int nLine) {
+		int n = 0;
+		if (b0) {
+			n = n + 16;
+		}
+		if (b1) {
+			n = n + 8;
+		}
+		if (b2) {
+			n = n + 4;
+		}
+		if (b3) {
+			n = n + 2;
+		}
+		if (b4) {
+			n = n + 1;
+		}
+		this.setLine((char) n, nLine);
+	}
+
+	/**
+	 * @param cData
+	 * @param nLine
+	 */
+	public void setLine(char cData, int nLine) {
+		StringBuilder sb = new StringBuilder(sData);
+		sb.setCharAt(nLine, cData);
+		this.sData = sb.toString();
+	}
+
+	/**
 	 * @return
 	 */
 	public String getName() {

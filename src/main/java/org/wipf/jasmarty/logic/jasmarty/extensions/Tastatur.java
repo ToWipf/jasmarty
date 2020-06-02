@@ -63,21 +63,6 @@ public class Tastatur {
 		}
 	}
 
-	/**
-	 * Schreibt ein A
-	 */
-//	public void name() {
-//		Robot r;
-//		try {
-//			r = new Robot();
-//			r.keyPress(KeyEvent.VK_A);
-//			r.keyRelease(KeyEvent.VK_A);
-//		} catch (AWTException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-
 //	public void vol() {
 //
 //		try {
