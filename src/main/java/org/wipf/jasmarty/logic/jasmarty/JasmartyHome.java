@@ -27,6 +27,8 @@ public class JasmartyHome {
 	SerialConfig serialConfig;
 	@Inject
 	CustomChars customChars;
+	@Inject
+	CharPictures charPictures;
 
 	private static final Logger LOGGER = Logger.getLogger("JasmartyHome");
 
@@ -53,6 +55,10 @@ public class JasmartyHome {
 
 		pageVerwaltung.writeStartPage();
 		refreshLoop.start();
+
+		// charPictures.writeAndLoadWipf();
+		// charPictures.testChars();
+
 		LOGGER.info("Gestartet");
 	}
 

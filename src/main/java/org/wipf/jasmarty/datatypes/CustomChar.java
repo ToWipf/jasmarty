@@ -16,6 +16,10 @@ public class CustomChar {
 	private String sName;
 	private String sData;
 
+	public CustomChar() {
+		this.sData = "00000000";
+	}
+
 	/**
 	 * @param sJson
 	 * @return

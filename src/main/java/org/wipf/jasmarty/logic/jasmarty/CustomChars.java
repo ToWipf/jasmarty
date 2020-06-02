@@ -54,7 +54,7 @@ public class CustomChars {
 	 * @param conf
 	 * @throws SQLException
 	 */
-	private void saveToDB(CustomChar cc) throws SQLException {
+	public void saveToDB(CustomChar cc) throws SQLException {
 		Statement stmt = MsqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES ('" + cc.getId() + "','"
 				+ cc.getName() + "','" + cc.getPosition() + "','" + cc.getData() + "')");
@@ -77,6 +77,13 @@ public class CustomChars {
 	 */
 	public void loadCharToLcdFromDB(int nIndexDB) {
 		lcdConnect.writeCustomChar(getFromDB(nIndexDB));
+	}
+
+	/**
+	 * @param cc
+	 */
+	public void loadCharToLcd(CustomChar cc) {
+		lcdConnect.writeCustomChar(cc);
 	}
 
 }
