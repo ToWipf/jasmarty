@@ -76,7 +76,7 @@ public class RefreshLoop {
 				while (bLoopActive) {
 					try {
 						pageConverter.refreshCache();
-						if (lcdConnect.isLcdOk()) {
+						if (lcdConnect.isLcdOk() && !lcdConnect.isbPauseWriteToLCD()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcdConnect.refreshDisplay();
 						}

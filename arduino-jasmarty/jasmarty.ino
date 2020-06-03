@@ -20,8 +20,9 @@
     Arduino Mini/Nano/Uno oder Pro-Micro/Leonardo
 */
 // SETTINGS
-#define VERSION " v2.1"
+#define VERSION " v2.2"
 #define ADDRESS 0X3F
+//#define ADDRESS 0X27
 
 //#define PROMICRO
 //#define LED_A 4
@@ -153,16 +154,16 @@ void loop() {
 
     // Zeichen anpassen
     switch (rxbyte) { 
-      case 0x01:
-        rxbyte = 0xFF; // 3/3 block
+      // Der versatz der customChars ist noeting um mit "LCD-Smartie" kompatibel zu bleiben
+      case 0x00:
+      case 0x01: // 3/3 Block
+        rxbyte = 0xFF; 
         break;
-      case 0x02:
-        // rxbyte = 0xC6; //  1/3  Block Altanativ: 0xA4
+      case 0x02: // 1/3 Block
         rxbyte = 0; // customChar 0
         break;
-      case 0x03:
+      case 0x03: // 2/3 Block
         rxbyte = 1; // customChar 1
-        //rxbyte = 0xDB; // 2/3 Block
         break;
       case 0x04:
         rxbyte = 2; // customChar 2
@@ -178,6 +179,9 @@ void loop() {
         break;
       case 0x08:
         rxbyte = 6; // customChar 6
+        break;
+      case 0x09:
+        rxbyte = 7; // customChar 8
         break;
       case 0xE4: //ASCII "a" umlaut
         rxbyte = 0xE1;

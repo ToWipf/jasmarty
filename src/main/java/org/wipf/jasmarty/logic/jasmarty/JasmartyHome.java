@@ -53,11 +53,11 @@ public class JasmartyHome {
 		lcdConnect.setConfig(serialConfig.getConfig());
 		lcdConnect.startSerialLcdPort();
 
+		charPictures.writeAndLoadWipf();
+		// charPictures.testChars();
+
 		pageVerwaltung.writeStartPage();
 		refreshLoop.start();
-
-		// charPictures.writeAndLoadWipf();
-		// charPictures.testChars();
 
 		LOGGER.info("Gestartet");
 	}

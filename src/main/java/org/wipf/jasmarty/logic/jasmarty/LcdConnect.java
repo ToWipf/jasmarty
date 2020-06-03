@@ -27,6 +27,7 @@ public class LcdConnect {
 	private LcdConfig lconf;
 	private boolean bLcdIsOk = false;
 	private boolean bLed = false;
+	private boolean bPauseWriteToLCD = false;
 
 	/**
 	 * 
@@ -261,6 +262,31 @@ public class LcdConnect {
 			this.bLcdIsOk = false;
 			LOGGER.warn("writeAscii: " + e);
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isbPauseWriteToLCD() {
+		return bPauseWriteToLCD;
+	}
+
+	/**
+	 * Wenn der Refesh ausgeschaltet werden soll, wird 2x getRefreshRate gewartet
+	 * 
+	 * So kann doppeltes schreiben verhindert werden (Custom Chars)
+	 * 
+	 * @param bPauseWriteToLCD
+	 */
+	public void setbPauseWriteToLCD(boolean bPauseWriteToLCD) {
+		if (bPauseWriteToLCD) {
+			try {
+				Thread.sleep(this.getRefreshRate() * 2);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		this.bPauseWriteToLCD = bPauseWriteToLCD;
 	}
 
 	/**

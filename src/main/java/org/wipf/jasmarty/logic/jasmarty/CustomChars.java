@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.jasmarty;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -76,14 +77,38 @@ public class CustomChars {
 	 * @param nIndexLcd
 	 */
 	public void loadCharToLcdFromDB(int nIndexDB) {
-		lcdConnect.writeCustomChar(getFromDB(nIndexDB));
+		this.loadCharToLcd(this.getFromDB(nIndexDB));
+	}
+
+	/**
+	 * @param naIndexDB
+	 */
+	public void loadCharToLcdFromDB(int[] naIndexDB) {
+		ArrayList<CustomChar> listCustomChar = new ArrayList<CustomChar>();
+		for (int id : naIndexDB) {
+			listCustomChar.add(this.getFromDB(id));
+		}
+		this.loadCharToLcd(listCustomChar.toArray(new CustomChar[listCustomChar.size()]));
 	}
 
 	/**
 	 * @param cc
 	 */
 	public void loadCharToLcd(CustomChar cc) {
+		this.lcdConnect.setbPauseWriteToLCD(true);
 		lcdConnect.writeCustomChar(cc);
+		this.lcdConnect.setbPauseWriteToLCD(false);
+	}
+
+	/**
+	 * @param cca
+	 */
+	public void loadCharToLcd(CustomChar[] cca) {
+		this.lcdConnect.setbPauseWriteToLCD(true);
+		for (CustomChar cc : cca) {
+			lcdConnect.writeCustomChar(cc);
+		}
+		this.lcdConnect.setbPauseWriteToLCD(false);
 	}
 
 }
