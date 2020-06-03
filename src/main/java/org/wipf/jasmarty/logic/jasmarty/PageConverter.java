@@ -66,10 +66,9 @@ public class PageConverter {
 	 */
 	private void convertPage(LcdPage page) throws Exception {
 		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
+			// Zeile erstellen
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
-
 			// Zeile in Cache schreiben und auf maximale Zeichenanzahl kürzen
-
 			lcdConnect.writeLineToCache(0, nLine, lineOptions(sLineAfterConvert, nLine));
 		}
 	}
@@ -80,6 +79,28 @@ public class PageConverter {
 	 */
 	private char[] shortArrayToLengh(char[] ca) {
 		return Arrays.copyOfRange(ca, 0, lcdConnect.getWidth());
+	}
+
+	/**
+	 * Alle Variablen finden und und ersetzen
+	 * 
+	 * @param sLine
+	 * @return
+	 * @throws Exception
+	 */
+	private String searchAndReplaceVars(String sLine) throws Exception {
+		String sOut = sLine;
+
+		int lastIndex = 0;
+		while (lastIndex != -1) {
+			lastIndex = sLine.indexOf("$", lastIndex);
+
+			if (lastIndex != -1) {
+				lastIndex += 1;
+				sOut = lineReplaceVars(sOut);
+			}
+		}
+		return sOut;
 	}
 
 	/**
@@ -210,28 +231,6 @@ public class PageConverter {
 	}
 
 	/**
-	 * Alle Variablen finden und und ersetzen
-	 * 
-	 * @param sLine
-	 * @return
-	 * @throws Exception
-	 */
-	private String searchAndReplaceVars(String sLine) throws Exception {
-		String sOut = sLine;
-
-		int lastIndex = 0;
-		while (lastIndex != -1) {
-			lastIndex = sLine.indexOf("$", lastIndex);
-
-			if (lastIndex != -1) {
-				lastIndex += 1;
-				sOut = lineReplaceVars(sOut);
-			}
-		}
-		return sOut;
-	}
-
-	/**
 	 * Sucht von hinen alle $var() und ersetzt diese
 	 * 
 	 * @param sLine
@@ -239,11 +238,11 @@ public class PageConverter {
 	 * @throws Exception
 	 */
 	private String lineReplaceVars(String sLine) throws Exception {
-
-		// Positionen bestimmen
 		if (sLine.length() < 3) {
 			return sLine;
 		}
+
+		// Positionen bestimmen
 		Integer nIndexStart = sLine.lastIndexOf('$');
 		if (nIndexStart == -1) {
 			return sLine;
@@ -264,6 +263,11 @@ public class PageConverter {
 		String sAfter = sLine.substring(nIndexEnd + 1, sLine.length());
 
 		switch (sCommand) {
+		case "pos":
+			// geht nur wenn keine $() zuvor kommen
+			// TODO -> daher erst im zweiten (letzten) durchlauf beachten? ermitteln der
+			// echten größe?
+			return sBefore + wipf.repeat(' ', (Integer.valueOf(sParameter) - nIndexStart)) + sAfter;
 		case "time":
 			return sBefore + wipf.time(sParameter) + sAfter;
 		case "bar":
@@ -274,8 +278,6 @@ public class PageConverter {
 			return sBefore + wipf.getRandomInt(sParameter) + sAfter;
 		case "winamp":
 			return sBefore + winamp.getInfos(sParameter) + sAfter;
-		case "pos":
-			return sBefore + wipf.repeat(' ', Integer.valueOf(sParameter) - nIndexStart) + sAfter;
 		case "ver":
 			return sBefore + QMain.VERSION + sAfter;
 		case "char":

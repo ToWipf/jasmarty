@@ -52,7 +52,7 @@ public class PageVerwaltung {
 			p.setId(1);
 			p.setName("Startseite");
 			p.setOptions("1012");
-			p.setLine(0, "jaSmarty");
+			p.setLine(0, "$time(HH:mm:ss)"); // TODO STARTSEITE NEU
 			p.setLine(1, "");
 			p.setLine(2, "von Wipf");
 			p.setLine(3, "V$ver()");

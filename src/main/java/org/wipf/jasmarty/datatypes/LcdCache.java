@@ -159,13 +159,22 @@ public class LcdCache {
 				case 0x03:
 					c = '▓';
 					break;
+				case 0x00:
 				case 0xFF:
 					c = '█';
+					break;
+				case 0x01:
+				case 0x04:
+				case 0x05:
+				case 0x06:
+				case 0x07:
+				case 0x08:
+				case 0x09:
+					c = '?';
 					break;
 				}
 				sb.append(c);
 			}
-
 			jLine.put("line", y);
 			jLine.put("data", sb.toString());
 			ja.put(jLine);
