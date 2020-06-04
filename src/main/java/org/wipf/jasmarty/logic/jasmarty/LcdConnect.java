@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.CustomChar;
 import org.wipf.jasmarty.datatypes.LcdCache;
@@ -254,6 +255,7 @@ public class LcdConnect {
 	 * @param s
 	 * @return
 	 */
+	@Metered
 	public void writeAscii(Integer n) {
 		try {
 			sp.getOutputStream().write(n.byteValue());
