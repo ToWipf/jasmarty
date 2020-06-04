@@ -45,17 +45,17 @@ public class PageVerwaltung {
 	 */
 	public void writeStartPage() {
 		LcdPage p = getPageFromDb(1);
-		if (!p.getName().equals("Startseite")) {
+		if (!p.getName().equals("Startseite " + QMain.VERSION)) {
 			// Wenn es keine Startseite gibt -> schreiben
-			LOGGER.info("Keine Startseite gefunden -> Schreibe neu");
+			LOGGER.info("Keine Startseite für die Version " + QMain.VERSION + " gefunden -> Schreibe neu");
 			p = new LcdPage();
 			p.setId(1);
-			p.setName("Startseite");
-			p.setOptions("1012");
-			p.setLine(0, "$time(HH:mm:ss)"); // TODO STARTSEITE NEU
-			p.setLine(1, "");
-			p.setLine(2, "von Wipf");
-			p.setLine(3, "V$ver()");
+			p.setName("Startseite " + QMain.VERSION);
+			p.setOptions("1120");
+			p.setLine(0, "$time(HH:mm:ss)");
+			p.setLine(1, "$time(dd MMMM yyyy)");
+			p.setLine(2, "$time(EEEEE)$pos(17)$char(4)$char(5)$char(6)");
+			p.setLine(3, "V$ver()$pos(19)$char(7)$char(8)$char(9)");
 			pageToDb(p);
 		}
 		LOGGER.info("Startseite laden");
