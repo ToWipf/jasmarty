@@ -43,4 +43,5 @@ export interface todoEntry {
   active?: string;
   editby?: string;
   date?: number;
+  remind?: string;
 }

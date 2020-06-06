@@ -54,15 +54,12 @@ export class todolistComponent implements OnInit {
   }
 
   private getNextId(): number {
-    console.log(this.toarry);
     var nextId: number = 0;
     this.toarry.forEach((item: todoEntry) => {
       if (item.id > nextId) {
         nextId = item.id;
-        console.log(item.id);
       }
     });
-    console.log(nextId);
     return nextId * 1 + 1;
   }
 

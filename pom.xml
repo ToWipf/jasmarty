@@ -52,6 +52,10 @@
 			<artifactId>jSerialComm</artifactId>
 			<version>2.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
 		<!-- end -->
 		<dependency>
 			<groupId>com.roufid.tutorials</groupId>
@@ -60,7 +64,7 @@
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/JavaWinampAPI.jar</systemPath>
 		</dependency>
-		<!--  -->
+		<!-- -->
 	</dependencies>
 	<build>
 		<plugins>

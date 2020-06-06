@@ -242,20 +242,38 @@ public class TAppTodoList {
 	}
 
 	/**
+	 * @return
+	 */
+	private int getNextId() {
+		int nNextId = 0;
+		try {
+			for (TodoEntry te : this.getAll()) {
+				if (te.getId() > nNextId) {
+					nNextId = te.getId();
+				}
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getNextId " + e);
+		}
+		return nNextId + 1;
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */
 	private String addByTelegram(Telegram t) {
+		int nId = getNextId();
 		TodoEntry te = new TodoEntry();
 		te.setData(t.getMessageStringFirst());
 		te.setEditBy(t.getFromIdOnly().toString());
 		te.setDate(t.getDate());
 		te.setRemind("");
 		te.setActive("NEW");
-		te.setId(t.getDate()); // TODO Date als id?
+		te.setId(nId);
 		saveEntry(te);
 
-		return "gespeichert"; // TODO prüfen?
+		return "gespeichert Id: " + nId;
 	}
 
 	/**
