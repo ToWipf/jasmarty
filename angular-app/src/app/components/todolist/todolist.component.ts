@@ -5,7 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { todoEntry } from "src/app/datatypes";
 import { ServiceRest } from "src/app/service/serviceRest";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { ServiceWipf } from "src/app/service/serviceWipf";
 
 @Component({
   selector: "app-todolist",
@@ -33,17 +33,20 @@ export class todolistComponent implements OnInit {
     });
   }
 
-  public newItem(): void {  
+  public newItem(): void {
     var nextId: number = 0;
-    this.toarry.forEach((item : todoEntry) => {
+    this.toarry.forEach((item: todoEntry) => {
       if (item.id > nextId) {
-        nextId = item.id++;
+        nextId = item.id;
       }
     });
 
     var td: todoEntry = {};
-    td.id = nextId;
-    
+    console.log(td);
+    td.id = nextId++;
+    console.log(td);
+    td.id = td.id + 1;
+    console.log(td);
     td.date = Math.round(Date.now() / 1000);
     td.editby = "web";
     this.openDialog(td);
