@@ -147,7 +147,7 @@ public class PageConverter {
 			return "Fehler 16".toCharArray();
 
 		default:
-			return ("Fail 1: " + nOption).toCharArray();
+			return ("Fehler 1: " + nOption).toCharArray();
 		}
 	}
 
@@ -283,7 +283,7 @@ public class PageConverter {
 		case "char":
 			return sBefore + charByPara(sParameter) + sAfter;
 		default:
-			return "Fail 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
+			return "Fehler 2: " + sCommand; // Suche nach weiteren vorkommen in dieser Zeile
 		}
 	}
 
@@ -302,46 +302,50 @@ public class PageConverter {
 	 * @return
 	 */
 	private String varBar(String sPara) {
-		int nVal = (int) Double.parseDouble(sPara.substring(0, sPara.indexOf(',')));
-		int nMax = (int) Double.parseDouble(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
-		int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
+		try {
+			int nVal = (int) Double.parseDouble(sPara.substring(0, sPara.indexOf(',')));
+			int nMax = (int) Double.parseDouble(sPara.substring(sPara.indexOf(',') + 1, sPara.lastIndexOf(',')));
+			int nWidth = Integer.valueOf(sPara.substring(sPara.lastIndexOf(',') + 1, sPara.length()));
 
-		if (nVal < 1) {
-			// negative werte ignorieren
-			nVal = 0;
-		}
-
-		// mal 4, da es 4 Füllstände gibt
-		int nFillBis = (nVal * nWidth * 4 / nMax);
-
-		StringBuilder sb = new StringBuilder();
-
-		// Gefüllte Blöcke:
-		sb.append(wipf.repeat(BLOCK_3_3, nFillBis / 4));
-
-		// komma auswerten
-		switch (nFillBis % 4) {
-		case 0:
-			if (nVal != nMax) {
-				// Verhindern das bei einer Vollen Zeile nicht noch ein Char angehängt wird
-				sb.append(BLOCK_0_3);
+			if (nVal < 1) {
+				// negative werte ignorieren
+				nVal = 0;
 			}
-			break;
-		case 1:
-			sb.append(BLOCK_1_3);
-			break;
-		case 2:
-			sb.append(BLOCK_2_3);
-			break;
-		case 3:
-			sb.append(BLOCK_3_3);
-			break;
+
+			// mal 4, da es 4 Füllstände gibt
+			int nFillBis = (nVal * nWidth * 4 / nMax);
+
+			StringBuilder sb = new StringBuilder();
+
+			// Gefüllte Blöcke:
+			sb.append(wipf.repeat(BLOCK_3_3, nFillBis / 4));
+
+			// komma auswerten
+			switch (nFillBis % 4) {
+			case 0:
+				if (nVal != nMax) {
+					// Verhindern das bei einer Vollen Zeile nicht noch ein Char angehängt wird
+					sb.append(BLOCK_0_3);
+				}
+				break;
+			case 1:
+				sb.append(BLOCK_1_3);
+				break;
+			case 2:
+				sb.append(BLOCK_2_3);
+				break;
+			case 3:
+				sb.append(BLOCK_3_3);
+				break;
+			}
+
+			// Leere Blöcke:
+			sb.append(wipf.repeat(BLOCK_0_3, (nWidth - (nFillBis / 4)) - 1));
+
+			return sb.toString();
+		} catch (Exception e) {
+			return "Fehler 28 ";
 		}
-
-		// Leere Blöcke:
-		sb.append(wipf.repeat(BLOCK_0_3, (nWidth - (nFillBis / 4)) - 1));
-
-		return sb.toString();
 	}
 
 }

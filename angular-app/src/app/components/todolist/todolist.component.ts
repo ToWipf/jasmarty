@@ -5,6 +5,7 @@ import { MatSort } from "@angular/material/sort";
 import { todoEntry } from "src/app/datatypes";
 import { ServiceRest } from "src/app/service/serviceRest";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
   selector: "app-todolist",
@@ -12,7 +13,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dial
   styleUrls: ["./todolist.component.less"],
 })
 export class todolistComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -32,11 +33,19 @@ export class todolistComponent implements OnInit {
     });
   }
 
-  public newItem(): void {
+  public newItem(): void {  
+    var nextId: number = 0;
+    this.toarry.forEach((item : todoEntry) => {
+      if (item.id > nextId) {
+        nextId = item.id++;
+      }
+    });
+
     var td: todoEntry = {};
-    td.id = this.toarry.length + 1;
-    td.date = 0; //TODO:
-    td.editby = "798200105"; //TODO:
+    td.id = nextId;
+    
+    td.date = Math.round(Date.now() / 1000);
+    td.editby = "web";
     this.openDialog(td);
   }
 
@@ -54,14 +63,18 @@ export class todolistComponent implements OnInit {
   }
 
   public openDialog(item: todoEntry): void {
+    let edititem: todoEntry = this.serviceWipf.deepCopy(item);
+
     const dialogRef = this.dialog.open(todolistComponentDialog, {
       width: "350px",
       height: "350px",
-      data: item,
+      data: edititem,
     });
 
     dialogRef.afterClosed().subscribe((result: todoEntry) => {
       if (result) {
+        result.editby = "web";
+        result.date = Math.round(Date.now() / 1000);
         this.saveTodo(result);
       }
     });

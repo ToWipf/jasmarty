@@ -26,6 +26,7 @@ public class TodoEntry {
 		jo.put("editby", sEditBy);
 		jo.put("date", sDate);
 		jo.put("active", sActive);
+		jo.put("id", nId);
 		return jo.toString();
 	}
 
@@ -43,6 +44,7 @@ public class TodoEntry {
 			this.sEditBy = jn.get("editby").asText();
 			this.sDate = jn.get("date").asText();
 			this.sActive = jn.get("active").asText();
+			this.nId = jn.get("id").asInt();
 			return this;
 		} catch (Exception e) {
 			return null;

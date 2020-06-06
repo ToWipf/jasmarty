@@ -1,10 +1,11 @@
 <h1 mat-dialog-title>Server Adresse</h1>
-<code>z.B 192.168.2.60:8080</code>
 <div mat-dialog-content>
     <mat-form-field>
         <mat-label>Server</mat-label>
         <input matInput [(ngModel)]="data">
     </mat-form-field>
+    <button mat-button class="btn-primary" (click)="setHost('http://192.168.2.60:8080')">192.168.2.60</button>
+    <hr>
 </div>
 
 <div mat-dialog-actions>

@@ -33,7 +33,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public newItem(): void {
-    const nextid = this.buttonactions.length + 1;
+    const nextid = this.buttonactions.length + 1; // TODO: !!!
     const empty: buttonaction = { id: nextid, active: false, button: this.lastPressed, action: "nichts" };
     this.editItem(empty);
   }

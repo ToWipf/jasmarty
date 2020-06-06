@@ -212,6 +212,7 @@ public class TAppTodoList {
 	/**
 	 * @return
 	 */
+	// TODO ablösen mit .toJson()
 	public String getAllAsJson() {
 		try {
 			JSONArray json = new JSONArray();
@@ -251,7 +252,7 @@ public class TAppTodoList {
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, active) VALUES " +
 					"('" + tE.getId() +
-					"'" + tE.getData() +
+					"','" + tE.getData() +
 					"','" + tE.getEditBy() +
 					"','"+ tE.getDate() +
 					"','"+ tE.getActive() +
@@ -259,7 +260,7 @@ public class TAppTodoList {
 			//@formatter:on
 			return true;
 		} catch (Exception e) {
-			LOGGER.warn("add todo " + e);
+			LOGGER.warn("save todo " + e);
 			return false;
 		}
 	}

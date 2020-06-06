@@ -37,7 +37,7 @@ export class FooterComponent implements OnInit {
 
     const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
       width: "250px",
-      height: "250px",
+      height: "300px",
       data: this.sHost,
     });
 
@@ -60,5 +60,9 @@ export class FooterComponentSetServerDialog {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  public setHost(host: string): void {
+    this.data = host;
   }
 }
