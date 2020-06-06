@@ -32,7 +32,6 @@ public class TodoListRest {
 
 	@GET
 	@Path("/delete/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public Response delete(@PathParam("id") Integer nId) {
 		todoList.delete(nId);
 		return Response.ok().build();
@@ -40,29 +39,21 @@ public class TodoListRest {
 
 	@GET
 	@Path("/getAll")
-	@Produces(MediaType.TEXT_PLAIN)
 	public Response getall() {
-		return Response.ok(todoList.getAll()).build();
+		return Response.ok(todoList.getAllAsJson().toString()).build();
 	}
 
-	@GET
-	@Path("/getByUserID/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response getByUserID(@PathParam("id") Integer nId) {
-		return Response.ok(todoList.getAllByUser(nId)).build();
-	}
+//	@GET
+//	@Path("/getByUserID/{id}")
+//	@Produces(MediaType.TEXT_PLAIN)
+//	public Response getByUserID(@PathParam("id") Integer nId) {
+//		return Response.ok(todoList.getAllByUser(nId)).build();
+//	}
 
 	@GET
 	@Path("/getAllFull")
-	@Produces(MediaType.TEXT_PLAIN)
 	public Response todolist() {
 		return Response.ok(todoList.getAllFull()).build();
 	}
 
-	@GET
-	@Path("/getAllJson")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getAllJson() {
-		return Response.ok(todoList.getAllAsJson()).build();
-	}
 }

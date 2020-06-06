@@ -20,33 +20,27 @@ export class todolistComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ["id", "data", "active", "date", "editby", "button"];
   public toarry: todoEntry[] = [];
+  private nextId: number;
 
   ngOnInit() {
     this.load();
   }
-
+  
   private load(): void {
-    this.http.get(this.rest.gethost() + "todolist/getAllJson").subscribe((resdata: any) => {
+    this.http.get(this.rest.gethost() + "todolist/getAll").subscribe((resdata: todoEntry[]) => {
       this.toarry = resdata;
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
+      this.nextId = this.getNextId();
     });
   }
 
   public newItem(): void {
-    var nextId: number = 0;
-    this.toarry.forEach((item: todoEntry) => {
-      if (item.id > nextId) {
-        nextId = item.id;
-      }
-    });
-
     var td: todoEntry = {};
-    console.log(td);
-    td.id = nextId++;
-    console.log(td);
-    td.id = td.id + 1;
-    console.log(td);
+
+    td.id = this.nextId;
+    td.remind = "";
+
     td.date = Math.round(Date.now() / 1000);
     td.editby = "web";
     this.openDialog(td);
@@ -57,6 +51,19 @@ export class todolistComponent implements OnInit {
     this.http.get(this.rest.gethost() + "todolist/delete/" + item.id).subscribe((resdata: any) => {
       this.load();
     });
+  }
+
+  private getNextId(): number {
+    console.log(this.toarry);
+    var nextId: number = 0;
+    this.toarry.forEach((item: todoEntry) => {
+      if (item.id > nextId) {
+        nextId = item.id;
+        console.log(item.id);
+      }
+    });
+    console.log(nextId);
+    return nextId * 1 + 1;
   }
 
   private saveTodo(item: todoEntry): void {

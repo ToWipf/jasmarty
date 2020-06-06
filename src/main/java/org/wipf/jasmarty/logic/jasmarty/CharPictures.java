@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.CustomChar;
 
 /**
@@ -19,6 +20,7 @@ public class CharPictures {
 
 	private static final boolean T = true;
 	private static final boolean F = false;
+	private static final Logger LOGGER = Logger.getLogger("CharPictures");
 
 	/**
 	 * @throws SQLException
@@ -117,7 +119,7 @@ public class CharPictures {
 			customChars.saveToDB(cWipf[4]);
 			customChars.saveToDB(cWipf[5]);
 		} catch (Exception e) {
-			System.out.println("Fail 1001");
+			LOGGER.warn("customChars.saveToDB" + e);
 		}
 
 		int[] ids = { 1001, 1002, 1003, 1004, 1005, 1006 };

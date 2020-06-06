@@ -95,20 +95,24 @@ public class CustomChars {
 	 * @param cc
 	 */
 	public void loadCharToLcd(CustomChar cc) {
-		this.lcdConnect.setbPauseWriteToLCD(true);
-		lcdConnect.writeCustomChar(cc);
-		this.lcdConnect.setbPauseWriteToLCD(false);
+		if (lcdConnect.isLcdOk()) {
+			this.lcdConnect.setbPauseWriteToLCD(true);
+			lcdConnect.writeCustomChar(cc);
+			this.lcdConnect.setbPauseWriteToLCD(false);
+		}
 	}
 
 	/**
 	 * @param cca
 	 */
 	public void loadCharToLcd(CustomChar[] cca) {
-		this.lcdConnect.setbPauseWriteToLCD(true);
-		for (CustomChar cc : cca) {
-			lcdConnect.writeCustomChar(cc);
+		if (lcdConnect.isLcdOk()) {
+			this.lcdConnect.setbPauseWriteToLCD(true);
+			for (CustomChar cc : cca) {
+				lcdConnect.writeCustomChar(cc);
+			}
+			this.lcdConnect.setbPauseWriteToLCD(false);
 		}
-		this.lcdConnect.setbPauseWriteToLCD(false);
 	}
 
 }

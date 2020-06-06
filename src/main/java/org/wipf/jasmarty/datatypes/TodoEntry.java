@@ -13,21 +13,23 @@ public class TodoEntry {
 
 	private String sData;
 	private String sEditBy;
-	private String sDate;
+	private Integer nDate;
 	private String sActive;
 	private Integer nId;
+	private String sRemind;
 
 	/**
 	 * @return
 	 */
-	public String toJson() {
+	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("data", sData);
 		jo.put("editby", sEditBy);
-		jo.put("date", sDate);
+		jo.put("date", nDate);
 		jo.put("active", sActive);
 		jo.put("id", nId);
-		return jo.toString();
+		jo.put("remind", sRemind);
+		return jo;
 	}
 
 	/**
@@ -42,9 +44,10 @@ public class TodoEntry {
 
 			this.sData = jn.get("data").asText();
 			this.sEditBy = jn.get("editby").asText();
-			this.sDate = jn.get("date").asText();
+			this.nDate = jn.get("date").asInt();
 			this.sActive = jn.get("active").asText();
 			this.nId = jn.get("id").asInt();
+			this.sRemind = jn.get("remind").asText();
 			return this;
 		} catch (Exception e) {
 			return null;
@@ -82,15 +85,15 @@ public class TodoEntry {
 	/**
 	 * @return
 	 */
-	public String getDate() {
-		return sDate;
+	public int getDate() {
+		return nDate;
 	}
 
 	/**
 	 * @param sDate
 	 */
-	public void setDate(String sDate) {
-		this.sDate = sDate;
+	public void setDate(int nDate) {
+		this.nDate = nDate;
 	}
 
 	/**
@@ -119,6 +122,14 @@ public class TodoEntry {
 	 */
 	public void setId(int nId) {
 		this.nId = nId;
+	}
+
+	public String getRemind() {
+		return sRemind;
+	}
+
+	public void setRemind(String sRemind) {
+		this.sRemind = sRemind;
 	}
 
 }

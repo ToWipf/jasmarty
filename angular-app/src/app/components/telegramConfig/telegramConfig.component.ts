@@ -10,6 +10,8 @@ import { ServiceRest } from "src/app/service/serviceRest";
 export class TelegramConfigComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest) {}
 
+  public sText: string;
+  public sStatus: string;
   public todo: string;
 
   ngOnInit() {
@@ -36,5 +38,15 @@ export class TelegramConfigComponent implements OnInit {
     this.http.get(this.rest.gethost() + "wipf/stop").subscribe((resdata: any) => {
       console.log(resdata);
     });
+  }
+
+  public sendMsgToGroup(): void {
+    if (this.sText) {
+      //TODO: escape input String (TEXTBOX?)
+      this.http.post(this.rest.gethost() + "telegram/sendMsgToGroup/" + this.sText, null).subscribe((resdata) => {
+        this.sStatus = resdata.toString();
+        this.sText = null;
+      });
+    }
   }
 }

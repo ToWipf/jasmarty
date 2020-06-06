@@ -3,13 +3,14 @@ package org.wipf.jasmarty.logic.telegram.extensions;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TodoEntry;
 import org.wipf.jasmarty.logic.base.MsqlLite;
@@ -86,10 +87,9 @@ public class TAppTodoList {
 			return getAllUnDoneByUser(t.getFromIdOnly());
 		case "la":
 		case "listall":
-			return getAllByUser(t.getFromIdOnly());
 		case "ev":
 		case "everything":
-			return getAll();
+			return getAllAsJson().toString();
 		case "lf":
 		case "listfull":
 			return getAllFull();
@@ -141,51 +141,6 @@ public class TAppTodoList {
 	}
 
 	/**
-	 * @return
-	 */
-	public String getAll() {
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from todolist;");
-			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("data") + "\n");
-			}
-			rs.close();
-			return sb.toString();
-
-		} catch (Exception e) {
-			LOGGER.warn("get all todolist" + e);
-		}
-		return "Fehler";
-	}
-
-	/**
-	 * @param nTeleID
-	 * @return
-	 */
-	public String getAllByUser(Integer nTeleID) {
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from todolist WHERE editby = " + nTeleID + ";");
-			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("data") + "\n");
-			}
-			rs.close();
-			return sb.toString();
-
-		} catch (Exception e) {
-			LOGGER.warn("get all todolist" + e);
-		}
-		return "Fehler";
-	}
-
-	/**
 	 * @param nTeleID
 	 * @return
 	 */
@@ -212,30 +167,41 @@ public class TAppTodoList {
 	/**
 	 * @return
 	 */
-	// TODO ablösen mit .toJson()
-	public String getAllAsJson() {
+	public JSONArray getAllAsJson() {
+		JSONArray ja = new JSONArray();
 		try {
-			JSONArray json = new JSONArray();
-
-			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from todolist;");
-			while (rs.next()) {
-				JSONObject entry = new JSONObject();
-				entry.put("id", rs.getString("id"));
-				entry.put("data", rs.getString("data"));
-				entry.put("editby", rs.getString("editby"));
-				entry.put("active", rs.getString("active"));
-				entry.put("remind", rs.getString("remind"));
-				entry.put("date", rs.getString("date"));
-				json.put(entry);
+			for (TodoEntry tItem : getAll()) {
+				ja.put(tItem.toJson());
 			}
-			rs.close();
-			return json.toString();
-
 		} catch (Exception e) {
-			LOGGER.warn("get all json todolist" + e);
+			LOGGER.warn("getAllAsJson" + e);
 		}
-		return "Fehler";
+		return ja;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<TodoEntry> getAll() throws SQLException {
+		List<TodoEntry> liTodoE = new ArrayList<>();
+
+		Statement stmt = MsqlLite.getDB();
+		ResultSet rs = stmt.executeQuery("select * from todolist;");
+
+		while (rs.next()) {
+			TodoEntry entry = new TodoEntry();
+			entry.setId(rs.getInt("id"));
+			entry.setData(rs.getString("data"));
+			entry.setEditBy(rs.getString("editby"));
+			entry.setActive(rs.getString("active"));
+			entry.setRemind(rs.getString("remind"));
+			entry.setDate(rs.getInt("date"));
+			liTodoE.add(entry);
+		}
+		rs.close();
+
+		return liTodoE;
 	}
 
 	/**
@@ -244,23 +210,21 @@ public class TAppTodoList {
 	 */
 	public boolean saveEntry(TodoEntry tE) {
 		try {
-			if (tE.getId() == null) {
-				// id automatisch vergeben
-				tE.setId(countItems() + 1);
-			}
 			Statement stmt = MsqlLite.getDB();
 			//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, active) VALUES " +
-					"('" + tE.getId() +
+			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES " +
+					"('"  + tE.getId() +
 					"','" + tE.getData() +
 					"','" + tE.getEditBy() +
-					"','"+ tE.getDate() +
-					"','"+ tE.getActive() +
+					"','" + tE.getDate() +
+					"','" + tE.getRemind() +
+					"','" + tE.getActive() +
 					"')");
 			//@formatter:on
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("save todo " + e);
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -282,21 +246,16 @@ public class TAppTodoList {
 	 * @return
 	 */
 	private String addByTelegram(Telegram t) {
-		try {
-			Statement stmt = MsqlLite.getDB();
-			//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO todolist (data, editby, date, active) VALUES " +
-					"('" + t.getMessageStringFirst() +
-					"','" + t.getFromIdOnly() +
-					"','"+ t.getDate() +
-					"','"+ "NEW" +
-					"')");
-			//@formatter:on
-			return "gespeichert";
-		} catch (Exception e) {
-			LOGGER.warn("add todo " + e);
-			return "Fehler";
-		}
+		TodoEntry te = new TodoEntry();
+		te.setData(t.getMessageStringFirst());
+		te.setEditBy(t.getFromIdOnly().toString());
+		te.setDate(t.getDate());
+		te.setRemind("");
+		te.setActive("NEW");
+		te.setId(t.getDate()); // TODO Date als id?
+		saveEntry(te);
+
+		return "gespeichert"; // TODO prüfen?
 	}
 
 	/**
