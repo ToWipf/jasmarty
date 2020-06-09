@@ -66,13 +66,10 @@ public class TAppTodoList {
 					"listfull" + "\n" +
 					"count" + "\n" +
 					"countall";
-				// @formatter:on
+			// @formatter:on
 		}
 
 		switch (sAction) {
-		// case "a":
-		// case "add":
-		// return add(t);
 		case "d":
 		case "done":
 			return markDone(t.getMessageIntPart(2));
@@ -84,7 +81,7 @@ public class TAppTodoList {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return getAllUnDoneByUser(t.getFromIdOnly());
+			return getAllUnDone().toString();
 		case "la":
 		case "listall":
 		case "ev":
@@ -141,27 +138,39 @@ public class TAppTodoList {
 	}
 
 	/**
-	 * @param nTeleID
 	 * @return
+	 * @throws SQLException
 	 */
-	public String getAllUnDoneByUser(Integer nTeleID) {
-		try {
-			StringBuilder sb = new StringBuilder();
+	public JSONArray getAllUnDone() {
+		List<TodoEntry> liTodoE = new ArrayList<>();
 
+		try {
 			Statement stmt = MsqlLite.getDB();
-			ResultSet rs = stmt
-					.executeQuery("select * from todolist WHERE editby = " + nTeleID + " AND active NOT LIKE 'DONE';");
+			ResultSet rs = stmt.executeQuery("select * from todolist WHERE active NOT LIKE 'DONE';");
+
 			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("data") + "\n");
+				TodoEntry entry = new TodoEntry();
+				entry.setId(rs.getInt("id"));
+				entry.setData(rs.getString("data"));
+				entry.setEditBy(rs.getString("editby"));
+				entry.setActive(rs.getString("active"));
+				entry.setRemind(rs.getString("remind"));
+				entry.setDate(rs.getInt("date"));
+				liTodoE.add(entry);
 			}
 			rs.close();
-			return sb.toString();
-
 		} catch (Exception e) {
-			LOGGER.warn("get all todolist" + e);
 		}
-		return "Fehler";
+
+		JSONArray ja = new JSONArray();
+		try {
+			for (TodoEntry tItem : liTodoE) {
+				ja.put(tItem.toJson());
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson" + e);
+		}
+		return ja;
 	}
 
 	/**
