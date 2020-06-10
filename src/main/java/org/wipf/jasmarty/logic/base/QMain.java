@@ -40,6 +40,8 @@ public class QMain {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		LOGGER.info("Starte " + VERSION);
+		LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+
 		MsqlLite.startDB();
 
 		jHome.jasmartyStart();
