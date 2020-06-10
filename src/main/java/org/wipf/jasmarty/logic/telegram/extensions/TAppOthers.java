@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram.extensions;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -8,8 +7,6 @@ import java.util.Random;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-
-import com.mashape.unirest.http.Unirest;
 
 /**
  * @author wipf
@@ -89,15 +86,15 @@ public class TAppOthers {
 	 * @return
 	 */
 	public static String getWitz() {
-		try {
-			String xml = Unirest.get("http://witze.net/witze.rss?cfg=000000410").asString().getBody();
-			// return URLEncoder.encode(parse(xml), "UTF-8");
-			return URLEncoder.encode(parseWitz(xml), "UTF-8");
-
-		} catch (Exception e) {
-			LOGGER.warn("Witzfehler " + e);
-		}
-		return "Fail";
+//		try {
+//			String xml = Unirest.get("http://witze.net/witze.rss?cfg=000000410").asString().getBody();
+//			// return URLEncoder.encode(parse(xml), "UTF-8");
+//			return URLEncoder.encode(parseWitz(xml), "UTF-8");
+//
+//		} catch (Exception e) {
+//			LOGGER.warn("Witzfehler " + e);
+//		}
+		return "Fail"; // TODO
 	}
 
 	/**

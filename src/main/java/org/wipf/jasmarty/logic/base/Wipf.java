@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.base;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -83,6 +84,34 @@ public class Wipf {
 	 */
 	public double doMathByString(String str) {
 		return doMath(str);
+	}
+
+	/**
+	 * @param sUrl
+	 * @return
+	 * @throws IOException
+	 */
+	public String httpRequestPOST(String sUrl) throws IOException {
+		URL url = new URL(sUrl);
+
+		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+		urlc.setRequestMethod("POST");
+		urlc.setRequestProperty("Accept", "*/*");
+
+		// use post mode
+		urlc.setDoOutput(true);
+		urlc.setAllowUserInteraction(false);
+
+		// get result
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
+		String l = null;
+		StringBuilder sbOut = new StringBuilder();
+		while ((l = br.readLine()) != null) {
+			sbOut.append(l);
+			// DEBUG: System.out.print(l);
+		}
+		br.close();
+		return sbOut.toString();
 	}
 
 	/**

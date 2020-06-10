@@ -21,8 +21,6 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
-import com.mashape.unirest.http.Unirest;
-
 /**
  * @author wipf
  *
@@ -126,10 +124,9 @@ public class TelegramVerwaltung {
 				sAntwort = "Leere%20Antwort";
 			}
 
-			String sResJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/sendMessage?chat_id="
-					+ t.getChatID() + "&text=" + sAntwort).asString().getBody();
+			String sResJson = wipf.httpRequestPOST("https://api.telegram.org/" + this.sBotKey + "/sendMessage?chat_id="
+					+ t.getChatID() + "&text=" + sAntwort);
 
-			// parse josn
 			JSONObject jo = new JSONObject(sResJson);
 
 			if (!jo.getBoolean("ok")) {
@@ -147,13 +144,12 @@ public class TelegramVerwaltung {
 	@Metered
 	public void readUpdateFromTelegram() {
 		try {
-			String sJson;
+			String sJson = "";
 			if (this.nOffsetID == 0) {
-				sJson = Unirest.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates").asString().getBody();
+				sJson = wipf.httpRequestPOST("https://api.telegram.org/" + this.sBotKey + "/getUpdates");
 			} else {
-				sJson = Unirest
-						.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
-						.asString().getBody();
+				sJson = wipf.httpRequestPOST(
+						"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID);
 			}
 
 			JSONObject jo = new JSONObject(sJson);
