@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MsqlLite;
@@ -145,6 +146,7 @@ public class TelegramVerwaltung {
 	/**
 	 * 
 	 */
+	@Metered
 	public void readUpdateFromTelegram() {
 		try {
 			String sJson;
@@ -155,7 +157,7 @@ public class TelegramVerwaltung {
 						.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
 						.asString().getBody();
 			}
-			// parse josn
+			// parse json
 			ObjectMapper mapper = new ObjectMapper();
 			ArrayList<Telegram> li = new ArrayList<>();
 

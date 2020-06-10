@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 
 /**
@@ -72,7 +71,6 @@ public class RefreshLoop {
 		service.submit(new Runnable() {
 
 			@Override
-			@Metered
 			public void run() {
 
 				while (bLoopActive) {
