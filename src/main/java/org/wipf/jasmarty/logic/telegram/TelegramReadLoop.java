@@ -80,17 +80,4 @@ public class TelegramReadLoop {
 			}
 		});
 	}
-
-	// TODO
-	// LocalDateTime localDateTime = LocalDateTime.now();
-
-	// Integer nSekundenBisMitternacht = (86400
-	// - (localDateTime.getHour() * 60 * 60 + localDateTime.getMinute() * 60 +
-	// localDateTime.getSecond()));
-
-	// This task is scheduled to run every 20 seconds
-
-	// This task is scheduled to run every 1 day at 00:00
-	// t.scheduleAtFixedRate(mInfoTask, nSekundenBisMitternacht * 1000, 86400000);
-
 }

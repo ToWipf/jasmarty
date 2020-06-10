@@ -23,6 +23,8 @@ public class TelegramHome {
 	TelegramVerwaltung tVerwaltung;
 	@Inject
 	TelegramReadLoop tReadLoop;
+	@Inject
+	TelegramSendTask tSendTask;
 
 	/**
 	 * 
@@ -35,6 +37,7 @@ public class TelegramHome {
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();
+			tSendTask.startTelegramTask();
 			LOGGER.info("Gestartet");
 		} else {
 			LOGGER.warn("nicht gestartet");
