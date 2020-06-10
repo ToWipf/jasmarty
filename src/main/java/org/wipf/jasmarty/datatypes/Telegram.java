@@ -1,9 +1,7 @@
 package org.wipf.jasmarty.datatypes;
 
 import org.jboss.logging.Logger;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 
 /**
  * @author wipf
@@ -129,12 +127,9 @@ public class Telegram {
 	}
 
 	public Integer getFromIdOnly() {
-		// parse josn
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sFrom);
-			return jn.get("id").asInt();
+			JSONObject jo = new JSONObject(sFrom);
+			return jo.getInt("id");
 		} catch (Exception e) {
 			LOGGER.warn("getFromIdOnly " + e);
 			return null;

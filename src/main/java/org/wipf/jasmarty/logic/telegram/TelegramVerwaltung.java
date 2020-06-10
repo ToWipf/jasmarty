@@ -2,7 +2,6 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +11,8 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MsqlLite;
 import org.wipf.jasmarty.logic.base.QMain;
@@ -20,8 +21,6 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mashape.unirest.http.Unirest;
 
 /**
@@ -131,10 +130,9 @@ public class TelegramVerwaltung {
 					+ t.getChatID() + "&text=" + sAntwort).asString().getBody();
 
 			// parse josn
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn = mapper.readTree(sResJson);
+			JSONObject jo = new JSONObject(sResJson);
 
-			if (!jn.get("ok").asBoolean()) {
+			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("API fail:" + sResJson + " Antworttext: '" + sAntwort + "'");
 			}
 
@@ -157,67 +155,61 @@ public class TelegramVerwaltung {
 						.post("https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID)
 						.asString().getBody();
 			}
-			// parse json
-			ObjectMapper mapper = new ObjectMapper();
-			ArrayList<Telegram> li = new ArrayList<>();
 
-			JsonNode jn = mapper.readTree(sJson);
-
-			if (!jn.get("ok").asBoolean()) {
+			JSONObject jo = new JSONObject(sJson);
+			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("API fail:" + sJson);
 				this.nFailCount++;
 				return;
 			}
 
-			for (JsonNode n : jn) {
-				for (JsonNode nn : n) {
-					Telegram t = new Telegram();
-					try {
-						// Nachricht gelesen -> löschen am Telegram server
-						this.nOffsetID = nn.get("update_id").asInt() + 1;
-						JsonNode msg = nn.get("message");
-						t.setMid(msg.get("message_id").asInt());
-						t.setMessage(msg.get("text").asText());
-						t.setChatID(msg.get("chat").get("id").asInt());
-						t.setType(msg.get("chat").get("type").asText());
-						t.setDate(msg.get("date").asInt());
-						t.setFrom(msg.get("from").toString());
-						li.add(t);
-					} catch (Exception e) {
-						// weiter da sticker oder ähnliches
-					}
+			JSONArray ja = jo.getJSONArray("result");
+
+			for (int nMsg = 0; nMsg < ja.length(); nMsg++) {
+				if (nMsg >= 5) {
+					// Nur 5 Nachrichten in einen Zug verarbeiten
+					continue;
 				}
+
+				Telegram t = new Telegram();
+				JSONObject joMsgFull = ja.getJSONObject(nMsg);
+				this.nOffsetID = joMsgFull.getInt("update_id") + 1;
+				JSONObject joMsg = joMsgFull.getJSONObject("message");
+
+				try {
+					// Nachricht einlesen -> gelesen -> löschen am Telegram server per id bei
+					// nächster abfrage
+					t.setMid(joMsg.getInt("message_id"));
+					t.setMessage(joMsg.getString("text"));
+					t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
+					t.setType(joMsg.getJSONObject("chat").getString("type"));
+					t.setDate(joMsg.getInt("date"));
+					t.setFrom(joMsg.get("from").toString());
+
+				} catch (Exception e) {
+					// weiter da sticker oder ähnliches
+					continue;
+				}
+
+				t.setAntwort(menueMsg(t));
+				saveTelegramToDB(t);
+				sendToTelegram(t);
+
 			}
 
-			// Maximal 5 MSG abarbeiten
-			if (li.size() > 5) {
-				this.nOffsetID = this.nOffsetID - li.size() + 5;
-			}
-
-			// ids zu db
-			Integer nMax = 0;
-			for (Telegram t : li) {
-				nMax++;
-				if (nMax <= 5) {
-					try {
-						t.setAntwort(menueMsg(t));
-						saveTelegramToDB(t);
-						sendToTelegram(t);
-					} catch (Exception e) {
-						LOGGER.warn("bearbeiteMsg " + e);
-					}
-				}
-			}
 			if (this.nFailCount != 0) {
-				// Wenn Telegram wieder erreichbar ist
+				// Wenn Telegram wieder erreichbar ist info senden:
 				sendExtIp();
 			}
+
+			// Da Telegram erreichbar ist:
 			this.nFailCount = 0;
 
 		} catch (Exception e) {
 			this.nFailCount++;
 			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
 		}
+
 	}
 
 	/**

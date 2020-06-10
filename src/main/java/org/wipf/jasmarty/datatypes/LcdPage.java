@@ -6,9 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author wipf
  */
@@ -58,27 +55,30 @@ public class LcdPage {
 	}
 
 	/**
-	 * @param jnRoot
+	 * @param sJson
 	 * @return
 	 */
-	public LcdPage setByJson(String jnRoot) {
+	public LcdPage setByJson(String sJson) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(jnRoot);
+			JSONObject jo = new JSONObject(sJson);
 
-			this.sName = jn.get("name").asText();
-			this.nId = jn.get("id").asInt();
-			sOptions = "";
+			this.sName = jo.getString("name");
+			this.nId = jo.getInt("id");
+			sOptions = ""; // Leer neu setzen
 
-			for (JsonNode jLine : jn.get("lines")) {
+			JSONArray ja = jo.getJSONArray("lines");
+
+			for (int i = 0; i < ja.length(); i++) {
+				JSONObject joLine = ja.getJSONObject(i);
+
 				sOptions = sOptions + " "; // TODO nicht sicher -> könnte alles verschieben
-				int nLine = jLine.get("line").asInt();
-				saLines.add(nLine, jLine.get("data").asText());
+				int nLine = joLine.getInt("line");
+				saLines.add(nLine, joLine.getString("data"));
 				StringBuilder sb = new StringBuilder(sOptions);
-				sb.setCharAt(nLine, (char) jLine.get("option").asInt());
+				sb.setCharAt(nLine, (char) joLine.getInt("option"));
 				sOptions = sb.toString();
 			}
+
 			return this;
 		} catch (Exception e) {
 			return null;

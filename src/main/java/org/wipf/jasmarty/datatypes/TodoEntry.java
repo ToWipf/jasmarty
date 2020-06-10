@@ -2,9 +2,6 @@ package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author wipf
  *
@@ -38,16 +35,15 @@ public class TodoEntry {
 	 */
 	public TodoEntry setByJson(String sJson) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sJson);
+			JSONObject jo = new JSONObject(sJson);
 
-			this.sData = jn.get("data").asText();
-			this.sEditBy = jn.get("editby").asText();
-			this.nDate = jn.get("date").asInt();
-			this.sActive = jn.get("active").asText();
-			this.nId = jn.get("id").asInt();
-			this.sRemind = jn.get("remind").asText();
+			this.sData = jo.getString("data");
+			this.sEditBy = jo.getString("editby");
+			this.nDate = jo.getInt("date");
+			this.sActive = jo.getString("active");
+			this.nId = jo.getInt("id");
+			this.sRemind = jo.getString("remind");
+
 			return this;
 		} catch (Exception e) {
 			return null;

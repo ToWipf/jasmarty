@@ -2,9 +2,6 @@ package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author wipf
  *
@@ -26,14 +23,11 @@ public class CustomChar {
 	 */
 	public CustomChar setByJson(String sJson) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sJson);
-
-			this.nId = jn.get("id").asInt();
-			this.sName = jn.get("name").asText();
-			this.nPosition = jn.get("position").asInt();
-			this.sData = jn.get("data").asText();
+			JSONObject jo = new JSONObject(sJson);
+			this.nId = jo.getInt("id");
+			this.sName = jo.getString("name");
+			this.nPosition = jo.getInt("position");
+			this.sData = jo.getString("data");
 			return this;
 		} catch (Exception e) {
 			return null;

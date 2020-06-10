@@ -2,9 +2,6 @@ package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author wipf
  *
@@ -34,14 +31,11 @@ public class ButtonAction {
 	 */
 	public ButtonAction setByJson(String sJson) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sJson);
-
-			this.nId = jn.get("id").asInt();
-			this.nButton = jn.get("button").asInt();
-			this.bActive = jn.get("active").asBoolean();
-			this.sAction = jn.get("action").asText();
+			JSONObject jo = new JSONObject(sJson);
+			this.nId = jo.getInt("id");
+			this.nButton = jo.getInt("button");
+			this.bActive = jo.getBoolean("active");
+			this.sAction = jo.getString("action");
 			return this;
 		} catch (Exception e) {
 			return null;

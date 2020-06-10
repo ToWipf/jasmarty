@@ -2,9 +2,6 @@ package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 /**
  * @author wipf
  *
@@ -36,15 +33,13 @@ public class LcdConfig {
 	 */
 	public LcdConfig setByJson(String sJson) {
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode jn;
-			jn = mapper.readTree(sJson);
+			JSONObject jo = new JSONObject(sJson);
 
-			this.sPort = jn.get("port").asText();
-			this.nWidth = jn.get("width").asInt();
-			this.nHeight = jn.get("height").asInt();
-			this.nBaudRate = jn.get("baudrate").asInt();
-			this.nRefreshRate = jn.get("refreshrate").asInt();
+			this.sPort = jo.getString("port");
+			this.nWidth = jo.getInt("width");
+			this.nHeight = jo.getInt("height");
+			this.nBaudRate = jo.getInt("baudrate");
+			this.nRefreshRate = jo.getInt("refreshrate");
 			return this;
 		} catch (Exception e) {
 			return null;
