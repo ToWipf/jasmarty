@@ -368,7 +368,7 @@ public class TelegramVerwaltung {
 		case "r":
 		case "rnd":
 		case "zufall":
-			return TAppOthers.zufall(t.getMessageStringPart(1), t.getMessageStringPart(2));
+			return appOthers.zufall(t.getMessageStringPart(1), t.getMessageStringPart(2));
 		case "c":
 		case "cr":
 		case "en":
@@ -399,7 +399,7 @@ public class TelegramVerwaltung {
 		case "fun":
 		case "w":
 		case "joke":
-			return TAppOthers.getWitz();
+			return appOthers.getWitz();
 		case "countmsg":
 			return countMsg();
 		case "countsend":

@@ -1,12 +1,16 @@
 package org.wipf.jasmarty.logic.telegram.extensions;
 
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
  * @author wipf
@@ -15,6 +19,9 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class TAppOthers {
 
+	@Inject
+	Wipf wipf;
+
 	private static final Logger LOGGER = Logger.getLogger("MOthers");
 
 	/**
@@ -22,7 +29,7 @@ public class TAppOthers {
 	 * @param sAnzahlWuerfel
 	 * @return
 	 */
-	public static String zufall(String sWuerfelBis, String sAnzahlWuerfel) {
+	public String zufall(String sWuerfelBis, String sAnzahlWuerfel) {
 		try {
 			return zufall(Integer.parseInt(sWuerfelBis), Integer.parseInt(sAnzahlWuerfel));
 		} catch (Exception e) {
@@ -35,7 +42,7 @@ public class TAppOthers {
 	 * @param nAnzahlWuerfel
 	 * @return
 	 */
-	public static String zufall(Integer nWuerfelBis, Integer nAnzahlWuerfel) {
+	public String zufall(Integer nWuerfelBis, Integer nAnzahlWuerfel) {
 		if (nAnzahlWuerfel > 57 || nWuerfelBis > 10421) {
 			return "zu viel";
 		}
@@ -85,24 +92,17 @@ public class TAppOthers {
 	/**
 	 * @return
 	 */
-	public static String getWitz() {
-//		try {
-//			String xml = Unirest.get("http://witze.net/witze.rss?cfg=000000410").asString().getBody();
-//			// return URLEncoder.encode(parse(xml), "UTF-8");
-//			return URLEncoder.encode(parseWitz(xml), "UTF-8");
-//
-//		} catch (Exception e) {
-//			LOGGER.warn("Witzfehler " + e);
-//		}
-		return "Fail"; // TODO
+	public String getWitz() {
+		try {
+			String sWitz;
+			sWitz = wipf.httpRequestGET("https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
+			return URLEncoder.encode(sWitz.substring(41, sWitz.length() - 3), "UTF-8");
+
+		} catch (IOException e) {
+			LOGGER.warn("getWitz: " + e);
+			return "no Witz";
+		}
+
 	}
 
-	/**
-	 * @param xml
-	 * @return
-	 */
-	private static String parseWitz(String xml) {
-		return xml.substring(xml.lastIndexOf("<description>") + 13, xml.lastIndexOf("</description>"))
-				.replaceAll("&lt;br&gt;", "\n");
-	}
 }

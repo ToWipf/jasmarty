@@ -115,6 +115,32 @@ public class Wipf {
 	}
 
 	/**
+	 * @param sUrl
+	 * @return
+	 * @throws IOException
+	 */
+	public String httpRequestGET(String sUrl) throws IOException {
+		URL url = new URL(sUrl);
+
+		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+		urlc.setRequestMethod("GET");
+		urlc.setRequestProperty("Accept", "*/*");
+
+		urlc.setAllowUserInteraction(false);
+
+		// get result
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
+		String l = null;
+		StringBuilder sbOut = new StringBuilder();
+		while ((l = br.readLine()) != null) {
+			sbOut.append(l);
+			// DEBUG: System.out.print(l);
+		}
+		br.close();
+		return sbOut.toString();
+	}
+
+	/**
 	 * Von:
 	 * https://stackoverflow.com/questions/3422673/how-to-evaluate-a-math-expression-given-in-string-form
 	 * 
