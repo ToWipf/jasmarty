@@ -4,17 +4,20 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class TelegramHome {
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
-	@Inject
-	TAppOthers appOthers;
+	// @Inject
+	// TAppOthers appOthers;
 	@Inject
 	TAppTicTacToe appTicTacToe;
 	@Inject

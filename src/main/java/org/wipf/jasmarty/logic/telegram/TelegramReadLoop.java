@@ -9,6 +9,10 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class TelegramReadLoop {
 

@@ -333,7 +333,6 @@ public class TicTacToe extends Game {
 	}
 
 	/**
-	 * TODO
 	 * 
 	 * @param n
 	 * @return Number als Symbol

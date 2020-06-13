@@ -120,10 +120,16 @@ public class TodoEntry {
 		this.nId = nId;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getRemind() {
 		return sRemind;
 	}
 
+	/**
+	 * @param sRemind
+	 */
 	public void setRemind(String sRemind) {
 		this.sRemind = sRemind;
 	}
