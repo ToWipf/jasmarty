@@ -416,7 +416,7 @@ public class TelegramVerwaltung {
 					+ t.getMid();
 		case "to":
 		case "todo":
-			return appTodoList.menueTodoList(t);
+			return appTodoList.telegramMenueTodoList(t);
 		default:
 			// Alle db aktionen
 			t = getMsg(t, 0);

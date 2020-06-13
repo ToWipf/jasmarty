@@ -27,13 +27,13 @@ public class TodoListRest {
 	@POST
 	@Path("/saveTodo")
 	public Response saveTodo(String jnRoot) {
-		return Response.ok("{\"save\":\"" + todoList.setTodo(jnRoot) + "\"}").build();
+		return Response.ok("{\"save\":\"" + todoList.setItem(jnRoot) + "\"}").build();
 	}
 
 	@GET
 	@Path("/delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		todoList.delete(nId);
+		todoList.deleteItem(nId);
 		return Response.ok().build();
 	}
 
@@ -49,11 +49,5 @@ public class TodoListRest {
 //	public Response getByUserID(@PathParam("id") Integer nId) {
 //		return Response.ok(todoList.getAllByUser(nId)).build();
 //	}
-
-	@GET
-	@Path("/getAllFull")
-	public Response todolist() {
-		return Response.ok(todoList.getAllFull()).build();
-	}
 
 }

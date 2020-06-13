@@ -14,7 +14,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
-import org.apache.commons.codec.binary.Base32;
+import io.quarkus.launcher.shaded.org.apache.commons.codec.binary.Base32;
 
 /**
  * @author wipf

@@ -4,7 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -41,18 +40,10 @@ public class TAppTodoList {
 	}
 
 	/**
-	 * @param jnRoot
-	 * @return
-	 */
-	public boolean setTodo(String jnRoot) {
-		return saveEntry(new TodoEntry().setByJson(jnRoot));
-	}
-
-	/**
 	 * @param t
 	 * @return
 	 */
-	public String menueTodoList(Telegram t) {
+	public String telegramMenueTodoList(Telegram t) {
 		String sAction = t.getMessageStringPart(1);
 		if (sAction == null) {
 			// @formatter:off
@@ -86,10 +77,9 @@ public class TAppTodoList {
 		case "listall":
 		case "ev":
 		case "everything":
-			return getAllAsJson().toString();
 		case "lf":
 		case "listfull":
-			return getAllFull();
+			return getAllAsJson().toString();
 		case "c":
 		case "count":
 			return count(t.getFromIdOnly());
@@ -99,42 +89,6 @@ public class TAppTodoList {
 		default:
 			return addByTelegram(t);
 		}
-	}
-
-	/**
-	 * @return
-	 */
-	public String getAllFull() {
-		try {
-			StringBuilder slog = new StringBuilder();
-			int n = 0;
-			Statement stmt = MsqlLite.getDB();
-
-			ResultSet rs = stmt.executeQuery("SELECT * FROM todolist");
-
-			while (rs.next()) {
-				n++;
-				// Timestamp zu datum
-				Date date = new Date(rs.getLong("date") * 1000);
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(n + ":\n");
-				sb.append("id:  \t" + rs.getString("id") + "\n");
-				sb.append("data: \t" + rs.getString("data") + "\n");
-				sb.append("remind:\t" + rs.getString("remind") + "\n");
-				sb.append("active: \t" + rs.getString("active") + "\n");
-				sb.append("editby:\t" + rs.getString("editby") + "\n");
-				sb.append("date:\t" + date + "\n");
-				sb.append("----------------\n\n");
-				slog.insert(0, sb);
-			}
-			rs.close();
-			return slog.toString();
-		} catch (Exception e) {
-			LOGGER.warn("getAllFull todolist" + e);
-			return "FAIL";
-		}
-
 	}
 
 	/**
@@ -209,7 +163,6 @@ public class TAppTodoList {
 			liTodoE.add(entry);
 		}
 		rs.close();
-
 		return liTodoE;
 	}
 
@@ -217,7 +170,7 @@ public class TAppTodoList {
 	 * @param tE
 	 * @return
 	 */
-	public boolean saveEntry(TodoEntry tE) {
+	public boolean saveItem(TodoEntry tE) {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			//@formatter:off
@@ -233,15 +186,22 @@ public class TAppTodoList {
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("save todo " + e);
-			e.printStackTrace();
 			return false;
 		}
 	}
 
 	/**
+	 * @param jnRoot
+	 * @return
+	 */
+	public boolean setItem(String jnRoot) {
+		return saveItem(new TodoEntry().setByJson(jnRoot));
+	}
+
+	/**
 	 * @param nId
 	 */
-	public void delete(Integer nId) {
+	public void deleteItem(Integer nId) {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			stmt.execute("DELETE FROM todolist WHERE id LIKE '" + nId + "';");
@@ -280,7 +240,7 @@ public class TAppTodoList {
 		te.setRemind("");
 		te.setActive("NEW");
 		te.setId(nId);
-		saveEntry(te);
+		saveItem(te);
 
 		return "gespeichert Id: " + nId;
 	}

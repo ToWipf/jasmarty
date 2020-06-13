@@ -48,11 +48,14 @@
 			<artifactId>jSerialComm</artifactId>
 			<version>2.6.0</version>
 		</dependency>
-		<!-- Verhindert: [WARNING] [io.quarkus.resteasy.common.deployment.ResteasyCommonProcessor] Quarkus detected the need of REST JSON support but you have not provided the necessary JSON extension for this. You can visit https://quarkus.io/guides/rest-json for more information on how to set one.-->		
-<!-- 	<dependency>
+		<!-- Verhindert: [WARNING] [io.quarkus.resteasy.common.deployment.ResteasyCommonProcessor] 
+			Quarkus detected the need of REST JSON support but you have not provided 
+			the necessary JSON extension for this. You can visit https://quarkus.io/guides/rest-json 
+			for more information on how to set one. -->
+		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>
-		</dependency> -->
+		</dependency>
 		<!-- end -->
 		<dependency>
 			<groupId>com.roufid.tutorials</groupId>
@@ -109,7 +112,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<quarkus.version>1.5.0.Final</quarkus.version>
+		<quarkus.version>1.5.1.Final</quarkus.version>
 		<!-- wegen 32Bit -> Java 1.8 -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
