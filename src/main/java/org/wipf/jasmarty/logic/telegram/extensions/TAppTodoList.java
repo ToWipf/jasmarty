@@ -87,7 +87,7 @@ public class TAppTodoList {
 		case "countall":
 			return countAll();
 		default:
-			return addByTelegram(t);
+			return saveItem(t).toString();
 		}
 	}
 
@@ -168,9 +168,9 @@ public class TAppTodoList {
 
 	/**
 	 * @param tE
-	 * @return
+	 * @return id
 	 */
-	public boolean saveItem(TodoEntry tE) {
+	public Integer saveItem(TodoEntry tE) {
 		try {
 			Statement stmt = MsqlLite.getDB();
 			//@formatter:off
@@ -183,18 +183,36 @@ public class TAppTodoList {
 					"','" + tE.getActive() +
 					"')");
 			//@formatter:on
-			return true;
+			return tE.getId();
 		} catch (Exception e) {
 			LOGGER.warn("save todo " + e);
-			return false;
+			return null;
 		}
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	private Integer saveItem(Telegram t) {
+		int nId = genNextId();
+		TodoEntry te = new TodoEntry();
+		te.setData(t.getMessageStringFirst());
+		te.setEditBy(t.getFromIdOnly().toString());
+		te.setDate(t.getDate());
+		te.setRemind("");
+		te.setActive("NEW");
+		te.setId(nId);
+		saveItem(te);
+
+		return nId;
 	}
 
 	/**
 	 * @param jnRoot
 	 * @return
 	 */
-	public boolean setItem(String jnRoot) {
+	public Integer saveItem(String jnRoot) {
 		return saveItem(new TodoEntry().setByJson(jnRoot));
 	}
 
@@ -213,7 +231,7 @@ public class TAppTodoList {
 	/**
 	 * @return
 	 */
-	private int getNextId() {
+	private int genNextId() {
 		int nNextId = 0;
 		try {
 			for (TodoEntry te : this.getAll()) {
@@ -225,24 +243,6 @@ public class TAppTodoList {
 			LOGGER.warn("getNextId " + e);
 		}
 		return nNextId + 1;
-	}
-
-	/**
-	 * @param t
-	 * @return
-	 */
-	private String addByTelegram(Telegram t) {
-		int nId = getNextId();
-		TodoEntry te = new TodoEntry();
-		te.setData(t.getMessageStringFirst());
-		te.setEditBy(t.getFromIdOnly().toString());
-		te.setDate(t.getDate());
-		te.setRemind("");
-		te.setActive("NEW");
-		te.setId(nId);
-		saveItem(te);
-
-		return "gespeichert Id: " + nId;
 	}
 
 	/**

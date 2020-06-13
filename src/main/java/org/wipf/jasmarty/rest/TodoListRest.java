@@ -27,7 +27,7 @@ public class TodoListRest {
 	@POST
 	@Path("/saveTodo")
 	public Response saveTodo(String jnRoot) {
-		return Response.ok("{\"save\":\"" + todoList.setItem(jnRoot) + "\"}").build();
+		return Response.ok("{\"save\":\"" + todoList.saveItem(jnRoot) + "\"}").build();
 	}
 
 	@GET
