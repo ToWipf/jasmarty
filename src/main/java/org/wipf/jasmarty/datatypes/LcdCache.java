@@ -181,12 +181,14 @@ public class LcdCache {
 		}
 		jo.put("display", ja);
 		jo.put("height", this.nHeight);
-		jo.put("width", this.nWidth); // TODO nicht nötig
+		// jo.put("width", this.nWidth); // nicht nötig
 		return jo;
 	}
 
 	/**
 	 * @return
+	 * 
+	 *         wird derzeit nicht verglichen
 	 */
 	public JSONObject toIstJson() {
 		JSONObject jo = new JSONObject();

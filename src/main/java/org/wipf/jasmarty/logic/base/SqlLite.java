@@ -16,7 +16,7 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class SqlLite {
 
-	private static final Logger LOGGER = Logger.getLogger("MsqlLite");
+	private static final Logger LOGGER = Logger.getLogger("SqlLite DB");
 	private static final SqlLite dbcontroller = new SqlLite();
 	private static Connection connection;
 

@@ -30,7 +30,7 @@ public class PageConverter {
 	public static char BLOCK_1_3 = 0x02;
 	public static char BLOCK_2_3 = 0x03;
 	public static char BLOCK_3_3 = 0xFF;
-	private LcdPage selectedPage;
+	private LcdPage selectedPage = new LcdPage();
 
 	/**
 	 * @param page

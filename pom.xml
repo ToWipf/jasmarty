@@ -27,10 +27,18 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-metrics</artifactId>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5</artifactId>
 			<scope>test</scope>
+		</dependency> -->
+		<!-- Verhindert: [WARNING] [io.quarkus.resteasy.common.deployment.ResteasyCommonProcessor] 
+			Quarkus detected the need of REST JSON support but you have not provided 
+			the necessary JSON extension for this. You can visit https://quarkus.io/guides/rest-json 
+			for more information on how to set one. -->
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
 		</dependency>
 		<!-- start -->
 		<dependency>
@@ -48,18 +56,10 @@
 			<artifactId>jSerialComm</artifactId>
 			<version>2.6.0</version>
 		</dependency>
-		<!-- Verhindert: [WARNING] [io.quarkus.resteasy.common.deployment.ResteasyCommonProcessor] 
-			Quarkus detected the need of REST JSON support but you have not provided 
-			the necessary JSON extension for this. You can visit https://quarkus.io/guides/rest-json 
-			for more information on how to set one. -->
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy-jsonb</artifactId>
-		</dependency>
 		<!-- end -->
 		<dependency>
-			<groupId>com.roufid.tutorials</groupId>
-			<artifactId>example-app</artifactId>
+			<groupId>com.winamp</groupId>
+			<artifactId>winamp</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/JavaWinampAPI.jar</systemPath>

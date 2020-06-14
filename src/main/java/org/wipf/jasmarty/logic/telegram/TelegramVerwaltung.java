@@ -519,7 +519,7 @@ public class TelegramVerwaltung {
 			return s;
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
-			return null;
+			return "Fehler countMsg";
 		}
 	}
 
@@ -537,7 +537,7 @@ public class TelegramVerwaltung {
 			return s;
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
-			return null;
+			return "Fehler countMotd";
 		}
 	}
 

@@ -24,8 +24,8 @@ public class LcdConnect {
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty Connect");
 
 	private SerialPort sp;
-	private LcdCache lcache;
-	private LcdConfig lconf;
+	private LcdCache lcache = new LcdCache(0, 0);
+	private LcdConfig lconf = new LcdConfig();
 	private boolean bLcdIsOk = false;
 	private boolean bLed = false;
 	private boolean bPauseWriteToLCD = false;

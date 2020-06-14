@@ -21,8 +21,6 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppTodoList {
 
-	// TODO: edit entry
-
 	private static final Logger LOGGER = Logger.getLogger("Telegram TodoList");
 
 	/**

@@ -112,6 +112,7 @@ public class CharPictures {
 		cWipf[5].setLine(T, T, T, T, F, 7);
 
 		try {
+			// TODO nicht nötig ? jedes mal
 			customChars.saveToDB(cWipf[0]);
 			customChars.saveToDB(cWipf[1]);
 			customChars.saveToDB(cWipf[2]);
@@ -119,7 +120,7 @@ public class CharPictures {
 			customChars.saveToDB(cWipf[4]);
 			customChars.saveToDB(cWipf[5]);
 		} catch (Exception e) {
-			LOGGER.warn("customChars.saveToDB" + e);
+			LOGGER.warn("customChars wipf saveToDB" + e);
 		}
 
 		int[] ids = { 1001, 1002, 1003, 1004, 1005, 1006 };

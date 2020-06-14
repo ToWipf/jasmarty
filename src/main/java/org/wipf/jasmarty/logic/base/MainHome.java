@@ -20,11 +20,13 @@ import io.quarkus.runtime.StartupEvent;
 public class MainHome {
 
 	@Inject
+	BaseSettings baseSettings;
+	@Inject
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
 
-	private static final Logger LOGGER = Logger.getLogger("QMain");
+	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "0.72";
 	public static final String DB_PATH = "jasmarty.db";
 
@@ -44,8 +46,15 @@ public class MainHome {
 
 		SqlLite.startDB();
 
-		jHome.jasmartyStart();
-		tHome.telegramStart();
+		baseSettings.setAppStatus("telegram", true);
+		baseSettings.setAppStatus("jasmarty", true);
+
+		if (baseSettings.isAppActive("jasmarty")) {
+			jHome.jasmartyStart();
+		}
+		if (baseSettings.isAppActive("telegram")) {
+			tHome.telegramStart();
+		}
 
 		LOGGER.info("Gestartet");
 	}
@@ -56,8 +65,12 @@ public class MainHome {
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("Stoppe");
 
-		jHome.jasmartyStop();
-		tHome.telegramStop();
+		if (baseSettings.isAppActive("jasmarty")) {
+			jHome.jasmartyStop();
+		}
+		if (baseSettings.isAppActive("telegram")) {
+			tHome.telegramStop();
+		}
 
 		LOGGER.info("Gestoppt");
 	}
