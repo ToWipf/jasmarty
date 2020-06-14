@@ -1,21 +1,20 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.base;
 
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdConfig;
-import org.wipf.jasmarty.logic.base.SqlLite;
 
-import com.fazecast.jSerialComm.SerialPort;
-
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
-public class SerialConfig {
+public class BaseSettings {
 
-	private static final Logger LOGGER = Logger.getLogger("SerialConfig");
+	private static final Logger LOGGER = Logger.getLogger("BaseSettings");
 
 	/**
 	 * 
@@ -24,6 +23,7 @@ public class SerialConfig {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.error("init DB " + e);
 		}
@@ -32,21 +32,17 @@ public class SerialConfig {
 	/**
 	 * @return
 	 */
-	public LcdConfig getConfig() {
+	public boolean isAppActive(String sAppname) {
+		boolean bApp = false;
 		try {
-			LcdConfig conf = new LcdConfig();
+
 			Statement stmt = SqlLite.getDB();
-			conf.setPort(stmt.executeQuery("SELECT val FROM config WHERE key IS 'port';").getString("val"));
-			conf.setRefreshRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'refreshrate';").getInt("val"));
-			conf.setWidth(stmt.executeQuery("SELECT val FROM config WHERE key IS 'widht';").getInt("val"));
-			conf.setHeight(stmt.executeQuery("SELECT val FROM config WHERE key IS 'height';").getInt("val"));
-			conf.setBaudRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'baudrate';").getInt("val"));
-			stmt.close();
-			return conf;
+			bApp = stmt.executeQuery("SELECT val FROM config WHERE key IS '" + sAppname + "';").getBoolean("val");
+
 		} catch (Exception e) {
-			LOGGER.warn("Config nicht gefunden > default Config erstellen");
-			return defaultConfig();
+			LOGGER.error("isAppActive " + e);
 		}
+		return bApp;
 	}
 
 	/**
@@ -80,7 +76,6 @@ public class SerialConfig {
 			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('height','" + conf.getHeight() + "')");
 			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('baudrate','" + conf.getBaudRate() + "')");
 			LOGGER.info("Config gespeichert");
-			stmt.close();
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("Config konnte nicht gespeichert werden!");
@@ -94,24 +89,6 @@ public class SerialConfig {
 	 */
 	public boolean setConfig(String jnRoot) {
 		return setConfig(new LcdConfig().setByJson(jnRoot));
-	}
-
-	/**
-	 * @return
-	 */
-	public JSONObject getPorts() {
-		SerialPort[] spa = SerialPort.getCommPorts();
-
-		JSONObject jo = new JSONObject();
-		JSONArray ja = new JSONArray();
-		for (SerialPort item : spa) {
-			JSONObject jItem = new JSONObject();
-
-			jItem.put("name", item.getDescriptivePortName());
-			ja.put(jItem);
-		}
-		jo.put("list", ja);
-		return jo;
 	}
 
 }

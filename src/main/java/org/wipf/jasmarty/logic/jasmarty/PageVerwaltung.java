@@ -35,8 +35,9 @@ public class PageVerwaltung {
 			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
+			stmt.close();
 		} catch (Exception e) {
-			LOGGER.error("init DB");
+			LOGGER.error("init DB " + e);
 		}
 	}
 
@@ -97,6 +98,7 @@ public class PageVerwaltung {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
 					+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
+			stmt.close();
 		} catch (SQLException e) {
 			LOGGER.warn("pageToDB " + e);
 		}
@@ -110,6 +112,7 @@ public class PageVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM pages WHERE id = " + nId);
+			stmt.close();
 		} catch (SQLException e) {
 			LOGGER.warn("delPageFromDB " + e);
 		}
@@ -120,20 +123,19 @@ public class PageVerwaltung {
 	 * @return
 	 */
 	public LcdPage getPageFromDb(int nId) {
+		LcdPage page = new LcdPage();
 		try {
-			LcdPage page = new LcdPage();
-
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE id = '" + nId + "';");
 			page.setId(rs.getInt("id"));
 			page.setName(rs.getString("name"));
 			page.setStringToPage(rs.getString("page"));
 			page.setOptions(rs.getString("options"));
-			return page;
+			stmt.close();
 		} catch (Exception e) {
-			// LOGGER.warn("Page not found: " + nId);
-			return new LcdPage();
+			LOGGER.warn("Page not found: " + nId);
 		}
+		return page;
 	}
 
 	/**

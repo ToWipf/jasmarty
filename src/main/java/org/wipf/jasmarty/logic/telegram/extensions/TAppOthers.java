@@ -22,7 +22,7 @@ public class TAppOthers {
 	@Inject
 	Wipf wipf;
 
-	private static final Logger LOGGER = Logger.getLogger("MOthers");
+	private static final Logger LOGGER = Logger.getLogger("Telegram Others");
 
 	/**
 	 * @param sWuerfelBis

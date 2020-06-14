@@ -23,7 +23,7 @@ public class TAppTodoList {
 
 	// TODO: edit entry
 
-	private static final Logger LOGGER = Logger.getLogger("MTodoList");
+	private static final Logger LOGGER = Logger.getLogger("Telegram TodoList");
 
 	/**
 	 * 
@@ -31,11 +31,11 @@ public class TAppTodoList {
 	public void initDB() {
 		try {
 			Statement stmt = SqlLite.getDB();
-			// stmt.executeUpdate("DROP TABLE todolist;");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);");
+			stmt.close();
 		} catch (Exception e) {
-			LOGGER.warn("initDB todolist " + e);
+			LOGGER.warn("initDB " + e);
 		}
 	}
 
@@ -112,7 +112,7 @@ public class TAppTodoList {
 				entry.setDate(rs.getInt("date"));
 				liTodoE.add(entry);
 			}
-			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("getAllAsJson A: " + e);
 		}
@@ -163,7 +163,7 @@ public class TAppTodoList {
 			entry.setDate(rs.getInt("date"));
 			liTodoE.add(entry);
 		}
-		rs.close();
+		stmt.close();
 		return liTodoE;
 	}
 
@@ -184,9 +184,10 @@ public class TAppTodoList {
 					"','" + tE.getActive() +
 					"')");
 			//@formatter:on
+			stmt.close();
 			return tE.getId();
 		} catch (Exception e) {
-			LOGGER.warn("save todo " + e);
+			LOGGER.warn("save " + e);
 			return null;
 		}
 	}
@@ -224,6 +225,7 @@ public class TAppTodoList {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM todolist WHERE id LIKE '" + nId + "';");
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("del todo " + e);
 		}

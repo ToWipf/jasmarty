@@ -42,8 +42,9 @@ public class ActionVerwaltung {
 			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);");
+			stmt.close();
 		} catch (Exception e) {
-			LOGGER.error("init DB");
+			LOGGER.error("init DB " + e);
 		}
 	}
 
@@ -55,6 +56,7 @@ public class ActionVerwaltung {
 		Statement stmt = SqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO actions (id, button, active, action) VALUES ('" + ba.getId() + "','"
 				+ ba.getButton() + "','" + ba.isActive() + "','" + ba.getAction() + "')");
+		stmt.close();
 	}
 
 	/**
@@ -64,6 +66,7 @@ public class ActionVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("del" + e);
 		}
@@ -74,8 +77,8 @@ public class ActionVerwaltung {
 	 * @return
 	 */
 	public ButtonAction getActionFromDbByID(int nId) {
+		ButtonAction ba = new ButtonAction();
 		try {
-			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
@@ -83,11 +86,11 @@ public class ActionVerwaltung {
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));
 			ba.setAction(rs.getString("action"));
-			return ba;
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("BA not found: " + nId);
-			return new ButtonAction();
 		}
+		return ba;
 	}
 
 	/**
@@ -112,7 +115,7 @@ public class ActionVerwaltung {
 				entry.put("action", rs.getString("action"));
 				ja.put(entry);
 			}
-			rs.close();
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("getAllFromDBAsJson: " + e);
 		}
@@ -124,8 +127,8 @@ public class ActionVerwaltung {
 	 * @return
 	 */
 	public ButtonAction getActionFromDbByButton(int nButton) {
+		ButtonAction ba = new ButtonAction();
 		try {
-			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt
@@ -134,10 +137,11 @@ public class ActionVerwaltung {
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));
 			ba.setAction(rs.getString("action"));
-			return ba;
+			stmt.close();
 		} catch (Exception e) {
-			return null;
+			LOGGER.warn("BA not found in DB by Button: " + nButton);
 		}
+		return ba;
 	}
 
 	/**
@@ -145,8 +149,8 @@ public class ActionVerwaltung {
 	 * @return
 	 */
 	public ButtonAction getActionFromDbById(int nId) {
+		ButtonAction ba = new ButtonAction();
 		try {
-			ButtonAction ba = new ButtonAction();
 
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
@@ -154,10 +158,11 @@ public class ActionVerwaltung {
 			ba.setButton(rs.getInt("button"));
 			ba.setActive(rs.getBoolean("active"));
 			ba.setAction(rs.getString("action"));
-			return ba;
+			stmt.close();
 		} catch (Exception e) {
-			return null;
+			LOGGER.warn("BA not found in DB by Id: " + nId);
 		}
+		return ba;
 	}
 
 	/**
@@ -218,7 +223,7 @@ public class ActionVerwaltung {
 	 * @throws Exception
 	 */
 	private void doActionByButton(ButtonAction ba) throws Exception {
-		if (ba != null) {
+		if (ba.getAction() != null) {
 
 			Integer nTrennlineFirst = ba.getAction().indexOf('|');
 			Integer nTrennlineLast = ba.getAction().lastIndexOf('|');

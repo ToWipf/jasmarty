@@ -29,7 +29,7 @@ public class CustomChars {
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);");
 		} catch (Exception e) {
-			LOGGER.error("init DB");
+			LOGGER.error("init DB" + e);
 		}
 	}
 
@@ -37,18 +37,19 @@ public class CustomChars {
 	 * @return
 	 */
 	public CustomChar getFromDB(int nId) {
+		CustomChar cc = new CustomChar();
 		try {
-			CustomChar cc = new CustomChar();
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM customChars WHERE id = '" + nId + "';");
 			cc.setId(rs.getInt("id"));
 			cc.setName(rs.getString("name"));
 			cc.setPosition(rs.getInt("position"));
 			cc.setData(rs.getString("data"));
-			return cc;
+			stmt.close();
 		} catch (Exception e) {
-			return new CustomChar();
+			LOGGER.warn("getFromDB " + e);
 		}
+		return cc;
 	}
 
 	/**
@@ -59,6 +60,7 @@ public class CustomChars {
 		Statement stmt = SqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES ('" + cc.getId() + "','"
 				+ cc.getName() + "','" + cc.getPosition() + "','" + cc.getData() + "')");
+		stmt.close();
 	}
 
 	/**

@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppTicTacToe {
 
-	private static final Logger LOGGER = Logger.getLogger("MTicTacToe");
+	private static final Logger LOGGER = Logger.getLogger("Telegram TicTacToe");
 
 	/**
 	 * 
@@ -28,9 +28,9 @@ public class TAppTicTacToe {
 			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);");
-
+			stmt.close();
 		} catch (Exception e) {
-			LOGGER.warn("initDB tictactoe " + e);
+			LOGGER.warn("initDB " + e);
 		}
 	}
 
@@ -169,6 +169,7 @@ public class TAppTicTacToe {
 			stmt.execute(
 					"INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES " + "('" + ttt.getChatID()
 							+ "','" + ttt.getFieldString() + "','" + ttt.getDate() + "','" + ttt.getType() + "')");
+			stmt.close();
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("setTicTacToe " + e);
@@ -187,7 +188,7 @@ public class TAppTicTacToe {
 			TicTacToe ttt = new TicTacToe(rs.getString("feld"));
 			// ttt.setChatID(rs.getInt("chatid")); weitere felder sind nicht nötig -> werden
 			// neu befüllt
-			rs.close();
+			stmt.close();
 			return ttt;
 		} catch (Exception e) {
 			// Kann vorkommen wenn kein spiel aktiv ist

@@ -37,7 +37,7 @@ public class TelegramVerwaltung {
 	@Inject
 	TAppTodoList appTodoList;
 
-	private static final Logger LOGGER = Logger.getLogger("MTelegram");
+	private static final Logger LOGGER = Logger.getLogger("Telegram V");
 
 	private Integer nFailCount;
 	private Integer nOffsetID;
@@ -56,8 +56,9 @@ public class TelegramVerwaltung {
 					"CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);");
+			stmt.close();
 		} catch (Exception e) {
-			LOGGER.warn("initDB Telegram " + e);
+			LOGGER.warn("initDB  " + e);
 		}
 	}
 
@@ -86,7 +87,7 @@ public class TelegramVerwaltung {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
 			this.sBotKey = (rs.getString("val"));
-			rs.close();
+			stmt.close();
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("telegrambot nicht in db gefunden."
@@ -101,12 +102,13 @@ public class TelegramVerwaltung {
 	 */
 	public Boolean setbot(String sBot) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + sBot + "')");
 			this.sBotKey = sBot;
+			Statement stmt = SqlLite.getDB();
+			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + this.sBotKey + "')");
+			stmt.close();
 			LOGGER.info("Bot Key: " + this.sBotKey);
-
 			return true;
+
 		} catch (Exception e) {
 			LOGGER.warn("setbot " + e);
 			return false;
@@ -215,6 +217,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
+			stmt.close();
 			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
@@ -231,7 +234,7 @@ public class TelegramVerwaltung {
 			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
 					+ t.getMid() + "','" + t.getMessage() + "','" + t.getAntwort() + "','" + t.getChatID() + "','"
 					+ t.getFrom() + "','" + t.getDate() + "','" + t.getType() + "')");
-
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("saveTelegramToDB " + e);
 		}
@@ -267,15 +270,13 @@ public class TelegramVerwaltung {
 					slog.insert(0, sb);
 				}
 			}
-			rs.close();
+			stmt.close();
 			return slog.toString();
 		} catch (Exception e) {
 			LOGGER.warn("getTelegram" + e);
 			return "FAIL";
 		}
 	}
-
-	/////////////////////////////
 
 	/**
 	 * @param t
@@ -446,6 +447,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemsg WHERE id = " + t.getMessageIntPart(1));
+			stmt.close();
 			return "DEL";
 		} catch (Exception e) {
 			LOGGER.warn("delete telemsg" + e);
@@ -461,6 +463,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemotd WHERE id = " + t.getMessageIntPart(1));
+			stmt.close();
 			return "DEL";
 		} catch (Exception e) {
 			LOGGER.warn("delete telemotd " + e);
@@ -477,6 +480,7 @@ public class TelegramVerwaltung {
 			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
 					+ t.getMessageStringPart(1) + "','" + t.getMessageStringSecond() + "','" + null + "','"
 					+ t.getFrom() + "','" + t.getDate() + "')");
+			stmt.close();
 			return "OK: " + t.getMessageStringPart(1);
 		} catch (Exception e) {
 			LOGGER.warn("add telemsg " + e);
@@ -493,6 +497,7 @@ public class TelegramVerwaltung {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"
 					+ t.getMessageStringFirst() + "','" + t.getFrom() + "','" + t.getDate() + "')");
+			stmt.close();
 			return "IN";
 		} catch (Exception e) {
 			LOGGER.warn("add telemotd " + e);
@@ -502,12 +507,16 @@ public class TelegramVerwaltung {
 
 	/**
 	 * @return
+	 * 
+	 *         TODO del this
 	 */
 	private String countMsg() {
 		try {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemsg;");
-			return rs.getString("COUNT(*)") + " Antworten in der DB";
+			String s = rs.getString("COUNT(*)") + " Antworten in der DB";
+			stmt.close();
+			return s;
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return null;
@@ -516,12 +525,16 @@ public class TelegramVerwaltung {
 
 	/**
 	 * @return
+	 * 
+	 *         TODO del this
 	 */
 	private String countMotd() {
 		try {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemotd;");
-			return rs.getString("COUNT(*)") + " Motds in der DB";
+			String s = rs.getString("COUNT(*)") + " Motds in der DB";
+			stmt.close();
+			return s;
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return null;
@@ -541,13 +554,12 @@ public class TelegramVerwaltung {
 				// Es gibt nur einen Eintrag
 				s = (rs.getString("text"));
 			}
-			rs.close();
-			// return "Nachricht des Tages\n " + MTime.date() + "\n\n" + s;
+			stmt.close();
 			return s;
 
 		} catch (Exception e) {
 			LOGGER.warn("get telemotd " + e);
-			return "Fehler";
+			return "Fehler motd";
 		}
 	}
 
@@ -555,6 +567,8 @@ public class TelegramVerwaltung {
 	 * @param t
 	 * @param nStelle
 	 * @return
+	 * 
+	 *         TODO del this
 	 */
 	private Telegram getMsg(Telegram t, Integer nStelle) {
 		try {
@@ -578,7 +592,7 @@ public class TelegramVerwaltung {
 					n++;
 				}
 			}
-
+			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("get telemsg " + e);
 		}
@@ -588,6 +602,8 @@ public class TelegramVerwaltung {
 	/**
 	 * @param t
 	 * @return
+	 * 
+	 *         TODO del this -> json
 	 */
 	private String getAllMotd() {
 		try {
@@ -599,7 +615,7 @@ public class TelegramVerwaltung {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("text") + "\n");
 			}
-			rs.close();
+			stmt.close();
 			return sb.toString();
 
 		} catch (Exception e) {
@@ -611,6 +627,8 @@ public class TelegramVerwaltung {
 	/**
 	 * @param t
 	 * @return
+	 * 
+	 *         TODO del this -> json
 	 */
 	private String getAllMsg() {
 		try {
@@ -622,7 +640,7 @@ public class TelegramVerwaltung {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("request") + "\n");
 			}
-			rs.close();
+			stmt.close();
 			return sb.toString();
 
 		} catch (Exception e) {
