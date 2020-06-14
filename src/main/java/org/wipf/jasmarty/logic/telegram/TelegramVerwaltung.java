@@ -211,21 +211,6 @@ public class TelegramVerwaltung {
 	}
 
 	/**
-	 * @return
-	 */
-	public String contSend() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
-			stmt.close();
-			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
-		} catch (Exception e) {
-			LOGGER.warn("count Telegram " + e);
-			return null;
-		}
-	}
-
-	/**
 	 * @param t
 	 */
 	public void saveTelegramToDB(Telegram t) {
@@ -538,6 +523,21 @@ public class TelegramVerwaltung {
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return "Fehler countMotd";
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	private String contSend() {
+		try {
+			Statement stmt = SqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
+			stmt.close();
+			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
+		} catch (Exception e) {
+			LOGGER.warn("count Telegram " + e);
+			return "Fehler contSend";
 		}
 	}
 

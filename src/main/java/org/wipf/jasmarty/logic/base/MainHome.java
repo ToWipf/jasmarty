@@ -65,12 +65,9 @@ public class MainHome {
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("Stoppe");
 
-		if (baseSettings.isAppActive("jasmarty")) {
-			jHome.jasmartyStop();
-		}
-		if (baseSettings.isAppActive("telegram")) {
-			tHome.telegramStop();
-		}
+		// Alles beenden -> keine db zum fragen vorhanden
+		jHome.jasmartyStop();
+		tHome.telegramStop();
 
 		LOGGER.info("Gestoppt");
 	}
