@@ -104,16 +104,7 @@ public class Telegram {
 	 * @param sAntwort
 	 */
 	public void setAntwort(String sAntwort) {
-
-		this.sAntwort = escapeString(sAntwort);
-
-	}
-
-	// TODO hier löschen
-	private String escapeString(String s) {
-		return s.replaceAll("\n", "%0A").replaceAll(" ", "%20").replaceAll("\t", "%20").replaceAll("\\|", "%7C")
-				.replaceAll("'", "%27").replaceAll("<", "_").replaceAll(">", "_").replaceAll("'", "_")
-				.replaceAll("\"", "_").replaceAll("\\{", "(").replaceAll("\\}", ")");
+		this.sAntwort = sAntwort;
 	}
 
 	/**
@@ -136,18 +127,6 @@ public class Telegram {
 		}
 
 	}
-
-//	/**
-//	 * @param sAntwort
-//	 */
-//	public void setAntwortOld(String sAntwort) {
-//		try {
-//			this.sAntwort = URLEncoder.encode(sAntwort, "UTF-8");
-//		} catch (UnsupportedEncodingException e) {
-//			this.sAntwort = "FAIL";
-//			MLogger.warn("setAntwort" + e);
-//		}
-//	}
 
 	public void setMessage(String sMessage) {
 		// this.sMessage = new MyString(sMessage).getS();

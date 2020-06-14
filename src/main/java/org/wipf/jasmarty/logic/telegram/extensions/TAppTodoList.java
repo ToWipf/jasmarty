@@ -114,6 +114,7 @@ public class TAppTodoList {
 			}
 			rs.close();
 		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson A: " + e);
 		}
 
 		JSONArray ja = new JSONArray();
@@ -122,7 +123,7 @@ public class TAppTodoList {
 				ja.put(tItem.toJson());
 			}
 		} catch (Exception e) {
-			LOGGER.warn("getAllAsJson" + e);
+			LOGGER.warn("getAllAsJson B: " + e);
 		}
 		return ja;
 	}
