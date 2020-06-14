@@ -10,22 +10,22 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.CustomChar;
-import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.SqlLite;
 
 @ApplicationScoped
 public class CustomChars {
 
-	private static final Logger LOGGER = Logger.getLogger("LcdCustomChars");
-
 	@Inject
 	LcdConnect lcdConnect;
+
+	private static final Logger LOGGER = Logger.getLogger("LcdCustomChars");
 
 	/**
 	 * 
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);");
 		} catch (Exception e) {
@@ -39,7 +39,7 @@ public class CustomChars {
 	public CustomChar getFromDB(int nId) {
 		try {
 			CustomChar cc = new CustomChar();
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM customChars WHERE id = '" + nId + "';");
 			cc.setId(rs.getInt("id"));
 			cc.setName(rs.getString("name"));
@@ -56,7 +56,7 @@ public class CustomChars {
 	 * @throws SQLException
 	 */
 	public void saveToDB(CustomChar cc) throws SQLException {
-		Statement stmt = MsqlLite.getDB();
+		Statement stmt = SqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES ('" + cc.getId() + "','"
 				+ cc.getName() + "','" + cc.getPosition() + "','" + cc.getData() + "')");
 	}

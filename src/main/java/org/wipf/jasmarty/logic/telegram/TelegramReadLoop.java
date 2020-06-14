@@ -16,13 +16,13 @@ import org.wipf.jasmarty.logic.base.Wipf;
 @ApplicationScoped
 public class TelegramReadLoop {
 
-	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
-	private boolean bLoopActive = false;
-
 	@Inject
 	TelegramVerwaltung telegramVerwaltung;
 	@Inject
 	Wipf wipf;
+
+	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
+	private boolean bLoopActive = false;
 
 	/**
 	 * 

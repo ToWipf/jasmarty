@@ -107,7 +107,6 @@ public class TAppOthers {
 			LOGGER.warn("getWitz: " + e);
 			return "no Witz";
 		}
-
 	}
 
 }

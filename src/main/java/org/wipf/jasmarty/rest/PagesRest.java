@@ -21,7 +21,7 @@ import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
  */
 @Path("/pages")
 @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
+// @Consumes(MediaType.APPLICATION_JSON) TODO POST DELETE geht nicht
 @ApplicationScoped
 public class PagesRest {
 
@@ -52,7 +52,7 @@ public class PagesRest {
 	}
 
 	@GET
-	@DELETE // DELETE not work TODO
+	@DELETE
 	@Path("/delete/{pid}")
 	public Response delete(@PathParam("pid") int nPid) {
 		pageVerwaltung.delPageFromDb(nPid);

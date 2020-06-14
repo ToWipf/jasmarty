@@ -14,8 +14,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
-import org.wipf.jasmarty.logic.base.MsqlLite;
-import org.wipf.jasmarty.logic.base.QMain;
+import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
@@ -28,12 +28,6 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 @ApplicationScoped
 public class TelegramVerwaltung {
 
-	private static final Logger LOGGER = Logger.getLogger("MTelegram");
-
-	private Integer nFailCount;
-	private Integer nOffsetID;
-	private String sBotKey;
-
 	@Inject
 	Wipf wipf;
 	@Inject
@@ -43,12 +37,18 @@ public class TelegramVerwaltung {
 	@Inject
 	TAppTodoList appTodoList;
 
+	private static final Logger LOGGER = Logger.getLogger("MTelegram");
+
+	private Integer nFailCount;
+	private Integer nOffsetID;
+	private String sBotKey;
+
 	/**
 	 * 
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
@@ -83,7 +83,7 @@ public class TelegramVerwaltung {
 		this.nOffsetID = 0;
 		// Load bot config
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
 			this.sBotKey = (rs.getString("val"));
 			rs.close();
@@ -101,7 +101,7 @@ public class TelegramVerwaltung {
 	 */
 	public Boolean setbot(String sBot) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + sBot + "')");
 			this.sBotKey = sBot;
 			LOGGER.info("Bot Key: " + this.sBotKey);
@@ -213,7 +213,7 @@ public class TelegramVerwaltung {
 	 */
 	public String contSend() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
 			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
 		} catch (Exception e) {
@@ -227,7 +227,7 @@ public class TelegramVerwaltung {
 	 */
 	public void saveTelegramToDB(Telegram t) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
 					+ t.getMid() + "','" + t.getMessage() + "','" + t.getAntwort() + "','" + t.getChatID() + "','"
 					+ t.getFrom() + "','" + t.getDate() + "','" + t.getType() + "')");
@@ -244,7 +244,7 @@ public class TelegramVerwaltung {
 		try {
 			StringBuilder slog = new StringBuilder();
 			int n = 0;
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			// ResultSet rs = stmt.executeQuery("SELECT * FROM telegrambot WHERE msgid = '"
 			// + nID + "';");
 			ResultSet rs = stmt.executeQuery("SELECT * FROM telegramlog WHERE msgid IS NOT '0' ORDER BY msgdate ASC"); // DESC
@@ -354,7 +354,7 @@ public class TelegramVerwaltung {
 		// Alle festen Antworten
 		switch (t.getMessageStringPart(0)) {
 		case "start":
-			return "Wipfbot Version:" + QMain.VERSION + "\nInfos per 'info'";
+			return "Wipfbot Version:" + MainHome.VERSION + "\nInfos per 'info'";
 		case "v":
 		case "ver":
 		case "version":
@@ -364,7 +364,7 @@ public class TelegramVerwaltung {
 		case "hilfe":
 		case "help":
 		case "wipfbot":
-			return "Wipfbot\nVersion " + QMain.VERSION + "\nCreated by Tobias Fritsch\nwipf2@web.de";
+			return "Wipfbot\nVersion " + MainHome.VERSION + "\nCreated by Tobias Fritsch\nwipf2@web.de";
 		case "r":
 		case "rnd":
 		case "zufall":
@@ -444,7 +444,7 @@ public class TelegramVerwaltung {
 	 */
 	private String delMsg(Telegram t) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemsg WHERE id = " + t.getMessageIntPart(1));
 			return "DEL";
 		} catch (Exception e) {
@@ -459,7 +459,7 @@ public class TelegramVerwaltung {
 	 */
 	private String delMotd(Telegram t) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemotd WHERE id = " + t.getMessageIntPart(1));
 			return "DEL";
 		} catch (Exception e) {
@@ -473,7 +473,7 @@ public class TelegramVerwaltung {
 	 */
 	private String addMsg(Telegram t) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
 					+ t.getMessageStringPart(1) + "','" + t.getMessageStringSecond() + "','" + null + "','"
 					+ t.getFrom() + "','" + t.getDate() + "')");
@@ -490,7 +490,7 @@ public class TelegramVerwaltung {
 	 */
 	private String addMotd(Telegram t) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"
 					+ t.getMessageStringFirst() + "','" + t.getFrom() + "','" + t.getDate() + "')");
 			return "IN";
@@ -505,7 +505,7 @@ public class TelegramVerwaltung {
 	 */
 	private String countMsg() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemsg;");
 			return rs.getString("COUNT(*)") + " Antworten in der DB";
 		} catch (Exception e) {
@@ -519,7 +519,7 @@ public class TelegramVerwaltung {
 	 */
 	private String countMotd() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemotd;");
 			return rs.getString("COUNT(*)") + " Motds in der DB";
 		} catch (Exception e) {
@@ -535,7 +535,7 @@ public class TelegramVerwaltung {
 		try {
 			String s = null;
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from telemotd ORDER BY RANDOM() LIMIT 1");
 			while (rs.next()) {
 				// Es gibt nur einen Eintrag
@@ -560,7 +560,7 @@ public class TelegramVerwaltung {
 		try {
 			Map<String, String> mapS = new HashMap<>();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt
 					.executeQuery("select * from telemsg where request = '" + t.getMessageStringPart(nStelle) + "';");
 			while (rs.next()) {
@@ -593,7 +593,7 @@ public class TelegramVerwaltung {
 		try {
 			StringBuilder sb = new StringBuilder();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from telemotd;");
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
@@ -616,7 +616,7 @@ public class TelegramVerwaltung {
 		try {
 			StringBuilder sb = new StringBuilder();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from telemsg;");
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
@@ -652,7 +652,7 @@ public class TelegramVerwaltung {
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
 		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + countMsg() + "\n" + countMotd() + "\n" + contSend()
-				+ "\n\nVersion:" + QMain.VERSION);
+				+ "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
 		saveTelegramToDB(t);

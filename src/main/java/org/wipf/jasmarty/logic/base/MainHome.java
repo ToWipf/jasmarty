@@ -17,7 +17,7 @@ import io.quarkus.runtime.StartupEvent;
  *
  */
 @ApplicationScoped
-public class QMain {
+public class MainHome {
 
 	@Inject
 	JasmartyHome jHome;
@@ -42,7 +42,7 @@ public class QMain {
 		LOGGER.info("Starte " + VERSION);
 		LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 
-		MsqlLite.startDB();
+		SqlLite.startDB();
 
 		jHome.jasmartyStart();
 		tHome.telegramStart();

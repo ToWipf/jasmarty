@@ -12,7 +12,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TodoEntry;
-import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
  * @author wipf
@@ -30,7 +30,7 @@ public class TAppTodoList {
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			// stmt.executeUpdate("DROP TABLE todolist;");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);");
@@ -99,7 +99,7 @@ public class TAppTodoList {
 		List<TodoEntry> liTodoE = new ArrayList<>();
 
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from todolist WHERE active NOT LIKE 'DONE';");
 
 			while (rs.next()) {
@@ -150,7 +150,7 @@ public class TAppTodoList {
 	public List<TodoEntry> getAll() throws SQLException {
 		List<TodoEntry> liTodoE = new ArrayList<>();
 
-		Statement stmt = MsqlLite.getDB();
+		Statement stmt = SqlLite.getDB();
 		ResultSet rs = stmt.executeQuery("select * from todolist;");
 
 		while (rs.next()) {
@@ -173,7 +173,7 @@ public class TAppTodoList {
 	 */
 	public Integer saveItem(TodoEntry tE) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES " +
 					"('"  + tE.getId() +
@@ -222,7 +222,7 @@ public class TAppTodoList {
 	 */
 	public void deleteItem(Integer nId) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM todolist WHERE id LIKE '" + nId + "';");
 		} catch (Exception e) {
 			LOGGER.warn("del todo " + e);
@@ -251,7 +251,7 @@ public class TAppTodoList {
 	 * @throws SQLException
 	 */
 	private Integer countItems() throws SQLException {
-		Statement stmt = MsqlLite.getDB();
+		Statement stmt = SqlLite.getDB();
 		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist;");
 		return rs.getInt("COUNT(*)");
 	}
@@ -274,7 +274,7 @@ public class TAppTodoList {
 	 */
 	private String count(Integer nTeleID) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist WHERE editby = " + nTeleID + ";");
 			return rs.getString("COUNT(*)") + " Einträge in der DB";
 		} catch (Exception e) {
@@ -289,7 +289,7 @@ public class TAppTodoList {
 	 */
 	private String delByID(Integer nID) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM todolist WHERE id = " + nID);
 			return "DEL";
 		} catch (Exception e) {
@@ -321,7 +321,7 @@ public class TAppTodoList {
 	 */
 	private String mark(String sMark, Integer nID) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("UPDATE todolist SET active ='" + sMark + "' WHERE id = " + nID);
 			return "OK";
 		} catch (Exception e) {

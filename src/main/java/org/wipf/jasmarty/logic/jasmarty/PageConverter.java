@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.LcdPage;
-import org.wipf.jasmarty.logic.base.QMain;
+import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
@@ -19,19 +19,18 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 @ApplicationScoped
 public class PageConverter {
 
-	public static char BLOCK_0_3 = '_';
-	public static char BLOCK_1_3 = 0x02;
-	public static char BLOCK_2_3 = 0x03;
-	public static char BLOCK_3_3 = 0xFF;
-
-	private LcdPage selectedPage;
-
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
 	Wipf wipf;
 	@Inject
 	Winamp winamp;
+
+	public static char BLOCK_0_3 = '_';
+	public static char BLOCK_1_3 = 0x02;
+	public static char BLOCK_2_3 = 0x03;
+	public static char BLOCK_3_3 = 0xFF;
+	private LcdPage selectedPage;
 
 	/**
 	 * @param page
@@ -279,7 +278,7 @@ public class PageConverter {
 		case "winamp":
 			return sBefore + winamp.getInfos(sParameter) + sAfter;
 		case "ver":
-			return sBefore + QMain.VERSION + sAfter;
+			return sBefore + MainHome.VERSION + sAfter;
 		case "char":
 			return sBefore + charByPara(sParameter) + sAfter;
 		default:

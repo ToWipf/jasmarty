@@ -22,7 +22,7 @@ import org.wipf.jasmarty.logic.jasmarty.CustomChars;
 @ApplicationScoped
 public class CustomCharsRest {
 
-	// TESTEN:
+	// Testen mit:
 	//
 	// curl -d '{"name":"test", "id":4, "position":4, "data":"11114444"}' -X POST
 	// localhost:8080/customchars/set

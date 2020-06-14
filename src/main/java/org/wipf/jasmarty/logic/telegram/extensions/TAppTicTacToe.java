@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TicTacToe;
-import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
  * @author wipf
@@ -25,7 +25,7 @@ public class TAppTicTacToe {
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);");
 
@@ -165,7 +165,7 @@ public class TAppTicTacToe {
 	 */
 	private Boolean saveTicTacToe(TicTacToe ttt) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute(
 					"INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES " + "('" + ttt.getChatID()
 							+ "','" + ttt.getFieldString() + "','" + ttt.getDate() + "','" + ttt.getType() + "')");
@@ -182,7 +182,7 @@ public class TAppTicTacToe {
 	 */
 	private TicTacToe loadTicTacToe(Integer nChatid) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM tictactoe WHERE chatid = '" + nChatid + "';");
 			TicTacToe ttt = new TicTacToe(rs.getString("feld"));
 			// ttt.setChatID(rs.getInt("chatid")); weitere felder sind nicht nötig -> werden

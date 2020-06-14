@@ -14,17 +14,17 @@ import org.jboss.logging.Logger;
  *
  */
 @ApplicationScoped
-public class MsqlLite {
+public class SqlLite {
 
 	private static final Logger LOGGER = Logger.getLogger("MsqlLite");
-	private static final MsqlLite dbcontroller = new MsqlLite();
+	private static final SqlLite dbcontroller = new SqlLite();
 	private static Connection connection;
 
 	/**
 	 * 
 	 */
 	public static void startDB() {
-		MsqlLite dbc = MsqlLite.getInstance();
+		SqlLite dbc = SqlLite.getInstance();
 		dbc.initDBConnection();
 	}
 
@@ -54,7 +54,7 @@ public class MsqlLite {
 	/**
 	 * @return
 	 */
-	private static MsqlLite getInstance() {
+	private static SqlLite getInstance() {
 		return dbcontroller;
 	}
 
@@ -67,8 +67,8 @@ public class MsqlLite {
 				LOGGER.warn("initDBConnection Fail C ");
 				return;
 			}
-			LOGGER.info("Verbinde zu Datenbank '" + QMain.DB_PATH + "'");
-			connection = DriverManager.getConnection("jdbc:sqlite:" + QMain.DB_PATH);
+			LOGGER.info("Verbinde zu Datenbank '" + MainHome.DB_PATH + "'");
+			connection = DriverManager.getConnection("jdbc:sqlite:" + MainHome.DB_PATH);
 			if (!connection.isClosed()) {
 				LOGGER.info("Datenbank Ok");
 			}
@@ -85,7 +85,7 @@ public class MsqlLite {
 						connection.close();
 						if (connection.isClosed()) {
 							LOGGER.info("Connection to Database closed");
-							QMain.stopApp();
+							MainHome.stopApp();
 						}
 					}
 				} catch (SQLException e) {

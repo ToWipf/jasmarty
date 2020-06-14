@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.ButtonAction;
-import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
@@ -22,9 +22,6 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 @ApplicationScoped
 public class ActionVerwaltung {
 
-	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
-	private Integer currentPressed;
-
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
@@ -34,12 +31,15 @@ public class ActionVerwaltung {
 	@Inject
 	Winamp winamp;
 
+	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
+	private Integer currentPressed;
+
 	/**
 	 * @throws SQLException
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);");
 		} catch (Exception e) {
@@ -52,7 +52,7 @@ public class ActionVerwaltung {
 	 * @throws SQLException
 	 */
 	public void saveToDB(ButtonAction ba) throws SQLException {
-		Statement stmt = MsqlLite.getDB();
+		Statement stmt = SqlLite.getDB();
 		stmt.execute("INSERT OR REPLACE INTO actions (id, button, active, action) VALUES ('" + ba.getId() + "','"
 				+ ba.getButton() + "','" + ba.isActive() + "','" + ba.getAction() + "')");
 	}
@@ -62,7 +62,7 @@ public class ActionVerwaltung {
 	 */
 	public void delete(Integer nId) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
 		} catch (Exception e) {
 			LOGGER.warn("del" + e);
@@ -77,7 +77,7 @@ public class ActionVerwaltung {
 		try {
 			ButtonAction ba = new ButtonAction();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
 			ba.setId(rs.getInt("id"));
 			ba.setButton(rs.getInt("button"));
@@ -96,7 +96,7 @@ public class ActionVerwaltung {
 	public JSONArray getAllFromDBAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("select * from actions;");
 			while (rs.next()) {
 				JSONObject entry = new JSONObject();
@@ -127,7 +127,7 @@ public class ActionVerwaltung {
 		try {
 			ButtonAction ba = new ButtonAction();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt
 					.executeQuery("SELECT * FROM actions WHERE button = '" + nButton + "' AND active = 'true';");
 			ba.setId(rs.getInt("id"));
@@ -148,7 +148,7 @@ public class ActionVerwaltung {
 		try {
 			ButtonAction ba = new ButtonAction();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
 			ba.setId(rs.getInt("id"));
 			ba.setButton(rs.getInt("button"));

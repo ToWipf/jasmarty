@@ -14,8 +14,6 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 @ApplicationScoped
 public class TelegramHome {
 
-	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
-
 	// @Inject
 	// TAppOthers appOthers;
 	@Inject
@@ -28,6 +26,8 @@ public class TelegramHome {
 	TelegramReadLoop tReadLoop;
 	@Inject
 	TelegramSendTask tSendTask;
+
+	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
 	/**
 	 * 

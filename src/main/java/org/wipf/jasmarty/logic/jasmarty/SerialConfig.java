@@ -8,7 +8,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdConfig;
-import org.wipf.jasmarty.logic.base.MsqlLite;
+import org.wipf.jasmarty.logic.base.SqlLite;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -22,7 +22,7 @@ public class SerialConfig {
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
 		} catch (Exception e) {
 			LOGGER.error("init DB");
@@ -35,7 +35,7 @@ public class SerialConfig {
 	public LcdConfig getConfig() {
 		try {
 			LcdConfig conf = new LcdConfig();
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			conf.setPort(stmt.executeQuery("SELECT val FROM config WHERE key IS 'port';").getString("val"));
 			conf.setRefreshRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'refreshrate';").getInt("val"));
 			conf.setWidth(stmt.executeQuery("SELECT val FROM config WHERE key IS 'widht';").getInt("val"));
@@ -71,7 +71,7 @@ public class SerialConfig {
 	 */
 	public boolean setConfig(LcdConfig conf) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('port','" + conf.getPort() + "')");
 			stmt.execute(
 					"INSERT OR REPLACE INTO config (key, val) VALUES ('refreshrate','" + conf.getRefreshRate() + "')");

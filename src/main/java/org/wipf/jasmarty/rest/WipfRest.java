@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.base.QMain;
+import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 /**
@@ -25,12 +25,12 @@ public class WipfRest {
 	@Inject
 	SerialConfig serialConfig;
 	@Inject
-	QMain qMain;
+	MainHome qMain;
 
 	@GET
 	@Path("/ver")
 	public Response getver() {
-		return Response.ok("{\"ver\":\"" + QMain.VERSION + "\"}").build();
+		return Response.ok("{\"ver\":\"" + MainHome.VERSION + "\"}").build();
 	}
 
 	@GET
@@ -42,7 +42,7 @@ public class WipfRest {
 	@GET
 	@Path("/stop")
 	public Response stopAll() {
-		QMain.stopApp();
+		MainHome.stopApp();
 		return Response.ok().build();
 	}
 

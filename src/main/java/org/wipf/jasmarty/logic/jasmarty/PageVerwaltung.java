@@ -11,8 +11,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdPage;
-import org.wipf.jasmarty.logic.base.MsqlLite;
-import org.wipf.jasmarty.logic.base.QMain;
+import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
  * @author wipf
@@ -21,18 +21,18 @@ import org.wipf.jasmarty.logic.base.QMain;
 @ApplicationScoped
 public class PageVerwaltung {
 
-	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
-	private Integer nSelectedSite = 1;
-
 	@Inject
 	PageConverter pageConverter;
+
+	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
+	private Integer nSelectedSite = 1;
 
 	/**
 	 * @throws SQLException
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
 		} catch (Exception e) {
@@ -45,12 +45,12 @@ public class PageVerwaltung {
 	 */
 	public void writeStartPage() {
 		LcdPage p = getPageFromDb(1);
-		if (!p.getName().equals("Startseite " + QMain.VERSION)) {
+		if (!p.getName().equals("Startseite " + MainHome.VERSION)) {
 			// Wenn es keine Startseite gibt -> schreiben
-			LOGGER.info("Keine Startseite für die Version " + QMain.VERSION + " gefunden -> Schreibe neu");
+			LOGGER.info("Keine Startseite für die Version " + MainHome.VERSION + " gefunden -> Schreibe neu");
 			p = new LcdPage();
 			p.setId(1);
-			p.setName("Startseite " + QMain.VERSION);
+			p.setName("Startseite " + MainHome.VERSION);
 			p.setOptions("1120");
 			p.setLine(0, "$time(HH:mm:ss)");
 			p.setLine(1, "$time(dd MMMM yyyy)");
@@ -73,7 +73,7 @@ public class PageVerwaltung {
 		p.setLine(0, "Beendet");
 		p.setLine(1, "");
 		p.setLine(2, "-wipf-");
-		p.setLine(3, "V" + QMain.VERSION);
+		p.setLine(3, "V" + MainHome.VERSION);
 		writePage(p);
 	}
 
@@ -94,7 +94,7 @@ public class PageVerwaltung {
 	 */
 	public void pageToDb(LcdPage page) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
 					+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
 		} catch (SQLException e) {
@@ -108,7 +108,7 @@ public class PageVerwaltung {
 	 */
 	public void delPageFromDb(Integer nId) {
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM pages WHERE id = " + nId);
 		} catch (SQLException e) {
 			LOGGER.warn("delPageFromDB " + e);
@@ -123,7 +123,7 @@ public class PageVerwaltung {
 		try {
 			LcdPage page = new LcdPage();
 
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE id = '" + nId + "';");
 			page.setId(rs.getInt("id"));
 			page.setName(rs.getString("name"));
@@ -187,7 +187,7 @@ public class PageVerwaltung {
 	public JSONArray getAllPages() {
 		JSONArray ja = new JSONArray();
 		try {
-			Statement stmt = MsqlLite.getDB();
+			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT id, name FROM pages");
 			while (rs.next()) {
 				JSONObject entry = new JSONObject();
