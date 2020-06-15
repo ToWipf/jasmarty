@@ -20,13 +20,13 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public load(): void {
-    this.http.get(this.rest.gethost() + "config/get").subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + "lcd/config/get").subscribe((resdata) => {
       this.jaconfig = resdata;
     });
   }
 
   public save(): void {
-    this.http.post(this.rest.gethost() + "config/set", JSON.stringify(this.jaconfig)).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + "lcd/config/set", JSON.stringify(this.jaconfig)).subscribe((resdata: any) => {
       if (resdata.save) {
         console.log("saved");
         this.startLcdAgain();
