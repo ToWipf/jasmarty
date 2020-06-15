@@ -12,15 +12,24 @@ export class TelegramConfigComponent implements OnInit {
 
   public sText: string;
   public sStatus: string;
-  public todo: string;
+  public sBotKey: string;
   public bTelegramActive: boolean;
 
   ngOnInit() {
     this.getTelegramActive();
+    this.getBotKey();
   }
 
-  public save(): void {
-    // TODO:
+  public getBotKey(): void {
+    this.http.get(this.rest.gethost() + "telegram/getbot").subscribe((resdata: any) => {
+      this.sBotKey = resdata.botkey;
+    });
+  }
+
+  public setBotKey(): void {
+    this.http.post(this.rest.gethost() + "telegram/setbot/" + this.sBotKey, "").subscribe((resdata: any) => {
+      console.log(resdata);
+    });
   }
 
   public refreshOn(): void {
@@ -58,9 +67,8 @@ export class TelegramConfigComponent implements OnInit {
   }
 
   public setTelegramActive(bStatus: boolean): void {
-    this.http.post(this.rest.gethost() + "basesettings/set/telegram/" + bStatus,"").subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + "basesettings/set/telegram/" + bStatus, "").subscribe((resdata: any) => {
       console.log(resdata);
     });
   }
-
 }

@@ -44,13 +44,19 @@ public class TelegramRest {
 	@POST
 	@Path("/setbot/{bot}")
 	public Response setbot(@PathParam("bot") String sBot) {
-		return Response.ok("{\"state\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
+		return Response.ok("{\"status\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
+	}
+
+	@GET
+	@Path("/getbot")
+	public Response getbot() {
+		return Response.ok("{\"botkey\":\"" + telegramVerwaltung.getBotKey() + "\"}").build();
 	}
 
 	@POST
 	@Path("/sendMsgToGroup/{msg}")
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
-		return Response.ok("{\"state\":\"" + telegramVerwaltung.sendMsgToGroup(sMsg) + "\"}").build();
+		return Response.ok("{\"status\":\"" + telegramVerwaltung.sendMsgToGroup(sMsg) + "\"}").build();
 	}
 
 	@GET

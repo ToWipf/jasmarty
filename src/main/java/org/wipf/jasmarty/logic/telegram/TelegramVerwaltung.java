@@ -44,6 +44,13 @@ public class TelegramVerwaltung {
 	private String sBotKey;
 
 	/**
+	 * @return
+	 */
+	public String getBotKey() {
+		return this.sBotKey;
+	}
+
+	/**
 	 * 
 	 */
 	public void initDB() {

@@ -10,17 +10,16 @@
             <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
                 <div class="form-group">
-                    <!-- TODO:! -->
                     <span class="title">BotKey</span>
-                    <input type="text" class="form-control inbutton" [(ngModel)]="todo" placeholder="Bitte eintragen TODO">
+                    <input type="text" class="form-control inbutton" [(ngModel)]="sBotKey" placeholder="Bitte eintragen">
                 </div>
-                <div class="form-group">
-                    <!-- TODO:! -->
+                <!-- <div class="form-group">
+                    TODO:! 
                     <span class="title">Meine Telegram id(s?)</span>
                     <input type="text" class="form-control inbutton" [(ngModel)]="todo" placeholder="Bitte eintragen TODO">
-                </div>
+                </div> -->
             </perfect-scrollbar>
-            <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button>
+            <button type="button" class="btn btn-primary inbutton" (click)="setBotKey()">Speichern</button>
         </div>
         <div class="gridCol">
             <h4>Hauptfunktionen</h4>
