@@ -9,8 +9,8 @@ import org.json.JSONObject;
 public class LcdConfig {
 
 	private String sPort;
-	private Integer nHeight;
-	private Integer nWidth;
+	private Integer nHeight = 0;
+	private Integer nWidth = 0;
 	private Integer nBaudRate;
 	private int nRefreshRate;
 

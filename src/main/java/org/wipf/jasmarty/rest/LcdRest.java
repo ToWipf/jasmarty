@@ -2,7 +2,6 @@ package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,7 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  */
 @Path("/lcd")
 @Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+//@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class LcdRest {
 
