@@ -18,18 +18,6 @@ public class SerialConfig {
 	private static final Logger LOGGER = Logger.getLogger("SerialConfig");
 
 	/**
-	 * 
-	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
-		} catch (Exception e) {
-			LOGGER.error("init DB " + e);
-		}
-	}
-
-	/**
 	 * @return
 	 */
 	public LcdConfig getConfig() {

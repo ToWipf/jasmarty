@@ -46,7 +46,6 @@ public class JasmartyHome {
 	public void jasmartyStart() {
 		LOGGER.info("Starten");
 		pageVerwaltung.initDB();
-		serialConfig.initDB();
 		actionVerwaltung.initDB();
 		customChars.initDB();
 

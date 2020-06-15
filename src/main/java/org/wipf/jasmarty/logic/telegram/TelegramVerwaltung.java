@@ -49,7 +49,6 @@ public class TelegramVerwaltung {
 	public void initDB() {
 		try {
 			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
 			stmt.executeUpdate(
 					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
 			stmt.executeUpdate(
