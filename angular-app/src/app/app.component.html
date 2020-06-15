@@ -1,6 +1,5 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
-
     <mat-drawer #drawer [mode]="mode.value">
         <div class="sidebar">
             <div class="titlemenue">Hauptmenü</div>
@@ -25,7 +24,6 @@
     </mat-drawer>
 
     <mat-drawer-content>
-
         <div class="hide">
             <mat-form-field>
                 <mat-select #mode value="push"></mat-select>
@@ -59,16 +57,6 @@
             </div>
         </div>
         <app-footer class="myfooter"></app-footer>
-
-
-
-        <!-- <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button> -->
-
     </mat-drawer-content>
 
 </mat-drawer-container>
-
-
-<!-- <ng-sidebar [(opened)]="opened" position="left">
-        
-    </ng-sidebar> -->

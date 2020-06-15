@@ -33,7 +33,7 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public loadConfig(): void {
-    this.http.get(this.rest.gethost() + "config/get").subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + "lcd/config/get").subscribe((resdata) => {
       this.jaconfig = resdata;
     });
   }
@@ -87,7 +87,7 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public deletePage(): void {
-    this.http.get(this.rest.gethost() + "pages/delete/" + this.selectedPage).subscribe((resdata) => {
+    this.http.delete(this.rest.gethost() + "pages/delete/" + this.selectedPage).subscribe((resdata) => {
       this.getSite();
     });
   }

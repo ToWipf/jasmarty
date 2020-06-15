@@ -2,7 +2,6 @@ package org.wipf.jasmarty.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -25,8 +24,6 @@ public class ActionRest {
 
 	@Inject
 	ActionVerwaltung actionVerwaltung;
-
-	// TODO mv lcd action ?
 
 	@GET
 	@Path("/currentPressed")
@@ -61,7 +58,6 @@ public class ActionRest {
 	}
 
 	@GET
-	@DELETE
 	@Path("/delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
 		actionVerwaltung.delete(nId);

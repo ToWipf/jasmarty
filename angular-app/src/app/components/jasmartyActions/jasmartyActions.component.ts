@@ -40,7 +40,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   public deleteItem(item: buttonaction): void {
     // TODO: ADD nachfragen dialog
-    this.http.get(this.rest.gethost() + "actions/delete/" + item.id).subscribe((resdata: any) => {
+    this.http.delete(this.rest.gethost() + "actions/delete/" + item.id).subscribe((resdata: any) => {
       this.load();
     });
   }

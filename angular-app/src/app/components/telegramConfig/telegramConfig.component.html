@@ -4,11 +4,11 @@
     <div class="gridRow">
         <div class="gridCol">
             <h4>Grundeinstellungen</h4>
+            <mat-checkbox class="example-margin" (ngModelChange)="setTelegramActive($event)" [(ngModel)]="bTelegramActive">
+                Telegram Aktivieren
+            </mat-checkbox>
+            <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
-                <mat-checkbox class="example-margin" (ngModelChange)="setTelegramActive($event)" [(ngModel)]="bTelegramActive">
-                    Telegram Aktivieren
-                </mat-checkbox>
-                <hr>
                 <div class="form-group">
                     <!-- TODO:! -->
                     <span class="title">BotKey</span>
@@ -24,6 +24,7 @@
         </div>
         <div class="gridCol">
             <h4>Hauptfunktionen</h4>
+            <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 500px;">
                 <button type="button" class="btn btn-danger inbutton" (click)="stopApp() ">JaSmarty Beenden</button>
                 <hr>
@@ -35,8 +36,10 @@
         </div>
 
         <div class="gridCol">
+            <h4>Telegram Nachricht senden: </h4>
+            <hr>
+            <code>{{sText}}</code>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Telegram Nachricht senden: {{sText}}</label>
                 <input type="text" class="form-control inbutton" [(ngModel)]="sText" placeholder="Nachrichten Text">
                 <button type="button" class="btn btn-primary inbutton" (click)="sendMsgToGroup()">Senden</button>
             </div>

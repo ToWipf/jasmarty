@@ -4,10 +4,12 @@
     <div class="gridRow">
         <div class="gridCol">
             <h4>Grundeinstellungen</h4>
+            <hr>
+            <mat-checkbox class="example-margin" (ngModelChange)="setJasmartyActive($event)" [(ngModel)]="bJasmartyActive">
+                Jasmarty Aktivieren
+            </mat-checkbox>
+            <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
-                <mat-checkbox class="example-margin" (ngModelChange)="setJasmartyActive($event)" [(ngModel)]="bJasmartyActive">
-                    Jasmarty Aktivieren
-                </mat-checkbox>
                 <div class="form-group">
                     <ng-container *ngIf="jaconfig">
 
@@ -33,6 +35,7 @@
         </div>
         <div class="gridCol">
             <h4>Verfügbare Ports</h4>
+            <hr>
             <div *ngFor="let p of ports;">
                 <code>{{p.name}}</code>
             </div>
@@ -40,6 +43,7 @@
         </div>
         <div class="gridCol">
             <h4>Hauptfunktionen</h4>
+            <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 500px;">
                 <button type="button" class="btn btn-danger inbutton" (click)="stopApp()">JaSmarty Beenden</button>
                 <hr>

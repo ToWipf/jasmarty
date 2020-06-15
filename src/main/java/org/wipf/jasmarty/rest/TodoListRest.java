@@ -31,7 +31,6 @@ public class TodoListRest {
 		return Response.ok("{\"save\":\"" + todoList.saveItem(jnRoot) + "\"}").build();
 	}
 
-	@GET
 	@DELETE
 	@Path("/delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {

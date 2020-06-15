@@ -57,7 +57,6 @@ public class PagesRest {
 		return Response.ok().build();
 	}
 
-	@GET
 	@DELETE
 	@Path("/delete/{pid}")
 	public Response delete(@PathParam("pid") int nPid) {

@@ -48,7 +48,7 @@ export class todolistComponent implements OnInit {
 
   public deleteItem(item: todoEntry): void {
     // TODO: ADD nachfragen dialog
-    this.http.get(this.rest.gethost() + "todolist/delete/" + item.id).subscribe((resdata: any) => {
+    this.http.delete(this.rest.gethost() + "todolist/delete/" + item.id).subscribe((resdata: any) => {
       this.load();
     });
   }

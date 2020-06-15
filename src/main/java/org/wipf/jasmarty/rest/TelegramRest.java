@@ -41,7 +41,6 @@ public class TelegramRest {
 		return Response.ok().build();
 	}
 
-	@GET
 	@POST
 	@Path("/setbot/{bot}")
 	public Response setbot(@PathParam("bot") String sBot) {
