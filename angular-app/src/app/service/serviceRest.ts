@@ -15,5 +15,11 @@ export class ServiceRest {
   public sethost(host: string): void {
     this.host = host;
   }
+
+  public sethostExpect(): void {
+    let sHref = window.location.href;
+    let sTmp = sHref.substring(0, sHref.lastIndexOf("/"));
+    this.host = sTmp.substring(0, sTmp.lastIndexOf("/") + 1);
+  }
   
 }

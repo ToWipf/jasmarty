@@ -16,32 +16,40 @@ export class FooterComponent implements OnInit {
   public sJavaVersion: string = "0.0";
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;
-  private sHost: string = this.rest.gethost();
+  public bSethostExpectFirstTry: boolean = true;
 
   ngOnInit() {
     this.getVersion();
   }
 
   private getVersion(): void {
-    this.http.get(this.sHost + "wipf/ver").subscribe((resdata: any) => {
-      this.bCantLoad = false;
-      this.sJavaVersion = resdata.ver.toString();
-      if (this.sAppVersion < this.sJavaVersion) {
-        this.bOldVersionWarn = true;
+    this.http.get(this.rest.gethost() + "wipf/ver").subscribe(
+      (resdata: any) => {
+        this.bCantLoad = false;
+        this.sJavaVersion = resdata.ver.toString();
+        if (this.sAppVersion < this.sJavaVersion) {
+          this.bOldVersionWarn = true;
+        }
+      },
+      (error) => {
+        if (this.bSethostExpectFirstTry){
+          this.rest.sethostExpect();
+          this.getVersion();
+          this.bSethostExpectFirstTry = false;
+        }
       }
-    });
+    );
   }
 
   public openSetServer(): void {
     const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
       width: "250px",
       height: "300px",
-      data: this.sHost,
+      data: this.rest.gethost(),
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.sHost = result;
         this.rest.sethost(result);
         this.getVersion();
       }
@@ -56,20 +64,7 @@ export class FooterComponent implements OnInit {
 export class FooterComponentSetServerDialog {
   constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) {}
 
-  public sExpectHref: string;
-
-  ngOnInit() {
-    console.log(window.location.href);
-    let sHref = window.location.href;
-    let sTmp = sHref.substring(0, sHref.lastIndexOf("/"));
-    this.sExpectHref = sTmp.substring(0, sTmp.lastIndexOf("/") + 1);
-  }
-
   onNoClick(): void {
     this.dialogRef.close();
-  }
-
-  public setHostExpect(): void {
-    this.data = this.sExpectHref;
   }
 }
