@@ -47,8 +47,6 @@ public class MainHome {
 		SqlLite.startDB();
 
 		baseSettings.initDB();
-		baseSettings.setAppStatus("telegram", true);
-		baseSettings.setAppStatus("jasmarty", true);
 
 		if (baseSettings.isAppActive("jasmarty")) {
 			jHome.jasmartyStart();
