@@ -44,6 +44,12 @@ public class PagesRest {
 		return Response.ok(pageVerwaltung.getPageFromDb(nPid).toJson()).build();
 	}
 
+	@GET
+	@Path("/current")
+	public Response getCurrent() {
+		return Response.ok(pageConverter.getCurrentSite().toJson()).build();
+	}
+
 	@POST
 	@Path("/save")
 	public Response save(String jnRoot) {
@@ -63,12 +69,6 @@ public class PagesRest {
 	@Path("/getAllPages")
 	public Response getAllPages() {
 		return Response.ok(pageVerwaltung.getAllPages().toString()).build();
-	}
-
-	@GET
-	@Path("/current")
-	public Response getCurrent() {
-		return Response.ok(pageConverter.getCurrentSite().toJson()).build();
 	}
 
 }

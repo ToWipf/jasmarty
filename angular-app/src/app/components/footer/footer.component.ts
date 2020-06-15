@@ -33,8 +33,6 @@ export class FooterComponent implements OnInit {
   }
 
   public openSetServer(): void {
-
-
     const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
       width: "250px",
       height: "300px",
@@ -58,11 +56,20 @@ export class FooterComponent implements OnInit {
 export class FooterComponentSetServerDialog {
   constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) {}
 
+  public sExpectHref: string;
+
+  ngOnInit() {
+    console.log(window.location.href);
+    let sHref = window.location.href;
+    let sTmp = sHref.substring(0, sHref.lastIndexOf("/"));
+    this.sExpectHref = sTmp.substring(0, sTmp.lastIndexOf("/") + 1);
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  public setHost(host: string): void {
-    this.data = host;
+  public setHostExpect(): void {
+    this.data = this.sExpectHref;
   }
 }

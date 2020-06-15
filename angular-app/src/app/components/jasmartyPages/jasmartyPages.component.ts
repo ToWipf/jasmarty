@@ -71,7 +71,7 @@ export class JasmartyPagesComponent implements OnInit {
       this.selectedPage = 1;
     }
 
-    this.http.get("http://localhost:8080/pages/get/" + this.selectedPage).subscribe((resdata: japage) => {
+    this.http.get(this.rest.gethost() + "pages/get/" + this.selectedPage).subscribe((resdata: japage) => {
       this.japage = resdata;
 
       if (this.japage.id == 0) {
@@ -81,13 +81,13 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public selectPage(): void {
-    this.http.get("http://localhost:8080/pages/select/" + this.selectedPage).subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + "pages/select/" + this.selectedPage).subscribe((resdata) => {
       console.log(resdata);
     });
   }
 
   public deletePage(): void {
-    this.http.get("http://localhost:8080/pages/delete/" + this.selectedPage).subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + "pages/delete/" + this.selectedPage).subscribe((resdata) => {
       this.getSite();
     });
   }
