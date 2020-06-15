@@ -12,17 +12,17 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private rest: ServiceRest) {}
 
   public displayLive: displayLcd;
-  public loopStop: boolean = false;
   public display: string[] = [];
   public pagelist: japageForList[] = [];
-
+  public bLoopStop: boolean = false;
+  
   ngOnInit() {
     this.loopLoadNew();
     this.getAllPages();
   }
 
   public ngOnDestroy(): void {
-    this.loopStop = true;
+    this.bLoopStop = true;
   }
 
   public refreshNow(): void {
@@ -38,7 +38,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private loopLoadNew(): void {
-    if (!this.loopStop) {
+    if (!this.bLoopStop) {
       // get current button
       setTimeout(() => {
         this.loopLoadNew();
@@ -48,14 +48,17 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getLcdSoll(): void {
-    this.http.get(this.rest.gethost() + "lcd/soll").subscribe((resdata: displayLcd) => {
-      this.displayLive = resdata;
-
-      this.displayLive.display.forEach((line) => {
-        this.display[line.line] = line.data;
-      });
-      console.log(this.display);
-    });
+    this.http.get(this.rest.gethost() + "lcd/soll").subscribe(
+      (resdata: displayLcd) => {
+        this.displayLive = resdata;
+        this.displayLive.display.forEach((line) => {
+          this.display[line.line] = line.data;
+        });
+      },
+      (error) => {
+        this.bLoopStop = true;
+      }
+    );
   }
 
   private getAllPages(): void {

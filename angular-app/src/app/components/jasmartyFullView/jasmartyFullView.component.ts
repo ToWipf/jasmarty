@@ -12,7 +12,7 @@ export class JasmartyFullViewComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest) {}
 
   public displayLive: displayLcd;
-  public loopStop: boolean = false;
+  public bLoopStop: boolean = false;
   public display: string[] = [];
 
   ngOnInit() {
@@ -20,11 +20,11 @@ export class JasmartyFullViewComponent implements OnInit {
   }
 
   public ngOnDestroy(): void {
-    this.loopStop = true;
+    this.bLoopStop = true;
   }
 
   private loopLoadNew(): void {
-    if (!this.loopStop) {
+    if (!this.bLoopStop) {
       // get current button
       setTimeout(() => {
         this.loopLoadNew();
@@ -34,13 +34,16 @@ export class JasmartyFullViewComponent implements OnInit {
   }
 
   private getLcdSoll(): void {
-    this.http.get(this.rest.gethost() + "lcd/soll").subscribe((resdata: displayLcd) => {
-      this.displayLive = resdata;
-
-      this.displayLive.display.forEach((line) => {
-        this.display[line.line] = line.data;
-      });
-      console.log(this.display);
-    });
+    this.http.get(this.rest.gethost() + "lcd/soll").subscribe(
+      (resdata: displayLcd) => {
+        this.displayLive = resdata;
+        this.displayLive.display.forEach((line) => {
+          this.display[line.line] = line.data;
+        });
+      },
+      (error) => {
+        this.bLoopStop = true;
+      }
+    );
   }
 }

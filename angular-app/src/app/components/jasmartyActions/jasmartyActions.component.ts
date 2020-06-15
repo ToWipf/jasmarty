@@ -21,7 +21,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   public tableDataSource: any;
   public displayedColumns: string[] = ["button", "action", "edit", "test"];
   public lastPressed: number = null;
-  public loopStop: boolean = false;
+  public bLoopStop: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -29,7 +29,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.loopStop = true;
+    this.bLoopStop = true;
   }
 
   public newItem(): void {
@@ -92,7 +92,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private loopLoadButton(): void {
-    if (!this.loopStop) {
+    if (!this.bLoopStop) {
       // get current button
       setTimeout(() => {
         this.loopLoadButton();
@@ -102,12 +102,17 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.http.get(this.rest.gethost() + "actions/currentPressed").subscribe((resdata: any) => {
-      console.log(resdata.btn);
-      if (resdata.btn) {
-        this.lastPressed = resdata.btn;
+    this.http.get(this.rest.gethost() + "actions/currentPressed").subscribe(
+      (resdata: any) => {
+        console.log(resdata.btn);
+        if (resdata.btn) {
+          this.lastPressed = resdata.btn;
+        }
+      },
+      (error) => {
+        this.bLoopStop = true;
       }
-    });
+    );
   }
 }
 
