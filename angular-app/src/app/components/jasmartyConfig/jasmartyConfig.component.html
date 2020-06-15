@@ -5,6 +5,9 @@
         <div class="gridCol">
             <h4>Grundeinstellungen</h4>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
+                <mat-checkbox class="example-margin" (ngModelChange)="setJasmartyActive($event)" [(ngModel)]="bJasmartyActive">
+                    Jasmarty Aktivieren
+                </mat-checkbox>
                 <div class="form-group">
                     <ng-container *ngIf="jaconfig">
 

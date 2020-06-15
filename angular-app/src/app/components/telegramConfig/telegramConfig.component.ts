@@ -13,9 +13,10 @@ export class TelegramConfigComponent implements OnInit {
   public sText: string;
   public sStatus: string;
   public todo: string;
+  public bTelegramActive: boolean;
 
   ngOnInit() {
-    // TODO:
+    this.getTelegramActive();
   }
 
   public save(): void {
@@ -49,4 +50,17 @@ export class TelegramConfigComponent implements OnInit {
       });
     }
   }
+
+  public getTelegramActive(): void {
+    this.http.get(this.rest.gethost() + "basesettings/get/telegram").subscribe((resdata: any) => {
+      this.bTelegramActive = resdata.active;
+    });
+  }
+
+  public setTelegramActive(bStatus: boolean): void {
+    this.http.post(this.rest.gethost() + "basesettings/set/telegram/" + bStatus,"").subscribe((resdata: any) => {
+      console.log(resdata);
+    });
+  }
+
 }

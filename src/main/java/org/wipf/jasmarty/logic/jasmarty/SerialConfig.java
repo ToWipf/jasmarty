@@ -42,7 +42,7 @@ public class SerialConfig {
 	 */
 	private LcdConfig defaultConfig() {
 		LcdConfig lcDef = new LcdConfig();
-		lcDef.setPort("COM10");
+		lcDef.setPort("");
 		lcDef.setHeight(4);
 		lcDef.setWidth(20);
 		lcDef.setBaudRate(9600);

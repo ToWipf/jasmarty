@@ -5,6 +5,10 @@
         <div class="gridCol">
             <h4>Grundeinstellungen</h4>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
+                <mat-checkbox class="example-margin" (ngModelChange)="setTelegramActive($event)" [(ngModel)]="bTelegramActive">
+                    Telegram Aktivieren
+                </mat-checkbox>
+                <hr>
                 <div class="form-group">
                     <!-- TODO:! -->
                     <span class="title">BotKey</span>
@@ -18,7 +22,6 @@
             </perfect-scrollbar>
             <button type="button" class="btn btn-primary inbutton" (click)="save()">Speichern</button>
         </div>
-
         <div class="gridCol">
             <h4>Hauptfunktionen</h4>
             <perfect-scrollbar style="max-width: 500px; max-height: 500px;">

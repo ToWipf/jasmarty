@@ -13,10 +13,12 @@ export class JasmartyConfigComponent implements OnInit {
 
   public jaconfig: jaconfig = {};
   public ports: [{ name: string }];
+  public bJasmartyActive: boolean;
 
   ngOnInit() {
     this.load();
     this.getPorts();
+    this.getJasmartyActive();
   }
 
   public load(): void {
@@ -76,6 +78,18 @@ export class JasmartyConfigComponent implements OnInit {
 
   public stopApp(): void {
     this.http.get(this.rest.gethost() + "wipf/stop").subscribe((resdata: any) => {
+      console.log(resdata);
+    });
+  }
+
+  public getJasmartyActive(): void {
+    this.http.get(this.rest.gethost() + "basesettings/get/jasmarty").subscribe((resdata: any) => {
+      this.bJasmartyActive = resdata.active;
+    });
+  }
+
+  public setJasmartyActive(bStatus: boolean): void {
+    this.http.post(this.rest.gethost() + "basesettings/set/jasmarty/" + bStatus,"").subscribe((resdata: any) => {
       console.log(resdata);
     });
   }
