@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -305,27 +307,6 @@ public class Wipf {
 	 * @param s
 	 * @return
 	 */
-	public String escapeStringHtml(String s) {
-		// @formatter:off
-		return s.replaceAll("\n", "%0A")
-				.replaceAll(" ", "%20")
-				.replaceAll("\t", "%20")
-				.replaceAll("\\|", "%7C")
-				.replaceAll("'", "%27")
-				.replaceAll("<", "_")
-				.replaceAll(">", "_")
-				.replaceAll("'", "_")
-				.replaceAll("\"", "_")
-				.replaceAll("\\{", "(")
-				.replaceAll("\\}", ")")
-				.trim();
-		// @formatter:on
-	}
-
-	/**
-	 * @param s
-	 * @return
-	 */
 	public String escapeStringSaveCode(String s) {
 		// @formatter:off
 		return s.replaceAll("\t", " ")
@@ -342,6 +323,18 @@ public class Wipf {
 				.replaceAll("!", "")
 				.trim();
 		// @formatter:on
+	}
+
+	/**
+	 * @param value
+	 * @return
+	 */
+	public String encodeUrlString(String value) {
+		try {
+			return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+		} catch (Exception e) {
+			return "Fehler 51";
+		}
 	}
 
 	/**
