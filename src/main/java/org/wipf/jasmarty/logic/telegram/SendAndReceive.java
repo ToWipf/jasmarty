@@ -2,9 +2,6 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,7 +14,9 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.telegram.extensions.TAppMotd;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppOthers;
+import org.wipf.jasmarty.logic.telegram.extensions.TAppTeleMsg;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTicTacToe;
 import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
 
@@ -26,7 +25,7 @@ import org.wipf.jasmarty.logic.telegram.extensions.TAppTodoList;
  *
  */
 @ApplicationScoped
-public class TelegramVerwaltung {
+public class SendAndReceive {
 
 	@Inject
 	Wipf wipf;
@@ -36,19 +35,20 @@ public class TelegramVerwaltung {
 	TAppTicTacToe appTicTacToe;
 	@Inject
 	TAppTodoList appTodoList;
+	@Inject
+	MsgLog msglog;
+	@Inject
+	AdminUser adminUser;
+	@Inject
+	TAppTeleMsg appTeleMsg;
+	@Inject
+	TAppMotd appMotd;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram V");
 
 	private Integer nFailCount;
 	private Integer nOffsetID;
 	private String sBotKey;
-
-	/**
-	 * @return
-	 */
-	public String getBotKey() {
-		return this.sBotKey;
-	}
 
 	/**
 	 * 
@@ -125,7 +125,8 @@ public class TelegramVerwaltung {
 	 * @param t
 	 * @return
 	 */
-	public void sendToTelegram(Telegram t) {
+	@Metered
+	private void sendToTelegram(Telegram t) {
 		try {
 			String sAntwort = wipf.escapeStringHtml(t.getAntwort());
 			if (sAntwort == null || sAntwort.equals("")) {
@@ -197,7 +198,7 @@ public class TelegramVerwaltung {
 				}
 
 				t.setAntwort(menueMsg(t));
-				saveTelegramToLog(t);
+				msglog.saveTelegramToLog(t);
 				sendToTelegram(t);
 
 			}
@@ -219,69 +220,11 @@ public class TelegramVerwaltung {
 
 	/**
 	 * @param t
-	 */
-	public void saveTelegramToLog(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
-					+ t.getMid() + "','" + t.getMessage().replaceAll("'", "_") + "','"
-					+ t.getAntwort().replaceAll("'", "_") + "','" + t.getChatID() + "','" + t.getFrom() + "','"
-					+ t.getDate() + "','" + t.getType() + "')");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("id  : " + t.getMid());
-			LOGGER.warn("msg : " + t.getMessage());
-			LOGGER.warn("antw: " + t.getAntwort());
-			LOGGER.warn("from: " + t.getFrom());
-			LOGGER.warn("saveTelegramToLog " + e);
-		}
-	}
-
-	/**
-	 * @return log
-	 */
-	public String getTelegramLog(String sFilter) {
-		try {
-			StringBuilder slog = new StringBuilder();
-			int n = 0;
-			Statement stmt = SqlLite.getDB();
-			// ResultSet rs = stmt.executeQuery("SELECT * FROM telegrambot WHERE msgid = '"
-			// + nID + "';");
-			ResultSet rs = stmt.executeQuery("SELECT * FROM telegramlog WHERE msgid IS NOT '0' ORDER BY msgdate ASC"); // DESC
-
-			while (rs.next()) {
-				n++;
-				Date date = new Date(rs.getLong("msgdate") * 1000);
-				StringBuilder sb = new StringBuilder();
-
-				if (sFilter == null || !rs.getString("msgfrom").contains(sFilter)) {
-					sb.append(n + ":\n");
-					sb.append("msgid:  \t" + rs.getString("msgid") + "\n");
-					sb.append("msg in: \t" + rs.getString("msg") + "\n");
-					sb.append("msg out:\t" + rs.getString("antw") + "\n");
-					sb.append("chatid: \t" + rs.getString("chatid") + "\n");
-					sb.append("msgfrom:\t" + rs.getString("msgfrom") + "\n");
-					sb.append("msgdate:\t" + date + "\n");
-					sb.append("type:   \t" + rs.getString("type") + "\n");
-					sb.append("----------------\n\n");
-					slog.insert(0, sb);
-				}
-			}
-			stmt.close();
-			return slog.toString();
-		} catch (Exception e) {
-			LOGGER.warn("getTelegram" + e);
-			return "FAIL";
-		}
-	}
-
-	/**
-	 * @param t
 	 * @return
 	 */
 	public String menueMsg(Telegram t) {
 		// Admin Befehle
-		if (isAdminUser(t)) {
+		if (adminUser.isAdminUser(t)) {
 			switch (t.getMessageStringPart(0)) {
 			case "admin":
 				// @formatter:off
@@ -306,29 +249,21 @@ public class TelegramVerwaltung {
 
 			// Anbindung an msg datenbank
 			case "addamsgtodb":
-				return addMsg(t);
+				return appTeleMsg.addMsg(t);
 			case "getallmsg":
-				return getAllMsg();
+				return appTeleMsg.getAllMsg();
 			case "delmsg":
-				return delMsg(t);
+				return appTeleMsg.delMsg(t);
 
 			// Anbindung an motd datenbank
 			case "addamotd":
-				return addMotd(t);
+				return appMotd.addMotd(t);
 			case "getallmotd":
-				return getAllMotd();
+				return appMotd.getAllMotd();
 			case "delmotd":
-				return delMotd(t);
+				return appMotd.delMotd(t);
 			case "getmotd":
-				return getMotd();
-
-			// Auto Msg Tests
-			case "sendmotd":
-				sendDaylyMotd();
-				return "OK";
-			case "sendinfo":
-				sendDaylyInfo();
-				return "OK";
+				return appMotd.getRndMotd();
 
 			case "doping":
 				return wipf.ping(t.getMessageStringPart(1)).toString();
@@ -399,11 +334,11 @@ public class TelegramVerwaltung {
 		case "joke":
 			return appOthers.getWitz();
 		case "countmsg":
-			return countMsg();
+			return appTeleMsg.countMsg();
 		case "countsend":
-			return contSend();
+			return msglog.contSend();
 		case "telestats":
-			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + countMsg() + "\n" + contSend();
+			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appTeleMsg.countMsg() + "\n" + msglog.contSend();
 		case "getmyid":
 		case "id":
 		case "whoami":
@@ -417,7 +352,7 @@ public class TelegramVerwaltung {
 			return appTodoList.telegramMenueTodoList(t);
 		default:
 			// Alle db aktionen
-			t = getMsg(t, 0);
+			t = appTeleMsg.getMsg(t, 0);
 			// ob keine Antwort in db gefunden
 			if (t.getAntwort() != null) {
 				return t.getAntwort();
@@ -440,238 +375,13 @@ public class TelegramVerwaltung {
 	 * @param t
 	 * @return
 	 */
-	private String delMsg(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM telemsg WHERE id = " + t.getMessageIntPart(1));
-			stmt.close();
-			return "DEL";
-		} catch (Exception e) {
-			LOGGER.warn("delete telemsg" + e);
-			return "Fehler";
-		}
-	}
-
-	/**
-	 * @param t
-	 * @return
-	 */
-	private String delMotd(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM telemotd WHERE id = " + t.getMessageIntPart(1));
-			stmt.close();
-			return "DEL";
-		} catch (Exception e) {
-			LOGGER.warn("delete telemotd " + e);
-			return "Fehler";
-		}
-	}
-
-	/**
-	 * @param t
-	 */
-	private String addMsg(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
-					+ t.getMessageStringPart(1) + "','" + t.getMessageFullWithoutSecondWord() + "','" + null + "','"
-					+ t.getFrom() + "','" + t.getDate() + "')");
-			stmt.close();
-			return "OK: " + t.getMessageStringPart(1);
-		} catch (Exception e) {
-			LOGGER.warn("add telemsg " + e);
-			return "Fehler";
-		}
-
-	}
-
-	/**
-	 * @param t
-	 */
-	private String addMotd(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"
-					+ t.getMessageFullWithoutFirstWord() + "','" + t.getFrom() + "','" + t.getDate() + "')");
-			stmt.close();
-			return "IN";
-		} catch (Exception e) {
-			LOGGER.warn("add telemotd " + e);
-			return "Fehler";
-		}
-	}
-
-	/**
-	 * @return
-	 * 
-	 *         TODO del this
-	 */
-	private String countMsg() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemsg;");
-			String s = rs.getString("COUNT(*)") + " Antworten in der DB";
-			stmt.close();
-			return s;
-		} catch (Exception e) {
-			LOGGER.warn("count Telegram " + e);
-			return "Fehler countMsg";
-		}
-	}
-
-	/**
-	 * @return
-	 * 
-	 *         TODO del this
-	 */
-	private String countMotd() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemotd;");
-			String s = rs.getString("COUNT(*)") + " Motds in der DB";
-			stmt.close();
-			return s;
-		} catch (Exception e) {
-			LOGGER.warn("count Telegram " + e);
-			return "Fehler countMotd";
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	private String contSend() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
-			stmt.close();
-			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
-		} catch (Exception e) {
-			LOGGER.warn("count Telegram " + e);
-			return "Fehler contSend";
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	private String getMotd() {
-		try {
-			String s = null;
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemotd ORDER BY RANDOM() LIMIT 1");
-			while (rs.next()) {
-				// Es gibt nur einen Eintrag
-				s = (rs.getString("text"));
-			}
-			stmt.close();
-			return s;
-
-		} catch (Exception e) {
-			LOGGER.warn("get telemotd " + e);
-			return "Fehler motd";
-		}
-	}
-
-	/**
-	 * @param t
-	 * @param nStelle
-	 * @return
-	 * 
-	 *         TODO del this
-	 */
-	private Telegram getMsg(Telegram t, Integer nStelle) {
-		try {
-			Map<String, String> mapS = new HashMap<>();
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt
-					.executeQuery("select * from telemsg where request = '" + t.getMessageStringPart(nStelle) + "';");
-			while (rs.next()) {
-				mapS.put(rs.getString("response"), rs.getString("options"));
-			}
-			rs.close();
-			if (mapS.size() != 0) {
-				int nZufallsElement = wipf.getRandomInt(mapS.size());
-				int n = 0;
-				for (Map.Entry<String, String> entry : mapS.entrySet()) {
-					if (n == nZufallsElement) {
-						t.setAntwort(entry.getKey());
-						t.setOptions(entry.getValue());
-					}
-					n++;
-				}
-			}
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("get telemsg " + e);
-		}
-		return t;
-	}
-
-	/**
-	 * @param t
-	 * @return
-	 * 
-	 *         TODO del this -> json
-	 */
-	private String getAllMotd() {
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemotd;");
-			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("text") + "\n");
-			}
-			stmt.close();
-			return sb.toString();
-
-		} catch (Exception e) {
-			LOGGER.warn("get all telemotd" + e);
-		}
-		return "Fehler";
-	}
-
-	/**
-	 * @param t
-	 * @return
-	 * 
-	 *         TODO del this -> json
-	 */
-	private String getAllMsg() {
-		try {
-			StringBuilder sb = new StringBuilder();
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemsg;");
-			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("request") + "\n");
-			}
-			stmt.close();
-			return sb.toString();
-
-		} catch (Exception e) {
-			LOGGER.warn("get all telemotd" + e);
-		}
-		return "Fehler";
-	}
-
-	/**
-	 * @param t
-	 * @return
-	 */
 	private String sendToId(Telegram t) {
 		Telegram tSend = new Telegram();
 		tSend.setChatID(t.getMessageIntPart(1));
 		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
 
-		saveTelegramToLog(tSend);
+		msglog.saveTelegramToLog(tSend);
 		sendToTelegram(tSend);
 		return "done";
 	}
@@ -681,23 +391,11 @@ public class TelegramVerwaltung {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + countMsg() + "\n" + countMotd() + "\n" + contSend()
-				+ "\n\nVersion:" + MainHome.VERSION);
+		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appTeleMsg.countMsg() + "\n" + appMotd.countMotd()
+				+ "\n" + msglog.contSend() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
-		saveTelegramToLog(t);
-		sendToTelegram(t);
-	}
-
-	/**
-	 * 
-	 */
-	public void sendDaylyMotd() {
-		Telegram t = new Telegram();
-		t.setAntwort(getMotd());
-		t.setChatID(-387871959);
-
-		saveTelegramToLog(t);
+		msglog.saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
@@ -709,7 +407,7 @@ public class TelegramVerwaltung {
 		t.setAntwort(sMsg);
 		t.setChatID(-387871959);
 
-		saveTelegramToLog(t);
+		msglog.saveTelegramToLog(t);
 		sendToTelegram(t);
 		return true;
 	}
@@ -722,18 +420,27 @@ public class TelegramVerwaltung {
 		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
 
-		saveTelegramToLog(t);
+		msglog.saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
 	/**
-	 * TODO ids zu db
 	 * 
-	 * @param t
+	 */
+	public void sendDaylyMotd() {
+		Telegram t = new Telegram();
+		t.setAntwort(appMotd.getRndMotd());
+		t.setChatID(-387871959);
+
+		msglog.saveTelegramToLog(t);
+		sendToTelegram(t);
+	}
+
+	/**
 	 * @return
 	 */
-	private Boolean isAdminUser(Telegram t) {
-		return (t.getChatID() == 798200105 || t.getChatID() == 522467648);
+	public String getBotKey() {
+		return this.sBotKey;
 	}
 
 }

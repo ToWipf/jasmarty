@@ -8,7 +8,7 @@ package org.wipf.jasmarty.logic.telegram.extensions;
 //
 //import org.jboss.logging.Logger;
 //import org.wipf.jasmarty.datatypes.Telegram;
-//import org.wipf.jasmarty.logic.base.MsqlLite;
+//import org.wipf.jasmarty.logic.base.SqlLite;
 //
 ///**
 // * @author wipf
@@ -24,7 +24,7 @@ package org.wipf.jasmarty.logic.telegram.extensions;
 //	 */
 //	public static void initDB() {
 //		try {
-//			Statement stmt = MsqlLite.getDB();
+//			Statement stmt = SqlLite.getDB();
 //			stmt.executeUpdate(
 //					"CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);");
 //		} catch (Exception e) {

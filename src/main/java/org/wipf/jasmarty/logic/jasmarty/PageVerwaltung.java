@@ -133,7 +133,7 @@ public class PageVerwaltung {
 			page.setOptions(rs.getString("options"));
 			stmt.close();
 		} catch (Exception e) {
-			LOGGER.warn("Page not found: " + nId);
+			// LOGGER.warn("Page not found: " + nId);
 		}
 		return page;
 	}

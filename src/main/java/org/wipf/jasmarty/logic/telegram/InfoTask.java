@@ -10,10 +10,10 @@ import javax.inject.Inject;
  *
  */
 @ApplicationScoped
-public class TelegramInfoTask extends TimerTask {
+public class InfoTask extends TimerTask {
 
 	@Inject
-	TelegramVerwaltung verwaltung;
+	SendAndReceive verwaltung;
 
 	/**
 	 *

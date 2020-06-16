@@ -10,8 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.logic.telegram.MsgLog;
+import org.wipf.jasmarty.logic.telegram.SendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
-import org.wipf.jasmarty.logic.telegram.TelegramVerwaltung;
 
 /**
  * @author wipf
@@ -23,9 +24,11 @@ import org.wipf.jasmarty.logic.telegram.TelegramVerwaltung;
 public class TelegramRest {
 
 	@Inject
-	TelegramVerwaltung telegramVerwaltung;
+	SendAndReceive telegramVerwaltung;
 	@Inject
 	TelegramHome tHome;
+	@Inject
+	MsgLog msglog;
 
 	@GET
 	@Path("/on")
@@ -63,7 +66,7 @@ public class TelegramRest {
 	@Path("/telelog")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelog() {
-		return Response.ok(telegramVerwaltung.getTelegramLog(null)).build();
+		return Response.ok(msglog.getTelegramLog(null)).build();
 	}
 
 	@GET
@@ -71,7 +74,7 @@ public class TelegramRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtf() {
 		// TODO id form db
-		return Response.ok(telegramVerwaltung.getTelegramLog("798200105")).build();
+		return Response.ok(msglog.getTelegramLog("798200105")).build();
 	}
 
 }

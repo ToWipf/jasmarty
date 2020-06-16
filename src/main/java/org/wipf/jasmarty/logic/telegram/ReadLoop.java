@@ -14,10 +14,10 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @ApplicationScoped
-public class TelegramReadLoop {
+public class ReadLoop {
 
 	@Inject
-	TelegramVerwaltung telegramVerwaltung;
+	SendAndReceive telegramVerwaltung;
 	@Inject
 	Wipf wipf;
 

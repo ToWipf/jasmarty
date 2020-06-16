@@ -14,10 +14,10 @@ import org.jboss.logging.Logger;
  *
  */
 @ApplicationScoped
-public class TelegramSendTask {
+public class SendTask {
 
 	@Inject
-	TelegramInfoTask infoTask;
+	InfoTask infoTask;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramSendTask");
 	private boolean bTaskRuns = false;

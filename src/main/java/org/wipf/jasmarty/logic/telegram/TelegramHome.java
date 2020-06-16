@@ -21,11 +21,11 @@ public class TelegramHome {
 	@Inject
 	TAppTodoList appTodoList;
 	@Inject
-	TelegramVerwaltung tVerwaltung;
+	SendAndReceive tVerwaltung;
 	@Inject
-	TelegramReadLoop tReadLoop;
+	ReadLoop tReadLoop;
 	@Inject
-	TelegramSendTask tSendTask;
+	SendTask tSendTask;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
