@@ -14,9 +14,9 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.telegram.messageEdit.MsgLog;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTeleMsg;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TeleMenue;
 
 /**
@@ -29,9 +29,9 @@ public class SendAndReceive {
 	@Inject
 	Wipf wipf;
 	@Inject
-	MsgLog msglog;
+	TeleLog tLog;
 	@Inject
-	TAppTeleMsg appTeleMsg;
+	TAppMsg appMsg;
 	@Inject
 	TAppMotd appMotd;
 	@Inject
@@ -42,24 +42,6 @@ public class SendAndReceive {
 	private Integer nFailCount;
 	private Integer nOffsetID;
 	private String sBotKey;
-
-	/**
-	 * 
-	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);");
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("initDB  " + e);
-		}
-	}
 
 	/**
 	 * 
@@ -177,13 +159,14 @@ public class SendAndReceive {
 				}
 
 				t.setAntwort(menue.menueMsg(t));
-				msglog.saveTelegramToLog(t);
+				tLog.saveTelegramToLog(t);
 				sendToTelegram(t);
 
 			}
 
 			if (this.nFailCount != 0) {
-				// Wenn Telegram wieder erreichbar ist info senden:
+				// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
+				// senden:
 				sendExtIp();
 			}
 
@@ -194,7 +177,6 @@ public class SendAndReceive {
 			this.nFailCount++;
 			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
 		}
-
 	}
 
 	/**
@@ -207,7 +189,7 @@ public class SendAndReceive {
 		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
 
-		msglog.saveTelegramToLog(tSend);
+		tLog.saveTelegramToLog(tSend);
 		sendToTelegram(tSend);
 		return "done";
 	}
@@ -217,11 +199,11 @@ public class SendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appTeleMsg.countMsg() + "\n" + appMotd.countMotd()
-				+ "\n" + msglog.contSend() + "\n\nVersion:" + MainHome.VERSION);
+		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
+				+ tLog.contSend() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
-		msglog.saveTelegramToLog(t);
+		tLog.saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
@@ -233,21 +215,9 @@ public class SendAndReceive {
 		t.setAntwort(sMsg);
 		t.setChatID(-387871959);
 
-		msglog.saveTelegramToLog(t);
+		tLog.saveTelegramToLog(t);
 		sendToTelegram(t);
 		return true;
-	}
-
-	/**
-	 * 
-	 */
-	public void sendExtIp() {
-		Telegram t = new Telegram();
-		t.setAntwort("Neue IP: " + wipf.getExternalIp());
-		t.setChatID(798200105);
-
-		msglog.saveTelegramToLog(t);
-		sendToTelegram(t);
 	}
 
 	/**
@@ -258,7 +228,7 @@ public class SendAndReceive {
 		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(-387871959);
 
-		msglog.saveTelegramToLog(t);
+		tLog.saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
@@ -281,6 +251,18 @@ public class SendAndReceive {
 	 */
 	public Integer getFailCount() {
 		return this.nFailCount;
+	}
+
+	/**
+	 * 
+	 */
+	private void sendExtIp() {
+		Telegram t = new Telegram();
+		t.setAntwort("Neue IP: " + wipf.getExternalIp());
+		t.setChatID(798200105);
+
+		tLog.saveTelegramToLog(t);
+		sendToTelegram(t);
 	}
 
 }

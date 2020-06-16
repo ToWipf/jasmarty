@@ -4,6 +4,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTicTacToe;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTodoList;
 
@@ -21,11 +24,17 @@ public class TelegramHome {
 	@Inject
 	TAppTodoList appTodoList;
 	@Inject
+	TAppMsg appTeleMsg;
+	@Inject
+	TAppMotd appMotd;
+	@Inject
 	SendAndReceive tVerwaltung;
 	@Inject
 	ReadLoop tReadLoop;
 	@Inject
 	SendTask tSendTask;
+	@Inject
+	TeleLog tLog;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
@@ -34,9 +43,11 @@ public class TelegramHome {
 	 */
 	public void telegramStart() {
 		LOGGER.info("Starten");
-		tVerwaltung.initDB();
+		tLog.initDB();
 		appTodoList.initDB();
 		appTicTacToe.initDB();
+		appTeleMsg.initDB();
+		appMotd.initDB();
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();

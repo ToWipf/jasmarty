@@ -19,6 +19,20 @@ public class TAppMotd {
 	private static final Logger LOGGER = Logger.getLogger("Telegram Motd");
 
 	/**
+	 * 
+	 */
+	public void initDB() {
+		try {
+			Statement stmt = SqlLite.getDB();
+			stmt.executeUpdate(
+					"CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);");
+			stmt.close();
+		} catch (Exception e) {
+			LOGGER.warn("initDB  " + e);
+		}
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */

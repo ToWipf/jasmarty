@@ -18,12 +18,26 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @ApplicationScoped
-public class TAppTeleMsg {
+public class TAppMsg {
 
 	@Inject
 	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Msg");
+
+	/**
+	 * 
+	 */
+	public void initDB() {
+		try {
+			Statement stmt = SqlLite.getDB();
+			stmt.executeUpdate(
+					"CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);");
+			stmt.close();
+		} catch (Exception e) {
+			LOGGER.warn("initDB  " + e);
+		}
+	}
 
 	/**
 	 * @param t

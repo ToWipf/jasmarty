@@ -15,9 +15,23 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  *
  */
 @ApplicationScoped
-public class MsgLog {
+public class TeleLog {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Log");
+
+	/**
+	 * 
+	 */
+	public void initDB() {
+		try {
+			Statement stmt = SqlLite.getDB();
+			stmt.executeUpdate(
+					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
+			stmt.close();
+		} catch (Exception e) {
+			LOGGER.warn("initDB  " + e);
+		}
+	}
 
 	/**
 	 * @param t

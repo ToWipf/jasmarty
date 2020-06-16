@@ -24,11 +24,11 @@ public class TeleMenue {
 	@Inject
 	TAppTodoList appTodoList;
 	@Inject
-	MsgLog msglog;
+	TeleLog msglog;
 	@Inject
 	AdminUser adminUser;
 	@Inject
-	TAppTeleMsg appTeleMsg;
+	TAppMsg appMsg;
 	@Inject
 	TAppMotd appMotd;
 
@@ -63,11 +63,11 @@ public class TeleMenue {
 
 			// Anbindung an msg datenbank
 			case "addamsgtodb":
-				return appTeleMsg.addMsg(t);
+				return appMsg.addMsg(t);
 			case "getallmsg":
-				return appTeleMsg.getAllMsg();
+				return appMsg.getAllMsg();
 			case "delmsg":
-				return appTeleMsg.delMsg(t);
+				return appMsg.delMsg(t);
 
 			// Anbindung an motd datenbank
 			case "addamotd":
@@ -141,11 +141,11 @@ public class TeleMenue {
 		case "joke":
 			return appOthers.getWitz();
 		case "countmsg":
-			return appTeleMsg.countMsg();
+			return appMsg.countMsg();
 		case "countsend":
 			return msglog.contSend();
 		case "telestats":
-			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appTeleMsg.countMsg() + "\n" + msglog.contSend();
+			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.contSend();
 		case "getmyid":
 		case "id":
 		case "whoami":
@@ -159,7 +159,7 @@ public class TeleMenue {
 			return appTodoList.telegramMenueTodoList(t);
 		default:
 			// Alle db aktionen
-			t = appTeleMsg.getMsg(t, 0);
+			t = appMsg.getMsg(t, 0);
 			// ob keine Antwort in db gefunden
 			if (t.getAntwort() != null) {
 				return t.getAntwort();

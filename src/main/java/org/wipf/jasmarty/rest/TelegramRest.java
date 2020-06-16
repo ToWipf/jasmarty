@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
-import org.wipf.jasmarty.logic.telegram.messageEdit.MsgLog;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
 
 /**
  * @author wipf
@@ -28,7 +28,7 @@ public class TelegramRest {
 	@Inject
 	TelegramHome tHome;
 	@Inject
-	MsgLog msglog;
+	TeleLog msglog;
 
 	@GET
 	@Path("/on")
