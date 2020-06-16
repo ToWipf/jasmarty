@@ -197,7 +197,7 @@ public class TelegramVerwaltung {
 				}
 
 				t.setAntwort(menueMsg(t));
-				saveTelegramToDB(t);
+				saveTelegramToLog(t);
 				sendToTelegram(t);
 
 			}
@@ -220,15 +220,20 @@ public class TelegramVerwaltung {
 	/**
 	 * @param t
 	 */
-	public void saveTelegramToDB(Telegram t) {
+	public void saveTelegramToLog(Telegram t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
-					+ t.getMid() + "','" + t.getMessage() + "','" + t.getAntwort() + "','" + t.getChatID() + "','"
-					+ t.getFrom() + "','" + t.getDate() + "','" + t.getType() + "')");
+					+ t.getMid() + "','" + t.getMessage().replaceAll("'", "_") + "','"
+					+ t.getAntwort().replaceAll("'", "_") + "','" + t.getChatID() + "','" + t.getFrom() + "','"
+					+ t.getDate() + "','" + t.getType() + "')");
 			stmt.close();
 		} catch (Exception e) {
-			LOGGER.warn("saveTelegramToDB " + e);
+			LOGGER.warn("id  : " + t.getMid());
+			LOGGER.warn("msg : " + t.getMessage());
+			LOGGER.warn("antw: " + t.getAntwort());
+			LOGGER.warn("from: " + t.getFrom());
+			LOGGER.warn("saveTelegramToLog " + e);
 		}
 	}
 
@@ -666,7 +671,7 @@ public class TelegramVerwaltung {
 		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
 
-		saveTelegramToDB(tSend);
+		saveTelegramToLog(tSend);
 		sendToTelegram(tSend);
 		return "done";
 	}
@@ -680,7 +685,7 @@ public class TelegramVerwaltung {
 				+ "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
-		saveTelegramToDB(t);
+		saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
@@ -692,7 +697,7 @@ public class TelegramVerwaltung {
 		t.setAntwort(getMotd());
 		t.setChatID(-387871959);
 
-		saveTelegramToDB(t);
+		saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
@@ -704,7 +709,7 @@ public class TelegramVerwaltung {
 		t.setAntwort(sMsg);
 		t.setChatID(-387871959);
 
-		saveTelegramToDB(t);
+		saveTelegramToLog(t);
 		sendToTelegram(t);
 		return true;
 	}
@@ -717,7 +722,7 @@ public class TelegramVerwaltung {
 		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
 
-		saveTelegramToDB(t);
+		saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
