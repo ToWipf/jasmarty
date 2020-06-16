@@ -127,7 +127,7 @@ public class TelegramVerwaltung {
 	 */
 	public void sendToTelegram(Telegram t) {
 		try {
-			String sAntwort = wipf.escapeString(t.getAntwort());
+			String sAntwort = wipf.escapeStringHtml(t.getAntwort());
 			if (sAntwort == null || sAntwort.equals("")) {
 				sAntwort = "Leere%20Antwort";
 			}
@@ -177,22 +177,23 @@ public class TelegramVerwaltung {
 
 				Telegram t = new Telegram();
 				JSONObject joMsgFull = ja.getJSONObject(nMsg);
+				// Nachricht einlesen -> gelesen -> löschen am Telegram server per update_id
 				this.nOffsetID = joMsgFull.getInt("update_id") + 1;
 				JSONObject joMsg = joMsgFull.getJSONObject("message");
 
+				t.setMid(joMsg.getInt("message_id"));
+				t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
+				t.setType(joMsg.getJSONObject("chat").getString("type"));
+				t.setDate(joMsg.getInt("date"));
+				t.setFrom(joMsg.get("from").toString());
+
 				try {
-					// Nachricht einlesen -> gelesen -> löschen am Telegram server per id bei
-					// nächster abfrage
-					t.setMid(joMsg.getInt("message_id"));
-					t.setMessage(wipf.escapeString(joMsg.getString("text").trim().replaceAll("\"", "\'")));
-					t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
-					t.setType(joMsg.getJSONObject("chat").getString("type"));
-					t.setDate(joMsg.getInt("date"));
-					t.setFrom(joMsg.get("from").toString());
+					// Normale Textnachricht
+					t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text").trim().replaceAll("\"", "\'")));
 
 				} catch (Exception e) {
-					// weiter da sticker oder ähnliches
-					continue;
+					// Sticker oder ähnliches
+					t.setMessage("");
 				}
 
 				t.setAntwort(menueMsg(t));
@@ -333,7 +334,7 @@ public class TelegramVerwaltung {
 				return sendToId(t);
 
 			case "getip":
-				return wipf.escapeString(wipf.getExternalIp());
+				return wipf.escapeStringHtml(wipf.getExternalIp());
 			case "sendip": {
 				sendExtIp();
 				return "OK";

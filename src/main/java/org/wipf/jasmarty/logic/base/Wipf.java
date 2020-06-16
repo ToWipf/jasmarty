@@ -305,10 +305,43 @@ public class Wipf {
 	 * @param s
 	 * @return
 	 */
-	public String escapeString(String s) {
-		return s.replaceAll("\n", "%0A").replaceAll(" ", "%20").replaceAll("\t", "%20").replaceAll("\\|", "%7C")
-				.replaceAll("'", "%27").replaceAll("<", "_").replaceAll(">", "_").replaceAll("'", "_")
-				.replaceAll("\"", "_").replaceAll("\\{", "(").replaceAll("\\}", ")");
+	public String escapeStringHtml(String s) {
+		// @formatter:off
+		return s.replaceAll("\n", "%0A")
+				.replaceAll(" ", "%20")
+				.replaceAll("\t", "%20")
+				.replaceAll("\\|", "%7C")
+				.replaceAll("'", "%27")
+				.replaceAll("<", "_")
+				.replaceAll(">", "_")
+				.replaceAll("'", "_")
+				.replaceAll("\"", "_")
+				.replaceAll("\\{", "(")
+				.replaceAll("\\}", ")")
+				.trim();
+		// @formatter:on
+	}
+
+	/**
+	 * @param s
+	 * @return
+	 */
+	public String escapeStringSaveCode(String s) {
+		// @formatter:off
+		return s.replaceAll("\t", " ")
+				.replaceAll("\\|", "%7C")
+				.replaceAll("<", "_")
+				.replaceAll(">", "_")
+				.replaceAll("'", "_")
+				.replaceAll("\"", "_")
+				.replaceAll("\\{", "(")
+				.replaceAll("\\}", ")")
+				.replaceAll("\\?", "")
+				.replaceAll("\\\\", "")
+				.replaceAll(".", "")
+				.replaceAll("!", "")
+				.trim();
+		// @formatter:on
 	}
 
 	/**

@@ -20,21 +20,28 @@ public class TelegramSendTask {
 	TelegramInfoTask infoTask;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramSendTask");
+	private boolean bTaskRuns = false;
 
 	/**
 	 * 
 	 */
 	public void startTelegramTask() {
-		LOGGER.info("Starte Telegram Task");
-		Timer t = new Timer();
-		TimerTask taskInfo = infoTask;
-		LocalDateTime localDateTime = LocalDateTime.now();
+		if (!bTaskRuns) {
+			LOGGER.info("Starte Telegram Task");
+			bTaskRuns = true;
+			Timer t = new Timer();
+			TimerTask taskInfo = infoTask;
+			LocalDateTime localDateTime = LocalDateTime.now();
 
-		Integer nSekundenBisMitternacht = (86400
-				- (localDateTime.getHour() * 60 * 60 + localDateTime.getMinute() * 60 + localDateTime.getSecond()));
+			Integer nSekundenBisMitternacht = (86400
+					- (localDateTime.getHour() * 60 * 60 + localDateTime.getMinute() * 60 + localDateTime.getSecond()));
 
-		// Starte jeden Tag um 00:00 Uhr
-		t.scheduleAtFixedRate(taskInfo, nSekundenBisMitternacht * 1000, 86400000);
+			// Starte jeden Tag um 00:00 Uhr
+			t.scheduleAtFixedRate(taskInfo, nSekundenBisMitternacht * 1000, 86400000);
+			// TODO t.cancel(); -> stop task
+		} else {
+			LOGGER.info("Telegram Task ist bereits aktiv");
+		}
 	}
 
 }
