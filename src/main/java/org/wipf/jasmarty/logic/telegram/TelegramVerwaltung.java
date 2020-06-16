@@ -189,11 +189,11 @@ public class TelegramVerwaltung {
 
 				try {
 					// Normale Textnachricht
-					t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text").trim().replaceAll("\"", "\'")));
+					t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
 
 				} catch (Exception e) {
 					// Sticker oder ähnliches
-					t.setMessage("");
+					t.setMessage("fail");
 				}
 
 				t.setAntwort(menueMsg(t));
@@ -326,9 +326,9 @@ public class TelegramVerwaltung {
 				return "OK";
 
 			case "doping":
-				return wipf.ping(t.getMessageStringRawPart(1)).toString();
+				return wipf.ping(t.getMessageStringPart(1)).toString();
 			case "shell":
-				return wipf.shell(t.getMessageStringFirst());
+				return wipf.shell(t.getMessageFullWithoutFirstWord());
 
 			case "send":
 				return sendToId(t);
@@ -367,13 +367,13 @@ public class TelegramVerwaltung {
 		case "en":
 		case "encrypt":
 			// TODO
-			return wipf.encrypt(t.getMessageStringFirst(), "TODO_KEY");
+			return wipf.encrypt(t.getMessageFullWithoutFirstWord(), "TODO_KEY");
 		case "d":
 		case "de":
 		case "dc":
 		case "decrypt":
 			// TODO
-			return wipf.decrypt(t.getMessageStringFirst(), "TODO_KEY");
+			return wipf.decrypt(t.getMessageFullWithoutFirstWord(), "TODO_KEY");
 		case "t":
 		case "ttt":
 		case "tictactoe":
@@ -470,7 +470,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
-					+ t.getMessageStringPart(1) + "','" + t.getMessageStringSecond() + "','" + null + "','"
+					+ t.getMessageStringPart(1) + "','" + t.getMessageFullWithoutSecondWord() + "','" + null + "','"
 					+ t.getFrom() + "','" + t.getDate() + "')");
 			stmt.close();
 			return "OK: " + t.getMessageStringPart(1);
@@ -488,7 +488,7 @@ public class TelegramVerwaltung {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"
-					+ t.getMessageStringFirst() + "','" + t.getFrom() + "','" + t.getDate() + "')");
+					+ t.getMessageFullWithoutFirstWord() + "','" + t.getFrom() + "','" + t.getDate() + "')");
 			stmt.close();
 			return "IN";
 		} catch (Exception e) {
@@ -663,7 +663,7 @@ public class TelegramVerwaltung {
 	private String sendToId(Telegram t) {
 		Telegram tSend = new Telegram();
 		tSend.setChatID(t.getMessageIntPart(1));
-		tSend.setAntwort(t.getMessageStringSecond());
+		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
 
 		saveTelegramToDB(tSend);

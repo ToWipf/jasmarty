@@ -197,7 +197,7 @@ public class TAppTodoList {
 	private Integer saveItem(Telegram t) {
 		int nId = genNextId();
 		TodoEntry te = new TodoEntry();
-		te.setData(t.getMessageStringFirst());
+		te.setData(t.getMessageFullWithoutFirstWord());
 		te.setEditBy(t.getFromIdOnly().toString());
 		te.setDate(t.getDate());
 		te.setRemind("");

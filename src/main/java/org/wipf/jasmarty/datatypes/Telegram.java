@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.datatypes;
 
-import org.jboss.logging.Logger;
 import org.json.JSONObject;
 
 /**
@@ -8,8 +7,6 @@ import org.json.JSONObject;
  *
  */
 public class Telegram {
-
-	private static final Logger LOGGER = Logger.getLogger("Telegram");
 
 	private Integer nMid;
 	private String sMessage;
@@ -46,46 +43,30 @@ public class Telegram {
 	 * @return
 	 */
 	public String getMessageStringPart(int nStelle) {
-		String s = getMessageStringRawPart(nStelle);
-		if (s != null) {
-			// Satzzeichen ignorieren
-			return s.toLowerCase().replace("/", "").replace(".", "").replace("?", "").replace("!", "").trim();
-		}
-		return null;
-	}
-
-	/**
-	 * @param nStelle
-	 * @return
-	 */
-	public String getMessageStringRawPart(int nStelle) {
-		try {
-			int n = 0;
-			for (String part : sMessage.split(" ")) {
-				if (n == nStelle) {
-					return part.trim();
-				}
-				n++;
+		int n = 0;
+		for (String part : this.sMessage.split(" ")) {
+			if (n == nStelle) {
+				return part.trim();
 			}
-		} catch (Exception e) {
-			LOGGER.warn("sgetMessageWord " + e);
+			n++;
 		}
+		// Wenn nichts gefunden wird
 		return null;
 	}
 
 	/**
 	 * @return mgs ohne die ersten zwei wörter
 	 */
-	public String getMessageStringSecond() {
-		String s = sMessage.substring(sMessage.indexOf(' ') + 1);
+	public String getMessageFullWithoutSecondWord() {
+		String s = getMessageFullWithoutFirstWord();
 		return s.substring(s.indexOf(' ')).trim();
 	}
 
 	/**
 	 * @return mgs ohne das erste wort
 	 */
-	public String getMessageStringFirst() {
-		return sMessage.substring(sMessage.indexOf(' ') + 1).trim();
+	public String getMessageFullWithoutFirstWord() {
+		return this.sMessage.substring(this.sMessage.indexOf(' ') + 1).trim();
 	}
 
 	/**
@@ -101,6 +82,112 @@ public class Telegram {
 	}
 
 	/**
+	 * @return
+	 */
+	public Integer getFromIdOnly() {
+		JSONObject jo = new JSONObject(sFrom);
+		return jo.getInt("id");
+	}
+
+	/**
+	 * @param sMessage
+	 */
+	public void setMessage(String sMessage) {
+		this.sMessage = sMessage;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getMid() {
+		return nMid;
+	}
+
+	/**
+	 * @param nMid
+	 */
+	public void setMid(Integer nMid) {
+		this.nMid = nMid;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getChatID() {
+		return nChatID;
+	}
+
+	/**
+	 * @param nChatID
+	 */
+	public void setChatID(Integer nChatID) {
+		this.nChatID = nChatID;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getMessage() {
+		return sMessage;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getType() {
+		return sType;
+	}
+
+	/**
+	 * @param sType
+	 */
+	public void setType(String sType) {
+		this.sType = sType;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getDate() {
+		return nDate;
+	}
+
+	/**
+	 * @param nDate
+	 */
+	public void setDate(Integer nDate) {
+		this.nDate = nDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFrom() {
+		return sFrom;
+	}
+
+	/**
+	 * @param sFrom
+	 */
+	public void setFrom(String sFrom) {
+		this.sFrom = sFrom;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getOptions() {
+		return sOptions;
+	}
+
+	/**
+	 * @param sOptions
+	 */
+	public void setOptions(String sOptions) {
+		this.sOptions = sOptions;
+	}
+
+	/**
 	 * @param sAntwort
 	 */
 	public void setAntwort(String sAntwort) {
@@ -111,78 +198,7 @@ public class Telegram {
 	 * @return
 	 */
 	public String getAntwort() {
-		if (sAntwort != null) {
-			return sAntwort;
-		}
-		return null;
-	}
-
-	public Integer getFromIdOnly() {
-		try {
-			JSONObject jo = new JSONObject(sFrom);
-			return jo.getInt("id");
-		} catch (Exception e) {
-			LOGGER.warn("getFromIdOnly " + e);
-			return null;
-		}
-
-	}
-
-	public void setMessage(String sMessage) {
-		// this.sMessage = new MyString(sMessage).getS();
-		this.sMessage = sMessage.trim();
-	}
-
-	public Integer getMid() {
-		return nMid;
-	}
-
-	public void setMid(Integer nMid) {
-		this.nMid = nMid;
-	}
-
-	public Integer getChatID() {
-		return nChatID;
-	}
-
-	public void setChatID(Integer nChatID) {
-		this.nChatID = nChatID;
-	}
-
-	public String getMessage() {
-		return sMessage;
-	}
-
-	public String getType() {
-		return sType;
-	}
-
-	public void setType(String sType) {
-		this.sType = sType;
-	}
-
-	public Integer getDate() {
-		return nDate;
-	}
-
-	public void setDate(Integer nDate) {
-		this.nDate = nDate;
-	}
-
-	public String getFrom() {
-		return sFrom;
-	}
-
-	public void setFrom(String sFrom) {
-		this.sFrom = sFrom;
-	}
-
-	public String getOptions() {
-		return sOptions;
-	}
-
-	public void setOptions(String sOptions) {
-		this.sOptions = sOptions;
+		return sAntwort;
 	}
 
 }

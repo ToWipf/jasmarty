@@ -329,7 +329,7 @@ public class Wipf {
 	public String escapeStringSaveCode(String s) {
 		// @formatter:off
 		return s.replaceAll("\t", " ")
-				.replaceAll("\\|", "%7C")
+				.replaceAll("\\|", "_")
 				.replaceAll("<", "_")
 				.replaceAll(">", "_")
 				.replaceAll("'", "_")
@@ -338,7 +338,7 @@ public class Wipf {
 				.replaceAll("\\}", ")")
 				.replaceAll("\\?", "")
 				.replaceAll("\\\\", "")
-				.replaceAll(".", "")
+				.replaceAll("\\.", "")
 				.replaceAll("!", "")
 				.trim();
 		// @formatter:on
