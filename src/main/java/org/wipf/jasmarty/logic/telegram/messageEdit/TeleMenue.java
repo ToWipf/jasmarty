@@ -143,9 +143,9 @@ public class TeleMenue {
 		case "countmsg":
 			return appMsg.countMsg();
 		case "countsend":
-			return msglog.contSend();
+			return msglog.count();
 		case "telestats":
-			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.contSend();
+			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
 		case "getmyid":
 		case "id":
 		case "whoami":

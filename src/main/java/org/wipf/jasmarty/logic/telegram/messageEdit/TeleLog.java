@@ -94,15 +94,16 @@ public class TeleLog {
 	/**
 	 * @return
 	 */
-	public String contSend() {
+	public String count() {
 		try {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
+			String s = rs.getString("COUNT(*)") + " Nachrichten gesendet";
 			stmt.close();
-			return rs.getString("COUNT(*)") + " Nachrichten gesendet";
+			return s;
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
-			return "Fehler contSend";
+			return "Fehler count";
 		}
 	}
 

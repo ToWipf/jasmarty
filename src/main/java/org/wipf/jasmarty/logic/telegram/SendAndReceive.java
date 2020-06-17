@@ -200,7 +200,7 @@ public class SendAndReceive {
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
 		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
-				+ tLog.contSend() + "\n\nVersion:" + MainHome.VERSION);
+				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
 		tLog.saveTelegramToLog(t);
