@@ -88,6 +88,7 @@ public class SendAndReceive {
 	 */
 	@Metered
 	private void sendToTelegram(Telegram t) {
+		tLog.saveTelegramToLog(t);
 		try {
 			String sAntwort = t.getAntwort();
 			if (sAntwort == null || sAntwort.equals("")) {
@@ -189,7 +190,6 @@ public class SendAndReceive {
 		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
 
-		tLog.saveTelegramToLog(tSend);
 		sendToTelegram(tSend);
 		return "done";
 	}
@@ -203,21 +203,18 @@ public class SendAndReceive {
 				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
 
-		tLog.saveTelegramToLog(t);
 		sendToTelegram(t);
 	}
 
 	/**
 	 * @param sMsg
 	 */
-	public Boolean sendMsgToGroup(String sMsg) {
+	public void sendMsgToGroup(String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
 		t.setChatID(-387871959);
 
-		tLog.saveTelegramToLog(t);
 		sendToTelegram(t);
-		return true;
 	}
 
 	/**
@@ -228,7 +225,17 @@ public class SendAndReceive {
 		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(-387871959);
 
-		tLog.saveTelegramToLog(t);
+		sendToTelegram(t);
+	}
+
+	/**
+	 * 
+	 */
+	private void sendExtIp() {
+		Telegram t = new Telegram();
+		t.setAntwort("Neue IP: " + wipf.getExternalIp());
+		t.setChatID(798200105);
+
 		sendToTelegram(t);
 	}
 
@@ -251,18 +258,6 @@ public class SendAndReceive {
 	 */
 	public Integer getFailCount() {
 		return this.nFailCount;
-	}
-
-	/**
-	 * 
-	 */
-	private void sendExtIp() {
-		Telegram t = new Telegram();
-		t.setAntwort("Neue IP: " + wipf.getExternalIp());
-		t.setChatID(798200105);
-
-		tLog.saveTelegramToLog(t);
-		sendToTelegram(t);
 	}
 
 }

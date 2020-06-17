@@ -59,14 +59,16 @@ public class TelegramRest {
 	@POST
 	@Path("/sendMsgToGroup/{msg}")
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
-		return Response.ok("{\"status\":\"" + telegramVerwaltung.sendMsgToGroup(sMsg) + "\"}").build();
+		telegramVerwaltung.sendMsgToGroup(sMsg);
+		// TODO:
+		return Response.ok("{\"status\":\"true\"}").build();
 	}
 
 	@GET
 	@Path("/telelog")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelog() {
-		return Response.ok(msglog.getTelegramLog(null)).build();
+		return Response.ok(msglog.genTelegramLog(null)).build();
 	}
 
 	@GET
@@ -74,7 +76,7 @@ public class TelegramRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtf() {
 		// TODO id form db
-		return Response.ok(msglog.getTelegramLog("798200105")).build();
+		return Response.ok(msglog.genTelegramLog("798200105")).build();
 	}
 
 }

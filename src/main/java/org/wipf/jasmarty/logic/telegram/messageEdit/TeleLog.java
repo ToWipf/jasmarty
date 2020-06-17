@@ -37,6 +37,14 @@ public class TeleLog {
 	 * @param t
 	 */
 	public void saveTelegramToLog(Telegram t) {
+		if (t.getDate() == null || t.getDate() == 0) {
+			t.setDate((int) (System.currentTimeMillis() / 1000));
+		}
+		if (t.getMid() == 0 && t.getType() == null) {
+			t.setMid(-1);
+			t.setType("system");
+		}
+
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
@@ -56,7 +64,7 @@ public class TeleLog {
 	/**
 	 * @return log
 	 */
-	public String getTelegramLog(String sFilter) {
+	public String genTelegramLog(String sFilter) {
 		try {
 			StringBuilder slog = new StringBuilder();
 			int n = 0;
