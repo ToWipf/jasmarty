@@ -29,6 +29,7 @@ export class TelegramConfigComponent implements OnInit {
   public setBotKey(): void {
     this.http.post(this.rest.gethost() + "telegram/setbot/" + this.sBotKey, "").subscribe((resdata: any) => {
       console.log(resdata);
+      this.refreshOn();
     });
   }
 
@@ -45,7 +46,7 @@ export class TelegramConfigComponent implements OnInit {
   }
 
   public stopApp(): void {
-    this.http.get(this.rest.gethost() + "wipf/stop").subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + "wipf/stop","").subscribe((resdata: any) => {
       console.log(resdata);
     });
   }
