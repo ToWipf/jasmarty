@@ -6,26 +6,24 @@ import org.json.JSONObject;
  * @author wipf
  *
  */
-public class TodoEntry {
+public class TodoEntry extends Telegram {
 
 	private String sData;
-	private String sEditBy;
-	private Integer nDate;
 	private String sActive;
 	private Integer nId;
 	private String sRemind;
+	private String sEditBy;
 
 	/**
 	 * @return
 	 */
 	public JSONObject toJson() {
-		JSONObject jo = new JSONObject();
-		jo.put("data", sData);
-		jo.put("editby", sEditBy);
-		jo.put("date", nDate);
-		jo.put("active", sActive);
-		jo.put("id", nId);
-		jo.put("remind", sRemind);
+		JSONObject jo = this.toJsonTelegram();
+		jo.put("data", this.sData);
+		jo.put("active", this.sActive);
+		jo.put("id", this.nId);
+		jo.put("remind", this.sRemind);
+		jo.put("editby", this.sEditBy);
 		return jo;
 	}
 
@@ -35,11 +33,12 @@ public class TodoEntry {
 	 */
 	public TodoEntry setByJson(String sJson) {
 		try {
+			this.setByTelegram(this.setByJsonTelegram(sJson));
+
 			JSONObject jo = new JSONObject(sJson);
 
+			this.setEditBy(jo.getString("editby"));
 			this.sData = jo.getString("data");
-			this.sEditBy = jo.getString("editby");
-			this.nDate = jo.getInt("date");
 			this.sActive = jo.getString("active");
 			this.nId = jo.getInt("id");
 			this.sRemind = jo.getString("remind");
@@ -48,6 +47,23 @@ public class TodoEntry {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	/**
+	 * @return via From
+	 */
+	public String getEditBy() {
+		return this.sEditBy;
+	}
+
+	/**
+	 * via From
+	 * 
+	 * @param sEditBy
+	 * @return
+	 */
+	public void setEditBy(String sEditBy) {
+		this.sEditBy = sEditBy;
 	}
 
 	/**
@@ -62,34 +78,6 @@ public class TodoEntry {
 	 */
 	public void setData(String sData) {
 		this.sData = sData;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getEditBy() {
-		return sEditBy;
-	}
-
-	/**
-	 * @param sEditBy
-	 */
-	public void setEditBy(String sEditBy) {
-		this.sEditBy = sEditBy;
-	}
-
-	/**
-	 * @return
-	 */
-	public int getDate() {
-		return nDate;
-	}
-
-	/**
-	 * @param sDate
-	 */
-	public void setDate(int nDate) {
-		this.nDate = nDate;
 	}
 
 	/**

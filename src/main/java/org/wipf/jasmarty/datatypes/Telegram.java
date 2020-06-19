@@ -8,7 +8,7 @@ import org.json.JSONObject;
  */
 public class Telegram {
 
-	private Integer nMid;
+	private Integer nMid; // Die Message Id
 	private Integer nChatID;
 	private Integer nDate;
 	private String sType;
@@ -29,13 +29,66 @@ public class Telegram {
 	 * @param copy of t
 	 */
 	public Telegram(Telegram t) {
-		this.sMessage = t.sMessage;
-		this.sAntwort = t.sAntwort;
+		setMessage(t.sMessage);
+		setAntwort(t.sAntwort);
 		setChatID(t.getChatID());
 		setMid(t.getMid());
 		setDate(t.getDate());
 		setType(t.getType());
 		setFrom(t.getFrom());
+		setOptions(t.getOptions());
+	}
+
+	/**
+	 * @param copy of t
+	 */
+	public void setByTelegram(Telegram t) {
+		setMessage(t.sMessage);
+		setAntwort(t.sAntwort);
+		setChatID(t.getChatID());
+		setMid(t.getMid());
+		setDate(t.getDate());
+		setType(t.getType());
+		setFrom(t.getFrom());
+		setOptions(t.getOptions());
+	}
+
+	/**
+	 * @return
+	 */
+	public JSONObject toJsonTelegram() {
+		JSONObject jo = new JSONObject();
+		jo.put("mid", getMid());
+		jo.put("from", getFrom());
+		jo.put("date", getDate());
+		jo.put("chatid", getChatID());
+		jo.put("type", getType());
+		jo.put("message", getMessage());
+		jo.put("antwort", getAntwort());
+		jo.put("options", getOptions());
+		return jo;
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public Telegram setByJsonTelegram(String sJson) {
+		try {
+			JSONObject jo = new JSONObject(sJson);
+			this.setMid(jo.getInt("editby"));
+
+			this.setFrom(jo.getString("from"));
+			this.setDate(jo.getInt("date"));
+			this.setChatID(jo.getInt("chatid"));
+			this.setType(jo.getString("type"));
+			this.setMessage(jo.getString("message"));
+			this.setAntwort(jo.getString("antwort"));
+			this.setOptions(jo.getString("options"));
+		} catch (Exception ignore) {
+
+		}
+		return this;
 	}
 
 	/**
@@ -85,8 +138,12 @@ public class Telegram {
 	 * @return
 	 */
 	public Integer getFromIdOnly() {
-		JSONObject jo = new JSONObject(getFrom());
-		return jo.getInt("id");
+		try {
+			JSONObject jo = new JSONObject(getFrom());
+			return jo.getInt("id");
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	/**
@@ -174,14 +231,14 @@ public class Telegram {
 	}
 
 	/**
-	 * @return
+	 * @return Message id
 	 */
 	public Integer getMid() {
 		return nMid;
 	}
 
 	/**
-	 * @param nMid
+	 * @param Message id
 	 */
 	public void setMid(Integer nMid) {
 		this.nMid = nMid;

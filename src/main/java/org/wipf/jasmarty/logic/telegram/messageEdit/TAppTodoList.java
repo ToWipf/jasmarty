@@ -136,7 +136,8 @@ public class TAppTodoList {
 				ja.put(tItem.toJson());
 			}
 		} catch (Exception e) {
-			LOGGER.warn("getAllAsJson" + e);
+			LOGGER.warn("getAllAsJson " + e);
+			e.printStackTrace();
 		}
 		return ja;
 	}
