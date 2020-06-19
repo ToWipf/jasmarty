@@ -1,0 +1,37 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- // TODO: LESS DATEI -->
+        <h1 mat-dialog-title>Id: {{data.id}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Titel</mat-label>
+                <input matInput [(ngModel)]="data.titel">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Art</mat-label>
+                <input matInput [(ngModel)]="data.art">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Infotext</mat-label>
+                <input matInput [(ngModel)]="data.infotext">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Bewertung</mat-label>
+                <input matInput [(ngModel)]="data.bewertung">
+            </mat-form-field>
+            <br>
+            <mat-form-field>
+                <mat-label>Gesehen</mat-label>
+                <input matInput [(ngModel)]="data.gesehenDate">
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+</div>

@@ -11,7 +11,7 @@ export class AppComponent {
 
   @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
 
-  public selectedSite: string = "main";
+  public selectedSite: string = "firstpage";
 
   public selectSite(s: string) {
     this.drawer.toggle();

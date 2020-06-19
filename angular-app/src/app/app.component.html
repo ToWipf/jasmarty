@@ -7,6 +7,7 @@
                 <li (click)="selectSite('main')">Startseite</li>
                 <li (click)="selectSite('liveFull')">Live Display</li>
                 <li (click)="selectSite('todolist')">Todo List</li>
+                <li (click)="selectSite('filme')">Filme</li>
             </ul>
 
             <div class="titlemenue">Konfiguration LCD</div>
@@ -53,6 +54,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='todolist'">
                     <app-todolist></app-todolist>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='filme'">
+                    <app-filme></app-filme>
                 </ng-container>
             </div>
         </div>

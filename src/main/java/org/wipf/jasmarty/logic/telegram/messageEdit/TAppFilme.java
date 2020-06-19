@@ -98,7 +98,7 @@ public class TAppFilme {
 			entry.setId(rs.getInt("id"));
 			entry.setArt(rs.getString("art"));
 			entry.setEditBy(rs.getString("editby"));
-			entry.setTitel(rs.getString("title"));
+			entry.setTitel(rs.getString("titel"));
 			entry.setInfotext(rs.getString("infotext"));
 			entry.setGesehenDate(rs.getInt("gesehendate"));
 			entry.setBewertung(rs.getInt("bewertung"));

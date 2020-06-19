@@ -58,6 +58,7 @@ import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmart
 import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
 import { todolistComponent, todolistComponentDialog } from './components/todolist/todolist.component';
+import { filmeComponent, filmeComponentDialog } from './components/filme/filme.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,8 @@ import { todolistComponent, todolistComponentDialog } from './components/todolis
     FooterComponentSetServerDialog,
     todolistComponent,
     todolistComponentDialog,
+    filmeComponent,
+    filmeComponentDialog,
   ],
   imports: [
     BrowserAnimationsModule,
