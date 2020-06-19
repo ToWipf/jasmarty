@@ -37,9 +37,6 @@ public class TeleLog {
 	 * @param t
 	 */
 	public void saveTelegramToLog(Telegram t) {
-		if (t.getDate() == null || t.getDate() == 0) {
-			t.setDate((int) (System.currentTimeMillis() / 1000));
-		}
 		if (t.getMid() == 0 && t.getType() == null) {
 			t.setMid(-1);
 			t.setType("system");

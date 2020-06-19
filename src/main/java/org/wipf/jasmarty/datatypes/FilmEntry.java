@@ -138,10 +138,16 @@ public class FilmEntry extends Telegram {
 		this.nId = nId;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getEditBy() {
 		return sEditBy;
 	}
 
+	/**
+	 * @param sEditBy
+	 */
 	public void setEditBy(String sEditBy) {
 		this.sEditBy = sEditBy;
 	}

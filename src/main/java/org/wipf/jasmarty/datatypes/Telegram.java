@@ -147,6 +147,16 @@ public class Telegram {
 	}
 
 	/**
+	 * @return
+	 */
+	public Integer getDate() {
+		if (this.nDate == null || this.nDate == 0) {
+			this.nDate = ((int) (System.currentTimeMillis() / 1000));
+		}
+		return this.nDate;
+	}
+
+	/**
 	 * @param sMessage
 	 */
 	public void setMessage(String sMessage) {
@@ -200,13 +210,6 @@ public class Telegram {
 	 */
 	public void setChatID(Integer nChatID) {
 		this.nChatID = nChatID;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getDate() {
-		return nDate;
 	}
 
 	/**
