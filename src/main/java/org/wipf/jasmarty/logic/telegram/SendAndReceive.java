@@ -14,6 +14,7 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TAppEssen;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
@@ -34,6 +35,8 @@ public class SendAndReceive {
 	TAppMsg appMsg;
 	@Inject
 	TAppMotd appMotd;
+	@Inject
+	TAppEssen appEssen;
 	@Inject
 	TeleMenue menue;
 
@@ -235,6 +238,17 @@ public class SendAndReceive {
 		Telegram t = new Telegram();
 		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
+
+		sendToTelegram(t);
+	}
+
+	/**
+	 * 
+	 */
+	public void sendDaylyEssen() {
+		Telegram t = new Telegram();
+		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
+		t.setChatID(-385659721);
 
 		sendToTelegram(t);
 	}

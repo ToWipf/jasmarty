@@ -24,6 +24,8 @@ public class TeleMenue {
 	@Inject
 	TAppTodoList appTodoList;
 	@Inject
+	TAppEssen appEssen;
+	@Inject
 	TeleLog msglog;
 	@Inject
 	AdminUser adminUser;
@@ -154,6 +156,9 @@ public class TeleMenue {
 		case "i":
 			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
 					+ t.getMid();
+		case "essen":
+		case "e":
+			return appEssen.menueEssen(t);
 		case "to":
 		case "todo":
 			return appTodoList.telegramMenueTodoList(t);
