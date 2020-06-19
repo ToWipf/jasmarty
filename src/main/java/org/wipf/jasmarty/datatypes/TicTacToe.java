@@ -6,9 +6,20 @@ import java.util.Random;
  * @author wipf
  *
  */
-public class TicTacToe extends Game {
+public class TicTacToe extends TelegramBase {
 
 	private Character[][] tttFeld = new Character[3][3];
+
+	/**
+	 * @param t
+	 */
+	public void setByTelegram(TeleMsg t) {
+		setChatID(t.getChatID());
+		setMid(t.getMid());
+		setDate(t.getDate());
+		setType(t.getType());
+		setFrom(t.getFrom());
+	}
 
 	/**
 	 * 
@@ -339,10 +350,28 @@ public class TicTacToe extends Game {
 	 */
 	private String numberToSymbol(Integer n) {
 		// 1⃣
-		if (n <= 9) {
-			return n.toString() + "%E2%83%A3";
+		switch (n) {
+		case 1:
+			return "1️⃣";
+		case 2:
+			return "2️⃣";
+		case 3:
+			return "3️⃣";
+		case 4:
+			return "4️⃣";
+		case 5:
+			return "5️⃣";
+		case 6:
+			return "6️⃣";
+		case 7:
+			return "7️⃣";
+		case 8:
+			return "8️⃣";
+		case 9:
+			return "9️⃣";
+		default:
+			return "?";
 		}
-		return null;
 	}
 
 }

@@ -6,7 +6,7 @@ import java.sql.Statement;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TeleMsg;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
@@ -36,7 +36,7 @@ public class TAppMotd {
 	 * @param t
 	 * @return
 	 */
-	public String delMotd(Telegram t) {
+	public String delMotd(TeleMsg t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemotd WHERE id = " + t.getMessageIntPart(1));
@@ -51,7 +51,7 @@ public class TAppMotd {
 	/**
 	 * @param t
 	 */
-	public String addMotd(Telegram t) {
+	public String addMotd(TeleMsg t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"

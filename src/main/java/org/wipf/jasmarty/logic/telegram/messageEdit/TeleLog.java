@@ -7,7 +7,7 @@ import java.util.Date;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TeleMsg;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
@@ -36,7 +36,7 @@ public class TeleLog {
 	/**
 	 * @param t
 	 */
-	public void saveTelegramToLog(Telegram t) {
+	public void saveTelegramToLog(TeleMsg t) {
 		if (t.getDate() == null || t.getDate() == 0) {
 			t.setDate((int) (System.currentTimeMillis() / 1000));
 		}

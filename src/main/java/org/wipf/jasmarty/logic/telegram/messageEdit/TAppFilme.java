@@ -19,9 +19,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  *
  */
 @ApplicationScoped
-public class TAppTodoList {
+public class TAppFilme {
 
-	private static final Logger LOGGER = Logger.getLogger("Telegram TodoList");
+	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
 
 	/**
 	 * 
@@ -30,7 +30,7 @@ public class TAppTodoList {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);");
+					"CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, Titel TEXT, Type TEXT, gesehen INTEGER, Infotext TEXT, Bewertung INTEGER, editby TEXT, date INTEGER);");
 			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("initDB " + e);
@@ -41,7 +41,7 @@ public class TAppTodoList {
 	 * @param t
 	 * @return
 	 */
-	public String telegramMenueTodoList(TeleMsg t) {
+	public String telegramMenuefilme(TeleMsg t) {
 		String sAction = t.getMessageStringPart(1);
 		if (sAction == null) {
 			// @formatter:off
@@ -98,7 +98,7 @@ public class TAppTodoList {
 
 		try {
 			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from todolist WHERE active NOT LIKE 'DONE';");
+			ResultSet rs = stmt.executeQuery("select * from filme WHERE active NOT LIKE 'DONE';");
 
 			while (rs.next()) {
 				TodoEntry entry = new TodoEntry();
@@ -149,7 +149,7 @@ public class TAppTodoList {
 		List<TodoEntry> liTodoE = new ArrayList<>();
 
 		Statement stmt = SqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("select * from todolist;");
+		ResultSet rs = stmt.executeQuery("select * from filme;");
 
 		while (rs.next()) {
 			TodoEntry entry = new TodoEntry();
@@ -173,7 +173,7 @@ public class TAppTodoList {
 		try {
 			Statement stmt = SqlLite.getDB();
 			//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES " +
+			stmt.execute("INSERT OR REPLACE INTO filme (id, data, editby, date, remind, active) VALUES " +
 					"('"  + tE.getId() +
 					"','" + tE.getData() +
 					"','" + tE.getEditBy() +
@@ -222,7 +222,7 @@ public class TAppTodoList {
 	public void deleteItem(Integer nId) {
 		try {
 			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM todolist WHERE id LIKE '" + nId + "';");
+			stmt.execute("DELETE FROM filme WHERE id LIKE '" + nId + "';");
 			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("del todo " + e);
@@ -252,7 +252,7 @@ public class TAppTodoList {
 	 */
 	private Integer countItems() throws SQLException {
 		Statement stmt = SqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist;");
+		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM filme;");
 		return rs.getInt("COUNT(*)");
 	}
 
@@ -263,7 +263,7 @@ public class TAppTodoList {
 		try {
 			return countItems() + " Einträge in der DB";
 		} catch (Exception e) {
-			LOGGER.warn("count todolist " + e);
+			LOGGER.warn("count filme " + e);
 			return null;
 		}
 	}
@@ -275,10 +275,10 @@ public class TAppTodoList {
 	private String count(Integer nTeleID) {
 		try {
 			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM todolist WHERE editby = " + nTeleID + ";");
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM filme WHERE editby = " + nTeleID + ";");
 			return rs.getString("COUNT(*)") + " Einträge in der DB";
 		} catch (Exception e) {
-			LOGGER.warn("count todolist " + e);
+			LOGGER.warn("count filme " + e);
 			return null;
 		}
 	}
@@ -290,7 +290,7 @@ public class TAppTodoList {
 	private String delByID(Integer nID) {
 		try {
 			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM todolist WHERE id = " + nID);
+			stmt.execute("DELETE FROM filme WHERE id = " + nID);
 			return "DEL";
 		} catch (Exception e) {
 			LOGGER.warn("delete todo" + e);
@@ -322,7 +322,7 @@ public class TAppTodoList {
 	private String mark(String sMark, Integer nID) {
 		try {
 			Statement stmt = SqlLite.getDB();
-			stmt.execute("UPDATE todolist SET active ='" + sMark + "' WHERE id = " + nID);
+			stmt.execute("UPDATE filme SET active ='" + sMark + "' WHERE id = " + nID);
 			return "OK";
 		} catch (Exception e) {
 			LOGGER.warn("delete todo" + e);

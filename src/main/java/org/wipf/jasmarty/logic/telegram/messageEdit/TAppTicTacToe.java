@@ -7,7 +7,7 @@ import java.util.Random;
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TeleMsg;
 import org.wipf.jasmarty.datatypes.TicTacToe;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -38,7 +38,7 @@ public class TAppTicTacToe {
 	 * @param t
 	 * @return
 	 */
-	public String input(Telegram t) {
+	public String input(TeleMsg t) {
 		try {
 			return tttPlay(t);
 
@@ -51,7 +51,7 @@ public class TAppTicTacToe {
 	 * @param sTelegramSetTo
 	 * @return
 	 */
-	private String tttPlay(Telegram t) {
+	private String tttPlay(TeleMsg t) {
 		TicTacToe ttt = loadTicTacToe(t.getChatID());
 		String sAction = t.getMessageStringPart(1);
 		if (sAction == null) {

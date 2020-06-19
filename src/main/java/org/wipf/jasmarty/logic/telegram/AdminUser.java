@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.telegram;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TeleMsg;
 
 /**
  * @author wipf
@@ -17,7 +17,7 @@ public class AdminUser {
 	 * @param t
 	 * @return
 	 */
-	public Boolean isAdminUser(Telegram t) {
+	public Boolean isAdminUser(TeleMsg t) {
 		return (t.getChatID() == 798200105 || t.getChatID() == 522467648);
 	}
 

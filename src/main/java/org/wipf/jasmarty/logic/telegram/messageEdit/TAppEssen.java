@@ -7,7 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.TeleMsg;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.telegram.AdminUser;
 
@@ -41,7 +41,7 @@ public class TAppEssen {
 	 * @param t
 	 * @return
 	 */
-	public String menueEssen(Telegram t) {
+	public String menueEssen(TeleMsg t) {
 		String sAction = t.getMessageStringPart(1);
 		if (sAction == null) {
 			return "Anleitung mit Essen hilfe";
@@ -82,7 +82,7 @@ public class TAppEssen {
 	 * @param t
 	 * @return
 	 */
-	private String addEssen(Telegram t) {
+	private String addEssen(TeleMsg t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			//@formatter:off
@@ -120,7 +120,7 @@ public class TAppEssen {
 	 * @param t
 	 * @return
 	 */
-	private String delEssen(Telegram t) {
+	private String delEssen(TeleMsg t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM essen WHERE id = " + t.getMessageIntPart(2));

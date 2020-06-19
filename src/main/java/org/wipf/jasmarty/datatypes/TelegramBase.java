@@ -4,19 +4,12 @@ package org.wipf.jasmarty.datatypes;
  * @author wipf
  *
  */
-public class Game {
+public class TelegramBase {
+	private Integer nMid;
 	private Integer nChatID;
 	private Integer nDate;
 	private String sType;
-
-	/**
-	 * @param t
-	 */
-	public void setByTelegram(Telegram t) {
-		setChatID(t.getChatID());
-		setDate(t.getDate());
-		setType(t.getType());
-	}
+	private String sFrom;
 
 	/**
 	 * @return
@@ -60,4 +53,31 @@ public class Game {
 		this.sType = sType;
 	}
 
+	/**
+	 * @return
+	 */
+	public Integer getMid() {
+		return nMid;
+	}
+
+	/**
+	 * @param nMid
+	 */
+	public void setMid(Integer nMid) {
+		this.nMid = nMid;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFrom() {
+		return sFrom;
+	}
+
+	/**
+	 * @param sFrom
+	 */
+	public void setFrom(String sFrom) {
+		this.sFrom = sFrom;
+	}
 }
