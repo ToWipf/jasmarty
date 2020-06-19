@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppEssen;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TAppFilme;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTicTacToe;
@@ -31,6 +32,8 @@ public class TelegramHome {
 	@Inject
 	TAppEssen appEssen;
 	@Inject
+	TAppFilme appFilme;
+	@Inject
 	SendAndReceive tVerwaltung;
 	@Inject
 	ReadLoop tReadLoop;
@@ -52,6 +55,7 @@ public class TelegramHome {
 		appTeleMsg.initDB();
 		appMotd.initDB();
 		appEssen.initDB();
+		appFilme.initDB();
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();

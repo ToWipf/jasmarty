@@ -46,13 +46,10 @@ public class TAppFilme {
 		if (sAction == null) {
 			// @formatter:off
 				return 
-					"text (add)" + "\n" + 
+					"text (add) titel" + "\n" + 
 					"delete ID" + "\n" +
 					"list" +  "\n" +
-					"listall" + "\n" +
-					"listfull" + "\n" +
-					"count" + "\n" +
-					"countall";
+					"count";
 			// @formatter:on
 		}
 
@@ -62,17 +59,9 @@ public class TAppFilme {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-		case "la":
-		case "listall":
-		case "ev":
-		case "everything":
-		case "lf":
-		case "listfull":
 			return getAllAsJson().toString();
 		case "c":
 		case "count":
-		case "ca":
-		case "countall":
 			return countItems().toString();
 		default:
 			return saveItem(t).toString();

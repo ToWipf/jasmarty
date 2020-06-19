@@ -33,6 +33,8 @@ public class TeleMenue {
 	TAppMsg appMsg;
 	@Inject
 	TAppMotd appMotd;
+	@Inject
+	TAppFilme appFilme;
 
 	/**
 	 * @param t
@@ -162,6 +164,9 @@ public class TeleMenue {
 		case "to":
 		case "todo":
 			return appTodoList.telegramMenueTodoList(t);
+		case "filme":
+		case "f":
+			return appFilme.telegramMenueFilme(t);
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t, 0);
