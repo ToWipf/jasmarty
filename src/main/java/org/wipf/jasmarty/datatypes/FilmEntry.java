@@ -1,88 +1,149 @@
 package org.wipf.jasmarty.datatypes;
 
+import org.json.JSONObject;
+
 /**
  * @author wipf
  *
  */
 public class FilmEntry extends Telegram {
 
-//	private String sData;
-//	private String sActive;
-//	private Integer nId;
-//
-//	/**
-//	 * @return
-//	 */
-//	@Override
-//	public JSONObject toJson() {
-//		JSONObject jo = this.toJson(); // geht das?
-//		jo.put("data", sData);
-//		jo.put("active", sActive);
-//		jo.put("id", nId);
-//
-//		return jo;
-//	}
-//
-//	/**
-//	 * @param sJson
-//	 * @return
-//	 */
-//	public FilmEntry setByJson(String sJson) {
-//		try {
-//			JSONObject jo = new JSONObject(sJson);
-//
-//			this.sData = jo.getString("data");
-//			this.setEditBy(jo.getString("editby"));
-//			this.setDate(jo.getInt("date"));
-//			this.sActive = jo.getString("active");
-//			this.nId = jo.getInt("id");
-//
-//			return this;
-//		} catch (Exception e) {
-//			return null;
-//		}
-//	}
-//
-//	/**
-//	 * @return
-//	 */
-//	public String getData() {
-//		return sData;
-//	}
-//
-//	/**
-//	 * @param sData
-//	 */
-//	public void setData(String sData) {
-//		this.sData = sData;
-//	}
-//
-//	/**
-//	 * @return
-//	 */
-//	public String getActive() {
-//		return sActive;
-//	}
-//
-//	/**
-//	 * @param sActive
-//	 */
-//	public void setActive(String sActive) {
-//		this.sActive = sActive;
-//	}
-//
-//	/**
-//	 * @return
-//	 */
-//	public Integer getId() {
-//		return nId;
-//	}
-//
-//	/**
-//	 * @param nId
-//	 */
-//	public void setId(int nId) {
-//		this.nId = nId;
-//	}
+	private Integer nId;
+	private String sTitel;
+	private String sArt;
+	private Integer nGesehenDate;
+	private String sInfotext;
+	private Integer nBewertung;
+	private String sEditBy;
+
+	/**
+	 * @return
+	 */
+	public JSONObject toJson() {
+		JSONObject jo = this.toJsonTelegram();
+		jo.put("id", nId);
+		jo.put("titel", sTitel);
+		jo.put("art", sArt);
+		jo.put("gesehenDate", nGesehenDate);
+		jo.put("infotext", sInfotext);
+		jo.put("bewertung", nBewertung);
+		jo.put("editby", sEditBy);
+		return jo;
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public FilmEntry setByJson(String sJson) {
+		try {
+			this.setByTelegram(this.setByJsonTelegram(sJson));
+			JSONObject jo = new JSONObject(sJson);
+
+			this.setId(jo.getInt("id"));
+			this.sTitel = jo.getString("titel");
+			this.sArt = (jo.getString("art"));
+			this.nGesehenDate = jo.getInt("gesehenDate");
+			this.sInfotext = (jo.getString("infotext"));
+			this.nBewertung = jo.getInt("bewertung");
+			this.sEditBy = jo.getString("editby");
+
+			return this;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getBewertung() {
+		return nBewertung;
+	}
+
+	/**
+	 * @param nBewertung
+	 */
+	public void setBewertung(Integer nBewertung) {
+		this.nBewertung = nBewertung;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getInfotext() {
+		return sInfotext;
+	}
+
+	/**
+	 * @param sInfotext
+	 */
+	public void setInfotext(String sInfotext) {
+		this.sInfotext = sInfotext;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getGesehenDate() {
+		return nGesehenDate;
+	}
+
+	/**
+	 * @param nGesehenDate
+	 */
+	public void setGesehenDate(Integer nGesehenDate) {
+		this.nGesehenDate = nGesehenDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getArt() {
+		return sArt;
+	}
+
+	/**
+	 * @param sArt
+	 */
+	public void setArt(String sArt) {
+		this.sArt = sArt;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTitel() {
+		return sTitel;
+	}
+
+	/**
+	 * @param sTitel
+	 */
+	public void setTitel(String sTitel) {
+		this.sTitel = sTitel;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getId() {
+		return nId;
+	}
+
+	/**
+	 * @param nId
+	 */
+	public void setId(Integer nId) {
+		this.nId = nId;
+	}
+
+	public String getEditBy() {
+		return sEditBy;
+	}
+
+	public void setEditBy(String sEditBy) {
+		this.sEditBy = sEditBy;
+	}
 
 }

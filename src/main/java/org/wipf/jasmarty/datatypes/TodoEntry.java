@@ -57,8 +57,6 @@ public class TodoEntry extends Telegram {
 	}
 
 	/**
-	 * via From
-	 * 
 	 * @param sEditBy
 	 * @return
 	 */
