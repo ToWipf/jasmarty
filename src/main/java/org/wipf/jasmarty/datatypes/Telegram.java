@@ -6,8 +6,13 @@ import org.json.JSONObject;
  * @author wipf
  *
  */
-public class TeleMsg extends TelegramBase {
+public class Telegram {
 
+	private Integer nMid;
+	private Integer nChatID;
+	private Integer nDate;
+	private String sType;
+	private String sFrom;
 	private String sMessage;
 	private String sAntwort;
 	private String sOptions;
@@ -15,7 +20,7 @@ public class TeleMsg extends TelegramBase {
 	/**
 	 * 
 	 */
-	public TeleMsg() {
+	public Telegram() {
 		setMid(0);
 		this.sMessage = "";
 	}
@@ -23,7 +28,7 @@ public class TeleMsg extends TelegramBase {
 	/**
 	 * @param copy of t
 	 */
-	public TeleMsg(TeleMsg t) {
+	public Telegram(Telegram t) {
 		this.sMessage = t.sMessage;
 		this.sAntwort = t.sAntwort;
 		setChatID(t.getChatID());
@@ -124,6 +129,76 @@ public class TeleMsg extends TelegramBase {
 	 */
 	public String getAntwort() {
 		return sAntwort;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getChatID() {
+		return nChatID;
+	}
+
+	/**
+	 * @param nChatID
+	 */
+	public void setChatID(Integer nChatID) {
+		this.nChatID = nChatID;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getDate() {
+		return nDate;
+	}
+
+	/**
+	 * @param nDate
+	 */
+	public void setDate(Integer nDate) {
+		this.nDate = nDate;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getType() {
+		return sType;
+	}
+
+	/**
+	 * @param sType
+	 */
+	public void setType(String sType) {
+		this.sType = sType;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getMid() {
+		return nMid;
+	}
+
+	/**
+	 * @param nMid
+	 */
+	public void setMid(Integer nMid) {
+		this.nMid = nMid;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFrom() {
+		return sFrom;
+	}
+
+	/**
+	 * @param sFrom
+	 */
+	public void setFrom(String sFrom) {
+		this.sFrom = sFrom;
 	}
 
 }

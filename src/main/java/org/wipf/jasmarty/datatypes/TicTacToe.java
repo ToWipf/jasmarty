@@ -6,14 +6,14 @@ import java.util.Random;
  * @author wipf
  *
  */
-public class TicTacToe extends TelegramBase {
+public class TicTacToe extends Telegram {
 
 	private Character[][] tttFeld = new Character[3][3];
 
 	/**
 	 * @param t
 	 */
-	public void setByTelegram(TeleMsg t) {
+	public void setByTelegram(Telegram t) {
 		setChatID(t.getChatID());
 		setMid(t.getMid());
 		setDate(t.getDate());

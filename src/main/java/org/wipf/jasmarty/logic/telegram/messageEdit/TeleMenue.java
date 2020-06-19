@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.telegram.messageEdit;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.wipf.jasmarty.datatypes.TeleMsg;
+import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.telegram.AdminUser;
@@ -38,7 +38,7 @@ public class TeleMenue {
 	 * @param t
 	 * @return
 	 */
-	public String menueMsg(TeleMsg t) {
+	public String menueMsg(Telegram t) {
 		// Admin Befehle
 		if (adminUser.isAdminUser(t)) {
 			switch (t.getMessageStringPart(0)) {

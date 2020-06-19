@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
-import org.wipf.jasmarty.datatypes.TeleMsg;
+import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TodoEntry;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -41,7 +41,7 @@ public class TAppFilme {
 	 * @param t
 	 * @return
 	 */
-	public String telegramMenuefilme(TeleMsg t) {
+	public String telegramMenuefilme(Telegram t) {
 		String sAction = t.getMessageStringPart(1);
 		if (sAction == null) {
 			// @formatter:off
@@ -194,7 +194,7 @@ public class TAppFilme {
 	 * @param t
 	 * @return
 	 */
-	private Integer saveItem(TeleMsg t) {
+	private Integer saveItem(Telegram t) {
 		int nId = genNextId();
 		TodoEntry te = new TodoEntry();
 		te.setData(t.getMessageFullWithoutFirstWord());

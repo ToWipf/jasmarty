@@ -9,7 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.TeleMsg;
+import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
 
@@ -71,7 +71,7 @@ public class TAppMsg {
 	 * 
 	 *         TODO del this
 	 */
-	public TeleMsg getMsg(TeleMsg t, Integer nStelle) {
+	public Telegram getMsg(Telegram t, Integer nStelle) {
 		try {
 			Map<String, String> mapS = new HashMap<>();
 
@@ -104,7 +104,7 @@ public class TAppMsg {
 	 * @param t
 	 * @return
 	 */
-	public String delMsg(TeleMsg t) {
+	public String delMsg(Telegram t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("DELETE FROM telemsg WHERE id = " + t.getMessageIntPart(1));
@@ -137,7 +137,7 @@ public class TAppMsg {
 	/**
 	 * @param t
 	 */
-	public String addMsg(TeleMsg t) {
+	public String addMsg(Telegram t) {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"

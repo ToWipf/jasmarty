@@ -10,7 +10,7 @@ import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wipf.jasmarty.datatypes.TeleMsg;
+import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -90,7 +90,7 @@ public class SendAndReceive {
 	 * @return
 	 */
 	@Metered
-	private void sendToTelegram(TeleMsg t) {
+	private void sendToTelegram(Telegram t) {
 		tLog.saveTelegramToLog(t);
 		try {
 			String sAntwort = t.getAntwort();
@@ -141,7 +141,7 @@ public class SendAndReceive {
 					continue;
 				}
 
-				TeleMsg t = new TeleMsg();
+				Telegram t = new Telegram();
 				JSONObject joMsgFull = ja.getJSONObject(nMsg);
 				// Nachricht einlesen -> gelesen -> löschen am Telegram server per update_id
 				this.nOffsetID = joMsgFull.getInt("update_id") + 1;
@@ -187,8 +187,8 @@ public class SendAndReceive {
 	 * @param t
 	 * @return
 	 */
-	private String sendToId(TeleMsg t) {
-		TeleMsg tSend = new TeleMsg();
+	private String sendToId(Telegram t) {
+		Telegram tSend = new Telegram();
 		tSend.setChatID(t.getMessageIntPart(1));
 		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
 		tSend.setType("from: " + t.getChatID());
@@ -201,7 +201,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	public void sendDaylyInfo() {
-		TeleMsg t = new TeleMsg();
+		Telegram t = new Telegram();
 		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
 				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(798200105);
@@ -213,7 +213,7 @@ public class SendAndReceive {
 	 * @param sMsg
 	 */
 	public void sendMsgToGroup(String sMsg) {
-		TeleMsg t = new TeleMsg();
+		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
 		t.setChatID(-387871959);
 
@@ -224,7 +224,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	public void sendDaylyMotd() {
-		TeleMsg t = new TeleMsg();
+		Telegram t = new Telegram();
 		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(-387871959);
 
@@ -235,7 +235,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	private void sendExtIp() {
-		TeleMsg t = new TeleMsg();
+		Telegram t = new Telegram();
 		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
 
@@ -246,7 +246,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	public void sendDaylyEssen() {
-		TeleMsg t = new TeleMsg();
+		Telegram t = new Telegram();
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
 		t.setChatID(-385659721);
 
