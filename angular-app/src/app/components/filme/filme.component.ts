@@ -18,7 +18,8 @@ export class filmeComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ["id", "titel", "art", "gesehen", "bewertung", "infotext", "date", "editby", "button"];
+  //public displayedColumns: string[] = ["id", "titel", "art", "gesehen", "bewertung", "infotext", "date", "editby", "button"];
+  public displayedColumns: string[] = ["titel", "art", "gesehen", "bewertung", "infotext", "button"];
   public farry: filmEntry[] = [];
   private nextId: number;
 
@@ -73,7 +74,7 @@ export class filmeComponent implements OnInit {
 
     const dialogRef = this.dialog.open(filmeComponentDialog, {
       width: "350px",
-      height: "350px",
+      height: "550px",
       data: edititem,
     });
 

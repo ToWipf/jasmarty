@@ -1,27 +1,30 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
     <mat-drawer #drawer [mode]="mode.value">
-        <div class="sidebar">
-            <div class="titlemenue">Hauptmenü</div>
-            <ul class="menueli">
-                <li (click)="selectSite('main')">Startseite</li>
-                <li (click)="selectSite('liveFull')">Live Display</li>
-                <li (click)="selectSite('todolist')">Todo List</li>
-                <li (click)="selectSite('filme')">Filme</li>
-            </ul>
+        <perfect-scrollbar class="pscroll">
 
-            <div class="titlemenue">Konfiguration LCD</div>
-            <ul class="menueli">
-                <li (click)="selectSite('pages')">Seiten</li>
-                <li (click)="selectSite('actions')">Funktionen</li>
-                <li (click)="selectSite('config')">Einstellungen</li>
-            </ul>
+            <div class="sidebar">
+                <div class="titlemenue">Hauptmenü</div>
+                <ul class="menueli">
+                    <li (click)="selectSite('main')">Startseite</li>
+                    <li (click)="selectSite('liveFull')">Live Display</li>
+                    <li (click)="selectSite('todolist')">Todo List</li>
+                    <li (click)="selectSite('filme')">Filme</li>
+                </ul>
 
-            <div class="titlemenue">Konfiguration Telegram</div>
-            <ul class="menueli">
-                <li (click)="selectSite('configtele')">Einstellungen</li>
-            </ul>
-        </div>
+                <div class="titlemenue">Konfiguration LCD</div>
+                <ul class="menueli">
+                    <li (click)="selectSite('pages')">Seiten</li>
+                    <li (click)="selectSite('actions')">Funktionen</li>
+                    <li (click)="selectSite('config')">Einstellungen</li>
+                </ul>
+
+                <div class="titlemenue">Konfiguration Telegram</div>
+                <ul class="menueli">
+                    <li (click)="selectSite('configtele')">Einstellungen</li>
+                </ul>
+            </div>
+        </perfect-scrollbar>
     </mat-drawer>
 
     <mat-drawer-content>
