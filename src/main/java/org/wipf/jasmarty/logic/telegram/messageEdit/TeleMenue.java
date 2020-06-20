@@ -43,7 +43,7 @@ public class TeleMenue {
 	public String menueMsg(Telegram t) {
 		// Admin Befehle
 		if (adminUser.isAdminUser(t)) {
-			switch (t.getMessageStringPart(0)) {
+			switch (t.getMessageStringPartLow(0)) {
 			case "admin":
 				// @formatter:off
 				return 
@@ -84,7 +84,7 @@ public class TeleMenue {
 				return appMotd.getRndMotd();
 
 			case "doping":
-				return wipf.ping(t.getMessageStringPart(1)).toString();
+				return wipf.ping(t.getMessageStringPartLow(1)).toString();
 			case "shell":
 				return wipf.shell(t.getMessageFullWithoutFirstWord());
 
@@ -96,7 +96,7 @@ public class TeleMenue {
 			}
 		}
 		// Alle festen Antworten
-		switch (t.getMessageStringPart(0)) {
+		switch (t.getMessageStringPartLow(0)) {
 		case "start":
 			return "Wipfbot Version:" + MainHome.VERSION + "\nInfos per 'info'";
 		case "v":
@@ -112,7 +112,7 @@ public class TeleMenue {
 		case "r":
 		case "rnd":
 		case "zufall":
-			return appOthers.zufall(t.getMessageStringPart(1), t.getMessageStringPart(2));
+			return appOthers.zufall(t.getMessageStringPartLow(1), t.getMessageStringPartLow(2));
 		case "c":
 		case "cr":
 		case "en":

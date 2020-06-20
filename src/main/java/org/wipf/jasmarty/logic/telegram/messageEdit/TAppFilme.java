@@ -42,7 +42,7 @@ public class TAppFilme {
 	 * @return
 	 */
 	public String telegramMenueFilme(Telegram t) {
-		String sAction = t.getMessageStringPart(1);
+		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			// @formatter:off
 				return 

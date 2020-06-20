@@ -95,11 +95,11 @@ public class Telegram {
 	 * @param nStelle
 	 * @return
 	 */
-	public String getMessageStringPart(int nStelle) {
+	public String getMessageStringPartLow(int nStelle) {
 		int n = 0;
 		for (String part : this.sMessage.split(" ")) {
 			if (n == nStelle) {
-				return part.trim();
+				return part.trim().toLowerCase();
 			}
 			n++;
 		}
@@ -110,9 +110,9 @@ public class Telegram {
 	/**
 	 * @return mgs ohne die ersten zwei wörter
 	 */
-	public String getMessageFullWithoutSecondWord() {
+	public String getMessageFullWithoutSecondWordLow() {
 		String s = getMessageFullWithoutFirstWord();
-		return s.substring(s.indexOf(' ')).trim();
+		return s.substring(s.indexOf(' ')).trim().toLowerCase();
 	}
 
 	/**
@@ -128,7 +128,7 @@ public class Telegram {
 	 */
 	public Integer getMessageIntPart(int nStelle) {
 		try {
-			return Integer.parseInt(getMessageStringPart(nStelle));
+			return Integer.parseInt(getMessageStringPartLow(nStelle));
 		} catch (Exception e) {
 			return null;
 		}

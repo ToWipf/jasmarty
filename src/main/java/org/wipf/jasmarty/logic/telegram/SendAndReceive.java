@@ -190,7 +190,7 @@ public class SendAndReceive {
 	private String sendToId(Telegram t) {
 		Telegram tSend = new Telegram();
 		tSend.setChatID(t.getMessageIntPart(1));
-		tSend.setAntwort(t.getMessageFullWithoutSecondWord());
+		tSend.setAntwort(t.getMessageFullWithoutSecondWordLow());
 		tSend.setType("from: " + t.getChatID());
 
 		sendToTelegram(tSend);

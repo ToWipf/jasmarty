@@ -42,7 +42,7 @@ public class TAppTodoList {
 	 * @return
 	 */
 	public String telegramMenueTodoList(Telegram t) {
-		String sAction = t.getMessageStringPart(1);
+		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			// @formatter:off
 				return 

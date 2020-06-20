@@ -53,7 +53,7 @@ public class TAppTicTacToe {
 	 */
 	private String tttPlay(Telegram t) {
 		TicTacToe ttt = loadTicTacToe(t.getChatID());
-		String sAction = t.getMessageStringPart(1);
+		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			return "Anleitung mit TicTacToe help";
 		}

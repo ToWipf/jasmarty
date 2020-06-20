@@ -42,7 +42,7 @@ public class TAppEssen {
 	 * @return
 	 */
 	public String menueEssen(Telegram t) {
-		String sAction = t.getMessageStringPart(1);
+		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			return "Anleitung mit Essen hilfe";
 		}
@@ -87,7 +87,7 @@ public class TAppEssen {
 			Statement stmt = SqlLite.getDB();
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO essen (name, editby, date) VALUES " +
-					"('" + t.getMessageFullWithoutSecondWord() +
+					"('" + t.getMessageFullWithoutSecondWordLow() +
 					"','" + t.getFrom() +
 					"','"+ t.getDate() +
 					"')");
