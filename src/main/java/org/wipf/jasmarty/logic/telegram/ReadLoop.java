@@ -17,9 +17,9 @@ import org.wipf.jasmarty.logic.base.Wipf;
 public class ReadLoop {
 
 	@Inject
-	SendAndReceive telegramVerwaltung;
-	@Inject
 	Wipf wipf;
+	@Inject
+	SendAndReceive telegramVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
 	private boolean bLoopActive = false;

@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
@@ -157,7 +158,7 @@ public class SendAndReceive {
 					// Normale Textnachricht
 					t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
 
-				} catch (Exception e) {
+				} catch (JSONException e) {
 					// Sticker oder ähnliches
 					t.setMessage("fail");
 				}
