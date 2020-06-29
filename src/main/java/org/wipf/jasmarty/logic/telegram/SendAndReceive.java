@@ -41,7 +41,7 @@ public class SendAndReceive {
 	@Inject
 	TeleMenue menue;
 
-	private static final Logger LOGGER = Logger.getLogger("Telegram V");
+	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
 	private Integer nFailCount;
 	private Integer nOffsetID;
