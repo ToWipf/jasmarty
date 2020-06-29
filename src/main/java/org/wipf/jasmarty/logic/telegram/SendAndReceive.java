@@ -91,7 +91,7 @@ public class SendAndReceive {
 	 * @return
 	 */
 	@Metered
-	private void sendToTelegram(Telegram t) {
+	public void sendToTelegram(Telegram t) {
 		tLog.saveTelegramToLog(t);
 		try {
 			String sAntwort = t.getAntwort();
