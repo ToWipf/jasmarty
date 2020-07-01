@@ -59,9 +59,16 @@ public class SendAndReceive {
 			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
 			this.sBotKey = (rs.getString("val"));
 			stmt.close();
+
+			System.out.println(this.sBotKey);
+
+			if (this.sBotKey == null || this.sBotKey.equals("null")) {
+				throw new Exception("botkey is null");
+			}
 			return true;
+
 		} catch (Exception e) {
-			LOGGER.warn("telegrambot nicht in db gefunden."
+			LOGGER.warn(e + " | telegrambot nicht in db gefunden."
 					+ " Setzen mit 'curl -X POST localhost:8080/telegram/setbot/bot2343242:ABCDEF348590247354352343345'");
 			return false;
 		}

@@ -91,9 +91,9 @@ public class Wipf {
 	/**
 	 * @param sUrl
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	public String httpRequestPOST(String sUrl) throws IOException {
+	public String httpRequestPOST(String sUrl) throws Exception {
 		URL url = new URL(sUrl);
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
