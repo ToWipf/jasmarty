@@ -55,6 +55,11 @@ public class Winamp {
 		case "start":
 			WinampController.run();
 			break;
+		//missing default case
+        	default:
+            	// add default case
+            		break;
+
 		}
 	}
 
