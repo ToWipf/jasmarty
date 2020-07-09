@@ -172,9 +172,7 @@ public class LcdCache {
 				case 0x09:
 					c = '?';
 					break;
-				//missing default case
         			default:
-       				     // add default case
             				break;
 				}
 				sb.append(c);
