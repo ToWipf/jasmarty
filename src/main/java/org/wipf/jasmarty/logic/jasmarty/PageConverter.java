@@ -337,11 +337,8 @@ public class PageConverter {
 				sb.append(BLOCK_3_3);
 				break;
 					
-			//missing default case
         		default:
-            		    // add default case
             			break;
-
 			}
 
 			// Leere Blöcke:
