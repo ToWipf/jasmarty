@@ -32,7 +32,6 @@
 #define NANO_UNO_MINI
 #define LED_A 13
 #define LED_B A0
-#define LED_C A1
 #define PINS_BUTTONS {2,3,4,5,6,7,8,9,10,11,12} // Nano
 
 // CODE
@@ -56,8 +55,7 @@ void setup() {
   pinMode(LED_A, OUTPUT);
   digitalWrite(LED_A, HIGH);
   pinMode(LED_B, OUTPUT);
-  pinMode(LED_C, OUTPUT);
-  
+
   Serial.begin(9600);
   #if defined(PROMICRO)
   Consumer.begin();
