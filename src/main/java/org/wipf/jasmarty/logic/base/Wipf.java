@@ -16,7 +16,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
-import io.quarkus.launcher.shaded.org.apache.commons.codec.binary.Base32;
+import org.wipf.jasmarty.datatypes.Base32;
 
 /**
  * @author wipf
@@ -99,6 +99,7 @@ public class Wipf {
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod("POST");
 		urlc.setRequestProperty("Accept", "*/*");
+		urlc.setConnectTimeout(5000); // 5 sek.
 
 		// use post mode
 		urlc.setDoOutput(true);
@@ -349,7 +350,7 @@ public class Wipf {
 			byte[] hasil = cipher.doFinal(sIn.getBytes());
 			// return Base64.getEncoder().encodeToString(hasil);
 			Base32 base32 = new Base32();
-			return (base32.encodeAsString(hasil));
+			return (base32.encode(hasil));
 		} catch (Exception e) {
 			return "fail";
 		}
