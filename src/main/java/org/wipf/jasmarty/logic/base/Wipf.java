@@ -128,7 +128,8 @@ public class Wipf {
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod("GET");
 		urlc.setRequestProperty("Accept", "*/*");
-
+		urlc.setConnectTimeout(5000); // 5 sek.
+		
 		urlc.setAllowUserInteraction(false);
 
 		// get result
