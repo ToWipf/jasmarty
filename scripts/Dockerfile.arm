@@ -1,0 +1,4 @@
+FROM arm32v7/openjdk
+
+COPY jasmarty.jar /app/jasmarty.jar
+CMD ["java","-jar","/app/jasmarty.jar"]
