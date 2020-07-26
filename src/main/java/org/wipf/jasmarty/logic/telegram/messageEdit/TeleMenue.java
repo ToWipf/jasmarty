@@ -53,7 +53,7 @@ public class TeleMenue {
 					"GetAllMotd" + "\n" +
 					"AddAMotd" + "\n" +
 					"SendMotd" + "\n" + 
-					"SendInfo" + "\n" +
+					"telestats" + "\n" +
 					"GetMotd" + "\n" + 
 					"DelMotd ID" +  "\n" +
 					"DelMsg ID"+  "\n" +
