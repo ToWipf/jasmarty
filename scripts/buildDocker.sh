@@ -7,7 +7,7 @@ cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
 
 # platform linux/arm/v7 
 
-docker buildx build --platform linux/arm -t docker.pkg.github.com/towipf/jasmarty/jasmarty:0.79-6arm -f Dockerfile.arm .
-docker push docker.pkg.github.com/towipf/jasmarty/jasmarty:0.79-6arm
+docker buildx build --platform linux/arm -t docker.pkg.github.com/towipf/jasmarty/jasmarty:0.80-1arm -f Dockerfile.arm .
+docker push docker.pkg.github.com/towipf/jasmarty/jasmarty:0.80-1arm 
 
 rm jasmarty.jar

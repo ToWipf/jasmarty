@@ -60,8 +60,6 @@ public class SendAndReceive {
 			this.sBotKey = (rs.getString("val"));
 			stmt.close();
 
-			System.out.println(this.sBotKey);
-
 			if (this.sBotKey == null || this.sBotKey.equals("null") || this.sBotKey.equals("")) {
 				throw new Exception("botkey is null");
 			}
