@@ -14,8 +14,7 @@ on:
   pull_request:
 
 env:
-  # TODO: Change variable to your image's name.
-  IMAGE_NAME: image
+  IMAGE_NAME: jasmarty
 
 jobs:
   # Push image to GitHub Packages.
@@ -34,17 +33,16 @@ jobs:
 #             apt install -y maven npm && \
 #             npm install -g @angular/cli@latest && \
       
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+      
       - name: build jar
         run: cd scripts && ./setup.sh && ./buildFull.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar 
       
       - name: Build dockerimage
         run: cd scripts && docker build . --tag $IMAGE_NAME
-        #docker build . --file scripts/Dockerfile.arm --tag $IMAGE_NAME
 
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-
-      - name: Push image
+      - name: Push dockerimage
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -65,3 +63,28 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+          
+      - name: Build dockerimage_arm
+        run: docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
+    
+      - name: Push dockerimage_arm
+        run: |
+          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
+          docker push $IMAGE_ID:${VERSION}-arm
