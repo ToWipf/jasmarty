@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: build jar
-        run: scripts/buildFull.sh
+        run: cd scripts/buildFull.sh && scripts/buildFull.sh
       
       - name: Build image
         run: docker build . --file scripts/Dockerfile.arm --tag $IMAGE_NAME
