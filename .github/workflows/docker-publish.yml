@@ -29,7 +29,8 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: build jar
-        run: npm install -g @angular/cli@latest && \
+        run: apt-get update && apt-get upgrade -y && \
+             npm install npm@latest -g && npm install -g @angular/cli@latest && \
              cd scripts && ./buildFull.sh
       
       - name: Build dockerimage
