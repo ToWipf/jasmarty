@@ -1,4 +1,4 @@
-FROM arm32v7/openjdk:7-jre
+FROM arm32v7/openjdk:8-jre-alpine
 
 COPY jasmarty.jar /app/jasmarty.jar
 CMD ["java","-jar","/app/jasmarty.jar"]
