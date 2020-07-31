@@ -22,17 +22,23 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/
   build-jasmarty:
 
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     if: github.event_name == 'push'
 
     steps:
       - uses: actions/checkout@v2
+        
+#      - name: install
+#        run: apt-get update && apt-get upgrade -y && \
+#             apt install -y maven npm && \
+#             npm install -g @angular/cli@latest && \
       
       - name: build jar
-        run: cd scripts && ./buildFull.sh
+        run: cd scripts && ./setup.sh && ./buildFull.sh
       
-      - name: Build image
-        run: docker build . --file scripts/Dockerfile.arm --tag $IMAGE_NAME
+      - name: Build dockerimage
+        run: ./buildDocker.sh
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
