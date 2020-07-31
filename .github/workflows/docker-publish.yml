@@ -35,7 +35,7 @@ jobs:
 #             npm install -g @angular/cli@latest && \
       
       - name: build jar
-        run: cd scripts && ./buildFull.sh
+        run: cd scripts && ./setup.sh && ./buildFull.sh
       
       - name: Build dockerimage
         run: ./buildDocker.sh
