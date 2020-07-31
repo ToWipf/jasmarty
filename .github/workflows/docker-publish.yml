@@ -65,7 +65,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
           
       - name: Build dockerimage_arm
-        run: docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
+        run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
     
       - name: Push dockerimage_arm
         run: |
