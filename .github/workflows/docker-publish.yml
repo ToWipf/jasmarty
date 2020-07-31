@@ -22,7 +22,8 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/
   build-jasmarty:
 
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: debian
     if: github.event_name == 'push'
 
     steps:
@@ -30,7 +31,8 @@ jobs:
       
       - name: build jar
         run: apt-get update && apt-get upgrade -y && \
-             npm install npm@latest -g && npm install -g @angular/cli@latest && \
+             apt install -y maven npm && \
+             npm install -g @angular/cli@latest && \
              cd scripts && ./buildFull.sh
       
       - name: Build dockerimage
