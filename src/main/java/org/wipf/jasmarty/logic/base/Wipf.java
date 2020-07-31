@@ -129,7 +129,7 @@ public class Wipf {
 		urlc.setRequestMethod("GET");
 		urlc.setRequestProperty("Accept", "*/*");
 		urlc.setConnectTimeout(5000); // 5 sek.
-		
+
 		urlc.setAllowUserInteraction(false);
 
 		// get result
@@ -311,18 +311,11 @@ public class Wipf {
 	 */
 	public String escapeStringSaveCode(String s) {
 		// @formatter:off
-		return s.replaceAll("\t", " ")
-				.replaceAll("\\|", "_")
-				.replaceAll("<", "_")
-				.replaceAll(">", "_")
-				.replaceAll("'", "_")
-				.replaceAll("\"", "_")
-				.replaceAll("\\{", "(")
-				.replaceAll("\\}", ")")
-				.replaceAll("\\?", "")
-				.replaceAll("\\\\", "")
-				.replaceAll("\\.", "")
-				.replaceAll("!", "")
+		return s.replaceAll("\t", " ").replaceAll("\\|", "_").replaceAll("<", "_").replaceAll(">", "_")
+				.replaceAll("'", "_").replaceAll("\"", "_").replaceAll("\\{", "(").replaceAll("\\}", ")")
+				// .replaceAll("\\?", "")
+				.replaceAll("\\\\", "").replaceAll("\\.", "")
+				// .replaceAll("!", "")
 				.trim();
 		// @formatter:on
 	}
