@@ -31,8 +31,8 @@ jobs:
         
 #      - name: install
 #        run: apt-get update && apt-get upgrade -y && \
-             apt install -y maven npm && \
-             npm install -g @angular/cli@latest && \
+#             apt install -y maven npm && \
+#             npm install -g @angular/cli@latest && \
       
       - name: build jar
         run: cd scripts && ./buildFull.sh
