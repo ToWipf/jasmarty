@@ -69,7 +69,7 @@ public class TeleLog {
 			// ResultSet rs = stmt.executeQuery("SELECT * FROM telegrambot WHERE msgid = '"
 			// + nID + "';");
 			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM telegramlog WHERE msgid IS NOT '0' OR type IS NOT 'system' ORDER BY msgdate ASC"); // DESC
+					"SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"); // DESC
 
 			while (rs.next()) {
 				n++;
