@@ -28,12 +28,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: build jar
-        run: apt-get update && apt-get upgrade -y && \
+        
+#      - name: install
+#        run: apt-get update && apt-get upgrade -y && \
              apt install -y maven npm && \
              npm install -g @angular/cli@latest && \
-             cd scripts && ./buildFull.sh
+      
+      - name: build jar
+        run: cd scripts && ./buildFull.sh
       
       - name: Build dockerimage
         run: ./buildDocker.sh
