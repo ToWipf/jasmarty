@@ -56,4 +56,3 @@ export interface filmEntry {
   gesehenDate?: number;
   infotext?: string;
 }
-
