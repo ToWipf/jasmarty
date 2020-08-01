@@ -50,6 +50,7 @@ public class FilmEntry extends Telegram {
 
 			return this;
 		} catch (Exception e) {
+			// TODO ignore
 			return null;
 		}
 	}
