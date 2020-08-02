@@ -33,8 +33,14 @@ jobs:
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       
-      - name: build jar
-        run: cd scripts && ./setup.sh && ./buildFull.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar 
+      - name: Build jar
+        run: cd scripts && ./setup.sh && ./buildFull.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
+        
+      - name: Save jar
+        uses: actions/upload-artifact@v2
+        with:
+          name: jasmarty.jar
+          path: scripts/jasmarty.jar
       
       - name: Build dockerimage
         run: cd scripts && docker build . --tag $IMAGE_NAME
