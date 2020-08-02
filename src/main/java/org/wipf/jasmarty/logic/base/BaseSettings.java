@@ -69,4 +69,35 @@ public class BaseSettings {
 		}
 	}
 
+	/**
+	 * @param sID
+	 * @return
+	 */
+	public boolean setAppWorkId(String sID) {
+		try {
+			Statement stmt = SqlLite.getDB();
+			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('" + "appworkid" + "','" + sID + "')");
+			LOGGER.info("Config gespeichert: setAppWorkId ist jetzt " + sID);
+			return true;
+		} catch (Exception e) {
+			LOGGER.warn("setAppStatus " + e);
+			return false;
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public String getAppWorkId() {
+		try {
+			Statement stmt = SqlLite.getDB();
+			String s = stmt.executeQuery("SELECT val FROM config WHERE key IS '" + "appworkid" + "';").getString("val");
+			stmt.close();
+			return s;
+		} catch (Exception e) {
+			LOGGER.warn("getAppWorkId " + e);
+		}
+		return null;
+	}
+
 }

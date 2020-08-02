@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -51,6 +52,10 @@ public class Wipf {
 	 */
 	public int getRandomInt(String sMax) {
 		return getRandomInt(Integer.valueOf(sMax));
+	}
+
+	public String getRandomUUID() {
+		return UUID.randomUUID().toString();
 	}
 
 	/**

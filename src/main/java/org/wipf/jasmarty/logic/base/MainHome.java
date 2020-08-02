@@ -22,6 +22,8 @@ public class MainHome {
 	@Inject
 	BaseSettings baseSettings;
 	@Inject
+	Auth auth;
+	@Inject
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
@@ -47,6 +49,7 @@ public class MainHome {
 		SqlLite.startDB();
 
 		baseSettings.initDB();
+		auth.initDB();
 
 		if (baseSettings.isAppActive("jasmarty")) {
 			jHome.jasmartyStart();
