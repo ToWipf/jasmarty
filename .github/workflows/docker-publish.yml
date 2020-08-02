@@ -1,4 +1,4 @@
-name: Docker
+name: Build Jasmarty Docker
 
 on:
   push:
@@ -17,11 +17,8 @@ env:
   IMAGE_NAME: jasmarty
 
 jobs:
-  # Push image to GitHub Packages.
-  # See also https://docs.docker.com/docker-hub/builds/
   build-jasmarty:
 
-    #runs-on: ubuntu-latest
     runs-on: ubuntu-20.04
     if: github.event_name == 'push'
 
@@ -42,7 +39,10 @@ jobs:
       - name: Build dockerimage
         run: cd scripts && docker build . --tag $IMAGE_NAME
 
-      - name: Push dockerimage
+      - name: Build dockerimage_arm
+        run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
+
+      - name: Push dockerimages
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -50,41 +50,14 @@ jobs:
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
           # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
+          VERSION=$(date '+%Y-%m-%d')
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-          
-      - name: Build dockerimage_arm
-        run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
-    
-      - name: Push dockerimage_arm
-        run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-
-          # Strip git ref prefix from version
-          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-
-          # Strip "v" prefix from tag name
-          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
-
-          # Use Docker `latest` tag convention
-          [ "$VERSION" == "master" ] && VERSION=latest
-
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
 
           docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
           docker push $IMAGE_ID:${VERSION}-arm
+          
