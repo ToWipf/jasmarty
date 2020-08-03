@@ -161,7 +161,7 @@ public class SendAndReceive {
 
 				try {
 					// Normale Textnachricht
-					t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
+					t.setMessage(wipf.escapeStringSatzzeichen(wipf.escapeStringSaveCode(joMsg.getString("text"))));
 
 				} catch (JSONException e) {
 					// Sticker oder ähnliches
@@ -187,21 +187,23 @@ public class SendAndReceive {
 			this.nFailCount++;
 			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
 		}
+
 	}
 
-	/**
-	 * @param t
-	 * @return
-	 */
-	private String sendToId(Telegram t) {
-		Telegram tSend = new Telegram();
-		tSend.setChatID(t.getMessageIntPart(1));
-		tSend.setAntwort(t.getMessageFullWithoutSecondWordLow());
-		tSend.setType("from: " + t.getChatID());
-
-		sendToTelegram(tSend);
-		return "done";
-	}
+// TODO
+//	/**
+//	 * @param t
+//	 * @return
+//	 */
+//	private String sendToId(Telegram t) {
+//		Telegram tSend = new Telegram();
+//		tSend.setChatID(t.getMessageIntPart(1));
+//		tSend.setAntwort(t.getMessageFullWithoutSecondWordLow());
+//		tSend.setType("from: " + t.getChatID());
+//
+//		sendToTelegram(tSend);
+//		return "done";
+//	}
 
 	/**
 	 * 

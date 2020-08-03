@@ -9,7 +9,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
@@ -60,7 +59,6 @@ public class LcdRest {
 	}
 
 	@GET
-	@Metered
 	@Path("/soll")
 	public Response chSoll() {
 		return Response.ok(lcdConnect.getCache().toSollJson().toString()).build();

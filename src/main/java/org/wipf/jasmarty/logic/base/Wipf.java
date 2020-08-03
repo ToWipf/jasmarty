@@ -316,13 +316,25 @@ public class Wipf {
 	 */
 	public String escapeStringSaveCode(String s) {
 		// @formatter:off
-		return s.replaceAll("\t", " ").replaceAll("\\|", "_").replaceAll("<", "_").replaceAll(">", "_")
-				.replaceAll("'", "_").replaceAll("\"", "_").replaceAll("\\{", "(").replaceAll("\\}", ")")
-				// .replaceAll("\\?", "")
-				.replaceAll("\\\\", "").replaceAll("\\.", "")
-				// .replaceAll("!", "")
+		return s.replaceAll("\t", " ")
+				.replaceAll("\\|", "_")
+				.replaceAll("<", "_")
+				.replaceAll(">", "_")
+				.replaceAll("'", "_")
+				.replaceAll("\"", "_")
+				.replaceAll("\\{", "(")
+				.replaceAll("\\}", ")")
+				.replaceAll("\\\\", "")
 				.trim();
 		// @formatter:on
+	}
+
+	/**
+	 * @param s
+	 * @return
+	 */
+	public String escapeStringSatzzeichen(String s) {
+		return s.replaceAll("\\?", "").replaceAll("!", "").replaceAll("\\.", "").trim();
 	}
 
 	/**
