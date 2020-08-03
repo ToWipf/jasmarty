@@ -8,11 +8,21 @@
                 <input matInput [(ngModel)]="data.data">
             </mat-form-field>
             <br>
-            <mat-form-field>
+
+            <!-- <mat-label>Status</mat-label> -->
+            <!-- <input matInput [(ngModel)]="data.active"> -->
+
+            <mat-form-field appearance="fill">
                 <mat-label>Status</mat-label>
-                <!-- TODO: active ? -->
-                <input matInput [(ngModel)]="data.active">
+                <mat-select [(value)]="data.active">
+                    <!-- <mat-option>None</mat-option> -->
+                    <mat-option value="NEW">Neu</mat-option>
+                    <mat-option value="DONE">Fertig</mat-option>
+                    <mat-option value="TODO">Zu Tun</mat-option>
+                    <mat-option value="LATER">Später</mat-option>
+                </mat-select>
             </mat-form-field>
+
         </div>
 
         <div mat-dialog-actions>
