@@ -98,7 +98,7 @@ public class TeleMenue {
 		// Alle festen Antworten
 		switch (t.getMessageStringPartLow(0)) {
 		case "start":
-			return "Wipfbot Version:" + MainHome.VERSION + "\nInfos per 'info'";
+			return "Wipfbot Jasmarty Version:" + MainHome.VERSION + "\nInfos per 'info'";
 		case "v":
 		case "ver":
 		case "version":
@@ -108,7 +108,7 @@ public class TeleMenue {
 		case "hilfe":
 		case "help":
 		case "wipfbot":
-			return "Wipfbot\nVersion " + MainHome.VERSION + "\nCreated by Tobias Fritsch\nwipf2@web.de";
+			return "Wipfbot Jasmarty\nVersion " + MainHome.VERSION + "\nCreated by Tobias Fritsch\nwipf2@web.de";
 		case "r":
 		case "rnd":
 		case "zufall":

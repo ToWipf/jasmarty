@@ -28,7 +28,6 @@ public class ReadLoop {
 	 * 
 	 */
 	public void start() {
-		telegramVerwaltung.setFailCount(1);
 		refreshloop();
 	}
 
@@ -61,22 +60,35 @@ public class ReadLoop {
 			@Override
 			public void run() {
 
+				boolean bLastFailed = true;
 				while (bLoopActive) {
-					telegramVerwaltung.readUpdateFromTelegram();
 
-					// Bei Fehlern warten und später erneut versuchen
-					if (telegramVerwaltung.getFailCount() > 5) {
-						// Warte 60 sec
-						LOGGER.warn("Telegram Task wartet nun 1 min. Fehler Nr. " + telegramVerwaltung.getFailCount());
-						wipf.sleep(6000);
-					} else if (telegramVerwaltung.getFailCount() > 1) {
-						// Warte 20 sec
-						LOGGER.warn("Telegram Task wartet nun 40 sec. Fehler Nr. " + telegramVerwaltung.getFailCount());
-						wipf.sleep(40000);
-					} else {
-						// Normales warten
-						// TODO aus db holen
+					switch (telegramVerwaltung.readUpdateFromTelegram()) {
+					case 'o':
+						// Es gab keine neue Nachrichten
+						wipf.sleep(25000); // warte 25 sec + case n (20s)
+					case 'n':
+						// Es gab neue Nachrichten -> warte kürzer
+						if (bLastFailed) {
+							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
+							// senden:
+							telegramVerwaltung.sendExtIp();
+							bLastFailed = false;
+						}
 						wipf.sleep(20000);
+						break;
+
+					case 'f':
+						// Es gab einen Fehler
+						wipf.sleep(60000);
+						LOGGER.warn("Telegram hatte einen Fehler -> Warte 1min ");
+						break;
+
+					default:
+						LOGGER.warn("Telegram unnormales Verhalten");
+						telegramVerwaltung.sendWarnung();
+						wipf.sleep(20000);
+						break;
 					}
 
 				}

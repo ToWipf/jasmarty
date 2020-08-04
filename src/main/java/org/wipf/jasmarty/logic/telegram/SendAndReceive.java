@@ -43,7 +43,6 @@ public class SendAndReceive {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
-	private Integer nFailCount;
 	private Integer nOffsetID;
 	private String sBotKey;
 
@@ -122,7 +121,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	@Metered
-	public void readUpdateFromTelegram() {
+	public char readUpdateFromTelegram() {
 		try {
 			String sJson = "";
 			if (this.nOffsetID == 0) {
@@ -135,62 +134,58 @@ public class SendAndReceive {
 			JSONObject jo = new JSONObject(sJson);
 			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("API fail:" + sJson);
-				this.nFailCount++;
-				return;
+				return 'f';
 			}
 
 			JSONArray ja = jo.getJSONArray("result");
 
-			for (int nMsg = 0; nMsg < ja.length(); nMsg++) {
-				if (nMsg >= 5) {
-					// Nur 5 Nachrichten in einen Zug verarbeiten
-					continue;
+			if (ja.length() > 0) {
+
+				for (int nMsg = 0; nMsg < ja.length(); nMsg++) {
+					if (nMsg >= 5) {
+						// Nur 5 Nachrichten in einen Zug verarbeiten
+						continue;
+					}
+
+					Telegram t = new Telegram();
+					JSONObject joMsgFull = ja.getJSONObject(nMsg);
+					// Nachricht einlesen -> gelesen -> löschen am Telegram server per update_id
+					this.nOffsetID = joMsgFull.getInt("update_id") + 1;
+					JSONObject joMsg = joMsgFull.getJSONObject("message");
+
+					t.setMid(joMsg.getInt("message_id"));
+					t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
+					t.setType(joMsg.getJSONObject("chat").getString("type"));
+					t.setDate(joMsg.getInt("date"));
+					t.setFrom(joMsg.get("from").toString());
+
+					try {
+						// Normale Textnachricht
+						t.setMessage(wipf.escapeStringSatzzeichen(wipf.escapeStringSaveCode(joMsg.getString("text"))));
+
+					} catch (JSONException e) {
+						// Sticker oder ähnliches
+						t.setMessage("fail");
+					}
+
+					t.setAntwort(menue.menueMsg(t));
+					tLog.saveTelegramToLog(t);
+					sendToTelegram(t);
 				}
-
-				Telegram t = new Telegram();
-				JSONObject joMsgFull = ja.getJSONObject(nMsg);
-				// Nachricht einlesen -> gelesen -> löschen am Telegram server per update_id
-				this.nOffsetID = joMsgFull.getInt("update_id") + 1;
-				JSONObject joMsg = joMsgFull.getJSONObject("message");
-
-				t.setMid(joMsg.getInt("message_id"));
-				t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
-				t.setType(joMsg.getJSONObject("chat").getString("type"));
-				t.setDate(joMsg.getInt("date"));
-				t.setFrom(joMsg.get("from").toString());
-
-				try {
-					// Normale Textnachricht
-					t.setMessage(wipf.escapeStringSatzzeichen(wipf.escapeStringSaveCode(joMsg.getString("text"))));
-
-				} catch (JSONException e) {
-					// Sticker oder ähnliches
-					t.setMessage("fail");
-				}
-
-				t.setAntwort(menue.menueMsg(t));
-				tLog.saveTelegramToLog(t);
-				sendToTelegram(t);
-
+				// Fertig mit neuen Nachrichten
+				return 'n';
+			} else {
+				// Keine neue Nachrichten
+				return 'o';
 			}
-
-			if (this.nFailCount != 0) {
-				// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
-				// senden:
-				sendExtIp();
-			}
-
-			// Da Telegram erreichbar ist:
-			this.nFailCount = 0;
-
 		} catch (Exception e) {
-			this.nFailCount++;
-			LOGGER.warn("readUpdateFromTelegram fails: " + this.nFailCount + " " + e);
+			LOGGER.warn("readUpdateFromTelegram fails: " + e);
+			return 'f';
 		}
 
 	}
 
-// TODO
+// TODO del?
 //	/**
 //	 * @param t
 //	 * @return
@@ -242,11 +237,21 @@ public class SendAndReceive {
 	/**
 	 * 
 	 */
-	private void sendExtIp() {
+	public void sendExtIp() {
 		Telegram t = new Telegram();
 		t.setAntwort("Neue IP: " + wipf.getExternalIp());
 		t.setChatID(798200105);
 
+		sendToTelegram(t);
+	}
+
+	/**
+	 * 
+	 */
+	public void sendWarnung() {
+		Telegram t = new Telegram();
+		t.setAntwort("Abnormales verhalten!");
+		t.setChatID(-385659721);
 		sendToTelegram(t);
 	}
 
@@ -266,20 +271,6 @@ public class SendAndReceive {
 	 */
 	public String getBotKey() {
 		return this.sBotKey;
-	}
-
-	/**
-	 * @param n
-	 */
-	public void setFailCount(Integer n) {
-		this.nFailCount = n;
-	}
-
-	/**
-	 * @param n
-	 */
-	public Integer getFailCount() {
-		return this.nFailCount;
 	}
 
 }
