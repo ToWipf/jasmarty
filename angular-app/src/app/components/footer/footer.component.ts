@@ -16,13 +16,14 @@ export class FooterComponent implements OnInit {
   public sJavaVersion: string = "0.0";
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;
-  public bSethostExpectFirstTry: boolean = true;
 
   ngOnInit() {
     this.getVersion();
   }
 
   private getVersion(): void {
+    this.rest.sethostExpect();
+
     this.http.get(this.rest.gethost() + "wipf/ver").subscribe(
       (resdata: any) => {
         this.bCantLoad = false;
@@ -31,13 +32,6 @@ export class FooterComponent implements OnInit {
           this.bOldVersionWarn = true;
         }
       },
-      (error) => {
-        if (this.bSethostExpectFirstTry){
-          this.rest.sethostExpect();
-          this.getVersion();
-          this.bSethostExpectFirstTry = false;
-        }
-      }
     );
   }
 
