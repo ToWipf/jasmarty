@@ -87,7 +87,7 @@ public class TAppEssen {
 			Statement stmt = SqlLite.getDB();
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO essen (name, editby, date) VALUES " +
-					"('" + t.getMessageFullWithoutSecondWordLow() +
+					"('" + t.getMessageFullWithoutSecondWord() +
 					"','" + t.getFrom() +
 					"','"+ t.getDate() +
 					"')");
