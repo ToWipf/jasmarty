@@ -110,9 +110,9 @@ public class Telegram {
 	/**
 	 * @return mgs ohne die ersten zwei wörter
 	 */
-	public String getMessageFullWithoutSecondWordLow() {
+	public String getMessageFullWithoutSecondWord() {
 		String s = getMessageFullWithoutFirstWord();
-		return s.substring(s.indexOf(' ')).trim().toLowerCase();
+		return s.substring(s.indexOf(' ')).trim();
 	}
 
 	/**

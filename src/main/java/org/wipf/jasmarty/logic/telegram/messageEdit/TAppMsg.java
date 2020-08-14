@@ -76,8 +76,8 @@ public class TAppMsg {
 			Map<String, String> mapS = new HashMap<>();
 
 			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt
-					.executeQuery("select * from telemsg where request = '" + t.getMessageStringPartLow(nStelle) + "';");
+			ResultSet rs = stmt.executeQuery(
+					"select * from telemsg where request = '" + t.getMessageStringPartLow(nStelle) + "';");
 			while (rs.next()) {
 				mapS.put(rs.getString("response"), rs.getString("options"));
 			}
@@ -141,7 +141,7 @@ public class TAppMsg {
 		try {
 			Statement stmt = SqlLite.getDB();
 			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
-					+ t.getMessageStringPartLow(1) + "','" + t.getMessageFullWithoutSecondWordLow() + "','" + null + "','"
+					+ t.getMessageStringPartLow(1) + "','" + t.getMessageFullWithoutSecondWord() + "','" + null + "','"
 					+ t.getFrom() + "','" + t.getDate() + "')");
 			stmt.close();
 			return "OK: " + t.getMessageStringPartLow(1);

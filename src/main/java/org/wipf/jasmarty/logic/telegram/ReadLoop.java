@@ -80,12 +80,14 @@ public class ReadLoop {
 
 					case 'f':
 						// Es gab einen Fehler
+						bLastFailed = true;
 						wipf.sleep(60000);
 						LOGGER.warn("Telegram hatte einen Fehler -> Warte 1min ");
 						break;
 
 					default:
 						LOGGER.warn("Telegram unnormales Verhalten");
+						bLastFailed = true;
 						telegramVerwaltung.sendWarnung();
 						wipf.sleep(20000);
 						break;
