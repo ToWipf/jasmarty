@@ -41,9 +41,11 @@ public class TeleMenue {
 	 * @return
 	 */
 	public String menueMsg(Telegram t) {
+		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
+
 		// Admin Befehle
 		if (adminUser.isAdminUser(t)) {
-			switch (t.getMessageStringPartLow(0)) {
+			switch (sInMsg) {
 			case "admin":
 				// @formatter:off
 				return 
@@ -96,7 +98,7 @@ public class TeleMenue {
 			}
 		}
 		// Alle festen Antworten
-		switch (t.getMessageStringPartLow(0)) {
+		switch (sInMsg) {
 		case "start":
 			return "Wipfbot Jasmarty Version:" + MainHome.VERSION + "\nInfos per 'info'";
 		case "v":

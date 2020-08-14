@@ -161,7 +161,7 @@ public class SendAndReceive {
 
 					try {
 						// Normale Textnachricht
-						t.setMessage(wipf.escapeStringSatzzeichen(wipf.escapeStringSaveCode(joMsg.getString("text"))));
+						t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
 
 					} catch (JSONException e) {
 						// Sticker oder ähnliches
