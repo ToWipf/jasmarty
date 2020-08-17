@@ -93,6 +93,10 @@ public class TeleMenue {
 			case "getip":
 				return wipf.getExternalIp();
 
+			case "stats":
+			case "telestats":
+				return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
+
 			default:
 				break;
 			}
@@ -150,8 +154,6 @@ public class TeleMenue {
 			return appMsg.countMsg();
 		case "countsend":
 			return msglog.count();
-		case "telestats":
-			return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
 		case "getmyid":
 		case "id":
 		case "whoami":

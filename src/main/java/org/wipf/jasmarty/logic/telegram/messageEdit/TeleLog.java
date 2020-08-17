@@ -2,11 +2,14 @@ package org.wipf.jasmarty.logic.telegram.messageEdit;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -62,6 +65,7 @@ public class TeleLog {
 	 * @return log
 	 */
 	public String genTelegramLog(String sFilter) {
+		// TODO filter ins sql!
 		try {
 			StringBuilder slog = new StringBuilder();
 			int n = 0;
@@ -92,7 +96,7 @@ public class TeleLog {
 			stmt.close();
 			return slog.toString();
 		} catch (Exception e) {
-			LOGGER.warn("getTelegram" + e);
+			LOGGER.warn("genTelegram" + e);
 			return "FAIL";
 		}
 	}
@@ -111,6 +115,52 @@ public class TeleLog {
 			LOGGER.warn("count Telegram " + e);
 			return "Fehler count";
 		}
+	}
+
+	/**
+	 * @return log
+	 */
+	public List<Telegram> getTelegramLog() {
+		List<Telegram> tList = new ArrayList<>();
+
+		try {
+			Statement stmt = SqlLite.getDB();
+			ResultSet rs = stmt
+					.executeQuery("SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system'");
+
+			while (rs.next()) {
+				Telegram t = new Telegram();
+				t.setMid(rs.getInt("msgid"));
+				t.setMessage(rs.getString("msg"));
+				t.setAntwort(rs.getString("antw"));
+				t.setChatID(rs.getInt("chatid"));
+				t.setFrom(rs.getString("msgfrom"));
+				t.setDate((int) rs.getLong("msgdate"));
+				t.setType(rs.getString("type"));
+
+				tList.add(t);
+			}
+
+			stmt.close();
+		} catch (Exception e) {
+			LOGGER.warn("getTelegram" + e);
+		}
+		return tList;
+	}
+
+	/**
+	 * @return
+	 */
+	public JSONArray getTelegramLogAsJson() {
+		JSONArray ja = new JSONArray();
+		try {
+			for (Telegram t : getTelegramLog()) {
+				ja.put(t.toJsonTelegram());
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson" + e);
+		}
+		return ja;
 	}
 
 }

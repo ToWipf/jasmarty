@@ -79,4 +79,10 @@ public class TelegramRest {
 		return Response.ok(msglog.genTelegramLog("798200105")).build();
 	}
 
+	@GET
+	@Path("/log")
+	public Response log() {
+		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
+	}
+
 }
