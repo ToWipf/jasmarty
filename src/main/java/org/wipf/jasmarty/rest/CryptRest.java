@@ -45,13 +45,13 @@ public class CryptRest {
 	@POST
 	@Path("/encrypt")
 	public Response encryptJson(String jnRoot) {
-		return Response.ok("{data:\"" + wipf.encrypt(jnRoot) + "\"}").build();
+		return Response.ok("{\"data\":\"" + wipf.encrypt(jnRoot) + "\"}").build();
 	}
 
 	@POST
 	@Path("/decrypt")
 	public Response decryptJson(String jnRoot) {
-		return Response.ok("{data:\"" + wipf.decrypt(jnRoot) + "\"}").build();
+		return Response.ok("{\"data\":\"" + wipf.decrypt(jnRoot) + "\"}").build();
 	}
 
 }

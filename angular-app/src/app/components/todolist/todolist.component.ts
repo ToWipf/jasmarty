@@ -46,7 +46,7 @@ export class TodolistComponent implements OnInit {
   }
 
   public newItem(): void {
-    var td: TodoEntry = {};
+    let td: TodoEntry = {};
 
     td.id = this.nextId;
     td.remind = '';
@@ -65,7 +65,7 @@ export class TodolistComponent implements OnInit {
   }
 
   private getNextId(): number {
-    var nextId: number = 0;
+    let nextId: number = 0;
     this.toarry.forEach((item: TodoEntry) => {
       if (item.id > nextId) {
         nextId = item.id;
