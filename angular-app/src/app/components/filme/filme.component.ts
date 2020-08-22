@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { filmEntry } from 'src/app/datatypes';
+import { FilmEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -20,7 +20,7 @@ export class FilmeComponent implements OnInit {
   public dataSource;
   //public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
   public displayedColumns: string[] = ['titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
-  public farry: filmEntry[] = [];
+  public farry: FilmEntry[] = [];
   private nextId: number;
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class FilmeComponent implements OnInit {
   }
 
   private load(): void {
-    this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: filmEntry[]) => {
+    this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: FilmEntry[]) => {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
@@ -37,7 +37,7 @@ export class FilmeComponent implements OnInit {
   }
 
   public newItem(): void {
-    var td: filmEntry = {};
+    var td: FilmEntry = {};
 
     td.id = this.nextId;
 
@@ -46,7 +46,7 @@ export class FilmeComponent implements OnInit {
     this.openDialog(td);
   }
 
-  public deleteItem(item: filmEntry): void {
+  public deleteItem(item: FilmEntry): void {
     // TODO: ADD nachfragen dialog
     this.http.delete(this.rest.gethost() + 'filme/delete/' + item.id).subscribe((resdata: any) => {
       this.load();
@@ -55,7 +55,7 @@ export class FilmeComponent implements OnInit {
 
   private getNextId(): number {
     var nextId: number = 0;
-    this.farry.forEach((item: filmEntry) => {
+    this.farry.forEach((item: FilmEntry) => {
       if (item.id > nextId) {
         nextId = item.id;
       }
@@ -63,14 +63,14 @@ export class FilmeComponent implements OnInit {
     return nextId * 1 + 1;
   }
 
-  private save(item: filmEntry): void {
+  private save(item: FilmEntry): void {
     this.http.post(this.rest.gethost() + 'filme/save', item).subscribe((resdata: any) => {
       this.load();
     });
   }
 
-  public openDialog(item: filmEntry): void {
-    const edititem: filmEntry = this.serviceWipf.deepCopy(item);
+  public openDialog(item: FilmEntry): void {
+    const edititem: FilmEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(FilmeComponentDialog, {
       width: '350px',
@@ -78,7 +78,7 @@ export class FilmeComponent implements OnInit {
       data: edititem,
     });
 
-    dialogRef.afterClosed().subscribe((result: filmEntry) => {
+    dialogRef.afterClosed().subscribe((result: FilmEntry) => {
       if (result) {
         result.editby = 'web';
         result.date = Math.round(Date.now() / 1000);
@@ -93,7 +93,7 @@ export class FilmeComponent implements OnInit {
   templateUrl: './filme.dialog.html',
 })
 export class FilmeComponentDialog {
-  constructor(public dialogRef: MatDialogRef<FilmeComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: filmEntry) {}
+  constructor(public dialogRef: MatDialogRef<FilmeComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: FilmEntry) {}
 
   onNoClick(): void {
     this.dialogRef.close();

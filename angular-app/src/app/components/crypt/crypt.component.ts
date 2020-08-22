@@ -14,19 +14,19 @@ export class CryptComponent {
 
   }
 
-  public crItem: CryptItem = { data: "", key: "" };
-  public textOut: string = 'out';
+  public crItem: CryptItem = { data: '', key: '' };
+  public textOut: string = '-';
   // TODO: out !
 
   public crypt(): void {
     this.http.post(this.rest.gethost() + 'crypt/encrypt', this.crItem).subscribe((resdata: any) => {
-      this.textOut = resdata;
+      this.textOut = resdata.data;
     });
   }
 
   public decrypt(): void {
     this.http.post(this.rest.gethost() + 'crypt/decrypt', this.crItem).subscribe((resdata: any) => {
-      this.textOut = resdata;
+      this.textOut = resdata.data;
     });
   }
 

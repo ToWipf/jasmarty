@@ -1,19 +1,19 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Globals } from "src/app/datatypes";
-import { ServiceRest } from "src/app/service/serviceRest";
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Globals } from 'src/app/datatypes';
+import { ServiceRest } from 'src/app/service/serviceRest';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.less"],
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.less'],
 })
 export class FooterComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) {}
 
   public sAppVersion: string = this.globals.version;
-  public sJavaVersion: string = "0.0";
+  public sJavaVersion: string = '0.0';
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;
 
@@ -24,7 +24,7 @@ export class FooterComponent implements OnInit {
   private getVersion(): void {
     this.rest.sethostExpect();
 
-    this.http.get(this.rest.gethost() + "wipf/ver").subscribe(
+    this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
         this.bCantLoad = false;
         this.sJavaVersion = resdata.ver.toString();
@@ -37,8 +37,8 @@ export class FooterComponent implements OnInit {
 
   public openSetServer(): void {
     const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
-      width: "250px",
-      height: "300px",
+      width: '250px',
+      height: '300px',
       data: this.rest.gethost(),
     });
 
@@ -52,8 +52,8 @@ export class FooterComponent implements OnInit {
 }
 
 @Component({
-  selector: "app-footer-setServer",
-  templateUrl: "./footer.setServer.html",
+  selector: 'app-footer-setServer',
+  templateUrl: './footer.setServer.html',
 })
 export class FooterComponentSetServerDialog {
   constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) {}

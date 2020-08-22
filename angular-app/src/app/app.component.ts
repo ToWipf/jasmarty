@@ -1,17 +1,17 @@
-import { Component, ViewChild } from "@angular/core";
-import { MatDrawer } from "@angular/material/sidenav";
+import { Component, ViewChild } from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.less"],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.less'],
 })
 export class AppComponent {
-  title = "Wipf";
+  title = 'Wipf';
 
   @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
 
-  public selectedSite: string = "firstpage";
+  public selectedSite: string = 'firstpage';
 
   public selectSite(s: string) {
     this.drawer.toggle();

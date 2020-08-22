@@ -1,11 +1,11 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Globals {
-  version: string = "0.84";
+  version: string = '0.84a';
 }
 
-export interface jaconfig {
+export interface Jaconfig {
   port?: string;
   width?: number;
   height?: number;
@@ -13,31 +13,31 @@ export interface jaconfig {
   baudrate?: number;
 }
 
-export interface japage {
+export interface Japage {
   id?: number;
   name?: string;
   lines?: [{ line?: number; data?: string; option?: number }?];
 }
 
-export interface buttonaction {
+export interface Buttonaction {
   id?: number;
   button?: number;
   active?: boolean;
   action?: string;
 }
 
-export interface displayLcd {
+export interface DisplayLcd {
   width?: number;
   height?: number;
   display?: [{ line: number; data: string }];
 }
 
-export interface japageForList {
+export interface JapageForList {
   id?: number;
   name?: string;
 }
 
-export interface todoEntry {
+export interface TodoEntry {
   id?: number;
   data?: string;
   active?: string;
@@ -46,7 +46,7 @@ export interface todoEntry {
   remind?: string;
 }
 
-export interface filmEntry {
+export interface FilmEntry {
   id?: number;
   titel?: string;
   art?: string;

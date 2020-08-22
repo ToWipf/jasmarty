@@ -17,8 +17,8 @@
 
     IN:
     <mat-form-field>
-        <mat-label>Autosize textarea</mat-label>
-        <textarea [(ngModel)]="crItem.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="20" cdkAutosizeMaxRows="50"></textarea>
+        <mat-label>Input data</mat-label>
+        <textarea [(ngModel)]="crItem.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
     </mat-form-field>
 
     OUT: {{textOut}}

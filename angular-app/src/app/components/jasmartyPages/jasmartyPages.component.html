@@ -1,4 +1,4 @@
-<h3>Seite {{selectedPage}}: '{{japage.name}}'</h3>
+<h3>Seite {{selectedPage}}: '{{Japage.name}}'</h3>
 <hr>
 
 <div class="gridRow">
@@ -11,25 +11,25 @@
 
         <perfect-scrollbar class="pscroll">
             <div>
-                <ng-container *ngIf="japage">
+                <ng-container *ngIf="Japage">
 
                     <div>
                         <h5>Name</h5>
-                        <input type="string" class="form-control inbutton" [(ngModel)]="japage.name">
+                        <input type="string" class="form-control inbutton" [(ngModel)]="Japage.name">
                     </div>
 
                     <h5>Zeilen</h5>
-                    <div *ngFor="let line of japage.lines; let i = index; trackBy:trackByIndex;">
+                    <div *ngFor="let line of Japage.lines; let i = index; trackBy:trackByIndex;">
                         <div class="lineconfig">
 
                             <mat-form-field class="lineInputData">
                                 <mat-label>Zeile {{i}}</mat-label>
-                                <input matInput type="string" class="form-control inputText" [(ngModel)]="japage.lines[i].data" placeholder="Zeile {{i}}">
+                                <input matInput type="string" class="form-control inputText" [(ngModel)]="Japage.lines[i].data" placeholder="Zeile {{i}}">
                             </mat-form-field>
 
                             <mat-form-field class="lineInputOption">
                                 <mat-label>Option</mat-label>
-                                <mat-select [(ngModel)]="japage.lines[i].option" name="option">
+                                <mat-select [(ngModel)]="Japage.lines[i].option" name="option">
                                     <mat-option *ngFor="let option of optionnumbers" [value]="option">
                                         <ng-container *ngIf="option == 48">
                                             Linksbündig

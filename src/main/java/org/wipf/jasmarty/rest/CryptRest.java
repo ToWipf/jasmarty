@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  */
 @Path("/crypt")
 @Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.TEXT_PLAIN)
+@Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class CryptRest {
 
@@ -29,6 +29,7 @@ public class CryptRest {
 	@POST
 	@GET
 	@Path("/encrypt/{key}/{str}")
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response encrypt(@PathParam("str") String sStr, @PathParam("key") String sKey) {
 		return Response.ok(wipf.encrypt(sStr, sKey)).build();
 	}
@@ -36,6 +37,7 @@ public class CryptRest {
 	@POST
 	@GET
 	@Path("/decrypt/{key}/{str}")
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response decrypt(@PathParam("str") String sStr, @PathParam("key") String sKey) {
 		return Response.ok(wipf.decrypt(sStr, sKey)).build();
 	}
@@ -43,13 +45,13 @@ public class CryptRest {
 	@POST
 	@Path("/encrypt")
 	public Response encryptJson(String jnRoot) {
-		return Response.ok(wipf.encrypt(jnRoot)).build();
+		return Response.ok("{data:\"" + wipf.encrypt(jnRoot) + "\"}").build();
 	}
 
 	@POST
 	@Path("/decrypt")
 	public Response decryptJson(String jnRoot) {
-		return Response.ok(wipf.decrypt(jnRoot)).build();
+		return Response.ok("{data:\"" + wipf.decrypt(jnRoot) + "\"}").build();
 	}
 
 }

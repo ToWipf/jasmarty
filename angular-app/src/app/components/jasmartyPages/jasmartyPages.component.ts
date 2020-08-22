@@ -1,22 +1,22 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { jaconfig, japage } from "src/app/datatypes";
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
-import { ServiceRest } from "src/app/service/serviceRest";
+import { Component, OnInit, Inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Jaconfig, Japage } from 'src/app/datatypes';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: "app-jasmartyPages",
-  templateUrl: "./jasmartyPages.component.html",
-  styleUrls: ["./jasmartyPages.component.less"],
+  selector: 'app-jasmartyPages',
+  templateUrl: './jasmartyPages.component.html',
+  styleUrls: ['./jasmartyPages.component.less'],
 })
 export class JasmartyPagesComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
 
   public sText: string;
   public sStatus: string;
-  public jaconfig: jaconfig = {};
+  public Jaconfig: Jaconfig = {};
   public selectedPage: number = 1;
-  public japage: japage = {};
+  public Japage: Japage = {};
 
   public optionnumbers: number[] = [48, 49, 50, 53];
 
@@ -26,15 +26,15 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public getCurrentSelectedSite(): void {
-    this.http.get(this.rest.gethost() + "pages/current").subscribe((resdata: japage) => {
+    this.http.get(this.rest.gethost() + 'pages/current').subscribe((resdata: Japage) => {
       this.selectedPage = resdata.id;
-      this.japage = resdata;
+      this.Japage = resdata;
     });
   }
 
   public loadConfig(): void {
-    this.http.get(this.rest.gethost() + "lcd/config/get").subscribe((resdata) => {
-      this.jaconfig = resdata;
+    this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
+      this.Jaconfig = resdata;
     });
   }
 
@@ -56,12 +56,12 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public save(): void {
-    this.http.post(this.rest.gethost() + "pages/save", JSON.stringify(this.japage)).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + 'pages/save', JSON.stringify(this.Japage)).subscribe((resdata: any) => {
       if (resdata.save) {
-        console.log("saved");
+        console.log('saved');
       } else {
         //TODO: Meldung Fehler
-        console.log("fehler");
+        console.log('fehler');
       }
     });
   }
@@ -71,35 +71,35 @@ export class JasmartyPagesComponent implements OnInit {
       this.selectedPage = 1;
     }
 
-    this.http.get(this.rest.gethost() + "pages/get/" + this.selectedPage).subscribe((resdata: japage) => {
-      this.japage = resdata;
+    this.http.get(this.rest.gethost() + 'pages/get/' + this.selectedPage).subscribe((resdata: Japage) => {
+      this.Japage = resdata;
 
-      if (this.japage.id == 0) {
+      if (this.Japage.id == 0) {
         this.newPage();
       }
     });
   }
 
   public selectPage(): void {
-    this.http.get(this.rest.gethost() + "pages/select/" + this.selectedPage).subscribe((resdata) => {
+    this.http.get(this.rest.gethost() + 'pages/select/' + this.selectedPage).subscribe((resdata) => {
       console.log(resdata);
     });
   }
 
   public deletePage(): void {
-    this.http.delete(this.rest.gethost() + "pages/delete/" + this.selectedPage).subscribe((resdata) => {
+    this.http.delete(this.rest.gethost() + 'pages/delete/' + this.selectedPage).subscribe((resdata) => {
       this.getSite();
     });
   }
 
   private newPage() {
-    this.japage = {};
-    this.japage.id = this.selectedPage;
-    this.japage.name = "Seite " + this.selectedPage;
-    this.japage.lines = [];
-    for (let index = 0; index < this.jaconfig.height; index++) {
-      this.japage.lines.push({
-        data: "",
+    this.Japage = {};
+    this.Japage.id = this.selectedPage;
+    this.Japage.name = 'Seite ' + this.selectedPage;
+    this.Japage.lines = [];
+    for (let index = 0; index < this.Jaconfig.height; index++) {
+      this.Japage.lines.push({
+        data: '',
         line: index,
         option: 48,
       });
@@ -121,8 +121,8 @@ export class JasmartyPagesComponent implements OnInit {
     var goToLine: number = this.selectedPage;
 
     const dialogRef = this.dialog.open(JasmartyPagesComponentGoToDialog, {
-      width: "250px",
-      height: "250px",
+      width: '250px',
+      height: '250px',
       data: goToLine,
     });
 
@@ -135,8 +135,8 @@ export class JasmartyPagesComponent implements OnInit {
 }
 
 @Component({
-  selector: "app-jasmartyPages-goToDialog",
-  templateUrl: "./jasmartyPages.goToDialog.html",
+  selector: 'app-jasmartyPages-goToDialog',
+  templateUrl: './jasmartyPages.goToDialog.html',
 })
 export class JasmartyPagesComponentGoToDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyPagesComponentGoToDialog>, @Inject(MAT_DIALOG_DATA) public data: number) {}

@@ -1,25 +1,25 @@
-import { Component, OnInit, ViewChild, Inject, OnDestroy } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { buttonaction } from "src/app/datatypes";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatSort } from "@angular/material/sort";
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
-import { ServiceWipf } from "src/app/service/serviceWipf";
-import { ServiceRest } from "src/app/service/serviceRest";
+import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Buttonaction } from 'src/app/datatypes';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: "app-jasmartyActions",
-  templateUrl: "./jasmartyActions.component.html",
-  styleUrls: ["./jasmartyActions.component.less"],
+  selector: 'app-jasmartyActions',
+  templateUrl: './jasmartyActions.component.html',
+  styleUrls: ['./jasmartyActions.component.less'],
 })
 export class JasmartyActionsComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  public buttonactions: buttonaction[];
+  public Buttonactions: Buttonaction[];
   public tableDataSource: any;
-  public displayedColumns: string[] = ["button", "action", "edit", "test"];
+  public displayedColumns: string[] = ['button', 'action', 'edit', 'test'];
   public lastPressed: number = null;
   public bLoopStop: boolean = false;
 
@@ -33,26 +33,26 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public newItem(): void {
-    const nextid = this.buttonactions.length + 1; // TODO: !!!
-    const empty: buttonaction = { id: nextid, active: false, button: this.lastPressed, action: "nichts" };
+    const nextid = this.Buttonactions.length + 1; // TODO: !!!
+    const empty: Buttonaction = { id: nextid, active: false, button: this.lastPressed, action: 'nichts' };
     this.editItem(empty);
   }
 
-  public deleteItem(item: buttonaction): void {
+  public deleteItem(item: Buttonaction): void {
     // TODO: ADD nachfragen dialog
-    this.http.delete(this.rest.gethost() + "actions/delete/" + item.id).subscribe((resdata: any) => {
+    this.http.delete(this.rest.gethost() + 'actions/delete/' + item.id).subscribe((resdata: any) => {
       this.load();
     });
   }
 
-  public editItem(item: buttonaction): void {
-    let edititem: buttonaction;
+  public editItem(item: Buttonaction): void {
+    let edititem: Buttonaction;
 
     edititem = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(JasmartyActionsComponentDialog, {
-      width: "700px",
-      height: "400px",
+      width: '700px',
+      height: '400px',
       data: edititem,
     });
 
@@ -64,29 +64,29 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     });
   }
 
-  public testAction(item: buttonaction): void {
-    this.http.get(this.rest.gethost() + "actions/doaction/" + item.id).subscribe((resdata: any) => {
+  public testAction(item: Buttonaction): void {
+    this.http.get(this.rest.gethost() + 'actions/doaction/' + item.id).subscribe((resdata: any) => {
       console.log(resdata);
     });
   }
 
-  private save(item: buttonaction): void {
-    this.http.post(this.rest.gethost() + "actions/set", JSON.stringify(item)).subscribe((resdata: any) => {
+  private save(item: Buttonaction): void {
+    this.http.post(this.rest.gethost() + 'actions/set', JSON.stringify(item)).subscribe((resdata: any) => {
       if (resdata.save) {
-        console.log("saved");
+        console.log('saved');
         this.load();
       } else {
         //TODO: Meldung Fehler
-        console.log("fehler");
+        console.log('fehler');
       }
     });
   }
 
   private load(): void {
-    this.http.get(this.rest.gethost() + "actions/getall").subscribe((resdata: any) => {
+    this.http.get(this.rest.gethost() + 'actions/getall').subscribe((resdata: any) => {
       console.log(resdata);
-      this.buttonactions = resdata;
-      this.tableDataSource = new MatTableDataSource(this.buttonactions);
+      this.Buttonactions = resdata;
+      this.tableDataSource = new MatTableDataSource(this.Buttonactions);
       this.tableDataSource.sort = this.sort;
     });
   }
@@ -102,7 +102,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.http.get(this.rest.gethost() + "actions/currentPressed").subscribe(
+    this.http.get(this.rest.gethost() + 'actions/currentPressed').subscribe(
       (resdata: any) => {
         console.log(resdata.btn);
         if (resdata.btn) {
@@ -117,12 +117,12 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: "app-jasmartyActions-dialog",
-  templateUrl: "./jasmartyActions.dialog.html",
-  styleUrls: ["./jasmartyActions.component.less"],
+  selector: 'app-jasmartyActions-dialog',
+  templateUrl: './jasmartyActions.dialog.html',
+  styleUrls: ['./jasmartyActions.component.less'],
 })
 export class JasmartyActionsComponentDialog {
-  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: buttonaction) {}
+  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) {}
 
   onNoClick(): void {
     this.dialogRef.close();

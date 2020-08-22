@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { displayLcd, japageForList } from "src/app/datatypes";
-import { ServiceRest } from "src/app/service/serviceRest";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { DisplayLcd, JapageForList } from 'src/app/datatypes';
+import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: "app-jasmartyMain",
-  templateUrl: "./jasmartyMain.component.html",
-  styleUrls: ["./jasmartyMain.component.less"],
+  selector: 'app-jasmartyMain',
+  templateUrl: './jasmartyMain.component.html',
+  styleUrls: ['./jasmartyMain.component.less'],
 })
 export class JasmartyMainComponent implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private rest: ServiceRest) {}
 
-  public displayLive: displayLcd;
+  public displayLive: DisplayLcd;
   public display: string[] = [];
-  public pagelist: japageForList[] = [];
+  public pagelist: JapageForList[] = [];
   public bLoopStop: boolean = false;
   
   ngOnInit() {
@@ -26,13 +26,13 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   public refreshNow(): void {
-    this.http.get(this.rest.gethost() + "refresh/refreshCache").subscribe((res: any) => {
+    this.http.get(this.rest.gethost() + 'refresh/refreshCache').subscribe((res: any) => {
       console.log(res);
     });
   }
 
-  public selectSite(item: japageForList): void {
-    this.http.get(this.rest.gethost() + "pages/select/" + item.id).subscribe(() => {
+  public selectSite(item: JapageForList): void {
+    this.http.get(this.rest.gethost() + 'pages/select/' + item.id).subscribe(() => {
       this.refreshNow();
     });
   }
@@ -48,8 +48,8 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getLcdSoll(): void {
-    this.http.get(this.rest.gethost() + "lcd/soll").subscribe(
-      (resdata: displayLcd) => {
+    this.http.get(this.rest.gethost() + 'lcd/soll').subscribe(
+      (resdata: DisplayLcd) => {
         this.displayLive = resdata;
         this.displayLive.display.forEach((line) => {
           this.display[line.line] = line.data;
@@ -62,7 +62,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getAllPages(): void {
-    this.http.get(this.rest.gethost() + "pages/getAllPages").subscribe((resdata: japageForList[]) => {
+    this.http.get(this.rest.gethost() + 'pages/getAllPages').subscribe((resdata: JapageForList[]) => {
       this.pagelist = resdata;
       this.pagelist.sort((a, b) => a.name.localeCompare(b.name));
     });
