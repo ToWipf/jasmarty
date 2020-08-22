@@ -23,6 +23,7 @@ public class ReadLoop {
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
 	private boolean bLoopActive = false;
+	private int lastMsgCounter = 4;
 
 	/**
 	 * 
@@ -66,7 +67,14 @@ public class ReadLoop {
 					switch (telegramVerwaltung.readUpdateFromTelegram()) {
 					case 'o':
 						// Es gab keine neue Nachrichten
-						wipf.sleep(25000); // warte 25 sec + case n (20s)
+						if (lastMsgCounter == 0) {
+							wipf.sleep(60000); // warte 60 sec
+						} else {
+							wipf.sleep(20000); // warte nur 20 sec, da gerade geschrieben wurde
+							lastMsgCounter--;
+						}
+						break;
+
 					case 'n':
 						// Es gab neue Nachrichten -> warte kürzer
 						if (bLastFailed) {
@@ -75,6 +83,7 @@ public class ReadLoop {
 							telegramVerwaltung.sendExtIp();
 							bLastFailed = false;
 						}
+						lastMsgCounter = 4;
 						wipf.sleep(20000);
 						break;
 

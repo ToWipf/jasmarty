@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  */
 @Path("/lcd")
 @Produces(MediaType.APPLICATION_JSON)
-//@Consumes(MediaType.APPLICATION_JSON)
+// @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class LcdRest {
 
