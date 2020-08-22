@@ -12,7 +12,7 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
   templateUrl: "./todolist.component.html",
   styleUrls: ["./todolist.component.less"],
 })
-export class todolistComponent implements OnInit {
+export class TodolistComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) {}
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -83,7 +83,7 @@ export class todolistComponent implements OnInit {
   public openDialog(item: todoEntry): void {
     let edititem: todoEntry = this.serviceWipf.deepCopy(item);
 
-    const dialogRef = this.dialog.open(todolistComponentDialog, {
+    const dialogRef = this.dialog.open(TodolistComponentDialog, {
       width: "350px",
       height: "350px",
       data: edititem,
@@ -103,8 +103,8 @@ export class todolistComponent implements OnInit {
   selector: "app-todolist-dialog",
   templateUrl: "./todolist.dialog.html",
 })
-export class todolistComponentDialog {
-  constructor(public dialogRef: MatDialogRef<todolistComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: todoEntry) {}
+export class TodolistComponentDialog {
+  constructor(public dialogRef: MatDialogRef<TodolistComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: todoEntry) {}
 
   onNoClick(): void {
     this.dialogRef.close();

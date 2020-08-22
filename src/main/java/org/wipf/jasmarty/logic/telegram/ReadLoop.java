@@ -67,14 +67,13 @@ public class ReadLoop {
 					switch (telegramVerwaltung.readUpdateFromTelegram()) {
 					case 'o':
 						// Es gab keine neue Nachrichten
-						if (lastMsgCounter == 0) {
-							wipf.sleep(60000); // warte 60 sec
+						if (lastMsgCounter < 1) {
+							wipf.sleep(40000); // warte 60 sec => 40 + 20 von unten
 						} else {
-							wipf.sleep(20000); // warte nur 20 sec, da gerade geschrieben wurde
+							// warte nur 20 sec, da gerade geschrieben wurde
 							lastMsgCounter--;
 						}
-						break;
-
+						// kein break hier!
 					case 'n':
 						// Es gab neue Nachrichten -> warte kürzer
 						if (bLastFailed) {

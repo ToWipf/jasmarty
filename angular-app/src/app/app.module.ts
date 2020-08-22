@@ -53,31 +53,16 @@ import { MatStepperModule } from "@angular/material/stepper";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
-import { Globals } from './datatypes';
-import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmartyFullView.component';
-import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
-import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
-import { todolistComponent, todolistComponentDialog } from './components/todolist/todolist.component';
-import { filmeComponent, filmeComponentDialog } from './components/filme/filme.component';
+import { Globals } from "./datatypes";
+import { JasmartyFullViewComponent } from "./components/jasmartyFullView/jasmartyFullView.component";
+import { JasmartyMainComponent } from "./components/jasmartyMain/jasmartyMain.component";
+import { TelegramConfigComponent } from "./components/telegramConfig/telegramConfig.component";
+import { CryptComponent } from "./components/crypt/crypt.component";
+import { TodolistComponent, TodolistComponentDialog } from "./components/todolist/todolist.component";
+import { FilmeComponent, FilmeComponentDialog } from "./components/filme/filme.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    JasmartyPagesComponent,
-    JasmartyPagesComponentGoToDialog,
-    JasmartyActionsComponent,
-    JasmartyActionsComponentDialog,
-    JasmartyConfigComponent,
-    JasmartyMainComponent,
-    JasmartyFullViewComponent,
-    TelegramConfigComponent,
-    FooterComponent,
-    FooterComponentSetServerDialog,
-    todolistComponent,
-    todolistComponentDialog,
-    filmeComponent,
-    filmeComponentDialog,
-  ],
+  declarations: [AppComponent, JasmartyPagesComponent, JasmartyPagesComponentGoToDialog, JasmartyActionsComponent, JasmartyActionsComponentDialog, JasmartyConfigComponent, JasmartyMainComponent, JasmartyFullViewComponent, TelegramConfigComponent, FooterComponent, FooterComponentSetServerDialog, TodolistComponent, TodolistComponentDialog, FilmeComponent, FilmeComponentDialog, CryptComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

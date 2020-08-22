@@ -56,3 +56,8 @@ export interface filmEntry {
   gesehenDate?: number;
   infotext?: string;
 }
+
+export interface CryptItem {
+  key?: string;
+  data?: string;
+}

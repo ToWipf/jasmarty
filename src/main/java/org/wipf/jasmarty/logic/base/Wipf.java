@@ -17,6 +17,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
 
 /**
@@ -368,11 +369,57 @@ public class Wipf {
 	}
 
 	/**
+	 * @param sJson
+	 * @return
+	 */
+	public String encrypt(String sJson) {
+		try {
+			JSONObject jo = new JSONObject(sJson);
+
+			String sCryptKey = jo.getString("key");
+			String sIn = jo.getString("data");
+
+			SecretKeySpec secretKeySpec = new SecretKeySpec((sCryptKey).getBytes(), "Blowfish");
+			Cipher cipher = Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec);
+			byte[] hasil = cipher.doFinal(sIn.getBytes());
+			// return Base64.getEncoder().encodeToString(hasil);
+			Base32 base32 = new Base32();
+			return (base32.encode(hasil));
+		} catch (Exception e) {
+			return "fail";
+		}
+	}
+
+	/**
 	 * @param sIn
 	 * @return
 	 */
 	public String decrypt(String sIn, String sCryptKey) {
 		try {
+			SecretKeySpec secretKeySpec = new SecretKeySpec((sCryptKey).getBytes(), "Blowfish");
+			Cipher cipher = Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);
+			// byte[] hasil = cipher.doFinal(Base64.getDecoder().decode(sIn));
+			Base32 base32 = new Base32();
+			byte[] hasil = cipher.doFinal(base32.decode(sIn));
+			return new String(hasil);
+		} catch (Exception e) {
+			return "Fail";
+		}
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public String decrypt(String sJson) {
+		try {
+			JSONObject jo = new JSONObject(sJson);
+
+			String sCryptKey = jo.getString("key");
+			String sIn = jo.getString("data");
+
 			SecretKeySpec secretKeySpec = new SecretKeySpec((sCryptKey).getBytes(), "Blowfish");
 			Cipher cipher = Cipher.getInstance("Blowfish");
 			cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);

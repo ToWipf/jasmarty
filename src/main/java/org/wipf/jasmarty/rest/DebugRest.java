@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -31,6 +32,7 @@ public class DebugRest {
 	@Inject
 	JasmartyHome jHome;
 
+	@POST
 	@GET
 	@Path("/lcd/write/{x}/{y}/{str}")
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
@@ -38,6 +40,7 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/lcd/refresh")
 	public Response refreshDisplay() {
@@ -45,6 +48,7 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/lcd/writeAscii/{int}")
 	public Response writeAscii(@PathParam("int") Integer n) {
@@ -52,6 +56,7 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/lcd/pos/{x}/{y}")
 	public Response pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
@@ -59,6 +64,7 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/lcd/cls")
 	public Response cls() {
@@ -66,6 +72,7 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/winamp/control/{s}/{s2}")
 	public Response control(@PathParam("s") String s, @PathParam("s") String s2) throws Exception {
@@ -73,12 +80,14 @@ public class DebugRest {
 		return Response.ok().build();
 	}
 
+	@POST
 	@GET
 	@Path("/winamp/info/{s}")
 	public Response info(@PathParam("s") String s) throws Exception {
 		return Response.ok("{\"info\":\"" + winamp.getInfos(s) + "\"}").build();
 	}
 
+	@POST
 	@GET
 	@Path("/jasmarty/restart")
 	public Response startAgain() {
