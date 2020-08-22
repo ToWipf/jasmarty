@@ -20,15 +20,25 @@ export class todolistComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ["id", "data", "active", "date", "editby", "button"];
   public toarry: todoEntry[] = [];
+  public filter: string = "ALL";
   private nextId: number;
 
   ngOnInit() {
     this.load();
   }
-  
-  private load(): void {
+
+  public load(): void {
+    this.toarry = [];
+
     this.http.get(this.rest.gethost() + "todolist/getAll").subscribe((resdata: todoEntry[]) => {
-      this.toarry = resdata;
+      resdata.forEach((element) => {
+        if (this.filter === "ALL" || element.active === this.filter) {
+          this.toarry.push(element);
+        }
+      });
+
+      //this.toarry = resdata;
+
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
       this.nextId = this.getNextId();
@@ -40,6 +50,7 @@ export class todolistComponent implements OnInit {
 
     td.id = this.nextId;
     td.remind = "";
+    td.active = "NEW";
 
     td.date = Math.round(Date.now() / 1000);
     td.editby = "web";

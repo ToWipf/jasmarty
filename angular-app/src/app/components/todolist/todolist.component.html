@@ -1,6 +1,23 @@
 <div>
     <h3>ToDo Liste</h3>
     <div class="todolist">
+
+        <div class="configline">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Filter</mat-label>
+                <mat-select [(value)]="filter">
+                    <mat-option value="ALL">Alles</mat-option>
+                    <mat-option value="NEW">Neu</mat-option>
+                    <mat-option value="DONE">Fertig</mat-option>
+                    <mat-option value="TODO">Zu Tun</mat-option>
+                    <mat-option value="LATER">Später</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <button class="btn btn-default" (click)="load()">Laden</button>
+        </div>
+
         <perfect-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
