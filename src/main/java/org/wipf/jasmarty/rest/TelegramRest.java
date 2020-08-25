@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
+import org.wipf.jasmarty.logic.telegram.messageEdit.TeleMenue;
 
 /**
  * @author wipf
@@ -29,6 +30,8 @@ public class TelegramRest {
 	TelegramHome tHome;
 	@Inject
 	TeleLog msglog;
+	@Inject
+	TeleMenue menue;
 
 	@GET
 	@Path("/on")
@@ -83,6 +86,13 @@ public class TelegramRest {
 	@Path("/log")
 	public Response log() {
 		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
+	}
+
+	// TODO testen
+	@POST
+	@Path("/chat")
+	public Response chat(String sJson) {
+		return Response.ok("{\"msg\":\"" + menue.menueMsg(sJson) + "\"}").build();
 	}
 
 }

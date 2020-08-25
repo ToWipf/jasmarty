@@ -37,6 +37,15 @@ public class TeleMenue {
 	TAppFilme appFilme;
 
 	/**
+	 * @param sJson
+	 * @return
+	 */
+	public String menueMsg(String sJson) {
+		Telegram t = new Telegram().setByJsonTelegram(sJson);
+		return menueMsg(t);
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */

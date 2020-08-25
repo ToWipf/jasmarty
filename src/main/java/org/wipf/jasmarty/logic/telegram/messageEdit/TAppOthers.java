@@ -96,9 +96,8 @@ public class TAppOthers {
 		try {
 			String sWitz;
 			sWitz = wipf.httpRequestGET("https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
-			String s = sWitz.substring(41, sWitz.length() - 3);
-			String y = s.replaceAll("\\<.*?>", "");
-			String x = URLEncoder.encode(y, "UTF-8");
+			String s = sWitz.substring(41, sWitz.length() - 3).replaceAll("\\<.*?>", "");
+			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
 
 			// TODO
 			return x;
