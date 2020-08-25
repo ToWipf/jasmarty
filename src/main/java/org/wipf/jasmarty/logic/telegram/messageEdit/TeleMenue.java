@@ -97,6 +97,10 @@ public class TeleMenue {
 			case "telestats":
 				return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
 
+			case "res":
+			case "response":
+				return t.getMessage();
+
 			default:
 				break;
 			}

@@ -68,21 +68,23 @@ public class ReadLoop {
 					case 'o':
 						// Es gab keine neue Nachrichten
 						if (lastMsgCounter == 0) {
-							wipf.sleep(40000); // warte 60 sec => 40 + 20 von unten
+							wipf.sleep(60000); // warte 60 sec
 						} else {
 							// warte nur 20 sec, da gerade geschrieben wurde
+							wipf.sleep(15000);
 							lastMsgCounter--;
 						}
-						// kein break hier!
-					case 'n':
-						// Es gab neue Nachrichten -> warte kürzer
 						if (bLastFailed) {
 							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
 							// senden:
+							// Das hat keine Prio -> erst wenn keine neuen Nachrichten ausstehen senden
 							telegramVerwaltung.sendExtIp();
 							bLastFailed = false;
 						}
-						lastMsgCounter = 4;
+						break;
+					case 'n':
+						// Es gab neue Nachrichten -> warte nur 20s
+						lastMsgCounter = 6;
 						wipf.sleep(20000);
 						break;
 

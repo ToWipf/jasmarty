@@ -326,6 +326,7 @@ public class Wipf {
 				.replaceAll("\\{", "(")
 				.replaceAll("\\}", ")")
 				.replaceAll("\\\\", "")
+				.replaceAll("/", "")
 				.trim();
 		// @formatter:on
 	}
