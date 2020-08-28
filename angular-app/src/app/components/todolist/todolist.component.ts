@@ -18,13 +18,12 @@ export class TodolistComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['id', 'data', 'active', 'date', 'editby', 'button'];
+  public displayedColumns: string[] = ['id', 'data', 'date', 'editby', 'button'];
   public toarry: TodoEntry[] = [];
-  public filter: string = 'ALL';
   private nextId: number;
   public bNew: boolean = true;
   public bTodo: boolean = true;
-  public bDone: boolean = true;
+  public bDone: boolean = false;
   public bLater: boolean = true;
 
 
@@ -37,10 +36,6 @@ export class TodolistComponent implements OnInit {
 
     this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
       resdata.forEach((element) => {
-
-        // if (this.filter === 'ALL' || element.active === this.filter) {
-        //   this.toarry.push(element);
-        // }
 
         if (element.active === 'LATER' && this.bLater) {
           this.toarry.push(element);
@@ -56,8 +51,6 @@ export class TodolistComponent implements OnInit {
         }
 
       });
-
-      //this.toarry = resdata;
 
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;

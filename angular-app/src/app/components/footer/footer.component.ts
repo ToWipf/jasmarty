@@ -10,7 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
   styleUrls: ['./footer.component.less'],
 })
 export class FooterComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) { }
 
   public sAppVersion: string = this.globals.version;
   public sJavaVersion: string = '0.0';
@@ -23,6 +23,9 @@ export class FooterComponent implements OnInit {
 
   private getVersion(): void {
     this.rest.sethostExpect();
+    if (this.rest.gethost() === 'http://') {
+      this.rest.sethost('http://localhost:8080/');
+    }
 
     this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
@@ -56,7 +59,7 @@ export class FooterComponent implements OnInit {
   templateUrl: './footer.setServer.html',
 })
 export class FooterComponentSetServerDialog {
-  constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) {}
+  constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) { }
 
   onNoClick(): void {
     this.dialogRef.close();
