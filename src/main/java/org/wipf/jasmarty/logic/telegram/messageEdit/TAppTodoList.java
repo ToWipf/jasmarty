@@ -176,9 +176,23 @@ public class TAppTodoList {
 	public TodoEntry getById(int nId) {
 		Statement stmt = SqlLite.getDB();
 		TodoEntry tItem = new TodoEntry();
-		ResultSet rs;
+
+		// TODO init?
+		tItem.setActive("");
+		tItem.setAntwort("");
+		tItem.setChatID(-1);
+		tItem.setData("");
+		tItem.setEditBy("");
+		tItem.setEditBy("");
+		tItem.setId(-1);
+		tItem.setMessage("");
+		tItem.setMid(-1);
+		tItem.setOptions("");
+		tItem.setRemind("");
+		tItem.setType("");
+
 		try {
-			rs = stmt.executeQuery("select * from todolist WHERE id like '" + nId + "';");
+			ResultSet rs = stmt.executeQuery("select * from todolist WHERE id like '" + nId + "';");
 
 			while (rs.next()) {
 				TodoEntry entry = new TodoEntry();
