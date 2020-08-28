@@ -77,7 +77,6 @@ public class Telegram {
 		try {
 			JSONObject jo = new JSONObject(sJson);
 			this.setMid(jo.getInt("editby"));
-
 			this.setFrom(jo.getString("from"));
 			this.setDate(jo.getInt("date"));
 			this.setChatID(jo.getInt("chatid"));
@@ -85,8 +84,11 @@ public class Telegram {
 			this.setMessage(jo.getString("message"));
 			this.setAntwort(jo.getString("antwort"));
 			this.setOptions(jo.getString("options"));
-		} catch (Exception ignore) {
 
+			System.out.println(jo.toString());
+
+		} catch (Exception e) {
+			System.out.println("setByJsonTelegram " + e);
 		}
 		return this;
 	}

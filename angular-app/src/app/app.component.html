@@ -11,6 +11,7 @@
                     <li (click)="selectSite('todolist')">Todo List</li>
                     <li (click)="selectSite('filme')">Filme</li>
                     <li (click)="selectSite('crypt')">Crypt</li>
+                    <li (click)="selectSite('chat')">Chat</li>
                 </ul>
 
                 <div class="titlemenue">Konfiguration LCD</div>
@@ -64,6 +65,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='crypt'">
                     <app-crypt></app-crypt>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='chat'">
+                    <app-chat></app-chat>
                 </ng-container>
             </div>
         </div>

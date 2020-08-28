@@ -41,7 +41,10 @@ public class TeleMenue {
 	 * @return
 	 */
 	public String menueMsg(String sJson) {
+		System.out.println(sJson);
 		Telegram t = new Telegram().setByJsonTelegram(sJson);
+		System.out.println("2");
+		System.out.println(t.toJsonTelegram().toString());
 		return menueMsg(t);
 	}
 

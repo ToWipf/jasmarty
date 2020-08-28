@@ -61,3 +61,17 @@ export interface CryptItem {
   key?: string;
   data?: string;
 }
+
+export interface Telegram {
+  id?: number;
+  data?: string;
+  active?: string;
+  editby?: number;
+  date?: number;
+  from?: string;
+  chatid?: number;
+  type?: string;
+  message?: string;
+  antwort?: string;
+  options?: string;
+}

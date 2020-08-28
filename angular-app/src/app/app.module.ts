@@ -58,11 +58,29 @@ import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmart
 import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
 import { CryptComponent } from './components/crypt/crypt.component';
+import { ChatComponent } from './components/chat/chat.component';
 import { TodolistComponent, TodolistComponentDialog } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 
 @NgModule({
-  declarations: [AppComponent, JasmartyPagesComponent, JasmartyPagesComponentGoToDialog, JasmartyActionsComponent, JasmartyActionsComponentDialog, JasmartyConfigComponent, JasmartyMainComponent, JasmartyFullViewComponent, TelegramConfigComponent, FooterComponent, FooterComponentSetServerDialog, TodolistComponent, TodolistComponentDialog, FilmeComponent, FilmeComponentDialog, CryptComponent],
+  declarations: [
+    AppComponent,
+    JasmartyPagesComponent,
+    JasmartyPagesComponentGoToDialog,
+    JasmartyActionsComponent,
+    JasmartyActionsComponentDialog,
+    JasmartyConfigComponent,
+    JasmartyMainComponent,
+    JasmartyFullViewComponent,
+    TelegramConfigComponent,
+    FooterComponent,
+    FooterComponentSetServerDialog,
+    TodolistComponent,
+    TodolistComponentDialog,
+    FilmeComponent,
+    FilmeComponentDialog,
+    CryptComponent,
+    ChatComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

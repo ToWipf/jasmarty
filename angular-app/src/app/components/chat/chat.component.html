@@ -1,0 +1,13 @@
+<div>
+    <h3>Chat</h3>
+
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Nachricht</mat-label>
+            <input matInput [(ngModel)]="tMsg.message">
+        </mat-form-field>
+    </div>
+
+    <button class="btn btn-default" (click)="send()">Send</button> Antwort: {{textOut}}
+
+</div>

@@ -88,7 +88,7 @@ public class TelegramRest {
 		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
 	}
 
-	// TODO testen
+	// TODO multiline fix
 	@POST
 	@Path("/chat")
 	public Response chat(String sJson) {
