@@ -186,7 +186,7 @@ public class TeleMenue {
 			return appFilme.telegramMenueFilme(t);
 		default:
 			// Alle db aktionen
-			t = appMsg.getMsg(t, 0);
+			t = appMsg.getMsg(t);
 			// ob keine Antwort in db gefunden
 			if (t.getAntwort() != null) {
 				return t.getAntwort();

@@ -13,7 +13,7 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
   styleUrls: ['./todolist.component.less'],
 })
 export class TodolistComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) {}
+  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -22,6 +22,11 @@ export class TodolistComponent implements OnInit {
   public toarry: TodoEntry[] = [];
   public filter: string = 'ALL';
   private nextId: number;
+  public bNew: boolean = true;
+  public bTodo: boolean = true;
+  public bDone: boolean = true;
+  public bLater: boolean = true;
+
 
   ngOnInit() {
     this.load();
@@ -32,9 +37,24 @@ export class TodolistComponent implements OnInit {
 
     this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
       resdata.forEach((element) => {
-        if (this.filter === 'ALL' || element.active === this.filter) {
+
+        // if (this.filter === 'ALL' || element.active === this.filter) {
+        //   this.toarry.push(element);
+        // }
+
+        if (element.active === 'LATER' && this.bLater) {
           this.toarry.push(element);
         }
+        if (element.active === 'TODO' && this.bTodo) {
+          this.toarry.push(element);
+        }
+        if (element.active === 'DONE' && this.bDone) {
+          this.toarry.push(element);
+        }
+        if (element.active === 'NEW' && this.bNew) {
+          this.toarry.push(element);
+        }
+
       });
 
       //this.toarry = resdata;
@@ -104,7 +124,7 @@ export class TodolistComponent implements OnInit {
   templateUrl: './todolist.dialog.html',
 })
 export class TodolistComponentDialog {
-  constructor(public dialogRef: MatDialogRef<TodolistComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: TodoEntry) {}
+  constructor(public dialogRef: MatDialogRef<TodolistComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: TodoEntry) { }
 
   onNoClick(): void {
     this.dialogRef.close();

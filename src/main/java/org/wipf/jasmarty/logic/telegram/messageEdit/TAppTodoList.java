@@ -50,6 +50,7 @@ public class TAppTodoList {
 					"done ID" + "\n" + 
 					"undone ID" + "\n" +
 					"delete ID" + "\n" +
+					"get ID" + "\n" +
 					"list" +  "\n" +
 					"listall" + "\n" +
 					"listfull" + "\n" +
@@ -84,6 +85,8 @@ public class TAppTodoList {
 		case "ca":
 		case "countall":
 			return countAll();
+		case "get":
+			return getById(t.getMessageIntPart(1)).toJson().toString();
 		default:
 			return saveItem(t).toString();
 		}
@@ -164,6 +167,34 @@ public class TAppTodoList {
 		}
 		stmt.close();
 		return liTodoE;
+	}
+
+	/**
+	 * @param nId
+	 * @return
+	 */
+	public TodoEntry getById(int nId) {
+		Statement stmt = SqlLite.getDB();
+		TodoEntry tItem = new TodoEntry();
+		ResultSet rs;
+		try {
+			rs = stmt.executeQuery("select * from todolist WHERE id like '" + nId + "';");
+
+			while (rs.next()) {
+				TodoEntry entry = new TodoEntry();
+				entry.setId(rs.getInt("id"));
+				entry.setData(rs.getString("data"));
+				entry.setEditBy(rs.getString("editby"));
+				entry.setActive(rs.getString("active"));
+				entry.setRemind(rs.getString("remind"));
+				entry.setDate(rs.getInt("date"));
+				tItem = entry;
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			LOGGER.warn("ById " + e);
+		}
+		return tItem;
 	}
 
 	/**

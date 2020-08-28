@@ -4,7 +4,7 @@
 
         <div class="configline">
 
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
                 <mat-label>Filter</mat-label>
                 <mat-select [(value)]="filter">
                     <mat-option value="ALL">Alles</mat-option>
@@ -13,9 +13,14 @@
                     <mat-option value="TODO">Zu Tun</mat-option>
                     <mat-option value="LATER">Später</mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            Neu:
+            <input type="checkbox" [(ngModel)]="bNew"> Fertig:
+            <input type="checkbox" [(ngModel)]="bDone"> Zu Tun:
+            <input type="checkbox" [(ngModel)]="bTodo"> Später:
+            <input type="checkbox" [(ngModel)]="bLater">
 
-            <button class="btn btn-default" (click)="load()">Laden</button>
+            <button class="btn btn-default" (click)="load()">Neu laden</button>
         </div>
 
         <perfect-scrollbar class="pscroll">
