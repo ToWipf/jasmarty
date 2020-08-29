@@ -108,7 +108,8 @@ public class TeleMenue {
 				break;
 			}
 		}
-		// Alle festen Antworten
+
+		// Alle public Antworten
 		switch (sInMsg) {
 		case "start":
 			return "Wipfbot Jasmarty Version:" + MainHome.VERSION + "\nInfos per 'info'";

@@ -18,7 +18,7 @@ public class AdminUser {
 	 * @return
 	 */
 	public Boolean isAdminUser(Telegram t) {
-		return (t.getChatID() == 798200105 || t.getChatID() == 522467648);
+		return (t.getChatID() == 798200105 || t.getChatID() == 522467648 || t.getType().equals("website"));
 	}
 
 }

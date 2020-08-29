@@ -45,17 +45,8 @@ public class TAppTodoList {
 		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			// @formatter:off
-				return 
-					"text (add)" + "\n" + 
-					"done ID" + "\n" + 
-					"undone ID" + "\n" +
-					"delete ID" + "\n" +
-					"get ID" + "\n" +
-					"list" +  "\n" +
-					"listall" + "\n" +
-					"listfull" + "\n" +
-					"count" + "\n" +
-					"countall";
+			return "text (add)" + "\n" + "done ID" + "\n" + "undone ID" + "\n" + "delete ID" + "\n" + "get ID" + "\n"
+					+ "list" + "\n" + "listall" + "\n" + "listfull" + "\n" + "count" + "\n" + "countall";
 			// @formatter:on
 		}
 
@@ -86,7 +77,7 @@ public class TAppTodoList {
 		case "countall":
 			return countAll();
 		case "get":
-			return getById(t.getMessageIntPart(1)).toJson().toString();
+			return getById(t.getMessageIntPart(2)).toJson().toString();
 		default:
 			return saveItem(t).toString();
 		}
@@ -192,7 +183,7 @@ public class TAppTodoList {
 		tItem.setType("");
 
 		try {
-			ResultSet rs = stmt.executeQuery("select * from todolist WHERE id like '" + nId + "';");
+			ResultSet rs = stmt.executeQuery("select * from todolist WHERE id IS '" + nId + "';");
 
 			while (rs.next()) {
 				TodoEntry entry = new TodoEntry();
@@ -218,16 +209,11 @@ public class TAppTodoList {
 	public Integer saveItem(TodoEntry tE) {
 		try {
 			Statement stmt = SqlLite.getDB();
-			//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES " +
-					"('"  + tE.getId() +
-					"','" + tE.getData() +
-					"','" + tE.getEditBy() +
-					"','" + tE.getDate() +
-					"','" + tE.getRemind() +
-					"','" + tE.getActive() +
-					"')");
-			//@formatter:on
+			// @formatter:off
+			stmt.execute("INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES " + "('"
+					+ tE.getId() + "','" + tE.getData() + "','" + tE.getEditBy() + "','" + tE.getDate() + "','"
+					+ tE.getRemind() + "','" + tE.getActive() + "')");
+			// @formatter:on
 			stmt.close();
 			return tE.getId();
 		} catch (Exception e) {

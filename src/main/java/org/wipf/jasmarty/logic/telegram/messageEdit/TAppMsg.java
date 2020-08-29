@@ -69,15 +69,14 @@ public class TAppMsg {
 	 * @param nStelle
 	 * @return
 	 * 
-	 *         TODO del this
 	 */
 	public Telegram getMsg(Telegram t) {
 		try {
 			Map<String, String> mapS = new HashMap<>();
 
 			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt
-					.executeQuery("select * from telemsg where request = '" + t.getMessageStringPartLow(0) + "';");
+			ResultSet rs = stmt.executeQuery("select * from telemsg where request = '"
+					+ wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0)) + "';");
 			while (rs.next()) {
 				mapS.put(rs.getString("response"), rs.getString("options"));
 			}

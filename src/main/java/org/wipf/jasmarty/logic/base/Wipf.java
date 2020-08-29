@@ -336,7 +336,7 @@ public class Wipf {
 	 * @return
 	 */
 	public String escapeStringSatzzeichen(String s) {
-		return s.replaceAll("\\?", "").replaceAll("!", "").replaceAll("\\.", "").trim();
+		return s.replaceAll("\\?", "").replaceAll("\\!", "").replaceAll("\\.", "").trim();
 	}
 
 	/**
