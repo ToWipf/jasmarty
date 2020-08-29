@@ -74,22 +74,56 @@ public class Telegram {
 	 * @return
 	 */
 	public Telegram setByJsonTelegram(String sJson) {
+		JSONObject jo = new JSONObject(sJson);
+
 		try {
-			JSONObject jo = new JSONObject(sJson);
-			this.setMid(jo.getInt("editby"));
-			this.setFrom(jo.getString("from"));
-			this.setDate(jo.getInt("date"));
 			this.setChatID(jo.getInt("chatid"));
-			this.setType(jo.getString("type"));
-			this.setMessage(jo.getString("message"));
-			this.setAntwort(jo.getString("antwort"));
-			this.setOptions(jo.getString("options"));
-
-			System.out.println(jo.toString());
-
-		} catch (Exception e) {
-			System.out.println("setByJsonTelegram " + e);
+		} catch (Exception ignore) {
+			// Ignore
 		}
+
+		try {
+			this.setType(jo.getString("type"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setMessage(jo.getString("message"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setMid(jo.getInt("editby"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setFrom(jo.getString("from"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setDate(jo.getInt("date"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setAntwort(jo.getString("antwort"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
+		try {
+			this.setOptions(jo.getString("options"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
 		return this;
 	}
 

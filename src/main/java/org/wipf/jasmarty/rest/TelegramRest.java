@@ -88,11 +88,10 @@ public class TelegramRest {
 		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
 	}
 
-	// TODO multiline fix
 	@POST
 	@Path("/chat")
 	public Response chat(String sJson) {
-		return Response.ok("{\"msg\":\"" + menue.menueMsg(sJson) + "\"}").build();
+		return Response.ok("{\"msg\":\"" + menue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
 	}
 
 }

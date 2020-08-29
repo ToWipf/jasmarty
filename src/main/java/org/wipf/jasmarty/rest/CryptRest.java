@@ -51,7 +51,7 @@ public class CryptRest {
 	@POST
 	@Path("/decrypt")
 	public Response decryptJson(String jnRoot) {
-		return Response.ok("{\"data\":\"" + wipf.decrypt(jnRoot) + "\"}").build();
+		return Response.ok("{\"data\":\"" + wipf.decrypt(jnRoot).replaceAll("\n", "\\\\n") + "\"}").build();
 	}
 
 }

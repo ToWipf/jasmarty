@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Globals {
-  version: string = '0.84b';
+  version: string = '0.84c';
 }
 
 export interface Jaconfig {
@@ -44,6 +44,7 @@ export interface TodoEntry {
   editby?: string;
   date?: number;
   remind?: string;
+  chatid?: number;
 }
 
 export interface FilmEntry {

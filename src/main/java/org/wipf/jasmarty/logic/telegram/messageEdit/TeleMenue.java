@@ -41,10 +41,7 @@ public class TeleMenue {
 	 * @return
 	 */
 	public String menueMsg(String sJson) {
-		System.out.println(sJson);
 		Telegram t = new Telegram().setByJsonTelegram(sJson);
-		System.out.println("2");
-		System.out.println(t.toJsonTelegram().toString());
 		return menueMsg(t);
 	}
 
@@ -60,24 +57,11 @@ public class TeleMenue {
 			switch (sInMsg) {
 			case "admin":
 				// @formatter:off
-				return 
-					"Admin Befehle:" + "\n\n" + 
-					"AddAMsgToDB" + "\n" + 
-					"GetAllMsg" + "\n" +
-					"GetAllMotd" + "\n" +
-					"AddAMotd" + "\n" +
-					"SendMotd" + "\n" + 
-					"telestats" + "\n" +
-					"GetMotd" + "\n" + 
-					"DelMotd ID" +  "\n" +
-					"DelMsg ID"+  "\n" +
-					"DoPing IP" + "\n" +
-					"DoNmap" + "\n" +
-					"getIp" + "\n" +
-					"SendIp" + "\n" +
-					"send ID msg" + "\n" +
-					"Essen (Hilfe für essen)";
-				// @formatter:on
+				return "Admin Befehle:" + "\n\n" + "AddAMsgToDB" + "\n" + "GetAllMsg" + "\n" + "GetAllMotd" + "\n"
+						+ "AddAMotd" + "\n" + "SendMotd" + "\n" + "telestats" + "\n" + "GetMotd" + "\n" + "DelMotd ID"
+						+ "\n" + "DelMsg ID" + "\n" + "DoPing IP" + "\n" + "DoNmap" + "\n" + "getIp" + "\n" + "SendIp"
+						+ "\n" + "send ID msg" + "\n" + "Essen (Hilfe für essen)";
+			// @formatter:on
 
 			// Anbindung an msg datenbank
 			case "addamsgtodb":
@@ -112,6 +96,13 @@ public class TeleMenue {
 			case "res":
 			case "response":
 				return t.getMessage();
+
+			case "to":
+			case "todo":
+				return appTodoList.telegramMenueTodoList(t);
+			case "filme":
+			case "f":
+				return appFilme.telegramMenueFilme(t);
 
 			default:
 				break;
@@ -181,12 +172,6 @@ public class TeleMenue {
 		case "essen":
 		case "e":
 			return appEssen.menueEssen(t);
-		case "to":
-		case "todo":
-			return appTodoList.telegramMenueTodoList(t);
-		case "filme":
-		case "f":
-			return appFilme.telegramMenueFilme(t);
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);
