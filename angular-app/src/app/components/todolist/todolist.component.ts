@@ -25,7 +25,8 @@ export class TodolistComponent implements OnInit {
   public bTodo: boolean = true;
   public bDone: boolean = false;
   public bLater: boolean = true;
-
+  public bDeleteEnable: boolean = false;
+  public bShowWarning: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -49,7 +50,6 @@ export class TodolistComponent implements OnInit {
         if (element.active === 'NEW' && this.bNew) {
           this.toarry.push(element);
         }
-
       });
 
       this.dataSource = new MatTableDataSource(this.toarry);
@@ -90,6 +90,9 @@ export class TodolistComponent implements OnInit {
   private saveTodo(item: TodoEntry): void {
     this.http.post(this.rest.gethost() + 'todolist/saveTodo', item).subscribe((resdata: any) => {
       this.load();
+      if (resdata == null) {
+        this.bShowWarning = true;
+      }
     });
   }
 

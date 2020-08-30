@@ -56,7 +56,7 @@ public class PageVerwaltung {
 			p.setLine(0, "$time(HH:mm:ss)");
 			p.setLine(1, "$time(dd MMMM yyyy)");
 			p.setLine(2, "$time(EEEEE)$pos(17)$char(4)$char(5)$char(6)");
-			p.setLine(3, "V$ver()$pos(19)$char(7)$char(8)$char(9)");
+			p.setLine(3, "V$ver()$pos(18)$char(7)$char(8)$char(9)");
 			pageToDb(p);
 		}
 		LOGGER.info("Startseite laden");
