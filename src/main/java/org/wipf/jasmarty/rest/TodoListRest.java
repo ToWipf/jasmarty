@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTodoList;
+import org.wipf.jasmarty.logic.telegram.TAppTodoList;
 
 /**
  * @author wipf

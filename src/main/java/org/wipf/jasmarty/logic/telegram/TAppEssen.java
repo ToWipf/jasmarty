@@ -1,15 +1,13 @@
-package org.wipf.jasmarty.logic.telegram.messageEdit;
+package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
-import org.wipf.jasmarty.logic.telegram.AdminUser;
 
 /**
  * @author wipf
@@ -17,9 +15,6 @@ import org.wipf.jasmarty.logic.telegram.AdminUser;
  */
 @ApplicationScoped
 public class TAppEssen {
-
-	@Inject
-	AdminUser adminUser;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Essen");
 
@@ -47,23 +42,15 @@ public class TAppEssen {
 			return "Anleitung mit Essen hilfe";
 		}
 
-		// Admin Befehle
-		if (adminUser.isAdminUser(t)) {
-			switch (sAction) {
-			case "add":
-				return addEssen(t);
-			case "del":
-				return delEssen(t);
-			case "list":
-				return getAllEssen();
-			case "count":
-				return count();
-			}
-
-		}
-
-		// public Antworten
 		switch (sAction) {
+		case "add":
+			return addEssen(t);
+		case "del":
+			return delEssen(t);
+		case "list":
+			return getAllEssen();
+		case "count":
+			return count();
 		case "get":
 			return getEssenRnd();
 		default:

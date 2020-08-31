@@ -15,11 +15,6 @@ import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppEssen;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TeleMenue;
 
 /**
  * @author wipf
@@ -40,6 +35,8 @@ public class SendAndReceive {
 	TAppEssen appEssen;
 	@Inject
 	TeleMenue menue;
+	@Inject
+	UserAndGroups userAndGroups;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
@@ -185,21 +182,6 @@ public class SendAndReceive {
 
 	}
 
-// TODO del?
-//	/**
-//	 * @param t
-//	 * @return
-//	 */
-//	private String sendToId(Telegram t) {
-//		Telegram tSend = new Telegram();
-//		tSend.setChatID(t.getMessageIntPart(1));
-//		tSend.setAntwort(t.getMessageFullWithoutSecondWordLow());
-//		tSend.setType("from: " + t.getChatID());
-//
-//		sendToTelegram(tSend);
-//		return "done";
-//	}
-
 	/**
 	 * 
 	 */
@@ -207,7 +189,7 @@ public class SendAndReceive {
 		Telegram t = new Telegram();
 		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
 				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
-		t.setChatID(798200105);
+		t.setChatID(userAndGroups.getAdminId());
 
 		sendToTelegram(t);
 	}
@@ -218,7 +200,7 @@ public class SendAndReceive {
 	public void sendMsgToGroup(String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
-		t.setChatID(-387871959);
+		t.setChatID(userAndGroups.getGroupId());
 
 		sendToTelegram(t);
 	}
@@ -229,7 +211,7 @@ public class SendAndReceive {
 	public void sendDaylyMotd() {
 		Telegram t = new Telegram();
 		t.setAntwort(appMotd.getRndMotd());
-		t.setChatID(-387871959);
+		t.setChatID(userAndGroups.getGroupId());
 
 		sendToTelegram(t);
 	}
@@ -238,20 +220,16 @@ public class SendAndReceive {
 	 * 
 	 */
 	public void sendExtIp() {
-		Telegram t = new Telegram();
-		t.setAntwort("Neue IP: " + wipf.getExternalIp());
-		t.setChatID(798200105);
-
-		sendToTelegram(t);
+		sendMsgToAdmin("Neue IP: " + wipf.getExternalIp());
 	}
 
 	/**
 	 * 
 	 */
-	public void sendWarnung() {
+	public void sendMsgToAdmin(String sMsg) {
 		Telegram t = new Telegram();
-		t.setAntwort("Abnormales verhalten!");
-		t.setChatID(-385659721);
+		t.setAntwort(sMsg);
+		t.setChatID(userAndGroups.getAdminId());
 		sendToTelegram(t);
 	}
 
@@ -261,7 +239,7 @@ public class SendAndReceive {
 	public void sendDaylyEssen() {
 		Telegram t = new Telegram();
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
-		t.setChatID(-385659721);
+		t.setChatID(userAndGroups.getGroupId());
 
 		sendToTelegram(t);
 	}

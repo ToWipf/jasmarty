@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram.messageEdit;
+package org.wipf.jasmarty.logic.telegram;
 
 import java.io.IOException;
 import java.net.URLEncoder;

@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram.messageEdit;
+package org.wipf.jasmarty.logic.telegram;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.telegram.AdminUser;
 
 /**
  * @author wipf
@@ -28,7 +27,7 @@ public class TeleMenue {
 	@Inject
 	TeleLog msglog;
 	@Inject
-	AdminUser adminUser;
+	UserAndGroups userAndGroups;
 	@Inject
 	TAppMsg appMsg;
 	@Inject
@@ -53,7 +52,7 @@ public class TeleMenue {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
 
 		// Admin Befehle
-		if (adminUser.isAdminUser(t)) {
+		if (userAndGroups.isAdminUser(t)) {
 			switch (sInMsg) {
 			case "admin":
 				// @formatter:off
@@ -103,6 +102,9 @@ public class TeleMenue {
 			case "filme":
 			case "f":
 				return appFilme.telegramMenueFilme(t);
+			case "essen":
+			case "e":
+				return appEssen.menueEssen(t);
 
 			default:
 				break;
@@ -170,9 +172,6 @@ public class TeleMenue {
 		case "i":
 			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
 					+ t.getMid();
-		case "essen":
-		case "e":
-			return appEssen.menueEssen(t);
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);

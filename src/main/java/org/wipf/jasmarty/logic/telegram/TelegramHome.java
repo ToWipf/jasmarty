@@ -4,13 +4,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppEssen;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppFilme;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMotd;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppMsg;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTicTacToe;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TAppTodoList;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
 
 /**
  * @author wipf

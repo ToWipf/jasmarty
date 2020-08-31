@@ -9,7 +9,7 @@ import org.wipf.jasmarty.datatypes.Telegram;
  *
  */
 @ApplicationScoped
-public class AdminUser {
+public class UserAndGroups {
 
 	/**
 	 * TODO ids zu db
@@ -19,6 +19,19 @@ public class AdminUser {
 	 */
 	public Boolean isAdminUser(Telegram t) {
 		return (t.getChatID() == 798200105 || t.getChatID() == 522467648 || t.getType().equals("website"));
+	}
+
+	/**
+	 * TODO to DB
+	 * 
+	 * @return
+	 */
+	public int getGroupId() {
+		return -387871959;
+	}
+
+	public int getAdminId() {
+		return 798200105;
 	}
 
 }

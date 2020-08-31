@@ -98,7 +98,7 @@ public class ReadLoop {
 					default:
 						LOGGER.warn("Telegram unnormales Verhalten");
 						bLastFailed = true;
-						telegramVerwaltung.sendWarnung();
+						telegramVerwaltung.sendMsgToAdmin("Abnormales verhalten!");
 						wipf.sleep(20000);
 						break;
 					}

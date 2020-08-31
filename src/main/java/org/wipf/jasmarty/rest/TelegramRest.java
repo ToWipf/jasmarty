@@ -11,9 +11,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TeleLog;
+import org.wipf.jasmarty.logic.telegram.TeleMenue;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TeleLog;
-import org.wipf.jasmarty.logic.telegram.messageEdit.TeleMenue;
 
 /**
  * @author wipf
@@ -64,7 +64,7 @@ public class TelegramRest {
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
 		telegramVerwaltung.sendMsgToGroup(sMsg);
 		// TODO:
-		return Response.ok("{\"status\":\"true\"}").build();
+		return Response.ok("{}").build();
 	}
 
 	@GET
