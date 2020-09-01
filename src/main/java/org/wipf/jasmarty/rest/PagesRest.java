@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -12,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.json.JSONException;
 import org.wipf.jasmarty.logic.jasmarty.PageConverter;
 import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
 
@@ -53,21 +56,37 @@ public class PagesRest {
 	@POST
 	@Path("/save")
 	public Response save(String jnRoot) {
-		pageVerwaltung.pageToDb(jnRoot);
+		try {
+			pageVerwaltung.pageToDb(jnRoot);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("/delete/{pid}")
 	public Response delete(@PathParam("pid") int nPid) {
-		pageVerwaltung.delPageFromDb(nPid);
+		try {
+			pageVerwaltung.delPageFromDb(nPid);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/getAllPages")
 	public Response getAllPages() {
-		return Response.ok(pageVerwaltung.getAllPages().toString()).build();
+		try {
+			return Response.ok(pageVerwaltung.getAllPages().toString()).build();
+		} catch (JSONException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

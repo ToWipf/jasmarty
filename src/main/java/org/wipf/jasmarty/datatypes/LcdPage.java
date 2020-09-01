@@ -59,30 +59,25 @@ public class LcdPage {
 	 * @return
 	 */
 	public LcdPage setByJson(String sJson) {
-		try {
-			JSONObject jo = new JSONObject(sJson);
+		JSONObject jo = new JSONObject(sJson);
 
-			this.sName = jo.getString("name");
-			this.nId = jo.getInt("id");
-			sOptions = ""; // Leer neu setzen
+		this.sName = jo.getString("name");
+		this.nId = jo.getInt("id");
+		sOptions = ""; // Leer neu setzen
 
-			JSONArray ja = jo.getJSONArray("lines");
+		JSONArray ja = jo.getJSONArray("lines");
 
-			for (int i = 0; i < ja.length(); i++) {
-				JSONObject joLine = ja.getJSONObject(i);
+		for (int i = 0; i < ja.length(); i++) {
+			JSONObject joLine = ja.getJSONObject(i);
 
-				sOptions = sOptions + " "; // TODO nicht sicher -> könnte alles verschieben
-				int nLine = joLine.getInt("line");
-				saLines.add(nLine, joLine.getString("data"));
-				StringBuilder sb = new StringBuilder(sOptions);
-				sb.setCharAt(nLine, (char) joLine.getInt("option"));
-				sOptions = sb.toString();
-			}
-
-			return this;
-		} catch (Exception e) {
-			return null;
+			sOptions = sOptions + " "; // TODO nicht sicher -> könnte alles verschieben
+			int nLine = joLine.getInt("line");
+			saLines.add(nLine, joLine.getString("data"));
+			StringBuilder sb = new StringBuilder(sOptions);
+			sb.setCharAt(nLine, (char) joLine.getInt("option"));
+			sOptions = sb.toString();
 		}
+		return this;
 	}
 
 	/**
@@ -116,11 +111,7 @@ public class LcdPage {
 	 * @return
 	 */
 	public String getLine(int nLine) {
-		try {
-			return this.saLines.get(nLine);
-		} catch (Exception e) {
-			return "";
-		}
+		return this.saLines.get(nLine);
 	}
 
 	/**

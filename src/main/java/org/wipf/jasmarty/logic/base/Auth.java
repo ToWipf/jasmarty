@@ -27,15 +27,10 @@ public class Auth {
 	/**
 	 * @throws SQLException
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS auth (username TEXT UNIQUE, password TEXT, token TEXT);");
-			stmt.close();
-
-		} catch (Exception e) {
-			LOGGER.error("init DB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate("CREATE TABLE IF NOT EXISTS auth (username TEXT UNIQUE, password TEXT, token TEXT);");
+		stmt.close();
 
 		if (baseSettings.getAppWorkId() == null) {
 			baseSettings.setAppWorkId(wipf.getRandomUUID());

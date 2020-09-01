@@ -37,15 +37,11 @@ public class ActionVerwaltung {
 	/**
 	 * @throws SQLException
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.error("init DB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);");
+		stmt.close();
 	}
 
 	/**
@@ -61,15 +57,12 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param nId
+	 * @throws SQLException
 	 */
-	public void delete(Integer nId) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("del" + e);
-		}
+	public void delete(Integer nId) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
+		stmt.close();
 	}
 
 	/**
@@ -79,7 +72,6 @@ public class ActionVerwaltung {
 	public ButtonAction getActionFromDbByID(int nId) {
 		ButtonAction ba = new ButtonAction();
 		try {
-
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
 			ba.setId(rs.getInt("id"));
@@ -87,7 +79,7 @@ public class ActionVerwaltung {
 			ba.setActive(rs.getBoolean("active"));
 			ba.setAction(rs.getString("action"));
 			stmt.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.warn("BA not found: " + nId);
 		}
 		return ba;
@@ -151,7 +143,6 @@ public class ActionVerwaltung {
 	public ButtonAction getActionFromDbById(int nId) {
 		ButtonAction ba = new ButtonAction();
 		try {
-
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
 			ba.setId(rs.getInt("id"));
@@ -167,13 +158,10 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param jnRoot
+	 * @throws SQLException
 	 */
-	public void setAction(String jnRoot) {
-		try {
-			saveToDB(new ButtonAction().setByJson(jnRoot));
-		} catch (Exception e) {
-			LOGGER.warn("Convert Page fehler");
-		}
+	public void setAction(String jnRoot) throws SQLException {
+		saveToDB(new ButtonAction().setByJson(jnRoot));
 	}
 
 	/**
@@ -181,18 +169,6 @@ public class ActionVerwaltung {
 	 */
 	public Integer getCurrentPressed() {
 		return currentPressed;
-	}
-
-	/**
-	 * @param nButton
-	 */
-	public void testActionById(Integer nButtonId) {
-		try {
-			doActionById(nButtonId);
-		} catch (Exception e) {
-			LOGGER.warn("testAction fehler: " + e);
-		}
-
 	}
 
 	/**

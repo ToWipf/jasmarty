@@ -22,16 +22,12 @@ public class CustomChar {
 	 * @return
 	 */
 	public CustomChar setByJson(String sJson) {
-		try {
-			JSONObject jo = new JSONObject(sJson);
-			this.nId = jo.getInt("id");
-			this.sName = jo.getString("name");
-			this.nPosition = jo.getInt("position");
-			this.sData = jo.getString("data");
-			return this;
-		} catch (Exception e) {
-			return null;
-		}
+		JSONObject jo = new JSONObject(sJson);
+		this.nId = jo.getInt("id");
+		this.sName = jo.getString("name");
+		this.nPosition = jo.getInt("position");
+		this.sData = jo.getString("data");
+		return this;
 	}
 
 	/**

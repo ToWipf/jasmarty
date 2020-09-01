@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 
@@ -21,17 +22,14 @@ public class TAppTicTacToe {
 	private static final Logger LOGGER = Logger.getLogger("Telegram TicTacToe");
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("initDB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);");
+		stmt.close();
 	}
 
 	/**

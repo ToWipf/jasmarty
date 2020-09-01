@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,17 +20,14 @@ public class TAppEssen {
 	private static final Logger LOGGER = Logger.getLogger("Telegram Essen");
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("initDB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);");
+		stmt.close();
 	}
 
 	/**

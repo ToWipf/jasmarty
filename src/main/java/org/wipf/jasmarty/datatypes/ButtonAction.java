@@ -30,16 +30,12 @@ public class ButtonAction {
 	 * @return
 	 */
 	public ButtonAction setByJson(String sJson) {
-		try {
-			JSONObject jo = new JSONObject(sJson);
-			this.nId = jo.getInt("id");
-			this.nButton = jo.getInt("button");
-			this.bActive = jo.getBoolean("active");
-			this.sAction = jo.getString("action");
-			return this;
-		} catch (Exception e) {
-			return null;
-		}
+		JSONObject jo = new JSONObject(sJson);
+		this.nId = jo.getInt("id");
+		this.nButton = jo.getInt("button");
+		this.bActive = jo.getBoolean("active");
+		this.sAction = jo.getString("action");
+		return this;
 	}
 
 	/**

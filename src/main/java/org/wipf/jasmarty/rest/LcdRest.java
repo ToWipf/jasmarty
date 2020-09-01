@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -30,13 +32,25 @@ public class LcdRest {
 	@GET
 	@Path("/config/get")
 	public Response getConfig() {
-		return Response.ok(serialConfig.getConfig().toJson()).build();
+		try {
+			return Response.ok(serialConfig.getConfig().toJson()).build();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@POST
 	@Path("/config/set")
 	public Response setConfig(String jnRoot) {
-		return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
+		try {
+			return Response.ok("{\"save\":\"" + serialConfig.setConfig(jnRoot) + "\"}").build();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 
 	}
 

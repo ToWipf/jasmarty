@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -71,20 +72,15 @@ public class SendAndReceive {
 	/**
 	 * @param sBot
 	 * @return
+	 * @throws SQLException
 	 */
-	public Boolean setbot(String sBot) {
-		try {
-			this.sBotKey = sBot;
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + this.sBotKey + "')");
-			stmt.close();
-			LOGGER.info("Bot Key: " + this.sBotKey);
-			return true;
-
-		} catch (Exception e) {
-			LOGGER.warn("setbot " + e);
-			return false;
-		}
+	public Boolean setbot(String sBot) throws SQLException {
+		this.sBotKey = sBot;
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + this.sBotKey + "')");
+		stmt.close();
+		LOGGER.info("Bot Key: " + this.sBotKey);
+		return true;
 	}
 
 	/**

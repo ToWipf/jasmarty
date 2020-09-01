@@ -17,16 +17,13 @@ public class BaseSettings {
 	private static final Logger LOGGER = Logger.getLogger("BaseSettings");
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.error("init DB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate("CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);");
+		stmt.close();
 	}
 
 	/**

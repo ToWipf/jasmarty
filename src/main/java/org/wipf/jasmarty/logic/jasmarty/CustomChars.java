@@ -21,16 +21,13 @@ public class CustomChars {
 	private static final Logger LOGGER = Logger.getLogger("LcdCustomChars");
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);");
-		} catch (Exception e) {
-			LOGGER.error("init DB" + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);");
 	}
 
 	/**
@@ -46,7 +43,7 @@ public class CustomChars {
 			cc.setPosition(rs.getInt("position"));
 			cc.setData(rs.getString("data"));
 			stmt.close();
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.warn("getFromDB " + e);
 		}
 		return cc;
@@ -65,13 +62,10 @@ public class CustomChars {
 
 	/**
 	 * @param jnRoot
+	 * @throws SQLException
 	 */
-	public void setCustomChar(String jnRoot) {
-		try {
-			saveToDB(new CustomChar().setByJson(jnRoot));
-		} catch (Exception e) {
-			LOGGER.warn("setCustomChar fehler");
-		}
+	public void setCustomChar(String jnRoot) throws SQLException {
+		saveToDB(new CustomChar().setByJson(jnRoot));
 	}
 
 	/**

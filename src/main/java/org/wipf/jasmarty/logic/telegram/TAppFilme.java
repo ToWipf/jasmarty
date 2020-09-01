@@ -24,17 +24,14 @@ public class TAppFilme {
 	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.warn("initDB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate(
+				"CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);");
+		stmt.close();
 	}
 
 	/**

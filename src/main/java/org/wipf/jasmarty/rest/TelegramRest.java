@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -36,7 +38,12 @@ public class TelegramRest {
 	@GET
 	@Path("/on")
 	public Response on() {
-		tHome.telegramStart();
+		try {
+			tHome.telegramStart();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 
@@ -50,7 +57,13 @@ public class TelegramRest {
 	@POST
 	@Path("/setbot/{bot}")
 	public Response setbot(@PathParam("bot") String sBot) {
-		return Response.ok("{\"status\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
+		try {
+			return Response.ok("{\"status\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@GET

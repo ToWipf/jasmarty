@@ -36,23 +36,18 @@ public class FilmEntry extends Telegram {
 	 * @return
 	 */
 	public FilmEntry setByJson(String sJson) {
-		try {
-			this.setByTelegram(this.setByJsonTelegram(sJson));
-			JSONObject jo = new JSONObject(sJson);
+		this.setByTelegram(this.setByJsonTelegram(sJson));
+		JSONObject jo = new JSONObject(sJson);
 
-			this.setId(jo.getInt("id"));
-			this.sTitel = jo.getString("titel");
-			this.sArt = (jo.getString("art"));
-			this.nGesehenDate = jo.getInt("gesehenDate");
-			this.sInfotext = (jo.getString("infotext"));
-			this.nBewertung = jo.getInt("bewertung");
-			this.sEditBy = jo.getString("editby");
+		this.setId(jo.getInt("id"));
+		this.sTitel = jo.getString("titel");
+		this.sArt = (jo.getString("art"));
+		this.nGesehenDate = jo.getInt("gesehenDate");
+		this.sInfotext = (jo.getString("infotext"));
+		this.nBewertung = jo.getInt("bewertung");
+		this.sEditBy = jo.getString("editby");
 
-			return this;
-		} catch (Exception e) {
-			// TODO ignore
-			return null;
-		}
+		return this;
 	}
 
 	/**

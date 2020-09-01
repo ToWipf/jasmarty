@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -46,21 +48,36 @@ public class ActionRest {
 	@GET
 	@Path("/doaction/{id}")
 	public Response doaction(@PathParam("id") Integer nId) {
-		actionVerwaltung.testActionById(nId);
+		try {
+			actionVerwaltung.doActionById(nId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 
 	@POST
 	@Path("/set")
 	public Response setAction(String jnRoot) {
-		actionVerwaltung.setAction(jnRoot);
+		try {
+			actionVerwaltung.setAction(jnRoot);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		actionVerwaltung.delete(nId);
+		try {
+			actionVerwaltung.delete(nId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 

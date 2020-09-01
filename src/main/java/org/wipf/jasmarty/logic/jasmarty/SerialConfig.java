@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,8 +20,9 @@ public class SerialConfig {
 
 	/**
 	 * @return
+	 * @throws SQLException
 	 */
-	public LcdConfig getConfig() {
+	public LcdConfig getConfig() throws SQLException {
 		try {
 			LcdConfig conf = new LcdConfig();
 			Statement stmt = SqlLite.getDB();
@@ -31,7 +33,7 @@ public class SerialConfig {
 			conf.setBaudRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'baudrate';").getInt("val"));
 			stmt.close();
 			return conf;
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			LOGGER.warn("Config nicht gefunden > default Config erstellen");
 			return defaultConfig();
 		}
@@ -39,8 +41,9 @@ public class SerialConfig {
 
 	/**
 	 * @return
+	 * @throws SQLException
 	 */
-	private LcdConfig defaultConfig() {
+	private LcdConfig defaultConfig() throws SQLException {
 		LcdConfig lcDef = new LcdConfig();
 		lcDef.setPort("");
 		lcDef.setHeight(4);
@@ -57,30 +60,26 @@ public class SerialConfig {
 	/**
 	 * @param conf
 	 * @return
+	 * @throws SQLException
 	 */
-	public boolean setConfig(LcdConfig conf) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('port','" + conf.getPort() + "')");
-			stmt.execute(
-					"INSERT OR REPLACE INTO config (key, val) VALUES ('refreshrate','" + conf.getRefreshRate() + "')");
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('widht','" + conf.getWidth() + "')");
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('height','" + conf.getHeight() + "')");
-			stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('baudrate','" + conf.getBaudRate() + "')");
-			LOGGER.info("Config gespeichert");
-			stmt.close();
-			return true;
-		} catch (Exception e) {
-			LOGGER.warn("Config konnte nicht gespeichert werden!");
-			return false;
-		}
+	public boolean setConfig(LcdConfig conf) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('port','" + conf.getPort() + "')");
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('refreshrate','" + conf.getRefreshRate() + "')");
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('widht','" + conf.getWidth() + "')");
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('height','" + conf.getHeight() + "')");
+		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('baudrate','" + conf.getBaudRate() + "')");
+		LOGGER.info("Config gespeichert");
+		stmt.close();
+		return true;
 	}
 
 	/**
 	 * @param jnRoot
 	 * @return
+	 * @throws SQLException
 	 */
-	public boolean setConfig(String jnRoot) {
+	public boolean setConfig(String jnRoot) throws SQLException {
 		return setConfig(new LcdConfig().setByJson(jnRoot));
 	}
 

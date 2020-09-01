@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -43,7 +45,12 @@ public class CustomCharsRest {
 	@POST
 	@Path("/set")
 	public Response setC(String jnRoot) {
-		customChars.setCustomChar(jnRoot);
+		try {
+			customChars.setCustomChar(jnRoot);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 
 	}

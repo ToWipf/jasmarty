@@ -227,14 +227,13 @@ public class LcdConnect {
 	 * @return
 	 */
 	public Integer readButton() {
-		try {
-			char[] in = new char[1];
-			BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()));
+		char[] in = new char[1];
+
+		try (BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()))) {
 			input.read(in);
 			return (int) in[0];
-
-		} catch (Exception e) {
-			// Kein input,
+		} catch (IOException e) {
+			// Kein input
 			return null;
 		}
 	}

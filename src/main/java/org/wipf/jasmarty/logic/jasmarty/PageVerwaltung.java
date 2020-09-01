@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdPage;
 import org.wipf.jasmarty.logic.base.MainHome;
@@ -30,21 +31,17 @@ public class PageVerwaltung {
 	/**
 	 * @throws SQLException
 	 */
-	public void initDB() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
-			stmt.close();
-		} catch (Exception e) {
-			LOGGER.error("init DB " + e);
-		}
+	public void initDB() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.executeUpdate("CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
+		stmt.close();
 	}
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void writeStartPage() {
+	public void writeStartPage() throws SQLException {
 		LcdPage p = getPageFromDb(1);
 		if (!p.getName().equals("Startseite " + MainHome.VERSION)) {
 			// Wenn es keine Startseite gibt -> schreiben
@@ -80,42 +77,31 @@ public class PageVerwaltung {
 
 	/**
 	 * @param jnRoot
+	 * @throws SQLException
 	 */
-	public void pageToDb(String jnRoot) {
-		try {
-			pageToDb(new LcdPage().setByJson(jnRoot));
-		} catch (Exception e) {
-			LOGGER.warn("Convert Page fehler");
-		}
+	public void pageToDb(String jnRoot) throws SQLException {
+		pageToDb(new LcdPage().setByJson(jnRoot));
 	}
 
 	/**
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void pageToDb(LcdPage page) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
-					+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
-			stmt.close();
-		} catch (SQLException e) {
-			LOGGER.warn("pageToDB " + e);
-		}
+	public void pageToDb(LcdPage page) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
+				+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
+		stmt.close();
 	}
 
 	/**
 	 * @param nId
 	 * @throws SQLException
 	 */
-	public void delPageFromDb(Integer nId) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM pages WHERE id = " + nId);
-			stmt.close();
-		} catch (SQLException e) {
-			LOGGER.warn("delPageFromDB " + e);
-		}
+	public void delPageFromDb(Integer nId) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("DELETE FROM pages WHERE id = " + nId);
+		stmt.close();
 	}
 
 	/**
@@ -134,6 +120,7 @@ public class PageVerwaltung {
 			stmt.close();
 		} catch (Exception e) {
 			// LOGGER.warn("Page not found: " + nId);
+			// TODO
 		}
 		return page;
 	}
@@ -185,20 +172,19 @@ public class PageVerwaltung {
 
 	/**
 	 * @return
+	 * @throws SQLException
+	 * @throws JSONException
 	 */
-	public JSONArray getAllPages() {
+	public JSONArray getAllPages() throws JSONException, SQLException {
 		JSONArray ja = new JSONArray();
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT id, name FROM pages");
-			while (rs.next()) {
-				JSONObject entry = new JSONObject();
-				entry.put("id", rs.getInt("id"));
-				entry.put("name", rs.getString("name"));
-				ja.put(entry);
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getAllPages" + e);
+
+		Statement stmt = SqlLite.getDB();
+		ResultSet rs = stmt.executeQuery("SELECT id, name FROM pages");
+		while (rs.next()) {
+			JSONObject entry = new JSONObject();
+			entry.put("id", rs.getInt("id"));
+			entry.put("name", rs.getString("name"));
+			ja.put(entry);
 		}
 		return ja;
 	}

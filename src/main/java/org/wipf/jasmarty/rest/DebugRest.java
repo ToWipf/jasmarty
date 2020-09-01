@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -91,7 +93,12 @@ public class DebugRest {
 	@GET
 	@Path("/jasmarty/restart")
 	public Response startAgain() {
-		jHome.jasmartyRestart();
+		try {
+			jHome.jasmartyRestart();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return Response.ok().build();
 	}
 }

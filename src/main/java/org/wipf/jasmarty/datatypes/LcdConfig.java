@@ -32,18 +32,14 @@ public class LcdConfig {
 	 * @return
 	 */
 	public LcdConfig setByJson(String sJson) {
-		try {
-			JSONObject jo = new JSONObject(sJson);
+		JSONObject jo = new JSONObject(sJson);
 
-			this.sPort = jo.getString("port");
-			this.nWidth = jo.getInt("width");
-			this.nHeight = jo.getInt("height");
-			this.nBaudRate = jo.getInt("baudrate");
-			this.nRefreshRate = jo.getInt("refreshrate");
-			return this;
-		} catch (Exception e) {
-			return null;
-		}
+		this.sPort = jo.getString("port");
+		this.nWidth = jo.getInt("width");
+		this.nHeight = jo.getInt("height");
+		this.nBaudRate = jo.getInt("baudrate");
+		this.nRefreshRate = jo.getInt("refreshrate");
+		return this;
 	}
 
 	/**

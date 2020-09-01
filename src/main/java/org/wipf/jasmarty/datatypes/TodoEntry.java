@@ -32,21 +32,17 @@ public class TodoEntry extends Telegram {
 	 * @return
 	 */
 	public TodoEntry setByJson(String sJson) {
-		try {
-			this.setByTelegram(this.setByJsonTelegram(sJson));
+		this.setByTelegram(this.setByJsonTelegram(sJson));
 
-			JSONObject jo = new JSONObject(sJson);
+		JSONObject jo = new JSONObject(sJson);
 
-			this.setEditBy(jo.getString("editby"));
-			this.sData = jo.getString("data");
-			this.sActive = jo.getString("active");
-			this.nId = jo.getInt("id");
-			this.sRemind = jo.getString("remind");
+		this.setEditBy(jo.getString("editby"));
+		this.sData = jo.getString("data");
+		this.sActive = jo.getString("active");
+		this.nId = jo.getInt("id");
+		this.sRemind = jo.getString("remind");
 
-			return this;
-		} catch (Exception e) {
-			return null;
-		}
+		return this;
 	}
 
 	/**

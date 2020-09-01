@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.base;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
@@ -43,19 +45,25 @@ public class MainHome {
 	 * @param ev
 	 */
 	void onStart(@Observes StartupEvent ev) {
-		LOGGER.info("Starte " + VERSION);
-		LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+		try {
+			LOGGER.info("Starte " + VERSION);
+			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 
-		SqlLite.startDB();
+			SqlLite.startDB();
 
-		baseSettings.initDB();
-		auth.initDB();
+			baseSettings.initDB();
+			auth.initDB();
 
-		if (baseSettings.isAppActive("jasmarty")) {
-			jHome.jasmartyStart();
-		}
-		if (baseSettings.isAppActive("telegram")) {
-			tHome.telegramStart();
+			if (baseSettings.isAppActive("jasmarty")) {
+				jHome.jasmartyStart();
+			}
+			if (baseSettings.isAppActive("telegram")) {
+				tHome.telegramStart();
+			}
+
+		} catch (SQLException e) {
+			LOGGER.info("SQLException");
+			e.printStackTrace();
 		}
 
 		LOGGER.info("Gestartet");

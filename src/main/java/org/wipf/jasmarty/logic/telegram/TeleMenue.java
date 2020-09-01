@@ -172,6 +172,10 @@ public class TeleMenue {
 		case "i":
 			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
 					+ t.getMid();
+		case "calc":
+		case "math":
+		case "m":
+			return String.valueOf(wipf.doMathByString(t.getMessageFullWithoutFirstWord()));
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);
