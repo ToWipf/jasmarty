@@ -12,6 +12,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
@@ -58,11 +59,11 @@ public class SendAndReceive {
 			stmt.close();
 
 			if (this.sBotKey == null || this.sBotKey.equals("null") || this.sBotKey.equals("")) {
-				throw new Exception("botkey is null");
+				throw new WipfException("botkey is null");
 			}
 			return true;
 
-		} catch (Exception e) {
+		} catch (SQLException | WipfException e) {
 			LOGGER.warn(e + " | telegrambot nicht in db gefunden."
 					+ " Setzen mit 'curl -X POST localhost:8080/telegram/setbot/bot2343242:ABCDEF348590247354352343345'");
 			return false;
@@ -230,9 +231,11 @@ public class SendAndReceive {
 	}
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public void sendDaylyEssen() {
+	// TODO einbinden
+	public void sendDaylyEssen() throws SQLException {
 		Telegram t = new Telegram();
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
 		t.setChatID(userAndGroups.getGroupId());

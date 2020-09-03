@@ -33,26 +33,28 @@ public class TAppEssen {
 	/**
 	 * @param t
 	 * @return
+	 * @throws SQLException
 	 */
 	public String menueEssen(Telegram t) {
-		String sAction = t.getMessageStringPartLow(1);
-		if (sAction == null) {
-			return "Anleitung mit Essen hilfe";
-		}
+		try {
+			String sAction = t.getMessageStringPartLow(1);
+			if (sAction == null) {
+				return "Anleitung mit Essen hilfe";
+			}
 
-		switch (sAction) {
-		case "add":
-			return addEssen(t);
-		case "del":
-			return delEssen(t);
-		case "list":
-			return getAllEssen();
-		case "count":
-			return count();
-		case "get":
-			return getEssenRnd();
-		default:
-			return
+			switch (sAction) {
+			case "add":
+				return addEssen(t);
+			case "del":
+				return delEssen(t);
+			case "list":
+				return getAllEssen();
+			case "count":
+				return count();
+			case "get":
+				return getEssenRnd();
+			default:
+				return
 			//@formatter:off
 					"Essen Add: Essen hinzufügen\n" +
 					"Essen Del: id löschen\n" + 
@@ -60,105 +62,87 @@ public class TAppEssen {
 					"Essen Get: Zufallsessen\n" +
 					"Essen Count: Anzahl der Einträge\n";
 			//@formatter:on
+			}
+		} catch (SQLException e) {
+			LOGGER.error("menueEssen");
+			e.printStackTrace();
 		}
+		return null;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public String getEssenRnd() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		try (ResultSet rs = stmt.executeQuery("select * from essen ORDER BY RANDOM() LIMIT 1")) {
+			while (rs.next()) {
+				// Es gibt nur einen Eintrag
+				return (rs.getString("name"));
+			}
+		}
+		return null;
 	}
 
 	/**
 	 * @param t
 	 * @return
+	 * @throws SQLException
 	 */
-	private String addEssen(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			//@formatter:off
+	private String addEssen(Telegram t) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO essen (name, editby, date) VALUES " +
 					"('" + t.getMessageFullWithoutSecondWord() +
 					"','" + t.getFrom() +
 					"','"+ t.getDate() +
 					"')");
 			//@formatter:on
-			stmt.close();
-			return "gespeichert";
-		} catch (Exception e) {
-			LOGGER.warn("add essen " + e);
-			return "Fehler";
-		}
+		stmt.close();
+		return "gespeichert";
 	}
 
 	/**
 	 * @return
+	 * @throws SQLException
 	 */
-	private String count() {
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM essen;");
-			String s = rs.getString("COUNT(*)") + " Einträge in der DB";
-			stmt.close();
-			return s;
-		} catch (Exception e) {
-			LOGGER.warn("count essen " + e);
-			return null;
-		}
+	private String count() throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM essen;");
+		String s = rs.getString("COUNT(*)") + " Einträge in der DB";
+		stmt.close();
+		return s;
 	}
 
 	/**
 	 * @param t
 	 * @return
+	 * @throws SQLException
 	 */
-	private String delEssen(Telegram t) {
-		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM essen WHERE id = " + t.getMessageIntPart(2));
-			stmt.close();
-			return "DEL";
-		} catch (Exception e) {
-			LOGGER.warn("delete essen" + e);
-			return "Fehler";
-		}
+	private String delEssen(Telegram t) throws SQLException {
+		Statement stmt = SqlLite.getDB();
+		stmt.execute("DELETE FROM essen WHERE id = " + t.getMessageIntPart(2));
+		stmt.close();
+		return "DEL";
 	}
 
 	/**
 	 * @param t
 	 * @return
+	 * @throws SQLException
 	 */
-	private String getAllEssen() {
-		try {
-			StringBuilder sb = new StringBuilder();
+	private String getAllEssen() throws SQLException {
+		StringBuilder sb = new StringBuilder();
 
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from essen;");
-			while (rs.next()) {
-				sb.append(rs.getString("id") + "\t");
-				sb.append(rs.getString("name") + "\n");
-			}
-			stmt.close();
-			return sb.toString();
-
-		} catch (Exception e) {
-			LOGGER.warn("get all essen" + e);
+		Statement stmt = SqlLite.getDB();
+		ResultSet rs = stmt.executeQuery("select * from essen;");
+		while (rs.next()) {
+			sb.append(rs.getString("id") + "\t");
+			sb.append(rs.getString("name") + "\n");
 		}
-		return "Fehler";
+		stmt.close();
+		return sb.toString();
 	}
 
-	/**
-	 * @return
-	 */
-	public String getEssenRnd() {
-		try {
-			String s = null;
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from essen ORDER BY RANDOM() LIMIT 1");
-			while (rs.next()) {
-				// Es gibt nur einen Eintrag
-				s = (rs.getString("name"));
-			}
-			stmt.close();
-			return s;
-
-		} catch (Exception e) {
-			LOGGER.warn("get essen rnd " + e);
-			return "Fehler";
-		}
-	}
 }
