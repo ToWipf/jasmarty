@@ -9,7 +9,12 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -17,6 +22,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
 
@@ -443,6 +449,82 @@ public class Wipf {
 		} catch (Exception e) {
 			return "Fail 5";
 		}
+	}
+
+	/**
+	 * @param json
+	 * @return
+	 */
+	public String jsonToStringAsList(JSONObject json) {
+		StringBuilder sb = new StringBuilder();
+		Map<String, Object> map = jsonToMap(json);
+
+		for (Map.Entry<String, Object> entry : map.entrySet()) {
+			if (sb.length() > 1) {
+				sb.append("\n");
+			}
+			sb.append(entry.getKey() + ":" + entry.getValue());
+		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * Von:
+	 * https://stackoverflow.com/questions/30663430/json-to-yaml-conversion-does-not-work/30682637
+	 * 
+	 * @param json
+	 * @return
+	 */
+	private Map<String, Object> jsonToMap(JSONObject json) {
+		Map<String, Object> retMap = new HashMap<String, Object>();
+
+		if (json != JSONObject.NULL) {
+			retMap = toMap(json);
+		}
+		return retMap;
+	}
+
+	/**
+	 * @param object
+	 * @return
+	 */
+	private Map<String, Object> toMap(JSONObject object) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		Iterator<String> keysItr = object.keys();
+		while (keysItr.hasNext()) {
+			String key = keysItr.next();
+			Object value = object.get(key);
+
+			if (value instanceof JSONArray) {
+				value = toList((JSONArray) value);
+			}
+
+			else if (value instanceof JSONObject) {
+				value = toMap((JSONObject) value);
+			}
+			map.put(key, value);
+		}
+		return map;
+	}
+
+	/**
+	 * @param array
+	 * @return
+	 */
+	private List<Object> toList(JSONArray array) {
+		List<Object> list = new ArrayList<Object>();
+		for (int i = 0; i < array.length(); i++) {
+			Object value = array.get(i);
+			if (value instanceof JSONArray) {
+				value = toList((JSONArray) value);
+			} else if (value instanceof JSONObject) {
+				value = toMap((JSONObject) value);
+			}
+			list.add(value);
+		}
+		return list;
 	}
 
 }

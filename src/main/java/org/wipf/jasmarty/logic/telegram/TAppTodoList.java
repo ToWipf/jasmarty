@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.datatypes.TodoEntry;
 import org.wipf.jasmarty.logic.base.SqlLite;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
  * @author wipf
@@ -20,6 +22,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  */
 @ApplicationScoped
 public class TAppTodoList {
+
+	@Inject
+	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram TodoList");
 
@@ -74,7 +79,7 @@ public class TAppTodoList {
 		case "countall":
 			return countAll();
 		case "get":
-			return getById(t.getMessageIntPart(2)).toJson().toString();
+			return wipf.jsonToStringAsList(getById(t.getMessageIntPart(2)).toJson());
 		default:
 			return saveItem(t).toString();
 		}
