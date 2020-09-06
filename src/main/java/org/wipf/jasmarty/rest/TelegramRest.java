@@ -88,11 +88,19 @@ public class TelegramRest {
 	}
 
 	@GET
+	@Path("/telelogtf_old")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response telelogtfold() {
+		// TODO id form db
+		return Response.ok(msglog.genTelegramLog("798200105")).build();
+	}
+
+	@GET
 	@Path("/telelogtf")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtf() {
 		// TODO id form db
-		return Response.ok(msglog.genTelegramLog("798200105")).build();
+		return Response.ok(msglog.genTelegramLogUnknown()).build();
 	}
 
 	@GET

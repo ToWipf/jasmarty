@@ -31,7 +31,7 @@ public class MainHome {
 	TelegramHome tHome;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "0.84d";
+	public static final String VERSION = "0.84e";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**

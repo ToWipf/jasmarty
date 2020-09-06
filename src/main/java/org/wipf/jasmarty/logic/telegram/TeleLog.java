@@ -62,8 +62,11 @@ public class TeleLog {
 	}
 
 	/**
+	 * TODO Löschen
+	 * 
 	 * @return log
 	 */
+	@Deprecated
 	public String genTelegramLog(String sFilter) {
 		// TODO filter ins sql!
 		try {
@@ -92,6 +95,45 @@ public class TeleLog {
 					sb.append("----------------\n\n");
 					slog.insert(0, sb);
 				}
+			}
+			stmt.close();
+			return slog.toString();
+		} catch (Exception e) {
+			LOGGER.warn("genTelegram" + e);
+			return "FAIL";
+		}
+	}
+
+	/**
+	 * TODO
+	 * 
+	 * @return
+	 */
+	public String genTelegramLogUnknown() {
+		try {
+			StringBuilder slog = new StringBuilder();
+			int n = 0;
+			Statement stmt = SqlLite.getDB();
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 ORDER BY msgdate ASC");
+
+			while (rs.next()) {
+				n++;
+				Date date = new Date(rs.getLong("msgdate") * 1000);
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(n + ":\n");
+				sb.append("msgid:  \t" + rs.getString("msgid") + "\n");
+				sb.append("msg in: \t" + rs.getString("msg") + "\n");
+				sb.append("msg out:\t" + rs.getString("antw") + "\n");
+				sb.append("chatid: \t" + rs.getString("chatid") + "\n");
+				sb.append("msgfrom:\t" + rs.getString("msgfrom") + "\n");
+				sb.append("msgdate:\t" + date + "\n");
+				sb.append("type:   \t" + rs.getString("type") + "\n");
+				sb.append("----------------\n\n");
+				slog.insert(0, sb);
+
 			}
 			stmt.close();
 			return slog.toString();

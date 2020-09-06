@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Globals {
-  version: string = '0.84d';
+  version: string = '0.84e';
 }
 
 export interface Jaconfig {
@@ -67,7 +67,7 @@ export interface Telegram {
   id?: number;
   data?: string;
   active?: string;
-  editby?: number;
+  editby?: string;
   date?: number;
   from?: string;
   chatid?: number;

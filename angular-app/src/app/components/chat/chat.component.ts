@@ -14,7 +14,7 @@ export class ChatComponent {
 
   }
 
-  public tMsg: Telegram = { chatid: 0, message: '', type: 'website' };
+  public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
   public textOut: string = '-';
   // TODO: out !
 

@@ -22,6 +22,15 @@ public class UserAndGroups {
 	}
 
 	/**
+	 * TODO DB
+	 * 
+	 * @return
+	 */
+	public String getAllUsersAsList() {
+		return "798200105, 522467648";
+	}
+
+	/**
 	 * TODO to DB
 	 * 
 	 * @return
