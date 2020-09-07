@@ -80,7 +80,7 @@ public class ReadLoop {
 							// Das hat keine Prio -> erst wenn keine neuen Nachrichten ausstehen senden
 							telegramVerwaltung.sendExtIp();
 							bLastFailed = false;
-							LOGGER.info("Telegram wieder erreichbar");
+							LOGGER.info("Telegram ist erreichbar");
 						}
 						break;
 					case 'n':
