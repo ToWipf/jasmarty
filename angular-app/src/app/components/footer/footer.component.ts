@@ -31,7 +31,7 @@ export class FooterComponent implements OnInit {
       (resdata: any) => {
         this.bCantLoad = false;
         this.sJavaVersion = resdata.ver.toString();
-        if (this.sAppVersion < this.sJavaVersion) {
+        if (this.sAppVersion !== this.sJavaVersion) {
           this.bOldVersionWarn = true;
         }
       },
