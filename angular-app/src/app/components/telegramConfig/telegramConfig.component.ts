@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: 'app-telegramConfig',
+  selector: 'app-telegram-config',
   templateUrl: './telegramConfig.component.html',
   styleUrls: ['./telegramConfig.component.less'],
 })

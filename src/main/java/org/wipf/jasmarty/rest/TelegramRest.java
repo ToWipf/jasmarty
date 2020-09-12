@@ -115,4 +115,10 @@ public class TelegramRest {
 		return Response.ok("{\"msg\":\"" + menue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
 	}
 
+	@GET
+	@Path("/msg")
+	public Response msg() {
+		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
+	}
+
 }

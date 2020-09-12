@@ -63,6 +63,8 @@ public class TAppMsg {
 	}
 
 	/**
+	 * TODO del this
+	 * 
 	 * @param t
 	 * @param nStelle
 	 * @return

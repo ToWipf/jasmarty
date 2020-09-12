@@ -22,8 +22,10 @@
 
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('chat')">Chat</li>
+                    <li (click)="selectSite('chat')">Test Chat</li>
                     <li (click)="selectSite('configtele')">Einstellungen</li>
+                    <li (click)="selectSite('tmsg')">Nachrichten</li>
+                    <li (click)="selectSite('tlog')">Logs</li>
                 </ul>
             </div>
         </perfect-scrollbar>
@@ -55,7 +57,7 @@
                     <app-jasmartyMain></app-jasmartyMain>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='configtele'">
-                    <app-telegramConfig></app-telegramConfig>
+                    <app-telegram-config></app-telegram-config>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='todolist'">
                     <app-todolist></app-todolist>
@@ -67,7 +69,13 @@
                     <app-crypt></app-crypt>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='chat'">
-                    <app-telegramChat></app-telegramChat>
+                    <app-telegram-chat></app-telegram-chat>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='tlog'">
+                    <app-telegram-log></app-telegram-log>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='tmsg'">
+                    <app-telegram-msg></app-telegram-msg>
                 </ng-container>
             </div>
         </div>

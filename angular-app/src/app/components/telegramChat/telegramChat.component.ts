@@ -5,7 +5,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-telegramChat',
+  selector: 'app-telegram-chat',
   templateUrl: './telegramChat.component.html',
   styleUrls: ['./telegramChat.component.less'],
 })

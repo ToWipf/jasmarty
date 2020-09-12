@@ -59,6 +59,8 @@ import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.co
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
 import { CryptComponent } from './components/crypt/crypt.component';
 import { TelegramChatComponent } from './components/telegramChat/telegramChat.component';
+import { TelegramMsgComponent } from './components/telegramMsg/telegramMsg.component';
+import { TelegramLogComponent } from './components/telegramLog/telegramLog.component';
 import { TodolistComponent, TodolistComponentDialog } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 
@@ -81,6 +83,8 @@ import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.c
     FilmeComponentDialog,
     CryptComponent,
     TelegramChatComponent,
+    TelegramMsgComponent,
+    TelegramLogComponent
   ],
   imports: [
     BrowserAnimationsModule,
