@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Telegram } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
