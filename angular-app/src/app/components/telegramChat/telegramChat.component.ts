@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Telegram } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { HttpClient } from '@angular/common/http';
-import { Telegram } from 'src/app/datatypes';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.less'],
+  selector: 'app-telegramChat',
+  templateUrl: './telegramChat.component.html',
+  styleUrls: ['./telegramChat.component.less'],
 })
-export class ChatComponent {
+export class TelegramChatComponent {
   constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf) {
 
   }
