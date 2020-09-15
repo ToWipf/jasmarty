@@ -17,8 +17,9 @@ public class TodoEntry extends Telegram {
 	/**
 	 * @return
 	 */
+	@Override
 	public JSONObject toJson() {
-		JSONObject jo = this.toJsonTelegram();
+		JSONObject jo = super.toJson();
 		jo.put("data", this.sData);
 		jo.put("active", this.sActive);
 		jo.put("id", this.nId);

@@ -19,8 +19,9 @@ public class FilmEntry extends Telegram {
 	/**
 	 * @return
 	 */
+	@Override
 	public JSONObject toJson() {
-		JSONObject jo = this.toJsonTelegram();
+		JSONObject jo = super.toJson();
 		jo.put("id", nId);
 		jo.put("titel", sTitel);
 		jo.put("art", sArt);

@@ -56,7 +56,7 @@ public class Telegram {
 	/**
 	 * @return
 	 */
-	public JSONObject toJsonTelegram() {
+	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("mid", getMid());
 		jo.put("from", getFrom());

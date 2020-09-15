@@ -197,7 +197,7 @@ public class TeleLog {
 		JSONArray ja = new JSONArray();
 		try {
 			for (Telegram t : getTelegramLog()) {
-				ja.put(t.toJsonTelegram());
+				ja.put(t.toJson());
 			}
 		} catch (Exception e) {
 			LOGGER.warn("getAllAsJson" + e);
