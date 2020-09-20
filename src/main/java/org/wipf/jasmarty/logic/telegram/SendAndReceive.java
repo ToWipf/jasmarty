@@ -90,6 +90,7 @@ public class SendAndReceive {
 	 */
 	@Metered
 	public void sendToTelegram(Telegram t) {
+		tLog.saveTelegramToLog(t);
 		try {
 			String sAntwort = t.getAntwort();
 			if (sAntwort == null || sAntwort.equals("")) {
@@ -162,7 +163,6 @@ public class SendAndReceive {
 					}
 
 					t.setAntwort(menue.menueMsg(t));
-					tLog.saveTelegramToLog(t);
 					sendToTelegram(t);
 				}
 				// Fertig mit neuen Nachrichten
