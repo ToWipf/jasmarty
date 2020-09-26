@@ -160,15 +160,16 @@ public class TeleLog {
 	}
 
 	/**
-	 * @return log
+	 * @param sSQLFilter
+	 * @return
 	 */
-	public List<Telegram> getTelegramLog() {
+	public List<Telegram> getTelegramLog(String sSQLFilter) {
 		List<Telegram> tList = new ArrayList<>();
 
 		try {
 			Statement stmt = SqlLite.getDB();
 			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system'");
+					.executeQuery("SELECT * FROM telegramlog " + sSQLFilter);
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -196,7 +197,23 @@ public class TeleLog {
 	public JSONArray getTelegramLogAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getTelegramLog()) {
+			for (Telegram t : getTelegramLog("WHERE msgid IS NOT '0' AND type IS NOT 'system'")) {
+				ja.put(t.toJson());
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson" + e);
+		}
+		return ja;
+	}
+	
+	/**
+	 * @return
+	 */
+	public JSONArray getTelegramLogAsJsonEXTERN() {
+		JSONArray ja = new JSONArray();
+		try {
+			for (Telegram t : getTelegramLog("WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 AND chatid IS NOT 522467648")) {
+				//		"SELECT * FROM telegraWHERE msgid IS NOT '0' AND type IS NOT 'system'  ORDER BY msgdate ASC");
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {

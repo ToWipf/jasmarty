@@ -120,5 +120,11 @@ public class TelegramRest {
 	public Response msg() {
 		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
 	}
+	
+	@GET
+	@Path("/logs")
+	public Response logs() {
+		return Response.ok(msglog.getTelegramLogAsJsonEXTERN().toString()).build();
+	}
 
 }
