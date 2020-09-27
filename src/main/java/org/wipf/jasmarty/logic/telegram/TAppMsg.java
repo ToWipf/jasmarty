@@ -3,13 +3,16 @@ package org.wipf.jasmarty.logic.telegram;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -60,6 +63,52 @@ public class TAppMsg {
 			LOGGER.warn("get all telemotd" + e);
 		}
 		return "Fehler";
+	}
+
+	/**
+	 * @param sSQLFilter
+	 * @return
+	 */
+	public List<Telegram> getAllMsg(String sSQLFilter) {
+		List<Telegram> tList = new ArrayList<>();
+
+		try {
+			Statement stmt = SqlLite.getDB();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM telemsg " + sSQLFilter);
+
+			while (rs.next()) {
+				Telegram t = new Telegram();
+				t.setMid(rs.getInt("id"));
+				t.setMessage(rs.getString("request"));
+				t.setAntwort(rs.getString("response"));
+				t.setFrom(rs.getString("editby"));
+				t.setDate((int) rs.getLong("date"));
+				t.setType(rs.getString("options")); // options TEXT; Derzeit nicht benutzt
+				t.setChatID(0);
+
+				tList.add(t);
+			}
+
+			stmt.close();
+		} catch (Exception e) {
+			LOGGER.warn("getAllMsg" + e);
+		}
+		return tList;
+	}
+
+	/**
+	 * @return
+	 */
+	public JSONArray getMsgAsJson() {
+		JSONArray ja = new JSONArray();
+		try {
+			for (Telegram t : getAllMsg("")) {
+				ja.put(t.toJson());
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getMsgAsJson" + e);
+		}
+		return ja;
 	}
 
 	/**

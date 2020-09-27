@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.TeleLog;
 import org.wipf.jasmarty.logic.telegram.TeleMenue;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
@@ -27,13 +28,15 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
 public class TelegramRest {
 
 	@Inject
-	SendAndReceive telegramVerwaltung;
+	SendAndReceive tVerwaltung;
 	@Inject
 	TelegramHome tHome;
 	@Inject
-	TeleLog msglog;
+	TeleLog tlog;
 	@Inject
-	TeleMenue menue;
+	TeleMenue tMenue;
+	@Inject
+	TAppMsg tAppMsg;
 
 	@GET
 	@Path("/on")
@@ -58,7 +61,7 @@ public class TelegramRest {
 	@Path("/setbot/{bot}")
 	public Response setbot(@PathParam("bot") String sBot) {
 		try {
-			return Response.ok("{\"status\":\"" + telegramVerwaltung.setbot(sBot) + "\"}").build();
+			return Response.ok("{\"status\":\"" + tVerwaltung.setbot(sBot) + "\"}").build();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,13 +72,13 @@ public class TelegramRest {
 	@GET
 	@Path("/getbot")
 	public Response getbot() {
-		return Response.ok("{\"botkey\":\"" + telegramVerwaltung.getBotKey() + "\"}").build();
+		return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKey() + "\"}").build();
 	}
 
 	@POST
 	@Path("/sendMsgToGroup/{msg}")
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
-		telegramVerwaltung.sendMsgToGroup(sMsg);
+		tVerwaltung.sendMsgToGroup(sMsg);
 		// TODO:
 		return Response.ok("{}").build();
 	}
@@ -84,7 +87,7 @@ public class TelegramRest {
 	@Path("/telelog")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelog() {
-		return Response.ok(msglog.genTelegramLog(null)).build();
+		return Response.ok(tlog.genTelegramLog(null)).build();
 	}
 
 	@GET
@@ -92,7 +95,7 @@ public class TelegramRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtfold() {
 		// TODO id form db
-		return Response.ok(msglog.genTelegramLog("798200105")).build();
+		return Response.ok(tlog.genTelegramLog("798200105")).build();
 	}
 
 	@GET
@@ -100,31 +103,31 @@ public class TelegramRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response telelogtf() {
 		// TODO id form db
-		return Response.ok(msglog.genTelegramLogUnknown()).build();
+		return Response.ok(tlog.genTelegramLogUnknown()).build();
 	}
 
 	@GET
 	@Path("/log")
 	public Response log() {
-		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
+		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();
+	}
+
+	@GET
+	@Path("/logext")
+	public Response logs() {
+		return Response.ok(tlog.getTelegramLogAsJsonEXTERN().toString()).build();
 	}
 
 	@POST
 	@Path("/chat")
 	public Response chat(String sJson) {
-		return Response.ok("{\"msg\":\"" + menue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
+		return Response.ok("{\"msg\":\"" + tMenue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
 	}
 
 	@GET
-	@Path("/msg")
+	@Path("/msgall")
 	public Response msg() {
-		return Response.ok(msglog.getTelegramLogAsJson().toString()).build();
-	}
-	
-	@GET
-	@Path("/logs")
-	public Response logs() {
-		return Response.ok(msglog.getTelegramLogAsJsonEXTERN().toString()).build();
+		return Response.ok(tAppMsg.getMsgAsJson().toString()).build();
 	}
 
 }

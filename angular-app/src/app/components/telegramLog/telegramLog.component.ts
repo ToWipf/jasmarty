@@ -20,22 +20,21 @@ export class TelegramLogComponent implements OnInit {
   public displayedColumns: string[] = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date'];
 
   ngOnInit() {
-    this.load();
+    // Kein init laden
   }
 
-  private load(): void {
+  public loadAll(): void {
     this.http.get(this.rest.gethost() + 'telegram/log').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
     });
   }
 
-  public deleteItem(item: Telegram): void {
-    // TODO: javaseite
-    // TODO: ADD nachfragen dialog
-    // this.http.delete(this.rest.gethost() + 'telegram/log/delete/' + item.id).subscribe((resdata: any) => {
-    //   this.load();
-    // });
+  public loadExt(): void {
+    this.http.get(this.rest.gethost() + 'telegram/logext').subscribe((resdata: Telegram[]) => {
+      this.dataSource = new MatTableDataSource(resdata);
+      this.dataSource.sort = this.sort;
+    });
   }
 
 }

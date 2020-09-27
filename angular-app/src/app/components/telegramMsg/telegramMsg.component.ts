@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { Telegram } from 'src/app/datatypes';
 
 @Component({
   selector: 'app-telegram-msg',
@@ -16,10 +17,9 @@ export class TelegramMsgComponent implements OnInit  {
   }
 
   private load(): void {
-    // this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: Telegram[]) => {
-    //   console.log(resdata);
-    // });
-    //TODO:
+    this.http.get(this.rest.gethost() + 'telegram/msgall').subscribe((resdata: Telegram[]) => {
+      console.log(resdata);
+    });
   }
 
 }

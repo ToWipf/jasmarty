@@ -7,7 +7,7 @@
             <input type="checkbox" [(ngModel)]="bShowWarning">
         </ng-container>
 
-        <div class="configline">          
+        <div class="configline">
             <div class="box">
                 Löschen
                 <input type="checkbox" [(ngModel)]="bDeleteEnable">
@@ -36,7 +36,8 @@
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }"> {{element.id}} </td>
+                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                        {{element.id}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="data">
