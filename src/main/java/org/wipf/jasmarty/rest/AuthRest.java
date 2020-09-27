@@ -17,6 +17,8 @@ import org.wipf.jasmarty.logic.base.Auth;
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
+//@UserDefinition
+//https://quarkus.io/guides/datasource#other-databases
 @ApplicationScoped
 public class AuthRest {
 
@@ -24,8 +26,8 @@ public class AuthRest {
 	Auth auth;
 
 	@POST
-	@Path("/createNew")
-	public Response createNew(String jnRoot) {
+	@Path("/add")
+	public Response add(String jnRoot) {
 		auth.createNew(jnRoot);
 		return Response.ok().build();
 	}

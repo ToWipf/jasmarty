@@ -27,15 +27,10 @@
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-smallrye-metrics</artifactId>
 		</dependency>
-<!-- 		<dependency>
+		<!-- <dependency>
 			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-junit5</artifactId>
-			<scope>test</scope>
+			<artifactId>quarkus-security-jpa</artifactId>
 		</dependency> -->
-		<!-- Verhindert: [WARNING] [io.quarkus.resteasy.common.deployment.ResteasyCommonProcessor] 
-			Quarkus detected the need of REST JSON support but you have not provided 
-			the necessary JSON extension for this. You can visit https://quarkus.io/guides/rest-json 
-			for more information on how to set one. -->
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-resteasy-jsonb</artifactId>

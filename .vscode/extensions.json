@@ -4,8 +4,6 @@
       "eamodio.gitlens",
       "eg2.tslint",
       "esbenp.prettier-vscode",
-      "Mikael.Angular-BeastCode",
-      "PKief.material-icon-theme",
-      "msjsdiag.debugger-for-chrome"
+      "Mikael.Angular-BeastCode"
     ]
   }
