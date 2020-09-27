@@ -24,6 +24,7 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public loadAll(): void {
+    this.dataSource = null;
     this.http.get(this.rest.gethost() + 'telegram/log').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
@@ -31,6 +32,7 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public loadExt(): void {
+    this.dataSource = null;
     this.http.get(this.rest.gethost() + 'telegram/logext').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
