@@ -212,7 +212,7 @@ public class TeleLog {
 		JSONArray ja = new JSONArray();
 		try {
 			for (Telegram t : getTelegramLog(
-					"WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 AND chatid IS NOT 522467648 AND chatid IS NOT -387871959")) {
+					"WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT '798200105' AND chatid IS NOT '522467648' AND chatid IS NOT '-387871959'")) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {

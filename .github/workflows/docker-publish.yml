@@ -42,8 +42,8 @@ jobs:
           name: jasmarty.jar
           path: scripts/jasmarty.jar
       
-      - name: Build dockerimage
-        run: cd scripts && docker build . --tag $IMAGE_NAME
+#      - name: Build dockerimage
+#        run: cd scripts && docker build . --tag $IMAGE_NAME
 
       - name: Build dockerimage_arm
         run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
@@ -61,8 +61,8 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+#          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+#          docker push $IMAGE_ID:$VERSION
 
           docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
           docker push $IMAGE_ID:${VERSION}-arm
