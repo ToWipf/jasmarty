@@ -6,7 +6,7 @@
 version: 2
 updates:
   - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/angular-app/" # Location of package manifests
     schedule:
       interval: "daily"
   - package-ecosystem: "maven" # See documentation for possible values
@@ -14,7 +14,7 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/scripts/" # Location of package manifests
     schedule:
       interval: "daily"
 
