@@ -282,7 +282,7 @@ public class LcdConnect {
 	public void setbPauseWriteToLCD(boolean bPauseWriteToLCD) {
 		if (bPauseWriteToLCD) {
 			try {
-				Thread.sleep(this.getRefreshRate() * 2);
+				Thread.sleep((long) this.getRefreshRate() * 2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

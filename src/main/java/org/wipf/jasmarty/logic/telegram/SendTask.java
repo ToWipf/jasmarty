@@ -33,7 +33,7 @@ public class SendTask {
 			TimerTask taskInfo = infoTask;
 			LocalDateTime localDateTime = LocalDateTime.now();
 
-			Integer nSekundenBisMitternacht = (86400
+			long nSekundenBisMitternacht = (86400
 					- (localDateTime.getHour() * 60 * 60 + localDateTime.getMinute() * 60 + localDateTime.getSecond()));
 
 			// Starte jeden Tag um 00:00 Uhr
