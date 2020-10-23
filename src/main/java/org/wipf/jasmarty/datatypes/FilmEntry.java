@@ -9,12 +9,12 @@ import org.json.JSONObject;
 public class FilmEntry extends Telegram {
 
 	private Integer nId;
-	private MyString sTitel;
-	private MyString sArt;
+	private String sTitel;
+	private String sArt;
 	private Integer nGesehenDate;
-	private MyString sInfotext;
+	private String sInfotext;
 	private Integer nBewertung;
-	private MyString sEditBy;
+	private String sEditBy;
 
 	/**
 	 * @return
@@ -41,12 +41,12 @@ public class FilmEntry extends Telegram {
 		JSONObject jo = new JSONObject(sJson);
 
 		this.setId(jo.getInt("id"));
-		this.setTitel(jo.getString("titel"));
-		this.setArt(jo.getString("art"));
-		this.setGesehenDate(jo.getInt("gesehenDate"));
-		this.setInfotext(jo.getString("infotext"));
-		this.setBewertung(jo.getInt("bewertung"));
-		this.setEditBy(jo.getString("editby"));
+		this.sTitel = jo.getString("titel");
+		this.sArt = (jo.getString("art"));
+		this.nGesehenDate = jo.getInt("gesehenDate");
+		this.sInfotext = (jo.getString("infotext"));
+		this.nBewertung = jo.getInt("bewertung");
+		this.sEditBy = jo.getString("editby");
 
 		return this;
 	}
@@ -68,7 +68,7 @@ public class FilmEntry extends Telegram {
 	/**
 	 * @return
 	 */
-	public MyString getInfotext() {
+	public String getInfotext() {
 		return sInfotext;
 	}
 
@@ -76,7 +76,7 @@ public class FilmEntry extends Telegram {
 	 * @param sInfotext
 	 */
 	public void setInfotext(String sInfotext) {
-		this.sInfotext = new MyString(sInfotext);
+		this.sInfotext = sInfotext;
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class FilmEntry extends Telegram {
 	/**
 	 * @return
 	 */
-	public MyString getArt() {
+	public String getArt() {
 		return sArt;
 	}
 
@@ -104,13 +104,13 @@ public class FilmEntry extends Telegram {
 	 * @param sArt
 	 */
 	public void setArt(String sArt) {
-		this.sArt = new MyString(sArt);
+		this.sArt = sArt;
 	}
 
 	/**
 	 * @return
 	 */
-	public MyString getTitel() {
+	public String getTitel() {
 		return sTitel;
 	}
 
@@ -118,7 +118,7 @@ public class FilmEntry extends Telegram {
 	 * @param sTitel
 	 */
 	public void setTitel(String sTitel) {
-		this.sTitel = new MyString(sTitel);
+		this.sTitel = sTitel;
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class FilmEntry extends Telegram {
 	/**
 	 * @return
 	 */
-	public MyString getEditBy() {
+	public String getEditBy() {
 		return sEditBy;
 	}
 
@@ -146,7 +146,7 @@ public class FilmEntry extends Telegram {
 	 * @param sEditBy
 	 */
 	public void setEditBy(String sEditBy) {
-		this.sEditBy = new MyString(sEditBy);
+		this.sEditBy = sEditBy;
 	}
 
 }

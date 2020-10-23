@@ -113,15 +113,17 @@ public class TAppFilm {
 	public Integer saveItem(FilmEntry tE) {
 		try {
 			Statement stmt = SqlLite.getDB();
+			// TODO String query = "INSERT OR REPLACE INTO filme (id, titel, art,
+			// gesehendate, infotext, bewertung, editby, date) VALUES (? ? ? ? ? ? ? ?)";
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO filme (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES " +
 					"('"  + tE.getId() +
-					"','" + tE.getTitel().get() +
-					"','" + tE.getArt().get()  +
+					"','" + tE.getTitel()+
+					"','" + tE.getArt() +
 					"','" + tE.getGesehenDate() +
-					"','" + tE.getInfotext().get() +
+					"','" + tE.getInfotext() +
 					"','" + tE.getBewertung()  +
-					"','" + tE.getEditBy().get()  +
+					"','" + tE.getEditBy() +
 					"','" + tE.getDate() +
 					"')");
 			//@formatter:on
