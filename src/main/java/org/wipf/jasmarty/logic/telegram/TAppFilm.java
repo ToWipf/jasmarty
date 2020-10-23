@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  *
  */
 @ApplicationScoped
-public class TAppFilme {
+public class TAppFilm {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
 

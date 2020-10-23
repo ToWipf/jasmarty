@@ -35,7 +35,7 @@ public class TeleMenue {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppFilme appFilme;
+	TAppFilm appFilme;
 
 	/**
 	 * @param sJson

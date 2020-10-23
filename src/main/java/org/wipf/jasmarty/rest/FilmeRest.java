@@ -11,7 +11,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TAppFilme;
+import org.wipf.jasmarty.logic.telegram.TAppFilm;
 
 /**
  * @author wipf
@@ -23,7 +23,7 @@ import org.wipf.jasmarty.logic.telegram.TAppFilme;
 public class FilmeRest {
 
 	@Inject
-	TAppFilme appFilme;
+	TAppFilm appFilme;
 
 	@POST
 	@Path("/save")

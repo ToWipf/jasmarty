@@ -27,7 +27,7 @@ public class TelegramHome {
 	@Inject
 	TAppEssen appEssen;
 	@Inject
-	TAppFilme appFilme;
+	TAppFilm appFilme;
 	@Inject
 	SendAndReceive tVerwaltung;
 	@Inject
