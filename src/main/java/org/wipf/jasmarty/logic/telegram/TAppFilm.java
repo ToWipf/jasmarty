@@ -116,12 +116,12 @@ public class TAppFilm {
 			//@formatter:off
 			stmt.execute("INSERT OR REPLACE INTO filme (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES " +
 					"('"  + tE.getId() +
-					"','" + tE.getTitel() +
-					"','" + tE.getArt() +
+					"','" + tE.getTitel().get() +
+					"','" + tE.getArt().get()  +
 					"','" + tE.getGesehenDate() +
-					"','" + tE.getInfotext() +
-					"','" + tE.getBewertung() +
-					"','" + tE.getEditBy() +
+					"','" + tE.getInfotext().get() +
+					"','" + tE.getBewertung()  +
+					"','" + tE.getEditBy().get()  +
 					"','" + tE.getDate() +
 					"')");
 			//@formatter:on
