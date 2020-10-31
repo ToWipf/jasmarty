@@ -83,6 +83,14 @@ public class TelegramRest {
 		return Response.ok("{}").build();
 	}
 
+	@POST
+	@Path("/sendMsgToAdmin/{msg}")
+	public Response sendMsgToId(@PathParam("msg") String sMsg) {
+		tVerwaltung.sendMsgToAdmin(sMsg);
+		// TODO:
+		return Response.ok("{}").build();
+	}
+
 	@GET
 	@Path("/telelog")
 	@Produces(MediaType.TEXT_PLAIN)
