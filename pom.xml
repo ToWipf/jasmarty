@@ -44,8 +44,8 @@
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>
-			<version>3.32.3.2</version>
-			<!-- <version>3.31.1</version> -->
+			<version>3.7.2</version>
+			<!-- <version>3.32.3.2</version> -->
 		</dependency>
 		<dependency>
 			<groupId>com.fazecast</groupId>
@@ -108,7 +108,7 @@
 		</profile>
 	</profiles>
 	<properties>
-		<quarkus.version>1.9.0.Final</quarkus.version>
+		<quarkus.version>1.9.1.Final</quarkus.version>
 		<!-- wegen 32Bit -> Java 1.8 -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
