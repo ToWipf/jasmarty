@@ -111,7 +111,8 @@ public class Wipf {
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod("POST");
 		urlc.setRequestProperty("Accept", "*/*");
-		urlc.setConnectTimeout(5000); // 5 sek.
+		urlc.setConnectTimeout(5000); // 5 Sek.
+		urlc.setReadTimeout(60000); // 1 Min.
 
 		// use post mode
 		urlc.setDoOutput(true);

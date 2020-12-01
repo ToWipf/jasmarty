@@ -76,6 +76,9 @@ public class TeleMenue {
 					"send ID msg" + "\n" + 
 					"online" + "\n" + 
 				    "scan" + "\n" +
+				    "response" + "\n" +
+				    "filme" + "\n" +
+				    "todo" + "\n" +
 					"Essen (Hilfe für essen)";
 				// @formatter:on
 
@@ -123,9 +126,7 @@ public class TeleMenue {
 			case "e":
 				return appEssen.menueEssen(t);
 
-			case "on":
 			case "online":
-			case "sc":
 			case "scan":
 				return appOthers.getOnline();
 

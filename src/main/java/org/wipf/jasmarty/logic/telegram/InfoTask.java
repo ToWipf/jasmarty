@@ -20,10 +20,8 @@ public class InfoTask extends TimerTask {
 	 */
 	@Override
 	public void run() {
-
 		verwaltung.sendDaylyInfo();
 		verwaltung.sendDaylyMotd();
-
 	}
 
 }
