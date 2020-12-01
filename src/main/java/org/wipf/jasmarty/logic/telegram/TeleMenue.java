@@ -59,11 +59,25 @@ public class TeleMenue {
 			switch (sInMsg) {
 			case "admin":
 				// @formatter:off
-				return "Admin Befehle:" + "\n\n" + "AddAMsgToDB" + "\n" + "GetAllMsg" + "\n" + "GetAllMotd" + "\n"
-						+ "AddAMotd" + "\n" + "SendMotd" + "\n" + "telestats" + "\n" + "GetMotd" + "\n" + "DelMotd ID"
-						+ "\n" + "DelMsg ID" + "\n" + "DoPing IP" + "\n" + "DoNmap" + "\n" + "getIp" + "\n" + "SendIp"
-						+ "\n" + "send ID msg" + "\n" + "Essen (Hilfe für essen)";
-			// @formatter:on
+				return "Admin Befehle:" + "\n\n" + 
+					"AddAMsgToDB" + "\n" + 
+					"GetAllMsg" + "\n" + 
+					"GetAllMotd" + "\n"+ 
+					"AddAMotd" + "\n" + 
+					"SendMotd" + "\n" + 
+					"telestats" + "\n" + 
+					"GetMotd" + "\n" + 
+					"DelMotd ID" + "\n" + 
+					"DelMsg ID" + "\n" + 
+					"DoPing IP" + "\n" + 
+					"DoNmap" + "\n" + 
+					"getIp" + "\n" + 
+					"SendIp" + "\n" + 
+					"send ID msg" + "\n" + 
+					"online" + "\n" + 
+				    "scan" + "\n" +
+					"Essen (Hilfe für essen)";
+				// @formatter:on
 
 			// Anbindung an msg datenbank
 			case "addamsgtodb":
@@ -108,6 +122,12 @@ public class TeleMenue {
 			case "essen":
 			case "e":
 				return appEssen.menueEssen(t);
+
+			case "on":
+			case "online":
+			case "sc":
+			case "scan":
+				return appOthers.getOnline();
 
 			default:
 				break;

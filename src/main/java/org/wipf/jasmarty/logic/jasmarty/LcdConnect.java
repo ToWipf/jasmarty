@@ -30,6 +30,14 @@ public class LcdConnect {
 	private boolean bLed = false;
 	private boolean bPauseWriteToLCD = false;
 
+	public void test12864() {
+		LOGGER.info("START");
+		for (int i = 0; i < 1024; i++) {
+			writeAscii(i);
+		}
+		LOGGER.info("ENDE");
+	}
+
 	/**
 	 * 
 	 */

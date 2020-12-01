@@ -108,4 +108,16 @@ public class TAppOthers {
 		}
 	}
 
+	/**
+	 * @return
+	 */
+	public String getOnline() {
+		try {
+			return wipf.httpRequestGET("http://192.168.2.11:9042");
+
+		} catch (IOException e) {
+			LOGGER.warn("getOnline: " + e);
+			return "getOnline failed";
+		}
+	}
 }
