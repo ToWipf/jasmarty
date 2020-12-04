@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
@@ -21,6 +22,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppFilm {
 
+	@Inject
+	SqlLite sqlLite;
+
 	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
 
 	/**
@@ -28,10 +32,8 @@ public class TAppFilm {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**

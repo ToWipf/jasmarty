@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
@@ -17,6 +18,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppEssen {
 
+	@Inject
+	SqlLite sqlLite;
+
 	private static final Logger LOGGER = Logger.getLogger("Telegram Essen");
 
 	/**
@@ -24,10 +28,8 @@ public class TAppEssen {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -75,12 +77,12 @@ public class TAppEssen {
 	 * @throws SQLException
 	 */
 	public String getEssenRnd() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		try (ResultSet rs = stmt.executeQuery("select * from essen ORDER BY RANDOM() LIMIT 1")) {
-			while (rs.next()) {
-				// Es gibt nur einen Eintrag
-				return (rs.getString("name"));
-			}
+		String sQuery = "select * from essen ORDER BY RANDOM() LIMIT 1;";
+
+		ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+		while (rs.next()) {
+			// Es gibt nur einen Eintrag
+			return (rs.getString("name"));
 		}
 		return null;
 	}

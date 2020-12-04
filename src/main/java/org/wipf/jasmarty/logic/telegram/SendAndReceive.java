@@ -1,8 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,10 +10,9 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.logic.base.BaseSettings;
 import org.wipf.jasmarty.logic.base.MainHome;
-import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
@@ -39,6 +36,8 @@ public class SendAndReceive {
 	TeleMenue menue;
 	@Inject
 	UserAndGroups userAndGroups;
+	@Inject
+	BaseSettings baseSettings;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
@@ -46,28 +45,21 @@ public class SendAndReceive {
 	private String sBotKey;
 
 	/**
+	 * @throws SQLException
 	 * 
 	 */
-	public boolean loadConfig() {
-		// Auf 0 setzen -> definierter zustand
+	public boolean loadConfig() throws SQLException {
+		// Auf 0 setzen -> definierter zustand zum Start
 		this.nOffsetID = 0;
 		// Load bot config
-		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT val FROM config WHERE key = 'telegrambot';");
-			this.sBotKey = (rs.getString("val"));
-			stmt.close();
+		this.sBotKey = baseSettings.getConfParamString("telegrambot");
 
-			if (this.sBotKey == null || this.sBotKey.equals("null") || this.sBotKey.equals("")) {
-				throw new WipfException("botkey is null");
-			}
-			return true;
-
-		} catch (SQLException | WipfException e) {
-			LOGGER.warn(e + " | telegrambot nicht in db gefunden."
+		if (this.sBotKey == null || this.sBotKey.equals("null") || this.sBotKey.equals("")) {
+			LOGGER.warn("telegrambot nicht in db gefunden."
 					+ " Setzen mit 'curl -X POST localhost:8080/telegram/setbot/bot2343242:ABCDEF348590247354352343345'");
 			return false;
 		}
+		return true;
 	}
 
 	/**
@@ -77,9 +69,7 @@ public class SendAndReceive {
 	 */
 	public Boolean setbot(String sBot) throws SQLException {
 		this.sBotKey = sBot;
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('telegrambot','" + this.sBotKey + "')");
-		stmt.close();
+		baseSettings.setConfParam("telegrambot", sBot);
 		LOGGER.info("Bot Key: " + this.sBotKey);
 		return true;
 	}

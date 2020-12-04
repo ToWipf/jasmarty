@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
@@ -17,6 +18,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppMotd {
 
+	@Inject
+	SqlLite sqlLite;
+
 	private static final Logger LOGGER = Logger.getLogger("Telegram Motd");
 
 	/**
@@ -24,10 +28,8 @@ public class TAppMotd {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**

@@ -26,6 +26,8 @@ public class TAppMsg {
 
 	@Inject
 	Wipf wipf;
+	@Inject
+	SqlLite sqlLite;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Msg");
 
@@ -34,10 +36,8 @@ public class TAppMsg {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**

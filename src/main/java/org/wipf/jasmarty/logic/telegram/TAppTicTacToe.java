@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Telegram;
@@ -19,6 +20,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TAppTicTacToe {
 
+	@Inject
+	SqlLite sqlLite;
+
 	private static final Logger LOGGER = Logger.getLogger("Telegram TicTacToe");
 
 	/**
@@ -26,10 +30,8 @@ public class TAppTicTacToe {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**

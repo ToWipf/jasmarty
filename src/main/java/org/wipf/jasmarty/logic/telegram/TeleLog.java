@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
@@ -20,6 +21,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 @ApplicationScoped
 public class TeleLog {
 
+	@Inject
+	SqlLite sqlLite;
+
 	private static final Logger LOGGER = Logger.getLogger("Telegram Log");
 
 	/**
@@ -27,10 +31,8 @@ public class TeleLog {
 	 */
 	public void initDB() {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);");
-			stmt.close();
+			String sUpdate = "CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);";
+			sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 		} catch (Exception e) {
 			LOGGER.warn("initDB  " + e);
 		}

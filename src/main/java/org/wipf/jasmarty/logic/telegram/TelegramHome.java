@@ -56,7 +56,7 @@ public class TelegramHome {
 	 * @throws SQLException
 	 * 
 	 */
-	public void telegramStart() {
+	public void telegramStart() throws SQLException {
 		LOGGER.info("starten");
 
 		if (tVerwaltung.loadConfig()) {
