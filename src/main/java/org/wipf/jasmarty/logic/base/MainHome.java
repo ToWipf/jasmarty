@@ -24,7 +24,7 @@ public class MainHome {
 	@Inject
 	BaseSettings baseSettings;
 	@Inject
-	Auth auth;
+	ATEST auth;
 	@Inject
 	JasmartyHome jHome;
 	@Inject
@@ -48,11 +48,11 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
-
 			SqlLite.startDB();
+			auth.ntest();
 
 			baseSettings.initDB();
-			auth.initDB();
+			baseSettings.checkAppWorkId();
 
 			if (baseSettings.isAppActive("jasmarty")) {
 				jHome.jasmartyStart();

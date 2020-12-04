@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -28,13 +30,25 @@ public class BaseSettingsRest {
 	@POST
 	@Path("/set/{appname}/{status}")
 	public Response setConfig(@PathParam("appname") String sAppname, @PathParam("status") boolean bStatus) {
-		return Response.ok("{\"save\":\"" + baseSettings.setAppStatus(sAppname, bStatus) + "\"}").build();
+		try {
+			baseSettings.setAppStatus(sAppname, bStatus); // TODO
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Response.ok("{\"save\":\"" + "todo" + "\"}").build(); // TODO
 	}
 
 	@GET
 	@Path("/get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {
-		return Response.ok("{\"active\":" + baseSettings.isAppActive(sAppname) + "}").build();
+		try { // TODO
+			return Response.ok("{\"active\":" + baseSettings.isAppActive(sAppname) + "}").build();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
 	}
 
 }

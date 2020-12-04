@@ -6,8 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+
+import io.agroal.api.AgroalDataSource;
 
 /**
  * @author wipf
@@ -16,6 +19,24 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class SqlLite {
 
+	@Inject
+	AgroalDataSource sqliteDb;
+
+	private static Connection c = null;
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public Connection getNewDb() throws SQLException {
+		if (c == null) {
+			c = sqliteDb.getConnection();
+		}
+		return c;
+	}
+
+	////////// ALT:
+
 	private static final Logger LOGGER = Logger.getLogger("SqlLite DB");
 	private static final SqlLite dbcontroller = new SqlLite();
 	private static Connection connection;
@@ -23,6 +44,7 @@ public class SqlLite {
 	/**
 	 * 
 	 */
+	@Deprecated
 	public static void startDB() {
 		SqlLite dbc = SqlLite.getInstance();
 		dbc.initDBConnection();
@@ -31,6 +53,7 @@ public class SqlLite {
 	/**
 	 * @return
 	 */
+	@Deprecated
 	public static Statement getDB() {
 		try {
 			return connection.createStatement();
