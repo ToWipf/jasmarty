@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,6 +19,8 @@ import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
+import io.agroal.api.AgroalDataSource;
+
 /**
  * @author wipf
  *
@@ -33,6 +37,8 @@ public class DebugRest {
 	Winamp winamp;
 	@Inject
 	JasmartyHome jHome;
+	@Inject
+	AgroalDataSource defaultDataSource;
 
 	@POST
 	@GET
@@ -40,6 +46,19 @@ public class DebugRest {
 	public Response lcd12864test() {
 		lcdConnect.test12864();
 		return Response.ok().build();
+	}
+
+	@POST
+	@GET
+	@Path("/db2")
+	public Response db2() throws SQLException {
+		Connection connection = defaultDataSource.getConnection();
+
+		String query2 = "CREATE TABLE IF NOT EXISTS auth (username TEXT UNIQUE, password TEXT, token TEXT);";
+		PreparedStatement statement = connection.prepareStatement(query2);
+		int results = statement.executeUpdate();
+
+		return Response.ok("results").build();
 	}
 
 	@POST
