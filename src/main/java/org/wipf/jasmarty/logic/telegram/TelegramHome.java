@@ -14,8 +14,6 @@ import org.jboss.logging.Logger;
 @ApplicationScoped
 public class TelegramHome {
 
-	// @Inject
-	// TAppOthers appOthers;
 	@Inject
 	TAppTicTacToe appTicTacToe;
 	@Inject

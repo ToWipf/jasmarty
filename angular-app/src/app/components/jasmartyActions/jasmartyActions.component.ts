@@ -20,7 +20,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   public Buttonactions: Buttonaction[];
   public tableDataSource: any;
   public displayedColumns: string[] = ['button', 'action', 'edit', 'test'];
-  public lastPressed: number = null;
+  public lastPressed: number = 0;
   public bLoopStop: boolean = false;
 
   ngOnInit() {

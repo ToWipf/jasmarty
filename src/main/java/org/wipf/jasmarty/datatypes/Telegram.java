@@ -297,4 +297,9 @@ public class Telegram {
 		this.sFrom = sFrom;
 	}
 
+	@Override
+	public String toString() {
+		return this.sMessage + " | " + this.sAntwort + " | " + this.sFrom;
+	}
+
 }

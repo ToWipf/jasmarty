@@ -83,7 +83,7 @@ public class TeleLog {
 
 			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"; // DESC
 			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
 				n++;
@@ -168,15 +168,23 @@ public class TeleLog {
 	 * @param sSQLFilter
 	 * @return
 	 */
-	public List<Telegram> getTelegramLog(String sSQLFilter) {
+	public List<Telegram> getTelegramLog(String sSQLFilterSelect) {
+		String sSQLFilter = "";
+		switch (sSQLFilterSelect) {
+		case "full":
+			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system'";
+			break;
+		case "extern":
+			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT '798200105' AND chatid IS NOT '-385659721' AND chatid IS NOT '522467648' AND chatid IS NOT '-387871959'";
+		default:
+			break;
+		}
+
 		List<Telegram> tList = new ArrayList<>();
 
 		try {
-			String sQuery = "SELECT * FROM telegramlog ?";
-
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
-			statement.setString(1, sSQLFilter);
-			ResultSet rs = statement.executeQuery();
+			String sQuery = "SELECT * FROM telegramlog " + sSQLFilter;
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -192,7 +200,7 @@ public class TeleLog {
 			}
 
 		} catch (Exception e) {
-			LOGGER.warn("getTelegram" + e);
+			LOGGER.warn("getTelegram " + e);
 		}
 		return tList;
 	}
@@ -203,11 +211,11 @@ public class TeleLog {
 	public JSONArray getTelegramLogAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getTelegramLog("WHERE msgid IS NOT '0' AND type IS NOT 'system'")) {
+			for (Telegram t : getTelegramLog("full")) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {
-			LOGGER.warn("getAllAsJson" + e);
+			LOGGER.warn("getAllAsJson " + e);
 		}
 		return ja;
 	}
@@ -218,12 +226,11 @@ public class TeleLog {
 	public JSONArray getTelegramLogAsJsonEXTERN() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getTelegramLog(
-					"WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT '798200105' AND chatid IS NOT '-385659721' AND chatid IS NOT '522467648' AND chatid IS NOT '-387871959'")) {
+			for (Telegram t : getTelegramLog("extern")) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {
-			LOGGER.warn("getAllAsJson" + e);
+			LOGGER.warn("getAllAsJson " + e);
 		}
 		return ja;
 	}

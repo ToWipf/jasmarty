@@ -110,13 +110,7 @@ public class ActionVerwaltung {
 				JSONObject entry = new JSONObject();
 				entry.put("id", rs.getInt("id"));
 				entry.put("button", rs.getInt("button"));
-
-				if (rs.getString("active").equals("true")) {
-					entry.put("active", true);
-				} else {
-					entry.put("active", false);
-				}
-
+				entry.put("active", rs.getBoolean("active"));
 				entry.put("action", rs.getString("action"));
 				ja.put(entry);
 			}

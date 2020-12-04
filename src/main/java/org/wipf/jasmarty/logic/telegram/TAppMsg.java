@@ -59,7 +59,7 @@ public class TAppMsg {
 			return sb.toString();
 
 		} catch (Exception e) {
-			LOGGER.warn("get all telemotd" + e);
+			LOGGER.warn("get all telemotd " + e);
 		}
 		return "Fehler";
 	}
@@ -68,15 +68,11 @@ public class TAppMsg {
 	 * @param sSQLFilter
 	 * @return
 	 */
-	public List<Telegram> getAllMsg(String sSQLFilter) {
+	public List<Telegram> getAllMsgAsList() {
 		List<Telegram> tList = new ArrayList<>();
-
 		try {
-
-			String sQuery = ("SELECT * FROM telemsg ?");
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
-			statement.setString(1, sSQLFilter);
-			ResultSet rs = statement.executeQuery();
+			String sQuery = "SELECT * FROM telemsg";
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -92,7 +88,7 @@ public class TAppMsg {
 			}
 
 		} catch (Exception e) {
-			LOGGER.warn("getAllMsg" + e);
+			LOGGER.warn("getAllMsg " + e);
 		}
 		return tList;
 	}
@@ -103,7 +99,7 @@ public class TAppMsg {
 	public JSONArray getMsgAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getAllMsg("")) {
+			for (Telegram t : getAllMsgAsList()) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {
@@ -128,12 +124,12 @@ public class TAppMsg {
 
 			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
 			statement.setString(1, wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0)));
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
 				mapS.put(rs.getString("response"), rs.getString("options"));
 			}
-			rs.close();
+
 			if (mapS.size() != 0) {
 				int nZufallsElement = wipf.getRandomInt(mapS.size());
 				int n = 0;
@@ -198,10 +194,10 @@ public class TAppMsg {
 
 			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
 			statement.setString(1, t.getMessageStringPartLow(1));
-			statement.setString(1, t.getMessageFullWithoutSecondWord());
-			statement.setString(1, null);
-			statement.setString(1, t.getFrom());
-			statement.setInt(1, t.getDate());
+			statement.setString(2, t.getMessageFullWithoutSecondWord());
+			statement.setString(3, null);
+			statement.setString(4, t.getFrom());
+			statement.setInt(5, t.getDate());
 			statement.executeUpdate();
 
 			return "OK: " + t.getMessageStringPartLow(1);
