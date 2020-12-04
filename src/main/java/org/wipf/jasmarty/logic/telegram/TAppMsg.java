@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,13 +50,12 @@ public class TAppMsg {
 		try {
 			StringBuilder sb = new StringBuilder();
 
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemsg;");
+			String sQuery = ("select * from telemsg;");
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("request") + "\n");
 			}
-			stmt.close();
 			return sb.toString();
 
 		} catch (Exception e) {
@@ -73,8 +72,11 @@ public class TAppMsg {
 		List<Telegram> tList = new ArrayList<>();
 
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM telemsg " + sSQLFilter);
+
+			String sQuery = ("SELECT * FROM telemsg ?");
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setString(1, sSQLFilter);
+			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -89,7 +91,6 @@ public class TAppMsg {
 				tList.add(t);
 			}
 
-			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("getAllMsg" + e);
 		}
@@ -123,9 +124,12 @@ public class TAppMsg {
 		try {
 			Map<String, String> mapS = new HashMap<>();
 
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemsg where request = '"
-					+ wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0)) + "';");
+			String sQuery = "select * from telemsg where request = ?;";
+
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setString(1, wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0)));
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+
 			while (rs.next()) {
 				mapS.put(rs.getString("response"), rs.getString("options"));
 			}
@@ -141,7 +145,6 @@ public class TAppMsg {
 					n++;
 				}
 			}
-			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("get telemsg " + e);
 		}
@@ -154,9 +157,11 @@ public class TAppMsg {
 	 */
 	public String delMsg(Telegram t) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM telemsg WHERE id = " + t.getMessageIntPart(1));
-			stmt.close();
+			String sUpdate = "DELETE FROM telemsg WHERE id = ?";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setInt(1, t.getMessageIntPart(1));
+			statement.executeUpdate();
+
 			return "DEL";
 		} catch (Exception e) {
 			LOGGER.warn("delete telemsg" + e);
@@ -171,11 +176,13 @@ public class TAppMsg {
 	 */
 	public String countMsg() {
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemsg;");
-			String s = rs.getString("COUNT(*)") + " Antworten in der DB";
-			stmt.close();
-			return s;
+			String sQuery = "SELECT COUNT(*) FROM telemsg;";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				return rs.getString("COUNT(*)") + " Antworten in der DB";
+			}
+			return "Keine Msgs";
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return "Fehler countMsg";
@@ -187,11 +194,16 @@ public class TAppMsg {
 	 */
 	public String addMsg(Telegram t) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES " + "('"
-					+ t.getMessageStringPartLow(1) + "','" + t.getMessageFullWithoutSecondWord() + "','" + null + "','"
-					+ t.getFrom() + "','" + t.getDate() + "')");
-			stmt.close();
+			String sUpdate = "INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES (?,?,?,?,?)";
+
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setString(1, t.getMessageStringPartLow(1));
+			statement.setString(1, t.getMessageFullWithoutSecondWord());
+			statement.setString(1, null);
+			statement.setString(1, t.getFrom());
+			statement.setInt(1, t.getDate());
+			statement.executeUpdate();
+
 			return "OK: " + t.getMessageStringPartLow(1);
 		} catch (Exception e) {
 			LOGGER.warn("add telemsg " + e);

@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -93,15 +93,14 @@ public class TAppEssen {
 	 * @throws SQLException
 	 */
 	private String addEssen(Telegram t) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		//@formatter:off
-			stmt.execute("INSERT OR REPLACE INTO essen (name, editby, date) VALUES " +
-					"('" + t.getMessageFullWithoutSecondWord() +
-					"','" + t.getFrom() +
-					"','"+ t.getDate() +
-					"')");
-			//@formatter:on
-		stmt.close();
+		String sUpdate = ("INSERT OR REPLACE INTO essen (name, editby, date) VALUES (?,?,?')");
+
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setString(1, t.getMessageFullWithoutSecondWord());
+		statement.setString(2, t.getFrom());
+		statement.setInt(3, t.getDate());
+		statement.executeUpdate();
+
 		return "gespeichert";
 	}
 
@@ -110,11 +109,14 @@ public class TAppEssen {
 	 * @throws SQLException
 	 */
 	private String count() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM essen;");
-		String s = rs.getString("COUNT(*)") + " Einträge in der DB";
-		stmt.close();
-		return s;
+		String sQuery = ("SELECT COUNT(*) FROM essen;");
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			return rs.getString("COUNT(*)") + " Einträge in der DB";
+		}
+
+		return "FAIL";
 	}
 
 	/**
@@ -123,9 +125,10 @@ public class TAppEssen {
 	 * @throws SQLException
 	 */
 	private String delEssen(Telegram t) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("DELETE FROM essen WHERE id = " + t.getMessageIntPart(2));
-		stmt.close();
+		String sUpdate = "DELETE FROM essen WHERE id = ?";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, t.getMessageIntPart(2));
+		statement.executeUpdate();
 		return "DEL";
 	}
 
@@ -136,14 +139,13 @@ public class TAppEssen {
 	 */
 	private String getAllEssen() throws SQLException {
 		StringBuilder sb = new StringBuilder();
+		String sQuery = "select * from essen;";
 
-		Statement stmt = SqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("select * from essen;");
+		ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			sb.append(rs.getString("id") + "\t");
 			sb.append(rs.getString("name") + "\n");
 		}
-		stmt.close();
 		return sb.toString();
 	}
 

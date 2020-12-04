@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -35,47 +35,51 @@ public class TAppMotd {
 	/**
 	 * @param t
 	 * @return
+	 * @throws SQLException
 	 */
 	public String delMotd(Telegram t) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("DELETE FROM telemotd WHERE id = " + t.getMessageIntPart(1));
-			stmt.close();
+			String sUpdate = "DELETE FROM telemotd WHERE id = ?";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setInt(1, t.getMessageIntPart(1));
+
+			statement.executeUpdate();
 			return "DEL";
 		} catch (Exception e) {
-			LOGGER.warn("delete telemotd " + e);
-			return "Fehler";
+			return "fehler delMotd";
 		}
 	}
 
 	/**
 	 * @param t
+	 * @throws SQLException
 	 */
 	public String addMotd(Telegram t) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES " + "('"
-					+ t.getMessageFullWithoutFirstWord() + "','" + t.getFrom() + "','" + t.getDate() + "')");
-			stmt.close();
+			String sUpdate = "INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES (?,?,?)";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setString(1, t.getMessageFullWithoutFirstWord());
+			statement.setString(2, t.getFrom());
+			statement.setInt(3, t.getDate());
+			statement.executeUpdate();
 			return "IN";
 		} catch (Exception e) {
-			LOGGER.warn("add telemotd " + e);
-			return "Fehler";
+			return "fehler addMotd";
 		}
 	}
 
 	/**
 	 * @return
-	 * 
-	 *         TODO del this
 	 */
 	public String countMotd() {
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telemotd;");
-			String s = rs.getString("COUNT(*)") + " Motds in der DB";
-			stmt.close();
-			return s;
+			String sQuery = ("SELECT COUNT(*) FROM telemotd;");
+
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			while (rs.next()) {
+				return rs.getString("COUNT(*)") + " Motds in der DB";
+			}
+			return "Kein count motd vorhanden";
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return "Fehler countMotd";
@@ -87,16 +91,13 @@ public class TAppMotd {
 	 */
 	public String getRndMotd() {
 		try {
-			String s = null;
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemotd ORDER BY RANDOM() LIMIT 1");
+			String sQuery = "select * from telemotd ORDER BY RANDOM() LIMIT 1";
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				// Es gibt nur einen Eintrag
-				s = (rs.getString("text"));
+				return rs.getString("text");
 			}
-			stmt.close();
-			return s;
+			return "Kein motd vorhanden";
 
 		} catch (Exception e) {
 			LOGGER.warn("get telemotd " + e);
@@ -113,14 +114,12 @@ public class TAppMotd {
 	public String getAllMotd() {
 		try {
 			StringBuilder sb = new StringBuilder();
-
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from telemotd;");
+			String sQuery = "select * from telemotd;";
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("text") + "\n");
 			}
-			stmt.close();
 			return sb.toString();
 
 		} catch (Exception e) {
