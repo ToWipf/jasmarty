@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -165,11 +165,15 @@ public class TAppTicTacToe {
 	 */
 	private Boolean saveTicTacToe(TicTacToe ttt) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute(
-					"INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES " + "('" + ttt.getChatID()
-							+ "','" + ttt.getFieldString() + "','" + ttt.getDate() + "','" + ttt.getType() + "')");
-			stmt.close();
+			String sUpdate = "INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES (?,?,?,?)";
+
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setInt(1, ttt.getChatID());
+			statement.setString(2, ttt.getFieldString());
+			statement.setInt(3, ttt.getDate());
+			statement.setString(4, ttt.getType());
+			statement.executeUpdate();
+
 			return true;
 		} catch (Exception e) {
 			LOGGER.warn("setTicTacToe " + e);
@@ -183,13 +187,17 @@ public class TAppTicTacToe {
 	 */
 	private TicTacToe loadTicTacToe(Integer nChatid) {
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM tictactoe WHERE chatid = '" + nChatid + "';");
-			TicTacToe ttt = new TicTacToe(rs.getString("feld"));
-			// ttt.setChatID(rs.getInt("chatid")); weitere felder sind nicht nötig -> werden
-			// neu befüllt
-			stmt.close();
-			return ttt;
+			String sQuery = "SELECT * FROM tictactoe WHERE chatid = ?;";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nChatid);
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Treffer
+				TicTacToe ttt = new TicTacToe(rs.getString("feld"));
+				// ttt.setChatID(rs.getInt("chatid")); weitere felder sind nicht nötig -> werden
+				// neu befüllt
+				return ttt;
+			}
 		} catch (Exception e) {
 			// Kann vorkommen wenn kein spiel aktiv ist
 			// MLogger.warn("getTicTacToe " + e);

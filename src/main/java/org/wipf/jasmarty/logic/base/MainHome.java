@@ -46,7 +46,6 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
-			SqlLite.startDB();
 
 			baseSettings.initDB();
 			baseSettings.checkAppWorkId();

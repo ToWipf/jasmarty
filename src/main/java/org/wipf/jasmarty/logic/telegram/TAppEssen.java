@@ -110,8 +110,7 @@ public class TAppEssen {
 	 */
 	private String count() throws SQLException {
 		String sQuery = ("SELECT COUNT(*) FROM essen;");
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
-		ResultSet rs = statement.executeQuery();
+		ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			return rs.getString("COUNT(*)") + " Einträge in der DB";
 		}

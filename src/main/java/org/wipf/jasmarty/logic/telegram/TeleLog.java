@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +48,18 @@ public class TeleLog {
 		}
 
 		try {
-			Statement stmt = SqlLite.getDB();
-			stmt.execute("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type)" + " VALUES ('"
-					+ t.getMid() + "','" + t.getMessage().replaceAll("'", "_") + "','"
-					+ t.getAntwort().replaceAll("'", "_") + "','" + t.getChatID() + "','" + t.getFrom() + "','"
-					+ t.getDate() + "','" + t.getType() + "')");
-			stmt.close();
+			String sUpdate = ("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type) VALUES (?,?,?,?,?,?,?)");
+
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			statement.setInt(1, t.getMid());
+			statement.setString(2, t.getMessage().replaceAll("'", "_"));
+			statement.setString(3, t.getAntwort().replaceAll("'", "_"));
+			statement.setInt(4, t.getChatID());
+			statement.setString(5, t.getFrom());
+			statement.setInt(6, t.getDate());
+			statement.setString(7, t.getType());
+			statement.executeUpdate();
+
 		} catch (Exception e) {
 			LOGGER.warn("id  : " + t.getMid());
 			LOGGER.warn("msg : " + t.getMessage());
@@ -74,11 +80,10 @@ public class TeleLog {
 		try {
 			StringBuilder slog = new StringBuilder();
 			int n = 0;
-			Statement stmt = SqlLite.getDB();
-			// ResultSet rs = stmt.executeQuery("SELECT * FROM telegrambot WHERE msgid = '"
-			// + nID + "';");
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"); // DESC
+
+			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"; // DESC
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				n++;
@@ -98,7 +103,6 @@ public class TeleLog {
 					slog.insert(0, sb);
 				}
 			}
-			stmt.close();
 			return slog.toString();
 		} catch (Exception e) {
 			LOGGER.warn("genTelegram" + e);
@@ -115,10 +119,9 @@ public class TeleLog {
 		try {
 			StringBuilder slog = new StringBuilder();
 			int n = 0;
-			Statement stmt = SqlLite.getDB();
 
-			ResultSet rs = stmt.executeQuery(
-					"SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 ORDER BY msgdate ASC");
+			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 ORDER BY msgdate ASC";
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				n++;
@@ -137,7 +140,6 @@ public class TeleLog {
 				slog.insert(0, sb);
 
 			}
-			stmt.close();
 			return slog.toString();
 		} catch (Exception e) {
 			LOGGER.warn("genTelegram" + e);
@@ -150,11 +152,12 @@ public class TeleLog {
 	 */
 	public String count() {
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM telegramlog;");
-			String s = rs.getString("COUNT(*)") + " Nachrichten gesendet";
-			stmt.close();
-			return s;
+			String sQuery = "SELECT COUNT(*) FROM telegramlog;";
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			while (rs.next()) {
+				return rs.getString("COUNT(*)") + " Nachrichten gesendet";
+			}
+			return "Fehler count log";
 		} catch (Exception e) {
 			LOGGER.warn("count Telegram " + e);
 			return "Fehler count";
@@ -169,8 +172,11 @@ public class TeleLog {
 		List<Telegram> tList = new ArrayList<>();
 
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM telegramlog " + sSQLFilter);
+			String sQuery = "SELECT * FROM telegramlog ?";
+
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setString(1, sSQLFilter);
+			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -185,7 +191,6 @@ public class TeleLog {
 				tList.add(t);
 			}
 
-			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("getTelegram" + e);
 		}
