@@ -36,6 +36,15 @@ public class JasmartyHome {
 
 	/**
 	 * @throws SQLException
+	 */
+	public void init() throws SQLException {
+		pageVerwaltung.initDB();
+		actionVerwaltung.initDB();
+		customChars.initDB();
+	}
+
+	/**
+	 * @throws SQLException
 	 * 
 	 */
 	public void jasmartyRestart() throws SQLException {
@@ -49,9 +58,6 @@ public class JasmartyHome {
 	 */
 	public void jasmartyStart() throws SQLException {
 		LOGGER.info("Starten");
-		pageVerwaltung.initDB();
-		actionVerwaltung.initDB();
-		customChars.initDB();
 
 		lcdConnect.setConfig(serialConfig.getConfig());
 		lcdConnect.startSerialLcdPort();

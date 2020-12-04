@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,6 +24,8 @@ public class PageVerwaltung {
 
 	@Inject
 	PageConverter pageConverter;
+	@Inject
+	SqlLite sqlLite;
 
 	private static final Logger LOGGER = Logger.getLogger("PageVerwaltung");
 	private Integer nSelectedSite = 1;
@@ -32,9 +34,8 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate("CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -88,10 +89,13 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void pageToDb(LcdPage page) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO pages (id, name, page, options) VALUES ('" + page.getId() + "','"
-				+ page.getName() + "','" + page.getPageAsDBString() + "','" + page.getOptions() + "')");
-		stmt.close();
+		String sUpdate = "INSERT OR REPLACE INTO pages (id, name, page, options) VALUES (?,?,?,?)";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, page.getId());
+		statement.setString(2, page.getName());
+		statement.setString(3, page.getPageAsDBString());
+		statement.setString(4, page.getOptions());
+		statement.executeUpdate();
 	}
 
 	/**
@@ -99,9 +103,10 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void delPageFromDb(Integer nId) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("DELETE FROM pages WHERE id = " + nId);
-		stmt.close();
+		String sUpdate = "DELETE FROM pages WHERE id = ?";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, nId);
+		statement.executeUpdate();
 	}
 
 	/**
@@ -111,13 +116,20 @@ public class PageVerwaltung {
 	public LcdPage getPageFromDb(int nId) {
 		LcdPage page = new LcdPage();
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM pages WHERE id = '" + nId + "';");
-			page.setId(rs.getInt("id"));
-			page.setName(rs.getString("name"));
-			page.setStringToPage(rs.getString("page"));
-			page.setOptions(rs.getString("options"));
-			stmt.close();
+
+			String sQuery = "SELECT * FROM pages WHERE id = ?;";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nId);
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				page.setId(rs.getInt("id"));
+				page.setName(rs.getString("name"));
+				page.setStringToPage(rs.getString("page"));
+				page.setOptions(rs.getString("options"));
+				return page;
+			}
 		} catch (Exception e) {
 			// LOGGER.warn("Page not found: " + nId);
 			// TODO
@@ -178,8 +190,8 @@ public class PageVerwaltung {
 	public JSONArray getAllPages() throws JSONException, SQLException {
 		JSONArray ja = new JSONArray();
 
-		Statement stmt = SqlLite.getDB();
-		ResultSet rs = stmt.executeQuery("SELECT id, name FROM pages");
+		String sQuery = "SELECT id, name FROM pages";
+		ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			JSONObject entry = new JSONObject();
 			entry.put("id", rs.getInt("id"));

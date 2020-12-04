@@ -1,15 +1,15 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdConfig;
-import org.wipf.jasmarty.logic.base.SqlLite;
+import org.wipf.jasmarty.logic.base.BaseSettings;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -18,6 +18,9 @@ public class SerialConfig {
 
 	private static final Logger LOGGER = Logger.getLogger("SerialConfig");
 
+	@Inject
+	BaseSettings baseSettings;
+
 	/**
 	 * @return
 	 * @throws SQLException
@@ -25,15 +28,15 @@ public class SerialConfig {
 	public LcdConfig getConfig() throws SQLException {
 		try {
 			LcdConfig conf = new LcdConfig();
-			Statement stmt = SqlLite.getDB();
-			conf.setPort(stmt.executeQuery("SELECT val FROM config WHERE key IS 'port';").getString("val"));
-			conf.setRefreshRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'refreshrate';").getInt("val"));
-			conf.setWidth(stmt.executeQuery("SELECT val FROM config WHERE key IS 'widht';").getInt("val"));
-			conf.setHeight(stmt.executeQuery("SELECT val FROM config WHERE key IS 'height';").getInt("val"));
-			conf.setBaudRate(stmt.executeQuery("SELECT val FROM config WHERE key IS 'baudrate';").getInt("val"));
-			stmt.close();
+
+			conf.setPort(baseSettings.getConfParamString("port"));
+			conf.setRefreshRate(baseSettings.getConfParamInteger("refreshrate"));
+			conf.setWidth(baseSettings.getConfParamInteger("widht"));
+			conf.setHeight(baseSettings.getConfParamInteger("height"));
+			conf.setBaudRate(baseSettings.getConfParamInteger("baudrate"));
+
 			return conf;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.warn("Config nicht gefunden > default Config erstellen");
 			return defaultConfig();
 		}
@@ -51,36 +54,30 @@ public class SerialConfig {
 		lcDef.setBaudRate(9600);
 		lcDef.setRefreshRate(200);
 
-		if (!setConfig(lcDef)) {
-			LOGGER.warn("Config konnte nicht gespeichert werden!");
-		}
+		setConfig(lcDef);
 		return lcDef;
 	}
 
 	/**
 	 * @param conf
-	 * @return
 	 * @throws SQLException
 	 */
-	public boolean setConfig(LcdConfig conf) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('port','" + conf.getPort() + "')");
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('refreshrate','" + conf.getRefreshRate() + "')");
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('widht','" + conf.getWidth() + "')");
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('height','" + conf.getHeight() + "')");
-		stmt.execute("INSERT OR REPLACE INTO config (key, val) VALUES ('baudrate','" + conf.getBaudRate() + "')");
-		LOGGER.info("Config gespeichert");
-		stmt.close();
-		return true;
+	public void setConfig(LcdConfig conf) throws SQLException {
+		baseSettings.setConfParam("port", conf.getPort());
+		baseSettings.setConfParam("refreshrate", conf.getRefreshRate());
+		baseSettings.setConfParam("widht", conf.getWidth());
+		baseSettings.setConfParam("height", conf.getHeight());
+		baseSettings.setConfParam("baudrate", conf.getBaudRate());
+
+		LOGGER.info("Config speichern");
 	}
 
 	/**
 	 * @param jnRoot
-	 * @return
 	 * @throws SQLException
 	 */
-	public boolean setConfig(String jnRoot) throws SQLException {
-		return setConfig(new LcdConfig().setByJson(jnRoot));
+	public void setConfig(String jnRoot) throws SQLException {
+		setConfig(new LcdConfig().setByJson(jnRoot));
 	}
 
 	/**

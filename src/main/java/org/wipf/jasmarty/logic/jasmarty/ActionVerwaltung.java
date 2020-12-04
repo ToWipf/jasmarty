@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,6 +30,8 @@ public class ActionVerwaltung {
 	Tastatur tastatur;
 	@Inject
 	Winamp winamp;
+	@Inject
+	SqlLite sqlLite;
 
 	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
 	private Integer currentPressed;
@@ -38,10 +40,8 @@ public class ActionVerwaltung {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);");
-		stmt.close();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -49,10 +49,13 @@ public class ActionVerwaltung {
 	 * @throws SQLException
 	 */
 	public void saveToDB(ButtonAction ba) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO actions (id, button, active, action) VALUES ('" + ba.getId() + "','"
-				+ ba.getButton() + "','" + ba.isActive() + "','" + ba.getAction() + "')");
-		stmt.close();
+		String sUpdate = "INSERT OR REPLACE INTO actions (id, button, active, action) VALUES (?,?,?,?)";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, ba.getId());
+		statement.setInt(2, ba.getButton());
+		statement.setBoolean(3, ba.isActive());
+		statement.setString(4, ba.getAction());
+		statement.executeUpdate();
 	}
 
 	/**
@@ -60,9 +63,10 @@ public class ActionVerwaltung {
 	 * @throws SQLException
 	 */
 	public void delete(Integer nId) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("DELETE FROM actions WHERE id LIKE '" + nId + "';");
-		stmt.close();
+		String sUpdate = "DELETE FROM actions WHERE id LIKE ?;";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, nId);
+		statement.executeUpdate();
 	}
 
 	/**
@@ -72,13 +76,21 @@ public class ActionVerwaltung {
 	public ButtonAction getActionFromDbByID(int nId) {
 		ButtonAction ba = new ButtonAction();
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
-			ba.setId(rs.getInt("id"));
-			ba.setButton(rs.getInt("button"));
-			ba.setActive(rs.getBoolean("active"));
-			ba.setAction(rs.getString("action"));
-			stmt.close();
+
+			String sQuery = ("SELECT * FROM actions WHERE id = '" + nId + "';");
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nId);
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				ba.setId(rs.getInt("id"));
+				ba.setButton(rs.getInt("button"));
+				ba.setActive(rs.getBoolean("active"));
+				ba.setAction(rs.getString("action"));
+				return ba;
+			}
+
 		} catch (SQLException e) {
 			LOGGER.warn("BA not found: " + nId);
 		}
@@ -91,8 +103,9 @@ public class ActionVerwaltung {
 	public JSONArray getAllFromDBAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("select * from actions;");
+			String sQuery = ("select * from actions;");
+			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+
 			while (rs.next()) {
 				JSONObject entry = new JSONObject();
 				entry.put("id", rs.getInt("id"));
@@ -107,7 +120,6 @@ public class ActionVerwaltung {
 				entry.put("action", rs.getString("action"));
 				ja.put(entry);
 			}
-			stmt.close();
 		} catch (Exception e) {
 			LOGGER.warn("getAllFromDBAsJson: " + e);
 		}
@@ -122,14 +134,21 @@ public class ActionVerwaltung {
 		ButtonAction ba = new ButtonAction();
 		try {
 
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt
-					.executeQuery("SELECT * FROM actions WHERE button = '" + nButton + "' AND active = 'true';");
-			ba.setId(rs.getInt("id"));
-			ba.setButton(rs.getInt("button"));
-			ba.setActive(rs.getBoolean("active"));
-			ba.setAction(rs.getString("action"));
-			stmt.close();
+			String sQuery = ("SELECT * FROM actions WHERE button = ? AND active = 'true';");
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nButton);
+
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				ba.setId(rs.getInt("id"));
+				ba.setButton(rs.getInt("button"));
+				ba.setActive(rs.getBoolean("active"));
+				ba.setAction(rs.getString("action"));
+				return ba;
+			}
+
 		} catch (Exception e) {
 			LOGGER.warn("BA not found in DB by Button: " + nButton);
 		}
@@ -140,16 +159,24 @@ public class ActionVerwaltung {
 	 * @param nId
 	 * @return
 	 */
-	public ButtonAction getActionFromDbById(int nId) {
+	public ButtonAction getActionFromDbById(int nId) { // TODO zusammenfassen mit json
 		ButtonAction ba = new ButtonAction();
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM actions WHERE id = '" + nId + "';");
-			ba.setId(rs.getInt("id"));
-			ba.setButton(rs.getInt("button"));
-			ba.setActive(rs.getBoolean("active"));
-			ba.setAction(rs.getString("action"));
-			stmt.close();
+
+			String sQuery = "SELECT * FROM actions WHERE id = ?;";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nId);
+
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				ba.setId(rs.getInt("id"));
+				ba.setButton(rs.getInt("button"));
+				ba.setActive(rs.getBoolean("active"));
+				ba.setAction(rs.getString("action"));
+				return ba;
+			}
 		} catch (Exception e) {
 			LOGGER.warn("BA not found in DB by Id: " + nId);
 		}

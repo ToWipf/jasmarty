@@ -123,4 +123,68 @@ public class BaseSettings {
 		LOGGER.info("Config gespeichert: setAppWorkId ist jetzt " + sId);
 	}
 
+	/**
+	 * @param sConfParam
+	 * @return
+	 * @throws SQLException
+	 */
+	public String getConfParamString(String sConfParam) throws SQLException {
+		String sQuery = "SELECT val FROM config WHERE key IS ?;";
+
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		statement.setString(1, sConfParam);
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			// Es gibt nur einen oder keinen Eintrag
+			String sVal = rs.getString("val");
+			return (sVal);
+		}
+		return null;
+	}
+
+	/**
+	 * @param sConfParam
+	 * @return
+	 * @throws SQLException
+	 */
+	public Integer getConfParamInteger(String sConfParam) throws SQLException {
+		String sQuery = "SELECT val FROM config WHERE key IS ?;";
+
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		statement.setString(1, sConfParam);
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			// Es gibt nur einen oder keinen Eintrag
+			Integer sVal = rs.getInt("val");
+			return (sVal);
+		}
+		return null;
+	}
+
+	/**
+	 * @param sConfParam
+	 * @param sVal
+	 * @throws SQLException
+	 */
+	public void setConfParam(String sConfParam, String sVal) throws SQLException {
+		String sUpdate = "INSERT OR REPLACE INTO config (key, val) VALUES (?,?)";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setString(1, sConfParam);
+		statement.setString(2, sVal);
+		statement.executeUpdate();
+	}
+
+	/**
+	 * @param sConfParam
+	 * @param nVal
+	 * @throws SQLException
+	 */
+	public void setConfParam(String sConfParam, Integer nVal) throws SQLException {
+		String sUpdate = "INSERT OR REPLACE INTO config (key, val) VALUES (?,?)";
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setString(1, sConfParam);
+		statement.setInt(2, nVal);
+		statement.executeUpdate();
+	}
+
 }

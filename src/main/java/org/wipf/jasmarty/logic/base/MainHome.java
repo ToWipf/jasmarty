@@ -24,8 +24,6 @@ public class MainHome {
 	@Inject
 	BaseSettings baseSettings;
 	@Inject
-	ATEST auth;
-	@Inject
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
@@ -49,10 +47,12 @@ public class MainHome {
 			LOGGER.info("Starte " + VERSION);
 			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			SqlLite.startDB();
-			auth.ntest();
 
 			baseSettings.initDB();
 			baseSettings.checkAppWorkId();
+
+			jHome.init();
+			tHome.init();
 
 			if (baseSettings.isAppActive("jasmarty")) {
 				jHome.jasmartyStart();

@@ -1,8 +1,8 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -17,6 +17,8 @@ public class CustomChars {
 
 	@Inject
 	LcdConnect lcdConnect;
+	@Inject
+	SqlLite sqlLite;
 
 	private static final Logger LOGGER = Logger.getLogger("LcdCustomChars");
 
@@ -25,9 +27,8 @@ public class CustomChars {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.executeUpdate(
-				"CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);");
+		String sUpdate = "CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);";
+		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -36,13 +37,19 @@ public class CustomChars {
 	public CustomChar getFromDB(int nId) {
 		CustomChar cc = new CustomChar();
 		try {
-			Statement stmt = SqlLite.getDB();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM customChars WHERE id = '" + nId + "';");
-			cc.setId(rs.getInt("id"));
-			cc.setName(rs.getString("name"));
-			cc.setPosition(rs.getInt("position"));
-			cc.setData(rs.getString("data"));
-			stmt.close();
+			String sQuery = "SELECT * FROM customChars WHERE id = ?;";
+			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			statement.setInt(1, nId);
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				cc.setId(rs.getInt("id"));
+				cc.setName(rs.getString("name"));
+				cc.setPosition(rs.getInt("position"));
+				cc.setData(rs.getString("data"));
+				return cc;
+			}
 		} catch (SQLException e) {
 			LOGGER.warn("getFromDB " + e);
 		}
@@ -54,10 +61,14 @@ public class CustomChars {
 	 * @throws SQLException
 	 */
 	public void saveToDB(CustomChar cc) throws SQLException {
-		Statement stmt = SqlLite.getDB();
-		stmt.execute("INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES ('" + cc.getId() + "','"
-				+ cc.getName() + "','" + cc.getPosition() + "','" + cc.getData() + "')");
-		stmt.close();
+		String sUpdate = "INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES (?,?,?,?)";
+
+		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		statement.setInt(1, cc.getId());
+		statement.setString(2, cc.getName());
+		statement.setInt(3, cc.getPosition());
+		statement.setString(4, cc.getData());
+		statement.executeUpdate();
 	}
 
 	/**
