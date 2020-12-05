@@ -11,7 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
-import org.wipf.jasmarty.logic.base.BaseSettings;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 
@@ -37,7 +37,7 @@ public class SendAndReceive {
 	@Inject
 	UserAndGroups userAndGroups;
 	@Inject
-	BaseSettings baseSettings;
+	WipfConfig wipfConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
@@ -52,7 +52,7 @@ public class SendAndReceive {
 		// Auf 0 setzen -> definierter zustand zum Start
 		this.nOffsetID = 0;
 		// Load bot config
-		this.sBotKey = baseSettings.getConfParamString("telegrambot");
+		this.sBotKey = wipfConfig.getConfParamString("telegrambot");
 
 		if (this.sBotKey == null || this.sBotKey.equals("null") || this.sBotKey.equals("")) {
 			LOGGER.warn("telegrambot nicht in db gefunden."
@@ -69,7 +69,7 @@ public class SendAndReceive {
 	 */
 	public Boolean setbot(String sBot) throws SQLException {
 		this.sBotKey = sBot;
-		baseSettings.setConfParam("telegrambot", sBot);
+		wipfConfig.setConfParam("telegrambot", sBot);
 		LOGGER.info("Bot Key: " + this.sBotKey);
 		return true;
 	}

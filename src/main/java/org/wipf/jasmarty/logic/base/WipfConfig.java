@@ -15,7 +15,7 @@ import org.jboss.logging.Logger;
  *
  */
 @ApplicationScoped
-public class BaseSettings {
+public class WipfConfig {
 
 	@Inject
 	SqlLite sqlLite;

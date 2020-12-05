@@ -9,7 +9,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.LcdConfig;
-import org.wipf.jasmarty.logic.base.BaseSettings;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -19,7 +19,7 @@ public class SerialConfig {
 	private static final Logger LOGGER = Logger.getLogger("SerialConfig");
 
 	@Inject
-	BaseSettings baseSettings;
+	WipfConfig wipfConfig;
 
 	/**
 	 * @return
@@ -29,11 +29,11 @@ public class SerialConfig {
 		try {
 			LcdConfig conf = new LcdConfig();
 
-			conf.setPort(baseSettings.getConfParamString("port"));
-			conf.setRefreshRate(baseSettings.getConfParamInteger("refreshrate"));
-			conf.setWidth(baseSettings.getConfParamInteger("widht"));
-			conf.setHeight(baseSettings.getConfParamInteger("height"));
-			conf.setBaudRate(baseSettings.getConfParamInteger("baudrate"));
+			conf.setPort(wipfConfig.getConfParamString("port"));
+			conf.setRefreshRate(wipfConfig.getConfParamInteger("refreshrate"));
+			conf.setWidth(wipfConfig.getConfParamInteger("widht"));
+			conf.setHeight(wipfConfig.getConfParamInteger("height"));
+			conf.setBaudRate(wipfConfig.getConfParamInteger("baudrate"));
 
 			return conf;
 		} catch (Exception e) {
@@ -63,11 +63,11 @@ public class SerialConfig {
 	 * @throws SQLException
 	 */
 	public void setConfig(LcdConfig conf) throws SQLException {
-		baseSettings.setConfParam("port", conf.getPort());
-		baseSettings.setConfParam("refreshrate", conf.getRefreshRate());
-		baseSettings.setConfParam("widht", conf.getWidth());
-		baseSettings.setConfParam("height", conf.getHeight());
-		baseSettings.setConfParam("baudrate", conf.getBaudRate());
+		wipfConfig.setConfParam("port", conf.getPort());
+		wipfConfig.setConfParam("refreshrate", conf.getRefreshRate());
+		wipfConfig.setConfParam("widht", conf.getWidth());
+		wipfConfig.setConfParam("height", conf.getHeight());
+		wipfConfig.setConfParam("baudrate", conf.getBaudRate());
 
 		LOGGER.info("Config speichern");
 	}

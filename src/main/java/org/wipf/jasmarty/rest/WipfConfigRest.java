@@ -12,26 +12,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.base.BaseSettings;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 
 /**
  * @author wipf
  *
  */
-@Path("/basesettings")
+@Path("/basesettings") // TODO anpassen
 @Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class BaseSettingsRest {
+public class WipfConfigRest {
 
 	@Inject
-	BaseSettings baseSettings;
+	WipfConfig wipfConfig;
 
 	@POST
 	@Path("/set/{appname}/{status}")
 	public Response setConfig(@PathParam("appname") String sAppname, @PathParam("status") boolean bStatus) {
 		try {
-			baseSettings.setAppStatus(sAppname, bStatus); // TODO
+			wipfConfig.setAppStatus(sAppname, bStatus); // TODO
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +43,7 @@ public class BaseSettingsRest {
 	@Path("/get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {
 		try { // TODO
-			return Response.ok("{\"active\":" + baseSettings.isAppActive(sAppname) + "}").build();
+			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,14 +22,14 @@ import io.quarkus.runtime.StartupEvent;
 public class MainHome {
 
 	@Inject
-	BaseSettings baseSettings;
+	WipfConfig wipfConfig;
 	@Inject
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "0.91";
+	public static final String VERSION = "0.92";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -47,16 +47,16 @@ public class MainHome {
 			LOGGER.info("Starte " + VERSION);
 			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 
-			baseSettings.initDB();
-			baseSettings.checkAppWorkId();
+			wipfConfig.initDB();
+			wipfConfig.checkAppWorkId();
 
 			jHome.init();
 			tHome.init();
 
-			if (baseSettings.isAppActive("jasmarty")) {
+			if (wipfConfig.isAppActive("jasmarty")) {
 				jHome.jasmartyStart();
 			}
-			if (baseSettings.isAppActive("telegram")) {
+			if (wipfConfig.isAppActive("telegram")) {
 				tHome.telegramStart();
 			}
 
