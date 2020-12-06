@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,6 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
  *
  */
 @Path("/wipf")
+@RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped

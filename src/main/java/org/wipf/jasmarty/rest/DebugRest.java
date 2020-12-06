@@ -2,11 +2,14 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -22,6 +25,7 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
  *
  */
 @Path("/debug")
+@RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -108,5 +112,14 @@ public class DebugRest {
 			e.printStackTrace();
 		}
 		return Response.ok().build();
+	}
+
+	@GET
+	@PUT
+	@POST
+	@DELETE
+	@Path("/test")
+	public Response test() {
+		return Response.ok("{\"test\": \"ok\"}").build();
 	}
 }

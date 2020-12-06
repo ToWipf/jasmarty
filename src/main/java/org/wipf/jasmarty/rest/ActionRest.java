@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -20,6 +21,7 @@ import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
  *
  */
 @Path("/actions")
+@RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
 @ApplicationScoped

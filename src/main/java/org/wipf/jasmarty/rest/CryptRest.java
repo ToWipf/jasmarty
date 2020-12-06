@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -18,6 +19,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @Path("/crypt")
+@RolesAllowed("admin")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
