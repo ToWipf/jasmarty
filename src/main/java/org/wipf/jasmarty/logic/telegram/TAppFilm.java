@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.FilmEntry;
 import org.wipf.jasmarty.datatypes.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
  * @author wipf
@@ -24,6 +25,8 @@ public class TAppFilm {
 
 	@Inject
 	SqlLite sqlLite;
+	@Inject
+	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
 
@@ -58,7 +61,7 @@ public class TAppFilm {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return getAllAsJson().toString();
+			return wipf.jsonToStringAsList(getAllAsJson());
 		case "c":
 		case "count":
 			return countItems().toString();
@@ -68,6 +71,8 @@ public class TAppFilm {
 	}
 
 	/**
+	 * TODO Array hier?
+	 * 
 	 * @return
 	 */
 	public JSONArray getAllAsJson() {

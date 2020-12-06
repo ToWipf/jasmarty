@@ -102,8 +102,6 @@ public class TeleMenue {
 
 			case "doping":
 				return wipf.ping(t.getMessageStringPartLow(1)).toString();
-			case "shell":
-				return wipf.shell(t.getMessageFullWithoutFirstWord());
 
 			case "getip":
 				return wipf.getExternalIp();

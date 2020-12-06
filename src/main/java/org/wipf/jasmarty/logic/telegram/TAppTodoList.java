@@ -168,20 +168,6 @@ public class TAppTodoList {
 	public TodoEntry getById(int nId) {
 		TodoEntry tItem = new TodoEntry();
 
-		// TODO init?
-//		tItem.setActive("");
-//		tItem.setAntwort("");
-//		tItem.setChatID(-1);
-//		tItem.setData("");
-//		tItem.setEditBy("");
-//		tItem.setEditBy("");
-//		tItem.setId(-1);
-//		tItem.setMessage("");
-//		tItem.setMid(-1);
-//		tItem.setOptions("");
-//		tItem.setRemind("");
-//		tItem.setType("");
-
 		try {
 			String sQuery = "select * from todolist WHERE id IS ?;";
 			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);

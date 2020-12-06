@@ -190,7 +190,7 @@ public class TAppTicTacToe {
 			String sQuery = "SELECT * FROM tictactoe WHERE chatid = ?;";
 			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
 			statement.setInt(1, nChatid);
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				// Es gibt nur einen oder keinen Treffer
 				TicTacToe ttt = new TicTacToe(rs.getString("feld"));

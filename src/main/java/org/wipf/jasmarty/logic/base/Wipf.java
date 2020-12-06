@@ -106,7 +106,7 @@ public class Wipf {
 	 * @throws Exception
 	 */
 	public String httpRequestPOST(String sUrl) throws Exception {
-		URL url = new URL(sUrl);
+		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 2020)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod("POST");
@@ -136,12 +136,13 @@ public class Wipf {
 	 * @throws IOException
 	 */
 	public String httpRequestGET(String sUrl) throws IOException {
-		URL url = new URL(sUrl);
+		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 2020)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod("GET");
 		urlc.setRequestProperty("Accept", "*/*");
-		urlc.setConnectTimeout(5000); // 5 sek.
+		urlc.setConnectTimeout(5000); // 5 Sek.
+		urlc.setReadTimeout(60000); // 1 Min.
 
 		urlc.setAllowUserInteraction(false);
 
@@ -293,32 +294,6 @@ public class Wipf {
 	}
 
 	/**
-	 * @param sCommand
-	 */
-	public String shell(String sCommand) {
-		// TODO
-		return "todo";
-		/*
-		 * ProcessBuilder processBuilder = new ProcessBuilder(); // Windows //
-		 * processBuilder.command("cmd.exe", "/c", "ping -n 3 test.com"); // Linux
-		 * processBuilder.command(sCommand); StringBuilder sb = new StringBuilder();
-		 * 
-		 * try { Process process = processBuilder.start(); BufferedReader reader = new
-		 * BufferedReader(new InputStreamReader(process.getInputStream()));
-		 * 
-		 * String line; while ((line = reader.readLine()) != null) { //
-		 * System.out.println(line); sb.append(line); }
-		 * 
-		 * int exitCode = process.waitFor(); //
-		 * System.out.println("\nExited with error code : " + exitCode);
-		 * sb.append("\nExited with error code : " + exitCode);
-		 * 
-		 * } catch (IOException e) { e.printStackTrace(); } catch (InterruptedException
-		 * e) { e.printStackTrace(); } return sb.toString();
-		 */
-	}
-
-	/**
 	 * @param s
 	 * @return
 	 */
@@ -466,7 +441,23 @@ public class Wipf {
 			}
 			sb.append(entry.getKey() + ":" + entry.getValue());
 		}
+		return sb.toString();
+	}
 
+	/**
+	 * @param json
+	 * @return
+	 */
+	public String jsonToStringAsList(JSONArray json) {
+		StringBuilder sb = new StringBuilder();
+		List<Object> l = toList(json);
+
+		for (Object o : l) {
+			if (sb.length() > 1) {
+				sb.append("\n");
+			}
+			sb.append(o.toString());
+		}
 		return sb.toString();
 	}
 
