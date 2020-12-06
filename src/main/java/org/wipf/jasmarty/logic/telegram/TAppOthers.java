@@ -95,7 +95,8 @@ public class TAppOthers {
 	public String getWitz() {
 		try {
 			String sWitz;
-			sWitz = wipf.httpRequestGET("https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
+			sWitz = wipf.httpRequest(Wipf.httpRequestType.GET,
+					"https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
 			String s = sWitz.substring(41, sWitz.length() - 3).replaceAll("\\<.*?>", "");
 			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
 
@@ -113,7 +114,7 @@ public class TAppOthers {
 	 */
 	public String getOnline() {
 		try {
-			return wipf.httpRequestGET("http://192.168.2.11:9042");
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:9042");
 
 		} catch (IOException e) {
 			LOGGER.warn("getOnline: " + e);

@@ -33,6 +33,10 @@ import org.wipf.jasmarty.datatypes.Base32;
 @ApplicationScoped
 public class Wipf {
 
+	public enum httpRequestType {
+		GET, POST
+	};
+
 	/**
 	 * @param ms
 	 */
@@ -103,46 +107,20 @@ public class Wipf {
 	/**
 	 * @param sUrl
 	 * @return
-	 * @throws Exception
-	 */
-	public String httpRequestPOST(String sUrl) throws Exception {
-		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 2020)));
-
-		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-		urlc.setRequestMethod("POST");
-		urlc.setRequestProperty("Accept", "*/*");
-		urlc.setConnectTimeout(5000); // 5 Sek.
-		urlc.setReadTimeout(60000); // 1 Min.
-
-		// use post mode
-		urlc.setDoOutput(true);
-		urlc.setAllowUserInteraction(false);
-
-		// get result
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlc.getInputStream()));
-		String l = null;
-		StringBuilder sbOut = new StringBuilder();
-		while ((l = br.readLine()) != null) {
-			sbOut.append(l);
-			// DEBUG: System.out.print(l);
-		}
-		br.close();
-		return sbOut.toString();
-	}
-
-	/**
-	 * @param sUrl
-	 * @return
 	 * @throws IOException
 	 */
-	public String httpRequestGET(String sUrl) throws IOException {
-		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 2020)));
+	public String httpRequest(httpRequestType method, String sUrl) throws IOException {
+		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
-		urlc.setRequestMethod("GET");
+		urlc.setRequestMethod(method.name());
 		urlc.setRequestProperty("Accept", "*/*");
 		urlc.setConnectTimeout(5000); // 5 Sek.
 		urlc.setReadTimeout(60000); // 1 Min.
+
+		if (method != httpRequestType.GET) {
+			urlc.setDoOutput(true);
+		}
 
 		urlc.setAllowUserInteraction(false);
 
@@ -152,7 +130,6 @@ public class Wipf {
 		StringBuilder sbOut = new StringBuilder();
 		while ((l = br.readLine()) != null) {
 			sbOut.append(l);
-			// DEBUG: System.out.print(l);
 		}
 		br.close();
 		return sbOut.toString();

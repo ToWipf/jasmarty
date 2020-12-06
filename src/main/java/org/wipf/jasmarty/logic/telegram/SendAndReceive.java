@@ -11,9 +11,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Telegram;
-import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 
 /**
  * @author wipf
@@ -87,8 +87,8 @@ public class SendAndReceive {
 				sAntwort = "Leere Antwort";
 			}
 
-			String sResJson = wipf.httpRequestPOST("https://api.telegram.org/" + this.sBotKey + "/sendMessage?chat_id="
-					+ t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
+			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + this.sBotKey
+					+ "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
 
 			JSONObject jo = new JSONObject(sResJson);
 
@@ -109,9 +109,10 @@ public class SendAndReceive {
 		try {
 			String sJson = "";
 			if (this.nOffsetID == 0) {
-				sJson = wipf.httpRequestPOST("https://api.telegram.org/" + this.sBotKey + "/getUpdates");
+				sJson = wipf.httpRequest(Wipf.httpRequestType.POST,
+						"https://api.telegram.org/" + this.sBotKey + "/getUpdates");
 			} else {
-				sJson = wipf.httpRequestPOST(
+				sJson = wipf.httpRequest(Wipf.httpRequestType.POST,
 						"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID);
 			}
 

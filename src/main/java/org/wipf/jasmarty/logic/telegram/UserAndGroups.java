@@ -18,16 +18,8 @@ public class UserAndGroups {
 	 * @return
 	 */
 	public Boolean isAdminUser(Telegram t) {
-		return (t.getChatID() == 798200105 || t.getChatID() == 522467648 || t.getType().equals("website"));
-	}
-
-	/**
-	 * TODO DB
-	 * 
-	 * @return
-	 */
-	public String getAllUsersAsList() {
-		return "798200105, 522467648";
+		// Lf: || t.getChatID() == 522467648
+		return (t.getChatID() == 798200105 || t.getType().equals("website"));
 	}
 
 	/**
@@ -39,6 +31,9 @@ public class UserAndGroups {
 		return -387871959;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getAdminId() {
 		return 798200105;
 	}
