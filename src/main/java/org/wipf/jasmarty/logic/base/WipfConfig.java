@@ -29,9 +29,9 @@ public class WipfConfig {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);";
-		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 		String sUpdateUsers = "CREATE TABLE IF NOT EXISTS users (username TEXT UNIQUE, password TEXT, role TEXT, telegramid INTEGER);";
-		sqlLite.getNewDb().prepareStatement(sUpdateUsers).executeUpdate();
+		sqlLite.getDbAuth().prepareStatement(sUpdateUsers).executeUpdate();
 		createDefaultUser();
 	}
 
@@ -55,7 +55,7 @@ public class WipfConfig {
 	 */
 	public void addOrUpdateUser(WipfUser user) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO users (username, password, role, telegramid) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbAuth().prepareStatement(sUpdate);
 		statement.setString(1, user.getUsername());
 		statement.setString(2, user.getPassword());
 		statement.setString(3, user.getRole());
@@ -85,7 +85,7 @@ public class WipfConfig {
 	 */
 	private Boolean getAppActive(String sAppname) throws SQLException {
 		String sQuery = "SELECT val FROM config WHERE key IS ?;";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 		statement.setString(1, "app_" + sAppname);
 		ResultSet rs = statement.executeQuery();
 
@@ -103,7 +103,7 @@ public class WipfConfig {
 	 */
 	public void setAppStatus(String sAppname, boolean bStatus) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO config (key, val) VALUES (?,?)";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setString(1, "app_" + sAppname);
 		statement.setBoolean(2, bStatus);
 		statement.executeUpdate();
@@ -134,7 +134,7 @@ public class WipfConfig {
 	public String getConfParamString(String sConfParam) throws SQLException {
 		String sQuery = "SELECT val FROM config WHERE key IS ?;";
 
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 		statement.setString(1, sConfParam);
 		ResultSet rs = statement.executeQuery();
 		while (rs.next()) {
@@ -153,7 +153,7 @@ public class WipfConfig {
 	public Integer getConfParamInteger(String sConfParam) throws SQLException {
 		String sQuery = "SELECT val FROM config WHERE key IS ?;";
 
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 		statement.setString(1, sConfParam);
 		ResultSet rs = statement.executeQuery();
 		while (rs.next()) {
@@ -171,7 +171,7 @@ public class WipfConfig {
 	 */
 	public void setConfParam(String sConfParam, String sVal) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO config (key, val) VALUES (?,?)";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setString(1, sConfParam);
 		statement.setString(2, sVal);
 		statement.executeUpdate();
@@ -184,7 +184,7 @@ public class WipfConfig {
 	 */
 	public void setConfParam(String sConfParam, Integer nVal) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO config (key, val) VALUES (?,?)";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setString(1, sConfParam);
 		statement.setInt(2, nVal);
 		statement.executeUpdate();

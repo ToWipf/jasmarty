@@ -28,7 +28,7 @@ public class CustomChars {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS customChars (id INTEGER UNIQUE, name TEXT, position INTEGER, data TEXT);";
-		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class CustomChars {
 		CustomChar cc = new CustomChar();
 		try {
 			String sQuery = "SELECT * FROM customChars WHERE id = ?;";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
 
@@ -63,7 +63,7 @@ public class CustomChars {
 	public void saveToDB(CustomChar cc) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO customChars (id, name, position, data) VALUES (?,?,?,?)";
 
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, cc.getId());
 		statement.setString(2, cc.getName());
 		statement.setInt(3, cc.getPosition());

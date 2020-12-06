@@ -29,7 +29,7 @@ public class TAppMotd {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS telemotd (id integer primary key autoincrement, text TEXT, editby TEXT, date INTEGER);";
-		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -40,7 +40,7 @@ public class TAppMotd {
 	public String delMotd(Telegram t) {
 		try {
 			String sUpdate = "DELETE FROM telemotd WHERE id = ?";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 			statement.setInt(1, t.getMessageIntPart(1));
 
 			statement.executeUpdate();
@@ -57,7 +57,7 @@ public class TAppMotd {
 	public String addMotd(Telegram t) {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO telemotd (text, editby, date) VALUES (?,?,?)";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 			statement.setString(1, t.getMessageFullWithoutFirstWord());
 			statement.setString(2, t.getFrom());
 			statement.setInt(3, t.getDate());
@@ -75,7 +75,7 @@ public class TAppMotd {
 		try {
 			String sQuery = ("SELECT COUNT(*) FROM telemotd;");
 
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				return rs.getString("COUNT(*)") + " Motds in der DB";
 			}
@@ -92,7 +92,7 @@ public class TAppMotd {
 	public String getRndMotd() {
 		try {
 			String sQuery = "select * from telemotd ORDER BY RANDOM() LIMIT 1";
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				// Es gibt nur einen Eintrag
 				return rs.getString("text");
@@ -115,7 +115,7 @@ public class TAppMotd {
 		try {
 			StringBuilder sb = new StringBuilder();
 			String sQuery = "select * from telemotd;";
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("text") + "\n");

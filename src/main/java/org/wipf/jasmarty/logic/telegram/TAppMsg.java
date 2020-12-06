@@ -37,7 +37,7 @@ public class TAppMsg {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS telemsg (id integer primary key autoincrement, request TEXT, response TEXT, options TEXT, editby TEXT, date INTEGER);";
-		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class TAppMsg {
 			StringBuilder sb = new StringBuilder();
 
 			String sQuery = ("select * from telemsg;");
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				sb.append(rs.getString("id") + "\t");
 				sb.append(rs.getString("request") + "\n");
@@ -72,7 +72,7 @@ public class TAppMsg {
 		List<Telegram> tList = new ArrayList<>();
 		try {
 			String sQuery = "SELECT * FROM telemsg";
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -122,7 +122,7 @@ public class TAppMsg {
 
 			String sQuery = "select * from telemsg where request = ?;";
 
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			statement.setString(1, wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0)));
 			ResultSet rs = statement.executeQuery();
 
@@ -154,7 +154,7 @@ public class TAppMsg {
 	public String delMsg(Telegram t) {
 		try {
 			String sUpdate = "DELETE FROM telemsg WHERE id = ?";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 			statement.setInt(1, t.getMessageIntPart(1));
 			statement.executeUpdate();
 
@@ -173,7 +173,7 @@ public class TAppMsg {
 	public String countMsg() {
 		try {
 			String sQuery = "SELECT COUNT(*) FROM telemsg;";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				return rs.getString("COUNT(*)") + " Antworten in der DB";
@@ -192,7 +192,7 @@ public class TAppMsg {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES (?,?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 			statement.setString(1, t.getMessageStringPartLow(1));
 			statement.setString(2, t.getMessageFullWithoutSecondWord());
 			statement.setString(3, null);

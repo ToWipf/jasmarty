@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import io.agroal.api.AgroalDataSource;
+import io.quarkus.agroal.DataSource;
 
 /**
  * @author wipf
@@ -16,19 +17,34 @@ import io.agroal.api.AgroalDataSource;
 public class SqlLite {
 
 	@Inject
-	AgroalDataSource sqliteDb;
+	AgroalDataSource sqliteDbAuth;
 
-	private static Connection c = null;
+	@Inject
+	@DataSource("jasmarty")
+	AgroalDataSource sqliteDbJasmarty;
+
+	private static Connection cjasmarty = null;
+	private static Connection cauth = null;
 
 	/**
 	 * @return
 	 * @throws SQLException
 	 */
-	public Connection getNewDb() throws SQLException {
-		if (c == null) {
-			c = sqliteDb.getConnection();
+	public Connection getDbJasmarty() throws SQLException {
+		if (cjasmarty == null) {
+			cjasmarty = sqliteDbJasmarty.getConnection();
 		}
-		return c;
+		return cjasmarty;
 	}
 
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public Connection getDbAuth() throws SQLException {
+		if (cauth == null) {
+			cauth = sqliteDbAuth.getConnection();
+		}
+		return cauth;
+	}
 }

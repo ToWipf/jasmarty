@@ -32,7 +32,7 @@ public class TeleLog {
 	public void initDB() {
 		try {
 			String sUpdate = "CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);";
-			sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+			sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 		} catch (Exception e) {
 			LOGGER.warn("initDB  " + e);
 		}
@@ -50,7 +50,7 @@ public class TeleLog {
 		try {
 			String sUpdate = ("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type) VALUES (?,?,?,?,?,?,?)");
 
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 			statement.setInt(1, t.getMid());
 			statement.setString(2, t.getMessage().replaceAll("'", "_"));
 			statement.setString(3, t.getAntwort().replaceAll("'", "_"));
@@ -82,7 +82,7 @@ public class TeleLog {
 			int n = 0;
 
 			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"; // DESC
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
@@ -121,7 +121,7 @@ public class TeleLog {
 			int n = 0;
 
 			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 ORDER BY msgdate ASC";
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				n++;
@@ -153,7 +153,7 @@ public class TeleLog {
 	public String count() {
 		try {
 			String sQuery = "SELECT COUNT(*) FROM telegramlog;";
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				return rs.getString("COUNT(*)") + " Nachrichten gesendet";
 			}
@@ -184,7 +184,7 @@ public class TeleLog {
 
 		try {
 			String sQuery = "SELECT * FROM telegramlog " + sSQLFilter;
-			ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				Telegram t = new Telegram();

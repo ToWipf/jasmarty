@@ -35,7 +35,7 @@ public class PageVerwaltung {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);";
-		sqlLite.getNewDb().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class PageVerwaltung {
 	 */
 	public void pageToDb(LcdPage page) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO pages (id, name, page, options) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, page.getId());
 		statement.setString(2, page.getName());
 		statement.setString(3, page.getPageAsDBString());
@@ -104,7 +104,7 @@ public class PageVerwaltung {
 	 */
 	public void delPageFromDb(Integer nId) throws SQLException {
 		String sUpdate = "DELETE FROM pages WHERE id = ?";
-		PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
@@ -118,7 +118,7 @@ public class PageVerwaltung {
 		try {
 
 			String sQuery = "SELECT * FROM pages WHERE id = ?;";
-			PreparedStatement statement = sqlLite.getNewDb().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
 
@@ -191,7 +191,7 @@ public class PageVerwaltung {
 		JSONArray ja = new JSONArray();
 
 		String sQuery = "SELECT id, name FROM pages";
-		ResultSet rs = sqlLite.getNewDb().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			JSONObject entry = new JSONObject();
 			entry.put("id", rs.getInt("id"));
