@@ -6,6 +6,7 @@ import { TodoEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Component({
   selector: 'app-todolist',
@@ -27,6 +28,7 @@ export class TodolistComponent implements OnInit {
   public bLater: boolean = true;
   public bDeleteEnable: boolean = false;
   public bShowWarning: boolean = false;
+  public sFilter: String = "";
 
   ngOnInit() {
     this.load();
@@ -56,6 +58,10 @@ export class TodolistComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.nextId = this.getNextId();
     });
+  }
+
+  public applyFilter() {
+    this.dataSource.filter = this.sFilter.trim();
   }
 
   public newItem(): void {

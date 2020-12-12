@@ -3,7 +3,6 @@ package org.wipf.jasmarty.logic.telegram;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,6 +25,10 @@ public class TeleLog {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Log");
 
+	public enum sqlFilterSelect {
+		ALL, EXTERN
+	};
+
 	/**
 	 * 
 	 */
@@ -41,7 +44,7 @@ public class TeleLog {
 	/**
 	 * @param t
 	 */
-	public void saveTelegramToLog(Telegram t) {
+	public void saveToLog(Telegram t) {
 		if (t.getMid() == 0 && t.getType() == null) {
 			t.setMid(-1);
 			t.setType("system");
@@ -61,89 +64,12 @@ public class TeleLog {
 			statement.executeUpdate();
 
 		} catch (Exception e) {
+			LOGGER.warn("____Log failed:");
 			LOGGER.warn("id  : " + t.getMid());
 			LOGGER.warn("msg : " + t.getMessage());
 			LOGGER.warn("antw: " + t.getAntwort());
 			LOGGER.warn("from: " + t.getFrom());
 			LOGGER.warn("saveTelegramToLog " + e);
-		}
-	}
-
-	/**
-	 * TODO Löschen
-	 * 
-	 * @return log
-	 */
-	@Deprecated
-	public String genTelegramLog(String sFilter) {
-		// TODO filter ins sql!
-		try {
-			StringBuilder slog = new StringBuilder();
-			int n = 0;
-
-			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' ORDER BY msgdate ASC"; // DESC
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
-			ResultSet rs = statement.executeQuery();
-
-			while (rs.next()) {
-				n++;
-				Date date = new Date(rs.getLong("msgdate") * 1000);
-				StringBuilder sb = new StringBuilder();
-
-				if (sFilter == null || !rs.getString("msgfrom").contains(sFilter)) {
-					sb.append(n + ":\n");
-					sb.append("msgid:  \t" + rs.getString("msgid") + "\n");
-					sb.append("msg in: \t" + rs.getString("msg") + "\n");
-					sb.append("msg out:\t" + rs.getString("antw") + "\n");
-					sb.append("chatid: \t" + rs.getString("chatid") + "\n");
-					sb.append("msgfrom:\t" + rs.getString("msgfrom") + "\n");
-					sb.append("msgdate:\t" + date + "\n");
-					sb.append("type:   \t" + rs.getString("type") + "\n");
-					sb.append("----------------\n\n");
-					slog.insert(0, sb);
-				}
-			}
-			return slog.toString();
-		} catch (Exception e) {
-			LOGGER.warn("genTelegram" + e);
-			return "FAIL";
-		}
-	}
-
-	/**
-	 * TODO
-	 * 
-	 * @return
-	 */
-	public String genTelegramLogUnknown() {
-		try {
-			StringBuilder slog = new StringBuilder();
-			int n = 0;
-
-			String sQuery = "SELECT * FROM telegramlog WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT 79820010 ORDER BY msgdate ASC";
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
-
-			while (rs.next()) {
-				n++;
-				Date date = new Date(rs.getLong("msgdate") * 1000);
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(n + ":\n");
-				sb.append("msgid:  \t" + rs.getString("msgid") + "\n");
-				sb.append("msg in: \t" + rs.getString("msg") + "\n");
-				sb.append("msg out:\t" + rs.getString("antw") + "\n");
-				sb.append("chatid: \t" + rs.getString("chatid") + "\n");
-				sb.append("msgfrom:\t" + rs.getString("msgfrom") + "\n");
-				sb.append("msgdate:\t" + date + "\n");
-				sb.append("type:   \t" + rs.getString("type") + "\n");
-				sb.append("----------------\n\n");
-				slog.insert(0, sb);
-
-			}
-			return slog.toString();
-		} catch (Exception e) {
-			LOGGER.warn("genTelegram" + e);
-			return "FAIL";
 		}
 	}
 
@@ -168,13 +94,13 @@ public class TeleLog {
 	 * @param sSQLFilter
 	 * @return
 	 */
-	public List<Telegram> getTelegramLog(String sSQLFilterSelect) {
+	public List<Telegram> getTelegramLog(sqlFilterSelect filter) {
 		String sSQLFilter = "";
-		switch (sSQLFilterSelect) {
-		case "full":
+		switch (filter) {
+		case ALL:
 			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system'";
 			break;
-		case "extern":
+		case EXTERN:
 			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT '798200105' AND chatid IS NOT '-385659721' AND chatid IS NOT '522467648' AND chatid IS NOT '-387871959'";
 		default:
 			break;
@@ -211,7 +137,7 @@ public class TeleLog {
 	public JSONArray getTelegramLogAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getTelegramLog("full")) {
+			for (Telegram t : getTelegramLog(sqlFilterSelect.ALL)) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {
@@ -226,7 +152,7 @@ public class TeleLog {
 	public JSONArray getTelegramLogAsJsonEXTERN() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (Telegram t : getTelegramLog("extern")) {
+			for (Telegram t : getTelegramLog(sqlFilterSelect.EXTERN)) {
 				ja.put(t.toJson());
 			}
 		} catch (Exception e) {

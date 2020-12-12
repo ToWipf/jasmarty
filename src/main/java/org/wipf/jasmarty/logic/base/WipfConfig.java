@@ -43,7 +43,7 @@ public class WipfConfig {
 		// TODO get adminuser -> wenn da kein update
 		WipfUser wu = new WipfUser();
 		wu.setUsername("admin");
-		wu.setPassword("admin");
+		wu.setPassword("jadmin");
 		wu.setRole("admin");
 		wu.setTelegramId(0);
 		addOrUpdateUser(wu);

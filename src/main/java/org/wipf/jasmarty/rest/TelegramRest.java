@@ -94,29 +94,6 @@ public class TelegramRest {
 	}
 
 	@GET
-	@Path("/telelog")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response telelog() {
-		return Response.ok(tlog.genTelegramLog(null)).build();
-	}
-
-	@GET
-	@Path("/telelogtf_old")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response telelogtfold() {
-		// TODO id form db
-		return Response.ok(tlog.genTelegramLog("798200105")).build();
-	}
-
-	@GET
-	@Path("/telelogtf")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response telelogtf() {
-		// TODO id form db
-		return Response.ok(tlog.genTelegramLogUnknown()).build();
-	}
-
-	@GET
 	@Path("/log")
 	public Response log() {
 		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();

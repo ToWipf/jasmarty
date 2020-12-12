@@ -65,7 +65,6 @@ public class TAppMsg {
 	}
 
 	/**
-	 * @param sSQLFilter
 	 * @return
 	 */
 	public List<Telegram> getAllMsgAsList() {

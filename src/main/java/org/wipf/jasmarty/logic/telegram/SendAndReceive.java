@@ -80,7 +80,7 @@ public class SendAndReceive {
 	 */
 	@Metered
 	public void sendToTelegram(Telegram t) {
-		tLog.saveTelegramToLog(t);
+		tLog.saveToLog(t);
 		try {
 			String sAntwort = t.getAntwort();
 			if (sAntwort == null || sAntwort.equals("")) {
