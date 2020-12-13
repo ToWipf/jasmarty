@@ -24,6 +24,8 @@ public class MainHome {
 	@Inject
 	WipfConfig wipfConfig;
 	@Inject
+	WipfUserVW wipfUserVW;
+	@Inject
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
@@ -45,8 +47,9 @@ public class MainHome {
 	void onStart(@Observes StartupEvent ev) {
 		try {
 			LOGGER.info("Starte " + VERSION);
-			LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 
+			wipfUserVW.initDB();
 			wipfConfig.initDB();
 			wipfConfig.checkAppWorkId();
 

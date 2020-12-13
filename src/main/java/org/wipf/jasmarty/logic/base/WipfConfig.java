@@ -9,7 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.WipfUser;
 
 /**
  * @author wipf
@@ -21,7 +20,7 @@ public class WipfConfig {
 	@Inject
 	SqlLite sqlLite;
 
-	private static final Logger LOGGER = Logger.getLogger("BaseSettings");
+	private static final Logger LOGGER = Logger.getLogger("WipfConfig");
 
 	/**
 	 * @throws SQLException
@@ -30,38 +29,6 @@ public class WipfConfig {
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS config (key TEXT UNIQUE, val TEXT);";
 		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
-		String sUpdateUsers = "CREATE TABLE IF NOT EXISTS users (username TEXT UNIQUE, password TEXT, role TEXT, telegramid INTEGER);";
-		sqlLite.getDbAuth().prepareStatement(sUpdateUsers).executeUpdate();
-		createDefaultUser();
-	}
-
-	/**
-	 * @throws SQLException
-	 * 
-	 */
-	public void createDefaultUser() throws SQLException {
-		// TODO get adminuser -> wenn da kein update
-		WipfUser wu = new WipfUser();
-		wu.setUsername("admin");
-		wu.setPassword("jadmin");
-		wu.setRole("admin");
-		wu.setTelegramId(0);
-		addOrUpdateUser(wu);
-	}
-
-	/**
-	 * @param user
-	 * @throws SQLException
-	 */
-	public void addOrUpdateUser(WipfUser user) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO users (username, password, role, telegramid) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbAuth().prepareStatement(sUpdate);
-		statement.setString(1, user.getUsername());
-		statement.setString(2, user.getPassword());
-		statement.setString(3, user.getRole());
-		statement.setInt(4, user.getTelegramId());
-		statement.executeUpdate();
-
 	}
 
 	/**
