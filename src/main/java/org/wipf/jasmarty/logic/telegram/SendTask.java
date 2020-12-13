@@ -25,6 +25,7 @@ public class SendTask {
 	/**
 	 * 
 	 */
+	// TODO @Scheduled(cron = "0 15 10 * * ?")
 	public void startTelegramTask() {
 		if (!bTaskRuns) {
 			LOGGER.info("Starte Telegram Task");

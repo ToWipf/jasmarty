@@ -61,7 +61,7 @@ import { CryptComponent } from './components/crypt/crypt.component';
 import { TelegramChatComponent } from './components/telegramChat/telegramChat.component';
 import { TelegramMsgComponent } from './components/telegramMsg/telegramMsg.component';
 import { TelegramLogComponent } from './components/telegramLog/telegramLog.component';
-import { TodolistComponent, TodolistComponentDialog } from './components/todolist/todolist.component';
+import { TodolistComponent, TodolistComponentDialogComponent } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 
 @NgModule({
@@ -78,7 +78,7 @@ import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.c
     FooterComponent,
     FooterComponentSetServerDialog,
     TodolistComponent,
-    TodolistComponentDialog,
+    TodolistComponentDialogComponent,
     FilmeComponent,
     FilmeComponentDialog,
     CryptComponent,

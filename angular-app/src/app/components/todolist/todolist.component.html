@@ -28,9 +28,9 @@
                 Fertig:
                 <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bDone">
             </div>
-            <div class="box">
+            <!-- <div class="box">
                 <button class="btn btn-default" (click)="load()">Neu laden</button>
-            </div>
+            </div> -->
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
             </div>
@@ -78,5 +78,6 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </perfect-scrollbar>
+        Treffer: {{toarry.length}}
     </div>
 </div>

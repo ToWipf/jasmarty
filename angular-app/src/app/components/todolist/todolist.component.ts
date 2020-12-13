@@ -6,7 +6,6 @@ import { TodoEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 
 @Component({
   selector: 'app-todolist',
@@ -57,6 +56,7 @@ export class TodolistComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
       this.nextId = this.getNextId();
+      this.applyFilter();
     });
   }
 
@@ -78,6 +78,7 @@ export class TodolistComponent implements OnInit {
 
   public deleteItem(item: TodoEntry): void {
     // TODO: ADD nachfragen dialog
+    this.bDeleteEnable = false;
     this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
       this.load();
     });
@@ -96,16 +97,16 @@ export class TodolistComponent implements OnInit {
   private saveTodo(item: TodoEntry): void {
     this.http.post(this.rest.gethost() + 'todolist/saveTodo', item).subscribe((resdata: any) => {
       this.load();
-      if (resdata == null) {
+      if (!resdata) {
         this.bShowWarning = true;
       }
     });
   }
 
   public openDialog(item: TodoEntry): void {
-    let edititem: TodoEntry = this.serviceWipf.deepCopy(item);
+    const edititem: TodoEntry = this.serviceWipf.deepCopy(item);
 
-    const dialogRef = this.dialog.open(TodolistComponentDialog, {
+    const dialogRef = this.dialog.open(TodolistComponentDialogComponent, {
       width: '350px',
       height: '350px',
       data: edititem,
@@ -125,8 +126,8 @@ export class TodolistComponent implements OnInit {
   selector: 'app-todolist-dialog',
   templateUrl: './todolist.dialog.html',
 })
-export class TodolistComponentDialog {
-  constructor(public dialogRef: MatDialogRef<TodolistComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: TodoEntry) { }
+export class TodolistComponentDialogComponent {
+  constructor(public dialogRef: MatDialogRef<TodolistComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TodoEntry) { }
 
   onNoClick(): void {
     this.dialogRef.close();
