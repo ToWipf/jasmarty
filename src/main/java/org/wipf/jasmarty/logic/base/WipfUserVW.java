@@ -59,7 +59,6 @@ public class WipfUserVW {
 				addOrUpdateUser(wu, true);
 			}
 		}
-
 	}
 
 	/**
@@ -81,7 +80,6 @@ public class WipfUserVW {
 		statement.setString(3, user.getRole());
 		statement.setInt(4, user.getTelegramId());
 		statement.executeUpdate();
-
 	}
 
 	/**

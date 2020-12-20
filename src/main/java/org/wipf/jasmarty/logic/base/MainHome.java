@@ -31,7 +31,7 @@ public class MainHome {
 	TelegramHome tHome;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "0.95";
+	public static final String VERSION = "0.95a";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -77,7 +77,7 @@ public class MainHome {
 	void onStop(@Observes ShutdownEvent ev) {
 		LOGGER.info("Stoppe");
 
-		// Alles beenden -> keine db zum fragen vorhanden
+		// Alles beenden -> keine db zum fragen vorhanden // TODO evtl jetzt möglich
 		jHome.jasmartyStop();
 		tHome.telegramStop();
 

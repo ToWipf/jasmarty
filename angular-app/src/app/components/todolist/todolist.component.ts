@@ -55,6 +55,7 @@ export class TodolistComponent implements OnInit {
 
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
       this.nextId = this.getNextId();
       this.applyFilter();
     });
