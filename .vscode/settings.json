@@ -2,5 +2,7 @@
     "files.exclude": {
         "**/node_modules": true
     },
-    "editor.minimap.maxColumn": 180
+    "editor.minimap.maxColumn": 180,
+    "editor.fontSize": 12,
+    "terminal.integrated.fontSize": 12,
 }

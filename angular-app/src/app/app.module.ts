@@ -63,6 +63,7 @@ import { TelegramMsgComponent } from './components/telegramMsg/telegramMsg.compo
 import { TelegramLogComponent } from './components/telegramLog/telegramLog.component';
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
+import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/wipfUserVw/wipfUserVw.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,9 @@ import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.c
     CryptComponent,
     TelegramChatComponent,
     TelegramMsgComponent,
-    TelegramLogComponent
+    TelegramLogComponent,
+    WipfUserVwComponent,
+    WipfUserVWComponentDialogComponent,
   ],
   imports: [
     BrowserAnimationsModule,

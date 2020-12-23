@@ -9,6 +9,7 @@
                     <li (click)="selectSite('todolist')">Todo List</li>
                     <li (click)="selectSite('filme')">Filme</li>
                     <li (click)="selectSite('crypt')">Crypt</li>
+                    <li (click)="selectSite('wipfuservw')">Wipf User</li>
                 </ul>
 
                 <div class="titlemenue">LCD</div>
@@ -76,6 +77,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='tmsg'">
                     <app-telegram-msg></app-telegram-msg>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='wipfuservw'">
+                    <app-wipfuservw></app-wipfuservw>
                 </ng-container>
             </div>
         </div>
