@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.datatypes;
 
+import org.json.JSONObject;
+
 /**
  * @author wipf
  *
@@ -9,6 +11,31 @@ public class WipfUser {
 	private String sPassword;
 	private String sRole;
 	private Integer nTelegramId;
+
+	/**
+	 * @return
+	 */
+	public JSONObject toJson() {
+		JSONObject jo = new JSONObject();
+		jo.put("username", this.sUsername);
+		jo.put("password", this.sPassword);
+		jo.put("role", this.sRole);
+		jo.put("telegramid", this.nTelegramId);
+		return jo;
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public WipfUser setByJson(String sJson) {
+		JSONObject jo = new JSONObject(sJson);
+		setUsername(jo.getString("username"));
+		setPassword(jo.getString("password"));
+		setRole(jo.getString("role"));
+		setTelegramId(jo.getInt("telegramid"));
+		return this;
+	}
 
 	/**
 	 * @return

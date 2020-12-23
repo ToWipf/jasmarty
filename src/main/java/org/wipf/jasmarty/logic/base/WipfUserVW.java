@@ -9,10 +9,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
 /**
  * @author wipf
+ *
+ */
+/**
+ * @author Wipf
  *
  */
 @ApplicationScoped
@@ -63,6 +68,7 @@ public class WipfUserVW {
 
 	/**
 	 * @param user
+	 * @param bAuthDb
 	 * @throws SQLException
 	 */
 	public void addOrUpdateUser(WipfUser user, Boolean bAuthDb) throws SQLException {
@@ -83,6 +89,43 @@ public class WipfUserVW {
 	}
 
 	/**
+	 * @param sJson
+	 * @return
+	 */
+	public void addOrUpdateUser(String sJson) {
+		try {
+			addOrUpdateUser(new WipfUser().setByJson(sJson), false);
+		} catch (SQLException e) {
+			LOGGER.warn("addOrUpdateUser " + e);
+		}
+	}
+
+	/**
+	 * @param bAuthDb
+	 * @return
+	 */
+	public JSONArray getAllUsersAsJson(Boolean bAuthDb) {
+		try {
+			LinkedList<WipfUser> lwu = getAllUsers(bAuthDb);
+			JSONArray ja = new JSONArray();
+			for (WipfUser wu : lwu) {
+				ja.put(wu.toJson());
+			}
+			return ja;
+
+		} catch (SQLException e) {
+			LOGGER.warn("getAllUserAsJson " + e);
+			return null;
+		}
+
+	}
+
+	/**
+	 * true = AuthDB
+	 * 
+	 * false = jasmartyDB
+	 * 
+	 * @param bAuthDb
 	 * @return
 	 * @throws SQLException
 	 */
@@ -121,4 +164,5 @@ public class WipfUserVW {
 		addOrUpdateUser(wu, true);
 		LOGGER.info("Standarduser admin erstellt");
 	}
+
 }
