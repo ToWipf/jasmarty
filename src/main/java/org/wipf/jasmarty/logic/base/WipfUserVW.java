@@ -16,10 +16,6 @@ import org.wipf.jasmarty.datatypes.WipfUser;
  * @author wipf
  *
  */
-/**
- * @author Wipf
- *
- */
 @ApplicationScoped
 public class WipfUserVW {
 
