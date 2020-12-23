@@ -29,13 +29,12 @@ public class WipfUserVwRest {
 
 	@GET
 	@Path("/getAll")
-	public Response ports() {
+	public Response getAll() {
 		return Response.ok(wipfUserVW.getAllUsersAsJson(false).toString()).build();
 	}
 
 	@POST
 	@Path("/createOrUpdate")
-	@RolesAllowed("admin")
 	public Response createOrUpdate(String sJson) {
 		wipfUserVW.addOrUpdateUser(sJson);
 		return Response.ok().build();

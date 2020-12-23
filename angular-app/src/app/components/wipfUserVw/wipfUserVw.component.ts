@@ -45,8 +45,8 @@ export class WipfUserVwComponent implements OnInit {
     this.openDialog(td);
   }
 
-  private saveTodo(item: WipfUser): void {
-    this.http.post(this.rest.gethost() + 'wipfuservw/saveTodo', item).subscribe((resdata: any) => {
+  private saveWipfUser(item: WipfUser): void {
+    this.http.post(this.rest.gethost() + 'wipfuservw/createOrUpdate', item).subscribe((resdata: any) => {
       this.load();
     });
   }
@@ -62,7 +62,7 @@ export class WipfUserVwComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: WipfUser) => {
       if (result) {
-        this.saveTodo(result);
+        this.saveWipfUser(result);
       }
     });
   }
@@ -70,7 +70,7 @@ export class WipfUserVwComponent implements OnInit {
 
 @Component({
   selector: 'app-wipfuservw-dialog',
-  templateUrl: './wipfuservw.dialog.html',
+  templateUrl: './wipfUserVw.dialog.html',
 })
 export class WipfUserVWComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<WipfUserVWComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: WipfUser) { }
