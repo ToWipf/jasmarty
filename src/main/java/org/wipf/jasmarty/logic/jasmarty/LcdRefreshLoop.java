@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty.lcd2004;
+package org.wipf.jasmarty.logic.jasmarty;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -7,19 +7,23 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
 
 /**
  * @author wipf
  *
  */
 @ApplicationScoped
-public class Lcd2004RefreshLoop {
+public class LcdRefreshLoop {
 
 	@Inject
 	PageConverter pageConverter;
 	@Inject
 	Lcd2004 lcd2004;
+	@Inject
+	Lcd12864 lcd12864;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 
@@ -76,6 +80,7 @@ public class Lcd2004RefreshLoop {
 
 				while (bLoopActive) {
 					try {
+						// TODO umschalten zwischen 2004 und 12864
 						pageConverter.refreshCache();
 						if (lcd2004.isLcdOk() && !lcd2004.isbPauseWriteToLCD()) {
 							actionVerwaltung.doActionByButtonNr(lcd2004.readButton());

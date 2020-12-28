@@ -43,8 +43,8 @@ public class LcdConnect {
 	 */
 	public void ledOn() {
 		this.bLed = true;
-		writeAscii(254);
-		writeAscii(66);
+		write(254);
+		write(66);
 	}
 
 	/**
@@ -52,8 +52,8 @@ public class LcdConnect {
 	 */
 	public void ledOff() {
 		this.bLed = false;
-		writeAscii(254);
-		writeAscii(70);
+		write(254);
+		write(70);
 	}
 
 	/**
@@ -143,8 +143,15 @@ public class LcdConnect {
 	 * @param c
 	 * @return
 	 */
-	public void writeChar(char c) {
-		writeAscii((int) c);
+	public void write(char c) {
+		write((int) c);
+	}
+
+	/**
+	 * @param b
+	 */
+	public void write(byte b) {
+		write((int) b);
 	}
 
 	/**
@@ -152,7 +159,7 @@ public class LcdConnect {
 	 * @return
 	 */
 	@Metered
-	public void writeAscii(Integer n) {
+	public void write(Integer n) {
 		try {
 			sp.getOutputStream().write(n.byteValue());
 			sp.getOutputStream().flush();
@@ -195,24 +202,24 @@ public class LcdConnect {
 	 * Achtung: Nur mit Arduino Pro-Micro möglich
 	 */
 	public void commandVolUp() {
-		writeAscii(254);
-		writeAscii(40);
+		write(254);
+		write(40);
 	}
 
 	/**
 	 * Achtung: Nur mit Arduino Pro-Micro möglich
 	 */
 	public void commandVolDown() {
-		writeAscii(254);
-		writeAscii(41);
+		write(254);
+		write(41);
 	}
 
 	/**
 	 * Achtung: Nur mit Arduino Pro-Micro möglich
 	 */
 	public void commandVolMute() {
-		writeAscii(254);
-		writeAscii(42);
+		write(254);
+		write(42);
 	}
 
 }

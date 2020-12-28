@@ -72,7 +72,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd/writeAscii/{int}")
 	public Response writeAscii(@PathParam("int") Integer n) {
-		lcdConnect.writeAscii(n);
+		lcdConnect.write(n);
 		return Response.ok().build();
 	}
 

@@ -23,6 +23,7 @@ public class Lcd2004 {
 	 */
 	public Boolean start2004LCD() {
 		// Cache vorbereiten
+		LOGGER.info("Starte 2004 LCD");
 		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());
 		return lcdConnect.startPort();
 	}
@@ -58,8 +59,8 @@ public class Lcd2004 {
 	public void clearScreen() {
 		lcache.clearCacheFull();
 		if (lcdConnect.isLcdOk()) {
-			lcdConnect.writeAscii(254);
-			lcdConnect.writeAscii(88);
+			lcdConnect.write(254);
+			lcdConnect.write(88);
 		}
 	}
 
@@ -75,7 +76,7 @@ public class Lcd2004 {
 						setCursor(x, y);
 						for (int writePosX = x; writePosX < lcache.getWidth(); writePosX++) {
 							char c = lcache.getCacheSoll(writePosX, y);
-							lcdConnect.writeChar(c);
+							lcdConnect.write(c);
 							lcache.setToCacheIst(writePosX, y, c);
 						}
 						break;
@@ -91,11 +92,11 @@ public class Lcd2004 {
 	 * @param y
 	 */
 	public void setCursor(int x, int y) {
-		lcdConnect.writeAscii(254);
-		lcdConnect.writeAscii(71);
+		lcdConnect.write(254);
+		lcdConnect.write(71);
 		// Arduino 0/0 ist 1/1
-		lcdConnect.writeAscii(x + 1);
-		lcdConnect.writeAscii(y + 1);
+		lcdConnect.write(x + 1);
+		lcdConnect.write(y + 1);
 	}
 
 	/**
@@ -103,12 +104,12 @@ public class Lcd2004 {
 	 * @param nIndex
 	 */
 	public void writeCustomChar(CustomChar cc) {
-		lcdConnect.writeAscii(254);
-		lcdConnect.writeAscii(21);
+		lcdConnect.write(254);
+		lcdConnect.write(21);
 		for (int i = 0; i < 8; i++) {
-			lcdConnect.writeAscii((int) cc.getBytesForLine(i));
+			lcdConnect.write((int) cc.getBytesForLine(i));
 		}
-		lcdConnect.writeAscii(cc.getPosition());
+		lcdConnect.write(cc.getPosition());
 	}
 
 	/**

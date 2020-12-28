@@ -10,7 +10,6 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CharPictures;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004RefreshLoop;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
 
 /**
@@ -27,7 +26,7 @@ public class JasmartyHome {
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 	@Inject
-	Lcd2004RefreshLoop lcd2004refreshLoop;
+	LcdRefreshLoop lcdRefreshLoop;
 	@Inject
 	Wipf wipf;
 	@Inject
@@ -74,7 +73,7 @@ public class JasmartyHome {
 		// charPictures.testChars();
 
 		pageVerwaltung.writeStartPage();
-		lcd2004refreshLoop.start();
+		lcdRefreshLoop.start();
 
 		LOGGER.info("Gestartet");
 	}
@@ -85,10 +84,10 @@ public class JasmartyHome {
 	public void jasmartyStop() {
 		LOGGER.info("Stoppe");
 		if (lcdConnect.isLcdOk()) {
-			lcd2004refreshLoop.stop();
+			lcdRefreshLoop.stop();
 			wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
 			pageVerwaltung.writeExitPage();
-			lcd2004refreshLoop.doRefreshCacheManuell();
+			lcdRefreshLoop.doRefreshCacheManuell();
 			lcd2004.refreshDisplay();
 			lcdConnect.closeSerialLcdPort();
 		}
