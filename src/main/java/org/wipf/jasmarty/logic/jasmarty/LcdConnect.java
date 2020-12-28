@@ -8,8 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.CustomChar;
-import org.wipf.jasmarty.datatypes.LcdCache;
 import org.wipf.jasmarty.datatypes.LcdConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -24,19 +22,10 @@ public class LcdConnect {
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty Connect");
 
 	private SerialPort sp;
-	private LcdCache lcache = new LcdCache(0, 0);
-	private LcdConfig lconf = new LcdConfig();
-	private boolean bLcdIsOk = false;
-	private boolean bLed = false;
-	private boolean bPauseWriteToLCD = false;
 
-	public void test12864() {
-		LOGGER.info("START");
-		for (int i = 0; i < 1024; i++) {
-			writeAscii(i);
-		}
-		LOGGER.info("ENDE");
-	}
+	private LcdConfig lconf = new LcdConfig();
+	private boolean bLed = false;
+	private boolean bLcdIsOk = false;
 
 	/**
 	 * 
@@ -65,43 +54,6 @@ public class LcdConnect {
 		this.bLed = false;
 		writeAscii(254);
 		writeAscii(70);
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolUp() {
-		writeAscii(254);
-		writeAscii(40);
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolDown() {
-		writeAscii(254);
-		writeAscii(41);
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolMute() {
-		writeAscii(254);
-		writeAscii(42);
-	}
-
-	/**
-	 * @param ca
-	 * @param nIndex
-	 */
-	public void writeCustomChar(CustomChar cc) {
-		writeAscii(254);
-		writeAscii(21);
-		for (int i = 0; i < 8; i++) {
-			writeAscii((int) cc.getBytesForLine(i));
-		}
-		writeAscii(cc.getPosition());
 	}
 
 	/**
@@ -140,31 +92,6 @@ public class LcdConnect {
 	}
 
 	/**
-	 * @param x
-	 * @param y
-	 * @param s
-	 */
-	public void writeLineToCache(Integer x, Integer y, char[] cArr) {
-		lcache.writeLine(x, y, cArr);
-	}
-
-	/**
-	 * @param x
-	 * @param y
-	 * @param c
-	 */
-	public void writeCharToCache(Integer x, Integer y, char c) {
-		lcache.write(x, y, c);
-	}
-
-	/**
-	 * @return
-	 */
-	public LcdCache getCache() {
-		return lcache;
-	}
-
-	/**
 	 * @return
 	 */
 	public Boolean startSerialLcdPort() {
@@ -198,40 +125,6 @@ public class LcdConnect {
 	}
 
 	/**
-	 * 
-	 */
-	public void clearScreen() {
-		lcache.clearCacheFull();
-		if (isLcdOk()) {
-			writeAscii(254);
-			writeAscii(88);
-		}
-	}
-
-	/**
-	 * 
-	 */
-	public void refreshDisplay() {
-		if (lcache.hasChanges() && isLcdOk()) {
-			for (int y = 0; y < lcache.getHeight(); y++) {
-				for (int x = 0; x < lcache.getWidth(); x++) {
-					if (lcache.getCacheIst(x, y) != lcache.getCacheSoll(x, y)) {
-						// Schreibe Zeile immer zu ende
-						setCursor(x, y);
-						for (int writePosX = x; writePosX < lcache.getWidth(); writePosX++) {
-							char c = lcache.getCacheSoll(writePosX, y);
-							writeChar(c);
-							lcache.setToCacheIst(writePosX, y, c);
-						}
-						break;
-						// x = max
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * @return
 	 */
 	public Integer readButton() {
@@ -247,15 +140,11 @@ public class LcdConnect {
 	}
 
 	/**
-	 * @param x
-	 * @param y
+	 * @param c
+	 * @return
 	 */
-	public void setCursor(int x, int y) {
-		writeAscii(254);
-		writeAscii(71);
-		// Arduino 0/0 ist 1/1
-		writeAscii(x + 1);
-		writeAscii(y + 1);
+	public void writeChar(char c) {
+		writeAscii((int) c);
 	}
 
 	/**
@@ -276,42 +165,7 @@ public class LcdConnect {
 	/**
 	 * @return
 	 */
-	public boolean isbPauseWriteToLCD() {
-		return bPauseWriteToLCD;
-	}
-
-	/**
-	 * Wenn der Refesh ausgeschaltet werden soll, wird 2x getRefreshRate gewartet
-	 * 
-	 * So kann doppeltes schreiben verhindert werden (Custom Chars)
-	 * 
-	 * @param bPauseWriteToLCD
-	 */
-	public void setbPauseWriteToLCD(boolean bPauseWriteToLCD) {
-		if (bPauseWriteToLCD) {
-			try {
-				Thread.sleep((long) this.getRefreshRate() * 2);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		this.bPauseWriteToLCD = bPauseWriteToLCD;
-	}
-
-	/**
-	 * @param c
-	 * @return
-	 */
-	private void writeChar(char c) {
-		writeAscii((int) c);
-	}
-
-	/**
-	 * @return
-	 */
-	private Boolean startPort() {
-		// Cache vorbereiten
-		lcache = new LcdCache(lconf.getWidth(), lconf.getHeight());
+	public Boolean startPort() {
 
 		try {
 			// LCD Connect
@@ -335,6 +189,30 @@ public class LcdConnect {
 			LOGGER.warn("LCD Start: " + e);
 			return false;
 		}
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolUp() {
+		writeAscii(254);
+		writeAscii(40);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolDown() {
+		writeAscii(254);
+		writeAscii(41);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolMute() {
+		writeAscii(254);
+		writeAscii(42);
 	}
 
 }

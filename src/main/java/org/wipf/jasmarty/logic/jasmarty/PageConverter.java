@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 public class PageConverter {
 
 	@Inject
-	LcdConnect lcdConnect;
+	Lcd2004 lcd2004;
 	@Inject
 	Wipf wipf;
 	@Inject
@@ -38,7 +38,7 @@ public class PageConverter {
 	 */
 	public void selectToNewPage(LcdPage page) throws Exception {
 		// TODO cls noch nötig?
-		lcdConnect.clearScreen();
+		lcd2004.clearScreen();
 		this.selectedPage = page;
 		// Manuellen Refresh des caches anstoßen
 		this.refreshCache();
@@ -64,11 +64,11 @@ public class PageConverter {
 	 * @throws Exception
 	 */
 	private void convertPage(LcdPage page) throws Exception {
-		for (int nLine = 0; nLine < lcdConnect.getHeight(); nLine++) {
+		for (int nLine = 0; nLine < lcd2004.getHeight(); nLine++) {
 			// Zeile erstellen
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));
 			// Zeile in Cache schreiben und auf maximale Zeichenanzahl kürzen
-			lcdConnect.writeLineToCache(0, nLine, lineOptions(sLineAfterConvert, nLine));
+			lcd2004.writeLineToCache(0, nLine, lineOptions(sLineAfterConvert, nLine));
 		}
 	}
 
@@ -77,7 +77,7 @@ public class PageConverter {
 	 * @return
 	 */
 	private char[] shortArrayToLengh(char[] ca) {
-		return Arrays.copyOfRange(ca, 0, lcdConnect.getWidth());
+		return Arrays.copyOfRange(ca, 0, lcd2004.getWidth());
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class PageConverter {
 
 		// Wenn die Zeile genau voll oder leer ist -> nichts machen
 		// Wenn keine Options vorhanden sind -> nichts machen
-		if (sLine.length() == 0 || sLine.length() == lcdConnect.getWidth() || sOptions == null) {
+		if (sLine.length() == 0 || sLine.length() == lcd2004.getWidth() || sOptions == null) {
 			return sLine.toCharArray();
 		}
 
@@ -157,16 +157,16 @@ public class PageConverter {
 	 */
 	private char[] scrollLine(String sLine, int nLine) {
 		int nLength = sLine.length();
-		if (nLength > lcdConnect.getWidth()) {
+		if (nLength > lcd2004.getWidth()) {
 			// char[] caIst = lcdConnect.getCache().getCacheSollLine(nLine);
-			int nState = lcdConnect.getCache().getScrollStateForLine(nLine);
-			lcdConnect.getCache().setScrollStateForLine(nLine, nState + 1);
+			int nState = lcd2004.getCache().getScrollStateForLine(nLine);
+			lcd2004.getCache().setScrollStateForLine(nLine, nState + 1);
 
 			if (nState > nLength) {
-				lcdConnect.getCache().setScrollStateForLine(nLine, 2);
+				lcd2004.getCache().setScrollStateForLine(nLine, 2);
 			}
 
-			if (nLength - nState < lcdConnect.getWidth()) {
+			if (nLength - nState < lcd2004.getWidth()) {
 				// Zeile erneut hinten anhängen
 				sLine = sLine + sLine;
 			}
@@ -186,7 +186,7 @@ public class PageConverter {
 	private char[] lineRechts(String sLine) {
 		// Den rest mit Leerzeichen fuellen -> Lösche alte zeichen
 		return shortArrayToLengh(
-				(sLine.toString() + wipf.repeat(' ', lcdConnect.getWidth() - sLine.length())).toCharArray());
+				(sLine.toString() + wipf.repeat(' ', lcd2004.getWidth() - sLine.length())).toCharArray());
 	}
 
 	/**
@@ -195,12 +195,12 @@ public class PageConverter {
 	 */
 	private char[] lineLinks(String sLine) {
 		// Ausgabezeile vorbereiten -> Pauschal mit Leerzeichen init
-		char[] cOut = new char[lcdConnect.getWidth()];
+		char[] cOut = new char[lcd2004.getWidth()];
 		for (int i = 0; i < cOut.length; i++) {
 			cOut[i] = ' ';
 		}
 		int nZaehler = 0;
-		int nSpaces = (lcdConnect.getWidth() - sLine.length());
+		int nSpaces = (lcd2004.getWidth() - sLine.length());
 
 		for (char c : sLine.toCharArray()) {
 			cOut[nSpaces + nZaehler] = c;
@@ -215,12 +215,12 @@ public class PageConverter {
 	 */
 	private char[] lineMittig(String sLine) {
 		// Ausgabezeile vorbereiten -> Pauschal mit Leerzeichen init
-		char[] cOut = new char[lcdConnect.getWidth()];
+		char[] cOut = new char[lcd2004.getWidth()];
 		for (int i = 0; i < cOut.length; i++) {
 			cOut[i] = ' ';
 		}
 		int nZaehler = 0;
-		int nSpacesPerSite = (lcdConnect.getWidth() - sLine.length()) / 2;
+		int nSpacesPerSite = (lcd2004.getWidth() - sLine.length()) / 2;
 
 		for (char c : sLine.toCharArray()) {
 			cOut[nSpacesPerSite + nZaehler] = c;
@@ -336,9 +336,9 @@ public class PageConverter {
 			case 3:
 				sb.append(BLOCK_3_3);
 				break;
-					
-        		default:
-            			break;
+
+			default:
+				break;
 			}
 
 			// Leere Blöcke:

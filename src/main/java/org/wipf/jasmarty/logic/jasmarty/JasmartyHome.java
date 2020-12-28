@@ -22,7 +22,7 @@ public class JasmartyHome {
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 	@Inject
-	RefreshLoop refreshLoop;
+	Lcd2004RefreshLoop lcd2004refreshLoop;
 	@Inject
 	Wipf wipf;
 	@Inject
@@ -31,6 +31,8 @@ public class JasmartyHome {
 	CustomChars customChars;
 	@Inject
 	CharPictures charPictures;
+	@Inject
+	Lcd2004 lcd2004;
 
 	private static final Logger LOGGER = Logger.getLogger("JasmartyHome");
 
@@ -60,13 +62,14 @@ public class JasmartyHome {
 		LOGGER.info("Starten");
 
 		lcdConnect.setConfig(serialConfig.getConfig());
-		lcdConnect.startSerialLcdPort();
+		lcd2004.start2004LCD();
+		// wird über start2004LCD lcdConnect.startSerialLcdPort();
 
 		charPictures.writeAndLoadWipf();
 		// charPictures.testChars();
 
 		pageVerwaltung.writeStartPage();
-		refreshLoop.start();
+		lcd2004refreshLoop.start();
 
 		LOGGER.info("Gestartet");
 	}
@@ -77,11 +80,11 @@ public class JasmartyHome {
 	public void jasmartyStop() {
 		LOGGER.info("Stoppe");
 		if (lcdConnect.isLcdOk()) {
-			refreshLoop.stop();
+			lcd2004refreshLoop.stop();
 			wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
 			pageVerwaltung.writeExitPage();
-			refreshLoop.doRefreshCacheManuell();
-			lcdConnect.refreshDisplay();
+			lcd2004refreshLoop.doRefreshCacheManuell();
+			lcd2004.refreshDisplay();
 			lcdConnect.closeSerialLcdPort();
 		}
 		LOGGER.info("Gestoppt");

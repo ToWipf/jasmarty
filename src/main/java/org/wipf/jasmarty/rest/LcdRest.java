@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.logic.jasmarty.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
@@ -28,6 +29,8 @@ public class LcdRest {
 
 	@Inject
 	LcdConnect lcdConnect;
+	@Inject
+	Lcd2004 lcd2004;
 	@Inject
 	SerialConfig serialConfig;
 
@@ -72,13 +75,13 @@ public class LcdRest {
 	@GET
 	@Path("/ist")
 	public Response chIst() {
-		return Response.ok(lcdConnect.getCache().toIstJson().toString()).build();
+		return Response.ok(lcd2004.getCache().toIstJson().toString()).build();
 	}
 
 	@GET
 	@Path("/soll")
 	public Response chSoll() {
-		return Response.ok(lcdConnect.getCache().toSollJson().toString()).build();
+		return Response.ok(lcd2004.getCache().toSollJson().toString()).build();
 	}
 
 }

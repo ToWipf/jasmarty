@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 public class CustomChars {
 
 	@Inject
-	LcdConnect lcdConnect;
+	Lcd2004 lcd2004;
 	@Inject
 	SqlLite sqlLite;
 
@@ -102,10 +102,10 @@ public class CustomChars {
 	 * @param cc
 	 */
 	public void loadCharToLcd(CustomChar cc) {
-		if (lcdConnect.isLcdOk()) {
-			this.lcdConnect.setbPauseWriteToLCD(true);
-			lcdConnect.writeCustomChar(cc);
-			this.lcdConnect.setbPauseWriteToLCD(false);
+		if (lcd2004.isLcdOk()) {
+			this.lcd2004.setbPauseWriteToLCD(true);
+			lcd2004.writeCustomChar(cc);
+			this.lcd2004.setbPauseWriteToLCD(false);
 		}
 	}
 
@@ -113,12 +113,12 @@ public class CustomChars {
 	 * @param cca
 	 */
 	public void loadCharToLcd(CustomChar[] cca) {
-		if (lcdConnect.isLcdOk()) {
-			this.lcdConnect.setbPauseWriteToLCD(true);
+		if (lcd2004.isLcdOk()) {
+			this.lcd2004.setbPauseWriteToLCD(true);
 			for (CustomChar cc : cca) {
-				lcdConnect.writeCustomChar(cc);
+				lcd2004.writeCustomChar(cc);
 			}
-			this.lcdConnect.setbPauseWriteToLCD(false);
+			this.lcd2004.setbPauseWriteToLCD(false);
 		}
 	}
 

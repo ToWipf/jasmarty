@@ -13,12 +13,12 @@ import org.jboss.logging.Logger;
  *
  */
 @ApplicationScoped
-public class RefreshLoop {
+public class Lcd2004RefreshLoop {
 
 	@Inject
 	PageConverter pageConverter;
 	@Inject
-	LcdConnect lcdConnect;
+	Lcd2004 lcd2004;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 
@@ -76,11 +76,11 @@ public class RefreshLoop {
 				while (bLoopActive) {
 					try {
 						pageConverter.refreshCache();
-						if (lcdConnect.isLcdOk() && !lcdConnect.isbPauseWriteToLCD()) {
-							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
-							lcdConnect.refreshDisplay();
+						if (lcd2004.isLcdOk() && !lcd2004.isbPauseWriteToLCD()) {
+							actionVerwaltung.doActionByButtonNr(lcd2004.readButton());
+							lcd2004.refreshDisplay();
 						}
-						Thread.sleep(lcdConnect.getRefreshRate());
+						Thread.sleep(lcd2004.getRefreshRate());
 
 					} catch (Exception e) {
 						LOGGER.warn("Refreshloop fehler: " + e);

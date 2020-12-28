@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
+import org.wipf.jasmarty.logic.jasmarty.Lcd2004RefreshLoop;
 
 /**
  * @author wipf
@@ -24,7 +24,7 @@ import org.wipf.jasmarty.logic.jasmarty.RefreshLoop;
 public class TelegramRefreshRest {
 
 	@Inject
-	RefreshLoop refreshLoop;
+	Lcd2004RefreshLoop refreshLoop;
 
 	// TODO mv nach lcdRest
 

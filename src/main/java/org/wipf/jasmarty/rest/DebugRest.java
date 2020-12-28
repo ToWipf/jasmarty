@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
+import org.wipf.jasmarty.logic.jasmarty.Lcd12864;
+import org.wipf.jasmarty.logic.jasmarty.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
@@ -37,12 +39,16 @@ public class DebugRest {
 	Winamp winamp;
 	@Inject
 	JasmartyHome jHome;
+	@Inject
+	Lcd2004 lcd2004;
+	@Inject
+	Lcd12864 lcd12864;
 
 	@POST
 	@GET
 	@Path("/lcd12864/test")
 	public Response lcd12864test() {
-		lcdConnect.test12864();
+		lcd12864.test12864();
 		return Response.ok().build();
 	}
 
@@ -50,7 +56,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd/write/{x}/{y}/{str}")
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		lcdConnect.writeLineToCache(x, y, s.toCharArray());
+		lcd2004.writeLineToCache(x, y, s.toCharArray());
 		return Response.ok().build();
 	}
 
@@ -58,7 +64,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd/refresh")
 	public Response refreshDisplay() {
-		lcdConnect.refreshDisplay();
+		lcd2004.refreshDisplay();
 		return Response.ok().build();
 	}
 
@@ -74,7 +80,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd/pos/{x}/{y}")
 	public Response pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		lcdConnect.setCursor(x, y);
+		lcd2004.setCursor(x, y);
 		return Response.ok().build();
 	}
 
@@ -82,7 +88,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd/cls")
 	public Response cls() {
-		lcdConnect.clearScreen();
+		lcd2004.clearScreen();
 		return Response.ok().build();
 	}
 
