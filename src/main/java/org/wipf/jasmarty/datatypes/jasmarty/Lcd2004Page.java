@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.datatypes;
+package org.wipf.jasmarty.datatypes.jasmarty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.json.JSONObject;
 /**
  * @author wipf
  */
-public class LcdPage {
+public class Lcd2004Page {
 
 	private List<String> saLines;
 	private String sName = "";
@@ -19,7 +19,7 @@ public class LcdPage {
 	/**
 	 * 
 	 */
-	public LcdPage() {
+	public Lcd2004Page() {
 		this.saLines = new ArrayList<String>();
 	}
 
@@ -58,7 +58,7 @@ public class LcdPage {
 	 * @param sJson
 	 * @return
 	 */
-	public LcdPage setByJson(String sJson) {
+	public Lcd2004Page setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 
 		this.sName = jo.getString("name");

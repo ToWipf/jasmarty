@@ -9,8 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.Telegram;
-import org.wipf.jasmarty.datatypes.TicTacToe;
+import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.datatypes.telegram.TicTacToe;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**

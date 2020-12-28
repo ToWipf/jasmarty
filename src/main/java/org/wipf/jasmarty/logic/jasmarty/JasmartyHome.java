@@ -7,6 +7,11 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.CharPictures;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004RefreshLoop;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
 
 /**
  * @author wipf

@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.datatypes;
+package org.wipf.jasmarty.datatypes.jasmarty;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,7 +7,7 @@ import org.json.JSONObject;
  * @author wipf
  *
  */
-public class LcdCache {
+public class Lcd2004Cache {
 
 	private int nHeight;
 	private int nWidth;
@@ -19,7 +19,7 @@ public class LcdCache {
 	 * @param nWidth
 	 * @param nHeight
 	 */
-	public LcdCache(int nWidth, int nHeight) {
+	public Lcd2004Cache(int nWidth, int nHeight) {
 		this.nWidth = nWidth;
 		this.nHeight = nHeight;
 

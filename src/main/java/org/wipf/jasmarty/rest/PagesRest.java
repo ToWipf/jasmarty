@@ -16,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
-import org.wipf.jasmarty.logic.jasmarty.PageConverter;
-import org.wipf.jasmarty.logic.jasmarty.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
 
 /**
  * @author wipf

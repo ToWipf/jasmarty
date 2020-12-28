@@ -10,7 +10,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**

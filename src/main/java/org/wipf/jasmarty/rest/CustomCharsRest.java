@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.CustomChars;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
 
 /**
  * @author wipf

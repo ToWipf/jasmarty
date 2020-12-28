@@ -1,11 +1,11 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
 import java.util.Arrays;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.wipf.jasmarty.datatypes.LcdPage;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd2004Page;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
@@ -30,13 +30,13 @@ public class PageConverter {
 	public static char BLOCK_1_3 = 0x02;
 	public static char BLOCK_2_3 = 0x03;
 	public static char BLOCK_3_3 = 0xFF;
-	private LcdPage selectedPage = new LcdPage();
+	private Lcd2004Page selectedPage = new Lcd2004Page();
 
 	/**
 	 * @param page
 	 * @throws Exception
 	 */
-	public void selectToNewPage(LcdPage page) throws Exception {
+	public void selectToNewPage(Lcd2004Page page) throws Exception {
 		// TODO cls noch nötig?
 		lcd2004.clearScreen();
 		this.selectedPage = page;
@@ -47,7 +47,7 @@ public class PageConverter {
 	/**
 	 * @return
 	 */
-	public LcdPage getCurrentSite() {
+	public Lcd2004Page getCurrentSite() {
 		return selectedPage;
 	}
 
@@ -63,7 +63,7 @@ public class PageConverter {
 	 * @param page
 	 * @throws Exception
 	 */
-	private void convertPage(LcdPage page) throws Exception {
+	private void convertPage(Lcd2004Page page) throws Exception {
 		for (int nLine = 0; nLine < lcd2004.getHeight(); nLine++) {
 			// Zeile erstellen
 			String sLineAfterConvert = searchAndReplaceVars(page.getLine(nLine));

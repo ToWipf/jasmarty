@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wipf.jasmarty.datatypes.LcdPage;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd2004Page;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -43,11 +43,11 @@ public class PageVerwaltung {
 	 * 
 	 */
 	public void writeStartPage() throws SQLException {
-		LcdPage p = getPageFromDb(1);
+		Lcd2004Page p = getPageFromDb(1);
 		if (!p.getName().equals("Startseite " + MainHome.VERSION)) {
 			// Wenn es keine Startseite gibt -> schreiben
 			LOGGER.info("Keine Startseite für die Version " + MainHome.VERSION + " gefunden -> Schreibe neu");
-			p = new LcdPage();
+			p = new Lcd2004Page();
 			p.setId(1);
 			p.setName("Startseite " + MainHome.VERSION);
 			p.setOptions("1120");
@@ -66,7 +66,7 @@ public class PageVerwaltung {
 	 */
 	public void writeExitPage() {
 		// Seite nicht aus der db laden -> Fester inhalt
-		LcdPage p = new LcdPage();
+		Lcd2004Page p = new Lcd2004Page();
 		p.setId(0);
 		p.setOptions("1012");
 		p.setLine(0, "Beendet");
@@ -81,14 +81,14 @@ public class PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void pageToDb(String jnRoot) throws SQLException {
-		pageToDb(new LcdPage().setByJson(jnRoot));
+		pageToDb(new Lcd2004Page().setByJson(jnRoot));
 	}
 
 	/**
 	 * @param page
 	 * @throws SQLException
 	 */
-	public void pageToDb(LcdPage page) throws SQLException {
+	public void pageToDb(Lcd2004Page page) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO pages (id, name, page, options) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, page.getId());
@@ -113,8 +113,8 @@ public class PageVerwaltung {
 	 * @param nId
 	 * @return
 	 */
-	public LcdPage getPageFromDb(int nId) {
-		LcdPage page = new LcdPage();
+	public Lcd2004Page getPageFromDb(int nId) {
+		Lcd2004Page page = new Lcd2004Page();
 		try {
 
 			String sQuery = "SELECT * FROM pages WHERE id = ?;";
@@ -140,7 +140,7 @@ public class PageVerwaltung {
 	/**
 	 * @param page
 	 */
-	public void writePage(LcdPage page) {
+	public void writePage(Lcd2004Page page) {
 		try {
 			pageConverter.selectToNewPage(page);
 		} catch (Exception e) {

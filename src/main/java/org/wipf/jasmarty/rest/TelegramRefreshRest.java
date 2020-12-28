@@ -10,7 +10,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.Lcd2004RefreshLoop;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004RefreshLoop;
 
 /**
  * @author wipf

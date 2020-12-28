@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.LcdConfig;
+import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
 

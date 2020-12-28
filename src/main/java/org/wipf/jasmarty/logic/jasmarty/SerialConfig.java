@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wipf.jasmarty.datatypes.LcdConfig;
+import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
 import com.fazecast.jSerialComm.SerialPort;

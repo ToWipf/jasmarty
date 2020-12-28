@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.datatypes;
+package org.wipf.jasmarty.datatypes.telegram;
 
 import org.json.JSONObject;
 

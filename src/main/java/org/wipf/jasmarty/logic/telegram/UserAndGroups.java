@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.telegram;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.wipf.jasmarty.datatypes.Telegram;
+import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
 /**
  * @author wipf

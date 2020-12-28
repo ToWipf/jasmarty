@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
 
 /**
  * @author wipf

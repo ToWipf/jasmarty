@@ -10,10 +10,11 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wipf.jasmarty.datatypes.ButtonAction;
+import org.wipf.jasmarty.datatypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
 
 /**
  * @author wipf

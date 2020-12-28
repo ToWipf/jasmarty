@@ -12,9 +12,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 
 /**
  * @author wipf

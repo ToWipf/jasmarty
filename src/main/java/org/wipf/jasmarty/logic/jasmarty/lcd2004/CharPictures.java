@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
 import java.sql.SQLException;
 
@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.CustomChar;
+import org.wipf.jasmarty.datatypes.jasmarty.CustomChar;
 
 /**
  * @author wipf

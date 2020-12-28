@@ -1,11 +1,12 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.CustomChar;
-import org.wipf.jasmarty.datatypes.LcdCache;
+import org.wipf.jasmarty.datatypes.jasmarty.CustomChar;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd2004Cache;
+import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
 @ApplicationScoped
 public class Lcd2004 {
@@ -14,7 +15,7 @@ public class Lcd2004 {
 	LcdConnect lcdConnect;
 
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty 2004");
-	private LcdCache lcache = new LcdCache(0, 0);
+	private Lcd2004Cache lcache = new Lcd2004Cache(0, 0);
 	private boolean bPauseWriteToLCD = false;
 
 	/**
@@ -22,7 +23,7 @@ public class Lcd2004 {
 	 */
 	public Boolean start2004LCD() {
 		// Cache vorbereiten
-		lcache = new LcdCache(lcdConnect.getWidth(), lcdConnect.getHeight());
+		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());
 		return lcdConnect.startPort();
 	}
 
@@ -47,7 +48,7 @@ public class Lcd2004 {
 	/**
 	 * @return
 	 */
-	public LcdCache getCache() {
+	public Lcd2004Cache getCache() {
 		return lcache;
 	}
 

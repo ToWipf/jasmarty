@@ -1,9 +1,10 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
 @ApplicationScoped
 public class Lcd12864 {

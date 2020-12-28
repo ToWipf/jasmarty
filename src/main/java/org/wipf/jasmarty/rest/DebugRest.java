@@ -17,10 +17,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
-import org.wipf.jasmarty.logic.jasmarty.Lcd12864;
-import org.wipf.jasmarty.logic.jasmarty.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 
 /**
  * @author wipf
