@@ -11,7 +11,7 @@ public class Lcd12864Cache {
 
 	public static int SIZE = 1024;
 	private byte[] baScreen = new byte[SIZE];
-	private boolean bChanged;
+	private boolean bChanged = true;
 
 	/**
 	 * @return

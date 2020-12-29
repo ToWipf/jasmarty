@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CharPictures;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
@@ -64,16 +65,22 @@ public class JasmartyHome {
 	 */
 	public void jasmartyStart() throws SQLException {
 		LOGGER.info("Starten");
-
 		lcdConnect.setConfig(serialConfig.getConfig());
-		lcd2004.start2004LCD();
-		// wird über start2004LCD lcdConnect.startSerialLcdPort();
 
-		charPictures.writeAndLoadWipf();
-		// charPictures.testChars();
+		if (lcdConnect.getType() == lcdType.LCD_2004) {
+			lcd2004.start2004LCD();
+			// lcdConnect.startSerialLcdPort(); wird über start2004LCD
 
-		pageVerwaltung.writeStartPage();
-		lcdRefreshLoop.start();
+			charPictures.writeAndLoadWipf();
+			// charPictures.testChars();
+
+			pageVerwaltung.writeStartPage();
+			lcdRefreshLoop.startRefresh2004();
+		}
+
+		if (lcdConnect.getType() == lcdType.LCD_12864) {
+			lcdRefreshLoop.startRefresh12864();
+		}
 
 		LOGGER.info("Gestartet");
 	}
@@ -83,6 +90,7 @@ public class JasmartyHome {
 	 */
 	public void jasmartyStop() {
 		LOGGER.info("Stoppe");
+		// TODO für 2004 und 12864
 		if (lcdConnect.isLcdOk()) {
 			lcdRefreshLoop.stop();
 			wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
@@ -92,6 +100,14 @@ public class JasmartyHome {
 			lcdConnect.closeSerialLcdPort();
 		}
 		LOGGER.info("Gestoppt");
+	}
+
+	/**
+	 * 
+	 */
+	public void doRefreshManuell() {
+		// TODO Auto-generated method stub
+		LOGGER.info("TODO");
 	}
 
 }

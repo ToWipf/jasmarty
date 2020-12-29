@@ -7,7 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
@@ -36,13 +35,15 @@ public class LcdRefreshLoop {
 	/**
 	 * 
 	 */
-	public void start() {
-		if (lcdConnect.getType() == lcdType.LCD_2004) {
-			refreshloop2004();
-		}
-		if (lcdConnect.getType() == lcdType.LCD_12864) {
-			refreshloop12864();
-		}
+	public void startRefresh2004() {
+		refreshloop2004();
+	}
+
+	/**
+	 * 
+	 */
+	public void startRefresh12864() {
+		refreshloop12864();
 	}
 
 	/**
@@ -127,13 +128,10 @@ public class LcdRefreshLoop {
 
 				while (bLoopActive) {
 					try {
-						LOGGER.info("START 12868");
-						pageConverter.refreshCache();
 						if (lcdConnect.isLcdOk()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcd12864.refreshDisplay();
 						}
-						LOGGER.info("END 12868");
 						Thread.sleep(lcdConnect.getRefreshRate());
 
 					} catch (Exception e) {

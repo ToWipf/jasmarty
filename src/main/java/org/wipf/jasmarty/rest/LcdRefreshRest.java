@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest;
 
+import java.sql.SQLException;
+
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.LcdRefreshLoop;
+import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 
 /**
  * @author wipf
@@ -21,31 +23,32 @@ import org.wipf.jasmarty.logic.jasmarty.LcdRefreshLoop;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class TelegramRefreshRest {
+public class LcdRefreshRest {
 
 	@Inject
-	LcdRefreshLoop refreshLoop;
+	JasmartyHome jasmartyHome;
 
 	// TODO mv nach lcdRest
 
 	@GET
 	@Path("/on")
-	public Response on() {
-		refreshLoop.start();
+	public Response on() throws SQLException {
+		// TODO
+		jasmartyHome.jasmartyStart();
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/off")
 	public Response off() {
-		refreshLoop.stop();
+		jasmartyHome.jasmartyStop();
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("/refreshCache")
 	public Response refreshCache() {
-		refreshLoop.doRefreshCacheManuell();
+		jasmartyHome.doRefreshManuell();
 		return Response.ok().build();
 	}
 

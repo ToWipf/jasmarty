@@ -11,7 +11,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 export class JasmartyConfigComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest) { }
 
-  public Jaconfig: Jaconfig = {};
+  public jaconfig: Jaconfig = {};
   public ports: [{ name: string }];
   public bJasmartyActive: boolean;
 
@@ -23,12 +23,12 @@ export class JasmartyConfigComponent implements OnInit {
 
   public load(): void {
     this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
-      this.Jaconfig = resdata;
+      this.jaconfig = resdata;
     });
   }
 
   public save(): void {
-    this.http.post(this.rest.gethost() + 'lcd/config/set', JSON.stringify(this.Jaconfig)).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + 'lcd/config/set', JSON.stringify(this.jaconfig)).subscribe((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
         this.startLcdAgain();

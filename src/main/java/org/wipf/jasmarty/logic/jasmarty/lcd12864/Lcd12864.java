@@ -42,24 +42,20 @@ public class Lcd12864 {
 	 */
 	public void refreshDisplay() {
 		if (lcd12864Cache.isChanged()) {
+			LOGGER.info("Write 12864 LCD");
 			for (byte b : lcd12864Cache.getBaScreen()) {
 				lcdConnect.write(b);
 			}
 			lcd12864Cache.setChanged(false);
+			LOGGER.info("END 12864 LCD");
 		}
 	}
 
 	/**
 	 * 
 	 */
-	public void start() {
-		LOGGER.info("Starte 12864 LCD");
-	}
-
-	/**
-	 * 
-	 */
 	public void setCacheRnd() {
+		LOGGER.info("RND 12864");
 		byte[] bsRnd = new byte[Lcd12864Cache.SIZE];
 		for (int n = 0; n < 1024; n++) {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);

@@ -11,22 +11,32 @@
             <hr>
             <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
                 <div class="form-group">
-                    <ng-container *ngIf="Jaconfig">
+                    <ng-container *ngIf="jaconfig">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Typ</mat-label>
+                            <mat-select [(value)]="jaconfig.type">
+                                <mat-option>None</mat-option>
+                                <mat-option value="LCD_2004">2004</mat-option>
+                                <mat-option value="LCD_12864">12864</mat-option>
+                            </mat-select>
+                        </mat-form-field>
 
                         <span class="title">Port</span>
-                        <input type="text" class="form-control inbutton" [(ngModel)]="Jaconfig.port" placeholder="Bitte eintragen">
+                        <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
 
                         <span class="title">Baud Rate</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="Jaconfig.baudrate" placeholder="Bitte eintragen">
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
 
                         <span class="title">Refesh Rate</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="Jaconfig.refreshrate" placeholder="Bitte eintragen">
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
 
                         <span class="title">Breite</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="Jaconfig.width" placeholder="Bitte eintragen">
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
 
                         <span class="title">Höhe</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="Jaconfig.height" placeholder="Bitte eintragen">
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
+
 
                     </ng-container>
                 </div>
