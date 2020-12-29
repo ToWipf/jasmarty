@@ -37,12 +37,15 @@ public class Lcd12864 {
 	}
 
 	/**
-	 * 
+	 * Schreibt cache zu lcd
 	 * 
 	 */
-	public void writeCacheToLcd() {
-		for (byte b : lcd12864Cache.getBaScreen()) {
-			lcdConnect.write(b);
+	public void refreshDisplay() {
+		if (lcd12864Cache.isChanged()) {
+			for (byte b : lcd12864Cache.getBaScreen()) {
+				lcdConnect.write(b);
+			}
+			lcd12864Cache.setChanged(false);
 		}
 	}
 
@@ -61,7 +64,6 @@ public class Lcd12864 {
 		for (int n = 0; n < 1024; n++) {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);
 		}
-
 		lcd12864Cache.setBaScreen(bsRnd);
 	}
 

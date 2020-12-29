@@ -140,7 +140,7 @@ public class Lcd2004 {
 	/**
 	 * @return
 	 */
-	public boolean isbPauseWriteToLCD() {
+	public boolean isPauseWriteToLCD() {
 		return bPauseWriteToLCD;
 	}
 
@@ -156,20 +156,6 @@ public class Lcd2004 {
 	 */
 	public int getWidth() {
 		return lcdConnect.getWidth();
-	}
-
-	/**
-	 * @return
-	 */
-	public long getRefreshRate() {
-		return lcdConnect.getRefreshRate();
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer readButton() {
-		return lcdConnect.readButton();
 	}
 
 }

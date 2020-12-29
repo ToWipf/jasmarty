@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
@@ -26,6 +27,8 @@ public class LcdRefreshLoop {
 	Lcd12864 lcd12864;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
+	@Inject
+	LcdConnect lcdConnect;
 
 	private static final Logger LOGGER = Logger.getLogger("LCD RefreshLoop");
 	private boolean bLoopActive = false;
@@ -34,7 +37,12 @@ public class LcdRefreshLoop {
 	 * 
 	 */
 	public void start() {
-		refreshloop();
+		if (lcdConnect.getType() == lcdType.LCD_2004) {
+			refreshloop2004();
+		}
+		if (lcdConnect.getType() == lcdType.LCD_12864) {
+			refreshloop12864();
+		}
 	}
 
 	/**
@@ -63,7 +71,7 @@ public class LcdRefreshLoop {
 	/**
 	 * 
 	 */
-	private void refreshloop() {
+	private void refreshloop2004() {
 		if (!bLoopActive) {
 			bLoopActive = true;
 			LOGGER.info("Refresh an");
@@ -80,13 +88,12 @@ public class LcdRefreshLoop {
 
 				while (bLoopActive) {
 					try {
-						// TODO umschalten zwischen 2004 und 12864
 						pageConverter.refreshCache();
-						if (lcd2004.isLcdOk() && !lcd2004.isbPauseWriteToLCD()) {
-							actionVerwaltung.doActionByButtonNr(lcd2004.readButton());
+						if (lcdConnect.isLcdOk() && !lcd2004.isPauseWriteToLCD()) {
+							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcd2004.refreshDisplay();
 						}
-						Thread.sleep(lcd2004.getRefreshRate());
+						Thread.sleep(lcdConnect.getRefreshRate());
 
 					} catch (Exception e) {
 						LOGGER.warn("Refreshloop fehler: " + e);
@@ -100,4 +107,44 @@ public class LcdRefreshLoop {
 		});
 	}
 
+	/**
+	 * 
+	 */
+	private void refreshloop12864() {
+		if (!bLoopActive) {
+			bLoopActive = true;
+			LOGGER.info("Refresh an");
+		} else {
+			LOGGER.info("Refresh bereits an");
+			return;
+		}
+
+		ExecutorService service = Executors.newFixedThreadPool(1);
+		service.submit(new Runnable() {
+
+			@Override
+			public void run() {
+
+				while (bLoopActive) {
+					try {
+						LOGGER.info("START 12868");
+						pageConverter.refreshCache();
+						if (lcdConnect.isLcdOk()) {
+							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
+							lcd12864.refreshDisplay();
+						}
+						LOGGER.info("END 12868");
+						Thread.sleep(lcdConnect.getRefreshRate());
+
+					} catch (Exception e) {
+						LOGGER.warn("Refreshloop fehler: " + e);
+						e.printStackTrace();
+						break;
+					}
+				}
+				bLoopActive = false;
+				LOGGER.info("Refresh aus");
+			}
+		});
+	}
 }
