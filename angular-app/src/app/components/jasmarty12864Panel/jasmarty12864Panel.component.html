@@ -3,14 +3,7 @@
 
         <div *ngFor="let xA of screen; let x = index">
             <tr>
-                <td *ngFor="let yA of xA; let y = index" title="{{x}} {{y}}" (click)="setBlock(x,y)">
-
-                    <ng-container *ngIf="screen[x][y]">
-                        ■
-                    </ng-container>
-                    <ng-container *ngIf="!screen[x][y]">
-                        □
-                    </ng-container>
+                <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" (click)="setBlock(x,y)" [ngClass]="{ 'on': screen[x][y] , 'off': !screen[x][y] }">
 
                 </td>
             </tr>

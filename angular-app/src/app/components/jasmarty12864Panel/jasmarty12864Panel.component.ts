@@ -12,7 +12,7 @@ export class Jasmarty12864PanelComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf) {
 
   }
-  public screen: boolean[][] = new Array(128).fill(false).map(() => new Array(64).fill(false));
+  public screen: boolean[][] = new Array(64).fill(false).map(() => new Array(128).fill(false));
 
   ngOnInit(): void {
     for (let x = 0; x < 64; x++) {
