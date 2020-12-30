@@ -181,7 +181,6 @@ public class LcdConnect {
 	 * @return
 	 */
 	public Boolean startPort() {
-
 		try {
 			// LCD Connect
 			sp = null;

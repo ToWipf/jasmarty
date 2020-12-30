@@ -21,7 +21,7 @@ public class Lcd2004 {
 	/**
 	 * @return
 	 */
-	public Boolean start2004LCD() {
+	public Boolean startLCD() {
 		// Cache vorbereiten
 		LOGGER.info("Starte 2004 LCD");
 		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());

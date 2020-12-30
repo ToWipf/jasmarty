@@ -18,6 +18,7 @@
                     <li (click)="selectSite('liveFull')">Live Display</li>
                     <li (click)="selectSite('pages')">Seiten</li>
                     <li (click)="selectSite('actions')">Funktionen</li>
+                    <li (click)="selectSite('12864panel')">12864 Panel</li>
                     <li (click)="selectSite('config')">Einstellungen</li>
                 </ul>
 
@@ -80,6 +81,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='wipfuservw'">
                     <app-wipfuservw></app-wipfuservw>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='12864panel'">
+                    <app-jasmarty12864panel></app-jasmarty12864panel>
                 </ng-container>
             </div>
         </div>

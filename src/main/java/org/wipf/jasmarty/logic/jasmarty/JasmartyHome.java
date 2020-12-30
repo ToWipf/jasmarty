@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CharPictures;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
@@ -38,6 +39,8 @@ public class JasmartyHome {
 	CharPictures charPictures;
 	@Inject
 	Lcd2004 lcd2004;
+	@Inject
+	Lcd12864 lcd12864;
 
 	private static final Logger LOGGER = Logger.getLogger("JasmartyHome");
 
@@ -68,7 +71,7 @@ public class JasmartyHome {
 		lcdConnect.setConfig(serialConfig.getConfig());
 
 		if (lcdConnect.getType() == lcdType.LCD_2004) {
-			lcd2004.start2004LCD();
+			lcd2004.startLCD();
 			// lcdConnect.startSerialLcdPort(); wird über start2004LCD
 
 			charPictures.writeAndLoadWipf();
@@ -78,7 +81,8 @@ public class JasmartyHome {
 			lcdRefreshLoop.startRefresh2004();
 		}
 
-		if (lcdConnect.getType() == lcdType.LCD_12864) {
+		else if (lcdConnect.getType() == lcdType.LCD_12864) {
+			lcd12864.startLCD();
 			lcdRefreshLoop.startRefresh12864();
 		}
 
@@ -91,13 +95,20 @@ public class JasmartyHome {
 	public void jasmartyStop() {
 		LOGGER.info("Stoppe");
 		// TODO für 2004 und 12864
+
 		if (lcdConnect.isLcdOk()) {
-			lcdRefreshLoop.stop();
-			wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
-			pageVerwaltung.writeExitPage();
-			lcdRefreshLoop.doRefreshCacheManuell();
-			lcd2004.refreshDisplay();
-			lcdConnect.closeSerialLcdPort();
+			if (lcdConnect.getType() == lcdType.LCD_2004) {
+				lcdRefreshLoop.stop();
+				wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
+				pageVerwaltung.writeExitPage();
+				lcdRefreshLoop.doRefreshCacheManuell();
+				lcd2004.refreshDisplay();
+				lcdConnect.closeSerialLcdPort();
+
+			} else if (lcdConnect.getType() == lcdType.LCD_12864) {
+				lcdRefreshLoop.stop();
+				lcdConnect.closeSerialLcdPort();
+			}
 		}
 		LOGGER.info("Gestoppt");
 	}

@@ -2,6 +2,9 @@ package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Wipf
  *
@@ -42,6 +45,20 @@ public class Lcd12864Cache {
 	 */
 	public void setChanged(boolean bChanged) {
 		this.bChanged = bChanged;
+	}
+
+	/**
+	 * @param sJson
+	 */
+	public void setBaScreen(String sJson) {
+		JSONObject jo = new JSONObject(sJson);
+		JSONArray a = (JSONArray) jo.get("screen");
+		int n = 0;
+		for (Object oA : a) {
+			this.baScreen[n] = (byte) ((int) oA);
+			n++;
+		}
+
 	}
 
 }

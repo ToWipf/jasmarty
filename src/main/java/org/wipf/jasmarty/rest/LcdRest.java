@@ -72,6 +72,10 @@ public class LcdRest {
 		return Response.ok("{\"close\":\"" + lcdConnect.closeSerialLcdPort() + "\"}").build();
 	}
 
+	// ############################
+	// ########### 2004 ###########
+	// ############################
+
 	@GET
 	@Path("/ist")
 	public Response chIst() {

@@ -63,4 +63,14 @@ public class Lcd12864 {
 		lcd12864Cache.setBaScreen(bsRnd);
 	}
 
+	/**
+	 * @return
+	 * 
+	 */
+	public Boolean startLCD() {
+		LOGGER.info("Starte 12864 LCD");
+		return lcdConnect.startPort();
+
+	}
+
 }

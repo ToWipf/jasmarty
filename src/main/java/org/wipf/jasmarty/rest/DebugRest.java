@@ -20,6 +20,7 @@ import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 
 /**
@@ -43,6 +44,8 @@ public class DebugRest {
 	Lcd2004 lcd2004;
 	@Inject
 	Lcd12864 lcd12864;
+	@Inject
+	Lcd12864Cache lcd12864Cache;
 
 	@POST
 	@GET
@@ -65,6 +68,29 @@ public class DebugRest {
 	@Path("/lcd12864/re")
 	public Response lcd12864testRe() {
 		lcd12864.refreshDisplay();
+		return Response.ok().build();
+	}
+
+	@POST
+	@GET
+	@Path("/lcd12864/c")
+	public Response lcd12864testC() {
+		return Response.ok(lcd12864Cache.isChanged()).build();
+	}
+
+	@POST
+	@GET
+	@Path("/lcd12864/t")
+	public Response lcd12864testT() {
+		lcd12864Cache.setChanged(true);
+		return Response.ok().build();
+	}
+
+	@POST
+	@GET
+	@Path("/lcd12864/writeFull")
+	public Response lcd12864WriteFull(String sJson) {
+		lcd12864Cache.setBaScreen(sJson);
 		return Response.ok().build();
 	}
 

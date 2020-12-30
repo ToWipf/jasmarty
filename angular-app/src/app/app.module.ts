@@ -64,6 +64,7 @@ import { TelegramLogComponent } from './components/telegramLog/telegramLog.compo
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/wipfUserVw/wipfUserVw.component';
+import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jasmarty12864Panel.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './compo
     JasmartyConfigComponent,
     JasmartyMainComponent,
     JasmartyFullViewComponent,
+    Jasmarty12864PanelComponent,
     TelegramConfigComponent,
     FooterComponent,
     FooterComponentSetServerDialog,
