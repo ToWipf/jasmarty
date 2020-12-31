@@ -104,9 +104,9 @@ public class Lcd12864Cache {
 
 				if (baTmpFull[stellenstart + lauf]) {
 					System.out.println("Truestelle " + stellenstart + " p " + lauf);
-					// Funktioniert bis hier
 
-					tmpzahl = (int) (tmpzahl + Math.pow(2, lauf));
+					int gegenlauf = Math.abs(lauf - 7);
+					tmpzahl = (int) (tmpzahl + Math.pow(2, gegenlauf));
 				}
 			}
 
