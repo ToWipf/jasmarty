@@ -33,6 +33,19 @@ public class Lcd12864Cache {
 	}
 
 	/**
+	 * @param iScreen
+	 */
+	public void setBaScreen(int[] iScreen) {
+		this.bChanged = true;
+
+		for (int i = 0; i < 1024; i++) {
+			this.baScreen[i] = (byte) iScreen[i];
+
+		}
+		this.bChanged = true;
+	}
+
+	/**
 	 * @return
 	 */
 	public boolean isChanged() {
@@ -50,11 +63,14 @@ public class Lcd12864Cache {
 	 * @param sJson
 	 */
 	public void setBaScreen(String sJson) {
-		int[] iScreen = new int[1024];
+
 		JSONArray a = new JSONArray(sJson);
 
 		int cLine = 0;
 		int cPosInLine = 0;
+		boolean[] baTmpFull = new boolean[8192];
+
+		int cTmp = 0;
 		for (Object o : a) {
 			// Eine Zeile
 			JSONArray line = (JSONArray) o;
@@ -63,26 +79,52 @@ public class Lcd12864Cache {
 				// Eine Stelle
 				boolean b = (boolean) by;
 
+				baTmpFull[cTmp] = b;
+
+				cTmp++;
+
 				if (b) {
-
 					System.out.println("ROW: " + cLine + " COL: " + cPosInLine);
-					// Get full byte of 8
-					int nRun = cPosInLine % 8;
-					int curretInt = (cPosInLine % 32) * cLine;
-					// 32
-
-					iScreen[curretInt] = iScreen[curretInt] + 2 ^ nRun;
-
-					// Übertagen 7654321
-
-					// TODO Add do iScreen
 				}
+
 				cPosInLine++;
 			}
 			cPosInLine = 0;
 			cLine++;
 		}
 
+		int[] iScreen = new int[1024];
+		for (int i = 0; i < 1024; i++) {
+			int stellenstart = i * 8;
+
+			int tmpzahl = 0;
+
+			// schleife
+			for (int lauf = 0; lauf < 8; lauf++) {
+
+				if (baTmpFull[stellenstart + lauf]) {
+					System.out.println("Truestelle " + stellenstart + " p " + lauf);
+					// Funktioniert bis hier
+
+					tmpzahl = (int) (tmpzahl + Math.pow(2, lauf));
+				}
+			}
+
+			iScreen[i] = tmpzahl;
+
+		}
+
+		int aaa = 0;
+		for (int sdf : iScreen) {
+			if (sdf != 0) {
+				System.out.println(aaa + ": " + sdf);
+			}
+
+			aaa++;
+
+		}
+
+		setBaScreen(iScreen);
 	}
 
 //			System.out.println("True bei ");
