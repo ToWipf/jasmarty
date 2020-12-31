@@ -64,6 +64,22 @@ public class Lcd12864 {
 	}
 
 	/**
+	 * 
+	 */
+	public void setCacheToTest() {
+		LOGGER.info("RND 12864");
+		byte[] bsRnd = new byte[Lcd12864Cache.SIZE];
+		for (int n = 0; n < 1024; n++) {
+			if (n == 0) {
+				bsRnd[n] = (byte) 1; // bis 255
+			} else {
+				bsRnd[n] = (byte) 0;
+			}
+		}
+		lcd12864Cache.setBaScreen(bsRnd);
+	}
+
+	/**
 	 * @return
 	 * 
 	 */

@@ -14,6 +14,7 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 
 /**
@@ -31,6 +32,8 @@ public class LcdRest {
 	LcdConnect lcdConnect;
 	@Inject
 	Lcd2004 lcd2004;
+	@Inject
+	Lcd12864Cache lcd12864Cache;
 	@Inject
 	SerialConfig serialConfig;
 
@@ -88,4 +91,14 @@ public class LcdRest {
 		return Response.ok(lcd2004.getCache().toSollJson().toString()).build();
 	}
 
+	// ############################
+	// ########### 12864 ##########
+	// ############################
+
+	@POST
+	@Path("/12864/setScreen")
+	public Response setScreen(String jnRoot) {
+		lcd12864Cache.setBaScreen(jnRoot);
+		return Response.ok().build();
+	}
 }
