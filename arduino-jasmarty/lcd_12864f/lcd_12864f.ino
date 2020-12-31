@@ -20,7 +20,7 @@ void setup() {
   digitalWrite(LED_SYSTEM, HIGH);
   pinMode(LED_BUTTON, OUTPUT);
 
-  Serial.begin(9600);
+  Serial.begin(57600);
 
   for (int nPin : in_buttons) {
     pinMode(nPin, INPUT_PULLUP);
