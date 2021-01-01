@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
  * @author wipf
  *
  */
-@Path("/customchars")
+@Path("customchars")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
@@ -39,13 +39,13 @@ public class CustomCharsRest {
 	CustomChars customChars;
 
 	@GET
-	@Path("/get/{id}")
+	@Path("get/{id}")
 	public Response getC(@PathParam("id") Integer nId) {
 		return Response.ok(customChars.getFromDB(nId).toJson()).build();
 	}
 
 	@POST
-	@Path("/set")
+	@Path("set")
 	public Response setC(String jnRoot) {
 		try {
 			customChars.setCustomChar(jnRoot);
@@ -58,7 +58,7 @@ public class CustomCharsRest {
 	}
 
 	@POST
-	@Path("/loadCharToLcdFromDB/{id}")
+	@Path("loadCharToLcdFromDB/{id}")
 	public Response loadCharToLcdFromDB(@PathParam("id") Integer nId) {
 		customChars.loadCharToLcdFromDB(nId);
 		return Response.ok().build();

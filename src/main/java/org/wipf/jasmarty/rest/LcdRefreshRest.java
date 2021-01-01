@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
  * @author wipf
  *
  */
-@Path("/refresh")
+@Path("refresh")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -31,7 +31,7 @@ public class LcdRefreshRest {
 	// TODO mv nach lcdRest
 
 	@GET
-	@Path("/on")
+	@Path("on")
 	public Response on() throws SQLException {
 		// TODO
 		jasmartyHome.jasmartyStart();
@@ -39,14 +39,14 @@ public class LcdRefreshRest {
 	}
 
 	@GET
-	@Path("/off")
+	@Path("off")
 	public Response off() {
 		jasmartyHome.jasmartyStop();
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("/refreshCache")
+	@Path("refreshCache")
 	public Response refreshCache() {
 		jasmartyHome.doRefreshManuell();
 		return Response.ok().build();

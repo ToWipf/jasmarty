@@ -23,7 +23,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
  * @author wipf
  *
  */
-@Path("/pages")
+@Path("pages")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST DELETE geht nicht
@@ -37,26 +37,26 @@ public class PagesRest {
 
 	@GET
 	@PUT
-	@Path("/select/{pid}")
+	@Path("select/{pid}")
 	public Response newPage(@PathParam("pid") int nPid) {
 		pageVerwaltung.selectPage(nPid);
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("/get/{pid}")
+	@Path("get/{pid}")
 	public Response getPage(@PathParam("pid") int nPid) {
 		return Response.ok(pageVerwaltung.getPageFromDb(nPid).toJson()).build();
 	}
 
 	@GET
-	@Path("/current")
+	@Path("current")
 	public Response getCurrent() {
 		return Response.ok(pageConverter.getCurrentSite().toJson()).build();
 	}
 
 	@POST
-	@Path("/save")
+	@Path("save")
 	public Response save(String jnRoot) {
 		try {
 			pageVerwaltung.pageToDb(jnRoot);
@@ -68,7 +68,7 @@ public class PagesRest {
 	}
 
 	@DELETE
-	@Path("/delete/{pid}")
+	@Path("delete/{pid}")
 	public Response delete(@PathParam("pid") int nPid) {
 		try {
 			pageVerwaltung.delPageFromDb(nPid);
@@ -80,7 +80,7 @@ public class PagesRest {
 	}
 
 	@GET
-	@Path("/getAllPages")
+	@Path("getAllPages")
 	public Response getAllPages() {
 		try {
 			return Response.ok(pageVerwaltung.getAllPages().toString()).build();

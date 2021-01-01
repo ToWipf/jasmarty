@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
  * @author wipf
  *
  */
-@Path("/actions")
+@Path("actions")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
@@ -31,25 +31,25 @@ public class ActionRest {
 	ActionVerwaltung actionVerwaltung;
 
 	@GET
-	@Path("/currentPressed")
+	@Path("currentPressed")
 	public Response CurrentPressed() {
 		return Response.ok("{\"btn\":" + actionVerwaltung.getCurrentPressed() + "}").build();
 	}
 
 	@GET
-	@Path("/get/{id}")
+	@Path("get/{id}")
 	public Response getAction(@PathParam("id") Integer nId) {
 		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson()).build();
 	}
 
 	@GET
-	@Path("/getall")
+	@Path("getall")
 	public Response getAll() {
 		return Response.ok(actionVerwaltung.getAllFromDBAsJson().toString()).build();
 	}
 
 	@GET
-	@Path("/doaction/{id}")
+	@Path("doaction/{id}")
 	public Response doaction(@PathParam("id") Integer nId) {
 		try {
 			actionVerwaltung.doActionById(nId);
@@ -61,7 +61,7 @@ public class ActionRest {
 	}
 
 	@POST
-	@Path("/set")
+	@Path("set")
 	public Response setAction(String jnRoot) {
 		try {
 			actionVerwaltung.setAction(jnRoot);
@@ -73,7 +73,7 @@ public class ActionRest {
 	}
 
 	@DELETE
-	@Path("/delete/{id}")
+	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
 		try {
 			actionVerwaltung.delete(nId);

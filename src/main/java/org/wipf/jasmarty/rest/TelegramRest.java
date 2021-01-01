@@ -23,7 +23,7 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
  * @author wipf
  *
  */
-@Path("/telegram")
+@Path("telegram")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -41,7 +41,7 @@ public class TelegramRest {
 	TAppMsg tAppMsg;
 
 	@GET
-	@Path("/on")
+	@Path("on")
 	public Response on() {
 		try {
 			tHome.telegramStart();
@@ -53,14 +53,14 @@ public class TelegramRest {
 	}
 
 	@GET
-	@Path("/off")
+	@Path("off")
 	public Response off() {
 		tHome.telegramStop();
 		return Response.ok().build();
 	}
 
 	@POST
-	@Path("/setbot/{bot}")
+	@Path("setbot/{bot}")
 	public Response setbot(@PathParam("bot") String sBot) {
 		try {
 			return Response.ok("{\"status\":\"" + tVerwaltung.setbot(sBot) + "\"}").build();
@@ -72,13 +72,13 @@ public class TelegramRest {
 	}
 
 	@GET
-	@Path("/getbot")
+	@Path("getbot")
 	public Response getbot() {
 		return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKey() + "\"}").build();
 	}
 
 	@POST
-	@Path("/sendMsgToGroup/{msg}")
+	@Path("sendMsgToGroup/{msg}")
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToGroup(sMsg);
 		// TODO:
@@ -86,7 +86,7 @@ public class TelegramRest {
 	}
 
 	@POST
-	@Path("/sendMsgToAdmin/{msg}")
+	@Path("sendMsgToAdmin/{msg}")
 	public Response sendMsgToId(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToAdmin(sMsg);
 		// TODO:
@@ -94,25 +94,25 @@ public class TelegramRest {
 	}
 
 	@GET
-	@Path("/log")
+	@Path("log")
 	public Response log() {
 		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();
 	}
 
 	@GET
-	@Path("/logext")
+	@Path("logext")
 	public Response logs() {
 		return Response.ok(tlog.getTelegramLogAsJsonEXTERN().toString()).build();
 	}
 
 	@POST
-	@Path("/chat")
+	@Path("chat")
 	public Response chat(String sJson) {
 		return Response.ok("{\"msg\":\"" + tMenue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
 	}
 
 	@GET
-	@Path("/msgall")
+	@Path("msgall")
 	public Response msg() {
 		return Response.ok(tAppMsg.getMsgAsJson().toString()).build();
 	}

@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.telegram.TAppFilm;
  * @author wipf
  *
  */
-@Path("/filme")
+@Path("filme")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -28,20 +28,20 @@ public class FilmeRest {
 	TAppFilm appFilme;
 
 	@POST
-	@Path("/save")
+	@Path("save")
 	public Response save(String jnRoot) {
 		return Response.ok("{\"save\":\"" + appFilme.saveItem(jnRoot) + "\"}").build();
 	}
 
 	@DELETE
-	@Path("/delete/{id}")
+	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
 		appFilme.deleteItem(nId);
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("/getAll")
+	@Path("getAll")
 	public Response getall() {
 		return Response.ok(appFilme.getAllAsJson().toString()).build();
 	}

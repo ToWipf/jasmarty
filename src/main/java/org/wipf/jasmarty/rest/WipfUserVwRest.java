@@ -17,7 +17,7 @@ import org.wipf.jasmarty.logic.base.WipfUserVW;
  * @author wipf
  *
  */
-@Path("/wipfuservw")
+@Path("wipfuservw")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -28,13 +28,13 @@ public class WipfUserVwRest {
 	WipfUserVW wipfUserVW;
 
 	@GET
-	@Path("/getAll")
+	@Path("getAll")
 	public Response getAll() {
 		return Response.ok(wipfUserVW.getAllUsersAsJson(false).toString()).build();
 	}
 
 	@POST
-	@Path("/createOrUpdate")
+	@Path("createOrUpdate")
 	public Response createOrUpdate(String sJson) {
 		wipfUserVW.addOrUpdateUser(sJson);
 		return Response.ok().build();

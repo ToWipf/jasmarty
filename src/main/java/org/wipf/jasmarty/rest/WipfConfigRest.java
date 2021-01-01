@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.base.WipfConfig;
  * @author wipf
  *
  */
-@Path("/basesettings") // TODO anpassen
+@Path("basesettings") // TODO anpassen
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
@@ -30,7 +30,7 @@ public class WipfConfigRest {
 	WipfConfig wipfConfig;
 
 	@POST
-	@Path("/set/{appname}/{status}")
+	@Path("set/{appname}/{status}")
 	public Response setConfig(@PathParam("appname") String sAppname, @PathParam("status") boolean bStatus) {
 		try {
 			wipfConfig.setAppStatus(sAppname, bStatus); // TODO
@@ -42,7 +42,7 @@ public class WipfConfigRest {
 	}
 
 	@GET
-	@Path("/get/{appname}")
+	@Path("get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {
 		try { // TODO
 			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();

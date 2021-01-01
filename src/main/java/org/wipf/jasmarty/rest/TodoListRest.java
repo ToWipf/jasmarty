@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.telegram.TAppTodoList;
  * @author wipf
  *
  */
-@Path("/todolist")
+@Path("todolist")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -28,20 +28,20 @@ public class TodoListRest {
 	TAppTodoList todoList;
 
 	@POST
-	@Path("/saveTodo")
+	@Path("saveTodo")
 	public Response saveTodo(String jnRoot) {
 		return Response.ok("{\"save\":\"" + todoList.saveItem(jnRoot) + "\"}").build();
 	}
 
 	@DELETE
-	@Path("/delete/{id}")
+	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
 		todoList.deleteItem(nId);
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("/getAll")
+	@Path("getAll")
 	public Response getall() {
 		return Response.ok(todoList.getAllAsJson().toString()).build();
 	}
