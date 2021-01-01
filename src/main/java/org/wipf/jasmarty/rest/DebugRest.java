@@ -16,6 +16,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
@@ -57,14 +58,6 @@ public class DebugRest {
 
 	@POST
 	@GET
-	@Path("/lcd12864/test4")
-	public Response lcd12864test4b() {
-		lcd12864.setCacheToTest();
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
 	@Path("/lcd12864/test2")
 	public Response lcd12864test2() {
 		lcd12864.setCacheRnd();
@@ -98,7 +91,7 @@ public class DebugRest {
 	@GET
 	@Path("/lcd12864/writeFull")
 	public Response lcd12864WriteFull(String sJson) {
-		lcd12864Cache.setBaScreen(sJson);
+		lcd12864Cache.setScreen(new Lcd12864Page(sJson));
 		return Response.ok().build();
 	}
 

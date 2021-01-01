@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
@@ -43,7 +44,7 @@ public class Lcd12864 {
 	public void refreshDisplay() {
 		if (lcd12864Cache.isChanged()) {
 			LOGGER.info("Write 12864 LCD");
-			for (byte b : lcd12864Cache.getBaScreen()) {
+			for (byte b : lcd12864Cache.getScreen().getScreenAsByteArray()) {
 				lcdConnect.write(b);
 			}
 			lcd12864Cache.setChanged(false);
@@ -56,27 +57,11 @@ public class Lcd12864 {
 	 */
 	public void setCacheRnd() {
 		LOGGER.info("RND 12864");
-		byte[] bsRnd = new byte[Lcd12864Cache.SIZE];
+		byte[] bsRnd = new byte[Lcd12864Page.SIZE];
 		for (int n = 0; n < 1024; n++) {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);
 		}
-		lcd12864Cache.setBaScreen(bsRnd);
-	}
-
-	/**
-	 * 
-	 */
-	public void setCacheToTest() {
-		LOGGER.info("RND 12864");
-		byte[] bsRnd = new byte[Lcd12864Cache.SIZE];
-		for (int n = 0; n < 1024; n++) {
-			if (n == 0) {
-				bsRnd[n] = (byte) 1; // bis 255
-			} else {
-				bsRnd[n] = (byte) 0;
-			}
-		}
-		lcd12864Cache.setBaScreen(bsRnd);
+		lcd12864Cache.setScreen(new Lcd12864Page(bsRnd));
 	}
 
 	/**
