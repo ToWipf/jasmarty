@@ -33,6 +33,13 @@ export class Jasmarty12864PanelComponent implements OnInit {
       });
   }
 
+  public load(): void {
+    this.http.get(this.rest.gethost() + 'lcd/12864/getScreen').subscribe((res: any) => {
+      this.screen = res;
+      console.log(res);
+    });
+}
+
 
 
 }
