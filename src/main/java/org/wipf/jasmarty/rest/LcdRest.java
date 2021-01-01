@@ -22,7 +22,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
  * @author wipf
  *
  */
-@Path("/lcd")
+@Path("lcd")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON)
@@ -39,7 +39,7 @@ public class LcdRest {
 	SerialConfig serialConfig;
 
 	@GET
-	@Path("/config/get")
+	@Path("config/get")
 	public Response getConfig() {
 		try {
 			return Response.ok(serialConfig.getConfig().toJson()).build();
@@ -51,7 +51,7 @@ public class LcdRest {
 	}
 
 	@POST
-	@Path("/config/set")
+	@Path("config/set")
 	public Response setConfig(String jnRoot) {
 		try {
 			serialConfig.setConfig(jnRoot);
@@ -65,13 +65,13 @@ public class LcdRest {
 	}
 
 	@GET
-	@Path("/open")
+	@Path("open")
 	public Response open() {
 		return Response.ok("{\"open\":\"" + lcdConnect.startSerialLcdPort() + "\"}").build();
 	}
 
 	@GET
-	@Path("/close")
+	@Path("close")
 	public Response close() {
 		return Response.ok("{\"close\":\"" + lcdConnect.closeSerialLcdPort() + "\"}").build();
 	}
@@ -81,13 +81,13 @@ public class LcdRest {
 	// ############################
 
 	@GET
-	@Path("/ist")
+	@Path("ist")
 	public Response chIst() {
 		return Response.ok(lcd2004.getCache().toIstJson().toString()).build();
 	}
 
 	@GET
-	@Path("/soll")
+	@Path("soll")
 	public Response chSoll() {
 		return Response.ok(lcd2004.getCache().toSollJson().toString()).build();
 	}
@@ -97,14 +97,14 @@ public class LcdRest {
 	// ############################
 
 	@POST
-	@Path("/12864/setScreen")
+	@Path("12864/setScreen")
 	public Response setScreen(String jnRoot) {
 		lcd12864Cache.setScreen(new Lcd12864Page(jnRoot));
 		return Response.ok().build();
 	}
 
 	@GET
-	@Path("/12864/getScreen")
+	@Path("12864/getScreen")
 	public Response setScreen() {
 		return Response.ok(lcd12864Cache.getScreen().getScreenAsJsonArray().toString()).build();
 	}

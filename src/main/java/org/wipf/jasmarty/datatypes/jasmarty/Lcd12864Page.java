@@ -98,64 +98,60 @@ public class Lcd12864Page {
 	/**
 	 * @return
 	 */
-	public JSONArray getScreenAsJsonArray() {
-		JSONArray ja = new JSONArray();
+	public boolean[][] getScreenAsBooleanArray() {
+
+		boolean[] btmp = new boolean[8192];
+		// baTmp ein volles boolean array (alles hintereinander)
+		int nZaeler = 0;
+		for (byte bZahl : this.nScreen) {
+
+			int nDez = bZahl;
+
+			for (int i = 0; i < 8; i++) {
+				btmp[Math.abs(i - 7) + (nZaeler * 8)] = (nDez % 2 == 1 ? true : false);
+				nDez = nDez / 2;
+			}
+
+			nZaeler++;
+		}
 
 		boolean[][] ba = new boolean[64][128];
 
-		int nZaeler = 0;
-		for (byte bZahl : this.nScreen) {
-			int row = nZaeler % 128;
+		int nLauf = 0;
+		int nRow = -1; // bei -1 anfangen
+		for (boolean b : btmp) {
 
-			// nzahler von 0 - 1023
-			// bzahl von 0 - 255
+			int nCol = nLauf % 128;
 
-			// row von 0 - 63
-			// col von 0 - 127
+			if (nCol == 0) {
+				nRow++; // geht von 0 bis 63
+			}
 
-			// jede bZahl in bool mit je 8 zerlegen und er entsprechenden reihen zufügen
+			ba[nRow][nCol] = b;
 
-			boolean[] baBit = wandleDezInBin(bZahl);
-
-			// entspr. stelle finden und 8 anfügen
-			// ba[row] =
-
-			// finde jedes 128 iges um einen bruch zu machen
-
+			nLauf++; // von 0 bis 8192
 		}
 
-		/*
-		 * for (int y = 0; y < 64; y++) { // eine Reihe -> ein Array JSONArray jaRow =
-		 * new JSONArray();
-		 * 
-		 * // in einer Reihe for (int x = 0; x < 128 / 8; x++) { int xPosStart = x * 8;
-		 * 
-		 * int relevatZahl = this.nScreen[1]; // Von 0 bis 1024
-		 * 
-		 * // for (int nr = 0; nr < 8; nr++) { // jaRow.put(this.nScreen[xPosStart + nr]
-		 * % 8); // } } ja.put(jaRow); }
-		 */
-		return ja;
+		return ba;
 	}
 
 	/**
-	 * @param n
 	 * @return
 	 */
-	private boolean[] wandleDezInBin(int n) {
-		if (n > 255 || n < 0) {
-			return null;
+	public JSONArray getScreenAsJsonArray() {
+		boolean[][] ba = getScreenAsBooleanArray();
+
+		JSONArray ja = new JSONArray();
+
+		for (int r = 0; r < 64; r++) {
+			JSONArray jaRow = new JSONArray();
+			for (int c = 0; c < 128; c++) {
+				jaRow.put(ba[r][c]);
+			}
+			ja.put(jaRow);
 		}
 
-		int nDez = n;
-		boolean bin[] = new boolean[8];
-
-		for (int i = 0; i < 8; i++) {
-			bin[i] = (nDez % 2 == 1 ? true : false);
-			nDez = nDez / 2;
-		}
-
-		return bin;
+		return ja;
 	}
 
 }
