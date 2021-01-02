@@ -49,6 +49,22 @@ public class Lcd12864Page {
 	}
 
 	/**
+	 * TODO testen ob 8 bit richtigrum
+	 * 
+	 * @param baScreen
+	 */
+	public void setScreen(boolean[][] baScreen) {
+		boolean[] ba = new boolean[SIZE * 8];
+		int i = 0;
+		for (boolean[] bRow : baScreen) {
+			for (boolean b : bRow) {
+				ba[i] = b;
+				i++;
+			}
+		}
+	}
+
+	/**
 	 * Json:
 	 * 
 	 * [[true,false,true,...(128x)],[],...(64x)]
