@@ -65,6 +65,7 @@ import { TodolistComponent, TodolistComponentDialogComponent } from './component
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/wipfUserVw/wipfUserVw.component';
 import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jasmarty12864Panel.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -143,6 +144,7 @@ import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jas
     ScrollingModule,
     MatStepperModule,
     MatDatepickerModule,
+    NgbModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }, Globals],
   bootstrap: [AppComponent],
