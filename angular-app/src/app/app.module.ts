@@ -65,7 +65,9 @@ import { TodolistComponent, TodolistComponentDialogComponent } from './component
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/wipfUserVw/wipfUserVw.component';
 import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jasmarty12864Panel.component';
+import { Jasmarty12864PagesComponent } from './components/jasmarty12864Pages/jasmarty12864Pages.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 
 @NgModule({
   declarations: [
@@ -78,6 +80,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     JasmartyMainComponent,
     JasmartyFullViewComponent,
     Jasmarty12864PanelComponent,
+    Jasmarty12864PagesComponent,
     TelegramConfigComponent,
     FooterComponent,
     FooterComponentSetServerDialog,
@@ -107,6 +110,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CdkTableModule,
     CdkTreeModule,
     DragDropModule,
+    NgxPhotoEditorModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatBottomSheetModule,

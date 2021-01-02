@@ -1,0 +1,16 @@
+<div><input type="file" (change)="fileChangeEvent($event)"/></div>
+
+<ngx-photo-editor
+  [imageChanedEvent]="imageChangedEvent"
+  (imageCropped)="imageCropped($event)"
+  [viewMode]="3"
+  [resizeToHeight]="128"
+  [aspectRatio]="2/1"
+  [darkTheme]="true"
+  >
+</ngx-photo-editor>
+
+<img [src]="base64" alt="">
+
+
+<button (click)="test()">test</button>

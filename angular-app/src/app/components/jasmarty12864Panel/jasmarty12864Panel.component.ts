@@ -28,9 +28,9 @@ export class Jasmarty12864PanelComponent implements OnInit {
   }
 
   public send(): void {
-      this.http.post(this.rest.gethost() + 'lcd/12864/setScreen', this.screen).subscribe((res) => {
-        console.log(res);
-      });
+    this.http.post(this.rest.gethost() + 'lcd/12864/setScreen', this.screen).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   public load(): void {
@@ -38,8 +38,6 @@ export class Jasmarty12864PanelComponent implements OnInit {
       this.screen = res;
       console.log(res);
     });
-}
-
-
+  }
 
 }
