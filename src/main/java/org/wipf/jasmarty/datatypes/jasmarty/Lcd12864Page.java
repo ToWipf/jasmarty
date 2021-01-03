@@ -120,13 +120,19 @@ public class Lcd12864Page {
 		int nZaeler = 0;
 		for (byte bZahl : this.nScreen) {
 
-			int nDez = bZahl;
+			// unsigned byte
+			int nDez = bZahl & 0xFF;
 
 			for (int i = 0; i < 8; i++) {
 				btmp[Math.abs(i - 7) + (nZaeler * 8)] = (nDez % 2 == 1 ? true : false);
 				nDez = nDez / 2;
 			}
 			nZaeler++;
+		}
+
+		for (boolean b : btmp) {
+			// Hier schon falsch -> volles byte ist leer
+			// System.out.println(b);
 		}
 
 		boolean[][] ba = new boolean[64][128];

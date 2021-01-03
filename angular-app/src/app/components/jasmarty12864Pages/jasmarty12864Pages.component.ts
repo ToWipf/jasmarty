@@ -43,12 +43,11 @@ export class Jasmarty12864PagesComponent {
         const i = (y * 4) * width + x * 4;
         const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
 
-        console.log(avg);
         if (avg > (256 / 2)) {
 
-          this.screen[y][x] = true;
-        } else {
           this.screen[y][x] = false;
+        } else {
+          this.screen[y][x] = true;
         }
 
       }
