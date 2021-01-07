@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -78,6 +79,7 @@ public class TelegramRest {
 	}
 
 	@POST
+	@PermitAll
 	@Path("sendMsgToGroup/{msg}")
 	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToGroup(sMsg);
@@ -86,6 +88,7 @@ public class TelegramRest {
 	}
 
 	@POST
+	@PermitAll
 	@Path("sendMsgToAdmin/{msg}")
 	public Response sendMsgToId(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToAdmin(sMsg);
