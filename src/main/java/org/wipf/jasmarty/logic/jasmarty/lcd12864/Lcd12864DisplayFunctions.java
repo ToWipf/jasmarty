@@ -24,57 +24,57 @@ public class Lcd12864DisplayFunctions {
 		lcd12864Cache.setScreen(new Lcd12864Page());
 	}
 
-	/**
-	 * @param x
-	 * @param y
-	 * @param col
-	 */
-	public void setPixel(int x, int y) {
-		if (x > 0 && y > 0 && -x <= 128 && y <= 64) {
-			Lcd12864Page ls = lcd12864Cache.getScreen();
-			boolean[][] ba = ls.getScreenAsBooleanArray();
-			ba[y][x] = true;
-			ls.setScreen(ba);
-			lcd12864Cache.setScreen(ls);
-		}
-	}
-
-	/**
-	 * @param x0
-	 * @param y0
-	 * @param x1
-	 * @param y1
-	 * @param col
-	 */
-	void drawLine(int x0, int y0, int x1, int y1) {
-		Lcd12864Page ls = lcd12864Cache.getScreen();
-		boolean[][] ba = ls.getScreenAsBooleanArray();
-
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		int sx = (x0 < x1) ? 1 : -1;
-		int sy = (y0 < y1) ? 1 : -1;
-		int err = dx - dy;
-
-		while (true) {
-			ba[x0][y0] = true;
-			if (x0 == x1 && y0 == y1) {
-
-				ls.setScreen(ba);
-				lcd12864Cache.setScreen(ls);
-				return;
-			}
-			int err2 = err + err;
-			if (err2 > -dy) {
-				err -= dy;
-				x0 += sx;
-			}
-			if (err2 < dx) {
-				err += dx;
-				y0 += sy;
-			}
-		}
-	}
+//	/**
+//	 * @param x
+//	 * @param y
+//	 * @param col
+//	 */
+//	public void setPixel(int x, int y) {
+//		if (x > 0 && y > 0 && -x <= 128 && y <= 64) {
+//			Lcd12864Page ls = lcd12864Cache.getScreen();
+//			boolean[][] ba = ls.getScreenAsBooleanArray();
+//			ba[y][x] = true;
+//			ls.setScreen(ba);
+//			lcd12864Cache.setScreen(ls);
+//		}
+//	}
+//
+//	/**
+//	 * @param x0
+//	 * @param y0
+//	 * @param x1
+//	 * @param y1
+//	 * @param col
+//	 */
+//	void drawLine(int x0, int y0, int x1, int y1) {
+//		Lcd12864Page ls = lcd12864Cache.getScreen();
+//		boolean[][] ba = ls.getScreenAsBooleanArray();
+//
+//		int dx = x1 - x0;
+//		int dy = y1 - y0;
+//		int sx = (x0 < x1) ? 1 : -1;
+//		int sy = (y0 < y1) ? 1 : -1;
+//		int err = dx - dy;
+//
+//		while (true) {
+//			ba[x0][y0] = true;
+//			if (x0 == x1 && y0 == y1) {
+//
+//				ls.setScreen(ba);
+//				lcd12864Cache.setScreen(ls);
+//				return;
+//			}
+//			int err2 = err + err;
+//			if (err2 > -dy) {
+//				err -= dy;
+//				x0 += sx;
+//			}
+//			if (err2 < dx) {
+//				err += dx;
+//				y0 += sy;
+//			}
+//		}
+//	}
 
 //	/**
 //	 * @param x0

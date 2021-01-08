@@ -9,20 +9,14 @@ import org.json.JSONArray;
 public class Lcd12864Page {
 
 	public static int SIZE = 1024;
-	private byte[] nScreen = new byte[SIZE];
+	// private byte[] nScreen = new byte[SIZE];
+	private boolean[][] baScreen = new boolean[64][128];
 
 	/**
 	 * 
 	 */
 	public Lcd12864Page() {
 
-	}
-
-	/**
-	 * @param nScreen
-	 */
-	public Lcd12864Page(byte[] nScreen) {
-		setScreen(nScreen);
 	}
 
 	/**
@@ -35,33 +29,64 @@ public class Lcd12864Page {
 	/**
 	 * @param nScreen
 	 */
-	public void setScreen(byte[] nScreen) {
-		this.nScreen = nScreen;
+	public Lcd12864Page(byte[] nScreen) {
+		setScreen(nScreen);
 	}
 
 	/**
-	 * @param iScreen
+	 * @param baScreen
 	 */
-	public void setScreen(int[] iScreen) {
-		for (int i = 0; i < 1024; i++) {
-			this.nScreen[i] = (byte) iScreen[i];
+	public Lcd12864Page(boolean[][] baScreen) {
+		setScreen(baScreen);
+	}
+
+	/**
+	 * baScreenList 1024
+	 * 
+	 * @return
+	 */
+	public void setScreen(byte[] baScreenList) {
+		boolean[] bTmp = new boolean[8192];
+		int nZaeler = 0;
+		for (byte bZahl : baScreenList) {
+
+			// unsigned byte
+			int nDez = bZahl & 0xFF;
+
+			for (int i = 0; i < 8; i++) {
+				bTmp[Math.abs(i - 7) + (nZaeler * 8)] = (nDez % 2 == 1 ? true : false);
+				nDez = nDez / 2;
+			}
+			nZaeler++;
+		}
+		setScreen(bTmp);
+	}
+
+	/**
+	 * 8192 lange liste
+	 * 
+	 * @param baScreenList
+	 */
+	public void setScreen(boolean[] baScreenList) {
+
+		int nLauf = 0;
+		int nRow = -1; // bei -1 anfangen
+		for (boolean b : baScreenList) {
+			int nCol = nLauf % 128;
+			if (nCol == 0) {
+				nRow++; // geht von 0 bis 63
+			}
+
+			this.baScreen[nRow][nCol] = b;
+			nLauf++; // von 0 bis 8192
 		}
 	}
 
 	/**
-	 * TODO testen ob 8 bit richtigrum
-	 * 
 	 * @param baScreen
 	 */
 	public void setScreen(boolean[][] baScreen) {
-		boolean[] ba = new boolean[SIZE * 8];
-		int i = 0;
-		for (boolean[] bRow : baScreen) {
-			for (boolean b : bRow) {
-				ba[i] = b;
-				i++;
-			}
-		}
+		this.baScreen = baScreen;
 	}
 
 	/**
@@ -85,67 +110,49 @@ public class Lcd12864Page {
 				cTmp++;
 			}
 		}
+		setScreen(baTmpFull);
+	}
 
-		int[] iScreen = new int[1024];
+	/**
+	 * @return
+	 * 
+	 */
+	public byte[] getScreenAsByteArray() {
+		boolean[] baTmpFull = getScreenAsBooleanArryInLine();
+
+		// für get als byte liste
+		byte[] iScreen = new byte[1024];
 		for (int i = 0; i < 1024; i++) {
 			int stellenstart = i * 8;
-			int tmpzahl = 0;
+			byte tmpzahl = 0;
 
 			for (int lauf = 0; lauf < 8; lauf++) {
 				if (baTmpFull[stellenstart + lauf]) {
 					// System.out.println("Truestelle " + stellenstart + " p " + lauf);
-					tmpzahl = (int) (tmpzahl + Math.pow(2, Math.abs(lauf - 7)));
+					tmpzahl = (byte) (tmpzahl + Math.pow(2, Math.abs(lauf - 7)));
 				}
 			}
 
 			iScreen[i] = tmpzahl;
 		}
-		setScreen(iScreen);
+		return iScreen;
 	}
 
 	/**
-	 * @return
-	 */
-	public byte[] getScreenAsByteArray() {
-		return nScreen;
-	}
-
-	/**
-	 * ein volles boolean array (alles hintereinander)
+	 * TODO testen ob 8 bit richtigrum
 	 * 
-	 * @return
+	 * [8192]x
+	 * 
+	 * @param baScreen
 	 */
-	public boolean[][] getScreenAsBooleanArray() {
-		boolean[] btmp = new boolean[8192];
-		int nZaeler = 0;
-		for (byte bZahl : this.nScreen) {
-
-			// unsigned byte
-			int nDez = bZahl & 0xFF;
-
-			for (int i = 0; i < 8; i++) {
-				btmp[Math.abs(i - 7) + (nZaeler * 8)] = (nDez % 2 == 1 ? true : false);
-				nDez = nDez / 2;
+	public boolean[] getScreenAsBooleanArryInLine() {
+		boolean[] ba = new boolean[SIZE * 8];
+		int i = 0;
+		for (boolean[] bRow : baScreen) {
+			for (boolean b : bRow) {
+				ba[i] = b;
+				i++;
 			}
-			nZaeler++;
-		}
-
-		for (boolean b : btmp) {
-			// Hier schon falsch -> volles byte ist leer
-			// System.out.println(b);
-		}
-
-		boolean[][] ba = new boolean[64][128];
-		int nLauf = 0;
-		int nRow = -1; // bei -1 anfangen
-		for (boolean b : btmp) {
-			int nCol = nLauf % 128;
-			if (nCol == 0) {
-				nRow++; // geht von 0 bis 63
-			}
-
-			ba[nRow][nCol] = b;
-			nLauf++; // von 0 bis 8192
 		}
 		return ba;
 	}
@@ -154,13 +161,12 @@ public class Lcd12864Page {
 	 * @return
 	 */
 	public JSONArray getScreenAsJsonArray() {
-		boolean[][] ba = getScreenAsBooleanArray();
 		JSONArray ja = new JSONArray();
 
 		for (int r = 0; r < 64; r++) {
 			JSONArray jaRow = new JSONArray();
 			for (int c = 0; c < 128; c++) {
-				jaRow.put(ba[r][c]);
+				jaRow.put(baScreen[r][c]);
 			}
 			ja.put(jaRow);
 		}
