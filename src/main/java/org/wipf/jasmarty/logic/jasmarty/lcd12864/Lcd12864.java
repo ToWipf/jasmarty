@@ -38,17 +38,15 @@ public class Lcd12864 {
 	}
 
 	/**
-	 * Schreibt cache zu lcd
+	 * Cache senden an lcd
 	 * 
 	 */
 	public void refreshDisplay() {
 		if (lcd12864Cache.isChanged()) {
-			LOGGER.info("Write 12864 LCD");
 			for (byte b : lcd12864Cache.getScreen().getScreenAsByteArray()) {
 				lcdConnect.write(b);
 			}
 			lcd12864Cache.setChanged(false);
-			LOGGER.info("END 12864 LCD");
 		}
 	}
 

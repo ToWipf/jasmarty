@@ -17,6 +17,7 @@ export class Jasmarty12864PagesComponent {
   public imageChangedEvent: any;
   public base64: any;
   public screen: boolean[][] = new Array(64).fill(false).map(() => new Array(128).fill(false));
+  public nKontrast: number = 256 / 2;
 
   public fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -43,7 +44,7 @@ export class Jasmarty12864PagesComponent {
         const i = (y * 4) * width + x * 4;
         const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
 
-        if (avg > (256 / 2)) {
+        if (avg > this.nKontrast) {
 
           this.screen[y][x] = false;
         } else {

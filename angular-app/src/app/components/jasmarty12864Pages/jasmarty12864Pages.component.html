@@ -4,5 +4,5 @@
 </ngx-photo-editor>
 
 <img [src]="base64" alt="">
-
+<input type="number" class="form-control" max="256" min="0" [(ngModel)]="nKontrast" placeholder="128">
 <button (click)="convertImgToArray()">senden</button>
