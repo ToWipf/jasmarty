@@ -17,24 +17,24 @@ public class Lcd12864DisplayFunctions {
 	Lcd12864Cache lcd12864Cache;
 
 	/**
-	 * @param ls
+	 * @param lp
 	 * @param x0
 	 * @param y0
 	 * @param x1
 	 * @param y1
 	 * @return
 	 */
-	public Lcd12864Page drawLine(Lcd12864Page ls, int x0, int y0, int x1, int y1) {
-		int dx = x1 - x0;
-		int dy = y1 - y0;
+	public Lcd12864Page drawLine(Lcd12864Page lp, int x0, int y0, int x1, int y1) {
+		int dx = Math.abs(x1 - x0);
+		int dy = Math.abs(y1 - y0);
 		int sx = (x0 < x1) ? 1 : -1;
 		int sy = (y0 < y1) ? 1 : -1;
 		int err = dx - dy;
 
 		while (true) {
-			ls.setPixel(x0, y0, true);
+			lp.setPixel(x0, y0, true);
 			if (x0 == x1 && y0 == y1) {
-				return ls;
+				return lp;
 			}
 			int err2 = err + err;
 			if (err2 > -dy) {
@@ -49,20 +49,20 @@ public class Lcd12864DisplayFunctions {
 	}
 
 	/**
-	 * @param ls
+	 * @param lp
 	 * @param x0
 	 * @param x1
 	 * @param y
 	 * @return
 	 */
-	public Lcd12864Page drawLineH(Lcd12864Page ls, int x0, int x1, int y) {
+	public Lcd12864Page drawLineH(Lcd12864Page lp, int x0, int x1, int y) {
 		if (x1 > x0)
 			for (int x = x0; x <= x1; x++)
-				ls.setPixel(x, y, true);
+				lp.setPixel(x, y, true);
 		else
 			for (int x = x1; x <= x0; x++)
-				ls.setPixel(x, y, true);
-		return ls;
+				lp.setPixel(x, y, true);
+		return lp;
 	}
 
 	/**
@@ -72,27 +72,27 @@ public class Lcd12864DisplayFunctions {
 	 * @param col
 	 * @return
 	 */
-	public Lcd12864Page drawLineV(Lcd12864Page ls, int x, int y0, int y1) {
+	public Lcd12864Page drawLineV(Lcd12864Page lp, int x, int y0, int y1) {
 		if (y1 > y0)
 			for (int y = y0; y <= y1; y++)
-				ls.setPixel(x, y, true);
+				lp.setPixel(x, y, true);
 		else
 			for (int y = y1; y <= y0; y++)
-				ls.setPixel(x, y, true);
-		return ls;
+				lp.setPixel(x, y, true);
+		return lp;
 	}
 
 	/**
-	 * @param ls
+	 * @param lp
 	 * @param x
 	 * @param y
 	 * @param w
 	 * @param h
 	 * @return
 	 */
-	public Lcd12864Page drawRect(Lcd12864Page ls, int x, int y, int w, int h) {
+	public Lcd12864Page drawRect(Lcd12864Page lp, int x, int y, int w, int h) {
 		if (x >= 128 || y >= 64)
-			return ls;
+			return lp;
 		boolean drawVright = true;
 		if (x + w > 128) {
 			w = 128 - x;
@@ -101,107 +101,55 @@ public class Lcd12864DisplayFunctions {
 		if (y + h > 64) {
 			h = 64 - y;
 		} else {
-			drawLineH(ls, x, x + w - 1, y + h - 1);
+			drawLineH(lp, x, x + w - 1, y + h - 1);
 		}
 
-		drawLineH(ls, x, x + w - 1, y);
-		drawLineV(ls, x, y + 1, y + h - 2);
+		drawLineH(lp, x, x + w - 1, y);
+		drawLineV(lp, x, y + 1, y + h - 2);
 
 		if (drawVright) {
-			drawLineV(ls, x + w - 1, y + 1, y + h - 2);
+			drawLineV(lp, x + w - 1, y + 1, y + h - 2);
 		}
-		return ls;
-	}
-
-	// dithered version (50% of brightness)
-	/**
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @param col
-	 * @return
-	 */
-	public Lcd12864Page drawRectD(Lcd12864Page ls, int x, int y, int w, int h) {
-		if (x >= 128 || y >= 64)
-			return ls;
-		boolean drawVright = true;
-		if (x + w > 128) {
-			w = 128 - x;
-			drawVright = false;
-		}
-		if (y + h > 64) {
-			h = 64 - y;
-		} else {
-			drawLineH(ls, x, x + w - 1, y + h - 1);
-		}
-		drawLineH(ls, x, x + w - 1, y);
-		drawLineV(ls, x, y + 1, y + h - 2);
-		if (drawVright) {
-			drawLineV(ls, x + w - 1, y + 1, y + h - 2);
-		}
-		return ls;
+		return lp;
 	}
 
 	/**
-	 * @param ls
+	 * @param ld
 	 * @param x
 	 * @param y
 	 * @param w
 	 * @param h
 	 * @return
 	 */
-	public Lcd12864Page fillRect(Lcd12864Page ls, int x, int y, int w, int h) {
+	public Lcd12864Page drawRectFill(Lcd12864Page ld, int x, int y, int w, int h) {
 		if (x >= 128 || y >= 64)
-			return ls;
-		if (x + w > 128)
-			w = 128 - x;
-		if (y + h > 64)
-			h = 64 - y;
-		for (int i = y; i < y + h; i++)
-			drawLineH(ls, x, x + w - 1, i);
-		return ls;
-	}
-
-	// dithered version (50% of brightness)
-	/**
-	 * @param ls
-	 * @param x
-	 * @param y
-	 * @param w
-	 * @param h
-	 * @return
-	 */
-	public Lcd12864Page fillRectD(Lcd12864Page ls, int x, int y, int w, int h) {
-		if (x >= 128 || y >= 64)
-			return ls;
+			return ld;
 		if (x + w >= 128)
 			w = 128 - x;
 		if (y + h >= 64)
 			h = 64 - y;
 		for (int i = y; i < y + h; i++)
-			drawLineH(ls, x, x + w - 1, i);
-		return ls;
+			drawLineH(ld, x, x + w - 1, i);
+		return ld;
 	}
 
-	// circle
 	/**
+	 * @param ld
 	 * @param x0
 	 * @param y0
 	 * @param radius
-	 * @param col
 	 */
-	public void drawCircle(Lcd12864Page ls, int x0, int y0, int radius) {
+	public void drawCircle(Lcd12864Page ld, int x0, int y0, int radius) {
 		int f = 1 - radius;
 		int ddF_x = 1;
 		int ddF_y = -2 * radius;
 		int x = 0;
 		int y = radius;
 
-		ls.setPixel(x0, y0 + radius, true);
-		ls.setPixel(x0, y0 - radius, true);
-		ls.setPixel(x0 + radius, y0, true);
-		ls.setPixel(x0 - radius, y0, true);
+		ld.setPixel(x0, y0 + radius, true);
+		ld.setPixel(x0, y0 - radius, true);
+		ld.setPixel(x0 + radius, y0, true);
+		ld.setPixel(x0 - radius, y0, true);
 
 		while (x < y) {
 			if (f >= 0) {
@@ -212,25 +160,26 @@ public class Lcd12864DisplayFunctions {
 			x++;
 			ddF_x += 2;
 			f += ddF_x;
-			ls.setPixel(x0 + x, y0 + y, true);
-			ls.setPixel(x0 - x, y0 + y, true);
-			ls.setPixel(x0 + x, y0 - y, true);
-			ls.setPixel(x0 - x, y0 - y, true);
-			ls.setPixel(x0 + y, y0 + x, true);
-			ls.setPixel(x0 - y, y0 + x, true);
-			ls.setPixel(x0 + y, y0 - x, true);
-			ls.setPixel(x0 - y, y0 - x, true);
+			ld.setPixel(x0 + x, y0 + y, true);
+			ld.setPixel(x0 - x, y0 + y, true);
+			ld.setPixel(x0 + x, y0 - y, true);
+			ld.setPixel(x0 - x, y0 - y, true);
+			ld.setPixel(x0 + y, y0 + x, true);
+			ld.setPixel(x0 - y, y0 + x, true);
+			ld.setPixel(x0 + y, y0 - x, true);
+			ld.setPixel(x0 - y, y0 - x, true);
 		}
 	}
 
 	/**
-	 * @param ls
+	 * @param ld
 	 * @param x0
 	 * @param y0
 	 * @param r
+	 * @return
 	 */
-	void fillCircle(Lcd12864Page ls, int x0, int y0, int r) {
-		drawLineH(ls, x0 - r, x0 - r + 2 * r + 1, y0);
+	public Lcd12864Page drawCircleFill(Lcd12864Page ld, int x0, int y0, int r) {
+		drawLineH(ld, x0 - r, x0 - r + 2 * r + 1, y0);
 		int f = 1 - r;
 		int ddF_x = 1;
 		int ddF_y = -2 * r;
@@ -246,42 +195,12 @@ public class Lcd12864DisplayFunctions {
 			x++;
 			ddF_x += 2;
 			f += ddF_x;
-			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 + y);
-			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 + x);
-			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 - y);
-			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 - x);
+			drawLineH(ld, x0 - x, x0 - x + 2 * x + 1, y0 + y);
+			drawLineH(ld, x0 - y, x0 - y + 2 * y + 1, y0 + x);
+			drawLineH(ld, x0 - x, x0 - x + 2 * x + 1, y0 - y);
+			drawLineH(ld, x0 - y, x0 - y + 2 * y + 1, y0 - x);
 		}
-	}
-
-	// dithered version (50% of brightness)
-	/**
-	 * @param x0
-	 * @param y0
-	 * @param r
-	 * @param col
-	 */
-	public void fillCircleD(Lcd12864Page ls, int x0, int y0, int r) {
-		drawLineH(ls, x0 - r, x0 - r + 2 * r + 1, y0);
-		int f = 1 - r;
-		int ddF_x = 1;
-		int ddF_y = -2 * r;
-		int x = 0;
-		int y = r;
-
-		while (x < y) {
-			if (f >= 0) {
-				y--;
-				ddF_y += 2;
-				f += ddF_y;
-			}
-			x++;
-			ddF_x += 2;
-			f += ddF_x;
-			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 + y);
-			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 + x);
-			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 - y);
-			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 - x);
-		}
+		return ld;
 	}
 
 //	// ----------------------------------------------------------------

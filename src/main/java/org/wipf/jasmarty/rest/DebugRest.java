@@ -99,7 +99,7 @@ public class DebugRest {
 	@GET
 	@Path("lcd12864/testdf")
 	public Response lcd12864testdf() {
-		lcd12864.testDF();
+		lcd12864.testDisplayFunctions();
 		return Response.ok().build();
 	}
 

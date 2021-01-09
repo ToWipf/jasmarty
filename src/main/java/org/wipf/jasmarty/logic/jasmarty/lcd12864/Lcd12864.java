@@ -67,12 +67,35 @@ public class Lcd12864 {
 	/**
 	 * 
 	 */
-	public void testDF() {
-		Lcd12864Page lp = new Lcd12864Page();
-		lcd12864DisplayFunctions.drawCircle(lp, 5, 5, 5);
-		lcd12864DisplayFunctions.drawRect(lp, 8, 5, 6, 9);
-
-		lcd12864Cache.setScreen(lp);
+	public void testDisplayFunctions() {
+		System.out.println("test1");
+		for (int i = 0; i <= 128; i++) {
+			Lcd12864Page lp = new Lcd12864Page();
+			lcd12864DisplayFunctions.drawCircleFill(lp, 64, 32, i / 3);
+			lcd12864DisplayFunctions.drawLineH(lp, 0, 128, i / 2);
+			lcd12864Cache.setScreen(lp);
+			wipf.sleep(220);
+			System.out.println(i);
+		}
+		System.out.println("test2");
+		for (int i = 0; i <= 128; i++) {
+			Lcd12864Page lp = new Lcd12864Page();
+			lcd12864DisplayFunctions.drawRectFill(lp, 0, 0, i, i / 2);
+			lcd12864DisplayFunctions.drawLineV(lp, i, 0, 64);
+			lcd12864Cache.setScreen(lp);
+			wipf.sleep(220);
+			System.out.println(i);
+		}
+		System.out.println("test3");
+		for (int i = 0; i <= 128; i++) {
+			Lcd12864Page lp = new Lcd12864Page();
+			lcd12864DisplayFunctions.drawLine(lp, 64, 32, i, i / 2);
+			lcd12864DisplayFunctions.drawCircle(lp, 64, 32, i / 3);
+			lcd12864DisplayFunctions.drawRect(lp, 0, 0, i, i / 2);
+			lcd12864Cache.setScreen(lp);
+			wipf.sleep(220);
+			System.out.println(i);
+		}
 	}
 
 	/**
