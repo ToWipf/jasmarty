@@ -8,7 +8,6 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 /**
  * @author Wipf
  * 
- *         Alles was nicht auf true gesetzt wird ist false
  *
  */
 @ApplicationScoped
@@ -285,58 +284,13 @@ public class Lcd12864DisplayFunctions {
 		}
 	}
 
-//	/**
-//	 * @param s
-//	 */
-//	public void setDither(int s) {
-//		if (s > 16)
-//			return;
-//		pattern[0] = pgm_read_byte(ditherTab + s * 4 + 0);
-//		pattern[1] = pgm_read_byte(ditherTab + s * 4 + 1);
-//		pattern[2] = pgm_read_byte(ditherTab + s * 4 + 2);
-//		pattern[3] = pgm_read_byte(ditherTab + s * 4 + 3);
-//	}
-//
-//	/**
-//	 * @return
-//	 */
-//	public int drawBitmap(const int *bmp, int x, int y, int w, int h)
-//	{
-//	  int wdb = w;
-//	  ALIGNMENT;
-//	  byte i,j8,d,b,ht8=(h+7)/8;
-//	  for(j8=0; j8<ht8; j8++) {
-//	    for(i=0; i<w; i++) {
-//	      byte mask = 0x80 >> ((x+i)&7);
-//	      d = pgm_read_byte(bmp+wdb*j8+i);
-//	      int lastbit = h - j8 * 8;
-//	      if (lastbit > 8) lastbit = 8;
-//	      for(b=0; b<lastbit; b++) {
-//	         if(d & 1) scr[(y+j8*8+b)*scrWd+(x+i)/8] |= mask;
-//	         d>>=1;
-//	      }
-//	    }
-//	  }
-//	  return x+w;
-//	}
-//
-//	/**
-//	 * @return
-//	 */
-//	int drawBitmap(const int *bmp, int x, int y)
-//	{
-//	  int w = pgm_read_byte(bmp+0);
-//	  int h = pgm_read_byte(bmp+1);
-//	  return drawBitmap(bmp+2, x, y, w, h);
-//	}
-//
 //	// ----------------------------------------------------------------
 //	// text rendering
 //	// ----------------------------------------------------------------
 //	/**
 //	 * 
 //	 */
-//	void setFont(const int* font)
+//	void setFont(int font)
 //	{
 //	  cfont.font = font;
 //	  cfont.xSize = fontbyte(0);
@@ -378,19 +332,17 @@ public class Lcd12864DisplayFunctions {
 //	  }
 //	  return last ? wd+wdL+wdR : wd+wdL+wdR-spacing;  // last!=0 -> get rid of last empty columns 
 //	}
-
-///**
-// * @return
-// */
-//public int strWidth(char *str)
-//	{
+//
+//	/**
+//	 * @return
+// 	*/
+//	public int strWidth(String str) {
 //	  int wd = 0;
 //	  while (*str) wd += charWidth(*str++);
 //	  return wd;
 //	}
-//	// ----------------------------------------------------------------
-//	int ST7920_SPI::printChar(int xpos, int ypos, unsigned char c)
-//	{
+//
+//	public int printChar(int xpos, int ypos, char c) {
 //	  if(xpos >= 128 || ypos >= 64)  return 0;
 //	  int fht8 = (cfont.ySize + 7) / 8, wd, fwd = cfont.xSize;
 //	  if(fwd < 0)  fwd = -fwd;
@@ -436,9 +388,8 @@ public class Lcd12864DisplayFunctions {
 //	 * @param ypos
 //	 * @return
 //	 */
-//	public int printStr(int xpos, int ypos, char *str)
-//	{
-//	  unsigned char ch;
+//	public int printStr(int xpos, int ypos, String str) {
+//	  char ch;
 //	  int stl, row;
 //	  int x = xpos;
 //	  int y = ypos;

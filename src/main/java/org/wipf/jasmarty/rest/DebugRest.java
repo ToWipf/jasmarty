@@ -97,6 +97,14 @@ public class DebugRest {
 
 	@POST
 	@GET
+	@Path("lcd12864/testdf")
+	public Response lcd12864testdf() {
+		lcd12864.testDF();
+		return Response.ok().build();
+	}
+
+	@POST
+	@GET
 	@Path("lcd/write/{x}/{y}/{str}")
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
 		lcd2004.writeLineToCache(x, y, s.toCharArray());

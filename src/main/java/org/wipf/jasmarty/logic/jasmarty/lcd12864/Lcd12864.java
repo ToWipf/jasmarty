@@ -22,6 +22,8 @@ public class Lcd12864 {
 	@Inject
 	Lcd12864Cache lcd12864Cache;
 	@Inject
+	Lcd12864DisplayFunctions lcd12864DisplayFunctions;
+	@Inject
 	Wipf wipf;
 
 	/**
@@ -60,6 +62,17 @@ public class Lcd12864 {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);
 		}
 		lcd12864Cache.setScreen(new Lcd12864Page(bsRnd));
+	}
+
+	/**
+	 * 
+	 */
+	public void testDF() {
+		Lcd12864Page lp = new Lcd12864Page();
+		lcd12864DisplayFunctions.drawCircle(lp, 5, 5, 5);
+		lcd12864DisplayFunctions.drawRect(lp, 8, 5, 6, 9);
+
+		lcd12864Cache.setScreen(lp);
 	}
 
 	/**
