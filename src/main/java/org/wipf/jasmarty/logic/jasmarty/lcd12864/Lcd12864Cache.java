@@ -12,13 +12,13 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 public class Lcd12864Cache {
 
 	private boolean bChanged = true;
-	private Lcd12864Page pScreen = new Lcd12864Page();
+	private Lcd12864Page page = new Lcd12864Page();
 
 	/**
 	 * @return
 	 */
-	public Lcd12864Page getScreen() {
-		return pScreen;
+	public Lcd12864Page getPage() {
+		return page;
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class Lcd12864Cache {
 	 */
 	public void setScreen(Lcd12864Page pScreen) {
 		this.bChanged = true;
-		this.pScreen = pScreen;
+		this.page = pScreen;
 	}
 
 	/**

@@ -114,6 +114,22 @@ public class Lcd12864Page {
 	}
 
 	/**
+	 * @param x
+	 * @param y
+	 * @param b
+	 */
+	public void setPixel(int x, int y, boolean b) {
+		this.baScreen[x][y] = b;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean[][] getScreen() {
+		return this.baScreen;
+	}
+
+	/**
 	 * @return
 	 * 
 	 */

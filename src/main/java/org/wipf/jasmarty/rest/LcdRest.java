@@ -106,6 +106,6 @@ public class LcdRest {
 	@GET
 	@Path("12864/getScreen")
 	public Response setScreen() {
-		return Response.ok(lcd12864Cache.getScreen().getScreenAsJsonArray().toString()).build();
+		return Response.ok(lcd12864Cache.getPage().getScreenAsJsonArray().toString()).build();
 	}
 }

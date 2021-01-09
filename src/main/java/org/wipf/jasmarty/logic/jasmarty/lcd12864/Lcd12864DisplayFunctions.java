@@ -18,286 +18,273 @@ public class Lcd12864DisplayFunctions {
 	Lcd12864Cache lcd12864Cache;
 
 	/**
-	 * 
+	 * @param ls
+	 * @param x0
+	 * @param y0
+	 * @param x1
+	 * @param y1
+	 * @return
 	 */
-	public void cls() {
-		lcd12864Cache.setScreen(new Lcd12864Page());
+	public Lcd12864Page drawLine(Lcd12864Page ls, int x0, int y0, int x1, int y1) {
+		int dx = x1 - x0;
+		int dy = y1 - y0;
+		int sx = (x0 < x1) ? 1 : -1;
+		int sy = (y0 < y1) ? 1 : -1;
+		int err = dx - dy;
+
+		while (true) {
+			ls.setPixel(x0, y0, true);
+			if (x0 == x1 && y0 == y1) {
+				return ls;
+			}
+			int err2 = err + err;
+			if (err2 > -dy) {
+				err -= dy;
+				x0 += sx;
+			}
+			if (err2 < dx) {
+				err += dx;
+				y0 += sy;
+			}
+		}
 	}
 
-//	/**
-//	 * @param x
-//	 * @param y
-//	 * @param col
-//	 */
-//	public void setPixel(int x, int y) {
-//		if (x > 0 && y > 0 && -x <= 128 && y <= 64) {
-//			Lcd12864Page ls = lcd12864Cache.getScreen();
-//			boolean[][] ba = ls.getScreenAsBooleanArray();
-//			ba[y][x] = true;
-//			ls.setScreen(ba);
-//			lcd12864Cache.setScreen(ls);
-//		}
-//	}
-//
-//	/**
-//	 * @param x0
-//	 * @param y0
-//	 * @param x1
-//	 * @param y1
-//	 * @param col
-//	 */
-//	void drawLine(int x0, int y0, int x1, int y1) {
-//		Lcd12864Page ls = lcd12864Cache.getScreen();
-//		boolean[][] ba = ls.getScreenAsBooleanArray();
-//
-//		int dx = x1 - x0;
-//		int dy = y1 - y0;
-//		int sx = (x0 < x1) ? 1 : -1;
-//		int sy = (y0 < y1) ? 1 : -1;
-//		int err = dx - dy;
-//
-//		while (true) {
-//			ba[x0][y0] = true;
-//			if (x0 == x1 && y0 == y1) {
-//
-//				ls.setScreen(ba);
-//				lcd12864Cache.setScreen(ls);
-//				return;
-//			}
-//			int err2 = err + err;
-//			if (err2 > -dy) {
-//				err -= dy;
-//				x0 += sx;
-//			}
-//			if (err2 < dx) {
-//				err += dx;
-//				y0 += sy;
-//			}
-//		}
-//	}
+	/**
+	 * @param ls
+	 * @param x0
+	 * @param x1
+	 * @param y
+	 * @return
+	 */
+	public Lcd12864Page drawLineH(Lcd12864Page ls, int x0, int x1, int y) {
+		if (x1 > x0)
+			for (int x = x0; x <= x1; x++)
+				ls.setPixel(x, y, true);
+		else
+			for (int x = x1; x <= x0; x++)
+				ls.setPixel(x, y, true);
+		return ls;
+	}
 
-//	/**
-//	 * @param x0
-//	 * @param x1
-//	 * @param y
-//	 * @param col
-//	 */
-//	public void drawLineH(int x0, int x1, int y, int col) {
-//		if (x1 > x0)
-//			for (int x = x0; x <= x1; x++)
-//				drawPixel(x, y, col);
-//		else
-//			for (int x = x1; x <= x0; x++)
-//				drawPixel(x, y, col);
-//	}
-//
-//	/**
-//	 * @param x
-//	 * @param y0
-//	 * @param y1
-//	 * @param col
-//	 */
-//	void drawLineV(int x, int y0, int y1, int col) {
-//		if (y1 > y0)
-//			for (int y = y0; y <= y1; y++)
-//				drawPixel(x, y, col);
-//		else
-//			for (int y = y1; y <= y0; y++)
-//				drawPixel(x, y, col);
-//	}
-//
-//	/**
-//	 * @param x
-//	 * @param y
-//	 * @param w
-//	 * @param h
-//	 * @param col
-//	 */
-//	public void drawRect(int x, int y, int w, int h, int col) {
-//		if (x >= SCR_WD || y >= SCR_HT)
-//			return;
-//		byte drawVright = 1;
-//		if (x + w > SCR_WD) {
-//			w = SCR_WD - x;
-//			drawVright = 0;
-//		}
-//		if (y + h > SCR_HT)
-//			h = SCR_HT - y;
-//		else
-//			drawLineHfast(x, x + w - 1, y + h - 1, col);
-//		drawLineHfast(x, x + w - 1, y, col);
-//		drawLineVfast(x, y + 1, y + h - 2, col);
-//		if (drawVright)
-//			drawLineVfast(x + w - 1, y + 1, y + h - 2, col);
-//	}
-//
-//	// ----------------------------------------------------------------
-//	// dithered version (50% of brightness)
-//	/**
-//	 * @param x
-//	 * @param y
-//	 * @param w
-//	 * @param h
-//	 * @param col
-//	 */
-//	public void drawRectD(int x, int y, int w, int h, int col) {
-//		if (x >= SCR_WD || y >= SCR_HT)
-//			return;
-//		byte drawVright = 1;
-//		if (x + w > SCR_WD) {
-//			w = SCR_WD - x;
-//			drawVright = 0;
-//		}
-//		if (y + h > SCR_HT)
-//			h = SCR_HT - y;
-//		else
-//			drawLineHfastD(x, x + w - 1, y + h - 1, col);
-//		drawLineHfastD(x, x + w - 1, y, col);
-//		drawLineVfastD(x, y + 1, y + h - 2, col);
-//		if (drawVright)
-//			drawLineVfastD(x + w - 1, y + 1, y + h - 2, col);
-//	}
-//
-//	/**
-//	 * @param x
-//	 * @param y
-//	 * @param w
-//	 * @param h
-//	 * @param col
-//	 */
-//	public void fillRect(int x, int y, int w, int h, int col) {
-//		if (x >= SCR_WD || y >= SCR_HT)
-//			return;
-//		if (x + w > SCR_WD)
-//			w = SCR_WD - x;
-//		if (y + h > SCR_HT)
-//			h = SCR_HT - y;
-//		for (int i = y; i < y + h; i++)
-//			drawLineHfast(x, x + w - 1, i, col);
-//	}
-//
-//	// ----------------------------------------------------------------
-//	// dithered version (50% of brightness)
-//	/**
-//	 * @param x
-//	 * @param y
-//	 * @param w
-//	 * @param h
-//	 * @param col
-//	 */
-//	public void fillRectD(int x, int y, int w, int h, int col) {
-//		if (x >= SCR_WD || y >= SCR_HT)
-//			return;
-//		if (x + w >= SCR_WD)
-//			w = SCR_WD - x;
-//		if (y + h >= SCR_HT)
-//			h = SCR_HT - y;
-//		for (int i = y; i < y + h; i++)
-//			drawLineHfastD(x, x + w - 1, i, col);
-//	}
-//
-//	// ----------------------------------------------------------------
-//	// circle
-//	/**
-//	 * @param x0
-//	 * @param y0
-//	 * @param radius
-//	 * @param col
-//	 */
-//	public void drawCircle(int x0, int y0, int radius, int col) {
-//		int f = 1 - radius;
-//		int ddF_x = 1;
-//		int ddF_y = -2 * radius;
-//		int x = 0;
-//		int y = radius;
-//
-//		drawPixel(x0, y0 + radius, col);
-//		drawPixel(x0, y0 - radius, col);
-//		drawPixel(x0 + radius, y0, col);
-//		drawPixel(x0 - radius, y0, col);
-//
-//		while (x < y) {
-//			if (f >= 0) {
-//				y--;
-//				ddF_y += 2;
-//				f += ddF_y;
-//			}
-//			x++;
-//			ddF_x += 2;
-//			f += ddF_x;
-//			drawPixel(x0 + x, y0 + y, col);
-//			drawPixel(x0 - x, y0 + y, col);
-//			drawPixel(x0 + x, y0 - y, col);
-//			drawPixel(x0 - x, y0 - y, col);
-//			drawPixel(x0 + y, y0 + x, col);
-//			drawPixel(x0 - y, y0 + x, col);
-//			drawPixel(x0 + y, y0 - x, col);
-//			drawPixel(x0 - y, y0 - x, col);
-//		}
-//	}
-//
-//	/**
-//	 * @param x0
-//	 * @param y0
-//	 * @param r
-//	 * @param col
-//	 */
-//	void fillCircle(int x0, int y0, int r, int col) {
-//		drawLineHfast(x0 - r, x0 - r + 2 * r + 1, y0, col);
-//		int16_t f = 1 - r;
-//		int16_t ddF_x = 1;
-//		int16_t ddF_y = -2 * r;
-//		int16_t x = 0;
-//		int16_t y = r;
-//
-//		while (x < y) {
-//			if (f >= 0) {
-//				y--;
-//				ddF_y += 2;
-//				f += ddF_y;
-//			}
-//			x++;
-//			ddF_x += 2;
-//			f += ddF_x;
-//			drawLineHfast(x0 - x, x0 - x + 2 * x + 1, y0 + y, col);
-//			drawLineHfast(x0 - y, x0 - y + 2 * y + 1, y0 + x, col);
-//			drawLineHfast(x0 - x, x0 - x + 2 * x + 1, y0 - y, col);
-//			drawLineHfast(x0 - y, x0 - y + 2 * y + 1, y0 - x, col);
-//		}
-//	}
-//
-//	// ----------------------------------------------------------------
-//	// dithered version (50% of brightness)
-//	/**
-//	 * @param x0
-//	 * @param y0
-//	 * @param r
-//	 * @param col
-//	 */
-//	public void fillCircleD(int x0, int y0, int r, int col) {
-//		drawLineHfastD(x0 - r, x0 - r + 2 * r + 1, y0, col);
-//		int16_t f = 1 - r;
-//		int16_t ddF_x = 1;
-//		int16_t ddF_y = -2 * r;
-//		int16_t x = 0;
-//		int16_t y = r;
-//
-//		while (x < y) {
-//			if (f >= 0) {
-//				y--;
-//				ddF_y += 2;
-//				f += ddF_y;
-//			}
-//			x++;
-//			ddF_x += 2;
-//			f += ddF_x;
-//			drawLineHfastD(x0 - x, x0 - x + 2 * x + 1, y0 + y, col);
-//			drawLineHfastD(x0 - y, x0 - y + 2 * y + 1, y0 + x, col);
-//			drawLineHfastD(x0 - x, x0 - x + 2 * x + 1, y0 - y, col);
-//			drawLineHfastD(x0 - y, x0 - y + 2 * y + 1, y0 - x, col);
-//		}
-//	}
-//
+	/**
+	 * @param x
+	 * @param y0
+	 * @param y1
+	 * @param col
+	 * @return
+	 */
+	public Lcd12864Page drawLineV(Lcd12864Page ls, int x, int y0, int y1) {
+		if (y1 > y0)
+			for (int y = y0; y <= y1; y++)
+				ls.setPixel(x, y, true);
+		else
+			for (int y = y1; y <= y0; y++)
+				ls.setPixel(x, y, true);
+		return ls;
+	}
+
+	/**
+	 * @param ls
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	public Lcd12864Page drawRect(Lcd12864Page ls, int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return ls;
+		boolean drawVright = true;
+		if (x + w > 128) {
+			w = 128 - x;
+			drawVright = false;
+		}
+		if (y + h > 64) {
+			h = 64 - y;
+		} else {
+			drawLineH(ls, x, x + w - 1, y + h - 1);
+		}
+
+		drawLineH(ls, x, x + w - 1, y);
+		drawLineV(ls, x, y + 1, y + h - 2);
+
+		if (drawVright) {
+			drawLineV(ls, x + w - 1, y + 1, y + h - 2);
+		}
+		return ls;
+	}
+
+	// dithered version (50% of brightness)
+	/**
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @param col
+	 * @return
+	 */
+	public Lcd12864Page drawRectD(Lcd12864Page ls, int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return ls;
+		boolean drawVright = true;
+		if (x + w > 128) {
+			w = 128 - x;
+			drawVright = false;
+		}
+		if (y + h > 64) {
+			h = 64 - y;
+		} else {
+			drawLineH(ls, x, x + w - 1, y + h - 1);
+		}
+		drawLineH(ls, x, x + w - 1, y);
+		drawLineV(ls, x, y + 1, y + h - 2);
+		if (drawVright) {
+			drawLineV(ls, x + w - 1, y + 1, y + h - 2);
+		}
+		return ls;
+	}
+
+	/**
+	 * @param ls
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	public Lcd12864Page fillRect(Lcd12864Page ls, int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return ls;
+		if (x + w > 128)
+			w = 128 - x;
+		if (y + h > 64)
+			h = 64 - y;
+		for (int i = y; i < y + h; i++)
+			drawLineH(ls, x, x + w - 1, i);
+		return ls;
+	}
+
+	// dithered version (50% of brightness)
+	/**
+	 * @param ls
+	 * @param x
+	 * @param y
+	 * @param w
+	 * @param h
+	 * @return
+	 */
+	public Lcd12864Page fillRectD(Lcd12864Page ls, int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return ls;
+		if (x + w >= 128)
+			w = 128 - x;
+		if (y + h >= 64)
+			h = 64 - y;
+		for (int i = y; i < y + h; i++)
+			drawLineH(ls, x, x + w - 1, i);
+		return ls;
+	}
+
+	// circle
+	/**
+	 * @param x0
+	 * @param y0
+	 * @param radius
+	 * @param col
+	 */
+	public void drawCircle(Lcd12864Page ls, int x0, int y0, int radius) {
+		int f = 1 - radius;
+		int ddF_x = 1;
+		int ddF_y = -2 * radius;
+		int x = 0;
+		int y = radius;
+
+		ls.setPixel(x0, y0 + radius, true);
+		ls.setPixel(x0, y0 - radius, true);
+		ls.setPixel(x0 + radius, y0, true);
+		ls.setPixel(x0 - radius, y0, true);
+
+		while (x < y) {
+			if (f >= 0) {
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x;
+			ls.setPixel(x0 + x, y0 + y, true);
+			ls.setPixel(x0 - x, y0 + y, true);
+			ls.setPixel(x0 + x, y0 - y, true);
+			ls.setPixel(x0 - x, y0 - y, true);
+			ls.setPixel(x0 + y, y0 + x, true);
+			ls.setPixel(x0 - y, y0 + x, true);
+			ls.setPixel(x0 + y, y0 - x, true);
+			ls.setPixel(x0 - y, y0 - x, true);
+		}
+	}
+
+	/**
+	 * @param ls
+	 * @param x0
+	 * @param y0
+	 * @param r
+	 */
+	void fillCircle(Lcd12864Page ls, int x0, int y0, int r) {
+		drawLineH(ls, x0 - r, x0 - r + 2 * r + 1, y0);
+		int f = 1 - r;
+		int ddF_x = 1;
+		int ddF_y = -2 * r;
+		int x = 0;
+		int y = r;
+
+		while (x < y) {
+			if (f >= 0) {
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x;
+			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 + y);
+			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 + x);
+			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 - y);
+			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 - x);
+		}
+	}
+
+	// dithered version (50% of brightness)
+	/**
+	 * @param x0
+	 * @param y0
+	 * @param r
+	 * @param col
+	 */
+	public void fillCircleD(Lcd12864Page ls, int x0, int y0, int r) {
+		drawLineH(ls, x0 - r, x0 - r + 2 * r + 1, y0);
+		int f = 1 - r;
+		int ddF_x = 1;
+		int ddF_y = -2 * r;
+		int x = 0;
+		int y = r;
+
+		while (x < y) {
+			if (f >= 0) {
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x;
+			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 + y);
+			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 + x);
+			drawLineH(ls, x0 - x, x0 - x + 2 * x + 1, y0 - y);
+			drawLineH(ls, x0 - y, x0 - y + 2 * y + 1, y0 - x);
+		}
+	}
+
 //	/**
 //	 * @param s
 //	 */
@@ -404,7 +391,7 @@ public class Lcd12864DisplayFunctions {
 //	// ----------------------------------------------------------------
 //	int ST7920_SPI::printChar(int xpos, int ypos, unsigned char c)
 //	{
-//	  if(xpos >= SCR_WD || ypos >= SCR_HT)  return 0;
+//	  if(xpos >= 128 || ypos >= 64)  return 0;
 //	  int fht8 = (cfont.ySize + 7) / 8, wd, fwd = cfont.xSize;
 //	  if(fwd < 0)  fwd = -fwd;
 //
@@ -425,9 +412,9 @@ public class Lcd12864DisplayFunctions {
 //	    wdL = (cfont.minCharWd-wd)/2;
 //	    wdR += (cfont.minCharWd-wd-wdL);
 //	  }
-//	  if(xpos+wd+wdL+wdR>SCR_WD) wdR = max(SCR_WD-xpos-wdL-wd, 0);
-//	  if(xpos+wd+wdL+wdR>SCR_WD) wd  = max(SCR_WD-xpos-wdL, 0);
-//	  if(xpos+wd+wdL+wdR>SCR_WD) wdL = max(SCR_WD-xpos, 0);
+//	  if(xpos+wd+wdL+wdR>128) wdR = max(128-xpos-wdL-wd, 0);
+//	  if(xpos+wd+wdL+wdR>128) wd  = max(128-xpos-wdL, 0);
+//	  if(xpos+wd+wdL+wdR>128) wdL = max(128-xpos, 0);
 //
 //	  for(x=0; x<wd; x++) {
 //	    byte mask = 0x80 >> ((xpos+x+wdL)&7);
@@ -458,18 +445,18 @@ public class Lcd12864DisplayFunctions {
 //	  int wd = strWidth(str);
 //
 //	  if(x==-1) // right = -1
-//	    x = SCR_WD - wd;
+//	    x = 128 - wd;
 //	  else if(x<0) // center = -2
-//	    x = (SCR_WD - wd) / 2;
+//	    x = (128 - wd) / 2;
 //	  if(x<0) x = 0; // left
 //
 //	  while(*str) {
 //	    int wd = printChar(x,y,*str++);
 //	    x+=wd;
-//	    if(cr && x>=SCR_WD) { 
+//	    if(cr && x>=128) { 
 //	      x=0; 
 //	      y+=cfont.ySize; 
-//	      if(y>SCR_HT) y = 0;
+//	      if(y>64) y = 0;
 //	    }
 //	  }
 //	  if(invertCh) fillRect(xpos,x-1,y,y+cfont.ySize+1,2);

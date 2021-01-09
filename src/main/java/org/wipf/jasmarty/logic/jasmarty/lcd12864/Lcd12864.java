@@ -43,7 +43,7 @@ public class Lcd12864 {
 	 */
 	public void refreshDisplay() {
 		if (lcd12864Cache.isChanged()) {
-			for (byte b : lcd12864Cache.getScreen().getScreenAsByteArray()) {
+			for (byte b : lcd12864Cache.getPage().getScreenAsByteArray()) {
 				lcdConnect.write(b);
 			}
 			lcd12864Cache.setChanged(false);
