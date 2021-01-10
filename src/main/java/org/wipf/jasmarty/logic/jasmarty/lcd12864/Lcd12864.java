@@ -70,7 +70,7 @@ public class Lcd12864 {
 	public void testDisplayText() {
 		Lcd12864Page lp = new Lcd12864Page();
 		lcd12864DisplayFunctions.drawChar(lp, 0, 0, '!');
-		lcd12864DisplayFunctions.drawChar(lp, 10, 10, '2');
+		lcd12864DisplayFunctions.drawStr(lp, 20, 10, "Hallo Welt!");
 		lcd12864Cache.setScreen(lp);
 	}
 

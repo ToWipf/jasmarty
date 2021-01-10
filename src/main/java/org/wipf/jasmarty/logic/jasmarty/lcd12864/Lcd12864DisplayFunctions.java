@@ -205,159 +205,69 @@ public class Lcd12864DisplayFunctions {
 		return ld;
 	}
 
-//	 * @param c
-//	 * @param last
-//	 * @return
-//	 */
-//	int charWidth(int c, bool last)
-//	{
-//	  c = convertPolish(c);
-//	  if (c < cfont.firstCh || c > cfont.lastCh)
-//	      return c==' ' ?  1 + cfont.xSize/2 : 0;
-//	  if (cfont.xSize > 0) return cfont.xSize;
-//	  int ys8=(cfont.ySize+7)/8;
-//	  int idx = 4 + (c-cfont.firstCh)*(-cfont.xSize*ys8+1);
-//	  int wd = pgm_read_byte(cfont.font + idx);
-//	  int wdL = 0, wdR = spacing; // default spacing before and behind char
-//	  if((*isNumberFun)(c)) {
-//	    if(cfont.minDigitWd>wd) {
-//	      wdL = (cfont.minDigitWd-wd)/2;
-//	      wdR += (cfont.minDigitWd-wd-wdL);
-//	    }
-//	  } else
-//	  if(cfont.minCharWd>wd) {
-//	    wdL = (cfont.minCharWd-wd)/2;
-//	    wdR += (cfont.minCharWd-wd-wdL);
-//	  }
-//	  return last ? wd+wdL+wdR : wd+wdL+wdR-spacing;  // last!=0 -> get rid of last empty columns 
-//	}
-//
-//	/**
-//	 * @return
-// 	*/
-//	public int strWidth(String str) {
-//	  int wd = 0;
-//	  while (*str) wd += charWidth(*str++);
-//	  return wd;
-//	}
-//
-
+	/**
+	 * @param ld
+	 * @param xpos
+	 * @param ypos
+	 * @param c
+	 * @return
+	 */
 	public Lcd12864Page drawChar(Lcd12864Page ld, int xpos, int ypos, char c) {
-		int fontSizeX = 5;
-		int fontSizeY = 7;
-
 		if (xpos >= 128 || ypos >= 64) {
 			return ld;
 		}
 
 		byte[] zeichen = fonts.getFont1(c);
 
-		for (int xc = 0; xc < fontSizeX; xc++) {
+		for (int xc = 0; xc < fonts.getFont1X; xc++) {
 			// bauplan laden
 			boolean[] zeichenLine = booleanArrayFromByte(zeichen[xc]);
 
-			for (int yc = 0; yc < fontSizeY; yc++) {
+			for (int yc = 0; yc < fonts.getFont1Y; yc++) {
 
 				if (zeichenLine[yc]) {
 					ld.setPixel(xc + xpos, yc + ypos, true);
 				}
 			}
 		}
-
 		return ld;
 	}
 
 	/**
-	 * @param x
+	 * @param ld
+	 * @param xpos
+	 * @param ypos
+	 * @param str
 	 * @return
 	 */
-	private boolean[] booleanArrayFromByte(byte x) {
-		boolean bs[] = new boolean[8];
-		bs[0] = ((x & 0x01) != 0);
-		bs[1] = ((x & 0x02) != 0);
-		bs[2] = ((x & 0x04) != 0);
-		bs[3] = ((x & 0x08) != 0);
-		bs[4] = ((x & 0x10) != 0);
-		bs[5] = ((x & 0x20) != 0);
-		bs[6] = ((x & 0x40) != 0);
-		bs[7] = ((x & 0x80) != 0);
-		return bs;
+	public Lcd12864Page drawStr(Lcd12864Page ld, int xpos, int ypos, String str) {
+		int x = xpos;
+		int y = ypos;
+		int wd = str.length() * 8;
+
+		if (x == -1) // right = -1
+			x = 128 - wd;
+		else if (x < 0) // center = -2
+			x = (128 - wd) / 2;
+		if (x < 0)
+			x = 0; // left
+
+		for (char c : str.toCharArray()) {
+			ld = drawChar(ld, x, y, c);
+			x += wd;
+			if (x >= 128) {
+				x = 0;
+				y += fonts.getFont1Y;
+				if (y > 64)
+					y = 0;
+			}
+		}
+
+		if (true == true) { // TODO ?
+			drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
+		}
+		return ld;
 	}
-
-//	  int fht8 = (fontSizeY + 7) / 8, wd, fwd = fontSizeX;
-//	  if(fwd < 0) {
-//		  fwd = -fwd;
-//	  }
-
-	// c = convertPolish(c);
-	// if(c < cfont.firstCh || c > cfont.lastCh) {
-	// return c==' ' ? 1 + fwd/2 : 0;
-	// }
-
-//	  int x,y8,b,cdata = (c - cfont.firstCh) * (fwd*fht8+1) + 4;
-//	  byte d;
-//	  
-//	  wd = fontbyte(cdata++);
-//	  int wdL = 0, wdR = spacing;
-//	  if((*isNumberFun)(c)) {
-//	    if(cfont.minDigitWd>wd) {
-//	      wdL = (cfont.minDigitWd-wd)/2;
-//	      wdR += (cfont.minDigitWd-wd-wdL);
-//	    }
-//	  } else
-//	  if(cfont.minCharWd>wd) {
-//	    wdL = (cfont.minCharWd-wd)/2;
-//	    wdR += (cfont.minCharWd-wd-wdL);
-//	  }
-//	  if(xpos+wd+wdL+wdR>128) wdR = max(128-xpos-wdL-wd, 0);
-//	  if(xpos+wd+wdL+wdR>128) wd  = max(128-xpos-wdL, 0);
-//	  if(xpos+wd+wdL+wdR>128) wdL = max(128-xpos, 0);
-//
-//	  for(x=0; x<wd; x++) {
-//	    byte mask = 0x80 >> ((xpos+x+wdL)&7);
-//	    for(y8=0; y8<fht8; y8++) {
-//	      d = fontbyte(cdata+x*fht8+y8);
-//	      int lastbit = cfont.ySize - y8 * 8;
-//	      if (lastbit > 8) lastbit = 8;
-//	      for(b=0; b<lastbit; b++) {
-//	         if(d & 1) scr[(ypos+y8*8+b)*scrWd+(xpos+x+wdL)/8] |= mask;  //drawPixel(xpos+x, ypos+y8*8+b, 1);
-//	         d>>=1;
-//	      }
-//	    }
-//	  }
-//	  return wd+wdR+wdL;
-	// }
-//
-//	/**
-//	 * @param xpos
-//	 * @param ypos
-//	 * @return
-//	 */
-//	public int printStr(int xpos, int ypos, String str) {
-//	  char ch;
-//	  int stl, row;
-//	  int x = xpos;
-//	  int y = ypos;
-//	  int wd = strWidth(str);
-//
-//	  if(x==-1) // right = -1
-//	    x = 128 - wd;
-//	  else if(x<0) // center = -2
-//	    x = (128 - wd) / 2;
-//	  if(x<0) x = 0; // left
-//
-//	  while(*str) {
-//	    int wd = printChar(x,y,*str++);
-//	    x+=wd;
-//	    if(cr && x>=128) { 
-//	      x=0; 
-//	      y+=cfont.ySize; 
-//	      if(y>64) y = 0;
-//	    }
-//	  }
-//	  if(invertCh) fillRect(xpos,x-1,y,y+cfont.ySize+1,2);
-//	  return x;
-//	}
 //
 //	/**
 //	 * @param pos
@@ -399,5 +309,22 @@ public class Lcd12864DisplayFunctions {
 //		sendCmd(LCD_ADDR | y); // 6-bit (0..63)
 //		sendCmd(LCD_ADDR | x); // 4-bit (0..15)
 //	}
+
+	/**
+	 * @param x
+	 * @return
+	 */
+	private boolean[] booleanArrayFromByte(byte x) {
+		boolean bs[] = new boolean[8];
+		bs[0] = ((x & 0x01) != 0);
+		bs[1] = ((x & 0x02) != 0);
+		bs[2] = ((x & 0x04) != 0);
+		bs[3] = ((x & 0x08) != 0);
+		bs[4] = ((x & 0x10) != 0);
+		bs[5] = ((x & 0x20) != 0);
+		bs[6] = ((x & 0x40) != 0);
+		bs[7] = ((x & 0x80) != 0);
+		return bs;
+	}
 
 }
