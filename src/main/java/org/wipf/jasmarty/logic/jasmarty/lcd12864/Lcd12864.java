@@ -57,7 +57,7 @@ public class Lcd12864 {
 	 */
 	public void setCacheRnd() {
 		LOGGER.info("RND 12864");
-		byte[] bsRnd = new byte[Lcd12864Page.SIZE];
+		byte[] bsRnd = new byte[1024];
 		for (int n = 0; n < 1024; n++) {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);
 		}

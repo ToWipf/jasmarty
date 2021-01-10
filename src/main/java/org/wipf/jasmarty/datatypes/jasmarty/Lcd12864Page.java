@@ -8,8 +8,6 @@ import org.json.JSONArray;
  */
 public class Lcd12864Page {
 
-	public static int SIZE = 1024;
-	// private byte[] nScreen = new byte[SIZE];
 	private boolean[][] baScreen = new boolean[64][128];
 
 	/**
@@ -164,7 +162,7 @@ public class Lcd12864Page {
 	 * @param baScreen
 	 */
 	public boolean[] getScreenAsBooleanArryInLine() {
-		boolean[] ba = new boolean[SIZE * 8];
+		boolean[] ba = new boolean[8192];
 		int i = 0;
 		for (boolean[] bRow : baScreen) {
 			for (boolean b : bRow) {

@@ -19,10 +19,13 @@ public class Lcd12864PageVW {
 	SqlLite sqlLite;
 
 	/**
+	 * Jede Page hat optional einen Festen Pixelspeicher oder eine beschreibung
+	 * (Bauplan) des Inhaltes
+	 * 
 	 * @throws SQLException
 	 */
 	public void init() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS lcd_pages12864 (id INTEGER UNIQUE, name TEXT, page_static TEXT, page_dyn TEXT);";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS lcd_pages12864 (id INTEGER UNIQUE, type TEXT, name TEXT, page_static TEXT, page_dyn TEXT);";
 		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
