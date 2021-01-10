@@ -1,5 +1,8 @@
-package org.wipf.jasmarty.datatypes.jasmarty;
+package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
+import javax.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class Fonts {
 	public byte[] getFont1(char c) {
 		switch (c) {

@@ -15,6 +15,8 @@ public class Lcd12864DisplayFunctions {
 
 	@Inject
 	Lcd12864Cache lcd12864Cache;
+	@Inject
+	Fonts fonts;
 
 	/**
 	 * @param lp
@@ -203,28 +205,6 @@ public class Lcd12864DisplayFunctions {
 		return ld;
 	}
 
-//	// ----------------------------------------------------------------
-//	// text rendering
-//	// ----------------------------------------------------------------
-//	/**
-//	 * 
-//	 */
-//	void setFont(int font)
-//	{
-//	  cfont.font = font;
-//	  cfont.xSize = fontbyte(0);
-//	  cfont.ySize = fontbyte(1);
-//	  cfont.firstCh = fontbyte(2);
-//	  cfont.lastCh  = fontbyte(3);
-//	  cfont.minDigitWd = 0;
-//	  cfont.minCharWd = 0;
-//	  isNumberFun = &isNumber;
-//	  spacing = 1;
-//	  cr = 0;
-//	  invertCh = 0;
-//	}
-//
-//	/**
 //	 * @param c
 //	 * @param last
 //	 * @return
@@ -261,16 +241,62 @@ public class Lcd12864DisplayFunctions {
 //	  return wd;
 //	}
 //
-//	public int printChar(int xpos, int ypos, char c) {
-//	  if(xpos >= 128 || ypos >= 64)  return 0;
-//	  int fht8 = (cfont.ySize + 7) / 8, wd, fwd = cfont.xSize;
-//	  if(fwd < 0)  fwd = -fwd;
-//
-//	  c = convertPolish(c);
-//	  if(c < cfont.firstCh || c > cfont.lastCh)  return c==' ' ?  1 + fwd/2 : 0;
-//
+
+	public Lcd12864Page drawChar(Lcd12864Page ld, int xpos, int ypos, char c) {
+		int fontSizeX = 5;
+		int fontSizeY = 7;
+
+		if (xpos >= 128 || ypos >= 64) {
+			return ld;
+		}
+
+		byte[] zeichen = fonts.getFont1(c);
+
+		for (int xc = 0; xc < fontSizeX; xc++) {
+			// bauplan laden
+			boolean[] zeichenLine = booleanArrayFromByte(zeichen[xc]);
+
+			for (int yc = 0; yc < fontSizeY; yc++) {
+
+				if (zeichenLine[yc]) {
+					ld.setPixel(xc + xpos, yc + ypos, true);
+				}
+			}
+		}
+
+		return ld;
+	}
+
+	/**
+	 * @param x
+	 * @return
+	 */
+	private boolean[] booleanArrayFromByte(byte x) {
+		boolean bs[] = new boolean[8];
+		bs[0] = ((x & 0x01) != 0);
+		bs[1] = ((x & 0x02) != 0);
+		bs[2] = ((x & 0x04) != 0);
+		bs[3] = ((x & 0x08) != 0);
+		bs[4] = ((x & 0x10) != 0);
+		bs[5] = ((x & 0x20) != 0);
+		bs[6] = ((x & 0x40) != 0);
+		bs[7] = ((x & 0x80) != 0);
+		return bs;
+	}
+
+//	  int fht8 = (fontSizeY + 7) / 8, wd, fwd = fontSizeX;
+//	  if(fwd < 0) {
+//		  fwd = -fwd;
+//	  }
+
+	// c = convertPolish(c);
+	// if(c < cfont.firstCh || c > cfont.lastCh) {
+	// return c==' ' ? 1 + fwd/2 : 0;
+	// }
+
 //	  int x,y8,b,cdata = (c - cfont.firstCh) * (fwd*fht8+1) + 4;
 //	  byte d;
+//	  
 //	  wd = fontbyte(cdata++);
 //	  int wdL = 0, wdR = spacing;
 //	  if((*isNumberFun)(c)) {
@@ -300,7 +326,7 @@ public class Lcd12864DisplayFunctions {
 //	    }
 //	  }
 //	  return wd+wdR+wdL;
-//	}
+	// }
 //
 //	/**
 //	 * @param xpos

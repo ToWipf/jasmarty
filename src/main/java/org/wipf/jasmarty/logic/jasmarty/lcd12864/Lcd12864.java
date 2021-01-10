@@ -67,6 +67,16 @@ public class Lcd12864 {
 	/**
 	 * 
 	 */
+	public void testDisplayText() {
+		Lcd12864Page lp = new Lcd12864Page();
+		lcd12864DisplayFunctions.drawChar(lp, 0, 0, '!');
+		lcd12864DisplayFunctions.drawChar(lp, 10, 10, '2');
+		lcd12864Cache.setScreen(lp);
+	}
+
+	/**
+	 * 
+	 */
 	public void testDisplayFunctions() {
 		System.out.println("test1");
 		for (int i = 0; i <= 128; i++) {

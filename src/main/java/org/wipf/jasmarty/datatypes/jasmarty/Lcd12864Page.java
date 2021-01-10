@@ -123,10 +123,31 @@ public class Lcd12864Page {
 	}
 
 	/**
+	 * @param x
+	 * @param y
+	 */
+	public void setPixelInvert(int x, int y) {
+		setPixel(x, y, !getPixel(x, y));
+
+	}
+
+	/**
 	 * @return
 	 */
 	public boolean[][] getScreen() {
 		return this.baScreen;
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	public boolean getPixel(int x, int y) {
+		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
+			return this.baScreen[x][y];
+		}
+		return false;
 	}
 
 	/**
