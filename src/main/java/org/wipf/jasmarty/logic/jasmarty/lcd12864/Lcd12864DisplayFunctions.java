@@ -4,10 +4,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
- * @author Wipf
- * 
+ * @author wipf
  *
  */
 @ApplicationScoped
@@ -17,6 +17,12 @@ public class Lcd12864DisplayFunctions {
 	Lcd12864Cache lcd12864Cache;
 	@Inject
 	Fonts fonts;
+	@Inject
+	Wipf wipf;
+
+	public enum lineAlignment {
+		LEFT, CENTER, RIGHT, CUSTOM;
+	};
 
 	/**
 	 * @param lp
@@ -217,114 +223,68 @@ public class Lcd12864DisplayFunctions {
 			return ld;
 		}
 
-		byte[] zeichen = fonts.getFont1(c);
+		byte[] zeichen = fonts.getFont1(c); // TODO font wahlbar machen
 
-		for (int xc = 0; xc < fonts.getFont1X; xc++) {
-			// bauplan laden
-			boolean[] zeichenLine = booleanArrayFromByte(zeichen[xc]);
-
-			for (int yc = 0; yc < fonts.getFont1Y; yc++) {
-
-				if (zeichenLine[yc]) {
-					ld.setPixel(xc + xpos, yc + ypos, true);
-				}
+		int x = 0;
+		int y = 0;
+		for (byte zline : zeichen) {
+			y = 0;
+			for (boolean bb : wipf.booleanArrayFromByte(zline)) {
+				ld.setPixel(x + xpos, y + ypos, bb);
+				y++;
 			}
+			x++;
 		}
+
 		return ld;
 	}
 
 	/**
 	 * @param ld
-	 * @param xpos
+	 * @param xpos wird nur bei CUSTOM beachtet
 	 * @param ypos
 	 * @param str
 	 * @return
 	 */
-	public Lcd12864Page drawStr(Lcd12864Page ld, int xpos, int ypos, String str) {
-		int x = xpos;
+	public Lcd12864Page drawStr(Lcd12864Page ld, Integer xpos, int ypos, lineAlignment la, String str) {
+		int x = 0;
 		int y = ypos;
-		int wd = str.length() * 8;
 
-		if (x == -1) // right = -1
-			x = 128 - wd;
-		else if (x < 0) // center = -2
-			x = (128 - wd) / 2;
-		if (x < 0)
+		switch (la) {
+		case CENTER:
+			x = ((128 - (str.length() * fonts.getFont1X)) / 2) - fonts.getFont1X; // TODO anpassen -> ein char auf 64 -
+																					// 4 = 60 bringen
+			break;
+		case RIGHT:
+			x = 128 - fonts.getFont1X;
+			break;
+		case LEFT:
 			x = 0; // left
+			break;
+		case CUSTOM:
+		default:
+			x = xpos;
+			break;
+		}
 
 		for (char c : str.toCharArray()) {
 			ld = drawChar(ld, x, y, c);
-			x += wd;
+			x += fonts.getFont1X + 1 + 1;
+
+			// Für Zeilenumbruch -> nötig?
 			if (x >= 128) {
 				x = 0;
 				y += fonts.getFont1Y;
-				if (y > 64)
+				if (y > 64) {
 					y = 0;
+				}
 			}
 		}
 
-		if (true == true) { // TODO ?
-			drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
-		}
-		return ld;
-	}
-//
-//	/**
-//	 * @param pos
-//	 */
-//	public void printTxt(int pos, char *str)
-//	{
-//	  sendCmd(LCD_BASIC);
-//	  sendCmd(pos);
-//	  while(*str) sendData(*str++);
-//	}
-//
-//	/**
-//	 * @param pos
-//	 */
-//	void printTxt(int pos, uint16_t *signs)
-//	{
-//	  sendCmd(LCD_BASIC);
-//	  sendCmd(pos);
-//	  while(*signs) {  sendData(*signs>>8); sendData(*signs&0xff); signs++; }
-//	}
-//
-//	/**
-//	 * // y = 0..63 -> buffer #0 // y = 64..127 -> buffer #1
-//	 * 
-//	 * @param x
-//	 * @param y
-//	 */
-//	private void gotoXY(byte x, byte y) {
-//		if (y >= 32 && y < 64) {
-//			y -= 32;
-//			x += 8;
-//		} else if (y >= 64 && y < 64 + 32) {
-//			y -= 32;
-//			x += 0;
-//		} else if (y >= 64 + 32 && y < 64 + 64) {
-//			y -= 64;
-//			x += 8;
+//		if (true == true) { // TODO ?
+//			ld = drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
 //		}
-//		sendCmd(LCD_ADDR | y); // 6-bit (0..63)
-//		sendCmd(LCD_ADDR | x); // 4-bit (0..15)
-//	}
-
-	/**
-	 * @param x
-	 * @return
-	 */
-	private boolean[] booleanArrayFromByte(byte x) {
-		boolean bs[] = new boolean[8];
-		bs[0] = ((x & 0x01) != 0);
-		bs[1] = ((x & 0x02) != 0);
-		bs[2] = ((x & 0x04) != 0);
-		bs[3] = ((x & 0x08) != 0);
-		bs[4] = ((x & 0x10) != 0);
-		bs[5] = ((x & 0x20) != 0);
-		bs[6] = ((x & 0x40) != 0);
-		bs[7] = ((x & 0x80) != 0);
-		return bs;
+		return ld;
 	}
 
 }

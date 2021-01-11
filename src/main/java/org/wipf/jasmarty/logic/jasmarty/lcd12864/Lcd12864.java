@@ -7,6 +7,7 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864DisplayFunctions.lineAlignment;
 
 /**
  * @author Wipf
@@ -70,7 +71,10 @@ public class Lcd12864 {
 	public void testDisplayText() {
 		Lcd12864Page lp = new Lcd12864Page();
 		lcd12864DisplayFunctions.drawChar(lp, 0, 0, '!');
-		lcd12864DisplayFunctions.drawStr(lp, 20, 10, "Hallo Welt!");
+		lcd12864DisplayFunctions.drawChar(lp, 0, 50, 'A');
+		lcd12864DisplayFunctions.drawStr(lp, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
+		lcd12864DisplayFunctions.drawStr(lp, null, 30, lineAlignment.LEFT, "ABC123");
+		lcd12864DisplayFunctions.drawStr(lp, null, 40, lineAlignment.CENTER, "Jasmarty F");
 		lcd12864Cache.setScreen(lp);
 	}
 

@@ -496,4 +496,21 @@ public class Wipf {
 		return list;
 	}
 
+	/**
+	 * @param x
+	 * @return
+	 */
+	public boolean[] booleanArrayFromByte(byte x) {
+		boolean bs[] = new boolean[8];
+		bs[0] = ((x & 0x01) != 0);
+		bs[1] = ((x & 0x02) != 0);
+		bs[2] = ((x & 0x04) != 0);
+		bs[3] = ((x & 0x08) != 0);
+		bs[4] = ((x & 0x10) != 0);
+		bs[5] = ((x & 0x20) != 0);
+		bs[6] = ((x & 0x40) != 0);
+		bs[7] = ((x & 0x80) != 0);
+		return bs;
+	}
+
 }

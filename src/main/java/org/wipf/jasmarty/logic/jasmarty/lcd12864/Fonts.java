@@ -8,8 +8,8 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class Fonts {
-	public int getFont1X = 5;
-	public int getFont1Y = 7;
+	public int getFont1X = 6;
+	public int getFont1Y = 8;
 
 	/**
 	 * @param c
