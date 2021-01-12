@@ -22,40 +22,40 @@ public class Lcd12864FontStyle57 {
 	 * @param c
 	 * @return
 	 */
-	public byte[] getFont1(char c) {
+	public byte[] getChar(char c) {
 		switch (c) {
 		case ' ':
-			return new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; //
+			return new byte[] { (byte) 0x00 }; //
 		case '!':
-			return new byte[] { (byte) 0x5F, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // !
+			return new byte[] { (byte) 0x5F }; // !
 		case '"':
-			return new byte[] { (byte) 0x03, (byte) 0x00, (byte) 0x03, (byte) 0x00, (byte) 0x00 }; // "
+			return new byte[] { (byte) 0x03, (byte) 0x00, (byte) 0x03 }; // "
 		case '#':
 			return new byte[] { (byte) 0x14, (byte) 0x7F, (byte) 0x14, (byte) 0x7F, (byte) 0x14 }; // #
 		case '$':
 			return new byte[] { (byte) 0x24, (byte) 0x4A, (byte) 0xFF, (byte) 0x4A, (byte) 0x34 }; // $
 		case '%':
-			return new byte[] { (byte) 0x61, (byte) 0x1C, (byte) 0x43, (byte) 0x00, (byte) 0x00 }; // %
+			return new byte[] { (byte) 0x61, (byte) 0x1C, (byte) 0x43 }; // %
 		case '&':
-			return new byte[] { (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // &
+			return new byte[] { (byte) 0x7F, (byte) 0x7F, (byte) 0x7F, (byte) 0x7F, (byte) 0x7F }; // & //TODO
 		case '\'':
-			return new byte[] { (byte) 0x06, (byte) 0x09, (byte) 0x09, (byte) 0x06, (byte) 0x00 }; // '
+			return new byte[] { (byte) 0x06, (byte) 0x09, (byte) 0x09, (byte) 0x06 }; // '
 		case '(':
-			return new byte[] { (byte) 0x3E, (byte) 0x41, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // (
+			return new byte[] { (byte) 0x3E, (byte) 0x41 }; // (
 		case ')':
-			return new byte[] { (byte) 0x41, (byte) 0x3E, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // )
+			return new byte[] { (byte) 0x41, (byte) 0x3E }; // )
 		case '*':
 			return new byte[] { (byte) 0x14, (byte) 0x08, (byte) 0x1C, (byte) 0x08, (byte) 0x14 }; // *
 		case '+':
 			return new byte[] { (byte) 0x08, (byte) 0x08, (byte) 0x3E, (byte) 0x08, (byte) 0x08 }; // +
 		case ',':
-			return new byte[] { (byte) 0x80, (byte) 0x40, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // ,
+			return new byte[] { (byte) 0x80, (byte) 0x40 }; // ,
 		case '-':
 			return new byte[] { (byte) 0x08, (byte) 0x08, (byte) 0x08, (byte) 0x08, (byte) 0x08 }; // -
 		case '.':
-			return new byte[] { (byte) 0x40, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // .
+			return new byte[] { (byte) 0x40 }; // .
 		case '/':
-			return new byte[] { (byte) 0x60, (byte) 0x1C, (byte) 0x03, (byte) 0x00, (byte) 0x00 }; // /
+			return new byte[] { (byte) 0x60, (byte) 0x1C, (byte) 0x03 }; // /
 		case '0':
 			return new byte[] { (byte) 0x3E, (byte) 0x41, (byte) 0x41, (byte) 0x41, (byte) 0x3E }; // 0
 		case '1':
@@ -77,17 +77,17 @@ public class Lcd12864FontStyle57 {
 		case '9':
 			return new byte[] { (byte) 0x26, (byte) 0x49, (byte) 0x49, (byte) 0x49, (byte) 0x3E }; // 9
 		case ':':
-			return new byte[] { (byte) 0x28, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // :
+			return new byte[] { (byte) 0x28 }; // :
 		case ';':
-			return new byte[] { (byte) 0x80, (byte) 0x48, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // ;
+			return new byte[] { (byte) 0x80, (byte) 0x48, }; // ;
 		case '<':
-			return new byte[] { (byte) 0x08, (byte) 0x14, (byte) 0x22, (byte) 0x41, (byte) 0x00 }; // <
+			return new byte[] { (byte) 0x08, (byte) 0x14, (byte) 0x22, (byte) 0x41 }; // <
 		case '=':
-			return new byte[] { (byte) 0x14, (byte) 0x14, (byte) 0x14, (byte) 0x14, (byte) 0x00 }; // =
+			return new byte[] { (byte) 0x14, (byte) 0x14, (byte) 0x14, (byte) 0x14 }; // =
 		case '>':
-			return new byte[] { (byte) 0x41, (byte) 0x22, (byte) 0x14, (byte) 0x08, (byte) 0x00 }; // >
+			return new byte[] { (byte) 0x41, (byte) 0x22, (byte) 0x14, (byte) 0x08 }; // >
 		case '?':
-			return new byte[] { (byte) 0x02, (byte) 0x51, (byte) 0x09, (byte) 0x06, (byte) 0x00 }; // ?
+			return new byte[] { (byte) 0x02, (byte) 0x51, (byte) 0x09, (byte) 0x06 }; // ?
 		case '@':
 			return new byte[] { (byte) 0x3E, (byte) 0x59, (byte) 0x59, (byte) 0x59, (byte) 0x46 }; // @
 		case 'A':
@@ -107,7 +107,7 @@ public class Lcd12864FontStyle57 {
 		case 'H':
 			return new byte[] { (byte) 0x7F, (byte) 0x08, (byte) 0x08, (byte) 0x08, (byte) 0x7F }; // H
 		case 'I':
-			return new byte[] { (byte) 0x7F, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // I
+			return new byte[] { (byte) 0x7F }; // I
 		case 'J':
 			return new byte[] { (byte) 0x21, (byte) 0x41, (byte) 0x41, (byte) 0x41, (byte) 0x3F }; // J
 		case 'K':
@@ -143,17 +143,17 @@ public class Lcd12864FontStyle57 {
 		case 'Z':
 			return new byte[] { (byte) 0x61, (byte) 0x51, (byte) 0x49, (byte) 0x45, (byte) 0x43 }; // Z
 		case '[':
-			return new byte[] { (byte) 0x7F, (byte) 0x41, (byte) 0x41, (byte) 0x00, (byte) 0x00 }; // [
+			return new byte[] { (byte) 0x7F, (byte) 0x41, (byte) 0x41 }; // [
 		case '\\':
 			return new byte[] { (byte) 0x02, (byte) 0x04, (byte) 0x08, (byte) 0x10, (byte) 0x20 }; // BackSlash
 		case ']':
-			return new byte[] { (byte) 0x41, (byte) 0x41, (byte) 0x7F, (byte) 0x00, (byte) 0x00 }; // ]
+			return new byte[] { (byte) 0x41, (byte) 0x41, (byte) 0x7F }; // ]
 		case '^':
 			return new byte[] { (byte) 0x04, (byte) 0x02, (byte) 0x01, (byte) 0x02, (byte) 0x04 }; // ^
 		case '_':
 			return new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80, (byte) 0x80 }; // _
 		case '`':
-			return new byte[] { (byte) 0x01, (byte) 0x02, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // `
+			return new byte[] { (byte) 0x01, (byte) 0x02 }; // `
 		case 'a':
 			return new byte[] { (byte) 0x20, (byte) 0x54, (byte) 0x54, (byte) 0x38, (byte) 0x40 }; // a
 		case 'b':
@@ -165,19 +165,19 @@ public class Lcd12864FontStyle57 {
 		case 'e':
 			return new byte[] { (byte) 0x38, (byte) 0x54, (byte) 0x54, (byte) 0x54, (byte) 0x18 }; // e
 		case 'f':
-			return new byte[] { (byte) 0x08, (byte) 0x7E, (byte) 0x09, (byte) 0x01, (byte) 0x00 }; // f
+			return new byte[] { (byte) 0x08, (byte) 0x7E, (byte) 0x09, (byte) 0x01 }; // f
 		case 'g':
 			return new byte[] { (byte) 0x98, (byte) 0xA4, (byte) 0xA4, (byte) 0xA4, (byte) 0x58 }; // g
 		case 'h':
 			return new byte[] { (byte) 0x7F, (byte) 0x04, (byte) 0x04, (byte) 0x04, (byte) 0x78 }; // h
 		case 'i':
-			return new byte[] { (byte) 0x7D, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // i
+			return new byte[] { (byte) 0x7D }; // i
 		case 'j':
-			return new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x7D, (byte) 0x00, (byte) 0x00 }; // j
+			return new byte[] { (byte) 0x80, (byte) 0x80, (byte) 0x7D }; // j
 		case 'k':
 			return new byte[] { (byte) 0x7F, (byte) 0x10, (byte) 0x10, (byte) 0x28, (byte) 0x44 }; // k
 		case 'l':
-			return new byte[] { (byte) 0x3F, (byte) 0x40, (byte) 0x40, (byte) 0x00, (byte) 0x00 }; // l
+			return new byte[] { (byte) 0x3F, (byte) 0x40, (byte) 0x40 }; // l
 		case 'm':
 			return new byte[] { (byte) 0x78, (byte) 0x04, (byte) 0x18, (byte) 0x04, (byte) 0x78 }; // m
 		case 'n':
@@ -189,11 +189,11 @@ public class Lcd12864FontStyle57 {
 		case 'q':
 			return new byte[] { (byte) 0x18, (byte) 0x24, (byte) 0x24, (byte) 0x24, (byte) 0xFC }; // q
 		case 'r':
-			return new byte[] { (byte) 0x7C, (byte) 0x08, (byte) 0x04, (byte) 0x04, (byte) 0x00 }; // r
+			return new byte[] { (byte) 0x7C, (byte) 0x08, (byte) 0x04, (byte) 0x04 }; // r
 		case 's':
 			return new byte[] { (byte) 0x48, (byte) 0x54, (byte) 0x54, (byte) 0x54, (byte) 0x24 }; // s
 		case 't':
-			return new byte[] { (byte) 0x04, (byte) 0x3F, (byte) 0x44, (byte) 0x40, (byte) 0x00 }; // t
+			return new byte[] { (byte) 0x04, (byte) 0x3F, (byte) 0x44, (byte) 0x40 }; // t
 		case 'u':
 			return new byte[] { (byte) 0x3C, (byte) 0x40, (byte) 0x40, (byte) 0x20, (byte) 0x7C }; // u
 		case 'v':
@@ -207,13 +207,13 @@ public class Lcd12864FontStyle57 {
 		case 'z':
 			return new byte[] { (byte) 0x64, (byte) 0x54, (byte) 0x54, (byte) 0x54, (byte) 0x4C }; // z
 		case '{':
-			return new byte[] { (byte) 0x08, (byte) 0x36, (byte) 0x41, (byte) 0x00, (byte) 0x00 }; // {
+			return new byte[] { (byte) 0x08, (byte) 0x36, (byte) 0x41 }; // {
 		case '|':
-			return new byte[] { (byte) 0x7F, (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00 }; // |
+			return new byte[] { (byte) 0x7F }; // |
 		case '}':
-			return new byte[] { (byte) 0x41, (byte) 0x36, (byte) 0x08, (byte) 0x00, (byte) 0x00 }; // }
+			return new byte[] { (byte) 0x41, (byte) 0x36, (byte) 0x08 }; // }
 		case '~':
-			return new byte[] { (byte) 0x02, (byte) 0x01, (byte) 0x02, (byte) 0x01, (byte) 0x00 }; // ~
+			return new byte[] { (byte) 0x02, (byte) 0x01, (byte) 0x02, (byte) 0x01 }; // ~
 		case '':
 			return new byte[] { (byte) 0xFF, (byte) 0x81, (byte) 0x81, (byte) 0x81, (byte) 0xFF }; // 
 		case 'Ą':
@@ -237,11 +237,11 @@ public class Lcd12864FontStyle57 {
 		case 'ą':
 			return new byte[] { (byte) 0x20, (byte) 0x54, (byte) 0x54, (byte) 0xF8, (byte) 0x80 }; // ą
 		case 'Š':
-			return new byte[] { (byte) 0x38, (byte) 0x44, (byte) 0x46, (byte) 0x45, (byte) 0x00 }; // Š
+			return new byte[] { (byte) 0x38, (byte) 0x44, (byte) 0x46, (byte) 0x45 }; // Š
 		case '‹':
 			return new byte[] { (byte) 0x38, (byte) 0x54, (byte) 0x54, (byte) 0xD4, (byte) 0x98 }; // ‹
 		case 'Ś':
-			return new byte[] { (byte) 0x08, (byte) 0x3F, (byte) 0x42, (byte) 0x40, (byte) 0x00 }; // Ś
+			return new byte[] { (byte) 0x08, (byte) 0x3F, (byte) 0x42, (byte) 0x40 }; // Ś
 		case 'Ť':
 			return new byte[] { (byte) 0x7C, (byte) 0x04, (byte) 0x06, (byte) 0x05, (byte) 0x78 }; // Ť
 		case 'Ž':

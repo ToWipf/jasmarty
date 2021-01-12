@@ -271,8 +271,11 @@ public class Lcd12864DisplayFunctions {
 		}
 
 		for (char c : str.toCharArray()) {
-			ld = drawChar(ld, x, y, font68.getFont1(c));
-			x += font68.getFont1X + 1 + 1;
+			byte[] bChar = font68.getChar(c);
+			ld = drawChar(ld, x, y, bChar);
+
+			// Zeichenbreite bestimmen
+			x += bChar.length + 1;
 
 			// Für Zeilenumbruch -> nötig?
 			if (x >= 128) {
@@ -284,9 +287,6 @@ public class Lcd12864DisplayFunctions {
 			}
 		}
 
-//		if (true == true) { // TODO ?
-//			ld = drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
-//		}
 		return ld;
 	}
 
@@ -305,9 +305,7 @@ public class Lcd12864DisplayFunctions {
 
 		switch (la) {
 		case CENTER:
-			x = ((128 - (str.length() * font57.getFont1X)) / 2) - font57.getFont1X; // TODO anpassen -> ein char auf 64
-																					// -
-																					// 4 = 60 bringen
+			x = ((128 - (str.length() * font57.getFont1X)) / 2) - font57.getFont1X; // TODO anpassen
 			break;
 		case RIGHT:
 			x = 128 - font57.getFont1X;
@@ -322,8 +320,11 @@ public class Lcd12864DisplayFunctions {
 		}
 
 		for (char c : str.toCharArray()) {
-			ld = drawChar(ld, x, y, font57.getFont1(c));
-			x += font57.getFont1X + 1 + 1;
+			byte[] bChar = font57.getChar(c);
+			ld = drawChar(ld, x, y, bChar);
+
+			// Zeichenbreite bestimmen
+			x += bChar.length + 1;
 
 			// Für Zeilenumbruch -> nötig?
 			if (x >= 128) {
@@ -335,9 +336,6 @@ public class Lcd12864DisplayFunctions {
 			}
 		}
 
-//		if (true == true) { // TODO ?
-//			ld = drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
-//		}
 		return ld;
 	}
 
