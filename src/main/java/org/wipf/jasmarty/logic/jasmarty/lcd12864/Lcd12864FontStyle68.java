@@ -7,8 +7,15 @@ import javax.enterprise.context.ApplicationScoped;
  *
  */
 @ApplicationScoped
-public class Fonts {
+public class Lcd12864FontStyle68 {
+
+	/**
+	 * 
+	 */
 	public int getFont1X = 6;
+	/**
+	 * 
+	 */
 	public int getFont1Y = 8;
 
 	/**
@@ -137,8 +144,8 @@ public class Fonts {
 			return new byte[] { 0x61, 0x71, 0x59, 0x4D, 0x47, 0x43, 0x00 }; // Z
 		case '[':
 			return new byte[] { 0x7F, 0x7F, 0x41, 0x41, 0x00, 0x00, 0x00 }; // [
-		// case 'TODO':
-		// return new byte[] {0x02, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x40}; // BackSlash
+		case '\\':
+			return new byte[] { 0x02, 0x06, 0x0C, 0x18, 0x30, 0x60, 0x40 }; // BackSlash
 		case ']':
 			return new byte[] { 0x41, 0x41, 0x7F, 0x7F, 0x00, 0x00, 0x00 }; // ]
 		case '^':

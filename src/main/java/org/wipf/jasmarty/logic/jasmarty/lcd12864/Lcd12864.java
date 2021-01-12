@@ -70,11 +70,9 @@ public class Lcd12864 {
 	 */
 	public void testDisplayText() {
 		Lcd12864Page lp = new Lcd12864Page();
-		lcd12864DisplayFunctions.drawChar(lp, 0, 0, '!');
-		lcd12864DisplayFunctions.drawChar(lp, 0, 50, 'A');
-		lcd12864DisplayFunctions.drawStr(lp, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
-		lcd12864DisplayFunctions.drawStr(lp, null, 30, lineAlignment.LEFT, "ABC123");
-		lcd12864DisplayFunctions.drawStr(lp, null, 40, lineAlignment.CENTER, "Jasmarty F");
+		lcd12864DisplayFunctions.drawStr57(lp, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
+		lcd12864DisplayFunctions.drawStr57(lp, null, 30, lineAlignment.LEFT, "ABC123");
+		lcd12864DisplayFunctions.drawStr68(lp, null, 40, lineAlignment.CENTER, "Jasmarty F");
 		lcd12864Cache.setScreen(lp);
 	}
 

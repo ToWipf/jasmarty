@@ -16,7 +16,9 @@ public class Lcd12864DisplayFunctions {
 	@Inject
 	Lcd12864Cache lcd12864Cache;
 	@Inject
-	Fonts fonts;
+	Lcd12864FontStyle68 font68;
+	@Inject
+	Lcd12864FontStyle57 font57;
 	@Inject
 	Wipf wipf;
 
@@ -215,15 +217,13 @@ public class Lcd12864DisplayFunctions {
 	 * @param ld
 	 * @param xpos
 	 * @param ypos
-	 * @param c
+	 * @param zeichen
 	 * @return
 	 */
-	public Lcd12864Page drawChar(Lcd12864Page ld, int xpos, int ypos, char c) {
+	public Lcd12864Page drawChar(Lcd12864Page ld, int xpos, int ypos, byte[] zeichen) {
 		if (xpos >= 128 || ypos >= 64) {
 			return ld;
 		}
-
-		byte[] zeichen = fonts.getFont1(c); // TODO font wahlbar machen
 
 		int x = 0;
 		int y = 0;
@@ -240,23 +240,26 @@ public class Lcd12864DisplayFunctions {
 	}
 
 	/**
+	 * TODO zusammenfassen
+	 * 
 	 * @param ld
 	 * @param xpos wird nur bei CUSTOM beachtet
 	 * @param ypos
 	 * @param str
 	 * @return
 	 */
-	public Lcd12864Page drawStr(Lcd12864Page ld, Integer xpos, int ypos, lineAlignment la, String str) {
+	public Lcd12864Page drawStr68(Lcd12864Page ld, Integer xpos, int ypos, lineAlignment la, String str) {
 		int x = 0;
 		int y = ypos;
 
 		switch (la) {
 		case CENTER:
-			x = ((128 - (str.length() * fonts.getFont1X)) / 2) - fonts.getFont1X; // TODO anpassen -> ein char auf 64 -
+			x = ((128 - (str.length() * font68.getFont1X)) / 2) - font68.getFont1X; // TODO anpassen -> ein char auf 64
+																					// -
 																					// 4 = 60 bringen
 			break;
 		case RIGHT:
-			x = 128 - fonts.getFont1X;
+			x = 128 - font68.getFont1X;
 			break;
 		case LEFT:
 			x = 0; // left
@@ -268,13 +271,64 @@ public class Lcd12864DisplayFunctions {
 		}
 
 		for (char c : str.toCharArray()) {
-			ld = drawChar(ld, x, y, c);
-			x += fonts.getFont1X + 1 + 1;
+			ld = drawChar(ld, x, y, font68.getFont1(c));
+			x += font68.getFont1X + 1 + 1;
 
 			// Für Zeilenumbruch -> nötig?
 			if (x >= 128) {
 				x = 0;
-				y += fonts.getFont1Y;
+				y += font68.getFont1Y;
+				if (y > 64) {
+					y = 0;
+				}
+			}
+		}
+
+//		if (true == true) { // TODO ?
+//			ld = drawRect(ld, xpos, x - 1, y, y + fonts.getFont1Y + 1);
+//		}
+		return ld;
+	}
+
+	/**
+	 * TODO zusammenfassen
+	 * 
+	 * @param ld
+	 * @param xpos wird nur bei CUSTOM beachtet
+	 * @param ypos
+	 * @param str
+	 * @return
+	 */
+	public Lcd12864Page drawStr57(Lcd12864Page ld, Integer xpos, int ypos, lineAlignment la, String str) {
+		int x = 0;
+		int y = ypos;
+
+		switch (la) {
+		case CENTER:
+			x = ((128 - (str.length() * font57.getFont1X)) / 2) - font57.getFont1X; // TODO anpassen -> ein char auf 64
+																					// -
+																					// 4 = 60 bringen
+			break;
+		case RIGHT:
+			x = 128 - font57.getFont1X;
+			break;
+		case LEFT:
+			x = 0; // left
+			break;
+		case CUSTOM:
+		default:
+			x = xpos;
+			break;
+		}
+
+		for (char c : str.toCharArray()) {
+			ld = drawChar(ld, x, y, font57.getFont1(c));
+			x += font57.getFont1X + 1 + 1;
+
+			// Für Zeilenumbruch -> nötig?
+			if (x >= 128) {
+				x = 0;
+				y += font57.getFont1Y;
 				if (y > 64) {
 					y = 0;
 				}

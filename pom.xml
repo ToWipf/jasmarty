@@ -96,4 +96,7 @@
 			</activation>
 		</profile>
 	</profiles>
+	<name>jasmarty</name>
+	<description>LCD Display and Telegram Bot</description>
+	<url>https://github.com/ToWipf/jasmarty</url>
 </project>
