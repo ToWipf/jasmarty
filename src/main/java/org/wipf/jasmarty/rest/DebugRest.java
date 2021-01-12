@@ -113,6 +113,22 @@ public class DebugRest {
 
 	@POST
 	@GET
+	@Path("lcd12864/test57")
+	public Response lcd12864test57() {
+		lcd12864.testDisplayFont57();
+		return Response.ok().build();
+	}
+
+	@POST
+	@GET
+	@Path("lcd12864/test68")
+	public Response lcd12864test68() {
+		lcd12864.testDisplayFont68();
+		return Response.ok().build();
+	}
+
+	@POST
+	@GET
 	@Path("lcd/write/{x}/{y}/{str}")
 	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
 		lcd2004.writeLineToCache(x, y, s.toCharArray());

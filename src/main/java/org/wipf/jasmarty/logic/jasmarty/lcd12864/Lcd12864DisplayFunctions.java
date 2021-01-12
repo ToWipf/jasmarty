@@ -214,6 +214,8 @@ public class Lcd12864DisplayFunctions {
 	}
 
 	/**
+	 * Ein bis zu 8 Pixel hohes Zeichen schreiben
+	 * 
 	 * @param ld
 	 * @param xpos
 	 * @param ypos
@@ -235,7 +237,6 @@ public class Lcd12864DisplayFunctions {
 			}
 			x++;
 		}
-
 		return ld;
 	}
 
@@ -254,9 +255,7 @@ public class Lcd12864DisplayFunctions {
 
 		switch (la) {
 		case CENTER:
-			x = ((128 - (str.length() * font68.getFont1X)) / 2) - font68.getFont1X; // TODO anpassen -> ein char auf 64
-																					// -
-																					// 4 = 60 bringen
+			x = ((128 - (str.length() * font68.getFont1X)) / 2) - font68.getFont1X; // TODO anpassen
 			break;
 		case RIGHT:
 			x = 128 - font68.getFont1X;
@@ -278,9 +277,9 @@ public class Lcd12864DisplayFunctions {
 			x += bChar.length + 1;
 
 			// Für Zeilenumbruch -> nötig?
-			if (x >= 128) {
+			if (x >= 128 - font68.getFont1X) {
 				x = 0;
-				y += font68.getFont1Y;
+				y += font68.getFont1Y + 1;
 				if (y > 64) {
 					y = 0;
 				}
@@ -327,9 +326,9 @@ public class Lcd12864DisplayFunctions {
 			x += bChar.length + 1;
 
 			// Für Zeilenumbruch -> nötig?
-			if (x >= 128) {
+			if (x >= 128 - font57.getFont1X) {
 				x = 0;
-				y += font57.getFont1Y;
+				y += font57.getFont1Y + 1;
 				if (y > 64) {
 					y = 0;
 				}

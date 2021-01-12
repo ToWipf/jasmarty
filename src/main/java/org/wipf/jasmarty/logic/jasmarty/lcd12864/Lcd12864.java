@@ -80,6 +80,26 @@ public class Lcd12864 {
 	/**
 	 * 
 	 */
+	public void testDisplayFont57() {
+		Lcd12864Page lp = new Lcd12864Page();
+		lcd12864DisplayFunctions.drawStr57(lp, 0, 0, lineAlignment.CUSTOM,
+				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+		lcd12864Cache.setScreen(lp);
+	}
+
+	/**
+	 * 
+	 */
+	public void testDisplayFont68() {
+		Lcd12864Page lp = new Lcd12864Page();
+		lcd12864DisplayFunctions.drawStr68(lp, 0, 0, lineAlignment.CUSTOM,
+				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+		lcd12864Cache.setScreen(lp);
+	}
+
+	/**
+	 * 
+	 */
 	public void testDisplayFunctions() {
 		System.out.println("test1");
 		for (int i = 0; i <= 128; i++) {
