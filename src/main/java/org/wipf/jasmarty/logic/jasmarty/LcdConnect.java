@@ -23,17 +23,9 @@ public class LcdConnect {
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty Connect");
 
 	private SerialPort sp;
-
 	private LcdConfig lconf = new LcdConfig();
 	private boolean bLed = false;
 	private boolean bLcdIsOk = false;
-
-	/**
-	 * @return
-	 */
-	public lcdType getType() {
-		return lconf.getType();
-	}
 
 	/**
 	 * 
@@ -65,10 +57,27 @@ public class LcdConnect {
 	}
 
 	/**
-	 * @param lconfig
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
 	 */
-	public void setConfig(LcdConfig lconfig) {
-		this.lconf = lconfig;
+	public void commandVolUp() {
+		write(254);
+		write(40);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolDown() {
+		write(254);
+		write(41);
+	}
+
+	/**
+	 * Achtung: Nur mit Arduino Pro-Micro möglich
+	 */
+	public void commandVolMute() {
+		write(254);
+		write(42);
 	}
 
 	/**
@@ -83,6 +92,20 @@ public class LcdConnect {
 	 */
 	public int getWidth() {
 		return lconf.getWidth();
+	}
+
+	/**
+	 * @return
+	 */
+	public lcdType getType() {
+		return lconf.getType();
+	}
+
+	/**
+	 * @param lconfig
+	 */
+	public void setConfig(LcdConfig lconfig) {
+		this.lconf = lconfig;
 	}
 
 	/**
@@ -203,30 +226,6 @@ public class LcdConnect {
 			LOGGER.warn("LCD Start: " + e);
 			return false;
 		}
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolUp() {
-		write(254);
-		write(40);
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolDown() {
-		write(254);
-		write(41);
-	}
-
-	/**
-	 * Achtung: Nur mit Arduino Pro-Micro möglich
-	 */
-	public void commandVolMute() {
-		write(254);
-		write(42);
 	}
 
 }

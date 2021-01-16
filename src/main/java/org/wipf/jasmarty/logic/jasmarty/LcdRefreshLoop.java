@@ -69,6 +69,7 @@ public class LcdRefreshLoop {
 		}
 	}
 
+	// TODO zusammenfassen
 	/**
 	 * 
 	 */
