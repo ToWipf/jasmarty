@@ -20,10 +20,10 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  * 
  */
 @ApplicationScoped
-public class PageVerwaltung {
+public class Lcd2004PageVerwaltung {
 
 	@Inject
-	PageConverter pageConverter;
+	Lcd2004PageConverter pageConverter;
 	@Inject
 	SqlLite sqlLite;
 

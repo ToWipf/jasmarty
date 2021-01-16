@@ -16,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageConverter;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
 
 /**
  * @author wipf
@@ -31,9 +31,9 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
 public class PagesRest {
 
 	@Inject
-	PageVerwaltung pageVerwaltung;
+	Lcd2004PageVerwaltung pageVerwaltung;
 	@Inject
-	PageConverter pageConverter;
+	Lcd2004PageConverter pageConverter;
 
 	@GET
 	@PUT

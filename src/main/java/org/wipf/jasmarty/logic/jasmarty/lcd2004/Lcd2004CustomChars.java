@@ -13,7 +13,7 @@ import org.wipf.jasmarty.datatypes.jasmarty.CustomChar;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 @ApplicationScoped
-public class CustomChars {
+public class Lcd2004CustomChars {
 
 	@Inject
 	Lcd2004 lcd2004;

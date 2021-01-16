@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004CustomChars;
 
 /**
  * @author wipf
@@ -36,7 +36,7 @@ public class CustomCharsRest {
 	// Anzeigen mit $char(4)
 
 	@Inject
-	CustomChars customChars;
+	Lcd2004CustomChars customChars;
 
 	@GET
 	@Path("get/{id}")

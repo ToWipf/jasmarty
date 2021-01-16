@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageConverter;
 
 /**
  * @author wipf
@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageConverter;
 public class LcdRefreshLoop {
 
 	@Inject
-	PageConverter pageConverter;
+	Lcd2004PageConverter pageConverter;
 	@Inject
 	Lcd2004 lcd2004;
 	@Inject

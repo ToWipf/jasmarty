@@ -17,7 +17,7 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
  * 
  */
 @ApplicationScoped
-public class PageConverter {
+public class Lcd2004PageConverter {
 
 	@Inject
 	Lcd2004 lcd2004;

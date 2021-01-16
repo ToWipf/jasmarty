@@ -14,7 +14,7 @@ import org.wipf.jasmarty.datatypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
 
 /**
  * @author wipf
@@ -26,7 +26,7 @@ public class ActionVerwaltung {
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
-	PageVerwaltung pageVerwaltung;
+	Lcd2004PageVerwaltung pageVerwaltung;
 	@Inject
 	Tastatur tastatur;
 	@Inject

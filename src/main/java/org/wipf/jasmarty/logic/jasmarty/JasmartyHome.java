@@ -9,10 +9,10 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.CharPictures;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.CustomChars;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004CharPictures;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004CustomChars;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
 
 /**
  * @author wipf
@@ -24,7 +24,7 @@ public class JasmartyHome {
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
-	PageVerwaltung pageVerwaltung;
+	Lcd2004PageVerwaltung pageVerwaltung;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 	@Inject
@@ -34,9 +34,9 @@ public class JasmartyHome {
 	@Inject
 	SerialConfig serialConfig;
 	@Inject
-	CustomChars customChars;
+	Lcd2004CustomChars customChars;
 	@Inject
-	CharPictures charPictures;
+	Lcd2004CharPictures charPictures;
 	@Inject
 	Lcd2004 lcd2004;
 	@Inject

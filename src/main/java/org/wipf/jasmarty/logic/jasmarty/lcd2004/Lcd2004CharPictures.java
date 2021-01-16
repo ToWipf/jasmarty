@@ -13,10 +13,10 @@ import org.wipf.jasmarty.datatypes.jasmarty.CustomChar;
  *
  */
 @ApplicationScoped
-public class CharPictures {
+public class Lcd2004CharPictures {
 
 	@Inject
-	CustomChars customChars;
+	Lcd2004CustomChars customChars;
 
 	private static final boolean T = true;
 	private static final boolean F = false;
