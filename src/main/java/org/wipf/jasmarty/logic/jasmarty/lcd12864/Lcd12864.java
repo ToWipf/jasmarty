@@ -4,10 +4,13 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font.Lcd12864fontType;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page.lineAlignment;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864DisplayFunctions.lineAlignment;
 
 /**
  * @author Wipf
@@ -22,8 +25,6 @@ public class Lcd12864 {
 	LcdConnect lcdConnect;
 	@Inject
 	Lcd12864Cache lcd12864Cache;
-	@Inject
-	Lcd12864DisplayFunctions lcd12864DisplayFunctions;
 	@Inject
 	Wipf wipf;
 
@@ -62,7 +63,7 @@ public class Lcd12864 {
 		for (int n = 0; n < 1024; n++) {
 			bsRnd[n] = (byte) wipf.getRandomInt(255);
 		}
-		lcd12864Cache.setScreen(new Lcd12864Page(bsRnd));
+		lcd12864Cache.setScreen(new Lcd12864PageBase(bsRnd));
 	}
 
 	/**
@@ -70,10 +71,13 @@ public class Lcd12864 {
 	 */
 	public void testDisplayText() {
 		Lcd12864Page lp = new Lcd12864Page();
-		lcd12864DisplayFunctions.drawStr57(lp, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
-		lcd12864DisplayFunctions.drawStr57(lp, null, 30, lineAlignment.LEFT, "ABC123!456");
-		lcd12864DisplayFunctions.drawStr68(lp, null, 55, lineAlignment.CENTER, "Jasmarty F");
-		lcd12864DisplayFunctions.drawStr57(lp, null, 0, lineAlignment.LEFT, "Wipf");
+		Lcd12864Font font57 = new Lcd12864Font(Lcd12864fontType.FONT_57);
+		Lcd12864Font font68 = new Lcd12864Font(Lcd12864fontType.FONT_68);
+		lp.drawString(font57, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
+		lp.drawString(font57, null, 30, lineAlignment.LEFT, "\"ABC123!456\"");
+		lp.drawString(font68, null, 55, lineAlignment.CENTER, "Jasmarty F");
+		lp.drawString(font57, null, 0, lineAlignment.LEFT, "Wipf");
+
 		lcd12864Cache.setScreen(lp);
 	}
 
@@ -82,7 +86,8 @@ public class Lcd12864 {
 	 */
 	public void testDisplayFont57() {
 		Lcd12864Page lp = new Lcd12864Page();
-		lcd12864DisplayFunctions.drawStr57(lp, 0, 0, lineAlignment.CUSTOM,
+		Lcd12864Font font57 = new Lcd12864Font(Lcd12864fontType.FONT_57);
+		lp.drawString(font57, 0, 0, lineAlignment.CUSTOM,
 				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
 		lcd12864Cache.setScreen(lp);
 	}
@@ -92,7 +97,8 @@ public class Lcd12864 {
 	 */
 	public void testDisplayFont68() {
 		Lcd12864Page lp = new Lcd12864Page();
-		lcd12864DisplayFunctions.drawStr68(lp, 0, 0, lineAlignment.CUSTOM,
+		Lcd12864Font font = new Lcd12864Font(Lcd12864fontType.FONT_68);
+		lp.drawString(font, 0, 0, lineAlignment.CUSTOM,
 				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
 		lcd12864Cache.setScreen(lp);
 	}
@@ -104,8 +110,8 @@ public class Lcd12864 {
 		System.out.println("test1");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lcd12864DisplayFunctions.drawCircleFill(lp, 64, 32, i / 3);
-			lcd12864DisplayFunctions.drawLineH(lp, 0, 128, i / 2);
+			lp.drawCircleFill(64, 32, i / 3);
+			lp.drawLineH(0, 128, i / 2);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);
@@ -113,8 +119,8 @@ public class Lcd12864 {
 		System.out.println("test2");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lcd12864DisplayFunctions.drawRectFill(lp, 0, 0, i, i / 2);
-			lcd12864DisplayFunctions.drawLineV(lp, i, 0, 64);
+			lp.drawRectFill(0, 0, i, i / 2);
+			lp.drawLineV(i, 0, 64);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);
@@ -122,9 +128,9 @@ public class Lcd12864 {
 		System.out.println("test3");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lcd12864DisplayFunctions.drawLine(lp, 64, 32, i, i / 2);
-			lcd12864DisplayFunctions.drawCircle(lp, 64, 32, i / 3);
-			lcd12864DisplayFunctions.drawRect(lp, 0, 0, i, i / 2);
+			lp.drawLine(64, 32, i, i / 2);
+			lp.drawCircle(64, 32, i / 3);
+			lp.drawRect(0, 0, i, i / 2);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);

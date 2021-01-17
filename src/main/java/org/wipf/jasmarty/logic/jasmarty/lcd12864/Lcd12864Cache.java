@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 
 /**
  * @author Wipf
@@ -12,12 +12,12 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 public class Lcd12864Cache {
 
 	private boolean bChanged = true;
-	private Lcd12864Page page = new Lcd12864Page();
+	private Lcd12864PageBase page = new Lcd12864PageBase();
 
 	/**
 	 * @return
 	 */
-	public Lcd12864Page getPage() {
+	public Lcd12864PageBase getPage() {
 		return page;
 	}
 
@@ -26,7 +26,7 @@ public class Lcd12864Cache {
 	 * 
 	 * @param baScreen
 	 */
-	public void setScreen(Lcd12864Page pScreen) {
+	public void setScreen(Lcd12864PageBase pScreen) {
 		this.bChanged = true;
 		this.page = pScreen;
 	}

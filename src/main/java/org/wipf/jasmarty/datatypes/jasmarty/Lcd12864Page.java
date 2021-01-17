@@ -1,213 +1,265 @@
 package org.wipf.jasmarty.datatypes.jasmarty;
 
-import org.json.JSONArray;
-
 /**
- * @author Wipf
+ * @author wipf
  *
  */
-public class Lcd12864Page {
+public class Lcd12864Page extends Lcd12864PageBase {
 
-	private boolean[][] baScreen = new boolean[64][128];
-
-	/**
-	 * 
-	 */
-	public Lcd12864Page() {
-
-	}
+	public enum lineAlignment {
+		LEFT, CENTER, RIGHT, CUSTOM;
+	};
 
 	/**
-	 * @param sJson
+	 * @param x0
+	 * @param y0
+	 * @param x1
+	 * @param y1
 	 */
-	public Lcd12864Page(String sJson) {
-		setScreen(sJson);
-	}
+	public void drawLine(int x0, int y0, int x1, int y1) {
+		int dx = Math.abs(x1 - x0);
+		int dy = Math.abs(y1 - y0);
+		int sx = (x0 < x1) ? 1 : -1;
+		int sy = (y0 < y1) ? 1 : -1;
+		int err = dx - dy;
 
-	/**
-	 * @param nScreen
-	 */
-	public Lcd12864Page(byte[] nScreen) {
-		setScreen(nScreen);
-	}
-
-	/**
-	 * @param baScreen
-	 */
-	public Lcd12864Page(boolean[][] baScreen) {
-		setScreen(baScreen);
-	}
-
-	/**
-	 * baScreenList 1024
-	 * 
-	 * @return
-	 */
-	public void setScreen(byte[] baScreenList) {
-		boolean[] bTmp = new boolean[8192];
-		int nZaeler = 0;
-		for (byte bZahl : baScreenList) {
-
-			// unsigned byte
-			int nDez = bZahl & 0xFF;
-
-			for (int i = 0; i < 8; i++) {
-				bTmp[Math.abs(i - 7) + (nZaeler * 8)] = (nDez % 2 == 1 ? true : false);
-				nDez = nDez / 2;
+		while (true) {
+			this.setPixel(x0, y0, true);
+			if (x0 == x1 && y0 == y1) {
+				return;
 			}
-			nZaeler++;
-		}
-		setScreen(bTmp);
-	}
-
-	/**
-	 * 8192 lange liste
-	 * 
-	 * @param baScreenList
-	 */
-	public void setScreen(boolean[] baScreenList) {
-
-		int nLauf = 0;
-		int nRow = -1; // bei -1 anfangen
-		for (boolean b : baScreenList) {
-			int nCol = nLauf % 128;
-			if (nCol == 0) {
-				nRow++; // geht von 0 bis 63
+			int err2 = err + err;
+			if (err2 > -dy) {
+				err -= dy;
+				x0 += sx;
 			}
-
-			this.baScreen[nRow][nCol] = b;
-			nLauf++; // von 0 bis 8192
-		}
-	}
-
-	/**
-	 * @param baScreen
-	 */
-	public void setScreen(boolean[][] baScreen) {
-		this.baScreen = baScreen;
-	}
-
-	/**
-	 * Json:
-	 * 
-	 * [[true,false,true,...(128x)],[],...(64x)]
-	 * 
-	 * @param sJson
-	 */
-	public void setScreen(String sJson) {
-		JSONArray a = new JSONArray(sJson);
-		boolean[] baTmpFull = new boolean[8192];
-
-		int cTmp = 0;
-		for (Object o : a) {
-			JSONArray line = (JSONArray) o;
-
-			for (Object by : line) {
-				boolean b = (boolean) by;
-				baTmpFull[cTmp] = b;
-				cTmp++;
+			if (err2 < dx) {
+				err += dx;
+				y0 += sy;
 			}
 		}
-		setScreen(baTmpFull);
+	}
+
+	public void drawLineH(int x0, int x1, int y) {
+		if (x1 > x0)
+			for (int x = x0; x <= x1; x++)
+				this.setPixel(x, y, true);
+		else
+			for (int x = x1; x <= x0; x++)
+				this.setPixel(x, y, true);
+	}
+
+	/**
+	 * @param x
+	 * @param y0
+	 * @param y1
+	 */
+	public void drawLineV(int x, int y0, int y1) {
+		if (y1 > y0)
+			for (int y = y0; y <= y1; y++)
+				this.setPixel(x, y, true);
+		else
+			for (int y = y1; y <= y0; y++)
+				this.setPixel(x, y, true);
 	}
 
 	/**
 	 * @param x
 	 * @param y
-	 * @param b
+	 * @param w
+	 * @param h
 	 */
-	public void setPixel(int x, int y, boolean b) {
-		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-			this.baScreen[y][x] = b;
+	public void drawRect(int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return;
+		boolean drawVright = true;
+		if (x + w > 128) {
+			w = 128 - x;
+			drawVright = false;
+		}
+		if (y + h > 64) {
+			h = 64 - y;
+		} else {
+			drawLineH(x, x + w - 1, y + h - 1);
+		}
+
+		drawLineH(x, x + w - 1, y);
+		drawLineV(x, y + 1, y + h - 2);
+
+		if (drawVright) {
+			drawLineV(x + w - 1, y + 1, y + h - 2);
 		}
 	}
 
 	/**
 	 * @param x
 	 * @param y
+	 * @param w
+	 * @param h
 	 */
-	public void setPixelInvert(int x, int y) {
-		setPixel(x, y, !getPixel(x, y));
-
+	public void drawRectFill(int x, int y, int w, int h) {
+		if (x >= 128 || y >= 64)
+			return;
+		if (x + w >= 128)
+			w = 128 - x;
+		if (y + h >= 64)
+			h = 64 - y;
+		for (int i = y; i < y + h; i++)
+			drawLineH(x, x + w - 1, i);
 	}
 
 	/**
-	 * @return
+	 * @param x0
+	 * @param y0
+	 * @param radius
 	 */
-	public boolean[][] getScreen() {
-		return this.baScreen;
-	}
+	public void drawCircle(int x0, int y0, int radius) {
+		int f = 1 - radius;
+		int ddF_x = 1;
+		int ddF_y = -2 * radius;
+		int x = 0;
+		int y = radius;
 
-	/**
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean getPixel(int x, int y) {
-		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-			return this.baScreen[x][y];
+		this.setPixel(x0, y0 + radius, true);
+		this.setPixel(x0, y0 - radius, true);
+		this.setPixel(x0 + radius, y0, true);
+		this.setPixel(x0 - radius, y0, true);
+
+		while (x < y) {
+			if (f >= 0) {
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x;
+			this.setPixel(x0 + x, y0 + y, true);
+			this.setPixel(x0 - x, y0 + y, true);
+			this.setPixel(x0 + x, y0 - y, true);
+			this.setPixel(x0 - x, y0 - y, true);
+			this.setPixel(x0 + y, y0 + x, true);
+			this.setPixel(x0 - y, y0 + x, true);
+			this.setPixel(x0 + y, y0 - x, true);
+			this.setPixel(x0 - y, y0 - x, true);
 		}
-		return false;
 	}
 
 	/**
-	 * @return
-	 * 
+	 * @param x0
+	 * @param y0
+	 * @param r
 	 */
-	public byte[] getScreenAsByteArray() {
-		boolean[] baTmpFull = getScreenAsBooleanArryInLine();
+	public void drawCircleFill(int x0, int y0, int r) {
+		drawLineH(x0 - r, x0 - r + 2 * r + 1, y0);
+		int f = 1 - r;
+		int ddF_x = 1;
+		int ddF_y = -2 * r;
+		int x = 0;
+		int y = r;
 
-		// für get als byte liste
-		byte[] iScreen = new byte[1024];
-		for (int i = 0; i < 1024; i++) {
-			int stellenstart = i * 8;
-			byte tmpzahl = 0;
+		while (x < y) {
+			if (f >= 0) {
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x;
+			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 + y);
+			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 + x);
+			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 - y);
+			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 - x);
+		}
+	}
 
-			for (int lauf = 0; lauf < 8; lauf++) {
-				if (baTmpFull[stellenstart + lauf]) {
-					// System.out.println("Truestelle " + stellenstart + " p " + lauf);
-					tmpzahl = (byte) (tmpzahl + Math.pow(2, Math.abs(lauf - 7)));
+	/**
+	 * Ein bis zu 8 Pixel hohes Zeichen schreiben
+	 *
+	 * @param xpos
+	 * @param ypos
+	 * @param zeichen
+	 */
+	public void drawChar(int xpos, int ypos, byte[] zeichen) {
+		if (xpos >= 128 || ypos >= 64) {
+			return;
+		}
+
+		int x = 0;
+		int y = 0;
+		for (byte zline : zeichen) {
+			y = 0;
+			for (boolean bb : booleanArrayFromByte(zline)) {
+				this.setPixel(x + xpos, y + ypos, bb);
+				y++;
+			}
+			x++;
+		}
+	}
+
+	/**
+	 * TODO zusammenfassen
+	 * 
+	 * @param ld
+	 * @param xpos wird nur bei CUSTOM beachtet
+	 * @param ypos
+	 * @param str
+	 * @return
+	 */
+	public void drawString(Lcd12864Font font, Integer xpos, int ypos, lineAlignment la, String str) {
+		int x = 0;
+		int y = ypos;
+
+		switch (la) {
+		case CENTER:
+			x = ((128 - (str.length() * font.getFontX()) / 2) - font.getFontX()); // TODO anpassen
+			break;
+		case RIGHT:
+			x = 128 - font.getFontX();
+			break;
+		case LEFT:
+			x = 0; // left
+			break;
+		case CUSTOM:
+		default:
+			x = xpos;
+			break;
+		}
+
+		for (char c : str.toCharArray()) {
+			byte[] bChar = font.getChar(c);
+			drawChar(x, y, bChar);
+
+			// Zeichenbreite bestimmen
+			x += bChar.length + 1;
+
+			// Für Zeilenumbruch -> nötig?
+			if (x >= 128 - font.getFontX()) {
+				x = 0;
+				y += font.getFontY() + 1;
+				if (y > 64) {
+					y = 0;
 				}
 			}
-
-			iScreen[i] = tmpzahl;
 		}
-		return iScreen;
 	}
 
 	/**
-	 * TODO testen ob 8 bit richtigrum
-	 * 
-	 * [8192]x
-	 * 
-	 * @param baScreen
-	 */
-	public boolean[] getScreenAsBooleanArryInLine() {
-		boolean[] ba = new boolean[8192];
-		int i = 0;
-		for (boolean[] bRow : baScreen) {
-			for (boolean b : bRow) {
-				ba[i] = b;
-				i++;
-			}
-		}
-		return ba;
-	}
-
-	/**
+	 * @param x
 	 * @return
 	 */
-	public JSONArray getScreenAsJsonArray() {
-		JSONArray ja = new JSONArray();
-
-		for (int r = 0; r < 64; r++) {
-			JSONArray jaRow = new JSONArray();
-			for (int c = 0; c < 128; c++) {
-				jaRow.put(baScreen[r][c]);
-			}
-			ja.put(jaRow);
-		}
-		return ja;
+	private boolean[] booleanArrayFromByte(byte x) {
+		boolean bs[] = new boolean[8];
+		bs[0] = ((x & 0x01) != 0);
+		bs[1] = ((x & 0x02) != 0);
+		bs[2] = ((x & 0x04) != 0);
+		bs[3] = ((x & 0x08) != 0);
+		bs[4] = ((x & 0x10) != 0);
+		bs[5] = ((x & 0x20) != 0);
+		bs[6] = ((x & 0x40) != 0);
+		bs[7] = ((x & 0x80) != 0);
+		return bs;
 	}
 
 }

@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
@@ -99,7 +99,7 @@ public class LcdRest {
 	@POST
 	@Path("12864/setScreen")
 	public Response setScreen(String jnRoot) {
-		lcd12864Cache.setScreen(new Lcd12864Page(jnRoot));
+		lcd12864Cache.setScreen(new Lcd12864PageBase(jnRoot));
 		return Response.ok().build();
 	}
 
