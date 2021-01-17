@@ -50,14 +50,6 @@ public class DebugRest {
 
 	@POST
 	@GET
-	@Path("lcd12864/test")
-	public Response lcd12864test() {
-		lcd12864.test12864();
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
 	@Path("lcd12864/test2")
 	public Response lcd12864test2() {
 		lcd12864.setCacheRnd();

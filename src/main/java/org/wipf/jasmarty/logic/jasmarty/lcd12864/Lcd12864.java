@@ -29,16 +29,13 @@ public class Lcd12864 {
 	Wipf wipf;
 
 	/**
-	 * zu übertragen sind 128x64 bit = 8192 bits = 1024 byte
+	 * @return
 	 * 
-	 * pro übertragen 8 bit = 1024 übertagungen nötig
 	 */
-	public void test12864() {
-		LOGGER.info("START");
-		for (int i = 0; i < 1024; i++) {
-			lcdConnect.write(i);
-		}
-		LOGGER.info("ENDE");
+	public Boolean startLCD() {
+		LOGGER.info("Starte 12864 LCD");
+		return lcdConnect.startPort();
+
 	}
 
 	/**
@@ -135,16 +132,6 @@ public class Lcd12864 {
 			wipf.sleep(220);
 			System.out.println(i);
 		}
-	}
-
-	/**
-	 * @return
-	 * 
-	 */
-	public Boolean startLCD() {
-		LOGGER.info("Starte 12864 LCD");
-		return lcdConnect.startPort();
-
 	}
 
 }

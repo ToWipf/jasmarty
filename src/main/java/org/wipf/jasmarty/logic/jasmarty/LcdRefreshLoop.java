@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageConverter;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageConverter;
 
@@ -19,11 +20,13 @@ import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageConverter;
 public class LcdRefreshLoop {
 
 	@Inject
-	Lcd2004PageConverter pageConverter;
+	Lcd2004PageConverter lcd2004PageConverter;
 	@Inject
 	Lcd2004 lcd2004;
 	@Inject
 	Lcd12864 lcd12864;
+	@Inject
+	Lcd12864PageConverter lcd12864PageConverter;
 	@Inject
 	ActionVerwaltung actionVerwaltung;
 	@Inject
@@ -63,7 +66,7 @@ public class LcdRefreshLoop {
 	 */
 	public void doRefreshCacheManuell() {
 		try {
-			pageConverter.refreshCache();
+			lcd2004PageConverter.refreshCache();
 		} catch (Exception e) {
 			LOGGER.warn("doRefreshCacheManuell fehlgeschlagen. Seite ist fehlerhaft." + e);
 		}
@@ -90,7 +93,7 @@ public class LcdRefreshLoop {
 
 				while (bLoopActive) {
 					try {
-						pageConverter.refreshCache();
+						lcd2004PageConverter.refreshCache();
 						if (lcdConnect.isLcdOk() && !lcd2004.isPauseWriteToLCD()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcd2004.refreshDisplay();
@@ -131,6 +134,7 @@ public class LcdRefreshLoop {
 					try {
 						if (lcdConnect.isLcdOk()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
+							lcd12864PageConverter.refreshCurrentPage();
 							lcd12864.refreshDisplay();
 						}
 						Thread.sleep(lcdConnect.getRefreshRate());
