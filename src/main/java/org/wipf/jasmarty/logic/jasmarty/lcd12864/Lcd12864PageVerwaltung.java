@@ -65,7 +65,7 @@ public class Lcd12864PageVerwaltung {
 		Lcd12864PageDescription pd = new Lcd12864PageDescription();
 		try {
 
-			String sQuery = "SELECT * FROM pages WHERE id = ?;";
+			String sQuery = "SELECT * FROM lcd_pages12864 WHERE id = ?;";
 			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
@@ -76,6 +76,7 @@ public class Lcd12864PageVerwaltung {
 				pd.setName(rs.getString("name"));
 				pd.setStatic(rs.getString("static"));
 				pd.setDynamic(rs.getString("dynamic"));
+				// pd.setStatic(rs.getArray("static").toString()); TODO
 				return pd;
 			}
 		} catch (Exception e) {

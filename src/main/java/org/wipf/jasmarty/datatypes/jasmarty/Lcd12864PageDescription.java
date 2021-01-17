@@ -34,8 +34,8 @@ public class Lcd12864PageDescription {
 		JSONObject jo = new JSONObject(sJson);
 		setId(jo.getInt("id"));
 		setName(jo.getString("name"));
-		setStatic(jo.getString("static"));
-		setDynamic(jo.getString("dynamic"));
+		setStatic(jo.getJSONArray("static"));
+		setDynamic(jo.getJSONArray("dynamic"));
 		return this;
 	}
 
@@ -103,10 +103,10 @@ public class Lcd12864PageDescription {
 	}
 
 	/**
-	 * @param jaStatic
+	 * @param sDynamic
 	 */
-	public void setDynamic(String sStatic) {
-		setDynamic(new JSONArray(sStatic));
+	public void setDynamic(String sDynamic) {
+		setDynamic(new JSONArray(sDynamic));
 	}
 
 }

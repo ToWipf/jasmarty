@@ -30,11 +30,17 @@ public class Lcd12864PageConverter {
 	 * 
 	 */
 	public void refreshCurrentPage() {
-		cache.setScreen(buildPage(pd));
+		if (pd != null) {
+			System.out.println("re");
+			cache.setScreen(buildPage(pd));
+		}
 	}
 
 	/**
-	 * [{type, x, y, font, data:"text"},{}]
+	 * curl -d '{"id":1,"name":"testseite1","static":[],"dynamic":[{"type":"TEXT",
+	 * "font":"FONT_57", "data":"11112222", "x":0,"y":0}]}' -X POST
+	 * localhost:8080/lcd12864/savePage
+	 * 
 	 * 
 	 * @param page
 	 */
@@ -44,11 +50,11 @@ public class Lcd12864PageConverter {
 		JSONArray jStatic = pd.getStatic(); // TODO
 
 		for (Object o : jDynamic) {
-			JSONObject jo = new JSONObject(o);
+			JSONObject jo = new JSONObject(o.toString());
 
 			switch (jo.get("type").toString()) {
 			case "TEXT":
-				switch (jo.get("FONT").toString()) {
+				switch (jo.get("font").toString()) {
 				case "FONT_57":
 					lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), jo.getInt("x"), jo.getInt("y"),
 							lineAlignment.CUSTOM, jo.get("data").toString());

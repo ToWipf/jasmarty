@@ -49,6 +49,7 @@ public class Lcd12864 {
 	 * 
 	 */
 	public void refreshDisplay() {
+		// TODO: nur senden wenn auch "echte" änderungen da sind
 		if (lcd12864Cache.isChanged()) {
 			for (byte b : lcd12864Cache.getPage().getScreenAsByteArray()) {
 				lcdConnect.write(b);

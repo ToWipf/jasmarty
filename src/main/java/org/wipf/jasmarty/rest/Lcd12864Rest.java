@@ -2,7 +2,6 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
@@ -23,7 +22,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
  *
  */
 @Path("lcd12864")
-@RolesAllowed("admin")
+//@RolesAllowed("admin") TODO!
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -55,7 +54,7 @@ public class Lcd12864Rest {
 //	}
 
 	@GET
-	@Path("getPage/{pid}")
+	@Path("getPage/{id}")
 	public Response getPage(@PathParam("id") int nId) {
 		return Response.ok(lcd12864PageVerwaltung.load(nId).toJson().toString()).build();
 	}
@@ -73,7 +72,7 @@ public class Lcd12864Rest {
 	}
 
 	@DELETE
-	@Path("deletePage/{pid}")
+	@Path("deletePage/{id}")
 	public Response delete(@PathParam("id") int nId) {
 		try {
 			lcd12864PageVerwaltung.del(nId);
@@ -86,7 +85,7 @@ public class Lcd12864Rest {
 
 	@GET
 	@POST
-	@Path("selectPage")
+	@Path("selectPage/{id}")
 	public Response selectPage(@PathParam("id") int nId) {
 		lcd12864PageVerwaltung.select(nId);
 		return Response.ok().build();
