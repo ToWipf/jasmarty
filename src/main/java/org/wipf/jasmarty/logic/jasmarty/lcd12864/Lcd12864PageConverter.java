@@ -34,14 +34,14 @@ public class Lcd12864PageConverter {
 	}
 
 	/**
-	 * {dynamic:[{type, x, y, font, data:"text"},{}]}
+	 * [{type, x, y, font, data:"text"},{}]
 	 * 
 	 * @param page
 	 */
 	private Lcd12864Page buildPage(Lcd12864PageDescription pd) {
 		Lcd12864Page lp = new Lcd12864Page();
 		JSONArray jDynamic = pd.getDynamic();
-		JSONArray jStatic = pd.getStatic();
+		JSONArray jStatic = pd.getStatic(); // TODO
 
 		for (Object o : jDynamic) {
 			JSONObject jo = new JSONObject(o);

@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.datatypes.jasmarty;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author wipf
@@ -12,6 +13,31 @@ public class Lcd12864PageDescription {
 	private String sName;
 	private JSONArray jaStatic;
 	private JSONArray jaDynamic;
+
+	/**
+	 * @return
+	 */
+	public JSONObject toJson() {
+		JSONObject jo = new JSONObject();
+		jo.put("id", getId());
+		jo.put("name", getName());
+		jo.put("static", getStatic().toString());
+		jo.put("dynamic", getDynamic().toString());
+		return jo;
+	}
+
+	/**
+	 * @param sJson
+	 * @return
+	 */
+	public Lcd12864PageDescription setByJson(String sJson) {
+		JSONObject jo = new JSONObject(sJson);
+		setId(jo.getInt("id"));
+		setName(jo.getString("name"));
+		setStatic(jo.getString("static"));
+		setDynamic(jo.getString("dynamic"));
+		return this;
+	}
 
 	/**
 	 * @return

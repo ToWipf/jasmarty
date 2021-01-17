@@ -30,7 +30,7 @@ public class Lcd12864PageVerwaltung {
 	 * 
 	 * @throws SQLException
 	 */
-	public void init() throws SQLException { // TODO einbinden
+	public void init() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS lcd_pages12864 (id INTEGER UNIQUE, name TEXT, static TEXT, dynamic TEXT);";
 		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
@@ -47,6 +47,14 @@ public class Lcd12864PageVerwaltung {
 		statement.setString(3, page.getStatic().toString());
 		statement.setString(4, page.getDynamic().toString());
 		statement.executeUpdate();
+	}
+
+	/**
+	 * @param jnRoot
+	 * @throws SQLException
+	 */
+	public void save(String jnRoot) throws SQLException {
+		save(new Lcd12864PageDescription().setByJson(jnRoot));
 	}
 
 	/**
@@ -86,6 +94,13 @@ public class Lcd12864PageVerwaltung {
 		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();
+	}
+
+	/**
+	 * @param nId
+	 */
+	public void select(int nId) {
+		converter.setPageDescription(load(nId));
 	}
 
 }

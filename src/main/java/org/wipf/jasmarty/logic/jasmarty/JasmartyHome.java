@@ -6,13 +6,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004CharPictures;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004CustomChars;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
 
 /**
  * @author wipf
@@ -24,8 +20,6 @@ public class JasmartyHome {
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
-	Lcd2004PageVerwaltung pageVerwaltung;
-	@Inject
 	ActionVerwaltung actionVerwaltung;
 	@Inject
 	LcdRefreshLoop lcdRefreshLoop;
@@ -33,10 +27,6 @@ public class JasmartyHome {
 	Wipf wipf;
 	@Inject
 	SerialConfig serialConfig;
-	@Inject
-	Lcd2004CustomChars customChars;
-	@Inject
-	Lcd2004CharPictures charPictures;
 	@Inject
 	Lcd2004 lcd2004;
 	@Inject
@@ -48,9 +38,8 @@ public class JasmartyHome {
 	 * @throws SQLException
 	 */
 	public void init() throws SQLException {
-		pageVerwaltung.initDB();
 		actionVerwaltung.initDB();
-		customChars.initDB();
+
 	}
 
 	/**
@@ -70,22 +59,18 @@ public class JasmartyHome {
 		LOGGER.info("Starten");
 		lcdConnect.setConfig(serialConfig.getConfig());
 
-		if (lcdConnect.getType() == lcdType.LCD_2004) {
+		switch (lcdConnect.getType()) {
+		case LCD_2004:
 			lcd2004.startLCD();
-			// lcdConnect.startSerialLcdPort(); wird über start2004LCD
-
-			charPictures.writeAndLoadWipf();
-			// charPictures.testChars();
-
-			pageVerwaltung.writeStartPage();
 			lcdRefreshLoop.startRefresh2004();
-		}
-
-		else if (lcdConnect.getType() == lcdType.LCD_12864) {
+			break;
+		case LCD_12864:
 			lcd12864.startLCD();
 			lcdRefreshLoop.startRefresh12864();
+			break;
+		default:
+			break;
 		}
-
 		LOGGER.info("Gestartet");
 	}
 
@@ -94,20 +79,23 @@ public class JasmartyHome {
 	 */
 	public void jasmartyStop() {
 		LOGGER.info("Stoppe");
-		// TODO für 2004 und 12864
 
 		if (lcdConnect.isLcdOk()) {
-			if (lcdConnect.getType() == lcdType.LCD_2004) {
+			switch (lcdConnect.getType()) {
+			case LCD_2004:
 				lcdRefreshLoop.stop();
 				wipf.sleep(lcdConnect.getRefreshRate() * 2 + 50);
-				pageVerwaltung.writeExitPage();
+				lcd2004.stopLCD();
 				lcdRefreshLoop.doRefreshCacheManuell();
 				lcd2004.refreshDisplay();
 				lcdConnect.closeSerialLcdPort();
-
-			} else if (lcdConnect.getType() == lcdType.LCD_12864) {
+				break;
+			case LCD_12864:
 				lcdRefreshLoop.stop();
 				lcdConnect.closeSerialLcdPort();
+				break;
+			default:
+				break;
 			}
 		}
 		LOGGER.info("Gestoppt");

@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.jasmarty.lcd2004;
 
+import java.sql.SQLException;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -13,6 +15,12 @@ public class Lcd2004 {
 
 	@Inject
 	LcdConnect lcdConnect;
+	@Inject
+	Lcd2004PageVerwaltung pageVerwaltung;
+	@Inject
+	Lcd2004CustomChars customChars;
+	@Inject
+	Lcd2004CharPictures charPictures;
 
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty 2004");
 	private Lcd2004Cache lcache = new Lcd2004Cache(0, 0);
@@ -20,12 +28,29 @@ public class Lcd2004 {
 
 	/**
 	 * @return
+	 * @throws SQLException
 	 */
-	public Boolean startLCD() {
-		// Cache vorbereiten
+	public Boolean startLCD() throws SQLException {
 		LOGGER.info("Starte 2004 LCD");
+		pageVerwaltung.initDB();
+		customChars.initDB();
+
+		// lcdConnect.startSerialLcdPort(); wird über start2004LCD
+
+		charPictures.writeAndLoadWipf();
+		// charPictures.testChars();
+
+		pageVerwaltung.writeStartPage();
+		// Cache vorbereiten
 		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());
 		return lcdConnect.startPort();
+	}
+
+	/**
+	 * 
+	 */
+	public void stopLCD() {
+		pageVerwaltung.writeExitPage();
 	}
 
 	/**

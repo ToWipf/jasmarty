@@ -28,13 +28,13 @@ export class Jasmarty12864PanelComponent implements OnInit {
   }
 
   public send(): void {
-    this.http.post(this.rest.gethost() + 'lcd/12864/setScreen', this.screen).subscribe((res) => {
+    this.http.post(this.rest.gethost() + 'lcd12864/setScreen', this.screen).subscribe((res) => {
       console.log(res);
     });
   }
 
   public load(): void {
-    this.http.get(this.rest.gethost() + 'lcd/12864/getScreen').subscribe((res: any) => {
+    this.http.get(this.rest.gethost() + 'lcd12864/getScreen').subscribe((res: any) => {
       this.screen = res;
       console.log(res);
     });

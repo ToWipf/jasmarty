@@ -39,7 +39,7 @@ public class ActionRest {
 	@GET
 	@Path("get/{id}")
 	public Response getAction(@PathParam("id") Integer nId) {
-		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson()).build();
+		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson().toString()).build();
 	}
 
 	@GET

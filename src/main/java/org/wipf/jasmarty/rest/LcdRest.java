@@ -12,7 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
@@ -92,20 +91,4 @@ public class LcdRest {
 		return Response.ok(lcd2004.getCache().toSollJson().toString()).build();
 	}
 
-	// ############################
-	// ########### 12864 ##########
-	// ############################
-
-	@POST
-	@Path("12864/setScreen")
-	public Response setScreen(String jnRoot) {
-		lcd12864Cache.setScreen(new Lcd12864PageBase(jnRoot));
-		return Response.ok().build();
-	}
-
-	@GET
-	@Path("12864/getScreen")
-	public Response setScreen() {
-		return Response.ok(lcd12864Cache.getPage().getScreenAsJsonArray().toString()).build();
-	}
 }

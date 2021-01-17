@@ -16,13 +16,13 @@ public class ButtonAction {
 	/**
 	 * @return
 	 */
-	public String toJson() {
+	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("id", this.nId);
 		jo.put("button", this.nButton);
 		jo.put("active", this.bActive);
 		jo.put("action", this.sAction);
-		return jo.toString();
+		return jo;
 	}
 
 	/**
