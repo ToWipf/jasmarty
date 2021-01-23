@@ -3,6 +3,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { HttpClient } from '@angular/common/http';
 import { CroppedEvent } from 'ngx-photo-editor';
+import { Lcd12864PageDescription } from 'src/app/datatypes';
 
 @Component({
   selector: 'app-jasmarty12864pages',
@@ -18,6 +19,7 @@ export class Jasmarty12864PagesComponent {
   public base64: any;
   public screen: boolean[][] = new Array(64).fill(false).map(() => new Array(128).fill(false));
   public nKontrast: number = 256 / 2;
+  //public lcdDescription: Lcd12864PageDescription; TODO:
 
   public fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;

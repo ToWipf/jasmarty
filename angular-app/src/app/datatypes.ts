@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class Globals {
-  version: string = '0.104';
+  version: string = '0.105';
 }
 
 export interface Jaconfig {
@@ -84,4 +84,19 @@ export interface WipfUser {
   password?: string;
   role?: string;
   telegramid?: number;
+}
+
+export interface Lcd12864PageDescription {
+  id?: number;
+  name?: string;
+  static?: any;
+  dynamic?: Lcd12864PageDescriptionDynamic[];
+}
+
+export interface Lcd12864PageDescriptionDynamic {
+  type?: string;
+  font?: string;
+  data?: string;
+  x?: number;
+  y?: number;
 }
