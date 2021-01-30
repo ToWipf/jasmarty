@@ -1,32 +1,34 @@
-<div><input type="file" (change)="fileChangeEvent($event)" /></div>
-
-<ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
-</ngx-photo-editor>
-
-<img [src]="base64" alt="">
-<input type="number" class="form-control" max="256" min="0" [(ngModel)]="nKontrast" placeholder="128">
-
-<ng-container *ngIf="lcdDescription.static">
-    <table>
-        <div *ngFor="let xA of lcdDescription.static; let x = index">
-            <tr>
-                <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
-                </td>
-            </tr>
-        </div>
-    </table>
-</ng-container>
-
-
-<button (click)="addDynPage()">Dynamische Anweisung hinzufügen</button>
-
 <ng-container *ngIf="lcdDescription">
+    <h1> Seite: {{lcdDescription.id}} </h1>
 
-    <h1> {{lcdDescription.id}} </h1>
+    <h3>Statisch</h3>
+
+    <div><input type="file" (change)="fileChangeEvent($event)" /></div>
+
+    <ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
+    </ngx-photo-editor>
+
+    <input type="number" class="form-control" max="256" min="0" (onchange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
+
+    <img [src]="base64" alt="">
+    <ng-container *ngIf="lcdDescription.static">
+        <table>
+            <div *ngFor="let xA of lcdDescription.static; let x = index">
+                <tr>
+                    <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
+                    </td>
+                </tr>
+            </div>
+        </table>
+    </ng-container>
+
+    <h3>Dynamisch</h3>
+
+    <button (click)="addDynPage()">Dynamische Anweisung hinzufügen</button>
 
     <mat-form-field appearance="fill">
         <mat-label>Id</mat-label>
-        <input type="number" matInput [(value)]="lcdDescription.id">
+        <input type="number" matInput [(ngModel)]="lcdDescription.id">
     </mat-form-field>
 
     <mat-form-field appearance="fill">
