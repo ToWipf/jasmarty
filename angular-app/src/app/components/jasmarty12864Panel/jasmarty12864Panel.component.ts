@@ -40,4 +40,10 @@ export class Jasmarty12864PanelComponent implements OnInit {
     });
   }
 
+  public refreshLcdNow(): void {
+    this.http.post(this.rest.gethost() + 'lcd12864/refreshNow', null).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
 }

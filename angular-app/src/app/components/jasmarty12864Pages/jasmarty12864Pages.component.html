@@ -1,6 +1,9 @@
 <ng-container *ngIf="lcdDescription">
     <h1> Seite: {{lcdDescription.id}} </h1>
 
+    <button type="button" class="btn btn-primary inbutton" (click)="pageLast()">Seite zurück</button>
+    <button type="button" class="btn btn-primary inbutton" (click)="pageNext()">nächste Seite</button>
+
     <h3>Statisch</h3>
 
     <div><input type="file" (change)="fileChangeEvent($event)" /></div>
@@ -8,7 +11,7 @@
     <ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
     </ngx-photo-editor>
 
-    <input type="number" class="form-control" max="256" min="0" (onchange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
+    <input type="number" class="form-control" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
 
     <img [src]="base64" alt="">
     <ng-container *ngIf="lcdDescription.static">
@@ -24,12 +27,12 @@
 
     <h3>Dynamisch</h3>
 
-    <button (click)="addDynPage()">Dynamische Anweisung hinzufügen</button>
+    <button (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
 
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
         <mat-label>Id</mat-label>
         <input type="number" matInput [(ngModel)]="lcdDescription.id">
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
@@ -42,7 +45,9 @@
             <mat-label>Typ</mat-label>
             <mat-select [(value)]="lcdDescription.dynamic[i].type">
                 <mat-option value="TEXT">Text</mat-option>
-                <mat-option value="xxxx">xxxx</mat-option>
+                <mat-option value="xxxx">Kreis</mat-option>
+                <mat-option value="xxxx">Quardat</mat-option>
+                <mat-option value="xxxx">Linie</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -68,12 +73,10 @@
             <mat-label>y</mat-label>
             <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].y">
         </mat-form-field>
+
+        <button (click)="delDynLine(i)">Zeile Löschen</button>
     </div>
 
-    <button (click)="saveLcdDescription()">speichern</button>
-    <button (click)="loadLcdDescription()">laden</button>
-
-    <button (click)="sendSelectedPage()">sendToLcd</button>
-    <button (click)="refreshLcdNow()">refreshNow</button>
+    <button (click)="sendSelectedPage()">Speichern</button>
 
 </ng-container>

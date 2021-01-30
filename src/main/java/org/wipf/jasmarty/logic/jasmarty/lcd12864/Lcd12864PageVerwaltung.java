@@ -80,8 +80,9 @@ public class Lcd12864PageVerwaltung {
 				return pd;
 			}
 		} catch (Exception e) {
-			// LOGGER.warn("Page not found: " + nId);
-			// TODO
+			// Seite nicht gefunden -> neue erstllen
+			pd.setId(nId);
+			pd.setName("Neue Seite " + nId); // TODO
 		}
 		return pd;
 	}

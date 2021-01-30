@@ -22,18 +22,17 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   public ngOnInit(): void {
     this.lcdDescription.dynamic = [];
-    this.lcdDescription.id = 4;
-    this.lcdDescription.name = "demo";
+    this.lcdDescription.id = 1;
+    this.loadLcdDescription();
   }
 
   public fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
-    //this.convertImgToArray();
   }
 
   public imageCropped(event: CroppedEvent): void {
-    console.log("now!")
     this.base64 = event.base64;
+    this.convertImgToArray();
   }
 
   public convertImgToArray(): void {
@@ -69,7 +68,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
     }
   }
 
-  public addDynPage(): void {
+  public addDynLine(): void {
     var dp: Lcd12864PageDescriptionDynamic = {};
     dp.data = "data";
     dp.font = "FONT_57";
@@ -79,29 +78,12 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.lcdDescription.dynamic.push(dp);
   }
 
-  public saveLcdDescription(): void {
-    this.convertImgToArray();
-    console.log(this.lcdDescription);
-    this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
-      console.log(res);
-    });
-  }
-
-  public loadLcdDescription(): void {
-    this.http.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).subscribe((res) => {
-      console.log(res);
-      this.lcdDescription = res;
-    });
+  public delDynLine(id: number): void {
+    this.lcdDescription.dynamic.splice(id, 1);
   }
 
   public selectLcdDescription(): void {
     this.http.post(this.rest.gethost() + 'lcd12864/selectPage/' + this.lcdDescription.id, null).subscribe((res) => {
-      console.log(res);
-    });
-  }
-
-  public refreshLcdNow(): void {
-    this.http.post(this.rest.gethost() + 'lcd12864/refreshNow', null).subscribe((res) => {
       console.log(res);
     });
   }
@@ -111,6 +93,30 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.selectLcdDescription();
   }
 
+  public pageNext(): void {
+    this.lcdDescription.id++;
+    this.loadLcdDescription();
+  }
 
+  public pageLast(): void {
+    if (this.lcdDescription.id > 0) {
+      this.lcdDescription.id--;
+      this.loadLcdDescription();
+    }
+  }
+
+  private saveLcdDescription(): void {
+    this.convertImgToArray();
+    console.log(this.lcdDescription);
+    this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  private loadLcdDescription(): void {
+    this.http.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).subscribe((res) => {
+      this.lcdDescription = res;
+    });
+  }
 
 }
