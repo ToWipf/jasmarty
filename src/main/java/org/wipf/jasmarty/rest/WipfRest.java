@@ -21,6 +21,7 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 @Path("wipf")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RolesAllowed("admin")
 @ApplicationScoped
 public class WipfRest {
 
@@ -37,14 +38,12 @@ public class WipfRest {
 
 	@GET
 	@Path("ports")
-	@RolesAllowed("admin")
 	public Response ports() {
 		return Response.ok(serialConfig.getPorts().toString()).build();
 	}
 
 	@POST
 	@Path("stop")
-	@RolesAllowed("admin")
 	public Response stopAll() {
 		MainHome.stopApp();
 		return Response.ok().build();

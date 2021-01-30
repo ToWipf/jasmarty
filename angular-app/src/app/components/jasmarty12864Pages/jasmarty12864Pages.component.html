@@ -5,14 +5,24 @@
 
 <img [src]="base64" alt="">
 <input type="number" class="form-control" max="256" min="0" [(ngModel)]="nKontrast" placeholder="128">
-<button (click)="convertImgToArray()">senden Bild</button>
 
+<ng-container *ngIf="lcdDescription.static">
+    <table>
+        <div *ngFor="let xA of lcdDescription.static; let x = index">
+            <tr>
+                <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
+                </td>
+            </tr>
+        </div>
+    </table>
+</ng-container>
 
-<h1>demo</h1>
 
 <button (click)="addDynPage()">Dynamische Anweisung hinzufügen</button>
 
 <ng-container *ngIf="lcdDescription">
+
+    <h1> {{lcdDescription.id}} </h1>
 
     <mat-form-field appearance="fill">
         <mat-label>Id</mat-label>
@@ -44,17 +54,17 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Data</mat-label>
-            <input matInput [(value)]="lcdDescription.dynamic[i].data">
+            <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>x</mat-label>
-            <input type="number" matInput [(value)]="lcdDescription.dynamic[i].x">
+            <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].x">
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>y</mat-label>
-            <input type="number" matInput [(value)]="lcdDescription.dynamic[i].y">
+            <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].y">
         </mat-form-field>
     </div>
 
@@ -62,5 +72,6 @@
     <button (click)="loadLcdDescription()">laden</button>
 
     <button (click)="sendSelectedPage()">sendToLcd</button>
+    <button (click)="refreshLcdNow()">refreshNow</button>
 
 </ng-container>

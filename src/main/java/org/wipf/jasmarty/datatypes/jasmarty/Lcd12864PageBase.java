@@ -96,6 +96,17 @@ public class Lcd12864PageBase {
 	 */
 	public void setScreen(String sJson) {
 		JSONArray a = new JSONArray(sJson);
+		setScreen(a);
+	}
+
+	/**
+	 * Json:
+	 * 
+	 * [[true,false,true,...(128x)],[],...(64x)]
+	 * 
+	 * @param a
+	 */
+	public void setScreen(JSONArray a) {
 		boolean[] baTmpFull = new boolean[8192];
 
 		int cTmp = 0;

@@ -21,8 +21,8 @@ public class Lcd12864PageDescription {
 		JSONObject jo = new JSONObject();
 		jo.put("id", getId());
 		jo.put("name", getName());
-		jo.put("static", getStatic().toString());
-		jo.put("dynamic", getDynamic().toString());
+		jo.put("static", getStatic());
+		jo.put("dynamic", getDynamic());
 		return jo;
 	}
 

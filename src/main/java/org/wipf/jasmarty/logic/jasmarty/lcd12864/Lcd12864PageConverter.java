@@ -59,7 +59,9 @@ public class Lcd12864PageConverter {
 	private Lcd12864Page buildPage(Lcd12864PageDescription pd) {
 		Lcd12864Page lp = new Lcd12864Page();
 		JSONArray jDynamic = pd.getDynamic();
-		JSONArray jStatic = pd.getStatic(); // TODO statische inhalte
+		JSONArray jStatic = pd.getStatic();
+
+		lp.setScreen(jStatic);
 
 		for (Object o : jDynamic) {
 			JSONObject jo = new JSONObject(o.toString());

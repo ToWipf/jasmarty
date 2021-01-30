@@ -91,4 +91,12 @@ public class Lcd12864Rest {
 		return Response.ok().build();
 	}
 
+	@GET
+	@POST
+	@Path("refreshNow")
+	public Response refreshNow() {
+		lcd12864Cache.setChanged(true);
+		return Response.ok().build();
+	}
+
 }

@@ -82,7 +82,7 @@ export interface WipfUser {
 export interface Lcd12864PageDescription {
   id?: number;
   name?: string;
-  static?: any;
+  static?: boolean[][];
   dynamic?: Lcd12864PageDescriptionDynamic[];
 }
 

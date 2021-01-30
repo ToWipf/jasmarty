@@ -27,7 +27,7 @@ public class Lcd12864Cache {
 	 * @param baScreen
 	 */
 	public void setScreen(Lcd12864PageBase pScreen) {
-		this.bChanged = true;
+		this.bChanged = true; // TODO: auto erkennung!
 		this.page = pScreen;
 	}
 
