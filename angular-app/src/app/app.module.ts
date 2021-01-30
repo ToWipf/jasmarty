@@ -53,7 +53,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { Globals } from './datatypes';
 import { JasmartyFullViewComponent } from './components/jasmartyFullView/jasmartyFullView.component';
 import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.component';
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
@@ -150,7 +149,7 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
     MatDatepickerModule,
     NgbModule,
   ],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }, Globals],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
   bootstrap: [AppComponent],
   entryComponents: [AppComponent, JasmartyActionsComponentDialog],
 })

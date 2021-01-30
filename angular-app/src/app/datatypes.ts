@@ -1,10 +1,3 @@
-import { Injectable } from '@angular/core';
-
-@Injectable()
-export class Globals {
-  version: string = '0.105';
-}
-
 export interface Jaconfig {
   port?: string;
   width?: number;

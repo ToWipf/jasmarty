@@ -25,7 +25,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.lcdDescription.dynamic = [];
     this.lcdDescription.id = 4;
     this.lcdDescription.name = "demo";
-    //this.lcdDescription.static = new boolean[][];
+    this.lcdDescription.static = [];
   }
 
   public fileChangeEvent(event: any): void {
@@ -85,10 +85,30 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.lcdDescription.dynamic.push(dp);
   }
 
-  public sendDemoPage(): void {
+  public saveLcdDescription(): void {
     this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
       console.log(res);
     });
   }
+
+  public loadLcdDescription(): void {
+    this.http.get(this.rest.gethost() + 'lcd12864/loadPage/' + this.lcdDescription.id).subscribe((res) => {
+      console.log(res);
+      this.lcdDescription = res;
+    });
+  }
+
+  public selectLcdDescription(): void {
+    this.http.post(this.rest.gethost() + 'lcd12864/selectPage/' + this.lcdDescription.id, null).subscribe((res) => {
+      console.log(res);
+    });
+  }
+
+  public sendSelectedPage(): void {
+    this.saveLcdDescription();
+    this.selectLcdDescription();
+  }
+
+
 
 }

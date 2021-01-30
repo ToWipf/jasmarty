@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Globals } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { version } from '../../../../package.json';
 
 @Component({
   selector: 'app-footer',
@@ -10,9 +10,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dial
   styleUrls: ['./footer.component.less'],
 })
 export class FooterComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, public globals: Globals, private rest: ServiceRest) { }
+  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) { }
 
-  public sAppVersion: string = this.globals.version;
+
+  public sAppVersion: string = version;
   public sJavaVersion: string = '0.0';
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;

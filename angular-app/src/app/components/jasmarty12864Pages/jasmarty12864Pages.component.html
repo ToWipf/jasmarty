@@ -14,7 +14,10 @@
 
 <ng-container *ngIf="lcdDescription">
 
-    Id: {{lcdDescription.id}}
+    <mat-form-field appearance="fill">
+        <mat-label>Id</mat-label>
+        <input type="number" matInput [(value)]="lcdDescription.id">
+    </mat-form-field>
 
     <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
@@ -55,6 +58,9 @@
         </mat-form-field>
     </div>
 
-    <button (click)="sendDemoPage()">senden Beschreibung</button>
+    <button (click)="saveLcdDescription()">speichern</button>
+    <button (click)="loadLcdDescription()">laden</button>
+
+    <button (click)="sendSelectedPage()">sendToLcd</button>
 
 </ng-container>
