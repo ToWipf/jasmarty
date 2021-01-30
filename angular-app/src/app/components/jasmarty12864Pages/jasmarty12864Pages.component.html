@@ -5,4 +5,56 @@
 
 <img [src]="base64" alt="">
 <input type="number" class="form-control" max="256" min="0" [(ngModel)]="nKontrast" placeholder="128">
-<button (click)="convertImgToArray()">senden</button>
+<button (click)="convertImgToArray()">senden Bild</button>
+
+
+<h1>demo</h1>
+
+<button (click)="addDynPage()">Dynamische Anweisung hinzufügen</button>
+
+<ng-container *ngIf="lcdDescription">
+
+    Id: {{lcdDescription.id}}
+
+    <mat-form-field appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput [(value)]="lcdDescription.name">
+    </mat-form-field>
+
+    <div *ngFor="let dy of lcdDescription.dynamic; let i = index" class="dyConfig">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Typ</mat-label>
+            <mat-select [(value)]="lcdDescription.dynamic[i].type">
+                <mat-option value="TEXT">Text</mat-option>
+                <mat-option value="xxxx">xxxx</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Schriftart</mat-label>
+            <mat-select [(value)]="lcdDescription.dynamic[i].font">
+                <mat-option value="FONT_57">57</mat-option>
+                <mat-option value="FONT_68">68</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Data</mat-label>
+            <input matInput [(value)]="lcdDescription.dynamic[i].data">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>x</mat-label>
+            <input type="number" matInput [(value)]="lcdDescription.dynamic[i].x">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>y</mat-label>
+            <input type="number" matInput [(value)]="lcdDescription.dynamic[i].y">
+        </mat-form-field>
+    </div>
+
+    <button (click)="sendDemoPage()">senden Beschreibung</button>
+
+</ng-container>

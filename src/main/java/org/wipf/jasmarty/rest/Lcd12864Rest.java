@@ -61,7 +61,7 @@ public class Lcd12864Rest {
 
 	@POST
 	@Path("savePage")
-	public Response save(String jnRoot) {
+	public Response savePage(String jnRoot) {
 		try {
 			lcd12864PageVerwaltung.save(jnRoot);
 		} catch (SQLException e) {

@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { HttpClient } from '@angular/common/http';
 import { CroppedEvent } from 'ngx-photo-editor';
-import { Lcd12864PageDescription } from 'src/app/datatypes';
+import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
 
 @Component({
   selector: 'app-jasmarty12864pages',
   templateUrl: './jasmarty12864Pages.component.html',
   styleUrls: ['./jasmarty12864Pages.component.less'],
 })
-export class Jasmarty12864PagesComponent {
+export class Jasmarty12864PagesComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf) {
 
   }
@@ -19,7 +19,14 @@ export class Jasmarty12864PagesComponent {
   public base64: any;
   public screen: boolean[][] = new Array(64).fill(false).map(() => new Array(128).fill(false));
   public nKontrast: number = 256 / 2;
-  //public lcdDescription: Lcd12864PageDescription; TODO:
+  public lcdDescription: Lcd12864PageDescription = {};
+
+  public ngOnInit(): void {
+    this.lcdDescription.dynamic = [];
+    this.lcdDescription.id = 4;
+    this.lcdDescription.name = "demo";
+    //this.lcdDescription.static = new boolean[][];
+  }
 
   public fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
@@ -66,5 +73,22 @@ export class Jasmarty12864PagesComponent {
     });
   }
 
+  /////
+
+  public addDynPage(): void {
+    var dp: Lcd12864PageDescriptionDynamic = {};
+    dp.data = "";
+    dp.font = "FONT_57";
+    dp.type = "TEXT";
+    dp.x = 0;
+    dp.y = 0;
+    this.lcdDescription.dynamic.push(dp);
+  }
+
+  public sendDemoPage(): void {
+    this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
+      console.log(res);
+    });
+  }
 
 }
