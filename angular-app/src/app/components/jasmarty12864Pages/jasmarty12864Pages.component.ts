@@ -30,15 +30,17 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.imageChangedEvent = event;
   }
 
-  public imageCropped(event: CroppedEvent): void {
+  public async imageCropped(event: CroppedEvent): Promise<void> {
     this.base64 = event.base64;
-    this.convertImgToArray();
+    // Vorbereiten des Speichers
+    this.lcdDescription.static = new Array(64).fill(false).map(() => new Array(128).fill(false));
+    await this.serviceWipf.delay(1000).then((x) => {
+      this.convertImgToArray();
+    });
   }
 
   public convertImgToArray(): void {
     if (this.base64) {
-      this.lcdDescription.static = new Array(64).fill(false).map(() => new Array(128).fill(false));
-
       const myimage = new Image();
       myimage.src = this.base64;
 
@@ -106,7 +108,6 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   private saveLcdDescription(): void {
-    this.convertImgToArray();
     console.log(this.lcdDescription);
     this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
       console.log(res);
@@ -114,8 +115,16 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   private loadLcdDescription(): void {
+    this.base64 = null;
     this.http.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).subscribe((res) => {
       this.lcdDescription = res;
+
+      if (!this.lcdDescription.dynamic) {
+        this.lcdDescription.dynamic = [];
+      }
+      if (!this.lcdDescription.static) {
+        this.lcdDescription.static = [];
+      }
     });
   }
 

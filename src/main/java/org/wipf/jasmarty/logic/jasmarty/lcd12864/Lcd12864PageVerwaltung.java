@@ -79,10 +79,11 @@ public class Lcd12864PageVerwaltung {
 				// pd.setStatic(rs.getArray("static").toString()); TODO
 				return pd;
 			}
-		} catch (Exception e) {
 			// Seite nicht gefunden -> neue erstllen
 			pd.setId(nId);
-			pd.setName("Neue Seite " + nId); // TODO
+			pd.setName("Neue Seite " + nId);
+		} catch (Exception e) {
+			// TODO
 		}
 		return pd;
 	}

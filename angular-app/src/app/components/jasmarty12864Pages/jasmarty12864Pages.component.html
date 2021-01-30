@@ -3,80 +3,89 @@
 
     <button type="button" class="btn btn-primary inbutton" (click)="pageLast()">Seite zurück</button>
     <button type="button" class="btn btn-primary inbutton" (click)="pageNext()">nächste Seite</button>
-
-    <h3>Statisch</h3>
-
-    <div><input type="file" (change)="fileChangeEvent($event)" /></div>
-
-    <ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
-    </ngx-photo-editor>
-
-    <input type="number" class="form-control" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
-
-    <img [src]="base64" alt="">
-    <ng-container *ngIf="lcdDescription.static">
-        <table>
-            <div *ngFor="let xA of lcdDescription.static; let x = index">
-                <tr>
-                    <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
-                    </td>
-                </tr>
-            </div>
-        </table>
-    </ng-container>
-
-    <h3>Dynamisch</h3>
-
-    <button (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
-
-    <!-- <mat-form-field appearance="fill">
-        <mat-label>Id</mat-label>
-        <input type="number" matInput [(ngModel)]="lcdDescription.id">
-    </mat-form-field> -->
+    <hr>
 
     <mat-form-field appearance="fill">
-        <mat-label>Name</mat-label>
+        <mat-label>Seitenname</mat-label>
         <input matInput [(value)]="lcdDescription.name">
     </mat-form-field>
 
-    <div *ngFor="let dy of lcdDescription.dynamic; let i = index" class="dyConfig">
+    <h3>Hintergrundbild</h3>
+
+    <div class="images">
+
+        Bild einfügen
+        <br>
+        <input type="file" (change)="fileChangeEvent($event)" />
+
+
+
+        <img [src]="base64" alt="" height="128" width="256">
 
         <mat-form-field appearance="fill">
-            <mat-label>Typ</mat-label>
-            <mat-select [(value)]="lcdDescription.dynamic[i].type">
-                <mat-option value="TEXT">Text</mat-option>
-                <mat-option value="xxxx">Kreis</mat-option>
-                <mat-option value="xxxx">Quardat</mat-option>
-                <mat-option value="xxxx">Linie</mat-option>
-            </mat-select>
+            <mat-label>Kontrast</mat-label>
+            <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Schriftart</mat-label>
-            <mat-select [(value)]="lcdDescription.dynamic[i].font">
-                <mat-option value="FONT_57">57</mat-option>
-                <mat-option value="FONT_68">68</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Data</mat-label>
-            <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>x</mat-label>
-            <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].x">
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>y</mat-label>
-            <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].y">
-        </mat-form-field>
-
-        <button (click)="delDynLine(i)">Zeile Löschen</button>
+        <ng-container *ngIf="lcdDescription.static">
+            <table>
+                <div *ngFor="let xA of lcdDescription.static; let x = index">
+                    <tr>
+                        <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
+                        </td>
+                    </tr>
+                </div>
+            </table>
+        </ng-container>
     </div>
 
+    <hr>
+    <h3>Inhalt</h3>
+
+    <perfect-scrollbar class="pscroll">
+        <div *ngFor="let dy of lcdDescription.dynamic; let i = index" class="dyConfig">
+
+            <mat-form-field appearance="fill">
+                <mat-label>Typ</mat-label>
+                <mat-select [(value)]="lcdDescription.dynamic[i].type">
+                    <mat-option value="TEXT">Text</mat-option>
+                    <mat-option value="xxxx">Kreis</mat-option>
+                    <mat-option value="xxxx">Quardat</mat-option>
+                    <mat-option value="xxxx">Linie</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Schriftart</mat-label>
+                <mat-select [(value)]="lcdDescription.dynamic[i].font">
+                    <mat-option value="FONT_57">57</mat-option>
+                    <mat-option value="FONT_68">68</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Data</mat-label>
+                <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>x</mat-label>
+                <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].x">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>y</mat-label>
+                <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].y">
+            </mat-form-field>
+
+            <button (click)="delDynLine(i)">Zeile Löschen</button>
+        </div>
+    </perfect-scrollbar>
+
+    <button (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
     <button (click)="sendSelectedPage()">Speichern</button>
 
 </ng-container>
+
+<ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
+</ngx-photo-editor>

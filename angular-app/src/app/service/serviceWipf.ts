@@ -1,3 +1,4 @@
+import { resolve } from '@angular/compiler-cli/src/ngtsc/file_system';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -18,6 +19,10 @@ export class ServiceWipf {
       }
     }
     return newObj;
+  }
+
+  public delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }
