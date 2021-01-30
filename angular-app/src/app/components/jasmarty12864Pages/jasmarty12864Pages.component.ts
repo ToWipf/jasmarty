@@ -90,20 +90,28 @@ export class Jasmarty12864PagesComponent implements OnInit {
     });
   }
 
-  public sendSelectedPage(): void {
+  public async sendSelectedPage(): Promise<void> {
     this.saveLcdDescription();
-    this.selectLcdDescription();
+    this.serviceWipf.delay(100).then((x) => {
+      this.selectLcdDescription();
+    });
   }
 
-  public pageNext(): void {
+  public async pageNext(): Promise<void> {
     this.lcdDescription.id++;
     this.loadLcdDescription();
+    this.serviceWipf.delay(100).then((x) => {
+      this.selectLcdDescription();
+    });
   }
 
-  public pageLast(): void {
+  public async pageLast(): Promise<void> {
     if (this.lcdDescription.id > 0) {
       this.lcdDescription.id--;
       this.loadLcdDescription();
+      this.serviceWipf.delay(100).then((x) => {
+        this.selectLcdDescription();
+      });
     }
   }
 

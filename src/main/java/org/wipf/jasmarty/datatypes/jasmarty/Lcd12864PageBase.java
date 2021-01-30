@@ -10,6 +10,10 @@ public class Lcd12864PageBase {
 
 	private boolean[][] baScreen = new boolean[64][128];
 
+	public enum pixelType {
+		ON, OFF, INVERT
+	};
+
 	/**
 	 * 
 	 */
@@ -110,13 +114,15 @@ public class Lcd12864PageBase {
 		boolean[] baTmpFull = new boolean[8192];
 
 		int cTmp = 0;
-		for (Object o : a) {
-			JSONArray line = (JSONArray) o;
+		if (a != null) {
+			for (Object o : a) {
+				JSONArray line = (JSONArray) o;
 
-			for (Object by : line) {
-				boolean b = (boolean) by;
-				baTmpFull[cTmp] = b;
-				cTmp++;
+				for (Object by : line) {
+					boolean b = (boolean) by;
+					baTmpFull[cTmp] = b;
+					cTmp++;
+				}
 			}
 		}
 		setScreen(baTmpFull);
@@ -125,9 +131,30 @@ public class Lcd12864PageBase {
 	/**
 	 * @param x
 	 * @param y
+	 * @param pt
+	 */
+	public void setPixel(int x, int y, pixelType pt) {
+		switch (pt) {
+		case ON:
+			this.setPixelByBoolean(x, y, true);
+			break;
+		case OFF:
+			this.setPixelByBoolean(x, y, false);
+			break;
+		case INVERT:
+			this.setPixelInvert(x, y);
+			break;
+		default:
+			break;
+		}
+	}
+
+	/**
+	 * @param x
+	 * @param y
 	 * @param b
 	 */
-	public void setPixel(int x, int y, boolean b) {
+	public void setPixelByBoolean(int x, int y, boolean b) {
 		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
 			this.baScreen[y][x] = b;
 		}
@@ -138,8 +165,9 @@ public class Lcd12864PageBase {
 	 * @param y
 	 */
 	public void setPixelInvert(int x, int y) {
-		setPixel(x, y, !getPixel(x, y));
-
+		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
+			this.baScreen[y][x] = !getPixel(x, y);
+		}
 	}
 
 	/**
@@ -156,7 +184,7 @@ public class Lcd12864PageBase {
 	 */
 	public boolean getPixel(int x, int y) {
 		if (x >= 0 && x < 128 && y >= 0 && y < 64) {
-			return this.baScreen[x][y];
+			return this.baScreen[y][x];
 		}
 		return false;
 	}

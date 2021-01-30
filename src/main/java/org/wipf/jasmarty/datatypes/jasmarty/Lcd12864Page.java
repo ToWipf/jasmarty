@@ -16,7 +16,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param x1
 	 * @param y1
 	 */
-	public void drawLine(int x0, int y0, int x1, int y1) {
+	public void drawLine(int x0, int y0, int x1, int y1, pixelType pt) {
 		int dx = Math.abs(x1 - x0);
 		int dy = Math.abs(y1 - y0);
 		int sx = (x0 < x1) ? 1 : -1;
@@ -24,7 +24,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 		int err = dx - dy;
 
 		while (true) {
-			this.setPixel(x0, y0, true);
+			this.setPixel(x0, y0, pt);
 			if (x0 == x1 && y0 == y1) {
 				return;
 			}
@@ -40,13 +40,13 @@ public class Lcd12864Page extends Lcd12864PageBase {
 		}
 	}
 
-	public void drawLineH(int x0, int x1, int y) {
+	public void drawLineH(int x0, int x1, int y, pixelType pt) {
 		if (x1 > x0)
 			for (int x = x0; x <= x1; x++)
-				this.setPixel(x, y, true);
+				this.setPixel(x, y, pt);
 		else
 			for (int x = x1; x <= x0; x++)
-				this.setPixel(x, y, true);
+				this.setPixel(x, y, pt);
 	}
 
 	/**
@@ -54,13 +54,13 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param y0
 	 * @param y1
 	 */
-	public void drawLineV(int x, int y0, int y1) {
+	public void drawLineV(int x, int y0, int y1, pixelType pt) {
 		if (y1 > y0)
 			for (int y = y0; y <= y1; y++)
-				this.setPixel(x, y, true);
+				this.setPixel(x, y, pt);
 		else
 			for (int y = y1; y <= y0; y++)
-				this.setPixel(x, y, true);
+				this.setPixel(x, y, pt);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param w
 	 * @param h
 	 */
-	public void drawRect(int x, int y, int w, int h) {
+	public void drawRect(int x, int y, int w, int h, pixelType pt) {
 		if (x >= 128 || y >= 64)
 			return;
 		boolean drawVright = true;
@@ -80,14 +80,14 @@ public class Lcd12864Page extends Lcd12864PageBase {
 		if (y + h > 64) {
 			h = 64 - y;
 		} else {
-			drawLineH(x, x + w - 1, y + h - 1);
+			drawLineH(x, x + w - 1, y + h - 1, pt);
 		}
 
-		drawLineH(x, x + w - 1, y);
-		drawLineV(x, y + 1, y + h - 2);
+		drawLineH(x, x + w - 1, y, pt);
+		drawLineV(x, y + 1, y + h - 2, pt);
 
 		if (drawVright) {
-			drawLineV(x + w - 1, y + 1, y + h - 2);
+			drawLineV(x + w - 1, y + 1, y + h - 2, pt);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param w
 	 * @param h
 	 */
-	public void drawRectFill(int x, int y, int w, int h) {
+	public void drawRectFill(int x, int y, int w, int h, pixelType pt) {
 		if (x >= 128 || y >= 64)
 			return;
 		if (x + w >= 128)
@@ -105,7 +105,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 		if (y + h >= 64)
 			h = 64 - y;
 		for (int i = y; i < y + h; i++)
-			drawLineH(x, x + w - 1, i);
+			drawLineH(x, x + w - 1, i, pt);
 	}
 
 	/**
@@ -113,17 +113,17 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param y0
 	 * @param radius
 	 */
-	public void drawCircle(int x0, int y0, int radius) {
+	public void drawCircle(int x0, int y0, int radius, pixelType pt) {
 		int f = 1 - radius;
 		int ddF_x = 1;
 		int ddF_y = -2 * radius;
 		int x = 0;
 		int y = radius;
 
-		this.setPixel(x0, y0 + radius, true);
-		this.setPixel(x0, y0 - radius, true);
-		this.setPixel(x0 + radius, y0, true);
-		this.setPixel(x0 - radius, y0, true);
+		this.setPixel(x0, y0 + radius, pt);
+		this.setPixel(x0, y0 - radius, pt);
+		this.setPixel(x0 + radius, y0, pt);
+		this.setPixel(x0 - radius, y0, pt);
 
 		while (x < y) {
 			if (f >= 0) {
@@ -134,14 +134,14 @@ public class Lcd12864Page extends Lcd12864PageBase {
 			x++;
 			ddF_x += 2;
 			f += ddF_x;
-			this.setPixel(x0 + x, y0 + y, true);
-			this.setPixel(x0 - x, y0 + y, true);
-			this.setPixel(x0 + x, y0 - y, true);
-			this.setPixel(x0 - x, y0 - y, true);
-			this.setPixel(x0 + y, y0 + x, true);
-			this.setPixel(x0 - y, y0 + x, true);
-			this.setPixel(x0 + y, y0 - x, true);
-			this.setPixel(x0 - y, y0 - x, true);
+			this.setPixel(x0 + x, y0 + y, pt);
+			this.setPixel(x0 - x, y0 + y, pt);
+			this.setPixel(x0 + x, y0 - y, pt);
+			this.setPixel(x0 - x, y0 - y, pt);
+			this.setPixel(x0 + y, y0 + x, pt);
+			this.setPixel(x0 - y, y0 + x, pt);
+			this.setPixel(x0 + y, y0 - x, pt);
+			this.setPixel(x0 - y, y0 - x, pt);
 		}
 	}
 
@@ -150,8 +150,8 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param y0
 	 * @param r
 	 */
-	public void drawCircleFill(int x0, int y0, int r) {
-		drawLineH(x0 - r, x0 - r + 2 * r + 1, y0);
+	public void drawCircleFill(int x0, int y0, int r, pixelType pt) {
+		drawLineH(x0 - r, x0 - r + 2 * r + 1, y0, pt);
 		int f = 1 - r;
 		int ddF_x = 1;
 		int ddF_y = -2 * r;
@@ -167,10 +167,10 @@ public class Lcd12864Page extends Lcd12864PageBase {
 			x++;
 			ddF_x += 2;
 			f += ddF_x;
-			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 + y);
-			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 + x);
-			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 - y);
-			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 - x);
+			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 + y, pt);
+			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 + x, pt);
+			drawLineH(x0 - x, x0 - x + 2 * x + 1, y0 - y, pt);
+			drawLineH(x0 - y, x0 - y + 2 * y + 1, y0 - x, pt);
 		}
 	}
 
@@ -181,7 +181,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param ypos
 	 * @param zeichen
 	 */
-	public void drawChar(int xpos, int ypos, byte[] zeichen) {
+	public void drawChar(int xpos, int ypos, byte[] zeichen, pixelType pt) {
 		if (xpos >= 128 || ypos >= 64) {
 			return;
 		}
@@ -191,7 +191,10 @@ public class Lcd12864Page extends Lcd12864PageBase {
 		for (byte zline : zeichen) {
 			y = 0;
 			for (boolean bb : booleanArrayFromByte(zline)) {
-				this.setPixel(x + xpos, y + ypos, bb);
+				if (bb) {
+					// Nur Pixel die auch relevant sind bearbeiten
+					this.setPixel(x + xpos, y + ypos, pt);
+				}
 				y++;
 			}
 			x++;
@@ -207,7 +210,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param str
 	 * @return
 	 */
-	public void drawString(Lcd12864Font font, Integer xpos, int ypos, lineAlignment la, String str) {
+	public void drawString(Lcd12864Font font, Integer xpos, int ypos, lineAlignment la, String str, pixelType pt) {
 		int x = 0;
 		int y = ypos;
 
@@ -229,7 +232,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 
 		for (char c : str.toCharArray()) {
 			byte[] bChar = font.getChar(c);
-			drawChar(x, y, bChar);
+			drawChar(x, y, bChar, pt);
 
 			// Zeichenbreite bestimmen
 			x += bChar.length + 1;

@@ -11,6 +11,7 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font.Lcd12864fontType;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page.lineAlignment;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
@@ -77,10 +78,10 @@ public class Lcd12864 {
 		Lcd12864Page lp = new Lcd12864Page();
 		Lcd12864Font font57 = new Lcd12864Font(Lcd12864fontType.FONT_57);
 		Lcd12864Font font68 = new Lcd12864Font(Lcd12864fontType.FONT_68);
-		lp.drawString(font57, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!");
-		lp.drawString(font57, null, 30, lineAlignment.LEFT, "\"ABC123!456\"");
-		lp.drawString(font68, null, 55, lineAlignment.CENTER, "Jasmarty F");
-		lp.drawString(font57, null, 0, lineAlignment.LEFT, "Wipf");
+		lp.drawString(font57, 20, 10, lineAlignment.CUSTOM, "Hallo Welt!", pixelType.ON);
+		lp.drawString(font57, null, 30, lineAlignment.LEFT, "\"ABC123!456\"", pixelType.ON);
+		lp.drawString(font68, null, 55, lineAlignment.CENTER, "Jasmarty F", pixelType.ON);
+		lp.drawString(font57, null, 0, lineAlignment.LEFT, "Wipf", pixelType.ON);
 
 		lcd12864Cache.setScreen(lp);
 	}
@@ -92,7 +93,8 @@ public class Lcd12864 {
 		Lcd12864Page lp = new Lcd12864Page();
 		Lcd12864Font font57 = new Lcd12864Font(Lcd12864fontType.FONT_57);
 		lp.drawString(font57, 0, 0, lineAlignment.CUSTOM,
-				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+				pixelType.ON);
 		lcd12864Cache.setScreen(lp);
 	}
 
@@ -103,7 +105,8 @@ public class Lcd12864 {
 		Lcd12864Page lp = new Lcd12864Page();
 		Lcd12864Font font = new Lcd12864Font(Lcd12864fontType.FONT_68);
 		lp.drawString(font, 0, 0, lineAlignment.CUSTOM,
-				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+				" !\"#$%& '()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~",
+				pixelType.ON);
 		lcd12864Cache.setScreen(lp);
 	}
 
@@ -114,8 +117,8 @@ public class Lcd12864 {
 		System.out.println("test1");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lp.drawCircleFill(64, 32, i / 3);
-			lp.drawLineH(0, 128, i / 2);
+			lp.drawCircleFill(64, 32, i / 3, pixelType.ON);
+			lp.drawLineH(0, 128, i / 2, pixelType.ON);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);
@@ -123,8 +126,8 @@ public class Lcd12864 {
 		System.out.println("test2");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lp.drawRectFill(0, 0, i, i / 2);
-			lp.drawLineV(i, 0, 64);
+			lp.drawRectFill(0, 0, i, i / 2, pixelType.ON);
+			lp.drawLineV(i, 0, 64, pixelType.ON);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);
@@ -132,9 +135,9 @@ public class Lcd12864 {
 		System.out.println("test3");
 		for (int i = 0; i <= 128; i++) {
 			Lcd12864Page lp = new Lcd12864Page();
-			lp.drawLine(64, 32, i, i / 2);
-			lp.drawCircle(64, 32, i / 3);
-			lp.drawRect(0, 0, i, i / 2);
+			lp.drawLine(64, 32, i, i / 2, pixelType.ON);
+			lp.drawCircle(64, 32, i / 3, pixelType.ON);
+			lp.drawRect(0, 0, i, i / 2, pixelType.ON);
 			lcd12864Cache.setScreen(lp);
 			wipf.sleep(220);
 			System.out.println(i);
