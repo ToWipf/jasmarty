@@ -18,14 +18,14 @@
         <br>
         <input type="file" (change)="fileChangeEvent($event)" />
 
+        <ng-container *ngIf="base64">
+            <img [src]="base64" alt="" height="128" width="256">
 
-
-        <img [src]="base64" alt="" height="128" width="256">
-
-        <mat-form-field appearance="fill">
-            <mat-label>Kontrast</mat-label>
-            <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Kontrast</mat-label>
+                <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
+            </mat-form-field>
+        </ng-container>
 
         <ng-container *ngIf="lcdDescription.static">
             <table>
@@ -37,6 +37,8 @@
                 </div>
             </table>
         </ng-container>
+
+        <button class="btn" (click)="clearPic()">Hintergrundbild löschen</button>
     </div>
 
     <hr>
@@ -49,28 +51,49 @@
                 <mat-label>Typ</mat-label>
                 <mat-select [(value)]="lcdDescription.dynamic[i].type">
                     <mat-option value="TEXT">Text</mat-option>
-                    <mat-option value="xxxx">Kreis</mat-option>
-                    <mat-option value="xxxx">Quardat</mat-option>
-                    <mat-option value="xxxx">Linie</mat-option>
+                    <mat-option value="CIRCLE_EMPTY">Kreis</mat-option>
+                    <mat-option value="CIRCLE_FILL">Kreis gefüllt</mat-option>
+                    <mat-option value="LINE_H">Linie horizontal</mat-option>
+                    <mat-option value="LINE_V">Linie vertikal</mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Schriftart</mat-label>
-                <mat-select [(value)]="lcdDescription.dynamic[i].font">
-                    <mat-option value="FONT_57_ON">57 an</mat-option>
-                    <mat-option value="FONT_68_ON">68 an</mat-option>
-                    <mat-option value="FONT_57_OFF">57 aus</mat-option>
-                    <mat-option value="FONT_68_OFF">68 aus</mat-option>
-                    <mat-option value="FONT_57_INVERT">57 invers</mat-option>
-                    <mat-option value="FONT_68_INVERT">68 invers</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <ng-container *ngIf="lcdDescription.dynamic[i].type === 'TEXT'">
+                <mat-form-field appearance="fill">
+                    <mat-label>Schriftart</mat-label>
+                    <mat-select [(value)]="lcdDescription.dynamic[i].font">
+                        <mat-option value="FONT_57_ON">57 an</mat-option>
+                        <mat-option value="FONT_68_ON">68 an</mat-option>
+                        <mat-option value="FONT_57_OFF">57 aus</mat-option>
+                        <mat-option value="FONT_68_OFF">68 aus</mat-option>
+                        <mat-option value="FONT_57_INVERT">57 invers</mat-option>
+                        <mat-option value="FONT_68_INVERT">68 invers</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Data</mat-label>
-                <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
-            </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Data</mat-label>
+                    <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
+                </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="lcdDescription.dynamic[i].type !== 'TEXT'">
+                <mat-form-field appearance="fill">
+                    <mat-label>Art</mat-label>
+                    <mat-select [(value)]="lcdDescription.dynamic[i].font">
+                        <mat-option value="ON">an</mat-option>
+                        <mat-option value="OFF">aus</mat-option>
+                        <mat-option value="INVERT">invers</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Parameter</mat-label>
+                    <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].data">
+                </mat-form-field>
+            </ng-container>
+
 
             <mat-form-field appearance="fill">
                 <mat-label>x</mat-label>
@@ -86,8 +109,8 @@
         </div>
     </perfect-scrollbar>
 
-    <button (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
-    <button (click)="sendSelectedPage()">Speichern</button>
+    <button class="btn" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
+    <button class="btn" (click)="sendSelectedPage()">Speichern</button>
 
 </ng-container>
 

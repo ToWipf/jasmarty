@@ -106,6 +106,69 @@ public class Lcd12864PageConverter {
 						break;
 					}
 					break;
+				case "CIRCLE_EMPTY":
+					switch (jo.get("font").toString()) {
+					case "ON":
+						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						break;
+					case "OFF":
+						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						break;
+					case "INVERT":
+						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+
+						break;
+					default:
+						break;
+					}
+					break;
+				case "CIRCLE_FILL":
+					switch (jo.get("font").toString()) {
+					case "ON":
+						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						break;
+					case "OFF":
+						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						break;
+					case "INVERT":
+						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						break;
+					default:
+						break;
+					}
+					break;
+
+				case "LINE_V":
+					switch (jo.get("font").toString()) {
+					case "ON":
+						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						break;
+					case "OFF":
+						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						break;
+					case "INVERT":
+						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						break;
+					default:
+						break;
+					}
+					break;
+
+				case "LINE_H":
+					switch (jo.get("font").toString()) {
+					case "ON":
+						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						break;
+					case "OFF":
+						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						break;
+					case "INVERT":
+						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						break;
+					default:
+						break;
+					}
+					break;
 
 				default:
 					break;

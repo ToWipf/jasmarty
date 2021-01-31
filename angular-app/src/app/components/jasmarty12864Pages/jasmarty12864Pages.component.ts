@@ -72,9 +72,9 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   public addDynLine(): void {
     var dp: Lcd12864PageDescriptionDynamic = {};
-    dp.data = "data";
-    dp.font = "FONT_57";
-    dp.type = "TEXT";
+    dp.data = "";
+    dp.font = "";
+    dp.type = "";
     dp.x = 0;
     dp.y = 0;
     this.lcdDescription.dynamic.push(dp);
@@ -113,6 +113,10 @@ export class Jasmarty12864PagesComponent implements OnInit {
         this.selectLcdDescription();
       });
     }
+  }
+
+  public clearPic(): void {
+    this.lcdDescription.static = [];
   }
 
   private saveLcdDescription(): void {
