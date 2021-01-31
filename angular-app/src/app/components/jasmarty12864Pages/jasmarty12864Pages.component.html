@@ -1,8 +1,8 @@
 <ng-container *ngIf="lcdDescription">
     <h1> Seite: {{lcdDescription.id}} </h1>
 
-    <button type="button" class="btn btn-primary inbutton" (click)="pageLast()">Seite zurück</button>
-    <button type="button" class="btn btn-primary inbutton" (click)="pageNext()">nächste Seite</button>
+    <button type="button" class="btn btn-primary" (click)="pageLast()">Seite zurück</button>
+    <button type="button" class="btn btn-primary" (click)="pageNext()">nächste Seite</button>
     <hr>
 
     <mat-form-field appearance="fill">
@@ -17,6 +17,7 @@
         Bild einfügen
         <br>
         <input type="file" (change)="fileChangeEvent($event)" />
+        <button class="btn btn-primary" (click)="clearPic()">Hintergrundbild löschen</button>
 
         <ng-container *ngIf="base64">
             <img [src]="base64" alt="" height="128" width="256">
@@ -38,7 +39,6 @@
             </table>
         </ng-container>
 
-        <button class="btn" (click)="clearPic()">Hintergrundbild löschen</button>
     </div>
 
     <hr>
@@ -109,8 +109,8 @@
         </div>
     </perfect-scrollbar>
 
-    <button class="btn" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
-    <button class="btn" (click)="sendSelectedPage()">Speichern</button>
+    <button class="btn btn-primary" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
+    <button class="btn btn-primary" (click)="sendSelectedPage()">Speichern</button>
 
 </ng-container>
 
