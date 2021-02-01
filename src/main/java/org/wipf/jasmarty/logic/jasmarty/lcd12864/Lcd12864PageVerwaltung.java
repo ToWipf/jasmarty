@@ -31,7 +31,7 @@ public class Lcd12864PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void init() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS lcd_pages12864 (id INTEGER UNIQUE, name TEXT, static TEXT, dynamic TEXT);";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS lcd_pages12864 (id INTEGER UNIQUE, name TEXT, timeouttime INTEGER, static TEXT, dynamic TEXT);";
 		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -40,12 +40,13 @@ public class Lcd12864PageVerwaltung {
 	 * @throws SQLException
 	 */
 	public void save(Lcd12864PageDescription page) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO lcd_pages12864 (id, name, static, dynamic) VALUES (?,?,?,?)";
+		String sUpdate = "INSERT OR REPLACE INTO lcd_pages12864 (id, name, timeouttime, static, dynamic) VALUES (?,?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
 		statement.setInt(1, page.getId());
 		statement.setString(2, page.getName());
-		statement.setString(3, page.getStatic().toString());
-		statement.setString(4, page.getDynamic().toString());
+		statement.setInt(3, page.getTimeouttime());
+		statement.setString(4, page.getStatic().toString());
+		statement.setString(5, page.getDynamic().toString());
 		statement.executeUpdate();
 	}
 
@@ -74,6 +75,7 @@ public class Lcd12864PageVerwaltung {
 				// Es gibt nur einen oder keinen Eintrag
 				pd.setId(rs.getInt("id"));
 				pd.setName(rs.getString("name"));
+				pd.setTimeouttime(rs.getInt("timeouttime"));
 				pd.setStatic(rs.getString("static"));
 				pd.setDynamic(rs.getString("dynamic"));
 				// pd.setStatic(rs.getArray("static").toString()); TODO

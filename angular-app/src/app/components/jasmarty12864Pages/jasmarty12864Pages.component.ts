@@ -23,6 +23,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   public ngOnInit(): void {
     this.lcdDescription.dynamic = [];
     this.lcdDescription.id = 1;
+    this.lcdDescription.timeouttime = 1;
     this.loadLcdDescription();
   }
 

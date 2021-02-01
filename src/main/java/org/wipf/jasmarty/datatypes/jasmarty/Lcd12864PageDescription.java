@@ -11,6 +11,7 @@ public class Lcd12864PageDescription {
 
 	private int nId;
 	private String sName;
+	private int timeoutTime;
 	private JSONArray jaStatic;
 	private JSONArray jaDynamic;
 
@@ -21,6 +22,7 @@ public class Lcd12864PageDescription {
 		JSONObject jo = new JSONObject();
 		jo.put("id", getId());
 		jo.put("name", getName());
+		jo.put("timeouttime", getTimeouttime());
 		jo.put("static", getStatic());
 		jo.put("dynamic", getDynamic());
 		return jo;
@@ -34,6 +36,7 @@ public class Lcd12864PageDescription {
 		JSONObject jo = new JSONObject(sJson);
 		setId(jo.getInt("id"));
 		setName(jo.getString("name"));
+		setTimeouttime(jo.getInt("timeouttime"));
 		setStatic(jo.getJSONArray("static"));
 		setDynamic(jo.getJSONArray("dynamic"));
 		return this;
@@ -107,6 +110,20 @@ public class Lcd12864PageDescription {
 	 */
 	public void setDynamic(String sDynamic) {
 		setDynamic(new JSONArray(sDynamic));
+	}
+
+	/**
+	 * @return
+	 */
+	public int getTimeouttime() {
+		return this.timeoutTime;
+	}
+
+	/**
+	 * @param nTime
+	 */
+	public void setTimeouttime(int nTime) {
+		this.timeoutTime = nTime;
 	}
 
 }

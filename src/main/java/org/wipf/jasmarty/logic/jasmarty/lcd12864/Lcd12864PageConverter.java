@@ -25,22 +25,27 @@ public class Lcd12864PageConverter {
 	@Inject
 	Winamp winamp;
 
-	private Lcd12864PageDescription pd;
+	private Lcd12864PageDescription lpdCurrentCache;
 
 	/**
 	 * @param pd
 	 */
 	public void setPageDescription(Lcd12864PageDescription pd) {
-		this.pd = pd;
+		this.lpdCurrentCache = pd;
 	}
 
 	/**
 	 * 
 	 */
-	public void refreshCurrentPage() {
-		if (pd != null) {
-			cache.setScreen(buildPage(pd));
-		}
+	public void refreshCurrentPageToCache() {
+		cache.setScreen(buildPage(lpdCurrentCache));
+	}
+
+	/**
+	 * @return
+	 */
+	public int getCurrentTimeoutime() {
+		return lpdCurrentCache.getTimeouttime();
 	}
 
 	/**
@@ -57,10 +62,10 @@ public class Lcd12864PageConverter {
 	 * 
 	 * @param page
 	 */
-	private Lcd12864Page buildPage(Lcd12864PageDescription pd) {
+	private Lcd12864Page buildPage(Lcd12864PageDescription lpd) {
 		Lcd12864Page lp = new Lcd12864Page();
-		JSONArray jDynamic = pd.getDynamic();
-		JSONArray jStatic = pd.getStatic();
+		JSONArray jDynamic = lpd.getDynamic();
+		JSONArray jStatic = lpd.getStatic();
 
 		// Hintergrund setzen
 		lp.setScreen(jStatic);
@@ -177,6 +182,29 @@ public class Lcd12864PageConverter {
 		}
 
 		return lp;
+	}
+
+	/**
+	 * 
+	 */
+	public void loadDefaultPage() {
+		Lcd12864PageDescription lpdDefault = new Lcd12864PageDescription();
+		JSONArray ja = new JSONArray();
+		JSONObject jo = new JSONObject();
+		jo.put("type", "TEXT");
+		jo.put("font", "FONT_68_ON");
+		jo.put("data", "Jasmarty " + MainHome.VERSION);
+		jo.put("x", 30);
+		jo.put("y", 32);
+		ja.put(jo);
+
+		lpdDefault.setId(0);
+		lpdDefault.setName("Startseite");
+		lpdDefault.setTimeouttime(10000);
+		lpdDefault.setStatic("[]");
+		lpdDefault.setDynamic(ja);
+
+		this.setPageDescription(lpdDefault);
 	}
 
 	/**

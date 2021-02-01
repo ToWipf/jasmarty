@@ -134,10 +134,10 @@ public class LcdRefreshLoop {
 					try {
 						if (lcdConnect.isLcdOk()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
-							lcd12864PageConverter.refreshCurrentPage();
+							lcd12864PageConverter.refreshCurrentPageToCache();
 							lcd12864.refreshDisplay();
 						}
-						Thread.sleep(lcdConnect.getRefreshRate());
+						Thread.sleep(lcdConnect.getRefreshRate() + lcd12864PageConverter.getCurrentTimeoutime());
 
 					} catch (Exception e) {
 						LOGGER.warn("Refreshloop fehler: " + e);
