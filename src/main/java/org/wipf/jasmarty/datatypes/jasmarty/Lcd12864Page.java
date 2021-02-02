@@ -239,7 +239,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 
 			// Für Zeilenumbruch -> nötig?
 			if (x >= 128 - font.getFontX()) {
-				x = 0;
+				x = xpos; // TODO testen
 				y += font.getFontY() + 1;
 				if (y > 64) {
 					y = 0;
