@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./buildApp.sh
+./buildAppQuick.sh
 if [ $? -eq 0 ];
 then
 	echo "app OK"
