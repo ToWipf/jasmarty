@@ -114,27 +114,28 @@ public class TAppFilm {
 	}
 
 	/**
-	 * @param tE
+	 * @param filmE
 	 * @return id
 	 */
-	public Integer saveItem(FilmEntry tE) {
+	public Integer saveItem(FilmEntry filmE) {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO filme (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
 
 			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
-			statement.setInt(1, tE.getId());
-			statement.setString(2, tE.getTitel());
-			statement.setString(3, tE.getArt());
-			statement.setInt(4, tE.getGesehenDate());
-			statement.setString(5, tE.getInfotext());
-			statement.setInt(6, tE.getBewertung());
-			statement.setString(7, tE.getEditBy());
-			statement.setInt(8, tE.getDate());
+			statement.setInt(1, filmE.getId());
+			statement.setString(2, filmE.getTitel());
+			statement.setString(3, filmE.getArt());
+			statement.setInt(4, filmE.getGesehenDate());
+			statement.setString(5, filmE.getInfotext());
+			statement.setInt(6, filmE.getBewertung());
+			statement.setString(7, filmE.getEditBy());
+			statement.setInt(8, filmE.getDate());
 			statement.executeUpdate();
 
-			return tE.getId();
+			return filmE.getId();
 		} catch (Exception e) {
 			LOGGER.warn("save " + e);
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -147,15 +148,13 @@ public class TAppFilm {
 	 */
 	private Integer saveItem(Telegram t) {
 		int nId = genNextId();
-		FilmEntry te = new FilmEntry();
-		te.setTitel(t.getMessageFullWithoutFirstWord());
-		te.setEditBy(t.getFromIdOnly().toString());
-		te.setDate(t.getDate());
+		FilmEntry filmE = new FilmEntry();
+		filmE.setId(nId);
+		filmE.setTitel(t.getMessageFullWithoutFirstWord());
+		filmE.setEditBy(t.getFromIdOnly().toString());
+		filmE.setDate(t.getDate());
 
-		te.setId(nId);
-		saveItem(te);
-
-		return nId;
+		return saveItem(filmE);
 	}
 
 	/**
