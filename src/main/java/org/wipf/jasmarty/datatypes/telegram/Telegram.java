@@ -178,7 +178,8 @@ public class Telegram {
 			JSONObject jo = new JSONObject(getFrom());
 			return jo.getInt("id");
 		} catch (Exception e) {
-			return null;
+			System.err.println("get Telegram From Id fails: " + getFrom());
+			return -1;
 		}
 	}
 
