@@ -135,7 +135,6 @@ public class TAppFilm {
 			return filmE.getId();
 		} catch (Exception e) {
 			LOGGER.warn("save " + e);
-			e.printStackTrace();
 			return null;
 		}
 	}
@@ -153,6 +152,8 @@ public class TAppFilm {
 		filmE.setTitel(t.getMessageFullWithoutFirstWord());
 		filmE.setEditBy(t.getFromIdOnly().toString());
 		filmE.setDate(t.getDate());
+		filmE.setGesehenDate(0);
+		filmE.setBewertung(0);
 
 		return saveItem(filmE);
 	}

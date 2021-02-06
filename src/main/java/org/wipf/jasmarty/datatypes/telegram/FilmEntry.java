@@ -41,12 +41,12 @@ public class FilmEntry extends Telegram {
 		JSONObject jo = new JSONObject(sJson);
 
 		this.setId(jo.getInt("id"));
-		this.sTitel = jo.getString("titel");
-		this.sArt = (jo.getString("art"));
-		this.nGesehenDate = jo.getInt("gesehenDate");
-		this.sInfotext = (jo.getString("infotext"));
-		this.nBewertung = jo.getInt("bewertung");
-		this.sEditBy = jo.getString("editby");
+		this.setTitel(jo.getString("titel"));
+		this.setArt(jo.getString("art"));
+		this.setGesehenDate(jo.getInt("gesehenDate"));
+		this.setInfotext(jo.getString("infotext"));
+		this.setBewertung(jo.getInt("bewertung"));
+		this.setEditBy(jo.getString("editby"));
 
 		return this;
 	}
