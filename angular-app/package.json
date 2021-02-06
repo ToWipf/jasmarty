@@ -4,7 +4,8 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve --host localhost --aot --port 3000",
-        "build": "ng build --prod --base-href /app/"
+        "build": "ng build --prod --base-href /app/",
+        "buildq": "ng build --base-href /app/"
     },
     "private": true,
     "dependencies": {
@@ -14,7 +15,6 @@
         "@angular/compiler": "11.0.2",
         "@angular/core": "11.0.2",
         "@angular/forms": "11.0.2",
-        "@angular/localize": "11.0.2",
         "@angular/material": "11.0.1",
         "@angular/platform-browser": "11.0.2",
         "@angular/platform-browser-dynamic": "11.0.2",
