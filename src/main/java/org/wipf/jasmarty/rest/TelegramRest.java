@@ -124,15 +124,13 @@ public class TelegramRest {
 	@POST
 	@Path("saveMsg")
 	public Response saveMsg(String sJson) {
-		tAppMsg.saveMsg(sJson);
-		return Response.ok().build();
+		return Response.ok("{\"save\":\"" + tAppMsg.saveMsg(sJson) + "\"}").build();
 	}
 
 	@DELETE
 	@Path("delMsg/{id}")
 	public Response delMsg(@PathParam("id") Integer nId) {
-		tAppMsg.delItem(nId);
-		return Response.ok().build();
+		return Response.ok("{\"del\":\"" + tAppMsg.delItem(nId) + "\"}").build();
 	}
 
 }

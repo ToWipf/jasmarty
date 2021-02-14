@@ -26,20 +26,17 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   public editItem(t: Telegram): void {
-    t.editby = "web";
     this.openDialog(t);
   }
-  
+
   public newItem(): void {
     let t: Telegram = {};
-    t.editby = "web";
-    t.id = this.getNextId();
     this.openDialog(t);
   }
-  
+
   public deleteItem(i: Telegram): void {
     this.bDeleteEnable = false;
-    this.http.delete(this.rest.gethost() + 'telegram/delMsg/' + i.id).subscribe((resdata: any) => {
+    this.http.delete(this.rest.gethost() + 'telegram/delMsg/' + i.mid).subscribe((resdata: any) => {
       this.loadAllItems();
     });
   }
@@ -57,9 +54,10 @@ export class TelegramMsgComponent implements OnInit {
       this.dataSource.sort = this.sort;
     });
   }
-  
+
   private openDialog(item: Telegram): void {
     const edititem: Telegram = this.serviceWipf.deepCopy(item);
+    edititem.from = "web";
 
     const dialogRef = this.dialog.open(TelegramMsgComponentDialogComponent, {
       width: '350px',
@@ -74,16 +72,6 @@ export class TelegramMsgComponent implements OnInit {
         this.saveItem(result);
       }
     });
-  }
-
-  private getNextId(): number {
-    let nextId: number = 0;
-    this.dataSource.forEach((item: Telegram) => {
-      if (item.id > nextId) {
-        nextId = item.id;
-      }
-    });
-    return nextId * 1 + 1;
   }
 
 }

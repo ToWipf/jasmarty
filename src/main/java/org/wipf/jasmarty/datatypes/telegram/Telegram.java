@@ -124,6 +124,12 @@ public class Telegram {
 			// Ignore
 		}
 
+		try {
+			this.setMid(jo.getInt("mid"));
+		} catch (Exception ignore) {
+			// Ignore
+		}
+
 		return this;
 	}
 

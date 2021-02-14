@@ -195,24 +195,41 @@ public class TAppMsg {
 	/**
 	 * @param t
 	 */
+	public String saveItemByTelegram(Telegram t) {
+		Telegram tMsg = new Telegram();
+		tMsg.setMessage(t.getMessageStringPartLow(1));
+		tMsg.setAntwort(t.getMessageFullWithoutSecondWord());
+		tMsg.setFrom(t.getFrom());
+		tMsg.setDate(t.getDate());
+		return saveItem(tMsg);
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
 	public String saveItem(Telegram t) {
 		try {
-			String sUpdate = "INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES (?,?,?,?,?)";
-
+			String sUpdate = "INSERT OR REPLACE INTO telemsg (id, request, response, options, editby, date) VALUES (?,?,?,?,?,?)";
 			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
-			statement.setString(1, t.getMessageStringPartLow(1));
-			statement.setString(2, t.getMessageFullWithoutSecondWord());
-			statement.setString(3, null);
-			statement.setString(4, t.getFrom());
-			statement.setInt(5, t.getDate());
+
+			if (t.getMid() > 0) {
+				statement.setInt(1, t.getMid());
+			} else {
+				statement.setString(1, null); // erstellt die id automatisch
+			}
+			statement.setString(2, t.getMessage());
+			statement.setString(3, t.getAntwort());
+			statement.setString(4, null);
+			statement.setString(5, t.getFrom());
+			statement.setInt(6, t.getDate());
 			statement.executeUpdate();
 
-			return "OK: " + t.getMessageStringPartLow(1);
+			return "OK: " + t.getMessage();
 		} catch (Exception e) {
 			LOGGER.warn("add telemsg " + e);
 			return "Fehler";
 		}
-
 	}
 
 	/**
