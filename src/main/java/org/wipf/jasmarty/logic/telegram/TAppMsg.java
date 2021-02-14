@@ -150,11 +150,19 @@ public class TAppMsg {
 	 * @param t
 	 * @return
 	 */
-	public String delMsg(Telegram t) {
+	public String delItemByTelegram(Telegram t) {
+		return delItem(t.getMessageIntPart(1));
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public String delItem(int nId) {
 		try {
 			String sUpdate = "DELETE FROM telemsg WHERE id = ?";
 			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
-			statement.setInt(1, t.getMessageIntPart(1));
+			statement.setInt(1, nId);
 			statement.executeUpdate();
 
 			return "DEL";
@@ -187,7 +195,7 @@ public class TAppMsg {
 	/**
 	 * @param t
 	 */
-	public String addMsg(Telegram t) {
+	public String saveItem(Telegram t) {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO telemsg (request, response, options, editby, date) VALUES (?,?,?,?,?)";
 
@@ -206,4 +214,12 @@ public class TAppMsg {
 		}
 
 	}
+
+	/**
+	 * @param sJson
+	 */
+	public String saveMsg(String sJson) {
+		return saveItem(new Telegram().setByJsonTelegram(sJson));
+	}
+
 }

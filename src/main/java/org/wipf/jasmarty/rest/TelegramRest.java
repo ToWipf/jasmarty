@@ -6,6 +6,7 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -118,6 +119,20 @@ public class TelegramRest {
 	@Path("msgall")
 	public Response msg() {
 		return Response.ok(tAppMsg.getMsgAsJson().toString()).build();
+	}
+
+	@POST
+	@Path("saveMsg")
+	public Response saveMsg(String sJson) {
+		tAppMsg.saveMsg(sJson);
+		return Response.ok().build();
+	}
+
+	@DELETE
+	@Path("delMsg/{id}")
+	public Response delMsg(@PathParam("id") Integer nId) {
+		tAppMsg.delItem(nId);
+		return Response.ok().build();
 	}
 
 }

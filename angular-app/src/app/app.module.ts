@@ -58,7 +58,7 @@ import { JasmartyMainComponent } from './components/jasmartyMain/jasmartyMain.co
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
 import { CryptComponent } from './components/crypt/crypt.component';
 import { TelegramChatComponent } from './components/telegramChat/telegramChat.component';
-import { TelegramMsgComponent } from './components/telegramMsg/telegramMsg.component';
+import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './components/telegramMsg/telegramMsg.component';
 import { TelegramLogComponent } from './components/telegramLog/telegramLog.component';
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/todolist/todolist.component';
 import { FilmeComponent, FilmeComponentDialog } from './components/filme/filme.component';
@@ -90,6 +90,7 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
     CryptComponent,
     TelegramChatComponent,
     TelegramMsgComponent,
+    TelegramMsgComponentDialogComponent,
     TelegramLogComponent,
     WipfUserVwComponent,
     WipfUserVWComponentDialogComponent,

@@ -84,11 +84,11 @@ public class TeleMenue {
 
 			// Anbindung an msg datenbank
 			case "addamsgtodb":
-				return appMsg.addMsg(t);
+				return appMsg.saveItem(t);
 			case "getallmsg":
 				return appMsg.getAllMsg();
 			case "delmsg":
-				return appMsg.delMsg(t);
+				return appMsg.delItemByTelegram(t);
 
 			// Anbindung an motd datenbank
 			case "addamotd":
