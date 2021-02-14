@@ -74,6 +74,24 @@ public class TeleLog {
 	}
 
 	/**
+	 * @param nId
+	 * @return
+	 */
+	public String delItem(Integer nId) {
+		LOGGER.info("del log id:" + nId);
+		try {
+			String sUpdate = "DELETE FROM telegramlog WHERE msgid LIKE ?;";
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			statement.setInt(1, nId);
+			statement.executeUpdate();
+		} catch (Exception e) {
+			LOGGER.warn("del log " + e);
+			return "FAIL";
+		}
+		return "OK";
+	}
+
+	/**
 	 * @return
 	 */
 	public String count() {

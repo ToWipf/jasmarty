@@ -109,6 +109,12 @@ public class TelegramRest {
 		return Response.ok(tlog.getTelegramLogAsJsonEXTERN().toString()).build();
 	}
 
+	@DELETE
+	@Path("delLog/{id}")
+	public Response delLog(@PathParam("id") Integer nId) {
+		return Response.ok("{\"del\":\"" + tlog.delItem(nId) + "\"}").build();
+	}
+
 	@POST
 	@Path("chat")
 	public Response chat(String sJson) {

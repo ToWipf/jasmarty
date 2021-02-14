@@ -1,0 +1,15 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+
+        <h1 mat-dialog-title>Sicher ?</h1>
+
+        <div mat-dialog-content>
+            {{data.infotext}}
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Nein</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ja</button>
+        </div>
+    </div>
+</div>
