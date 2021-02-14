@@ -218,7 +218,7 @@ public class TAppMsg {
 			} else {
 				statement.setString(1, null); // erstellt die id automatisch
 			}
-			statement.setString(2, t.getMessage());
+			statement.setString(2, t.getMessage().toLowerCase());
 			statement.setString(3, t.getAntwort());
 			statement.setString(4, null);
 			statement.setString(5, t.getFrom());
