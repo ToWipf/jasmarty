@@ -18,6 +18,8 @@ public class WipfInfo {
 			sb.append("\nState " + t.getState());
 			sb.append("\nPriority " + t.getPriority());
 			sb.append("\nThreadGroup" + t.getThreadGroup());
+			sb.append("\nContextClassLoader" + t.getContextClassLoader());
+
 			sb.append("\n");
 		});
 		return sb.toString();
