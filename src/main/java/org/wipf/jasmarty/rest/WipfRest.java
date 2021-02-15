@@ -48,6 +48,7 @@ public class WipfRest {
 
 	@GET
 	@Path("tinfo")
+	@Produces(MediaType.TEXT_PLAIN)
 	@PermitAll
 	public Response tinfo() {
 		return Response.ok(wipfInfo.getThreadInfo()).build();
