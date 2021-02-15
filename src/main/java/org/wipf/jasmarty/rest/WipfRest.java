@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.WipfInfo;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 /**
@@ -29,6 +31,8 @@ public class WipfRest {
 	SerialConfig serialConfig;
 	@Inject
 	MainHome qMain;
+	@Inject
+	WipfInfo wipfInfo;
 
 	@GET
 	@Path("ver")
@@ -40,6 +44,13 @@ public class WipfRest {
 	@Path("ports")
 	public Response ports() {
 		return Response.ok(serialConfig.getPorts().toString()).build();
+	}
+
+	@GET
+	@Path("tinfo")
+	@PermitAll
+	public Response tinfo() {
+		return Response.ok(wipfInfo.getThreadInfo()).build();
 	}
 
 	@POST
