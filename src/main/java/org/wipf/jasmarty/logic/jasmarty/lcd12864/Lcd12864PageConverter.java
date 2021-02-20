@@ -200,7 +200,7 @@ public class Lcd12864PageConverter {
 
 		lpdDefault.setId(0);
 		lpdDefault.setName("Startseite");
-		lpdDefault.setTimeouttime(10000);
+		lpdDefault.setTimeouttime(1000);
 		lpdDefault.setStatic("[]");
 		lpdDefault.setDynamic(ja);
 

@@ -55,8 +55,8 @@ public class Winamp {
 		case "start":
 			WinampController.run();
 			break;
-        	default:
-            		break;
+		default:
+			break;
 		}
 	}
 
@@ -88,7 +88,7 @@ public class Winamp {
 				return "Fail 4";
 			}
 		} catch (InvalidHandle e) {
-			// Bei Winamp fehlern nichts anzeigen -> Winamp läuft nicht
+			// Bei Winamp InvalidHandle nichts anzeigen -> da Winamp nicht läuft
 			return "";
 		}
 
