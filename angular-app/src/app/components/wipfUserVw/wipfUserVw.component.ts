@@ -6,6 +6,7 @@ import { WipfUser } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-wipfuservw',
@@ -26,6 +27,7 @@ export class WipfUserVwComponent implements OnInit {
   }
 
   public load(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.wuArray = [];
 
     this.http.get(this.rest.gethost() + 'wipfuservw/getAll').subscribe((resdata: WipfUser[]) => {
@@ -36,6 +38,7 @@ export class WipfUserVwComponent implements OnInit {
       });
       this.dataSource = new MatTableDataSource(this.wuArray);
       this.dataSource.sort = this.sort;
+      warten.close();
     });
   }
 

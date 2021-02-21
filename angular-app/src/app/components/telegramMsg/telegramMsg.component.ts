@@ -6,6 +6,7 @@ import { Telegram } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-telegramMsg',
@@ -48,10 +49,12 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   private loadAllItems(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
     this.http.get(this.rest.gethost() + 'telegram/msgall').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
+      warten.close();
     });
   }
 

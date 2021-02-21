@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { ServiceRest } from 'src/app/service/serviceRest';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-jasmartyActions',
@@ -83,11 +84,13 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private load(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.http.get(this.rest.gethost() + 'actions/getall').subscribe((resdata: any) => {
       console.log(resdata);
       this.Buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.Buttonactions);
       this.tableDataSource.sort = this.sort;
+      warten.close();
     });
   }
 

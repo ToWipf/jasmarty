@@ -6,6 +6,7 @@ import { FilmEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-filme',
@@ -28,11 +29,13 @@ export class FilmeComponent implements OnInit {
   }
 
   private load(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: FilmEntry[]) => {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
       this.nextId = this.getNextId();
+      warten.close();
     });
   }
 

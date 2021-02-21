@@ -6,6 +6,7 @@ import { TodoEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-todolist',
@@ -37,6 +38,7 @@ export class TodolistComponent implements OnInit {
     this.toarry = [];
 
     this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
+      const warten = this.dialog.open(DialogWartenComponent, {});
       resdata.forEach((element) => {
 
         if (element.active === 'LATER' && this.bLater) {
@@ -58,6 +60,7 @@ export class TodolistComponent implements OnInit {
       this.dataSource.filter = this.sFilter.trim();
       this.nextId = this.getNextId();
       this.applyFilter();
+      warten.close();
     });
   }
 

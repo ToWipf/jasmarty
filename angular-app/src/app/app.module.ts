@@ -67,7 +67,7 @@ import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jas
 import { Jasmarty12864PagesComponent } from './components/jasmarty12864Pages/jasmarty12864Pages.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
-import { JaNeinDialogComponent } from './dialog/main.dialog';
+import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dialog';
 
 @NgModule({
   declarations: [
@@ -95,7 +95,8 @@ import { JaNeinDialogComponent } from './dialog/main.dialog';
     TelegramLogComponent,
     WipfUserVwComponent,
     WipfUserVWComponentDialogComponent,
-    JaNeinDialogComponent,
+    DialogJaNeinComponent,
+    DialogWartenComponent,
   ],
   imports: [
     BrowserAnimationsModule,
