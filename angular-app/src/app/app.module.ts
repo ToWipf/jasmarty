@@ -97,6 +97,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dial
     WipfUserVWComponentDialogComponent,
     DialogJaNeinComponent,
     DialogWartenComponent,
+    JasmartyActionsComponentDialog,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -155,6 +156,6 @@ import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dial
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
   bootstrap: [AppComponent],
-  entryComponents: [AppComponent, JasmartyActionsComponentDialog],
+  entryComponents: [AppComponent],
 })
 export class AppModule { }
