@@ -56,15 +56,15 @@ public class WipfUserVW {
 		// TODO Test: noch löschen Amdin immer erstellen
 		createDefaultUserAuthDb();
 
-		if (lUserFromJasmartyDb.size() == 0) {
-			// Admin User nur erstellen wenn es kein anderen User gibt
-			createDefaultUserAuthDb();
-		} else {
-			// Alle User einspielen
-			for (WipfUser wu : lUserFromJasmartyDb) {
-				addOrUpdateUser(wu, true);
-			}
-		}
+//		if (lUserFromJasmartyDb.size() == 0) {
+//			// Admin User nur erstellen wenn es kein anderen User gibt
+//			createDefaultUserAuthDb();
+//		} else {
+//			// Alle User einspielen
+//			for (WipfUser wu : lUserFromJasmartyDb) {
+//				addOrUpdateUser(wu, true);
+//			}
+//		}
 	}
 
 	/**
