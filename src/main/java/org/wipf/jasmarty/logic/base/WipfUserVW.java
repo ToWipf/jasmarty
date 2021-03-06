@@ -12,6 +12,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+
 /**
  * @author wipf
  *
@@ -50,6 +52,9 @@ public class WipfUserVW {
 		LinkedList<WipfUser> lUserFromJasmartyDb = getAllUsers(false);
 
 		LOGGER.info("Lade " + lUserFromJasmartyDb.size() + " User");
+
+		// TODO Test: noch löschen Amdin immer erstellen
+		createDefaultUserAuthDb();
 
 		if (lUserFromJasmartyDb.size() == 0) {
 			// Admin User nur erstellen wenn es kein anderen User gibt
@@ -154,7 +159,7 @@ public class WipfUserVW {
 	private void createDefaultUserAuthDb() throws SQLException {
 		WipfUser wu = new WipfUser();
 		wu.setUsername("admin");
-		wu.setPassword("jadmin");
+		wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
 		wu.setRole("admin");
 		wu.setTelegramId(0);
 		addOrUpdateUser(wu, true);

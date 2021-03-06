@@ -2,6 +2,8 @@ package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+
 /**
  * @author wipf
  *
@@ -31,7 +33,7 @@ public class WipfUser {
 	public WipfUser setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		setUsername(jo.getString("username"));
-		setPassword(jo.getString("password"));
+		setPassword(BcryptUtil.bcryptHash(jo.getString("password")));
 		setRole(jo.getString("role"));
 		setTelegramId(jo.getInt("telegramid"));
 		return this;
