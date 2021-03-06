@@ -155,7 +155,7 @@ public class WipfUserVW {
 	 */
 	private void createDefaultUserAuthDb() throws SQLException {
 		WipfUser wu = new WipfUser();
-		wu.setUsername("admin");
+		wu.setUsername("mainadmin");
 		// Mit bcrypt Verschluesselung (sehr traege)
 		// wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
 		wu.setPassword("jadmin");
