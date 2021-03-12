@@ -9,14 +9,14 @@
     },
     "private": true,
     "dependencies": {
-        "@angular/animations": "11.2.3",
+        "@angular/animations": "11.2.5",
         "@angular/cdk": "11.2.4",
-        "@angular/common": "11.2.3",
+        "@angular/common": "11.2.5",
         "@angular/compiler": "11.2.5",
         "@angular/core": "11.2.5",
         "@angular/forms": "11.2.3",
         "@angular/material": "11.2.2",
-        "@angular/platform-browser": "11.2.3",
+        "@angular/platform-browser": "11.2.5",
         "@angular/platform-browser-dynamic": "11.2.3",
         "@ng-bootstrap/ng-bootstrap": "9.0.2",
         "bootstrap": "4.6.0",
@@ -26,7 +26,7 @@
         "zone.js": "0.11.4"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "0.1102.3",
+        "@angular-devkit/build-angular": "0.1102.4",
         "@angular/cli": "11.2.4",
         "@angular/compiler-cli": "11.2.3",
         "tslint": "6.1.3",
