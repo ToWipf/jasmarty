@@ -6,7 +6,7 @@ import { TodoEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-todolist',
@@ -26,7 +26,6 @@ export class TodolistComponent implements OnInit {
   public bTodo: boolean = true;
   public bDone: boolean = false;
   public bLater: boolean = true;
-  public bDeleteEnable: boolean = false;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -80,11 +79,20 @@ export class TodolistComponent implements OnInit {
     this.openDialog(td);
   }
 
-  public deleteItem(item: TodoEntry): void {
-    // TODO: ADD nachfragen dialog
-    this.bDeleteEnable = false;
-    this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
-      this.load();
+  public deleteItem(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.data;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
+          this.load();
+        });
+      }
     });
   }
 

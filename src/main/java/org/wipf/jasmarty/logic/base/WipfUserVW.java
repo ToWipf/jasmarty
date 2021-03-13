@@ -51,8 +51,6 @@ public class WipfUserVW {
 
 		LOGGER.info("Lade " + lUserFromJasmartyDb.size() + " User");
 
-		createDefaultUserAuthDb();
-
 		if (lUserFromJasmartyDb.size() == 0) {
 			// Admin User nur erstellen wenn es kein anderen User gibt
 			createDefaultUserAuthDb();
@@ -95,6 +93,24 @@ public class WipfUserVW {
 			addOrUpdateUser(new WipfUser().setByJson(sJson), false);
 		} catch (SQLException e) {
 			LOGGER.warn("addOrUpdateUser " + e);
+		}
+	}
+
+	/**
+	 * @param sUsername
+	 */
+	public void deleteUser(String sUsername) {
+		try {
+			String sUpdate = "DELETE FROM users WHERE username = ?";
+
+			PreparedStatement statement = null;
+
+			statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+
+			statement.setString(1, sUsername);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.warn("deleteUser " + e);
 		}
 	}
 
@@ -155,7 +171,7 @@ public class WipfUserVW {
 	 */
 	private void createDefaultUserAuthDb() throws SQLException {
 		WipfUser wu = new WipfUser();
-		wu.setUsername("mainadmin");
+		wu.setUsername("admin");
 		// Mit bcrypt Verschluesselung (sehr traege)
 		// wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
 		wu.setPassword("jadmin");

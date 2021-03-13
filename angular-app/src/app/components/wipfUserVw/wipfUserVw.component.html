@@ -24,7 +24,8 @@
                     <th mat-header-cell *matHeaderCellDef><button class="btn btn-default" (click)="newItem()">Neu</button></th>
                     <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                     <td mat-cell *matCellDef="let element">
-                        <button class="btn btn-default" (click)="openDialog(element)">Edit</button>
+                        <button class="btn btn-default" (click)="openDialogEdit(element)">Edit</button>
+                        <button class="btn btn-default" (click)="deleteUser(element)">Löschen</button>
                     </td>
                 </ng-container>
 

@@ -8,6 +8,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -15,6 +16,8 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.WipfInfo;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
+
+import io.quarkus.elytron.security.common.BcryptUtil;
 
 /**
  * @author wipf
@@ -59,6 +62,12 @@ public class WipfRest {
 	public Response stopAll() {
 		MainHome.stopApp();
 		return Response.ok().build();
+	}
+
+	@GET
+	@Path("bct/{x}")
+	public Response bct(@PathParam("x") String x) {
+		return Response.ok(BcryptUtil.bcryptHash(x)).build();
 	}
 
 }
