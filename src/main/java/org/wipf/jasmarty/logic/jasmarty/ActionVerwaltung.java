@@ -270,7 +270,11 @@ public class ActionVerwaltung {
 				tastatur.write(sParameter2, sParameter3);
 				return;
 			case "winamp":
-				winamp.control(sParameter2, sParameter3);
+				try {
+					winamp.control(sParameter2, sParameter3);
+				} catch (Exception e) {
+					// Winamp fehler ignorieren
+				}
 				return;
 			case "volume":
 				switch (sParameter2) {

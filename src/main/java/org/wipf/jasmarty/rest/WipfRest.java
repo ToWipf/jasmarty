@@ -65,6 +65,7 @@ public class WipfRest {
 	}
 
 	@GET
+	@Produces(MediaType.TEXT_PLAIN)
 	@Path("bct/{x}")
 	public Response bct(@PathParam("x") String x) {
 		return Response.ok(BcryptUtil.bcryptHash(x)).build();
