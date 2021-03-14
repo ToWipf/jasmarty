@@ -131,10 +131,21 @@ public class TeleMenue {
 			case "scan":
 				return appOthers.getOnline();
 
+			case "p":
 			case "punkte":
 				return punkteVW.getPunkte().toString();
 			case "setpunkte":
-				return punkteVW.setPunkte(t.getMessageIntPart(1)).toString();
+			case "sp":
+				punkteVW.setPunkte(t.getMessageIntPart(1));
+				return punkteVW.getPunkte().toString();
+			case "mp":
+			case "minuspunkte":
+				punkteVW.minuspunkt();
+				return punkteVW.getPunkte().toString();
+			case "pp":
+			case "pluspunkte":
+				punkteVW.pluspunkt();
+				return punkteVW.getPunkte().toString();
 
 			default:
 				break;

@@ -35,13 +35,25 @@ public class PunkteVW {
 	/**
 	 * @param n
 	 */
-	public Boolean setPunkte(int n) {
+	public void setPunkte(int n) {
 		try {
 			wipfConfig.setConfParam(PUNKTE, n);
-			return true;
 		} catch (SQLException e) {
 			LOGGER.warn("setPunkte " + e);
 		}
-		return false;
+	}
+
+	/**
+	 * 
+	 */
+	public void pluspunkt() {
+		setPunkte(getPunkte() + 1);
+	}
+
+	/**
+	 * 
+	 */
+	public void minuspunkt() {
+		setPunkte(getPunkte() - 1);
 	}
 }

@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram;
+package org.wipf.jasmarty.logic.base;
 
 import java.time.LocalDateTime;
 import java.util.Timer;
@@ -14,34 +14,34 @@ import org.jboss.logging.Logger;
  *
  */
 @ApplicationScoped
-public class SendTask {
+public class TaskManager {
 
 	@Inject
-	InfoTask infoTask;
+	DailyTask dailyTask;
 
-	private static final Logger LOGGER = Logger.getLogger("TelegramSendTask");
+	private static final Logger LOGGER = Logger.getLogger("Daily Task");
 	private boolean bTaskRuns = false;
 
 	/**
 	 * 
 	 */
 	// TODO @Scheduled(cron = "0 15 10 * * ?")
-	public void startTelegramTask() {
+	public void startDailyTask() {
 		if (!bTaskRuns) {
-			LOGGER.info("Starte Telegram Task");
+			LOGGER.info("Starte Daily Task");
 			bTaskRuns = true;
 			Timer t = new Timer();
-			TimerTask taskInfo = infoTask;
+			TimerTask taskdaily = dailyTask;
 			LocalDateTime localDateTime = LocalDateTime.now();
 
 			long nSekundenBisMitternacht = (86400
 					- (localDateTime.getHour() * 60 * 60 + localDateTime.getMinute() * 60 + localDateTime.getSecond()));
 
 			// Starte jeden Tag um 00:00 Uhr
-			t.scheduleAtFixedRate(taskInfo, nSekundenBisMitternacht * 1000, 86400000);
+			t.scheduleAtFixedRate(taskdaily, nSekundenBisMitternacht * 1000, 86400000);
 			// TODO t.cancel(); -> stop task
 		} else {
-			LOGGER.info("Telegram Task ist bereits aktiv");
+			LOGGER.info("Daily Task ist bereits aktiv");
 		}
 	}
 

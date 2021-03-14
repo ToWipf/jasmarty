@@ -31,8 +31,6 @@ public class TelegramHome {
 	@Inject
 	ReadLoop tReadLoop;
 	@Inject
-	SendTask tSendTask;
-	@Inject
 	TeleLog tLog;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
@@ -59,7 +57,6 @@ public class TelegramHome {
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();
-			tSendTask.startTelegramTask();
 			LOGGER.info("Gestartet");
 		} else {
 			LOGGER.warn("nicht gestartet");
