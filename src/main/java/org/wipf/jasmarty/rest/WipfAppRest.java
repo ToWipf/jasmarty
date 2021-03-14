@@ -17,7 +17,7 @@ import org.wipf.jasmarty.logic.wipfapp.AppInfos;
  */
 @Path("wipfapp")
 @RolesAllowed("admin")
-@Produces(MediaType.TEXT_HTML)
+@Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class WipfAppRest {
 
@@ -27,15 +27,15 @@ public class WipfAppRest {
 	@GET
 	@Path("starttext")
 	public Response starttext() {
-		System.out.println("starttext");
-		return Response.ok(appInfos.genStarttext()).build();
+		System.out.println("starttext1");
+		return Response.ok("{\"data\":\"" + appInfos.genStarttext() + "\"}").build();
 	}
 
 	@GET
 	@Path("infotext")
 	public Response infotext() {
-		System.out.println("infotext");
-		return Response.ok(appInfos.genInfotext()).build();
+		System.out.println("infotext1");
+		return Response.ok("{\"data\":\"" + appInfos.genInfotext() + "\"}").build();
 	}
 
 }

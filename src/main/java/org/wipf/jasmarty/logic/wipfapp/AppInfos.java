@@ -9,7 +9,7 @@ public class AppInfos {
 	 * @return
 	 */
 	public String genStarttext() {
-		return "Wipfapp !";
+		return "Wipfapp !<br><strong>Testversion</strong>";
 	}
 
 	/**
