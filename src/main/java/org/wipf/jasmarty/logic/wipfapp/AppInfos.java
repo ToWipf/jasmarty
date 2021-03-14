@@ -1,15 +1,19 @@
 package org.wipf.jasmarty.logic.wipfapp;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 @ApplicationScoped
 public class AppInfos {
+
+	@Inject
+	PunkteVW punkteVW;
 
 	/**
 	 * @return
 	 */
 	public String genStarttext() {
-		return "Wipfapp !<br><strong>Testversion</strong>";
+		return "Punkte: <strong>" + punkteVW.getPunkte() + "</strong>";
 	}
 
 	/**
