@@ -24,6 +24,6 @@ public class AppInfos {
 	 * @return
 	 */
 	public String genInfotext() {
-		return "Wipfapp info Text<br> Zufallszahl:" + wipf.getRandomInt(60);
+		return "Wipfapp info Text<br> Zufallszahl: " + wipf.getRandomInt(60);
 	}
 }
