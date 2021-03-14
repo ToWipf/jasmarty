@@ -134,11 +134,13 @@ public class TeleMenue {
 			case "p":
 			case "punkte":
 				return punkteVW.getPunkte().toString();
-			case "setpunkte":
 			case "sp":
+			case "ps":
+			case "setpunkte":
 				punkteVW.setPunkte(t.getMessageIntPart(1));
 				return punkteVW.getPunkte().toString();
 			case "mp":
+			case "pm":
 			case "minuspunkte":
 				punkteVW.minuspunkt();
 				return punkteVW.getPunkte().toString();

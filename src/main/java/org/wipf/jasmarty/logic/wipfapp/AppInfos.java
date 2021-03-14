@@ -3,11 +3,15 @@ package org.wipf.jasmarty.logic.wipfapp;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.wipf.jasmarty.logic.base.Wipf;
+
 @ApplicationScoped
 public class AppInfos {
 
 	@Inject
 	PunkteVW punkteVW;
+	@Inject
+	Wipf wipf;
 
 	/**
 	 * @return
@@ -20,6 +24,6 @@ public class AppInfos {
 	 * @return
 	 */
 	public String genInfotext() {
-		return "Wipfapp info text ! <br> Test?";
+		return "Wipfapp info Text<br> Zufallszahl:" + wipf.getRandomInt(60);
 	}
 }
