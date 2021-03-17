@@ -35,9 +35,9 @@ export class TodolistComponent implements OnInit {
 
   public load(): void {
     this.toarry = [];
+    const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
-      const warten = this.dialog.open(DialogWartenComponent, {});
       resdata.forEach((element) => {
 
         if (element.active === 'LATER' && this.bLater) {
