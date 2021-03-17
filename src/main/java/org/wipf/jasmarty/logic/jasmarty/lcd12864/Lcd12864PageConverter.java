@@ -260,7 +260,7 @@ public class Lcd12864PageConverter {
 		// Werte ermittelen
 		switch (sCommand) {
 		case "time":
-			return sBefore + wipf.time(sParameter) + sAfter;
+			return sBefore + wipf.getTime(sParameter) + sAfter;
 		case "math":
 			return sBefore + wipf.doMathByString(sParameter) + sAfter;
 		case "rnd":

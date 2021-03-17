@@ -174,7 +174,7 @@ public class SendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.time("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
+		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
 				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(userAndGroups.getAdminId());
 

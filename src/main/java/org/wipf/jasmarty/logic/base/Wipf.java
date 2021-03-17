@@ -395,7 +395,7 @@ public class Wipf {
 	/**
 	 * @return
 	 */
-	public String time(String sPara) {
+	public String getTime(String sPara) {
 		try {
 			SimpleDateFormat time = new SimpleDateFormat(sPara);
 			return time.format(new Date());

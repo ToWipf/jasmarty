@@ -111,7 +111,7 @@ public class TeleMenue {
 
 			case "stats":
 			case "telestats":
-				return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
 
 			case "res":
 			case "response":
@@ -197,7 +197,7 @@ public class TeleMenue {
 		case "zeit":
 		case "clock":
 		case "z":
-			return wipf.time("dd.MM.yyyy HH:mm:ss");
+			return wipf.getTime("dd.MM.yyyy HH:mm:ss");
 		case "witz":
 		case "fun":
 		case "w":
