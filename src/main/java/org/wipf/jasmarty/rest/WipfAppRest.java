@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.wipfapp.AppInfos;
+import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -28,6 +29,8 @@ public class WipfAppRest {
 	AppInfos appInfos;
 	@Inject
 	PunkteVW punkteVW;
+	@Inject
+	Infotext infotext;
 
 	@GET
 	@Path("starttext")
@@ -48,4 +51,13 @@ public class WipfAppRest {
 		punkteVW.setPunkte(nP);
 		return Response.ok().build();
 	}
+
+	@GET
+	@POST
+	@Path("setInfotext/s}")
+	public Response setInfotext(@PathParam("s") String s) {
+		infotext.setText(s);
+		return Response.ok().build();
+	}
+
 }

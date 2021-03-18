@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -39,6 +40,8 @@ public class TeleMenue {
 	TAppFilm appFilme;
 	@Inject
 	PunkteVW punkteVW;
+	@Inject
+	Infotext infotext;
 
 	/**
 	 * @param sJson
@@ -148,6 +151,9 @@ public class TeleMenue {
 			case "pluspunkte":
 				punkteVW.pluspunkt();
 				return punkteVW.getPunkte().toString();
+			case "itext":
+				infotext.setText(t.getMessageFullWithoutFirstWord());
+				return infotext.getText();
 
 			default:
 				break;

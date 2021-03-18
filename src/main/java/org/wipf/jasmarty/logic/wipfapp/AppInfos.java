@@ -12,6 +12,8 @@ public class AppInfos {
 	@Inject
 	PunkteVW punkteVW;
 	@Inject
+	Infotext infotext;
+	@Inject
 	Wipf wipf;
 
 	/**
@@ -28,6 +30,6 @@ public class AppInfos {
 	 */
 	@Metered
 	public String genInfotext() {
-		return "Wipfapp info Text<br> Zufallszahl: " + wipf.getRandomInt(60);
+		return infotext.getText();
 	}
 }
