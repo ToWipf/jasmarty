@@ -68,6 +68,7 @@ import { Jasmarty12864PagesComponent } from './components/jasmarty12864Pages/jas
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dialog';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dial
     JasmartyActionsComponentDialog,
   ],
   imports: [
+    AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
