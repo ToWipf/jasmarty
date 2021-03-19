@@ -5,7 +5,7 @@ import { TodolistComponent } from './components/todolist/todolist.component';
 
 const routes: Routes = [
   { path: 'test', component: TodolistComponent },
-  { path: 'test2', component: FilmeComponent },
+  { path: 'app/test2', component: FilmeComponent },
 ];
 
 @NgModule({
