@@ -278,14 +278,11 @@ public class Wipf {
 		// @formatter:off
 		return s.replaceAll("\t", " ")
 				.replaceAll("\\|", "_")
-				//.replaceAll("<", "_")
-				//.replaceAll(">", "_")
 				.replaceAll("'", "_")
 				.replaceAll("\"", "_")
 				.replaceAll("\\{", "(")
 				.replaceAll("\\}", ")")
 				.replaceAll("\\\\", "")
-				//.replaceAll("/", "")
 				.trim();
 		// @formatter:on
 	}
