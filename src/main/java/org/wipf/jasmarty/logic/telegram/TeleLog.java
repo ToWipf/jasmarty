@@ -179,4 +179,28 @@ public class TeleLog {
 		return ja;
 	}
 
+	/**
+	 * 
+	 */
+	public void cleanLog() {
+		LOGGER.info("clean Logs");
+
+		List<Integer> lIds = new ArrayList<>();
+		lIds.add(798200105);
+		lIds.add(-385659721);
+		lIds.add(-387871959);
+
+		lIds.forEach((nCid) -> {
+			try {
+				String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
+				PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+				statement.setInt(1, nCid);
+				statement.executeUpdate();
+			} catch (Exception e) {
+				LOGGER.warn("clean log " + e);
+			}
+		});
+
+	}
+
 }

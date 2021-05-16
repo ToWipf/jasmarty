@@ -115,6 +115,13 @@ public class TelegramRest {
 		return Response.ok("{\"del\":\"" + tlog.delItem(nId) + "\"}").build();
 	}
 
+	@DELETE
+	@Path("cleanLog")
+	public Response cleanLog() {
+		tlog.cleanLog();
+		return Response.ok().build();
+	}
+
 	@POST
 	@Path("chat")
 	public Response chat(String sJson) {
