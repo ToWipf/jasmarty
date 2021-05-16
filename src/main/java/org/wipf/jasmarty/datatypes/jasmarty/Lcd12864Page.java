@@ -182,7 +182,7 @@ public class Lcd12864Page extends Lcd12864PageBase {
 	 * @param zeichen
 	 */
 	public void drawChar(int xpos, int ypos, byte[] zeichen, pixelType pt) {
-		if (xpos >= 128 || ypos >= 64) {
+		if (xpos >= 128 || ypos >= 64 || zeichen == null) {
 			return;
 		}
 
