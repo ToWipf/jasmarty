@@ -23,15 +23,6 @@ public class UserAndGroups {
 	}
 
 	/**
-	 * TODO to DB
-	 * 
-	 * @return
-	 */
-	public int getGroupId() {
-		return -387871959;
-	}
-
-	/**
 	 * @return
 	 */
 	public int getAdminId() {

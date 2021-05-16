@@ -81,9 +81,9 @@ public class TelegramRest {
 
 	@POST
 	@PermitAll
-	@Path("sendMsgToGroup/{msg}")
-	public Response sendMsgToGroup(@PathParam("msg") String sMsg) {
-		tVerwaltung.sendMsgToGroup(sMsg);
+	@Path("sendMsgTo/{gid}/{msg}")
+	public Response sendMsgTo(@PathParam("gid") Integer nGid, @PathParam("msg") String sMsg) {
+		tVerwaltung.sendMsgTo(nGid, sMsg);
 		// TODO:
 		return Response.ok("{}").build();
 	}

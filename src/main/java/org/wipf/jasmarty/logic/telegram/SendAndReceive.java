@@ -174,8 +174,8 @@ public class SendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd() + "\n"
-				+ tLog.count() + "\n\nVersion:" + MainHome.VERSION);
+		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd()
+				+ "\n" + tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(userAndGroups.getAdminId());
 
 		sendToTelegram(t);
@@ -184,10 +184,10 @@ public class SendAndReceive {
 	/**
 	 * @param sMsg
 	 */
-	public void sendMsgToGroup(String sMsg) {
+	public void sendMsgTo(Integer nGroupId, String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
-		t.setChatID(userAndGroups.getGroupId());
+		t.setChatID(nGroupId);
 
 		sendToTelegram(t);
 	}
@@ -195,10 +195,10 @@ public class SendAndReceive {
 	/**
 	 * 
 	 */
-	public void sendDaylyMotd() {
+	public void sendDaylyMotd(Integer nGroupId) {
 		Telegram t = new Telegram();
 		t.setAntwort(appMotd.getRndMotd());
-		t.setChatID(userAndGroups.getGroupId());
+		t.setChatID(nGroupId);
 
 		sendToTelegram(t);
 	}
@@ -225,10 +225,10 @@ public class SendAndReceive {
 	 * 
 	 */
 	// TODO einbinden
-	public void sendDaylyEssen() throws SQLException {
+	public void sendDaylyEssen(Integer nGroupId) throws SQLException {
 		Telegram t = new Telegram();
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
-		t.setChatID(userAndGroups.getGroupId());
+		t.setChatID(nGroupId);
 
 		sendToTelegram(t);
 	}
