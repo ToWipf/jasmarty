@@ -202,6 +202,12 @@ public class Telegram {
 	 * @param sMessage
 	 */
 	public void setMessage(String sMessage) {
+		// Schneide ein führenden / weg
+		if (sMessage != null) {
+			if (sMessage.charAt(0) == '/') {
+				sMessage = sMessage.substring(1);
+			}
+		}
 		this.sMessage = sMessage;
 	}
 
