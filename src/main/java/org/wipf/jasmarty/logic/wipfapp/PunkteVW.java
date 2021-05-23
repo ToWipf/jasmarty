@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfig;
@@ -41,6 +43,14 @@ public class PunkteVW {
 		} catch (SQLException e) {
 			LOGGER.warn("setPunkte " + e);
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	@Gauge(name = "punke", unit = MetricUnits.NONE, description = "die Punkte")
+	public Integer getPunkteMetric() {
+		return getPunkte();
 	}
 
 	/**
