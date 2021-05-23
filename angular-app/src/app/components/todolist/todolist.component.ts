@@ -26,6 +26,7 @@ export class TodolistComponent implements OnInit {
   public bTodo: boolean = true;
   public bDone: boolean = false;
   public bLater: boolean = true;
+  public bZitat: boolean = true;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -50,6 +51,9 @@ export class TodolistComponent implements OnInit {
           this.toarry.push(element);
         }
         if (element.active === 'NEW' && this.bNew) {
+          this.toarry.push(element);
+        }
+        if (element.active === 'ZITAT' && this.bZitat) {
           this.toarry.push(element);
         }
       });
