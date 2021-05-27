@@ -95,19 +95,19 @@
 
                 <mat-form-field appearance="fill">
                     <mat-label>Parameter</mat-label>
-                    <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].data">
+                    <input matInput [(ngModel)]="lcdDescription.dynamic[i].data">
                 </mat-form-field>
             </ng-container>
 
 
             <mat-form-field appearance="fill">
                 <mat-label>x</mat-label>
-                <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].x">
+                <input matInput [(ngModel)]="lcdDescription.dynamic[i].x">
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>y</mat-label>
-                <input type="number" matInput [(ngModel)]="lcdDescription.dynamic[i].y">
+                <input matInput [(ngModel)]="lcdDescription.dynamic[i].y">
             </mat-form-field>
 
             <button (click)="delDynLine(i)">Zeile Löschen</button>

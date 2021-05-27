@@ -91,6 +91,6 @@ export interface Lcd12864PageDescriptionDynamic {
   type?: string;
   font?: string;
   data?: string;
-  x?: number;
-  y?: number;
+  x?: string;
+  y?: string;
 }

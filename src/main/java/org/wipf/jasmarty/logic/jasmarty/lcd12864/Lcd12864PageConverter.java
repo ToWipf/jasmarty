@@ -74,37 +74,36 @@ public class Lcd12864PageConverter {
 			for (Object o : jDynamic) {
 				JSONObject jo = new JSONObject(o.toString());
 
+				// Parameter ermitteln
+				int x = Integer.valueOf(searchAndReplaceVarsInString(jo.get("x").toString()));
+				int y = Integer.valueOf(searchAndReplaceVarsInString(jo.get("y").toString()));
+				String d = searchAndReplaceVarsInString(jo.get("data").toString());
+
 				switch (jo.get("type").toString()) {
 				case "TEXT":
 					switch (jo.get("font").toString()) {
 					case "FONT_57_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
 								pixelType.ON);
 						break;
 					case "FONT_68_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
 								pixelType.ON);
 						break;
 					case "FONT_57_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
 								pixelType.OFF);
 						break;
 					case "FONT_68_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
 								pixelType.OFF);
 						break;
 					case "FONT_57_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
 								pixelType.INVERT);
 						break;
 					case "FONT_68_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), jo.getInt("x"), jo.getInt("y"),
-								lineAlignment.CUSTOM, searchAndReplaceVarsInString(jo.get("data").toString()),
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
 								pixelType.INVERT);
 						break;
 					default:
@@ -114,13 +113,13 @@ public class Lcd12864PageConverter {
 				case "CIRCLE_EMPTY":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircle(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.INVERT);
 
 						break;
 					default:
@@ -130,13 +129,13 @@ public class Lcd12864PageConverter {
 				case "CIRCLE_FILL":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircleFill(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -146,13 +145,13 @@ public class Lcd12864PageConverter {
 				case "LINE_V":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawLineV(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -162,13 +161,13 @@ public class Lcd12864PageConverter {
 				case "LINE_H":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.ON);
+						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.OFF);
+						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawLineH(jo.getInt("x"), jo.getInt("y"), jo.getInt("data"), pixelType.INVERT);
+						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.INVERT);
 						break;
 					default:
 						break;

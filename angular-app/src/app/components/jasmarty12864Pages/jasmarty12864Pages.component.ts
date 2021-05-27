@@ -76,8 +76,8 @@ export class Jasmarty12864PagesComponent implements OnInit {
     dp.data = "";
     dp.font = "";
     dp.type = "";
-    dp.x = 0;
-    dp.y = 0;
+    dp.x = "0";
+    dp.y = "0";
     this.lcdDescription.dynamic.push(dp);
   }
 

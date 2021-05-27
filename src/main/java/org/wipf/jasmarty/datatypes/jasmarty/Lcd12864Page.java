@@ -232,18 +232,23 @@ public class Lcd12864Page extends Lcd12864PageBase {
 
 		for (char c : str.toCharArray()) {
 			byte[] bChar = font.getChar(c);
-			drawChar(x, y, bChar, pt);
+			if (bChar != null) {
 
-			// Zeichenbreite bestimmen
-			x += bChar.length + 1;
+				drawChar(x, y, bChar, pt);
 
-			// Für Zeilenumbruch -> nötig?
-			if (x >= 128 - font.getFontX()) {
-				x = xpos; // TODO testen
-				y += font.getFontY() + 1;
-				if (y > 64) {
-					y = 0;
+				// Zeichenbreite bestimmen
+				x += bChar.length + 1;
+
+				// Für Zeilenumbruch -> nötig?
+				if (x >= 128 - font.getFontX()) {
+					x = xpos; // TODO testen
+					y += font.getFontY() + 1;
+					if (y > 64) {
+						y = 0;
+					}
 				}
+			} else {
+				System.out.println("FEHLER MIT CHAR: " + str);
 			}
 		}
 	}
