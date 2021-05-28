@@ -306,4 +306,5 @@ public class Lcd12864PageConverter {
 			return "Nicht gefunden: " + sCommand;
 		}
 	}
+
 }

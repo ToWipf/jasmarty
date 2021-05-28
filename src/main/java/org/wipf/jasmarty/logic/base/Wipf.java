@@ -97,14 +97,6 @@ public class Wipf {
 	}
 
 	/**
-	 * @param str
-	 * @return
-	 */
-	public double doMathByString(String str) {
-		return doMath(str);
-	}
-
-	/**
 	 * @param sUrl
 	 * @return
 	 * @throws IOException
@@ -133,6 +125,18 @@ public class Wipf {
 		}
 		br.close();
 		return sbOut.toString();
+	}
+
+	/**
+	 * @param str
+	 * @return
+	 */
+	public double doMathByString(String str) {
+		try {
+			return doMath(str);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	/**
