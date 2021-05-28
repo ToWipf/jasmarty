@@ -243,9 +243,10 @@ public class Lcd12864Page extends Lcd12864PageBase {
 				if (x >= 128 - font.getFontX()) {
 					x = xpos; // TODO testen
 					y += font.getFontY() + 1;
-					if (y > 64) {
-						y = 0;
-					}
+					// wenn aktiv, schreibe text der unten raus geht nach oben
+//					if (y > 64) {
+//						y = 0;
+//					}
 				}
 			} else {
 				System.out.println("FEHLER MIT CHAR: " + str);

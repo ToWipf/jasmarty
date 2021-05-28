@@ -71,10 +71,10 @@ public class Winamp {
 			case "filename":
 				return WinampController.getFileNamePlaying();
 			case "title":
+				String s = WinampController.getTitle();
+				return s.substring(s.indexOf('.') + 2, s.lastIndexOf('-'));
+			case "titleraw":
 				return WinampController.getTitle();
-			case "titlename":
-				String s = WinampController.getTitle().substring(WinampController.getTitle().indexOf('.') + 2);
-				return s.substring(0, s.length() - 8);
 			case "timefull":
 				return ((Integer) (WinampController.getTime(WinampController.TIMELENGTH))).toString();
 			case "time":
