@@ -75,67 +75,69 @@ public class Lcd12864PageConverter {
 				JSONObject jo = new JSONObject(o.toString());
 
 				// Parameter ermitteln
-				int x = Integer.valueOf(searchAndReplaceVarsInString(jo.get("x").toString()));
-				int y = Integer.valueOf(searchAndReplaceVarsInString(jo.get("y").toString()));
-				String d = searchAndReplaceVarsInString(jo.get("data").toString());
+				int x = searchAndReplaceVarsForInt(jo.get("x").toString());
+				int y = searchAndReplaceVarsForInt(jo.get("y").toString());
 
 				switch (jo.get("type").toString()) {
 				case "TEXT":
 					switch (jo.get("font").toString()) {
 					case "FONT_57_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
-								pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_68_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
-								pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_57_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
-								pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_68_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
-								pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_57_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, d,
-								pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					case "FONT_68_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, d,
-								pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
 					}
 					break;
+
 				case "CIRCLE_EMPTY":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.ON);
+						lp.drawCircle(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.OFF);
+						lp.drawCircle(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircle(x, y, Integer.valueOf(d), pixelType.INVERT);
+						lp.drawCircle(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
 
 						break;
 					default:
 						break;
 					}
 					break;
+
 				case "CIRCLE_FILL":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.ON);
+						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.OFF);
+						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircleFill(x, y, Integer.valueOf(d), pixelType.INVERT);
+						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()),
+								pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -145,13 +147,13 @@ public class Lcd12864PageConverter {
 				case "LINE_V":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.ON);
+						lp.drawLineV(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.OFF);
+						lp.drawLineV(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawLineV(x, y, Integer.valueOf(d), pixelType.INVERT);
+						lp.drawLineV(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -161,13 +163,13 @@ public class Lcd12864PageConverter {
 				case "LINE_H":
 					switch (jo.get("font").toString()) {
 					case "ON":
-						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.ON);
+						lp.drawLineH(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "OFF":
-						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.OFF);
+						lp.drawLineH(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawLineH(x, y, Integer.valueOf(d), pixelType.INVERT);
+						lp.drawLineH(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -213,7 +215,7 @@ public class Lcd12864PageConverter {
 	 * @return
 	 * @throws Exception
 	 */
-	private String searchAndReplaceVarsInString(String sLine) {
+	private String searchAndReplaceVarsForString(String sLine) {
 		String sOut = sLine;
 
 		int lastIndex = 0;
@@ -226,6 +228,34 @@ public class Lcd12864PageConverter {
 			}
 		}
 		return sOut;
+	}
+
+	/**
+	 * @param sLine
+	 * @return
+	 */
+	private int searchAndReplaceVarsForInt(String sLine) {
+		String sOut = sLine;
+
+		int lastIndex = 0;
+		while (lastIndex != -1) {
+			lastIndex = sLine.indexOf("$", lastIndex);
+
+			if (lastIndex != -1) {
+				lastIndex += 1;
+				sOut = lineReplaceVars(sOut);
+			}
+		}
+		try {
+			// kommawerte wegschneiden
+			if (sOut.indexOf('.') > 0) {
+				sOut = sOut.substring(0, sOut.indexOf('.'));
+			}
+
+			return Integer.valueOf(sOut);
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	/**
