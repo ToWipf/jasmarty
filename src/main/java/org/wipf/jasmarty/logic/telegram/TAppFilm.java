@@ -61,7 +61,7 @@ public class TAppFilm {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return wipf.jsonToStringAsList(getAllAsJson());
+			return getAllAsList();
 		case "c":
 		case "count":
 			return countItems().toString();
@@ -71,8 +71,23 @@ public class TAppFilm {
 	}
 
 	/**
-	 * TODO Array hier?
-	 * 
+	 * @return
+	 */
+	public String getAllAsList() {
+		StringBuilder sb = new StringBuilder();
+
+		for (FilmEntry tItem : getAll()) {
+			if (sb.length() > 0) {
+				sb.append("\n");
+			}
+			sb.append(wipf.jsonToStringAsList(tItem.toJsonRelevantOnly()));
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
+	/**
 	 * @return
 	 */
 	public JSONArray getAllAsJson() {
@@ -91,26 +106,31 @@ public class TAppFilm {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<FilmEntry> getAll() throws SQLException {
-		List<FilmEntry> liTodoE = new ArrayList<>();
+	public List<FilmEntry> getAll() {
+		try {
+			List<FilmEntry> liTodoE = new ArrayList<>();
 
-		String sQuery = "select * from filme;";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
-		ResultSet rs = statement.executeQuery();
+			String sQuery = "select * from filme;";
+			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			ResultSet rs = statement.executeQuery();
 
-		while (rs.next()) {
-			FilmEntry entry = new FilmEntry();
-			entry.setId(rs.getInt("id"));
-			entry.setArt(rs.getString("art"));
-			entry.setEditBy(rs.getString("editby"));
-			entry.setTitel(rs.getString("titel"));
-			entry.setInfotext(rs.getString("infotext"));
-			entry.setGesehenDate(rs.getInt("gesehendate"));
-			entry.setBewertung(rs.getInt("bewertung"));
-			entry.setDate(rs.getInt("date"));
-			liTodoE.add(entry);
+			while (rs.next()) {
+				FilmEntry entry = new FilmEntry();
+				entry.setId(rs.getInt("id"));
+				entry.setArt(rs.getString("art"));
+				entry.setEditBy(rs.getString("editby"));
+				entry.setTitel(rs.getString("titel"));
+				entry.setInfotext(rs.getString("infotext"));
+				entry.setGesehenDate(rs.getInt("gesehendate"));
+				entry.setBewertung(rs.getInt("bewertung"));
+				entry.setDate(rs.getInt("date"));
+				liTodoE.add(entry);
+			}
+			return liTodoE;
+		} catch (Exception e) {
+			LOGGER.warn("getAll " + e);
+			return null;
 		}
-		return liTodoE;
 	}
 
 	/**

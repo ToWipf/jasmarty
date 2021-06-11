@@ -121,4 +121,17 @@ public class TAppOthers {
 			return "getOnline failed";
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	public String getTemperature() {
+		try {
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.0.14:80");
+
+		} catch (IOException e) {
+			LOGGER.warn("getOnline: " + e);
+			return "getOnline failed";
+		}
+	}
 }

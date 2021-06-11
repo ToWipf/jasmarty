@@ -85,7 +85,13 @@ public class TeleMenue {
 				    "response" + "\n" +
 				    "filme" + "\n" +
 				    "todo" + "\n" +
-					"Essen (Hilfe für essen)";
+					"Essen (Hilfe für essen) \n" +
+					"punkte \n" +
+					"pp \n" +
+					"pm / mp\n" +
+					"setpunkte / sp / ps / mp\n" +
+					"itext TEXT IN DER APP\n" +
+					"temperature \n";
 				// @formatter:on
 
 			// Anbindung an msg datenbank
@@ -134,7 +140,11 @@ public class TeleMenue {
 			case "scan":
 				return appOthers.getOnline();
 
-			case "p":
+			case "tm":
+			case "temp":
+			case "temperature":
+				return appOthers.getTemperature();
+
 			case "punkte":
 				return punkteVW.getPunkte().toString();
 			case "sp":
