@@ -69,6 +69,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { AppRoutingModule } from './app-routing.module';
+import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { AppRoutingModule } from './app-routing.module';
     DialogJaNeinComponent,
     DialogWartenComponent,
     JasmartyActionsComponentDialog,
+    CharGeneratorComponent,
   ],
   imports: [
     AppRoutingModule,
