@@ -125,9 +125,8 @@ public class TeleLog {
 
 		List<Telegram> tList = new ArrayList<>();
 
-		try {
-			String sQuery = "SELECT * FROM telegramlog " + sSQLFilter;
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		String sQuery = "SELECT * FROM telegramlog " + sSQLFilter;
+		try (ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery()) {
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -191,9 +190,9 @@ public class TeleLog {
 		lIds.add(-387712260);
 
 		lIds.forEach((nCid) -> {
-			try {
-				String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
-				PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+
+			String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
+			try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
 				statement.setInt(1, nCid);
 				statement.executeUpdate();
 			} catch (Exception e) {
