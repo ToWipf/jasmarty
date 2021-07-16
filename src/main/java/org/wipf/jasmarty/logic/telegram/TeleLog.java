@@ -191,8 +191,8 @@ public class TeleLog {
 
 		lIds.forEach((nCid) -> {
 
-			String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
-			try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
+				String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
+				try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
 				statement.setInt(1, nCid);
 				statement.executeUpdate();
 			} catch (Exception e) {
