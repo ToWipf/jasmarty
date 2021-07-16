@@ -106,19 +106,23 @@ public class SendAndReceive {
 	 */
 	@Metered
 	public char readUpdateFromTelegram() {
-		try {
-			String sJson = "";
-			if (this.nOffsetID == 0) {
-				sJson = wipf.httpRequest(Wipf.httpRequestType.POST,
-						"https://api.telegram.org/" + this.sBotKey + "/getUpdates");
-			} else {
-				sJson = wipf.httpRequest(Wipf.httpRequestType.POST,
-						"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID);
-			}
 
-			JSONObject jo = new JSONObject(sJson);
+		StringBuilder sbHttpRequestTelegram = new StringBuilder();
+		sbHttpRequestTelegram.append("https://api.telegram.org/");
+		sbHttpRequestTelegram.append(this.sBotKey);
+		sbHttpRequestTelegram.append("/getUpdates");
+
+		if (this.nOffsetID != 0) {
+			sbHttpRequestTelegram.append("?offset=");
+			sbHttpRequestTelegram.append(this.nOffsetID);
+		}
+
+		try {
+			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST,
+					"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID));
+
 			if (!jo.getBoolean("ok")) {
-				LOGGER.warn("API fail:" + sJson);
+				LOGGER.warn("Telegram nicht 'ok'");
 				return 'f';
 			}
 
@@ -128,7 +132,7 @@ public class SendAndReceive {
 
 				for (int nMsg = 0; nMsg < ja.length(); nMsg++) {
 					if (nMsg >= 5) {
-						// Nur 5 Nachrichten in einen Zug verarbeiten
+						// Nur 5 Nachrichten in einen Zug verarbeiten, der rest wird später neu abgeholt
 						continue;
 					}
 
