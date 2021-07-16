@@ -50,10 +50,9 @@ public class TeleLog {
 			t.setType("system");
 		}
 
-		try {
-			String sUpdate = ("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type) VALUES (?,?,?,?,?,?,?)");
+		String sUpdate = ("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type) VALUES (?,?,?,?,?,?,?)");
 
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
 			statement.setInt(1, t.getMid());
 			statement.setString(2, t.getMessage().replaceAll("'", "_"));
 			statement.setString(3, t.getAntwort().replaceAll("'", "_"));
