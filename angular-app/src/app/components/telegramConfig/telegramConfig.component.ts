@@ -54,7 +54,7 @@ export class TelegramConfigComponent implements OnInit {
   public sendMsgToGroup(): void {
     if (this.sText) {
       //TODO: escape input String (TEXTBOX?)
-      this.http.post(this.rest.gethost() + 'telegram/sendMsgToGroup/' + this.sText, null).subscribe((resdata) => {
+      this.http.post(this.rest.gethost() + 'telegram/sendMsgToAdmin/' + this.sText, null).subscribe((resdata) => {
         this.sStatus = resdata.toString();
         this.sText = null;
       });

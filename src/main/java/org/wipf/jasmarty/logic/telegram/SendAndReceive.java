@@ -75,33 +75,6 @@ public class SendAndReceive {
 	}
 
 	/**
-	 * @param t
-	 * @return
-	 */
-	@Metered
-	public void sendToTelegram(Telegram t) {
-		tLog.saveToLog(t);
-		try {
-			String sAntwort = t.getAntwort();
-			if (sAntwort == null || sAntwort.equals("")) {
-				sAntwort = "Leere Antwort";
-			}
-
-			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + this.sBotKey
-					+ "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
-
-			JSONObject jo = new JSONObject(sResJson);
-
-			if (!jo.getBoolean("ok")) {
-				LOGGER.warn("API fail:" + sResJson + " Antworttext: '" + sAntwort + "'");
-			}
-
-		} catch (Exception e) {
-			LOGGER.warn("Telegram senden " + e);
-		}
-	}
-
-	/**
 	 * 
 	 */
 	@Metered
@@ -158,7 +131,7 @@ public class SendAndReceive {
 					}
 
 					t.setAntwort(menue.menueMsg(t));
-					sendToTelegram(t);
+					sendTelegram(t);
 				}
 				// Fertig mit neuen Nachrichten
 				return 'n';
@@ -170,7 +143,46 @@ public class SendAndReceive {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
 			return 'f';
 		}
+	}
 
+	/**
+	 * @param t
+	 * @return
+	 */
+	private void sendTelegram(Telegram t) {
+		// Lange Nachrichten splitten (max 4096 chars)
+		for (String sPart : t.getAntwort().split("(?<=\\G.{3900})")) {
+			t.setAntwort(sPart);
+			sendToTelegram(t);
+			// Um das Maximale Sendelimit nicht zu erreichen
+			wipf.sleep(1000);
+		}
+	}
+
+	/**
+	 * @param t
+	 */
+	@Metered
+	private void sendToTelegram(Telegram t) {
+		tLog.saveToLog(t);
+		String sAntwort = t.getAntwort();
+		if (sAntwort == null || sAntwort.equals("")) {
+			sAntwort = "Leere Antwort";
+		}
+
+		try {
+			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + this.sBotKey
+					+ "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
+
+			JSONObject jo = new JSONObject(sResJson);
+
+			if (!jo.getBoolean("ok")) {
+				LOGGER.warn("API fail:" + sResJson + " Antworttext: '" + sAntwort + "'");
+			}
+
+		} catch (Exception e) {
+			LOGGER.warn("Telegram senden " + e);
+		}
 	}
 
 	/**
@@ -182,7 +194,7 @@ public class SendAndReceive {
 				+ "\n" + tLog.count() + "\n\nVersion:" + MainHome.VERSION);
 		t.setChatID(userAndGroups.getAdminId());
 
-		sendToTelegram(t);
+		sendTelegram(t);
 	}
 
 	/**
@@ -193,7 +205,7 @@ public class SendAndReceive {
 		t.setAntwort(sMsg);
 		t.setChatID(nGroupId);
 
-		sendToTelegram(t);
+		sendTelegram(t);
 	}
 
 	/**
@@ -204,7 +216,7 @@ public class SendAndReceive {
 		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(nGroupId);
 
-		sendToTelegram(t);
+		sendTelegram(t);
 	}
 
 	/**
@@ -221,7 +233,7 @@ public class SendAndReceive {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
 		t.setChatID(userAndGroups.getAdminId());
-		sendToTelegram(t);
+		sendTelegram(t);
 	}
 
 	/**
@@ -234,7 +246,7 @@ public class SendAndReceive {
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
 		t.setChatID(nGroupId);
 
-		sendToTelegram(t);
+		sendTelegram(t);
 	}
 
 	/**
