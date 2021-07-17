@@ -149,7 +149,7 @@ public class SendAndReceive {
 	 * @param t
 	 * @return
 	 */
-	private void sendTelegram(Telegram t) {
+	public void sendTelegram(Telegram t) {
 		// Lange Nachrichten splitten (max 4096 chars)
 		for (String sPart : t.getAntwort().split("(?<=\\G.{3900})")) {
 			t.setAntwort(sPart);
@@ -163,7 +163,7 @@ public class SendAndReceive {
 	 * @param t
 	 */
 	@Metered
-	private void sendToTelegram(Telegram t) {
+	public void sendToTelegram(Telegram t) {
 		tLog.saveToLog(t);
 		String sAntwort = t.getAntwort();
 		if (sAntwort == null || sAntwort.equals("")) {
