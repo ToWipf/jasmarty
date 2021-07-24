@@ -44,7 +44,7 @@
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
                         {{element.id}} </td>
                 </ng-container>
 

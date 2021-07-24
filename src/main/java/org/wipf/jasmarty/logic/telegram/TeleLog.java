@@ -115,7 +115,7 @@ public class TeleLog {
 		String sSQLFilter = "";
 		switch (filter) {
 		case ALL:
-			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system'";
+			sSQLFilter = "";
 			break;
 		case EXTERN:
 			sSQLFilter = "WHERE msgid IS NOT '0' AND type IS NOT 'system' AND chatid IS NOT '798200105' AND chatid IS NOT '-385659721' AND chatid IS NOT '522467648' AND chatid IS NOT '-387871959'";
@@ -188,6 +188,7 @@ public class TeleLog {
 		lIds.add(-385659721);
 		lIds.add(-387871959);
 		lIds.add(-387712260);
+		lIds.add(0);
 
 		lIds.forEach((nCid) -> {
 
