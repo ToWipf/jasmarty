@@ -66,4 +66,11 @@ public class PunkteVW {
 	public void minuspunkt() {
 		setPunkte(getPunkte() - 1);
 	}
+
+	/**
+	 * positiv und negativ
+	 */
+	public void appendPunkt(int n) {
+		setPunkte(getPunkte() + n);
+	}
 }

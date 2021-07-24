@@ -161,6 +161,10 @@ public class TeleMenue {
 			case "pluspunkte":
 				punkteVW.pluspunkt();
 				return punkteVW.getPunkte().toString();
+			case "pc":
+			case "punkteChange":
+				punkteVW.appendPunkt(t.getMessageIntPart(1));
+				return punkteVW.getPunkte().toString();
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
