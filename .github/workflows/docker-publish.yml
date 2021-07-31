@@ -48,7 +48,7 @@ jobs:
         run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
 
       - name: Build dockerimage_arm_64
-        run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
+        run: cd scripts && docker buildx build --platform linux/arm64 -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
 
       - name: Push dockerimage_arm
         run: |
