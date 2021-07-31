@@ -1,0 +1,4 @@
+FROM arm64v8/openjdk:17
+
+COPY jasmarty.jar /app/jasmarty.jar
+CMD ["java","-jar","-Xmx64m","/app/jasmarty.jar"]
