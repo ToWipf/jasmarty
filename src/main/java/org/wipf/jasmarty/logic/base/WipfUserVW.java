@@ -12,6 +12,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+
 /**
  * @author wipf
  *
@@ -172,8 +174,8 @@ public class WipfUserVW {
 	private void createDefaultUserAuthDb() throws SQLException {
 		WipfUser wu = new WipfUser();
 		wu.setUsername("admin");
-		// Mit bcrypt Verschluesselung (sehr traege)
-		// wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
+		// Mit bcrypt Verschluesselung (slow bei 32Bit)
+		wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
 		wu.setPassword("jadmin");
 		wu.setRole("admin");
 		wu.setTelegramId(0);
