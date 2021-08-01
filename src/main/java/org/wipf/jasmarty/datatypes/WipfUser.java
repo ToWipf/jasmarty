@@ -35,7 +35,7 @@ public class WipfUser {
 		setUsername(jo.getString("username"));
 		// Mit bcrypt Verschluesselung (slow 32bit)
 		setPassword(BcryptUtil.bcryptHash(jo.getString("password")));
-		setPassword(jo.getString("password"));
+		// setPassword(jo.getString("password"));
 		setRole(jo.getString("role"));
 		setTelegramId(jo.getInt("telegramid"));
 		return this;

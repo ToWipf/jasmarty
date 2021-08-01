@@ -176,7 +176,7 @@ public class WipfUserVW {
 		wu.setUsername("admin");
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
 		wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
-		wu.setPassword("jadmin");
+		// wu.setPassword("jadmin");
 		wu.setRole("admin");
 		wu.setTelegramId(0);
 		addOrUpdateUser(wu, true);
