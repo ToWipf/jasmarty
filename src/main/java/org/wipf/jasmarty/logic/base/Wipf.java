@@ -427,7 +427,8 @@ public class Wipf {
 	 * @return
 	 */
 	public String jsonToStringAsList(JSONArray ja) {
-		JSONObject jo = new JSONObject(ja);
+		JSONObject jo = new JSONObject();
+		jo.append("array", ja);
 		return jsonToStringAsList(jo);
 	}
 

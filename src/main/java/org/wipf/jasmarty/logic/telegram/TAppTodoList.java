@@ -50,7 +50,7 @@ public class TAppTodoList {
 			return "text (add)" + 
 					"\n" + 
 					"done ID" + "\n" + "undone ID" + "\n" + "delete ID" + "\n" + "get ID" + "\n"
-					+ "list" + "\n" + "listall" + "\n" + "count" + "\n" + "countall";
+					+ "list" + "\n" + "listall" + "\n" + "listjson" + "\n" + "count" + "\n" + "countall";
 			// @formatter:on
 		}
 
