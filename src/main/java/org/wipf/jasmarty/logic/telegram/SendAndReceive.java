@@ -155,7 +155,7 @@ public class SendAndReceive {
 			t.setAntwort(sPart);
 			sendToTelegram(t);
 			// Um das Maximale Sendelimit nicht zu erreichen
-			wipf.sleep(2000);
+			wipf.sleep(5000);
 		}
 	}
 
