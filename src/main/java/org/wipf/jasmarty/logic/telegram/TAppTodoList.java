@@ -66,13 +66,13 @@ public class TAppTodoList {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return wipf.jsonToStringAsList(getAllUnDone());
+			return getAllUnDone().toString();
 		case "lj":
 		case "listjson":
 			return getAllAsJson().toString();
 		case "la":
 		case "listall":
-			return wipf.jsonToStringAsList(getAllAsJson());
+			return getAllAsList();
 		case "c":
 		case "count":
 			return count(t.getFromIdOnly());
@@ -137,6 +137,24 @@ public class TAppTodoList {
 			e.printStackTrace();
 		}
 		return ja;
+	}
+
+	public String getAllAsList() {
+		StringBuilder sb = new StringBuilder();
+
+		try {
+			for (TodoEntry tItem : getAll()) {
+				if (sb.length() > 0) {
+					sb.append("\n");
+				}
+				sb.append(wipf.jsonToStringAsList(tItem.toJsonRelevantOnly()));
+				sb.append("\n");
+			}
+		} catch (SQLException e) {
+			return "fail to get all";
+		}
+
+		return sb.toString();
 	}
 
 	/**
