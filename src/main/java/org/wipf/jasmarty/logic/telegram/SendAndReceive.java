@@ -151,11 +151,12 @@ public class SendAndReceive {
 	 */
 	public void sendTelegram(Telegram t) {
 		// Lange Nachrichten splitten (max 4096 chars)
-		for (String sPart : t.getAntwort().split("(?<=\\G.{3900})")) {
+		String sAntwortToSend = t.getAntwort();
+		for (String sPart : sAntwortToSend.split("(?<=\\G.{3900})")) {
 			t.setAntwort(sPart);
 			sendToTelegram(t);
 			// Um das Maximale Sendelimit nicht zu erreichen
-			wipf.sleep(5000);
+			wipf.sleep(4000);
 		}
 	}
 
