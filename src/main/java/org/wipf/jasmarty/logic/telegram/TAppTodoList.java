@@ -47,8 +47,10 @@ public class TAppTodoList {
 		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			// @formatter:off
-			return "text (add)" + "\n" + "done ID" + "\n" + "undone ID" + "\n" + "delete ID" + "\n" + "get ID" + "\n"
-					+ "list" + "\n" + "listall" + "\n" + "listfull" + "\n" + "count" + "\n" + "countall";
+			return "text (add)" + 
+					"\n" + 
+					"done ID" + "\n" + "undone ID" + "\n" + "delete ID" + "\n" + "get ID" + "\n"
+					+ "list" + "\n" + "listall" + "\n" + "count" + "\n" + "countall";
 			// @formatter:on
 		}
 
@@ -64,14 +66,13 @@ public class TAppTodoList {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return getAllUnDone().toString();
+			return wipf.jsonToStringAsList(getAllUnDone());
+		case "lj":
+		case "listjson":
+			return getAllAsJson().toString();
 		case "la":
 		case "listall":
-		case "ev":
-		case "everything":
-		case "lf":
-		case "listfull":
-			return getAllAsJson().toString();
+			return wipf.jsonToStringAsList(getAllAsJson());
 		case "c":
 		case "count":
 			return count(t.getFromIdOnly());
@@ -165,7 +166,11 @@ public class TAppTodoList {
 	 * @param nId
 	 * @return
 	 */
-	public TodoEntry getById(int nId) {
+	public TodoEntry getById(Integer nId) {
+		if (nId == null) {
+			return new TodoEntry();
+		}
+
 		TodoEntry tItem = new TodoEntry();
 
 		try {
