@@ -203,7 +203,7 @@ public class Telegram {
 	 */
 	public void setMessage(String sMessage) {
 		// Schneide ein führendes '/' weg
-		if (sMessage != null && sMessage != "") {
+		if (sMessage != null && sMessage != "" && sMessage.length() > 1) {
 			if (sMessage.charAt(0) == '/') {
 				sMessage = sMessage.substring(1);
 			}
