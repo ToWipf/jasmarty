@@ -33,7 +33,7 @@ public class MainHome {
 	TaskManager taskmanager;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.22";
+	public static final String VERSION = "1.0.24";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**

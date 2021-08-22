@@ -10,6 +10,7 @@
                     <li (click)="selectSite('filme')">Filme</li>
                     <li (click)="selectSite('crypt')">Crypt</li>
                     <li (click)="selectSite('wipfuservw')">Wipf User</li>
+                    <li (click)="selectSite('debug')">Debug</li>
                 </ul>
 
                 <div class="titlemenue">LCD</div>
@@ -92,6 +93,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='charGenerator'">
                     <app-charGenerator></app-charGenerator>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='debug'">
+                    <app-debugSeite></app-debugSeite>
                 </ng-container>
             </div>
         </div>
