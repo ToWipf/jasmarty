@@ -115,20 +115,12 @@ public class TeleMenue {
 			case "getmotd":
 				return appMotd.getRndMotd();
 
-			case "doping":
-				return wipf.ping(t.getMessageStringPartLow(1)).toString();
-
-			case "getip":
-				return wipf.getExternalIp();
-
 			case "stats":
 			case "telestats":
 				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
-
 			case "res":
 			case "response":
 				return t.getMessage();
-
 			case "to":
 			case "todo":
 				return appTodoList.telegramMenueTodoList(t);
@@ -139,10 +131,14 @@ public class TeleMenue {
 			case "e":
 				return appEssen.menueEssen(t);
 
+			// Web
+			case "getip":
+				return wipf.getExternalIp();
+			case "doping":
+				return wipf.ping(t.getMessageStringPartLow(1)).toString();
 			case "online":
 			case "scan":
 				return appOthers.getOnline();
-
 			case "tm":
 			case "temp":
 			case "temperature":
@@ -150,8 +146,8 @@ public class TeleMenue {
 			case "sys":
 			case "system":
 				return appOthers.getSystem();
-			case "punkte":
-				return punkteVW.getPunkte().toString();
+
+			// Punkte
 			case "sp":
 			case "ps":
 			case "setpunkte":
@@ -170,9 +166,11 @@ public class TeleMenue {
 			case "punkteChange":
 				punkteVW.appendPunkt(t.getMessageIntPart(1));
 				return punkteVW.getPunkte().toString();
+
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
+			// System
 			case "kill":
 				sendAndReceive.readUpdateFromTelegram();
 
@@ -237,6 +235,9 @@ public class TeleMenue {
 			return appMsg.countMsg();
 		case "countsend":
 			return msglog.count();
+		case "punkte":
+		case "p":
+			return punkteVW.getPunkte().toString();
 		case "getmyid":
 		case "id":
 		case "whoami":
