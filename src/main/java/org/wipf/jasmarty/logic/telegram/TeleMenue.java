@@ -42,6 +42,8 @@ public class TeleMenue {
 	PunkteVW punkteVW;
 	@Inject
 	Infotext infotext;
+	@Inject
+	SendAndReceive sendAndReceive;
 
 	/**
 	 * @param sJson
@@ -170,6 +172,8 @@ public class TeleMenue {
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
 			case "kill":
+				sendAndReceive.readUpdateFromTelegram();
+
 				MainHome.stopApp();
 				return "killed";
 
