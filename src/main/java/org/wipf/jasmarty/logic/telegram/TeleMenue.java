@@ -94,6 +94,7 @@ public class TeleMenue {
 					"setpunkte / sp / ps / mp\n" +
 					"itext TEXT IN DER APP\n" +
 					"kill\n" +
+					"system\n" +
 					"temperature \n";
 				// @formatter:on
 
