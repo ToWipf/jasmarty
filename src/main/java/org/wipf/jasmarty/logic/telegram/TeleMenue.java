@@ -91,6 +91,7 @@ public class TeleMenue {
 					"pm / mp\n" +
 					"setpunkte / sp / ps / mp\n" +
 					"itext TEXT IN DER APP\n" +
+					"kill\n" +
 					"temperature \n";
 				// @formatter:on
 
@@ -168,6 +169,9 @@ public class TeleMenue {
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
+			case "kill":
+				MainHome.stopApp();
+				return "killed";
 
 			default:
 				break;

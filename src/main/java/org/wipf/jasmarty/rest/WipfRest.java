@@ -33,8 +33,6 @@ public class WipfRest {
 	@Inject
 	SerialConfig serialConfig;
 	@Inject
-	MainHome qMain;
-	@Inject
 	WipfInfo wipfInfo;
 
 	@GET
