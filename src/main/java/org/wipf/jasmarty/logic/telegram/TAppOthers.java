@@ -130,8 +130,21 @@ public class TAppOthers {
 			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.0.14:80");
 
 		} catch (IOException e) {
-			LOGGER.warn("getOnline: " + e);
-			return "getOnline failed";
+			LOGGER.warn("getTemperature: " + e);
+			return "getTemperature failed";
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public String getSystem() {
+		try {
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:80/metrics");
+
+		} catch (IOException e) {
+			LOGGER.warn("getSystem: " + e);
+			return "getSystem failed";
 		}
 	}
 }

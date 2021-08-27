@@ -147,7 +147,9 @@ public class TeleMenue {
 			case "temp":
 			case "temperature":
 				return appOthers.getTemperature();
-
+			case "sys":
+			case "system":
+				return appOthers.getSystem();
 			case "punkte":
 				return punkteVW.getPunkte().toString();
 			case "sp":
