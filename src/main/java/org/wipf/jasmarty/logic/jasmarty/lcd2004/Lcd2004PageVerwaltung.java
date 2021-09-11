@@ -35,7 +35,7 @@ public class Lcd2004PageVerwaltung {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS pages (id INTEGER UNIQUE, name TEXT, page TEXT, options TEXT);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Lcd2004PageVerwaltung {
 	 */
 	public void pageToDb(Lcd2004Page page) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO pages (id, name, page, options) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, page.getId());
 		statement.setString(2, page.getName());
 		statement.setString(3, page.getPageAsDBString());
@@ -104,7 +104,7 @@ public class Lcd2004PageVerwaltung {
 	 */
 	public void delPageFromDb(Integer nId) throws SQLException {
 		String sUpdate = "DELETE FROM pages WHERE id = ?";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
@@ -118,7 +118,7 @@ public class Lcd2004PageVerwaltung {
 		try {
 
 			String sQuery = "SELECT * FROM pages WHERE id = ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
 
@@ -191,7 +191,7 @@ public class Lcd2004PageVerwaltung {
 		JSONArray ja = new JSONArray();
 
 		String sQuery = "SELECT id, name FROM pages";
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			JSONObject entry = new JSONObject();
 			entry.put("id", rs.getInt("id"));

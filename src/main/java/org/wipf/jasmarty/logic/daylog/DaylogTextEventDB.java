@@ -3,11 +3,13 @@ package org.wipf.jasmarty.logic.daylog;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
+import org.wipf.jasmarty.datatypes.daylog.DaylogTextEvent;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
@@ -15,7 +17,7 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  *
  */
 @ApplicationScoped
-public class DaylogDayDB {
+public class DaylogTextEventDB {
 
 	@Inject
 	SqlLite sqlLite;
@@ -24,21 +26,21 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogDay (id INTEGER NOT NULL UNIQUE, date TEXT, tagestext TEXT, userid INTEGER, PRIMARY KEY(id AUTOINCREMENT));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogTextEvent (id INTEGER NOT NULL UNIQUE, dateid INTEGER, typ TEXT, text TEXT, PRIMARY KEY(id AUTOINCREMENT));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
-	 * @param day
+	 * @param o
 	 * @throws SQLException
 	 */
-	public void save(DaylogDay day) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO daylogDay (id, date, tagestext, userid) VALUES (?,?,?,?)";
+	public void save(DaylogTextEvent o) throws SQLException {
+		String sUpdate = "INSERT OR REPLACE INTO daylogTextEvent (id, dateid, typ, text) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, day.getId());
-		statement.setString(2, day.getDate());
-		statement.setString(3, day.getTagestext());
-		statement.setInt(4, day.getUserId());
+		statement.setInt(1, o.getId());
+		statement.setInt(2, o.getDateId());
+		statement.setString(3, o.getTyp());
+		statement.setString(4, o.getText());
 		statement.executeUpdate();
 	}
 
@@ -48,25 +50,22 @@ public class DaylogDayDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public DaylogDay load(String sDate, Integer nUserId) throws SQLException {
-		DaylogDay o = new DaylogDay();
+	public List<DaylogTextEvent> load(Integer nDateId) throws SQLException {
+		List<DaylogTextEvent> o = new LinkedList<>();
 
-		String sQuery = "SELECT * FROM daylogDay WHERE date = ? AND userid = ?;";
+		String sQuery = "SELECT * FROM daylogTextEvent WHERE date = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setString(1, sDate);
-		statement.setInt(2, nUserId);
+		statement.setInt(1, nDateId);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
-			// Es gibt nur einen oder keinen Eintrag
-			o.setId(rs.getInt("id"));
-			o.setDate(rs.getString("date"));
-			o.setTagestext(rs.getString("tagestext"));
-			o.setUserId(rs.getInt("userid"));
-			return o;
+			DaylogTextEvent d = new DaylogTextEvent();
+			d.setId(rs.getInt("id"));
+			d.setDateId(rs.getInt("dateid"));
+			d.setTyp(rs.getString("typ"));
+			d.setText(rs.getString("text"));
+			o.add(d);
 		}
-		// Datum nicht gefunden -> neu erstllen
-		o.setDate(sDate);
 
 		return o;
 	}
@@ -76,7 +75,7 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public void del(Integer nId) throws SQLException {
-		String sUpdate = "DELETE FROM daylogDay WHERE id = ?";
+		String sUpdate = "DELETE FROM daylogTextEvent WHERE id = ?";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();

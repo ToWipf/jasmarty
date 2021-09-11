@@ -31,7 +31,7 @@ public class TAppTicTacToe {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -167,7 +167,7 @@ public class TAppTicTacToe {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES (?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, ttt.getChatID());
 			statement.setString(2, ttt.getFieldString());
 			statement.setInt(3, ttt.getDate());
@@ -188,7 +188,7 @@ public class TAppTicTacToe {
 	private TicTacToe loadTicTacToe(Integer nChatid) {
 		try {
 			String sQuery = "SELECT * FROM tictactoe WHERE chatid = ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nChatid);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {

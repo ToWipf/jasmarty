@@ -29,7 +29,7 @@ public class TAppEssen {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS essen (id integer primary key autoincrement, type TEXT, name TEXT, options TEXT, editby TEXT, date INTEGER);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class TAppEssen {
 	public String getEssenRnd() throws SQLException {
 		String sQuery = "select * from essen ORDER BY RANDOM() LIMIT 1;";
 
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			// Es gibt nur einen Eintrag
 			return (rs.getString("name"));
@@ -95,7 +95,7 @@ public class TAppEssen {
 	private String addEssen(Telegram t) throws SQLException {
 		String sUpdate = ("INSERT OR REPLACE INTO essen (name, editby, date) VALUES (?,?,?')");
 
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setString(1, t.getMessageFullWithoutSecondWord());
 		statement.setString(2, t.getFrom());
 		statement.setInt(3, t.getDate());
@@ -110,7 +110,7 @@ public class TAppEssen {
 	 */
 	private String count() throws SQLException {
 		String sQuery = ("SELECT COUNT(*) FROM essen;");
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			return rs.getString("COUNT(*)") + " Einträge in der DB";
 		}
@@ -125,7 +125,7 @@ public class TAppEssen {
 	 */
 	private String delEssen(Telegram t) throws SQLException {
 		String sUpdate = "DELETE FROM essen WHERE id = ?";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, t.getMessageIntPart(2));
 		statement.executeUpdate();
 		return "DEL";
@@ -140,7 +140,7 @@ public class TAppEssen {
 		StringBuilder sb = new StringBuilder();
 		String sQuery = "select * from essen;";
 
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			sb.append(rs.getString("id") + "\t");
 			sb.append(rs.getString("name") + "\n");
