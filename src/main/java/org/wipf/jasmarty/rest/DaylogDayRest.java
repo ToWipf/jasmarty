@@ -49,7 +49,7 @@ public class DaylogDayRest {
 	}
 
 	@GET
-	@Path("getAll")
+	@Path("getAll/{userid}")
 	public Response getall(@PathParam("userid") Integer nUserid) throws SQLException {
 		return Response.ok(daylogDayDB.getAllAsJson(nUserid).toString()).build();
 	}
