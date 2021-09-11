@@ -36,13 +36,24 @@ public class DaylogTextEventDB {
 	 * @throws SQLException
 	 */
 	public void save(DaylogTextEvent o) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO daylogTextEvent (id, dateid, typ, text) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, o.getId());
-		statement.setInt(2, o.getDateId());
-		statement.setString(3, o.getTyp());
-		statement.setString(4, o.getText());
-		statement.executeUpdate();
+		if (o.getId() != null) {
+			// update
+			String sUpdate = "INSERT OR REPLACE INTO daylogTextEvent (id, dateid, typ, text) VALUES (?,?,?,?)";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setInt(1, o.getId());
+			statement.setInt(2, o.getDateId());
+			statement.setString(3, o.getTyp());
+			statement.setString(4, o.getText());
+			statement.executeUpdate();
+		} else {
+			// insert
+			String sUpdate = "INSERT OR REPLACE INTO daylogTextEvent (dateid, typ, text) VALUES (?,?,?)";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setInt(1, o.getDateId());
+			statement.setString(2, o.getTyp());
+			statement.setString(3, o.getText());
+			statement.executeUpdate();
+		}
 	}
 
 	/**

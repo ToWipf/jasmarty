@@ -31,7 +31,9 @@ public class DaylogTextEvent {
 	 */
 	public DaylogTextEvent setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
-		this.nId = jo.getInt("id");
+		if (jo.has("id")) {
+			this.nId = jo.getInt("id");
+		}
 		this.nDateId = jo.getInt("dateid");
 		this.sTyp = jo.getString("typ");
 		this.sText = jo.getString("text");

@@ -65,7 +65,6 @@ public class DaylogDayDB {
 			save(new DaylogDay().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
