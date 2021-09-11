@@ -36,13 +36,24 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public void save(DaylogDay o) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO daylogDay (id, date, tagestext, userid) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, o.getId());
-		statement.setString(2, o.getDate());
-		statement.setString(3, o.getTagestext());
-		statement.setInt(4, o.getUserId());
-		statement.executeUpdate();
+		if (o.getId() != null) {
+			// id vorhanden (update)
+			String sUpdate = "INSERT OR REPLACE INTO daylogDay (id, date, tagestext, userid) VALUES (?,?,?,?)";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setInt(1, o.getId());
+			statement.setString(2, o.getDate());
+			statement.setString(3, o.getTagestext());
+			statement.setInt(4, o.getUserId());
+			statement.executeUpdate();
+		} else {
+			// neue id (insert)
+			String sUpdate = "INSERT OR REPLACE INTO daylogDay (date, tagestext, userid) VALUES (?,?,?)";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setString(1, o.getDate());
+			statement.setString(2, o.getTagestext());
+			statement.setInt(3, o.getUserId());
+			statement.executeUpdate();
+		}
 	}
 
 	/**
@@ -54,6 +65,7 @@ public class DaylogDayDB {
 			save(new DaylogDay().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

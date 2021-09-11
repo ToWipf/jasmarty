@@ -31,7 +31,9 @@ public class DaylogDay {
 	 */
 	public DaylogDay setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
-		this.nId = jo.getInt("id");
+		if (jo.has("id")) {
+			this.nId = jo.getInt("id");
+		}
 		this.nUserId = jo.getInt("userid");
 		this.sDate = jo.getString("date");
 		this.sTagestext = jo.getString("tagestext");
