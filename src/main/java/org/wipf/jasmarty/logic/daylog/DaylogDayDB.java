@@ -3,10 +3,13 @@ package org.wipf.jasmarty.logic.daylog;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -29,17 +32,30 @@ public class DaylogDayDB {
 	}
 
 	/**
-	 * @param day
+	 * @param o
 	 * @throws SQLException
 	 */
-	public void save(DaylogDay day) throws SQLException {
+	public void save(DaylogDay o) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO daylogDay (id, date, tagestext, userid) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, day.getId());
-		statement.setString(2, day.getDate());
-		statement.setString(3, day.getTagestext());
-		statement.setInt(4, day.getUserId());
+		statement.setInt(1, o.getId());
+		statement.setString(2, o.getDate());
+		statement.setString(3, o.getTagestext());
+		statement.setInt(4, o.getUserId());
 		statement.executeUpdate();
+	}
+
+	/**
+	 * @param jnRoot
+	 * @throws SQLException
+	 */
+	public Boolean save(String jnRoot) throws SQLException {
+		try {
+			save(new DaylogDay().setByJson(jnRoot));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
@@ -48,7 +64,7 @@ public class DaylogDayDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public DaylogDay load(String sDate, Integer nUserId) throws SQLException {
+	public DaylogDay get(String sDate, Integer nUserId) throws SQLException {
 		DaylogDay o = new DaylogDay();
 
 		String sQuery = "SELECT * FROM daylogDay WHERE date = ? AND userid = ?;";
@@ -69,6 +85,45 @@ public class DaylogDayDB {
 		o.setDate(sDate);
 
 		return o;
+	}
+
+	/**
+	 * @param nUserId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DaylogDay> getAll(Integer nUserId) throws SQLException {
+		List<DaylogDay> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM daylogDay WHERE userid = ?;";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setInt(1, nUserId);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			DaylogDay d = new DaylogDay();
+			d.setId(rs.getInt("id"));
+			d.setDate(rs.getString("date"));
+			d.setTagestext(rs.getString("tagestext"));
+			d.setUserId(rs.getInt("userid"));
+			o.add(d);
+		}
+
+		return o;
+	}
+
+	/**
+	 * @param nUserId
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllAsJson(Integer nUserId) throws SQLException {
+		List<DaylogDay> l = getAll(nUserId);
+		JSONArray ja = new JSONArray();
+		for (DaylogDay d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
 	}
 
 	/**

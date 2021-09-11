@@ -9,6 +9,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.daylog.DaylogTextEvent;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -45,12 +46,26 @@ public class DaylogTextEventDB {
 	}
 
 	/**
+	 * @param jnRoot
+	 * @return
+	 * @throws SQLException
+	 */
+	public Boolean save(String jnRoot) throws SQLException {
+		try {
+			save(new DaylogTextEvent().setByJson(jnRoot));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	/**
 	 * @param sDate
 	 * @param nUserId
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogTextEvent> load(Integer nDateId) throws SQLException {
+	public List<DaylogTextEvent> get(Integer nDateId) throws SQLException {
 		List<DaylogTextEvent> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM daylogTextEvent WHERE date = ?;";
@@ -68,6 +83,20 @@ public class DaylogTextEventDB {
 		}
 
 		return o;
+	}
+
+	/**
+	 * @param nDateId
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAsJson(Integer nDateId) throws SQLException {
+		List<DaylogTextEvent> l = get(nDateId);
+		JSONArray ja = new JSONArray();
+		for (DaylogTextEvent d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
 	}
 
 	/**
