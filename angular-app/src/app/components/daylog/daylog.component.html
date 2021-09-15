@@ -1,0 +1,42 @@
+<div>
+    <h3>Daylog</h3>
+    <div class="list">
+
+        <perfect-scrollbar class="pscroll">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="tagestext">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Tagestext </th>
+                    <td mat-cell *matCellDef="let element"> {{element.tagestext}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="userid">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Userid </th>
+                    <td mat-cell *matCellDef="let element"> {{element.userid}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="button">
+                    <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="btn btn-default" (click)="openDay(element)">Tag anzeigen</button>
+                        <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </perfect-scrollbar>
+        Treffer: {{toarry.length}}
+    </div>
+</div>

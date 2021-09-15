@@ -94,3 +94,17 @@ export interface Lcd12864PageDescriptionDynamic {
   x?: string;
   y?: string;
 }
+
+export interface DaylogDay {
+  id?: number;
+  userid?: number;
+  date?: string;
+  tagestext?: string;
+}
+
+export interface DaylogTextEvent {
+  id?: number;
+  dateid?: number;
+  typ?: string;
+  text?: string;
+}

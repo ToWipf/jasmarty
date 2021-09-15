@@ -42,7 +42,7 @@ public class ActionVerwaltung {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ActionVerwaltung {
 	 */
 	public void saveToDB(ButtonAction ba) throws SQLException {
 		String sUpdate = "INSERT OR REPLACE INTO actions (id, button, active, action) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, ba.getId());
 		statement.setInt(2, ba.getButton());
 		statement.setBoolean(3, ba.isActive());
@@ -65,7 +65,7 @@ public class ActionVerwaltung {
 	 */
 	public void delete(Integer nId) throws SQLException {
 		String sUpdate = "DELETE FROM actions WHERE id LIKE ?;";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
@@ -79,7 +79,7 @@ public class ActionVerwaltung {
 		try {
 
 			String sQuery = ("SELECT * FROM actions WHERE id = '" + nId + "';");
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
 
@@ -105,7 +105,7 @@ public class ActionVerwaltung {
 		JSONArray ja = new JSONArray();
 		try {
 			String sQuery = ("select * from actions;");
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				JSONObject entry = new JSONObject();
@@ -130,7 +130,7 @@ public class ActionVerwaltung {
 		try {
 
 			String sQuery = ("SELECT * FROM actions WHERE button = ? AND active = 'true';");
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nButton);
 
 			ResultSet rs = statement.executeQuery();
@@ -159,7 +159,7 @@ public class ActionVerwaltung {
 		try {
 
 			String sQuery = "SELECT * FROM actions WHERE id = ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 
 			ResultSet rs = statement.executeQuery();

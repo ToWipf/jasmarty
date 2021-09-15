@@ -36,7 +36,7 @@ public class TAppTodoList {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class TAppTodoList {
 
 		try {
 			String sQuery = "select * from todolist WHERE active NOT LIKE 'DONE';";
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 
 			while (rs.next()) {
 				TodoEntry entry = new TodoEntry();
@@ -165,7 +165,7 @@ public class TAppTodoList {
 		List<TodoEntry> liTodoE = new ArrayList<>();
 
 		String sQuery = "select * from todolist;";
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 
 		while (rs.next()) {
 			TodoEntry entry = new TodoEntry();
@@ -193,7 +193,7 @@ public class TAppTodoList {
 
 		try {
 			String sQuery = "select * from todolist WHERE id IS ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nId);
 			ResultSet rs = statement.executeQuery();
 
@@ -221,7 +221,7 @@ public class TAppTodoList {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES (?,?,?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, tE.getId());
 			statement.setString(2, tE.getData());
 			statement.setString(3, tE.getEditBy());
@@ -269,7 +269,7 @@ public class TAppTodoList {
 	public void deleteItem(Integer nId) {
 		try {
 			String sUpdate = "DELETE FROM todolist WHERE id LIKE ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nId);
 			statement.executeUpdate();
 
@@ -301,7 +301,7 @@ public class TAppTodoList {
 	 */
 	private Integer countItems() throws SQLException {
 		String sQuery = "SELECT COUNT(*) FROM todolist;";
-		ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
 			return rs.getInt("COUNT(*)");
 		}
@@ -327,7 +327,7 @@ public class TAppTodoList {
 	private String count(Integer nTeleID) {
 		try {
 			String sQuery = "SELECT COUNT(*) FROM todolist WHERE editby = ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			statement.setInt(1, nTeleID);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
@@ -346,7 +346,7 @@ public class TAppTodoList {
 	private String delByID(Integer nID) {
 		try {
 			String sUpdate = "DELETE FROM todolist WHERE id = ?";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nID);
 			statement.executeUpdate();
 			return "DEL";
@@ -380,7 +380,7 @@ public class TAppTodoList {
 	private String mark(String sMark, Integer nID) {
 		try {
 			String sUpdate = "UPDATE todolist SET active = ? WHERE id = ?";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setString(1, sMark);
 			statement.setInt(2, nID);
 			statement.executeUpdate();

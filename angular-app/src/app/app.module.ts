@@ -71,6 +71,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dial
 import { AppRoutingModule } from './app-routing.module';
 import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
+import { DayLogComponent } from './components/daylog/daylog.component';
 
 @NgModule({
   declarations: [
@@ -103,6 +104,7 @@ import { DebugSeiteComponent } from './components/debugSeite/debugSeite.componen
     JasmartyActionsComponentDialog,
     CharGeneratorComponent,
     DebugSeiteComponent,
+    DayLogComponent,
   ],
   imports: [
     AppRoutingModule,

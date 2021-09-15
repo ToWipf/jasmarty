@@ -31,7 +31,7 @@ public class WipfUserVW {
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS users (username TEXT UNIQUE, password TEXT, role TEXT, telegramid INTEGER);";
 		sqlLite.getDbAuth().prepareStatement(sUpdate).executeUpdate();
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 		syncUsers();
 	}
 
@@ -74,7 +74,7 @@ public class WipfUserVW {
 		if (bAuthDb) {
 			statement = sqlLite.getDbAuth().prepareStatement(sUpdate);
 		} else {
-			statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		}
 
 		statement.setString(1, user.getUsername());
@@ -105,7 +105,7 @@ public class WipfUserVW {
 
 			PreparedStatement statement = null;
 
-			statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 
 			statement.setString(1, sUsername);
 			statement.executeUpdate();
@@ -151,7 +151,7 @@ public class WipfUserVW {
 		if (bAuthDb) {
 			rs = sqlLite.getDbAuth().prepareStatement(sQuery).executeQuery();
 		} else {
-			rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		}
 
 		while (rs.next()) {

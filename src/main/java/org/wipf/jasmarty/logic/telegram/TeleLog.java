@@ -35,7 +35,7 @@ public class TeleLog {
 	public void initDB() {
 		try {
 			String sUpdate = "CREATE TABLE IF NOT EXISTS telegramlog (msgid INTEGER, msg TEXT, antw TEXT, chatid INTEGER, msgfrom TEXT, msgdate INTEGER, type TEXT);";
-			sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+			sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 		} catch (Exception e) {
 			LOGGER.warn("initDB  " + e);
 		}
@@ -52,7 +52,7 @@ public class TeleLog {
 
 		String sUpdate = ("INSERT INTO telegramlog (msgid, msg, antw, chatid, msgfrom, msgdate, type) VALUES (?,?,?,?,?,?,?)");
 
-		try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
+		try (PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate)) {
 			statement.setInt(1, t.getMid());
 			statement.setString(2, t.getMessage().replaceAll("'", "_"));
 			statement.setString(3, t.getAntwort().replaceAll("'", "_"));
@@ -80,7 +80,7 @@ public class TeleLog {
 		LOGGER.info("del log id:" + nId);
 		try {
 			String sUpdate = "DELETE FROM telegramlog WHERE msgid LIKE ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nId);
 			statement.executeUpdate();
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class TeleLog {
 	public String count() {
 		try {
 			String sQuery = "SELECT COUNT(*) FROM telegramlog;";
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 				return rs.getString("COUNT(*)") + " Nachrichten gesendet";
 			}
@@ -126,7 +126,7 @@ public class TeleLog {
 		List<Telegram> tList = new ArrayList<>();
 
 		String sQuery = "SELECT * FROM telegramlog " + sSQLFilter;
-		try (ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery()) {
+		try (ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery()) {
 
 			while (rs.next()) {
 				Telegram t = new Telegram();
@@ -193,7 +193,7 @@ public class TeleLog {
 		lIds.forEach((nCid) -> {
 
 			String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
-			try (PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate)) {
+			try (PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate)) {
 				statement.setInt(1, nCid);
 				statement.executeUpdate();
 			} catch (Exception e) {

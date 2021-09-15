@@ -7,6 +7,7 @@
                 <div class="titlemenue">Hauptfunktionen</div>
                 <ul class="menueli">
                     <li (click)="selectSite('todolist')">Todo List</li>
+                    <li (click)="selectSite('daylog')">TagesLog</li>
                     <li (click)="selectSite('filme')">Filme</li>
                     <li (click)="selectSite('crypt')">Crypt</li>
                     <li (click)="selectSite('wipfuservw')">Wipf User</li>
@@ -96,6 +97,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='debug'">
                     <app-debugSeite></app-debugSeite>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='daylog'">
+                    <app-daylog></app-daylog>
                 </ng-container>
             </div>
         </div>

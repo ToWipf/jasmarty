@@ -30,7 +30,7 @@ public class SqlLite {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Connection getDbJasmarty() throws SQLException {
+	public Connection getDbApp() throws SQLException {
 		if (cjasmarty == null) {
 			cjasmarty = sqliteDbJasmarty.getConnection();
 		}

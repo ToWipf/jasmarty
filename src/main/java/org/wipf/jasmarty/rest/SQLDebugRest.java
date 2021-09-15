@@ -38,7 +38,7 @@ public class SQLDebugRest {
 		ResultSet rs;
 		StringBuilder sb = new StringBuilder();
 		try {
-			rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 
 			ResultSetMetaData rsmd = rs.getMetaData();
 
