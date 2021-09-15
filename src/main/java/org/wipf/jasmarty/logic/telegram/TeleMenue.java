@@ -92,6 +92,7 @@ public class TeleMenue {
 					"pp \n" +
 					"pm / mp\n" +
 					"setpunkte / sp / ps / mp\n" +
+					"changepunkte / pc / pa N\n" +
 					"itext TEXT IN DER APP\n" +
 					"kill\n" +
 					"system\n" +
@@ -163,6 +164,7 @@ public class TeleMenue {
 			case "pluspunkte":
 				punkteVW.pluspunkt();
 				return punkteVW.getPunkte().toString();
+			case "pa":
 			case "pc":
 			case "punkteChange":
 				punkteVW.appendPunkt(t.getMessageIntPart(1));
