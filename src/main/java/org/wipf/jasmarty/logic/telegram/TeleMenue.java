@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -251,6 +252,9 @@ public class TeleMenue {
 		case "math":
 		case "m":
 			return String.valueOf(wipf.doMathByString(t.getMessageFullWithoutFirstWord()));
+		case "mills":
+		case "ts":
+			return String.valueOf(new Date().getTime());
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);
