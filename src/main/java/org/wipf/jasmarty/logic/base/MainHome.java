@@ -7,7 +7,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.daylog.Daylog;
+import org.wipf.jasmarty.logic.daylog.DaylogEvent;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 
@@ -33,7 +33,7 @@ public class MainHome {
 	@Inject
 	TaskManager taskmanager;
 	@Inject
-	Daylog daylog;
+	DaylogEvent daylogEvent;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.0.25";
@@ -58,7 +58,7 @@ public class MainHome {
 			wipfConfig.initDB();
 			wipfConfig.checkAppWorkId();
 			taskmanager.startDailyTask();
-			daylog.initDB();
+			daylogEvent.initDB();
 
 			jHome.init();
 			tHome.init();

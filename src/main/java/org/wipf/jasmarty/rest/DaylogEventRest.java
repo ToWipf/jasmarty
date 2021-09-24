@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.daylog.DaylogBoolEventDB;
+import org.wipf.jasmarty.logic.daylog.DaylogEvent;
 import org.wipf.jasmarty.logic.daylog.DaylogNumberEventDB;
 import org.wipf.jasmarty.logic.daylog.DaylogTextEventDB;
 
@@ -29,11 +30,32 @@ import org.wipf.jasmarty.logic.daylog.DaylogTextEventDB;
 public class DaylogEventRest {
 
 	@Inject
+	DaylogEvent daylogEvent;
+	@Inject
 	DaylogTextEventDB daylogTextEventDB;
 	@Inject
 	DaylogBoolEventDB daylogBoolEventDB;
 	@Inject
 	DaylogNumberEventDB daylogNumberEventDB;
+
+	@POST
+	@Path("save")
+	public Response save(String jnRoot) throws SQLException {
+		return Response.ok("{\"save\":\"" + daylogEvent.save(jnRoot) + "\"}").build();
+	}
+
+	@DELETE
+	@Path("delete/{id}")
+	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+		daylogEvent.del(nId);
+		return Response.ok().build();
+	}
+
+	@GET
+	@Path("get/{dateid}")
+	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
+		return Response.ok(daylogEvent.getAsJson(nDateid)).build();
+	}
 
 	/// Text
 
