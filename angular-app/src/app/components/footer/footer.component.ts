@@ -28,6 +28,7 @@ export class FooterComponent implements OnInit {
       this.rest.sethost('http://localhost:8080/');
     }
 
+
     this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
         this.bCantLoad = false;

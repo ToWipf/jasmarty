@@ -102,9 +102,11 @@ export interface DaylogDay {
   tagestext?: string;
 }
 
-export interface DaylogTextEvent {
+export interface DaylogEvent {
   id?: number;
   dateid?: number;
   typ?: string;
   text?: string;
+  bool?: boolean;
+  number?: number;
 }
