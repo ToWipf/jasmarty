@@ -44,11 +44,17 @@ public class WipfAppRest {
 		return Response.ok("{\"data\":\"" + appInfos.genInfotext() + "\"}").build();
 	}
 
-	@GET
 	@POST
 	@Path("setPunkte/{p}")
 	public Response setPunkte(@PathParam("p") Integer nP) {
 		punkteVW.setPunkte(nP);
+		return Response.ok().build();
+	}
+
+	@POST
+	@Path("playPunkte")
+	public Response setPunkte(String sJson) {
+		punkteVW.playPunkte(sJson);
 		return Response.ok().build();
 	}
 

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.jboss.logging.Logger;
+import org.json.JSONObject;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
@@ -72,5 +73,40 @@ public class PunkteVW {
 	 */
 	public void appendPunkt(int n) {
 		setPunkte(getPunkte() + n);
+	}
+
+	/**
+	 * @param json
+	 */
+	public void playPunkte(String sJson) {
+		System.out.println(sJson);
+
+		JSONObject jo = new JSONObject(sJson);
+		Integer nEinsatz = jo.getInt("punkte");
+		String sCode = jo.getString("code");
+
+		appendPunkt(doPlayPunkte(nEinsatz, sCode));
+	}
+
+	/**
+	 * @param nEinsatz
+	 * @param sCode
+	 * @return
+	 */
+	public Integer doPlayPunkte(Integer nEinsatz, String sCode) {
+		if (nEinsatz < 2) {
+			return 0;
+		}
+
+		if (nEinsatz > getPunkte()) {
+			return 0;
+		}
+
+		if (sCode.contains("2")) {
+			return 2;
+		}
+
+		return -2;
+
 	}
 }
