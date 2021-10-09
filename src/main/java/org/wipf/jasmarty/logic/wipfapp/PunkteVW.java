@@ -161,8 +161,8 @@ public class PunkteVW {
 		else
 			pRes.setPunkte(-nEinsatz);
 
-		pRes.setsText("Spiel um " + nEinsatz + "Punkte mit Code " + sCode + ".und der Zufallszahl " + nZufallsZahl + "."
-				+ "<br> Der Gewinn liegt bei " + pRes.getPunkte());
+		pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+				+ "." + "<br> Der Gewinn liegt bei <strong>" + pRes.getPunkte() + "<strong>");
 		return pRes;
 	}
 }
