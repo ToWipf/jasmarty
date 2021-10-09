@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.wipfapp;
 
-import java.sql.SQLException;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -30,7 +28,7 @@ public class PunkteVW {
 	public Integer getPunkte() {
 		try {
 			return wipfConfig.getConfParamInteger(PUNKTE);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getPunkte " + e);
 			return -99999;
 		}
@@ -41,8 +39,8 @@ public class PunkteVW {
 	 */
 	public void setPunkte(int n) {
 		try {
-			wipfConfig.setConfParam(NOCH_SPIELE, n);
-		} catch (SQLException e) {
+			wipfConfig.setConfParam(PUNKTE, n);
+		} catch (Exception e) {
 			LOGGER.warn("setPunkte " + e);
 		}
 	}
@@ -53,7 +51,7 @@ public class PunkteVW {
 	public Integer getNochSpiele() {
 		try {
 			return wipfConfig.getConfParamInteger(NOCH_SPIELE);
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getNochSpiele " + e);
 			return -1;
 		}
@@ -64,8 +62,8 @@ public class PunkteVW {
 	 */
 	public void setNochSpiele(int n) {
 		try {
-			wipfConfig.setConfParam(PUNKTE, n);
-		} catch (SQLException e) {
+			wipfConfig.setConfParam(NOCH_SPIELE, n);
+		} catch (Exception e) {
 			LOGGER.warn("setNochSpiele " + e);
 		}
 	}
@@ -103,7 +101,9 @@ public class PunkteVW {
 	 * @param json
 	 */
 	public void playPunkte(String sJson) {
+		System.out.println("_________");
 		System.out.println(sJson);
+		System.out.println("_________");
 
 		JSONObject jo = new JSONObject(sJson);
 		Integer nEinsatz = jo.getInt("punkte");
