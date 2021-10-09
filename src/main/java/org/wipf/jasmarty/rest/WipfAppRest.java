@@ -53,6 +53,12 @@ public class WipfAppRest {
 	}
 
 	@GET
+	@Path("getPunkte")
+	public Response getPunkte() {
+		return Response.ok("{\"punkte\":\"" + punkteVW.getPunkte() + "\"}").build();
+	}
+
+	@GET
 	@POST
 	@Path("setInfotext/s}")
 	public Response setInfotext(@PathParam("s") String s) {
