@@ -1,0 +1,22 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- TODO: LESS DATEI -->
+        <h1 mat-dialog-title>Id: {{data.id}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Data</mat-label>
+                <input matInput [(ngModel)]="data.data">
+            </mat-form-field>
+            <br>
+
+            <!-- <mat-label>Status</mat-label> -->
+            <!-- <input matInput [(ngModel)]="data.active"> -->
+
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+</div>

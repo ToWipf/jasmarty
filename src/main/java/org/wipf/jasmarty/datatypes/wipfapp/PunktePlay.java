@@ -21,6 +21,14 @@ public class PunktePlay {
 	 * @param sInput
 	 */
 	public PunktePlay(String sInput) {
+		sInput = sInput.trim().toLowerCase();
+		sInput = sInput.replaceAll("a", "2");
+		sInput = sInput.replaceAll("b", "9");
+		sInput = sInput.replaceAll("c", "3");
+		sInput = sInput.replaceAll("d", "9");
+		sInput = sInput.replaceAll("e", "8");
+		sInput = sInput.replaceAll("f", "9");
+
 		n0 = (sInput.contains("0"));
 		n1 = (sInput.contains("1"));
 		n2 = (sInput.contains("2"));
