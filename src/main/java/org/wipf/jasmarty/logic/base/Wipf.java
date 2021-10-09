@@ -65,6 +65,17 @@ public class Wipf {
 		return getRandomInt(Integer.valueOf(sMax));
 	}
 
+	/**
+	 * @return
+	 */
+	public boolean getRandomBoolean() {
+		Random wuerfel = new Random();
+		return wuerfel.nextBoolean();
+	}
+
+	/**
+	 * @return
+	 */
 	public String getRandomUUID() {
 		return UUID.randomUUID().toString();
 	}

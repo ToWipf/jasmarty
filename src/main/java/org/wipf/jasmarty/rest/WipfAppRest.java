@@ -54,8 +54,7 @@ public class WipfAppRest {
 	@POST
 	@Path("playPunkte")
 	public Response setPunkte(String sJson) {
-		punkteVW.playPunkte(sJson);
-		return Response.ok().build();
+		return Response.ok("{\"text\":\"" + punkteVW.playPunkte(sJson) + "\"}").build();
 	}
 
 	@GET

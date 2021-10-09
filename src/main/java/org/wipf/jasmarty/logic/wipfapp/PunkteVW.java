@@ -7,6 +7,8 @@ import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.jboss.logging.Logger;
 import org.json.JSONObject;
+import org.wipf.jasmarty.datatypes.wipfapp.PunkteGewinn;
+import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
@@ -98,18 +100,29 @@ public class PunkteVW {
 	}
 
 	/**
+	 * positiv und negativ
+	 */
+	public void appendNochSpielen(int n) {
+		setNochSpiele(getNochSpiele() + n);
+	}
+
+	/**
 	 * @param json
 	 */
-	public void playPunkte(String sJson) {
-		System.out.println("_________");
-		System.out.println(sJson);
-		System.out.println("_________");
-
+	public String playPunkte(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		Integer nEinsatz = jo.getInt("punkte");
 		String sCode = jo.getString("code");
+		appendNochSpielen(-1);
 
-		appendPunkt(doPlayPunkte(nEinsatz, sCode));
+		PunkteGewinn pRes = doPlayPunkte(nEinsatz, sCode);
+
+		if (!(getPunkte() + pRes.getPunkte() < 10)) {
+			// Nicht unter 10 kommen lassen
+			appendPunkt(pRes.getPunkte());
+		}
+
+		return pRes.getsText();
 	}
 
 	/**
@@ -117,19 +130,40 @@ public class PunkteVW {
 	 * @param sCode
 	 * @return
 	 */
-	public Integer doPlayPunkte(Integer nEinsatz, String sCode) {
-		if (nEinsatz < 2) {
-			return 0;
+	public PunkteGewinn doPlayPunkte(Integer nEinsatz, String sCode) {
+		PunkteGewinn pRes = new PunkteGewinn();
+
+		if (nEinsatz > getPunkte() / 2) {
+			// Zu hoher Einsatz
+			pRes.setsText("Zu hoher Einsatz");
+			pRes.setPunkte(-1);
+			return pRes;
 		}
 
-		if (nEinsatz > getPunkte()) {
-			return 0;
-		}
+		/// Spiel beginnen
+		Integer nZufallsZahl = wipf.getRandomInt(900000);
+		PunktePlay ppIn = new PunktePlay(sCode);
+		PunktePlay ppRand = new PunktePlay(String.valueOf(nZufallsZahl));
 
-		if (sCode.contains("2")) {
-			return 2;
-		}
+		Integer nZahlVon0bis9 = ppIn.vergleiche(ppRand);
 
-		return -2;
+		// Gewonnen oder Verloren
+		// > 5 Treffer = Gewonnen
+		if (nZahlVon0bis9 == 9)
+			pRes.setPunkte(nEinsatz * 5);
+		else if (nZahlVon0bis9 == 8)
+			pRes.setPunkte(nEinsatz * 4);
+		else if (nZahlVon0bis9 == 7)
+			pRes.setPunkte(nEinsatz * 3);
+		else if (nZahlVon0bis9 == 6)
+			pRes.setPunkte(nEinsatz * 2);
+		else if (nZahlVon0bis9 == 5)
+			pRes.setPunkte(nEinsatz);
+		else
+			pRes.setPunkte(-nEinsatz);
+
+		pRes.setsText("Spiel um " + nEinsatz + " mit code " + sCode + ". Die Zufallszahl war " + nZufallsZahl
+				+ ". Das Ergibt " + nZahlVon0bis9 + " treffer. Der Gewinn liegt bei " + pRes.getPunkte());
+		return pRes;
 	}
 }
