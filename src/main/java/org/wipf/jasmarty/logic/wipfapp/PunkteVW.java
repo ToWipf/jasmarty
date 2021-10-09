@@ -22,6 +22,7 @@ public class PunkteVW {
 
 	private static final Logger LOGGER = Logger.getLogger("PunkteVW");
 	private static final String PUNKTE = "punkte";
+	private static final String NOCH_SPIELE = "nochSpiele";
 
 	/**
 	 * @return
@@ -40,9 +41,32 @@ public class PunkteVW {
 	 */
 	public void setPunkte(int n) {
 		try {
-			wipfConfig.setConfParam(PUNKTE, n);
+			wipfConfig.setConfParam(NOCH_SPIELE, n);
 		} catch (SQLException e) {
 			LOGGER.warn("setPunkte " + e);
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getNochSpiele() {
+		try {
+			return wipfConfig.getConfParamInteger(NOCH_SPIELE);
+		} catch (SQLException e) {
+			LOGGER.warn("getNochSpiele " + e);
+			return -1;
+		}
+	}
+
+	/**
+	 * @param n
+	 */
+	public void setNochSpiele(int n) {
+		try {
+			wipfConfig.setConfParam(PUNKTE, n);
+		} catch (SQLException e) {
+			LOGGER.warn("setNochSpiele " + e);
 		}
 	}
 
@@ -107,6 +131,5 @@ public class PunkteVW {
 		}
 
 		return -2;
-
 	}
 }

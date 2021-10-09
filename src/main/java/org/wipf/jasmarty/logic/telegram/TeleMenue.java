@@ -92,6 +92,8 @@ public class TeleMenue {
 					"punkte \n" +
 					"pp \n" +
 					"pm / mp\n" +
+					"ns / nochSpiele\n" +
+					"sns / setNochSpiele\n" +
 					"setpunkte / sp / ps / mp\n" +
 					"changepunkte / pc / pa N\n" +
 					"itext TEXT IN DER APP\n" +
@@ -170,6 +172,14 @@ public class TeleMenue {
 			case "punkteChange":
 				punkteVW.appendPunkt(t.getMessageIntPart(1));
 				return punkteVW.getPunkte().toString();
+
+			case "ns":
+			case "nochspiele":
+				punkteVW.getNochSpiele();
+
+			case "sns":
+			case "setnochspiele":
+				punkteVW.setNochSpiele(t.getMessageIntPart(1));
 
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());

@@ -44,12 +44,12 @@ public class WipfAppRest {
 		return Response.ok("{\"data\":\"" + appInfos.genInfotext() + "\"}").build();
 	}
 
-	@POST
-	@Path("setPunkte/{p}")
-	public Response setPunkte(@PathParam("p") Integer nP) {
-		punkteVW.setPunkte(nP);
-		return Response.ok().build();
-	}
+//	@POST
+//	@Path("setPunkte/{p}")
+//	public Response setPunkte(@PathParam("p") Integer nP) {
+//		punkteVW.setPunkte(nP);
+//		return Response.ok().build();
+//	}
 
 	@POST
 	@Path("playPunkte")
@@ -62,6 +62,12 @@ public class WipfAppRest {
 	@Path("getPunkte")
 	public Response getPunkte() {
 		return Response.ok("{\"punkte\":\"" + punkteVW.getPunkte() + "\"}").build();
+	}
+
+	@GET
+	@Path("getNochSpiele")
+	public Response getNochSpiele() {
+		return Response.ok("{\"nochspiele\":\"" + punkteVW.getNochSpiele() + "\"}").build();
 	}
 
 	@GET
