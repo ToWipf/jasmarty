@@ -27,6 +27,7 @@ public class DailyTask extends TimerTask {
 	public void run() {
 		verwaltung.sendDaylyInfo();
 		punkteVW.pluspunkt();
+		punkteVW.appendNochSpiel(5);
 		// TODO vorerst nicht mehr senden
 		// verwaltung.sendDaylyMotd();
 	}

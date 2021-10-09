@@ -73,7 +73,7 @@ public class PunktePlay {
 		Integer nTreffer = 0;
 
 		for (int i = 0; i <= 9; i++) {
-			if (this.getZahl(i) == pZuVerleichen.getZahl(i)) {
+			if (this.getZahl(i) && pZuVerleichen.getZahl(i)) {
 				nTreffer++;
 			}
 		}

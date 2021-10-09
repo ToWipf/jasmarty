@@ -66,7 +66,7 @@ public class WipfAppRest {
 	@GET
 	@Path("getNochSpiele")
 	public Response getNochSpiele() {
-		return Response.ok("{\"nochspiele\":\"" + punkteVW.getNochSpiele() + "\"}").build();
+		return Response.ok("{\"nochspiele\":\"" + punkteVW.getNochSpielen() + "\"}").build();
 	}
 
 	@GET

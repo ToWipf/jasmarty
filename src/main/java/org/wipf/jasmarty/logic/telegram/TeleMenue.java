@@ -175,12 +175,12 @@ public class TeleMenue {
 
 			case "ns":
 			case "nochspiele":
-				return punkteVW.getNochSpiele().toString();
+				return punkteVW.getNochSpielen().toString();
 
 			case "sns":
 			case "setnochspiele":
 				punkteVW.setNochSpiele(t.getMessageIntPart(1));
-				return punkteVW.getNochSpiele().toString();
+				return punkteVW.getNochSpielen().toString();
 
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());

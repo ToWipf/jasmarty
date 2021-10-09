@@ -50,7 +50,7 @@ public class PunkteVW {
 	/**
 	 * @return
 	 */
-	public Integer getNochSpiele() {
+	public Integer getNochSpielen() {
 		try {
 			return wipfConfig.getConfParamInteger(NOCH_SPIELE);
 		} catch (Exception e) {
@@ -102,8 +102,8 @@ public class PunkteVW {
 	/**
 	 * positiv und negativ
 	 */
-	public void appendNochSpielen(int n) {
-		setNochSpiele(getNochSpiele() + n);
+	public void appendNochSpiel(int n) {
+		setNochSpiele(getNochSpielen() + n);
 	}
 
 	/**
@@ -113,16 +113,19 @@ public class PunkteVW {
 		JSONObject jo = new JSONObject(sJson);
 		Integer nEinsatz = jo.getInt("punkte");
 		String sCode = jo.getString("code");
-		appendNochSpielen(-1);
 
-		PunkteGewinn pRes = doPlayPunkte(nEinsatz, sCode);
+		if (getNochSpielen() > 0) {
+			appendNochSpiel(-1);
+			PunkteGewinn pRes = doPlayPunkte(nEinsatz, sCode);
 
-		if (!(getPunkte() + pRes.getPunkte() < 10)) {
-			// Nicht unter 10 kommen lassen
-			appendPunkt(pRes.getPunkte());
+			if (!(getPunkte() + pRes.getPunkte() < 10)) {
+				// Nicht unter 10 kommen lassen
+				appendPunkt(pRes.getPunkte());
+			}
+
+			return pRes.getsText();
 		}
-
-		return pRes.getsText();
+		return "fehler 809";
 	}
 
 	/**
@@ -145,25 +148,21 @@ public class PunkteVW {
 		PunktePlay ppIn = new PunktePlay(sCode);
 		PunktePlay ppRand = new PunktePlay(String.valueOf(nZufallsZahl));
 
-		Integer nZahlVon0bis9 = ppIn.vergleiche(ppRand);
+		Integer nZahlVon0bis6 = ppIn.vergleiche(ppRand);
 
 		// Gewonnen oder Verloren
-		// > 5 Treffer = Gewonnen
-		if (nZahlVon0bis9 == 9)
-			pRes.setPunkte(nEinsatz * 5);
-		else if (nZahlVon0bis9 == 8)
+		// > 4 Treffer = Gewonnen
+		if (nZahlVon0bis6 == 6)
+			pRes.setPunkte(nEinsatz * 6);
+		else if (nZahlVon0bis6 == 5)
 			pRes.setPunkte(nEinsatz * 4);
-		else if (nZahlVon0bis9 == 7)
-			pRes.setPunkte(nEinsatz * 3);
-		else if (nZahlVon0bis9 == 6)
+		else if (nZahlVon0bis6 == 4)
 			pRes.setPunkte(nEinsatz * 2);
-		else if (nZahlVon0bis9 == 5)
-			pRes.setPunkte(nEinsatz);
 		else
 			pRes.setPunkte(-nEinsatz);
 
-		pRes.setsText("Spiel um " + nEinsatz + " mit code " + sCode + ". Die Zufallszahl war " + nZufallsZahl
-				+ ". Das Ergibt " + nZahlVon0bis9 + " treffer. Der Gewinn liegt bei " + pRes.getPunkte());
+		pRes.setsText("Spiel um " + nEinsatz + "Punkte mit Code " + sCode + ".und der Zufallszahl " + nZufallsZahl + "."
+				+ "<br> Der Gewinn liegt bei " + pRes.getPunkte());
 		return pRes;
 	}
 }
