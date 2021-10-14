@@ -144,7 +144,7 @@ public class PunkteVW {
 		}
 
 		/// Spiel beginnen
-		Integer nZufallsZahl = wipf.getRandomInt(900000);
+		Integer nZufallsZahl = wipf.getRandomInt(1000000000);
 		PunktePlay ppIn = new PunktePlay(sCode);
 		PunktePlay ppRand = new PunktePlay(String.valueOf(nZufallsZahl));
 
