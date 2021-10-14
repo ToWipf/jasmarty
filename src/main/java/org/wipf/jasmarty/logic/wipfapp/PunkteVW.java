@@ -136,33 +136,46 @@ public class PunkteVW {
 	public PunkteGewinn doPlayPunkte(Integer nEinsatz, String sCode) {
 		PunkteGewinn pRes = new PunkteGewinn();
 
-		if (nEinsatz > getPunkte() / 2) {
+		if (nEinsatz > getPunkte() / 4) {
 			// Zu hoher Einsatz
-			pRes.setsText("Zu hoher Einsatz");
+			pRes.setsText("Zu hoher Einsatz, das kostet einen Punkt");
 			pRes.setPunkte(-1);
 			return pRes;
 		}
 
 		/// Spiel beginnen
-		Integer nZufallsZahl = wipf.getRandomInt(1000000000);
+		Integer nZufallsZahl = wipf.getRandomInt(Integer.MAX_VALUE);
 		PunktePlay ppIn = new PunktePlay(sCode);
 		PunktePlay ppRand = new PunktePlay(String.valueOf(nZufallsZahl));
 
 		Integer nZahlVon0bis6 = ppIn.vergleiche(ppRand);
 
 		// Gewonnen oder Verloren
-		// > 4 Treffer = Gewonnen
-		if (nZahlVon0bis6 == 6)
+		if (nZahlVon0bis6 == 6) {
 			pRes.setPunkte(nEinsatz * 6);
-		else if (nZahlVon0bis6 == 5)
+			pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+					+ ". Das sind " + nZahlVon0bis6 + " Treffer!" + "." + "<br> Der Gewinn liegt bei <h1>🐧🐧🐧"
+					+ pRes.getPunkte() + "🐧🐧🐧<\\h1>");
+		} else if (nZahlVon0bis6 == 5) {
 			pRes.setPunkte(nEinsatz * 4);
-		else if (nZahlVon0bis6 == 4)
+			pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+					+ ". Das sind " + nZahlVon0bis6 + " Treffer!" + "." + "<br> Der Gewinn liegt bei 🐧🐧<h2>"
+					+ pRes.getPunkte() + "🐧🐧<\\h2>");
+		} else if (nZahlVon0bis6 == 4) {
 			pRes.setPunkte(nEinsatz * 2);
-		else
+			pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+					+ ". Das sind " + nZahlVon0bis6 + " Treffer!" + "." + "<br> Der Gewinn liegt bei <strong>🐧"
+					+ pRes.getPunkte() + "🐧<strong>");
+		} else if (nZahlVon0bis6 == 3) {
+			pRes.setPunkte(-nEinsatz / 2);
+			pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+					+ ". Das sind " + nZahlVon0bis6 + " Treffer" + "." + "Der Einsatz geht zur hälfte zurück."
+					+ pRes.getPunkte() + "<h1>");
+		} else {
 			pRes.setPunkte(-nEinsatz);
-
-		pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
-				+ "." + "<br> Der Gewinn liegt bei <strong>" + pRes.getPunkte() + "<strong>");
+			pRes.setsText("Spiel um " + nEinsatz + " Punkte mit Code " + sCode + " und der Zufallszahl " + nZufallsZahl
+					+ "." + "<br> Der Verlust liegt bei <strong>" + pRes.getPunkte() + "<strong>");
+		}
 
 		LOGGER.info(pRes.getsText());
 		return pRes;
