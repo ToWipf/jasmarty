@@ -116,7 +116,7 @@ public class PunkteVW {
 
 		if (getNochSpielen() > 0) {
 			appendNochSpiel(-1);
-			PunkteGewinn pRes = doPlayPunkte(nEinsatz, sCode);
+			PunkteGewinn pRes = doPlayPunkte(+nEinsatz, sCode);
 
 			if (!(getPunkte() + pRes.getPunkte() < 10)) {
 				// Nicht unter 10 kommen lassen
