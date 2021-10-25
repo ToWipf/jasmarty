@@ -215,7 +215,7 @@ public class DebugRest {
 	@PermitAll
 	@Path("grafana")
 	public Response grafana() throws Exception {
-		tAppGrafana.testen();
+		tAppGrafana.testen(798200105);
 		return Response.ok("{\"test\": \"" + "ok" + "\"}").build();
 	}
 

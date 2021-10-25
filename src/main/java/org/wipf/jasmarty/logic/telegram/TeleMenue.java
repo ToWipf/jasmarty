@@ -45,6 +45,8 @@ public class TeleMenue {
 	Infotext infotext;
 	@Inject
 	SendAndReceive sendAndReceive;
+	@Inject
+	TAppGrafana grafana;
 
 	/**
 	 * @param sJson
@@ -191,6 +193,10 @@ public class TeleMenue {
 
 				MainHome.stopApp();
 				return "killed";
+
+			case "grafana":
+				grafana.testen(t.getChatID());
+				return "Testbild";
 
 			default:
 				break;
