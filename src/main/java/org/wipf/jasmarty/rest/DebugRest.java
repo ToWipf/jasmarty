@@ -25,6 +25,7 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
+import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 
 /**
  * @author wipf
@@ -49,6 +50,8 @@ public class DebugRest {
 	Lcd12864 lcd12864;
 	@Inject
 	Lcd12864Cache lcd12864Cache;
+	@Inject
+	TAppGrafana tAppGrafana;
 
 	@POST
 	@GET
@@ -206,6 +209,14 @@ public class DebugRest {
 		PunktePlay pb = new PunktePlay(b);
 
 		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
+	}
+
+	@GET
+	@PermitAll
+	@Path("grafana")
+	public Response grafana() throws Exception {
+		tAppGrafana.testen();
+		return Response.ok("{\"test\": \"" + "ok" + "\"}").build();
 	}
 
 }
