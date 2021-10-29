@@ -164,10 +164,12 @@ public class SendAndReceive {
 	}
 
 	/**
+	 * nur public das @Metered funktioniert
+	 * 
 	 * @param t
 	 */
 	@Metered
-	private void sendToTelegram(Telegram t) {
+	public void sendToTelegram(Telegram t) {
 		tLog.saveToLog(t);
 		String sAntwort = t.getAntwort();
 		if (sAntwort == null || sAntwort.equals("")) {

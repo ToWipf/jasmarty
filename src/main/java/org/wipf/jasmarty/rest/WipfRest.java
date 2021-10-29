@@ -5,6 +5,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -77,4 +78,9 @@ public class WipfRest {
 		return Response.ok(BcryptUtil.bcryptHash(x)).build();
 	}
 
+	@DELETE
+	@Path("/garbage")
+	public void gc() {
+		System.gc();
+	}
 }

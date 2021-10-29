@@ -107,8 +107,8 @@ public class TAppGrafana {
 		FileOutputStream fos = new FileOutputStream(sFilename);
 		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 		fos.close();
-
-		return sendAndReceive.sendPictureToTelegram(nChatId, sFilename);
+		sendAndReceive.sendPictureToTelegram(nChatId, sFilename);
+		return sFilename;
 	}
 
 	/**
