@@ -45,7 +45,7 @@ jobs:
 #        run: cd scripts && docker build . --tag $IMAGE_NAME
 
       - name: Build dockerimage_arm
-        run: cd scripts && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
+        run: cd scripts && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm --push .
         #run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
         
 #      - name: Build dockerimage_arm_64

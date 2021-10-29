@@ -9,7 +9,7 @@ docker buildx use mybuilder
 #docker push docker.pkg.github.com/towipf/jasmarty/jasmarty:0.80
 
 # platform linux/arm/v7 
-
+#--push
 docker buildx build --platform linux/arm -t jatest -f Dockerfile.arm .
 #docker buildx build --platform linux/arm -t docker.pkg.github.com/towipf/jasmarty/jasmarty:0.80-1arm -f Dockerfile.arm .
 #docker push docker.pkg.github.com/towipf/jasmarty/jasmarty:0.80-1arm 
