@@ -154,7 +154,7 @@ public class TeleMenue {
 			case "system":
 				return appOthers.getSystem();
 
-			// Punkte
+			// Punkte - App
 			case "sp":
 			case "ps":
 			case "setpunkte":
@@ -187,16 +187,22 @@ public class TeleMenue {
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
+
 			// System
 			case "kill":
+				// Noch ein Update machen, ansonsen wird nach einen neustart sofort wieder
+				// "kill" aufgerufen
 				sendAndReceive.readUpdateFromTelegram();
-
 				MainHome.stopApp();
 				return "killed";
 
+			// Grafana
 			case "grafana":
 				grafana.testen(t.getChatID());
 				return "Testbild";
+			case "heizung":
+			case "h":
+				return grafana.telegramMenuehHeizung(t);
 
 			default:
 				break;

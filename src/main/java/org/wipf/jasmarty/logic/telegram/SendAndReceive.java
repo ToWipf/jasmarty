@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -12,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
@@ -164,7 +167,7 @@ public class SendAndReceive {
 	 * @param t
 	 */
 	@Metered
-	public void sendToTelegram(Telegram t) {
+	private void sendToTelegram(Telegram t) {
 		tLog.saveToLog(t);
 		String sAntwort = t.getAntwort();
 		if (sAntwort == null || sAntwort.equals("")) {
@@ -184,6 +187,21 @@ public class SendAndReceive {
 		} catch (Exception e) {
 			LOGGER.warn("Telegram senden " + e);
 		}
+	}
+
+	/**
+	 * @param sChatID
+	 * @param sFilePath
+	 * @return
+	 * @throws IOException
+	 */
+	public String sendPictureToTelegram(Integer nChatId, String sFilePath) throws IOException {
+		MultipartUtility multipart = new MultipartUtility(
+				"https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId, "UTF-8");
+		// multipart.addFormField("param_name_1", "param_value");
+		multipart.addFilePart("photo", new File(sFilePath));
+		String response = multipart.finish();
+		return (response);
 	}
 
 	/**

@@ -36,7 +36,7 @@ public class MainHome {
 	DaylogEvent daylogEvent;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.28";
+	public static final String VERSION = "1.0.29";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
