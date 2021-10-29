@@ -101,7 +101,7 @@ public class TAppGrafana {
 		URL URLGrafana = new URL("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
 				+ "&from=now-" + sTime + "&to=now");
 
-		String sFilename = nChatId + sDashboard + sPanel + sTime + ".png";
+		String sFilename = (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
 
 		ReadableByteChannel rbc = Channels.newChannel(URLGrafana.openStream());
 		FileOutputStream fos = new FileOutputStream(sFilename);
