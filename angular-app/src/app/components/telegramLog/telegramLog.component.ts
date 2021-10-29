@@ -46,8 +46,40 @@ export class TelegramLogComponent implements OnInit {
     });
   }
 
+  public openCleanLogDialog(): void {
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: 'Soll das Log aufgeräumt werden? Dabei werden viele Einträge gelöscht!',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.cleanLog();
+      }
+    });
+  }
+
+  private cleanLog():void {
+    this.http.delete(this.rest.gethost() + 'telegram/cleanLog').subscribe((resdata: any) => {
+
+      const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+        width: '250px',
+        height: '250px',
+        data: "Liste neu laden?",
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.dataSource = null;
+        }
+      });
+
+    });
+  }
+
   public openDelItemDialog(e: any): void {
-    e.infotext = "Wirklich löschen der id " + e.mid + " ?";
+    e.infotext = "Wirklich löschen der id " + e.mid + "?";
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -64,7 +96,7 @@ export class TelegramLogComponent implements OnInit {
   private delItem(e: any): void {
     this.http.delete(this.rest.gethost() + 'telegram/delLog/' + e.mid).subscribe((resdata: any) => {
 
-      e.infotext = "Logs neu laden ?";
+      e.infotext = "Logs neu laden?";
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         width: '250px',
         height: '250px',
