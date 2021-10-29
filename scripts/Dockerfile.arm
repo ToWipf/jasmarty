@@ -1,6 +1,7 @@
 FROM arm32v7/openjdk:8-jre-alpine
 
-RUN apk add curl
+RUN /bin/sh -c 'apk add curl'
+
 COPY jasmarty.jar /app/jasmarty.jar
 CMD ["java","-jar","-Xmx90m","/app/jasmarty.jar"]
 HEALTHCHECK --interval=120s --start-period=30s CMD curl --fail http://localhost:8080/wipf/up || kill 1
