@@ -36,7 +36,7 @@ public class MultipartUtility {
 		boundary = "===" + System.currentTimeMillis() + "===";
 
 		URL url = new URL(requestURL);
-		System.out.println("URL : " + requestURL.toString());
+		// System.out.println("URL : " + requestURL.toString());
 		httpConn = (HttpURLConnection) url.openConnection();
 		httpConn.setUseCaches(false);
 		httpConn.setDoOutput(true); // indicates POST method

@@ -150,9 +150,6 @@ public class TeleMenue {
 			case "temp":
 			case "temperature":
 				return appOthers.getTemperature();
-			case "sys":
-			case "system":
-				return appOthers.getSystem();
 
 			// Punkte - App
 			case "sp":
@@ -196,6 +193,17 @@ public class TeleMenue {
 				MainHome.stopApp();
 				return "killed";
 
+			default:
+				break;
+			}
+		}
+
+		// Antworten für all User
+		if (userAndGroups.isUser(t)) {
+			switch (sInMsg) {
+			case "user":
+				return "User OK";
+
 			// Grafana
 			case "grafana":
 				grafana.testen(t.getChatID());
@@ -203,6 +211,11 @@ public class TeleMenue {
 			case "heizung":
 			case "h":
 				return grafana.telegramMenuehHeizung(t);
+
+			// System
+			case "sys":
+			case "system":
+				return appOthers.getSystem();
 
 			default:
 				break;

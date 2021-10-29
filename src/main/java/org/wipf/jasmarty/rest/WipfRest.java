@@ -36,6 +36,14 @@ public class WipfRest {
 	WipfInfo wipfInfo;
 
 	@GET
+	@Path("up")
+	@Produces(MediaType.TEXT_PLAIN)
+	@PermitAll
+	public Response up() {
+		return Response.ok(1).build();
+	}
+
+	@GET
 	@Path("ver")
 	public Response getver() {
 		return Response.ok("{\"ver\":\"" + MainHome.VERSION + "\"}").build();
