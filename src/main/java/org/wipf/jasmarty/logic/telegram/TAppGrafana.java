@@ -27,7 +27,6 @@ public class TAppGrafana {
 
 	public String telegramMenuehHeizung(Telegram t) {
 		String sPanelId = "";
-		String sTime = "";
 
 		String sTeil1_Was = t.getMessageStringPartLow(1);
 		String sTeil2_Zeit = t.getMessageStringPartLow(2);
@@ -84,7 +83,7 @@ public class TAppGrafana {
 		try {
 			return sendGrafanaPicture(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
 		} catch (Exception e) {
-			return "Fehler 9";
+			return "Fehler 8 " + e;
 		}
 	}
 
@@ -99,8 +98,9 @@ public class TAppGrafana {
 			throws IOException {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
-		URL URLGrafana = new URL(
-				"http://192.168.2.11:3000/render/d-solo/[DASHBOARD]?orgId=1&panelId=[PANELID]&from=now-[TIME]&to=now");
+		URL URLGrafana = new URL("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+				+ "&from=now-" + sTime + "&to=now");
+
 		String sFilename = nChatId + sDashboard + sPanel + sTime + ".png";
 
 		ReadableByteChannel rbc = Channels.newChannel(URLGrafana.openStream());
