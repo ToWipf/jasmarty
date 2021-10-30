@@ -45,13 +45,6 @@ jobs:
 #        run: cd scripts && docker build . --tag $IMAGE_NAME
 
       - name: Build dockerimage_arm
-        run: cd scripts && docker buildx create --name mybuilder && docker buildx use mybuilder && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm --push .
-        #run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
-        
-#      - name: Build dockerimage_arm_64
-#        run: cd scripts && docker buildx build --platform linux/arm64 -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
-
-      - name: Push dockerimage_arm
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
@@ -63,8 +56,29 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
-          docker push $IMAGE_ID:${VERSION}-arm
+
+          cd scripts && docker buildx create --name mybuilder && \
+          docker buildx use mybuilder && \
+          docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm -f Dockerfile.arm --push .
+        #run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
+        
+#      - name: Build dockerimage_arm_64
+#        run: cd scripts && docker buildx build --platform linux/arm64 -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
+
+  ###    - name: Push dockerimage_arm
+  ###      run: |
+  ###        IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+###
+  ###        # Change all uppercase to lowercase
+  ###        IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+###
+  ###        # Strip git ref prefix from version
+  ###        VERSION=$(date '+%Y-%m-%d')
+###
+  ###        echo IMAGE_ID=$IMAGE_ID
+  ###        echo VERSION=$VERSION
+  ###        docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
+  ###        docker push $IMAGE_ID:${VERSION}-arm
 
 #      - name: Push dockerimage_arm_64
 #        run: |
