@@ -43,11 +43,10 @@ public class TAppGrafana {
 					"- fb/Fusboden\n" +
 					"- fbd/Fusbodendifferenz\n" +
 					"\n" +
-					"Zeit (die letzten xx) Beispiele:" +
+					"Zeit (die letzten xx) Beispiele:\n" +
 					"- 15m (Minuten)\n" +
 					"- 6h (Stunden)\n" +
-					"- 1d (Tage)\n" +
-					"- 1M (Monate)\n";
+					"- 1d (Tage)\n";
 			// @formatter:on
 		}
 
@@ -78,8 +77,13 @@ public class TAppGrafana {
 			break;
 		default:
 			sPanelId = "0";
-			break;
+			return "Panel id nicht gefunden";
 		}
+
+		if (sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d")) {
+			return "Zeiteinheit fehlt (m,h,d)";
+		}
+
 		try {
 			return sendGrafanaPicture(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
 		} catch (Exception e) {
