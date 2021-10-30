@@ -189,6 +189,7 @@ public class TeleLog {
 		lIds.add(-387871959);
 		lIds.add(-387712260);
 		lIds.add(0);
+		lIds.add(-1);
 
 		lIds.forEach((nCid) -> {
 

@@ -28,7 +28,7 @@ export class TelegramLogComponent implements OnInit {
   public loadAll(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
-    
+
     this.http.get(this.rest.gethost() + 'telegram/log').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
@@ -47,10 +47,12 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public openCleanLogDialog(): void {
+    var e: any = {};
+    e.infotext = 'Soll das Log aufgeräumt werden? Dabei werden viele Einträge gelöscht!'
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
-      data: 'Soll das Log aufgeräumt werden? Dabei werden viele Einträge gelöscht!',
+      data: e,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -60,13 +62,15 @@ export class TelegramLogComponent implements OnInit {
     });
   }
 
-  private cleanLog():void {
+  private cleanLog(): void {
+    var e: any = {};
+    e.infotext = 'Liste neu laden?'
     this.http.delete(this.rest.gethost() + 'telegram/cleanLog').subscribe((resdata: any) => {
 
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         width: '250px',
         height: '250px',
-        data: "Liste neu laden?",
+        data: e,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
