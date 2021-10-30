@@ -57,6 +57,8 @@ jobs:
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
           cd scripts && \
           docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder && \
           docker buildx use mybuilder && \
