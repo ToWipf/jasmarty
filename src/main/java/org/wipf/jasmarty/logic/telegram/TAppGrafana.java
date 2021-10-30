@@ -80,7 +80,7 @@ public class TAppGrafana {
 			return "Panel id nicht gefunden";
 		}
 
-		if (sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d")) {
+		if (!(sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d"))) {
 			return "Zeiteinheit fehlt (m,h,d)";
 		}
 
