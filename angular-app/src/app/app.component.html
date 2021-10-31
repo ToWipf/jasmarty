@@ -11,6 +11,7 @@
                     <li (click)="selectSite('filme')">Filme</li>
                     <li (click)="selectSite('crypt')">Crypt</li>
                     <li (click)="selectSite('wipfuservw')">Wipf User</li>
+                    <li (click)="selectSite('dynpages')">Dynpages</li>
                     <li (click)="selectSite('debug')">Debug</li>
                 </ul>
 
@@ -100,6 +101,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='daylog'">
                     <app-daylog></app-daylog>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='dynpages'">
+                    <app-dynpages></app-dynpages>
                 </ng-container>
             </div>
         </div>

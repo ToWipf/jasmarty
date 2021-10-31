@@ -8,20 +8,24 @@ import org.json.JSONObject;
  */
 public class Dynpage {
 
-	private Integer nPageId;
+	private Integer nId;
 	private String sHtml;
 	private String sScript;
 	private String sStyle;
+	private String sRechte;
+	private Boolean bLive;
 
 	/**
 	 * @return
 	 */
 	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
-		jo.put("pageid", this.nPageId);
+		jo.put("id", this.nId);
 		jo.put("html", this.sHtml);
 		jo.put("script", this.sScript);
 		jo.put("style", this.sStyle);
+		jo.put("rechte", this.sRechte);
+		jo.put("live", this.bLive);
 		return jo;
 	}
 
@@ -32,11 +36,13 @@ public class Dynpage {
 	public Dynpage setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		if (jo.has("id")) {
-			this.nPageId = jo.getInt("pageid");
+			this.nId = jo.getInt("id");
 		}
 		this.sHtml = jo.getString("html");
 		this.sScript = jo.getString("script");
 		this.sStyle = jo.getString("style");
+		this.sRechte = jo.getString("rechte");
+		this.bLive = jo.getBoolean("live");
 		return this;
 	}
 
@@ -82,18 +88,28 @@ public class Dynpage {
 		this.sStyle = sStyle;
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getPageId() {
-		return nPageId;
+	public Integer getId() {
+		return nId;
 	}
 
-	/**
-	 * @param nPageId
-	 */
-	public void setPageId(Integer nPageId) {
-		this.nPageId = nPageId;
+	public void setId(Integer nId) {
+		this.nId = nId;
+	}
+
+	public Boolean getLive() {
+		return bLive;
+	}
+
+	public void setLive(Boolean bLive) {
+		this.bLive = bLive;
+	}
+
+	public String getRechte() {
+		return sRechte;
+	}
+
+	public void setRechte(String sRechte) {
+		this.sRechte = sRechte;
 	}
 
 }

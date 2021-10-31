@@ -110,3 +110,12 @@ export interface DaylogEvent {
   bool?: boolean;
   number?: number;
 }
+
+export interface DynpageEntry {
+  id?: number;
+  html?: string;
+  script?: string;
+  style?: string;
+  rechte?: string;
+  live?: boolean;
+}

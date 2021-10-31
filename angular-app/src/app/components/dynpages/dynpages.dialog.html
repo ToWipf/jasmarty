@@ -1,0 +1,39 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- TODO: LESS DATEI -->
+        <h1 mat-dialog-title>Id: {{data.id}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Html</mat-label>
+                <input matInput [(ngModel)]="data.html">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Script</mat-label>
+                <input matInput [(ngModel)]="data.script">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Style</mat-label>
+                <input matInput [(ngModel)]="data.style">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Rechte</mat-label>
+                <mat-select [(value)]="data.rechte">
+                    <!-- <mat-option>None</mat-option> -->
+                    <mat-option value="ADMIN">Admin</mat-option>
+                    <mat-option value="USER">User</mat-option>
+                    <mat-option value="PUBLIC">Public</mat-option>
+                    <mat-option value="NONE">None</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Live</mat-label>
+                <input type="checkbox" matInput [(ngModel)]="data.live">
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+</div>
