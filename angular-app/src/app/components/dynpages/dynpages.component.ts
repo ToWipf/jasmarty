@@ -36,7 +36,7 @@ export class DynpagesComponent implements OnInit {
     this.http.get(this.rest.gethost() + 'dynpages/getAll').subscribe((resdata: DynpageEntry[]) => {
       resdata.forEach((element) => {
 
-        if (element.live && this.bLive) {
+        if (this.bLive || element.live) {
           this.dynpagearry.push(element);
         }
       });
@@ -54,8 +54,13 @@ export class DynpagesComponent implements OnInit {
   }
 
   public newItem(): void {
-    let td: DynpageEntry = {};
-    this.openDialog(td);
+    let e: DynpageEntry = {};
+    e.html = "";
+    e.script = "";
+    e.style = "";
+    e.rechte = "NONE";
+    e.live = false;
+    this.openDialog(e);
   }
 
   public deleteItem(item: any): void {

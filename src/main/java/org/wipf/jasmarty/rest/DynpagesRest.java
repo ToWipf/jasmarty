@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.wipfapp.Dynpages;
  * @author Wipf
  *
  */
-@Path("dynpage")
+@Path("dynpages")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -36,9 +36,9 @@ public class DynpagesRest {
 	}
 
 	@GET
-	@Path("getall")
+	@Path("getAll")
 	public Response getall() throws SQLException {
-		return Response.ok(dynpages.getAllAsJson()).build();
+		return Response.ok(dynpages.getAllAsJson().toString()).build();
 	}
 
 	@POST

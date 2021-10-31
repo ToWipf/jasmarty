@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.daylog.DaylogEvent;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
+import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
@@ -34,6 +35,8 @@ public class MainHome {
 	TaskManager taskmanager;
 	@Inject
 	DaylogEvent daylogEvent;
+	@Inject
+	Dynpages dynpages;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.0.41";
@@ -56,9 +59,10 @@ public class MainHome {
 
 			wipfUserVW.initDB();
 			wipfConfig.initDB();
+			dynpages.initDB();
+			daylogEvent.initDB();
 			wipfConfig.checkAppWorkId();
 			taskmanager.startDailyTask();
-			daylogEvent.initDB();
 
 			jHome.init();
 			tHome.init();

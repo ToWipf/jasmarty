@@ -1,4 +1,5 @@
 /target/
+/angular-app/package-lock.json
 /angular-app/node_modules/
 /angular-app/dist/
 /src/main/resources/META-INF/resources/app/
