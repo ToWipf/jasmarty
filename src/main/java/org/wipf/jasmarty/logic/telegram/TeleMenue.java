@@ -193,6 +193,10 @@ public class TeleMenue {
 				MainHome.stopApp();
 				return "killed";
 
+			case "d":
+			case "dev":
+				return grafana.telegramMenueDev(t);
+
 			default:
 				break;
 			}

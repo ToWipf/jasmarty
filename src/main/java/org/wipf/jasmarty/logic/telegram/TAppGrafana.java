@@ -27,7 +27,6 @@ public class TAppGrafana {
 
 	public String telegramMenuehHeizung(Telegram t) {
 		String sPanelId = "";
-
 		String sTeil1_Was = t.getMessageStringPartLow(1);
 		String sTeil2_Zeit = t.getMessageStringPartLow(2);
 		if (sTeil1_Was == null || sTeil2_Zeit == null) {
@@ -80,15 +79,74 @@ public class TAppGrafana {
 			return "Panel id nicht gefunden";
 		}
 
-		if (!(sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d"))) {
-			return "Zeiteinheit fehlt (m,h,d)";
+		if (validateInput(sTeil1_Was, sTeil2_Zeit)) {
+			try {
+				return sendGrafanaPictureToTelegram(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
+			} catch (Exception e) {
+				return "Fehler 8 " + e;
+			}
+		} else {
+			return "Fehlerhafte Eingabe\nHilfe mit 'Heizung'";
+		}
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public String telegramMenueDev(Telegram t) {
+		String sPanelId = "";
+		String sTeil1_Was = t.getMessageStringPartLow(1);
+		String sTeil2_Zeit = t.getMessageStringPartLow(2);
+		if (sTeil1_Was == null || sTeil2_Zeit == null) {
+			// @formatter:off
+				return 
+					"Syntax:\n" + 
+					"dev <Panel> <Zeit>\n" +
+					"Panels:\n" +
+					"- g\n" +
+					"\n" +
+					"Zeit (die letzten xx) Beispiele:\n" +
+					"- 15m (Minuten)\n" +
+					"- 6h (Stunden)\n" +
+					"- 1d (Tage)\n";
+			// @formatter:on
 		}
 
-		try {
-			return sendGrafanaPicture(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
-		} catch (Exception e) {
-			return "Fehler 8 " + e;
+		switch (sTeil1_Was) {
+		case "g":
+			sPanelId = "60";
+			break;
+		default:
+			sPanelId = "0";
+			return "Panel id nicht gefunden";
 		}
+
+		if (validateInput(sTeil1_Was, sTeil2_Zeit)) {
+			try {
+				return sendGrafanaPictureToTelegram(t.getChatID(), "FYv3KbWgk/fritsch-box", sPanelId, sTeil2_Zeit);
+			} catch (Exception e) {
+				return "Fehler 8 " + e;
+			}
+		} else {
+			return "Fehlerhafte Eingabe\nHilfe mit 'dev'";
+		}
+
+	}
+
+	/**
+	 * @param sTeil1_Was
+	 * @param sTeil2_Zeit
+	 * @return
+	 */
+	private Boolean validateInput(String sTeil1_Was, String sTeil2_Zeit) {
+		if (sTeil1_Was.equals("0")) {
+			return false;
+		}
+		if (!(sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d"))) {
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -98,7 +156,7 @@ public class TAppGrafana {
 	 * @return
 	 * @throws IOException
 	 */
-	private String sendGrafanaPicture(Integer nChatId, String sDashboard, String sPanel, String sTime)
+	private String sendGrafanaPictureToTelegram(Integer nChatId, String sDashboard, String sPanel, String sTime)
 			throws IOException {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
