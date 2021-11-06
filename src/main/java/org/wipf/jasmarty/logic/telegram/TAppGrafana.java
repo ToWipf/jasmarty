@@ -140,7 +140,7 @@ public class TAppGrafana {
 	 * @return
 	 */
 	private Boolean validateInput(String sTeil1_Was, String sTeil2_Zeit) {
-		if (sTeil1_Was.equals("0")) {
+		if (sTeil1_Was.equals("0") || sTeil1_Was.equals("")) {
 			return false;
 		}
 		if (!(sTeil2_Zeit.contains("m") || sTeil2_Zeit.contains("h") || sTeil2_Zeit.contains("d"))) {
