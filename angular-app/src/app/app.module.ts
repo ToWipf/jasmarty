@@ -73,6 +73,7 @@ import { CharGeneratorComponent } from './components/charGenerator/charGenerator
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
 import { DayLogComponent } from './components/daylog/daylog.component';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/dynpages/dynpages.component';
+import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { DynpagesComponent, DynpagesComponentDialogComponent } from './component
     DialogWartenComponent,
     DynpagesComponent,
     DynpagesComponentDialogComponent,
+    DynpageShowComponent,
     FilmeComponent,
     FilmeComponentDialog,
     FooterComponent,

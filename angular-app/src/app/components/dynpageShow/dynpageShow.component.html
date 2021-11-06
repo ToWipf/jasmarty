@@ -1,0 +1,14 @@
+<div class="gridRow">
+    <div class="gridCol">
+        <input type="number" class="form-control inbutton" [(ngModel)]="nPageId">
+    </div>
+    <div class="gridCol">
+        <button type="button" class="btn btn-primary inbutton" (click)="load()">Laden</button>
+    </div>
+</div>
+
+<hr>
+
+<script>{{sScript}}</script>
+
+<div [ngStyle]="getSytle()" [innerHTML]="sHtml"></div>

@@ -30,9 +30,9 @@ public class DynpagesRest {
 	Dynpages dynpages;
 
 	@GET
-	@Path("get/{dateid}")
-	public Response get(@PathParam("dateid") Integer nId) throws SQLException {
-		return Response.ok(dynpages.getById(nId).toJson()).build();
+	@Path("get/{id}")
+	public Response get(@PathParam("id") Integer nId) throws SQLException {
+		return Response.ok(dynpages.getById(nId).toJson().toString()).build();
 	}
 
 	@GET

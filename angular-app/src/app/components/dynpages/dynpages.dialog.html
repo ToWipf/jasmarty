@@ -3,18 +3,19 @@
         <!-- TODO: LESS DATEI -->
         <h1 mat-dialog-title>Id: {{data.id}}</h1>
         <div mat-dialog-content>
-            <mat-form-field>
-                <mat-label>Html</mat-label>
-                <input matInput [(ngModel)]="data.html">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Script</mat-label>
-                <input matInput [(ngModel)]="data.script">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Style</mat-label>
-                <input matInput [(ngModel)]="data.style">
-            </mat-form-field>
+            Html:
+            <br>
+            <textarea [(ngModel)]="data.html"></textarea>
+            <br>
+            Script:
+            <br>
+            <textarea [(ngModel)]="data.script"></textarea>
+            <br>
+            Style:
+            <br>
+            <textarea [(ngModel)]="data.style"></textarea>
+            <br>
+
             <mat-form-field appearance="fill">
                 <mat-label>Rechte</mat-label>
                 <mat-select [(value)]="data.rechte">
@@ -25,9 +26,11 @@
                     <mat-option value="NONE">None</mat-option>
                 </mat-select>
             </mat-form-field>
-            Live 
+            <br>
+            Live
             <input type="checkbox" [(ngModel)]="data.live">
         </div>
+        <hr>
 
         <div mat-dialog-actions>
             <button mat-button (click)="onNoClick()">Abbrechen</button>
