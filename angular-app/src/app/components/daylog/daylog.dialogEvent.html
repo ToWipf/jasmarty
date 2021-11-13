@@ -4,7 +4,11 @@
         <h1 mat-dialog-title>Id: {{data.id}}</h1>
         <div mat-dialog-content>
             <mat-form-field>
-                <mat-label>Data</mat-label>
+                <mat-label>Typ</mat-label>
+                <input matInput [(ngModel)]="data.typ">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Text</mat-label>
                 <input matInput [(ngModel)]="data.text">
             </mat-form-field>
             <br>

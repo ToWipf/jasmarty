@@ -27,6 +27,10 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
+
+		String sUpdatea = "drop TABLE daylogDay;";
+		sqlLite.getDbApp().prepareStatement(sUpdatea).executeUpdate();
+
 		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogDay (id INTEGER NOT NULL UNIQUE, date INTEGER, tagestext TEXT, userid INTEGER, PRIMARY KEY(id AUTOINCREMENT));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}

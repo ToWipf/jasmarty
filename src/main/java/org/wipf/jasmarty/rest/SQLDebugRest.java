@@ -37,6 +37,13 @@ public class SQLDebugRest {
 	public Response query(@PathParam("q") String sQuery) {
 		ResultSet rs;
 		StringBuilder sb = new StringBuilder();
+
+		try {
+			sqlLite.getDbApp().prepareStatement(sQuery).executeUpdate();
+		} catch (SQLException e) {
+			sb.append("Nr1: " + wipf.encodeUrlString(e.toString()) + "<br><br>");
+		}
+
 		try {
 			rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 
@@ -55,7 +62,7 @@ public class SQLDebugRest {
 				sb.append("<br>");
 			}
 		} catch (SQLException e) {
-			sb.append(wipf.encodeUrlString(e.toString()));
+			sb.append("Nr2: " + wipf.encodeUrlString(e.toString()));
 		}
 
 		return Response.ok("{\"res\":\"" + sb.toString() + "\"}").build();

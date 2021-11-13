@@ -39,6 +39,8 @@ public class DaylogDay {
 		} else {
 			this.nUserId = 0;
 		}
+		System.out.println(sJson);
+		System.out.println(jo.getInt("date"));
 		this.sDate = jo.getInt("date");
 		this.sTagestext = jo.getString("tagestext");
 		return this;

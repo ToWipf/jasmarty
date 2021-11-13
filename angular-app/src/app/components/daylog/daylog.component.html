@@ -13,9 +13,9 @@
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter" />
             </div>
-             <div class="box">
+            <div class="box">
                 <button class="btn btn-default" (click)="loadEvents()">Alle Events Laden</button>
-            </div> 
+            </div>
         </div>
 
         <div class="gridRow">
@@ -29,7 +29,8 @@
 
                         <ng-container matColumnDef="date">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Datum</th>
-                            <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+                            <td mat-cell *matCellDef="let element">{{element.date * 1000 | date: 'dd.MM.yyyy'}}
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="tagestext">
@@ -74,44 +75,59 @@
                 Anzahl Events: {{ eventlist.length }}
             </div>
 
-            <perfect-scrollbar class="pscroll">
-                <table mat-table [dataSource]="eventlistDataSource" matSort class="mat-elevation-z8">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-                    </ng-container>
+            <div class="gridCol">
+                <perfect-scrollbar class="pscroll">
+                    <table mat-table [dataSource]="eventlistDataSource" matSort class="mat-elevation-z8">
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="date">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Datum</th>
-                        <td mat-cell *matCellDef="let element">{{element.date * 1000 | date: 'dd.MM.yyyy HH:mm:ss'}}</td>
-                    </ng-container>
+                        <ng-container matColumnDef="dateid">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>DateId</th>
+                            <td mat-cell *matCellDef="let element">{{ element.dateid }}</td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="tagestext">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tagestext</th>
-                        <td mat-cell *matCellDef="let element">{{ element.tagestext }}</td>
-                    </ng-container>
 
-                    <ng-container matColumnDef="userid">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Userid</th>
-                        <td mat-cell *matCellDef="let element">{{ element.userid }}</td>
-                    </ng-container>
+                        <ng-container matColumnDef="typ">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
+                            <td mat-cell *matCellDef="let element">{{element.typ}}</td>
+                        </ng-container>
 
-                    <ng-container matColumnDef="button">
-                        <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
-                        <td mat-cell *matCellDef="let element">
-                            <button class="btn btn-default" (click)="newEvent(element)">
-                                Bearbeiten
-                            </button>
-                            <button class="btn btn-default" (click)="deleteEvent(element)">
-                                Löschen
-                            </button>
-                        </td>
-                    </ng-container>
+                        <ng-container matColumnDef="data">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+                            <td mat-cell *matCellDef="let element">{{ element.text }}</td>
 
-                    <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
-                </table>
-            </perfect-scrollbar>
+                            <!-- TODO erstmal nur text -->
+                            <!-- <ng-container *matCellDef="let elementdata">{{elementdata}} *ngIf="elementdata.bool">
+                            <td mat-cell *matCellDef="let element">{{ element.bool }}</td>
+                        </ng-container>
+                        <ng-container *matCellDef="let elementdata">{{elementdata}} *ngIf="elementdata.number">
+                            <td mat-cell *matCellDef="let element">{{ element.bool }}</td>
+                        </ng-container> -->
+                            <!-- <ng-container *matCellDef="let elementdata">{{elementdata}} *ngIf="elementdata.text"> -->
+                            <!-- <td mat-cell *matCellDef="let element">{{ element.bool }}</td> -->
+                            <!-- </ng-container> -->
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="button">
+                            <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
+                            <td mat-cell *matCellDef="let element">
+                                <button class="btn btn-default" (click)="newEvent(element)">
+                                    Bearbeiten
+                                </button>
+                                <button class="btn btn-default" (click)="deleteEvent(element)">
+                                    Löschen
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
+                    </table>
+                </perfect-scrollbar>
+            </div>
         </div>
     </div>
 </div>

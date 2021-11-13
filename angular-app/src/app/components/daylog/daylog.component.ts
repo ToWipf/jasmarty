@@ -7,10 +7,6 @@ import { DaylogDay, DaylogEvent } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { AbstractControl } from '@angular/forms';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Moment } from 'moment';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-daylog',
@@ -28,9 +24,10 @@ export class DayLogComponent implements OnInit {
   public eventlist: DaylogEvent[] = [];
   public userid = 0;
   public daylistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
-  public eventlistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
+  public eventlistDisplayedColumns: string[] = ['id', 'dateid', 'typ', 'data', 'button'];
   public sFilter: String = "";
   public bShowWarning: boolean = false;
+  private dateCacheForLoad: DaylogDay = {};
 
   ngOnInit() {
     this.loadDays();
@@ -126,6 +123,8 @@ export class DayLogComponent implements OnInit {
   }
 
   public newEvent(dayitem: DaylogDay): void {
+    // Tag speicher um später die Liste neu laden zu können
+    this.dateCacheForLoad = dayitem;
     let e: DaylogEvent = {};
     e.dateid = dayitem.id;
     e.text = "";
@@ -144,6 +143,7 @@ export class DayLogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
       if (result) {
+        result.date = result.date/1000;
         this.saveDay(result);
       }
     });
@@ -171,7 +171,7 @@ export class DayLogComponent implements OnInit {
     this.http.post(this.rest.gethost() + 'daylog/day/save', item).subscribe((resdata: any) => {
       console.log("item");
       this.loadDays();
-      if (resdata) {
+      if (resdata.save == "true") {
         this.bShowWarning = false;
       }
     });
@@ -180,8 +180,8 @@ export class DayLogComponent implements OnInit {
   private saveEvent(item: DaylogEvent): void {
     this.bShowWarning = true;
     this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
-      this.loadEvents(); // TODO nur vom Tag
-      if (resdata) {
+      this.loadEventsByDay(this.dateCacheForLoad);
+      if (resdata.save == "true") {
         this.bShowWarning = false;
       }
     });
