@@ -5,7 +5,7 @@
         <div mat-dialog-content>
             <mat-form-field>
                 <mat-label>Datum</mat-label>
-                <input matInput type="date" [(ngModel)]="data.date">
+                <input matInput type="datetime-local" [(ngModel)]="data.date">
             </mat-form-field>
             <br>
             <mat-form-field>
@@ -13,6 +13,7 @@
                 <input matInput [(ngModel)]="data.tagestext">
             </mat-form-field>
             <br>
+
             <!-- <mat-label>Status</mat-label> -->
             <!-- <input matInput [(ngModel)]="data.active"> -->
 

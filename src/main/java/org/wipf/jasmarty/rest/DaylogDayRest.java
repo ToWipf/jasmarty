@@ -29,6 +29,18 @@ public class DaylogDayRest {
 	@Inject
 	DaylogDayDB daylogDayDB;
 
+	@GET
+	@Path("get/{date}/{userid}")
+	public Response get(@PathParam("date") Integer sDate, @PathParam("userid") Integer nUserid) throws SQLException {
+		return Response.ok(daylogDayDB.get(sDate, nUserid)).build();
+	}
+
+	@GET
+	@Path("getAll/{userid}")
+	public Response getall(@PathParam("userid") Integer nUserid) throws SQLException {
+		return Response.ok(daylogDayDB.getAllAsJson(nUserid).toString()).build();
+	}
+
 	@POST
 	@Path("save")
 	public Response save(String jnRoot) throws SQLException {
@@ -42,15 +54,4 @@ public class DaylogDayRest {
 		return Response.ok().build();
 	}
 
-	@GET
-	@Path("get/{date}/{userid}")
-	public Response get(@PathParam("date") Integer sDate, @PathParam("userid") Integer nUserid) throws SQLException {
-		return Response.ok(daylogDayDB.get(sDate, nUserid)).build();
-	}
-
-	@GET
-	@Path("getAll/{userid}")
-	public Response getall(@PathParam("userid") Integer nUserid) throws SQLException {
-		return Response.ok(daylogDayDB.getAllAsJson(nUserid).toString()).build();
-	}
 }

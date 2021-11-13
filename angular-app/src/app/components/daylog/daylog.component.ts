@@ -7,6 +7,10 @@ import { DaylogDay, DaylogEvent } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { AbstractControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Moment } from 'moment';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-daylog',
@@ -31,7 +35,7 @@ export class DayLogComponent implements OnInit {
   ngOnInit() {
     this.loadDays();
     // TODO: laden detail -> nur von ausgewälten tag ->
-    this.loadEvents();
+    // this.loadEvents();
   }
 
   public loadDays(): void {
@@ -48,10 +52,11 @@ export class DayLogComponent implements OnInit {
   }
 
   public loadEvents(): void {
+    // NUR DEBUG TODO: da keine userid
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
     
-    this.http.get(this.rest.gethost() + 'daylog/event/getAll/' + this.userid).subscribe((resdata: DaylogEvent[]) => {
+    this.http.get(this.rest.gethost() + 'daylog/event/getAll/').subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);
@@ -60,8 +65,17 @@ export class DayLogComponent implements OnInit {
     });
   }
 
-  public openDay(d: DaylogDay): void {
-    console.log(d);
+  public loadEventsByDay(d: DaylogDay): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.eventlist = [];
+    
+    this.http.get(this.rest.gethost() + 'daylog/event/get/' + d.id).subscribe((resdata: DaylogEvent[]) => {
+      this.eventlist = resdata;
+
+      this.eventlistDataSource = new MatTableDataSource(this.eventlist);
+      this.eventlistDataSource.sort = this.sort;
+      warten.close();
+    });
   }
 
   public deleteDay(item: any): void {
@@ -111,10 +125,11 @@ export class DayLogComponent implements OnInit {
     this.openDialogDay(e);
   }
 
-  public newEvent(): void {
-    // TODO: AUTO SET DATE FROM CALL
+  public newEvent(dayitem: DaylogDay): void {
     let e: DaylogEvent = {};
+    e.dateid = dayitem.id;
     e.text = "";
+    e.typ = "";
     this.openDialogEvent(e);
   }
 
@@ -151,19 +166,23 @@ export class DayLogComponent implements OnInit {
   }
 
   private saveDay(item: DaylogDay): void {
+    this.bShowWarning = true;
+    console.log(item);
     this.http.post(this.rest.gethost() + 'daylog/day/save', item).subscribe((resdata: any) => {
+      console.log("item");
       this.loadDays();
-      if (!resdata) {
-        this.bShowWarning = true;
+      if (resdata) {
+        this.bShowWarning = false;
       }
     });
   }
 
   private saveEvent(item: DaylogEvent): void {
+    this.bShowWarning = true;
     this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
       this.loadEvents(); // TODO nur vom Tag
-      if (!resdata) {
-        this.bShowWarning = true;
+      if (resdata) {
+        this.bShowWarning = false;
       }
     });
   }

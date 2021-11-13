@@ -38,6 +38,18 @@ public class DaylogEventRest {
 	@Inject
 	DaylogNumberEventDB daylogNumberEventDB;
 
+	@GET
+	@Path("get/{dateid}")
+	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
+		return Response.ok(daylogEvent.getAsJson(nDateid).toString()).build();
+	}
+
+	@GET
+	@Path("getAll")
+	public Response getall() throws SQLException {
+		return Response.ok(daylogEvent.getAllAsJson().toString()).build();
+	}
+
 	@POST
 	@Path("save")
 	public Response save(String jnRoot) throws SQLException {
@@ -51,19 +63,13 @@ public class DaylogEventRest {
 		return Response.ok().build();
 	}
 
-	@GET
-	@Path("get/{dateid}")
-	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogEvent.getAsJson(nDateid)).build();
-	}
-
-	@GET
-	@Path("getAll")
-	public Response getall() throws SQLException {
-		return Response.ok(daylogEvent.getAllAsJson().toString()).build();
-	}
-
 	/// Text
+
+	@GET
+	@Path("text/get/{dateid}")
+	public Response textGet(@PathParam("dateid") Integer nDateid) throws SQLException {
+		return Response.ok(daylogTextEventDB.getAsJson(nDateid).toString()).build();
+	}
 
 	@POST
 	@Path("text/save")
@@ -78,13 +84,13 @@ public class DaylogEventRest {
 		return Response.ok().build();
 	}
 
-	@GET
-	@Path("text/get/{dateid}")
-	public Response textGet(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogTextEventDB.getAsJson(nDateid)).build();
-	}
-
 	/// Bool
+
+	@GET
+	@Path("bool/get/{dateid}")
+	public Response boolGet(@PathParam("dateid") Integer nDateid) throws SQLException {
+		return Response.ok(daylogBoolEventDB.getAsJson(nDateid).toString()).build();
+	}
 
 	@POST
 	@Path("bool/save")
@@ -99,13 +105,13 @@ public class DaylogEventRest {
 		return Response.ok().build();
 	}
 
-	@GET
-	@Path("bool/get/{dateid}")
-	public Response boolGet(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogBoolEventDB.getAsJson(nDateid)).build();
-	}
-
 	/// Number
+
+	@GET
+	@Path("number/get/{dateid}")
+	public Response numberGet(@PathParam("dateid") Integer nDateid) throws SQLException {
+		return Response.ok(daylogNumberEventDB.getAsJson(nDateid).toString()).build();
+	}
 
 	@POST
 	@Path("number/save")
@@ -118,12 +124,6 @@ public class DaylogEventRest {
 	public Response numberDelete(@PathParam("id") Integer nId) throws SQLException {
 		daylogNumberEventDB.del(nId);
 		return Response.ok().build();
-	}
-
-	@GET
-	@Path("number/get/{dateid}")
-	public Response numberGet(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogNumberEventDB.getAsJson(nDateid)).build();
 	}
 
 }
