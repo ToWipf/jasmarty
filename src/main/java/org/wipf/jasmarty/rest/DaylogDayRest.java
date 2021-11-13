@@ -44,7 +44,7 @@ public class DaylogDayRest {
 
 	@GET
 	@Path("get/{date}/{userid}")
-	public Response get(@PathParam("date") String sDate, @PathParam("userid") Integer nUserid) throws SQLException {
+	public Response get(@PathParam("date") Integer sDate, @PathParam("userid") Integer nUserid) throws SQLException {
 		return Response.ok(daylogDayDB.get(sDate, nUserid)).build();
 	}
 

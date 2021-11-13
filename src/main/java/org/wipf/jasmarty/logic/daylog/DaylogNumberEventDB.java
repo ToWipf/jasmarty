@@ -121,4 +121,40 @@ public class DaylogNumberEventDB {
 		statement.executeUpdate();
 	}
 
+	/**
+	 * @param nUserId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DaylogNumberEvent> getAll() throws SQLException {
+		List<DaylogNumberEvent> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM daylogNumberEvent";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			DaylogNumberEvent d = new DaylogNumberEvent();
+			d.setId(rs.getInt("id"));
+			d.setDateId(rs.getInt("dateid"));
+			d.setTyp(rs.getString("typ"));
+			d.setNumber(rs.getInt("number"));
+			o.add(d);
+		}
+		return o;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllAsJson() throws SQLException {
+		List<DaylogNumberEvent> l = getAll();
+		JSONArray ja = new JSONArray();
+		for (DaylogNumberEvent d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
+	}
+
 }

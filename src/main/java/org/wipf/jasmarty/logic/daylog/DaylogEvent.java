@@ -73,4 +73,16 @@ public class DaylogEvent {
 		// TODO
 	}
 
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllAsJson() throws SQLException {
+		JSONArray ja = new JSONArray();
+		ja.putAll(daylogTextEventDB.getAllAsJson());
+		ja.putAll(daylogBoolEventDB.getAllAsJson());
+		ja.putAll(daylogNumberEventDB.getAllAsJson());
+		return ja;
+	}
+
 }

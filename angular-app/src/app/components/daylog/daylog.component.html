@@ -1,6 +1,23 @@
 <div>
     <h3>Daylog</h3>
     <div class="list">
+       
+        <ng-container *ngIf="bShowWarning">
+            Es ist ein Fehler aufgetreten!
+            <input type="checkbox" [(ngModel)]="bShowWarning">
+        </ng-container>
+
+        <div class="configline">
+            <!-- <div class="box">
+                <button class="btn btn-default" (click)="load()">Neu laden</button>
+            </div> -->
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
+            <div class="box">
+                <button class="btn btn-default" (click)="newDay()">Neuen Tag erstellen</button>
+            </div>
+        </div>
 
         <div class="gridRow">
             <div class="gridCol">
@@ -32,7 +49,7 @@
                             <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                             <td mat-cell *matCellDef="let element">
                                 <button class="btn btn-default" (click)="openDay(element)">Tag anzeigen</button>
-                                <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
+                                <button class="btn btn-default" (click)="deleteDay(element)">Löschen</button>
                             </td>
                         </ng-container>
                         
@@ -46,7 +63,7 @@
 
 
             <perfect-scrollbar class="pscroll">
-                <table mat-table [dataSource]="daydetaillistDataSource" matSort class="mat-elevation-z8">
+                <table mat-table [dataSource]="eventlistDataSource" matSort class="mat-elevation-z8">
                     
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -72,15 +89,15 @@
                         <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                         <td mat-cell *matCellDef="let element">
                             <button class="btn btn-default" (click)="openDay(element)">Tag anzeigen</button>
-                            <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
+                            <button class="btn btn-default" (click)="deleteEvent(element)">Löschen</button>
                         </td>
                     </ng-container>
                     
-                    <tr mat-header-row *matHeaderRowDef="daydetaillistDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: daydetaillistDisplayedColumns;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns;"></tr>
                 </table>
             </perfect-scrollbar>
-            Treffer: {{daydetaillist.length}}
+            Treffer: {{eventlist.length}}
                 
             </div>
         </div>

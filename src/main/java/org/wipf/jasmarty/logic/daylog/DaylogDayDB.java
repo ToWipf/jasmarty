@@ -27,7 +27,7 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogDay (id INTEGER NOT NULL UNIQUE, date TEXT, tagestext TEXT, userid INTEGER, PRIMARY KEY(id AUTOINCREMENT));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogDay (id INTEGER NOT NULL UNIQUE, date INTEGER, tagestext TEXT, userid INTEGER, PRIMARY KEY(id AUTOINCREMENT));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -41,7 +41,7 @@ public class DaylogDayDB {
 			String sUpdate = "INSERT OR REPLACE INTO daylogDay (id, date, tagestext, userid) VALUES (?,?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, o.getId());
-			statement.setString(2, o.getDate());
+			statement.setInt(2, o.getDate());
 			statement.setString(3, o.getTagestext());
 			statement.setInt(4, o.getUserId());
 			statement.executeUpdate();
@@ -49,7 +49,7 @@ public class DaylogDayDB {
 			// neue id (insert)
 			String sUpdate = "INSERT OR REPLACE INTO daylogDay (date, tagestext, userid) VALUES (?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setString(1, o.getDate());
+			statement.setInt(1, o.getDate());
 			statement.setString(2, o.getTagestext());
 			statement.setInt(3, o.getUserId());
 			statement.executeUpdate();
@@ -75,19 +75,19 @@ public class DaylogDayDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public DaylogDay get(String sDate, Integer nUserId) throws SQLException {
+	public DaylogDay get(Integer sDate, Integer nUserId) throws SQLException {
 		DaylogDay o = new DaylogDay();
 
 		String sQuery = "SELECT * FROM daylogDay WHERE date = ? AND userid = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setString(1, sDate);
+		statement.setInt(1, sDate);
 		statement.setInt(2, nUserId);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
 			// Es gibt nur einen oder keinen Eintrag
 			o.setId(rs.getInt("id"));
-			o.setDate(rs.getString("date"));
+			o.setDate(rs.getInt("date"));
 			o.setTagestext(rs.getString("tagestext"));
 			o.setUserId(rs.getInt("userid"));
 			return o;
@@ -114,7 +114,7 @@ public class DaylogDayDB {
 		while (rs.next()) {
 			DaylogDay d = new DaylogDay();
 			d.setId(rs.getInt("id"));
-			d.setDate(rs.getString("date"));
+			d.setDate(rs.getInt("date"));
 			d.setTagestext(rs.getString("tagestext"));
 			d.setUserId(rs.getInt("userid"));
 			o.add(d);
@@ -147,5 +147,4 @@ public class DaylogDayDB {
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
-
 }

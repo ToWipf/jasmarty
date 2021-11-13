@@ -57,6 +57,12 @@ public class DaylogEventRest {
 		return Response.ok(daylogEvent.getAsJson(nDateid)).build();
 	}
 
+	@GET
+	@Path("getAll")
+	public Response getall() throws SQLException {
+		return Response.ok(daylogEvent.getAllAsJson().toString()).build();
+	}
+
 	/// Text
 
 	@POST

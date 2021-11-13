@@ -71,7 +71,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dial
 import { AppRoutingModule } from './app-routing.module';
 import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
-import { DayLogComponent } from './components/daylog/daylog.component';
+import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent } from './components/daylog/daylog.component';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/dynpages/dynpages.component';
 import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.component';
 
@@ -84,6 +84,8 @@ import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.compo
     DebugSeiteComponent,
     DialogJaNeinComponent,
     DialogWartenComponent,
+    DaylogComponentDialogDayComponent,
+    DaylogComponentDialogEventComponent,
     DynpagesComponent,
     DynpagesComponentDialogComponent,
     DynpageShowComponent,

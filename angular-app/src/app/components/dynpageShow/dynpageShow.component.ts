@@ -34,7 +34,16 @@ export class DynpageShowComponent {
     });
   }
 
-  public getSytle(): String {
+  public getSytle(): string {
     return JSON.stringify(this.sStyle);
   }
+
+  // public getRest(sPath: string): any {
+  //   const warten = this.dialog.open(DialogWartenComponent, {});
+  //   this.http.get(this.rest.gethost() + sPath).subscribe((result: any) => {
+  //     warten.close();
+  //     return result;
+  //   });
+  // }
+
 }

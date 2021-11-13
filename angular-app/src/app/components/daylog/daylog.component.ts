@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -19,21 +19,24 @@ export class DayLogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public daylistDataSource;
-  public daydetaillistDataSource;
+  public eventlistDataSource;
   public daylist: DaylogDay[] = [];
-  public daydetaillist: DaylogEvent[] = [];
+  public eventlist: DaylogEvent[] = [];
   public userid = 0;
   public daylistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
-  public daydetaillistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
+  public eventlistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
+  public sFilter: String = "";
+  public bShowWarning: boolean = false;
 
   ngOnInit() {
-    this.load();
+    this.loadDays();
+    // TODO: laden detail -> nur von ausgewälten tag ->
+    this.loadEvents();
   }
 
-  public load(): void {
+  public loadDays(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.daylist = [];
-    this.daydetaillist = [];
     
     this.http.get(this.rest.gethost() + 'daylog/day/getAll/' + this.userid).subscribe((resdata: DaylogDay[]) => {
       this.daylist = resdata;
@@ -42,15 +45,26 @@ export class DayLogComponent implements OnInit {
       this.daylistDataSource.sort = this.sort;
       warten.close();
     });
+  }
 
-    // TODO: laden detail
+  public loadEvents(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.eventlist = [];
+    
+    this.http.get(this.rest.gethost() + 'daylog/event/getAll/' + this.userid).subscribe((resdata: DaylogEvent[]) => {
+      this.eventlist = resdata;
+
+      this.eventlistDataSource = new MatTableDataSource(this.eventlist);
+      this.eventlistDataSource.sort = this.sort;
+      warten.close();
+    });
   }
 
   public openDay(d: DaylogDay): void {
     console.log(d);
   }
 
-  public deleteItem(item: any): void {
+  public deleteDay(item: any): void {
     item.infotext = "Wirklich löschen? " + item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
@@ -61,10 +75,121 @@ export class DayLogComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.http.delete(this.rest.gethost() + 'daylog/day/delete/' + item.id).subscribe((resdata: any) => {
-          this.load();
+          this.loadDays();
         });
       }
     });
   }
 
+
+  public deleteEvent(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.data;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item.date,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'daylog/event/delete/' + item.id).subscribe((resdata: any) => {
+          this.loadDays();
+        });
+      }
+    });
+  }
+
+  public applyFilter() {
+    this.daylistDataSource.filter = this.sFilter.trim();
+    this.eventlistDataSource.filter = this.sFilter.trim();
+  }
+
+  public newDay(): void {
+    let e: DaylogDay = {};
+    e.date = Date.now();
+    e.tagestext = "";
+    this.openDialogDay(e);
+  }
+
+  public newEvent(): void {
+    // TODO: AUTO SET DATE FROM CALL
+    let e: DaylogEvent = {};
+    e.text = "";
+    this.openDialogEvent(e);
+  }
+
+  public openDialogDay(item: DaylogDay): void {
+    const edititem: DaylogDay = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(DaylogComponentDialogDayComponent, {
+      width: '350px',
+      height: '350px',
+      data: edititem,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DaylogDay) => {
+      if (result) {
+        this.saveDay(result);
+      }
+    });
+  }
+
+  public openDialogEvent(item: DaylogEvent): void {
+    const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(DaylogComponentDialogEventComponent, {
+      width: '350px',
+      height: '350px',
+      data: edititem,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DaylogEvent) => {
+      if (result) {
+        this.saveEvent(result);
+      }
+    });
+  }
+
+  private saveDay(item: DaylogDay): void {
+    this.http.post(this.rest.gethost() + 'daylog/day/save', item).subscribe((resdata: any) => {
+      this.loadDays();
+      if (!resdata) {
+        this.bShowWarning = true;
+      }
+    });
+  }
+
+  private saveEvent(item: DaylogEvent): void {
+    this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
+      this.loadEvents(); // TODO nur vom Tag
+      if (!resdata) {
+        this.bShowWarning = true;
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'app-daylog-dialogday',
+  templateUrl: './daylog.dialogDay.html',
+})
+export class DaylogComponentDialogDayComponent {
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-daylog-dialogevent',
+  templateUrl: './daylog.dialogEvent.html',
+})
+export class DaylogComponentDialogEventComponent {
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

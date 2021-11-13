@@ -10,7 +10,7 @@ public class DaylogDay {
 
 	private Integer nId;
 	private Integer nUserId;
-	private String sDate;
+	private Integer sDate;
 	private String sTagestext;
 
 	/**
@@ -35,7 +35,7 @@ public class DaylogDay {
 			this.nId = jo.getInt("id");
 		}
 		this.nUserId = jo.getInt("userid");
-		this.sDate = jo.getString("date");
+		this.sDate = jo.getInt("date");
 		this.sTagestext = jo.getString("tagestext");
 		return this;
 	}
@@ -71,14 +71,14 @@ public class DaylogDay {
 	/**
 	 * @return
 	 */
-	public String getDate() {
+	public Integer getDate() {
 		return sDate;
 	}
 
 	/**
 	 * @param date
 	 */
-	public void setDate(String date) {
+	public void setDate(Integer date) {
 		this.sDate = date;
 	}
 

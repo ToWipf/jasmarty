@@ -98,7 +98,7 @@ export interface Lcd12864PageDescriptionDynamic {
 export interface DaylogDay {
   id?: number;
   userid?: number;
-  date?: string;
+  date?: number;
   tagestext?: string;
 }
 

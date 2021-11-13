@@ -121,4 +121,40 @@ public class DaylogBoolEventDB {
 		statement.executeUpdate();
 	}
 
+	/**
+	 * @param nUserId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DaylogBoolEvent> getAll() throws SQLException {
+		List<DaylogBoolEvent> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM daylogBoolEvent";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			DaylogBoolEvent d = new DaylogBoolEvent();
+			d.setId(rs.getInt("id"));
+			d.setDateId(rs.getInt("dateid"));
+			d.setTyp(rs.getString("typ"));
+			d.setBool(rs.getBoolean("bool"));
+			o.add(d);
+		}
+		return o;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllAsJson() throws SQLException {
+		List<DaylogBoolEvent> l = getAll();
+		JSONArray ja = new JSONArray();
+		for (DaylogBoolEvent d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
+	}
+
 }

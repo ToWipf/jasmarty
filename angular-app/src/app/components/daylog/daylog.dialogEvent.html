@@ -4,15 +4,11 @@
         <h1 mat-dialog-title>Id: {{data.id}}</h1>
         <div mat-dialog-content>
             <mat-form-field>
-                <mat-label>Datum</mat-label>
-                <input matInput type="date" [(ngModel)]="data.date">
+                <mat-label>Data</mat-label>
+                <input matInput [(ngModel)]="data.text">
             </mat-form-field>
             <br>
-            <mat-form-field>
-                <mat-label>Tagestext</mat-label>
-                <input matInput [(ngModel)]="data.tagestext">
-            </mat-form-field>
-            <br>
+
             <!-- <mat-label>Status</mat-label> -->
             <!-- <input matInput [(ngModel)]="data.active"> -->
 
