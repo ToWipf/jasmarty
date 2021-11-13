@@ -38,7 +38,7 @@ export class DayLogComponent implements OnInit {
   public loadDays(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.daylist = [];
-    
+
     this.http.get(this.rest.gethost() + 'daylog/day/getAll/' + this.userid).subscribe((resdata: DaylogDay[]) => {
       this.daylist = resdata;
 
@@ -52,7 +52,7 @@ export class DayLogComponent implements OnInit {
     // NUR DEBUG TODO: da keine userid
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
-    
+
     this.http.get(this.rest.gethost() + 'daylog/event/getAll/').subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
 
@@ -65,7 +65,7 @@ export class DayLogComponent implements OnInit {
   public loadEventsByDay(d: DaylogDay): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
-    
+
     this.http.get(this.rest.gethost() + 'daylog/event/get/' + d.id).subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
 
@@ -143,7 +143,7 @@ export class DayLogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
       if (result) {
-        result.date = result.date/1000;
+        result.date = result.date / 1000;
         this.saveDay(result);
       }
     });
