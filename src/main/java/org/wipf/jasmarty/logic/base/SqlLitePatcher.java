@@ -23,10 +23,14 @@ public class SqlLitePatcher {
 	public void doPatch() throws SQLException {
 		Integer nLastVersion = wipfConfig.getConfParamInteger("lastversion");
 
-		if (nLastVersion == null || nLastVersion < 1) {
-			LOGGER.warn("DROP TABLE daylogDay;");
-			String sUpdate = "DROP TABLE daylogDay;";
-			sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
+		try {
+			if (nLastVersion == null || nLastVersion < 1) {
+				LOGGER.warn("DROP TABLE daylogDay;");
+				String sUpdate = "DROP TABLE daylogDay;";
+				sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
+			}
+		} catch (Exception e) {
+			LOGGER.warn("Patch error: " + e);
 		}
 
 		setNewPatchVersion();
