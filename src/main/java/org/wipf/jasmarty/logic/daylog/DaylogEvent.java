@@ -71,6 +71,8 @@ public class DaylogEvent {
 	 */
 	public void del(Integer nId) throws SQLException {
 		// TODO
+		// Ermitteln des types
+		// Löschen
 	}
 
 	/**

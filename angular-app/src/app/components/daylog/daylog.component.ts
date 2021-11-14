@@ -16,7 +16,8 @@ import { MatSort } from '@angular/material/sort';
 export class DayLogComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sortDay: MatSort;
+  @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
 
   public daylistDataSource;
   public eventlistDataSource;
@@ -43,7 +44,7 @@ export class DayLogComponent implements OnInit {
       this.daylist = resdata;
 
       this.daylistDataSource = new MatTableDataSource(this.daylist);
-      this.daylistDataSource.sort = this.sort;
+      this.daylistDataSource.sort = this.sortDay;
       warten.close();
     });
   }
@@ -57,7 +58,7 @@ export class DayLogComponent implements OnInit {
       this.eventlist = resdata;
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);
-      this.eventlistDataSource.sort = this.sort;
+      this.eventlistDataSource.sort = this.sortEvent;
       warten.close();
     });
   }
@@ -70,7 +71,7 @@ export class DayLogComponent implements OnInit {
       this.eventlist = resdata;
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);
-      this.eventlistDataSource.sort = this.sort;
+      this.eventlistDataSource.sort = this.sortEvent;
       warten.close();
     });
   }
@@ -80,7 +81,7 @@ export class DayLogComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
-      data: item.date,
+      data: item,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -97,7 +98,7 @@ export class DayLogComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
-      data: item.id,
+      data: item,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
