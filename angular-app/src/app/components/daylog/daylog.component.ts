@@ -76,7 +76,7 @@ export class DayLogComponent implements OnInit {
   }
 
   public deleteDay(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen? " + item.date;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -92,13 +92,12 @@ export class DayLogComponent implements OnInit {
     });
   }
 
-
   public deleteEvent(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen? " + item.id;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
-      data: item.date,
+      data: item.id,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -117,8 +116,11 @@ export class DayLogComponent implements OnInit {
 
   public newDay(): void {
     let e: DaylogDay = {};
-    e.date = Date.now();
     e.tagestext = "";
+    this.openDialogDay(e);
+  }
+
+  public editDay(e: DaylogDay): void {
     this.openDialogDay(e);
   }
 
@@ -129,6 +131,10 @@ export class DayLogComponent implements OnInit {
     e.dateid = dayitem.id;
     e.text = "";
     e.typ = "";
+    this.openDialogEvent(e);
+  }
+
+  public editEvent(e: DaylogEvent): void {
     this.openDialogEvent(e);
   }
 
@@ -143,7 +149,6 @@ export class DayLogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
       if (result) {
-        result.date = result.date / 1000;
         this.saveDay(result);
       }
     });
@@ -167,9 +172,7 @@ export class DayLogComponent implements OnInit {
 
   private saveDay(item: DaylogDay): void {
     this.bShowWarning = true;
-    console.log(item);
     this.http.post(this.rest.gethost() + 'daylog/day/save', item).subscribe((resdata: any) => {
-      console.log("item");
       this.loadDays();
       if (resdata.save == "true") {
         this.bShowWarning = false;

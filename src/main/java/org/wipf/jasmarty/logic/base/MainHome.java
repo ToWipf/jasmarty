@@ -37,9 +37,12 @@ public class MainHome {
 	DaylogEvent daylogEvent;
 	@Inject
 	Dynpages dynpages;
+	@Inject
+	SqlLitePatcher sqlLitePatcher;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.0.41";
+	public static final Integer DB_PATCH_VERSION = 1;
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -56,9 +59,11 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+			wipfConfig.initDB();
+
+			sqlLitePatcher.doPatch();
 
 			wipfUserVW.initDB();
-			wipfConfig.initDB();
 			dynpages.initDB();
 			daylogEvent.initDB();
 			wipfConfig.checkAppWorkId();
