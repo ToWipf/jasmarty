@@ -51,22 +51,22 @@ jobs:
           docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm -f Dockerfile.arm --push .
 
 # Geht nicht -> umstellen auf buildx mit builder und ghcr
-#      - name: Build and Push dockerimage_arm 64
-#        run: |
-#          cd scripts && docker buildx build --platform linux/arm64 -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
-#          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
-#
-#          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-#
-#          # Change all uppercase to lowercase
-#          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-#
-#          # Strip git ref prefix from version
-#          VERSION=$(date '+%Y-%m-%d')
-#
-#          echo IMAGE_ID=$IMAGE_ID
-#          echo VERSION=$VERSION
-#          docker tag ${IMAGE_NAME}-arm_64 $IMAGE_ID:${VERSION}-arm_64
-#          docker push $IMAGE_ID:${VERSION}-arm_64
-#          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-#          docker push $IMAGE_ID:$VERSION       
+      - name: Build and Push dockerimage_arm 64
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          # Strip git ref prefix from version
+          VERSION=$(date '+%Y-%m-%d')
+
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          cd scripts && \
+          docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder && \
+          docker buildx use mybuilder && \
+          docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm:64 -f Dockerfile.arm_64 --push .
