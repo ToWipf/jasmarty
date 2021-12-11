@@ -1,6 +1,6 @@
 FROM arm64v8/openjdk
 
-RUN apk add curl
+#RUN apk add curl
 COPY jasmarty.jar /app/jasmarty.jar
 CMD ["java","-jar","-Xmx90m","/app/jasmarty.jar"]
-HEALTHCHECK --interval=120s --start-period=30s CMD curl --fail http://localhost:8080/wipf/up || kill 1
+#HEALTHCHECK --interval=120s --start-period=30s CMD curl --fail http://localhost:8080/wipf/up || kill 1
