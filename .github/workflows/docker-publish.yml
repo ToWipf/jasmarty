@@ -69,4 +69,4 @@ jobs:
           cd scripts && \
           docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder64 && \
           docker buildx use mybuilder64 && \
-          docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm_64 -f Dockerfile.arm_64 --push .
+          docker buildx build --platform linux/arm64 -t $IMAGE_ID:${VERSION}-arm_64 -f Dockerfile.arm_64 --push .
