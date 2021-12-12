@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -10,8 +11,10 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import org.wipf.jasmarty.logic.base.WipfUserVW;
 
@@ -47,6 +50,14 @@ public class WipfUserVwRest {
 	public Response delete(@PathParam("username") String sUsername) {
 		wipfUserVW.deleteUser(sUsername);
 		return Response.ok().build();
+	}
+
+	@GET
+	@PermitAll
+	@Path("/getUsername")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response me(@Context SecurityContext securityContext) {
+		return Response.ok(securityContext.getUserPrincipal().getName()).build();
 	}
 
 }
