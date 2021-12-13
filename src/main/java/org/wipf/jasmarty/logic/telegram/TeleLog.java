@@ -201,6 +201,9 @@ public class TeleLog {
 				LOGGER.warn("clean log " + e);
 			}
 		});
+
+		// Systemmeldungen löschen
+		delItem(-1);
 	}
 
 }
