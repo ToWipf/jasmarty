@@ -61,15 +61,16 @@ export class TelegramLogComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.logArry = [];
+        this.dataSource = null;
         this.cleanLog();
       }
     });
   }
 
   private cleanLog(): void {
-    var e: any = {};
-    e.infotext = 'Liste neu laden?'
     this.http.delete(this.rest.gethost() + 'telegram/cleanLog').subscribe((resdata: any) => {
+      var e: any = {};
+      e.infotext = 'Löschen ist fertig <br> Liste neu laden?'
 
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         width: '250px',
@@ -79,7 +80,7 @@ export class TelegramLogComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.dataSource = null;
+          this.loadAll();
         }
       });
 
