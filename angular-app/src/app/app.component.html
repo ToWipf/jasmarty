@@ -1,7 +1,5 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
-
-
     <mat-drawer #drawer [mode]="mode.value">
         <perfect-scrollbar class="pscroll">
 
@@ -18,11 +16,16 @@
 
                 <div class="titlemenue">LCD</div>
                 <ul class="menueli">
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">2004 Startseite</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">2004 Live Display</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">2004 Seiten</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">12864 Panel</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864 Seiten</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">2004
+                        Startseite</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">2004 Live
+                        Display</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">2004 Seiten
+                    </li>
+                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">12864 Panel
+                    </li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864
+                        Seiten</li>
                     <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">Char Generator</li>
                     <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">Funktionen</li>
                     <li (click)="selectSite('config')">Einstellungen</li>
@@ -42,10 +45,12 @@
                     <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')">Zeige Dynpage</li>
                 </ul>
 
-                <div class="titlemenue">Dev</div>
+                <div class="titlemenue">Anzeige</div>
                 <ul class="menueli">
-                    <li (click)="getActiveModules()">Menü Laden</li>
+                    <li (click)="getActiveModules()">Menü neu Laden</li>
                     <li *ngIf="!bDevActive" (click)="showDevModules()">Zeige Dev</li>
+                    <li *ngIf="bDevActive" (click)="showAll2004()">Zeige Alles 2004</li>
+                    <li *ngIf="bDevActive" (click)="showAll12864()">Zeige Alles 12864</li>
                     <li *ngIf="bDevActive" (click)="showDevModules()">Verstecke Dev</li>
                 </ul>
             </div>
@@ -61,73 +66,73 @@
         </div>
         <div class="fullsite">
             <button class="mainMenueButton" (click)="drawer.toggle()">Menü Öffnen</button>
+
             <div class="maincontainer">
-                <ng-container *ngIf="selectedSite==='pages'">
-                    <app-jasmartyPages></app-jasmartyPages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='liveFull'">
-                    <app-jasmartyFullView></app-jasmartyFullView>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='actions'">
-                    <app-jasmartyActions></app-jasmartyActions>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='config'">
-                    <app-jasmartyConfig></app-jasmartyConfig>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='main'">
-                    <app-jasmartyMain></app-jasmartyMain>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='configtele'">
-                    <app-telegram-config></app-telegram-config>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='todolist'">
-                    <app-todolist></app-todolist>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='filme'">
-                    <app-filme></app-filme>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='crypt'">
-                    <app-crypt></app-crypt>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='chat'">
-                    <app-telegram-chat></app-telegram-chat>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='tlog'">
-                    <app-telegram-log></app-telegram-log>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='tmsg'">
-                    <app-telegramMsg></app-telegramMsg>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='wipfuservw'">
-                    <app-wipfuservw></app-wipfuservw>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='12864panel'">
-                    <app-jasmarty12864panel></app-jasmarty12864panel>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='12864pages'">
-                    <app-jasmarty12864pages></app-jasmarty12864pages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='charGenerator'">
-                    <app-charGenerator></app-charGenerator>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='debug'">
-                    <app-debugSeite></app-debugSeite>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='daylog'">
-                    <app-daylog></app-daylog>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='dynpages'">
-                    <app-dynpages></app-dynpages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='dynpageShow'">
-                    <app-dynpageShow></app-dynpageShow>
-                </ng-container>
+                <perfect-scrollbar class="pscroll">
+                    <ng-container *ngIf="selectedSite==='pages'">
+                        <app-jasmartyPages></app-jasmartyPages>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='liveFull'">
+                        <app-jasmartyFullView></app-jasmartyFullView>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='actions'">
+                        <app-jasmartyActions></app-jasmartyActions>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='config'">
+                        <app-jasmartyConfig></app-jasmartyConfig>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='main'">
+                        <app-jasmartyMain></app-jasmartyMain>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='configtele'">
+                        <app-telegram-config></app-telegram-config>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='todolist'">
+                        <app-todolist></app-todolist>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='filme'">
+                        <app-filme></app-filme>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='crypt'">
+                        <app-crypt></app-crypt>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='chat'">
+                        <app-telegram-chat></app-telegram-chat>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='tlog'">
+                        <app-telegram-log></app-telegram-log>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='tmsg'">
+                        <app-telegramMsg></app-telegramMsg>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='wipfuservw'">
+                        <app-wipfuservw></app-wipfuservw>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='12864panel'">
+                        <app-jasmarty12864panel></app-jasmarty12864panel>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='12864pages'">
+                        <app-jasmarty12864pages></app-jasmarty12864pages>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='charGenerator'">
+                        <app-charGenerator></app-charGenerator>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='debug'">
+                        <app-debugSeite></app-debugSeite>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='daylog'">
+                        <app-daylog></app-daylog>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='dynpages'">
+                        <app-dynpages></app-dynpages>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='dynpageShow'">
+                        <app-dynpageShow></app-dynpageShow>
+                    </ng-container>
+                </perfect-scrollbar>
             </div>
         </div>
         <app-footer class="myfooter"></app-footer>
     </mat-drawer-content>
 
 </mat-drawer-container>
-
-<!-- The routed views render in the <router-outlet>-->
-<router-outlet></router-outlet>

@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
   }
   
   public getActiveModules(): void {
+    this.bDevActive = false;
     this.http.get(this.rest.gethost() + 'basesettings/get/telegram').subscribe((resdata: any) => {
       this.bTelegramActive = resdata.active;
     });
@@ -46,6 +47,18 @@ export class AppComponent implements OnInit {
 
   public showDevModules(): void {
     this.bDevActive = !this.bDevActive;
+  }
+
+  public showAll2004(): void {
+    this.bJasmartyActive = true;
+    this.bTelegramActive = true;
+    this.jasmartyType = "LCD_2004";
+  }
+
+  public showAll12864(): void {
+    this.bJasmartyActive = true;
+    this.bTelegramActive = true;
+    this.jasmartyType = "LCD_12864";
   }
 
 }

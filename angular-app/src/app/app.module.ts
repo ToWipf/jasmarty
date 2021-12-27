@@ -68,7 +68,6 @@ import { Jasmarty12864PagesComponent } from './components/jasmarty12864Pages/jas
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dialog';
-import { AppRoutingModule } from './app-routing.module';
 import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent } from './components/daylog/daylog.component';
@@ -115,7 +114,6 @@ import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.compo
   ],
   imports: [
     A11yModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
     CdkStepperModule,
