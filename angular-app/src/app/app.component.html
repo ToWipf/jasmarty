@@ -1,5 +1,7 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
+
+
     <mat-drawer #drawer [mode]="mode.value">
         <perfect-scrollbar class="pscroll">
 
@@ -9,35 +11,41 @@
                     <li (click)="selectSite('todolist')">Todo List</li>
                     <li (click)="selectSite('daylog')">TagesLog</li>
                     <li (click)="selectSite('filme')">Filme</li>
-                    <li (click)="selectSite('crypt')">Crypt</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('crypt')">Crypt</li>
                     <li (click)="selectSite('wipfuservw')">Wipf User</li>
-                    <li (click)="selectSite('debug')">Debug</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('debug')">Debug</li>
                 </ul>
-                
+
                 <div class="titlemenue">LCD</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('main')">2004 Startseite</li>
-                    <li (click)="selectSite('liveFull')">2004 Live Display</li>
-                    <li (click)="selectSite('pages')">2004 Seiten</li>
-                    <li (click)="selectSite('12864panel')">12864 Panel</li>
-                    <li (click)="selectSite('12864pages')">12864 Seiten</li>
-                    <li (click)="selectSite('charGenerator')">Char Generator</li>
-                    <li (click)="selectSite('actions')">Funktionen</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType=='2004'" (click)="selectSite('main')">2004 Startseite</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType=='2004'" (click)="selectSite('liveFull')">2004 Live Display</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType=='2004'" (click)="selectSite('pages')">2004 Seiten</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType=='12864'" (click)="selectSite('12864panel')">12864 Panel</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType=='12864'" (click)="selectSite('12864pages')">12864 Seiten</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">Char Generator</li>
+                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">Funktionen</li>
                     <li (click)="selectSite('config')">Einstellungen</li>
                 </ul>
-                
+
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('chat')">Test Chat</li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')">Test Chat</li>
                     <li (click)="selectSite('configtele')">Einstellungen</li>
-                    <li (click)="selectSite('tmsg')">Nachrichten</li>
-                    <li (click)="selectSite('tlog')">Logs</li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')">Nachrichten</li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')">Logs</li>
                 </ul>
-                
-                <div class="titlemenue">DynPage</div>
+
+                <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('dynpages')">Dynpages</li>
-                    <li (click)="selectSite('dynpageShow')">Zeige Dynpage</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')">Dynpages</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')">Zeige Dynpage</li>
+                </ul>
+
+                <div class="titlemenue">Dev</div>
+                <ul class="menueli">
+                    <li (click)="getActiveModules()">Menü Laden</li>
+                    <li (click)="showDevModules()">Zeige Dev</li>
                 </ul>
             </div>
         </perfect-scrollbar>

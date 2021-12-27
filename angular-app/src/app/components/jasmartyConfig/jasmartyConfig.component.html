@@ -31,11 +31,13 @@
                         <span class="title">Refesh Rate</span>
                         <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
 
-                        <span class="title">Breite</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
-
-                        <span class="title">Höhe</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
+                        <ng-container *ngIf="jaconfig.type=='2004'">
+                            <span class="title">Breite</span>
+                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
+                            
+                            <span class="title">Höhe</span>
+                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
+                        </ng-container>
 
 
                     </ng-container>
