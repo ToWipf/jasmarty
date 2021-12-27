@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { CroppedEvent } from 'ngx-photo-editor';
 import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DialogVariablenHilfeComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-jasmarty12864pages',

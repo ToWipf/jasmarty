@@ -19,36 +19,39 @@
         <mat-label>Timeout Zeit</mat-label>
         <input matInput type="number" min="0" [(ngModel)]="lcdDescription.timeouttime">
     </mat-form-field>
-
-    <h3>Hintergrundbild</h3>
+    <hr>
 
     <div class="images">
 
-        Bild einfügen
-        <br>
+        Hintergrundbild Bild hochladen:
         <input type="file" (change)="fileChangeEvent($event)" />
-        <button class="btn btn-primary" (click)="clearPic()">Hintergrundbild löschen</button>
+
 
         <ng-container *ngIf="base64">
             <img [src]="base64" alt="" height="128" width="256">
 
             <mat-form-field appearance="fill">
                 <mat-label>Kontrast</mat-label>
-                <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
+                <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()"
+                    [(ngModel)]="nKontrast" placeholder="128">
             </mat-form-field>
         </ng-container>
 
         <ng-container *ngIf="lcdDescription.static">
+            Aktelles Bild:
+
             <table>
                 <div *ngFor="let xA of lcdDescription.static; let x = index">
                     <tr>
-                        <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
+                        <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}"
+                            [ngClass]="{ 'on': lcdDescription.static[x][y] , 'off': !lcdDescription.static[x][y] }">
                         </td>
                     </tr>
                 </div>
             </table>
+            Aktelles Bild löschen:
+            <button class="btn btn-danger" (click)="clearPic()">löschen</button>
         </ng-container>
-
     </div>
 
     <hr>
@@ -123,5 +126,6 @@
 
 </ng-container>
 
-<ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3" [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
+<ngx-photo-editor [imageChanedEvent]="imageChangedEvent" (imageCropped)="imageCropped($event)" [viewMode]="3"
+    [resizeToHeight]="64" [aspectRatio]="2/1" [darkTheme]="true">
 </ngx-photo-editor>

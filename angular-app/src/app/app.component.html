@@ -16,16 +16,11 @@
 
                 <div class="titlemenue">LCD</div>
                 <ul class="menueli">
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">2004
-                        Startseite</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">2004 Live
-                        Display</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">2004 Seiten
-                    </li>
-                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">12864 Panel
-                    </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864
-                        Seiten</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">2004Startseite</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">2004 Live Display</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">2004 Seiten</li>
+                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">12864 Panel</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864 Seiten</li>
                     <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">Char Generator</li>
                     <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">Funktionen</li>
                     <li (click)="selectSite('config')">Einstellungen</li>
