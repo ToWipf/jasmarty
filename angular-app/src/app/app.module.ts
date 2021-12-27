@@ -67,7 +67,7 @@ import { Jasmarty12864PanelComponent } from './components/jasmarty12864Panel/jas
 import { Jasmarty12864PagesComponent } from './components/jasmarty12864Pages/jasmarty12864Pages.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
-import { DialogJaNeinComponent, DialogWartenComponent } from './dialog/main.dialog';
+import { DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent } from './components/daylog/daylog.component';
@@ -82,6 +82,7 @@ import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.compo
     DayLogComponent,
     DebugSeiteComponent,
     DialogJaNeinComponent,
+    DialogVariablenHilfeComponent,
     DialogWartenComponent,
     DaylogComponentDialogDayComponent,
     DaylogComponentDialogEventComponent,

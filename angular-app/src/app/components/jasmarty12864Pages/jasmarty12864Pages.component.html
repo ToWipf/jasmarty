@@ -3,6 +3,11 @@
 
     <button type="button" class="btn btn-primary" (click)="pageLast()">Seite zurück</button>
     <button type="button" class="btn btn-primary" (click)="pageNext()">nächste Seite</button>
+
+    <button type="button" class="btn btn-primary" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
+    <button type="button" class="btn btn-danger" (click)="sendSelectedPage()">Speichern und zeigen</button>
+
+    <button type="button" class="btn btn-primary" (click)="openariablenHilfeDialog()">Variablen anzeigen</button>
     <hr>
 
     <mat-form-field appearance="fill">
@@ -114,8 +119,7 @@
         </div>
     </perfect-scrollbar>
 
-    <button class="btn btn-primary" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
-    <button class="btn btn-primary" (click)="sendSelectedPage()">Speichern und Zeigen</button>
+
 
 </ng-container>
 

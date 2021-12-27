@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Jaconfig, Japage } from 'src/app/datatypes';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
+import { DialogVariablenHilfeComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-jasmartyPages',
@@ -131,6 +132,10 @@ export class JasmartyPagesComponent implements OnInit {
         this.toPage(Math.round(result));
       }
     });
+  }
+
+  public openariablenHilfeDialog(): void {
+    this.dialog.open(DialogVariablenHilfeComponent, {});
   }
 }
 
