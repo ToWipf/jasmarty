@@ -270,4 +270,5 @@ public final class Base32 {
 		}
 		return base32.toString();
 	}
+
 }
