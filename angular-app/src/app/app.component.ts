@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { Jaconfig } from './datatypes';
 import { ServiceRest } from './service/serviceRest';
@@ -9,18 +9,22 @@ import { ServiceRest } from './service/serviceRest';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest) {}
-
+  
   public bTelegramActive: boolean = false;
   public bJasmartyActive: boolean = false;
   public bDevActive: boolean = false;
   public jasmartyType: string;
-
+  
   @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
-
+  
   public selectedSite: string = 'firstpage';
 
+  ngOnInit(): void {
+    this.getActiveModules();
+  }
+  
   public selectSite(s: string) {
     this.drawer.toggle();
     this.selectedSite = s;
