@@ -124,7 +124,7 @@ public class TAppGrafana {
 
 		if (validateInput(sTeil1_Was, sTeil2_Zeit)) {
 			try {
-				return sendGrafanaPictureToTelegram(t.getChatID(), "FYv3KbWgk/fritsch-box", sPanelId, sTeil2_Zeit);
+				return sendGrafanaPictureToTelegram(t.getChatID(), "FYv3KbWgk/netzwerk", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
 				return "Fehler 8 " + e;
 			}

@@ -35,6 +35,13 @@ public class Lcd2004 {
 		pageVerwaltung.initDB();
 		customChars.initDB();
 
+		if (lcdConnect.getHeight() <= 1 || lcdConnect.getWidth() <= 1) {
+			LOGGER.warn("LCD 2004 Config fehlerhaft");
+			return false;
+		}
+
+		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());
+
 		// lcdConnect.startSerialLcdPort(); wird über start2004LCD
 
 		charPictures.writeAndLoadWipf();
@@ -42,7 +49,6 @@ public class Lcd2004 {
 
 		pageVerwaltung.writeStartPage();
 		// Cache vorbereiten
-		lcache = new Lcd2004Cache(lcdConnect.getWidth(), lcdConnect.getHeight());
 		return lcdConnect.startPort();
 	}
 

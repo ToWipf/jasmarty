@@ -45,7 +45,8 @@ public class Lcd12864PageVerwaltung {
 		statement.setInt(1, page.getId());
 		statement.setString(2, page.getName());
 		statement.setInt(3, page.getTimeouttime());
-		statement.setString(4, page.getStatic().toString());
+		statement.setString(4, page.getStatic().toString().replaceAll("true", "1").replaceAll("false", "0")); // Speicherplatz
+																												// sparen
 		statement.setString(5, page.getDynamic().toString());
 		statement.executeUpdate();
 	}

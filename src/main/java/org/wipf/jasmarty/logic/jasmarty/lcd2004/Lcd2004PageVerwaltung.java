@@ -147,6 +147,7 @@ public class Lcd2004PageVerwaltung {
 			LOGGER.warn("Seiten init fehlgeschlagen. Seiten id: '" + page.getId() + "' name: '" + page.getName()
 					+ "' fehler: " + e);
 			e.printStackTrace();
+			LOGGER.warn("\n PAGE:" + page.getPageAsDBString());
 		}
 	}
 
