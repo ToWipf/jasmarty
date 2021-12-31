@@ -1,6 +1,17 @@
 <div>
     <h3>Nachrichteneditor</h3>
     <div class="msglist">
+        <div class="configline">
+
+            <div class="box">
+                Neu:
+                <button class="btn btn-default" (click)="newItem()">Neu</button>
+            </div>
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
+
+        </div>
 
         <perfect-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
@@ -31,7 +42,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="edit">
-                    <th mat-header-cell *matHeaderCellDef> <button class="btn btn-default" (click)="newItem()">Neu</button></th>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <!-- <th mat-header-cell *matHeaderCellDef> <button class="btn btn-default" (click)="newItem()">Neu</button></th> -->
                     <td mat-cell *matCellDef="let element">
                         <button class="btn btn-default" (click)="editItem(element)">Bearbeiten</button>
                         <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
