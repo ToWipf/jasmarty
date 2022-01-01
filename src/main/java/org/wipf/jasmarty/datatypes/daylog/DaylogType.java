@@ -10,6 +10,7 @@ public class DaylogType {
 
 	private Integer nId;
 	private String sType;
+	private String sArt;
 
 	/**
 	 * @return
@@ -18,6 +19,7 @@ public class DaylogType {
 		JSONObject jo = new JSONObject();
 		jo.put("id", this.nId);
 		jo.put("type", this.sType);
+		jo.put("art", this.sArt);
 		return jo;
 	}
 
@@ -31,6 +33,7 @@ public class DaylogType {
 			this.nId = jo.getInt("id");
 		}
 		this.sType = jo.getString("type");
+		this.sArt = jo.getString("art");
 		return this;
 	}
 
@@ -60,6 +63,20 @@ public class DaylogType {
 	 */
 	public void setType(String sType) {
 		this.sType = sType;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getArt() {
+		return sArt;
+	}
+
+	/**
+	 * @param sArt
+	 */
+	public void setArt(String sArt) {
+		this.sArt = sArt;
 	}
 
 }

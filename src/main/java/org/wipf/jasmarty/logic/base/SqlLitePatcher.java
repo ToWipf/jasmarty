@@ -15,6 +15,7 @@ public class SqlLitePatcher {
 	@Inject
 	SqlLite sqlLite;
 
+	public static final Integer DB_PATCH_VERSION = 2;
 	private static final Logger LOGGER = Logger.getLogger("Patcher");
 
 	/**
@@ -24,9 +25,9 @@ public class SqlLitePatcher {
 		Integer nLastVersion = wipfConfig.getConfParamInteger("lastversion");
 
 		try {
-			if (nLastVersion == null || nLastVersion < 1) {
-				LOGGER.warn("DROP TABLE daylogDay;");
-				String sUpdate = "DROP TABLE daylogDay;";
+			if (nLastVersion == null || nLastVersion < DB_PATCH_VERSION) {
+				LOGGER.warn("ALTER TABLE daylogType ADD art TEXT;");
+				String sUpdate = "ALTER TABLE daylogType ADD art TEXT;";
 				sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 			}
 		} catch (Exception e) {
@@ -41,8 +42,8 @@ public class SqlLitePatcher {
 	 * 
 	 */
 	private void setNewPatchVersion() throws SQLException {
-		LOGGER.info("DB Patch Version:" + MainHome.DB_PATCH_VERSION);
-		wipfConfig.setConfParam("lastversion", MainHome.DB_PATCH_VERSION);
+		LOGGER.info("DB Patch Version:" + DB_PATCH_VERSION);
+		wipfConfig.setConfParam("lastversion", DB_PATCH_VERSION);
 	}
 
 }

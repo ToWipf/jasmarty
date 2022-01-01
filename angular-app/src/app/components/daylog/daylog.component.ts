@@ -136,14 +136,14 @@ export class DayLogComponent implements OnInit {
     this.daylistDataSource.filter = this.sFilter.trim();
     this.eventlistDataSource.filter = this.sFilter.trim();
   }
-  
+
   public newDay(): void {
     let e: DaylogDay = {};
     e.tagestext = "";
     e.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     this.openDialogDay(e);
   }
-  
+
   public editDay(e: DaylogDay): void {
     this.openDialogDay(e);
   }
@@ -152,7 +152,7 @@ export class DayLogComponent implements OnInit {
     let tmpDay = this.dateCacheForLoad; // TODO: hier
     this.newEvent(tmpDay);
   }
-  
+
   public newEvent(dayitem: DaylogDay): void {
     // Tag speicher um später die Liste neu laden zu können
     this.dateCacheForLoad = dayitem;
@@ -264,7 +264,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  public eventlistDisplayedColumns: string[] = ['id', 'type', 'button'];
+  public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'button'];
   public sFilter: String = "";
   public bShowWarning: boolean = false;
   public daylogTypeDataSource;

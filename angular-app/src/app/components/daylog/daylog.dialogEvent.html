@@ -3,12 +3,6 @@
         <!-- TODO: LESS DATEI -->
         <h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typ}}</h1>
         <div mat-dialog-content>
-
-            <!-- <mat-form-field>
-                <mat-label>Typ</mat-label>
-                <input matInput [(ngModel)]="data.typ">
-            </mat-form-field> -->
-
             <mat-form-field appearance="fill">
                 <mat-label>Typ</mat-label>
                 <mat-select [(value)]="data.typ">
@@ -19,15 +13,31 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Text</mat-label>
-                <input matInput [(ngModel)]="data.text">
-            </mat-form-field>
+            <ng-container *ngFor="let type of daylogTypes">
+                <ng-container *ngIf="data.typ.toString()==type.id">
+                    <ng-container *ngIf="type.art==='TEXT'">
+                        <mat-form-field>
+                            <mat-label>Text</mat-label>
+                            <input matInput [(ngModel)]="data.text">
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="type.art==='NUMBER'">
+                        <mat-form-field>
+                            <mat-label>Nummer</mat-label>
+                            <input matInput type="number" [(ngModel)]="data.number">
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="type.art==='BOOL'">
+                        <mat-form-field>
+                            <mat-label>Boolean</mat-label>
+                            <input matInput type="checkbox" [(ngModel)]="data.bool">
+                        </mat-form-field>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
             <br>
-
-            <!-- <mat-label>Status</mat-label> -->
-            <!-- <input matInput [(ngModel)]="data.active"> -->
-
         </div>
 
         <div mat-dialog-actions>

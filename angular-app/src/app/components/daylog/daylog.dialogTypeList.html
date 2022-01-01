@@ -19,6 +19,11 @@
             <td mat-cell *matCellDef="let element">{{ element.type }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="art">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Art</th>
+            <td mat-cell *matCellDef="let element">{{ element.art }}</td>
+        </ng-container>
+
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 Verwalten

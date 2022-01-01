@@ -9,6 +9,15 @@
             </mat-form-field>
         </div>
 
+        <mat-form-field appearance="fill">
+            <mat-label>Art</mat-label>
+            <mat-select [(value)]="data.art">
+                <mat-option value="TEXT">Text</mat-option>
+                <mat-option value="NUMBER">Zahl</mat-option>
+                <mat-option value="BOOL">Boolean</mat-option>
+            </mat-select>
+        </mat-form-field>
+
         <div mat-dialog-actions>
             <button mat-button (click)="onNoClick()">Abbrechen</button>
             <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>

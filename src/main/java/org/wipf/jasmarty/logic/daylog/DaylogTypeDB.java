@@ -27,7 +27,7 @@ public class DaylogTypeDB {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogType (id INTEGER NOT NULL UNIQUE, type TEXT, PRIMARY KEY(id AUTOINCREMENT));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogType (id INTEGER NOT NULL UNIQUE, type TEXT, art TEXT, PRIMARY KEY(id AUTOINCREMENT));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -38,16 +38,18 @@ public class DaylogTypeDB {
 	public void save(DaylogType o) throws SQLException {
 		if (o.getId() != null) {
 			// update
-			String sUpdate = "INSERT OR REPLACE INTO daylogType (id, type) VALUES (?,?)";
+			String sUpdate = "INSERT OR REPLACE INTO daylogType (id, type, art) VALUES (?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, o.getId());
 			statement.setString(2, o.getType());
+			statement.setString(3, o.getArt());
 			statement.executeUpdate();
 		} else {
 			// insert
-			String sUpdate = "INSERT OR REPLACE INTO daylogType (type) VALUES (?)";
+			String sUpdate = "INSERT OR REPLACE INTO daylogType (type, art) VALUES (?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setString(1, o.getType());
+			statement.setString(2, o.getArt());
 			statement.executeUpdate();
 		}
 	}
@@ -84,6 +86,7 @@ public class DaylogTypeDB {
 			DaylogType d = new DaylogType();
 			d.setId(rs.getInt("id"));
 			d.setType(rs.getString("type"));
+			d.setArt(rs.getString("art"));
 			o.add(d);
 		}
 
@@ -131,6 +134,7 @@ public class DaylogTypeDB {
 			DaylogType d = new DaylogType();
 			d.setId(rs.getInt("id"));
 			d.setType(rs.getString("type"));
+			d.setArt(rs.getString("art"));
 			o.add(d);
 		}
 		return o;

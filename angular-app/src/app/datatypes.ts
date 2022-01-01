@@ -123,4 +123,5 @@ export interface DynpageEntry {
 export interface DaylogType {
   id?: number;
   type?: string;
+  art?: string;
 }
