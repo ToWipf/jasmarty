@@ -64,9 +64,9 @@
                                 <button class="btn btn-default" (click)="loadEventsByDay(element)">
                                     Tag anzeigen
                                 </button>
-                                <button class="btn btn-default" (click)="newEvent(element)">
+                                <!-- <button class="btn btn-default" (click)="newEvent(element)">
                                     Event erstellen
-                                </button>
+                                </button> -->
                                 <button class="btn btn-default" (click)="deleteDay(element)">
                                     Löschen
                                 </button>
@@ -126,7 +126,7 @@
                         <ng-container matColumnDef="button">
                             <th th mat-header-cell *matHeaderCellDef>
                                 Verwalten
-                                <button class="btn btn-default" (click)="newEventBySelectedDay()">
+                                <button *ngIf="dateCacheForLoad.id" class="btn btn-default" (click)="newEventBySelectedDay()">
                                     Event erstellen
                                 </button>
                             </th>

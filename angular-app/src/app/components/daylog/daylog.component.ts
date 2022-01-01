@@ -29,8 +29,7 @@ export class DayLogComponent implements OnInit {
   public sFilter: String = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
-
-  private dateCacheForLoad: DaylogDay = {};
+  public dateCacheForLoad: DaylogDay = {};
 
 
   ngOnInit() {
@@ -88,6 +87,7 @@ export class DayLogComponent implements OnInit {
   public loadEventsByDay(d: DaylogDay): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
+    this.dateCacheForLoad = d;
 
     this.http.get(this.rest.gethost() + 'daylog/event/get/' + d.id).subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
@@ -136,7 +136,6 @@ export class DayLogComponent implements OnInit {
     this.daylistDataSource.filter = this.sFilter.trim();
     this.eventlistDataSource.filter = this.sFilter.trim();
   }
-
   
   public newDay(): void {
     let e: DaylogDay = {};
