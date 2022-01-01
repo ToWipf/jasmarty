@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
-import org.wipf.jasmarty.datatypes.daylog.DaylogBoolEvent;
+import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.base.SqlLite;
  *
  */
 @ApplicationScoped
-public class DaylogBoolEventDB {
+public class DaylogEventDB {
 
 	@Inject
 	SqlLite sqlLite;
@@ -27,7 +27,7 @@ public class DaylogBoolEventDB {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS daylogBoolEvent (id INTEGER NOT NULL UNIQUE, dateid INTEGER, typ TEXT, bool INTEGER, PRIMARY KEY(id AUTOINCREMENT));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS DaylogTextEvent (id INTEGER NOT NULL UNIQUE, dateid INTEGER, typ TEXT, text TEXT, PRIMARY KEY(id AUTOINCREMENT));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -35,23 +35,23 @@ public class DaylogBoolEventDB {
 	 * @param o
 	 * @throws SQLException
 	 */
-	public void save(DaylogBoolEvent o) throws SQLException {
+	public void save(DaylogEvent o) throws SQLException {
 		if (o.getId() != null) {
 			// update
-			String sUpdate = "INSERT OR REPLACE INTO daylogBoolEvent (id, dateid, typ, bool) VALUES (?,?,?,?)";
+			String sUpdate = "INSERT OR REPLACE INTO DaylogTextEvent (id, dateid, typ, text) VALUES (?,?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, o.getId());
 			statement.setInt(2, o.getDateId());
 			statement.setString(3, o.getTyp());
-			statement.setBoolean(4, o.getBool());
+			statement.setString(4, o.getText());
 			statement.executeUpdate();
 		} else {
 			// insert
-			String sUpdate = "INSERT OR REPLACE INTO daylogBoolEvent (dateid, typ, bool) VALUES (?,?,?)";
+			String sUpdate = "INSERT OR REPLACE INTO DaylogTextEvent (dateid, typ, text) VALUES (?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, o.getDateId());
 			statement.setString(2, o.getTyp());
-			statement.setBoolean(3, o.getBool());
+			statement.setString(3, o.getText());
 			statement.executeUpdate();
 		}
 	}
@@ -63,7 +63,7 @@ public class DaylogBoolEventDB {
 	 */
 	public Boolean save(String jnRoot) throws SQLException {
 		try {
-			save(new DaylogBoolEvent().setByJson(jnRoot));
+			save(new DaylogEvent().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -76,20 +76,20 @@ public class DaylogBoolEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogBoolEvent> get(Integer nDateId) throws SQLException {
-		List<DaylogBoolEvent> o = new LinkedList<>();
+	public List<DaylogEvent> get(Integer nDateId) throws SQLException {
+		List<DaylogEvent> o = new LinkedList<>();
 
-		String sQuery = "SELECT * FROM daylogBoolEvent WHERE dateid = ?;";
+		String sQuery = "SELECT * FROM DaylogTextEvent WHERE dateid = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		statement.setInt(1, nDateId);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
-			DaylogBoolEvent d = new DaylogBoolEvent();
+			DaylogEvent d = new DaylogEvent();
 			d.setId(rs.getInt("id"));
 			d.setDateId(rs.getInt("dateid"));
 			d.setTyp(rs.getString("typ"));
-			d.setBool(rs.getBoolean("bool"));
+			d.setText(rs.getString("text"));
 			o.add(d);
 		}
 
@@ -102,9 +102,9 @@ public class DaylogBoolEventDB {
 	 * @throws SQLException
 	 */
 	public JSONArray getAsJson(Integer nDateId) throws SQLException {
-		List<DaylogBoolEvent> l = get(nDateId);
+		List<DaylogEvent> l = get(nDateId);
 		JSONArray ja = new JSONArray();
-		for (DaylogBoolEvent d : l) {
+		for (DaylogEvent d : l) {
 			ja.put(d.toJson());
 		}
 		return ja;
@@ -115,7 +115,7 @@ public class DaylogBoolEventDB {
 	 * @throws SQLException
 	 */
 	public void del(Integer nId) throws SQLException {
-		String sUpdate = "DELETE FROM daylogBoolEvent WHERE id = ?";
+		String sUpdate = "DELETE FROM DaylogTextEvent WHERE id = ?";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();
@@ -126,19 +126,19 @@ public class DaylogBoolEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogBoolEvent> getAll() throws SQLException {
-		List<DaylogBoolEvent> o = new LinkedList<>();
+	public List<DaylogEvent> getAll() throws SQLException {
+		List<DaylogEvent> o = new LinkedList<>();
 
-		String sQuery = "SELECT * FROM daylogBoolEvent";
+		String sQuery = "SELECT * FROM DaylogTextEvent";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
-			DaylogBoolEvent d = new DaylogBoolEvent();
+			DaylogEvent d = new DaylogEvent();
 			d.setId(rs.getInt("id"));
 			d.setDateId(rs.getInt("dateid"));
 			d.setTyp(rs.getString("typ"));
-			d.setBool(rs.getBoolean("bool"));
+			d.setText(rs.getString("text"));
 			o.add(d);
 		}
 		return o;
@@ -149,9 +149,9 @@ public class DaylogBoolEventDB {
 	 * @throws SQLException
 	 */
 	public JSONArray getAllAsJson() throws SQLException {
-		List<DaylogBoolEvent> l = getAll();
+		List<DaylogEvent> l = getAll();
 		JSONArray ja = new JSONArray();
-		for (DaylogBoolEvent d : l) {
+		for (DaylogEvent d : l) {
 			ja.put(d.toJson());
 		}
 		return ja;

@@ -108,12 +108,7 @@
 
                         <ng-container matColumnDef="data">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
-
-                            <td mat-cell *matCellDef="let element">
-                                <span *ngIf="element.bool">{{ element.bool }}</span>
-                                <span *ngIf="element.number">{{ element.number }}</span>
-                                <span *ngIf="element.text">{{ element.text }}</span>
-                            </td>
+                            <td mat-cell *matCellDef="let element">{{ element.text }}</td>
                         </ng-container>
 
                         <ng-container matColumnDef="button">
