@@ -36,12 +36,14 @@ export class DayLogComponent implements OnInit {
     // this.loadEvents();
   }
 
-  public openDialogTypeVW(){
-    const dialogRef = this.dialog.open(DaylogComponentDialogTypeListComponent, {
+  public openDialogTypeVW() {
+    this.dialog.open(DaylogComponentDialogTypeListComponent, {
       width: '550px',
-      height: '450px',
+      height: '550px',
     });
   }
+
+
 
   public loadDays(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
@@ -217,10 +219,24 @@ export class DaylogComponentDialogDayComponent {
   selector: 'app-daylog-dialogevent',
   templateUrl: './daylog.dialogEvent.html',
 })
-export class DaylogComponentDialogEventComponent {
-  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent) { }
+export class DaylogComponentDialogEventComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private http: HttpClient, private rest: ServiceRest) { }
+  
+  public daylogTypes: DaylogType[] = [];
+
+  ngOnInit(): void {
+    this.loadDaylogTypes();
+  }
+
+  private loadDaylogTypes(): void {
+    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogDay[]) => {
+      this.daylogTypes = resdata;
+    });
+  }
 
   onNoClick(): void {
+    console.log(this.daylogTypes);
+
     this.dialogRef.close();
   }
 }
@@ -271,7 +287,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 
   private saveType(item: DaylogType): void {
     this.bShowWarning = true;
-    this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + 'daylog/type/save', item).subscribe((resdata: any) => {
       if (resdata.save == "true") {
         this.bShowWarning = false;
         this.loadType();
@@ -285,7 +301,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.typelist = [];
 
-    this.http.get(this.rest.gethost() + 'daylog/type/getAll' ).subscribe((resdata: DaylogDay[]) => {
+    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogType[]) => {
       this.typelist = resdata;
 
       this.daylogTypeDataSource = new MatTableDataSource(this.typelist);
@@ -295,7 +311,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   }
 
   public deleteType(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.date;
+    item.infotext = "Wirklich löschen? " + item.type;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

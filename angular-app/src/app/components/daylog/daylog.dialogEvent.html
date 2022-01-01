@@ -1,12 +1,24 @@
 <div style="display: flex">
     <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
         <!-- TODO: LESS DATEI -->
-        <h1 mat-dialog-title>Id: {{data.id}}</h1>
+        <h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typ}}</h1>
         <div mat-dialog-content>
+
             <mat-form-field>
                 <mat-label>Typ</mat-label>
                 <input matInput [(ngModel)]="data.typ">
             </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Typ</mat-label>
+                <mat-select [(value)]="data.typ">
+                    <mat-option value='-1'>None</mat-option>
+                    <ng-container *ngFor="let type of daylogTypes; let x = index">
+                        <mat-option value='{{type.id}}'>{{type.type}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+
             <mat-form-field>
                 <mat-label>Text</mat-label>
                 <input matInput [(ngModel)]="data.text">
