@@ -25,15 +25,13 @@
                     <ng-container *ngIf="type.art==='NUMBER'">
                         <mat-form-field>
                             <mat-label>Nummer</mat-label>
-                            <input matInput type="number" [(ngModel)]="data.number">
+                            <input matInput type="number" [(ngModel)]="data.text">
                         </mat-form-field>
                     </ng-container>
 
                     <ng-container *ngIf="type.art==='BOOL'">
-                        <mat-form-field>
-                            <mat-label>Boolean</mat-label>
-                            <input matInput type="checkbox" [(ngModel)]="data.bool">
-                        </mat-form-field>
+                        Boolean<br>
+                        <input type="checkbox" [(ngModel)]="data.text" />
                     </ng-container>
                 </ng-container>
             </ng-container>

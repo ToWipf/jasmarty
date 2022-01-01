@@ -71,11 +71,11 @@ export class DayLogComponent implements OnInit {
   }
 
   public loadEvents(): void {
-    // NUR DEBUG TODO: da keine userid
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
-
-    this.http.get(this.rest.gethost() + 'daylog/event/getAll/').subscribe((resdata: DaylogEvent[]) => {
+    
+    // keine userid möglich -> unsicher!
+    this.http.get(this.rest.gethost() + 'daylog/event/getAll').subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);

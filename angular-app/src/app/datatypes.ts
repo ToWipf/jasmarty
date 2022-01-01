@@ -107,8 +107,6 @@ export interface DaylogEvent {
   dateid?: number;
   typ?: string;
   text?: string;
-  bool?: boolean;
-  number?: number;
 }
 
 export interface DynpageEntry {
