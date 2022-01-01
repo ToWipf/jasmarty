@@ -97,7 +97,13 @@
 
                         <ng-container matColumnDef="typ">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
-                            <td mat-cell *matCellDef="let element">{{element.typ}}</td>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container *ngFor="let type of daylogTypes">
+                                    <ng-container *ngIf='type.id.toString()==element.typ'>
+                                        {{type.type}}
+                                    </ng-container>
+                                </ng-container>
+                            </td>
                         </ng-container>
 
                         <ng-container matColumnDef="data">
@@ -118,7 +124,12 @@
                         </ng-container>
 
                         <ng-container matColumnDef="button">
-                            <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
+                            <th th mat-header-cell *matHeaderCellDef>
+                                Verwalten
+                                <button class="btn btn-default" (click)="newEventBySelectedDay()">
+                                    Event erstellen
+                                </button>
+                            </th>
                             <td mat-cell *matCellDef="let element">
                                 <button class="btn btn-default" (click)="editEvent(element)">
                                     Bearbeiten

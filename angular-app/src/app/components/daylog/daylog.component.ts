@@ -28,22 +28,35 @@ export class DayLogComponent implements OnInit {
   public eventlistDisplayedColumns: string[] = ['id', 'dateid', 'typ', 'data', 'button'];
   public sFilter: String = "";
   public bShowWarning: boolean = false;
+  public daylogTypes: DaylogType[] = [];
+
   private dateCacheForLoad: DaylogDay = {};
+
 
   ngOnInit() {
     this.loadDays();
+    this.loadDaylogTypes();
     // TODO: laden detail -> nur von ausgewälten tag ->
     // this.loadEvents();
   }
 
   public openDialogTypeVW() {
-    this.dialog.open(DaylogComponentDialogTypeListComponent, {
+    const dialogRef = this.dialog.open(DaylogComponentDialogTypeListComponent, {
       width: '550px',
       height: '550px',
     });
+
+    // Typen nach den Edit neu laden
+    dialogRef.afterClosed().subscribe((result: DaylogDay) => {
+      this.loadDaylogTypes();
+    });
   }
 
-
+  private loadDaylogTypes(): void {
+    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogDay[]) => {
+      this.daylogTypes = resdata;
+    });
+  }
 
   public loadDays(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
@@ -124,17 +137,23 @@ export class DayLogComponent implements OnInit {
     this.eventlistDataSource.filter = this.sFilter.trim();
   }
 
+  
   public newDay(): void {
     let e: DaylogDay = {};
     e.tagestext = "";
     e.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     this.openDialogDay(e);
   }
-
+  
   public editDay(e: DaylogDay): void {
     this.openDialogDay(e);
   }
 
+  public newEventBySelectedDay(): void {
+    let tmpDay = this.dateCacheForLoad; // TODO: hier
+    this.newEvent(tmpDay);
+  }
+  
   public newEvent(dayitem: DaylogDay): void {
     // Tag speicher um später die Liste neu laden zu können
     this.dateCacheForLoad = dayitem;
@@ -221,7 +240,7 @@ export class DaylogComponentDialogDayComponent {
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private http: HttpClient, private rest: ServiceRest) { }
-  
+
   public daylogTypes: DaylogType[] = [];
 
   ngOnInit(): void {
@@ -235,8 +254,6 @@ export class DaylogComponentDialogEventComponent implements OnInit {
   }
 
   onNoClick(): void {
-    console.log(this.daylogTypes);
-
     this.dialogRef.close();
   }
 }
@@ -295,8 +312,6 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     });
   }
 
-
-
   public loadType(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.typelist = [];
@@ -330,7 +345,6 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   public applyFilter() {
     this.daylogTypeDataSource.filter = this.sFilter.trim();
   }
-
 
   onNoClick(): void {
     this.dialogRef.close();
