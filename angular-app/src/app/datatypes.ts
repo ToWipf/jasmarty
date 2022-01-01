@@ -119,3 +119,8 @@ export interface DynpageEntry {
   rechte?: string;
   live?: boolean;
 }
+
+export interface DaylogType {
+  id?: number;
+  type?: string;
+}

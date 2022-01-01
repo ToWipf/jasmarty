@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { DaylogDay, DaylogEvent } from 'src/app/datatypes';
+import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -34,6 +34,13 @@ export class DayLogComponent implements OnInit {
     this.loadDays();
     // TODO: laden detail -> nur von ausgewälten tag ->
     // this.loadEvents();
+  }
+
+  public openDialogTypeVW(){
+    const dialogRef = this.dialog.open(DaylogComponentDialogTypeListComponent, {
+      width: '550px',
+      height: '450px',
+    });
   }
 
   public loadDays(): void {
@@ -118,6 +125,7 @@ export class DayLogComponent implements OnInit {
   public newDay(): void {
     let e: DaylogDay = {};
     e.tagestext = "";
+    e.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     this.openDialogDay(e);
   }
 
@@ -211,6 +219,113 @@ export class DaylogComponentDialogDayComponent {
 })
 export class DaylogComponentDialogEventComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-daylog-dialogtypelist',
+  templateUrl: './daylog.dialogTypeList.html',
+})
+export class DaylogComponentDialogTypeListComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+
+  public eventlistDisplayedColumns: string[] = ['id', 'type', 'button'];
+  public sFilter: String = "";
+  public bShowWarning: boolean = false;
+  public daylogTypeDataSource;
+  public typelist: DaylogType[] = [];
+  @ViewChild(MatSort, { static: true }) sortType: MatSort;
+
+  ngOnInit() {
+    this.loadType();
+  }
+
+  public newType(): void {
+    let e: DaylogType = {};
+    e.type = "";
+    this.openDialogType(e);
+  }
+
+  public editType(e: DaylogType): void {
+    this.openDialogType(e);
+  }
+
+  public openDialogType(item: DaylogEvent): void {
+    const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(DaylogComponentDialogTypeComponent, {
+      width: '350px',
+      height: '350px',
+      data: edititem,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DaylogEvent) => {
+      if (result) {
+        this.saveType(result);
+      }
+    });
+  }
+
+  private saveType(item: DaylogType): void {
+    this.bShowWarning = true;
+    this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
+      if (resdata.save == "true") {
+        this.bShowWarning = false;
+        this.loadType();
+      }
+    });
+  }
+
+
+
+  public loadType(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.typelist = [];
+
+    this.http.get(this.rest.gethost() + 'daylog/type/getAll' ).subscribe((resdata: DaylogDay[]) => {
+      this.typelist = resdata;
+
+      this.daylogTypeDataSource = new MatTableDataSource(this.typelist);
+      this.daylogTypeDataSource.sort = this.sortType;
+      warten.close();
+    });
+  }
+
+  public deleteType(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.date;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'daylog/type/delete/' + item.id).subscribe((resdata: any) => {
+          this.loadType();
+        });
+      }
+    });
+  }
+
+  public applyFilter() {
+    this.daylogTypeDataSource.filter = this.sFilter.trim();
+  }
+
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+@Component({
+  selector: 'app-daylog-dialogtype',
+  templateUrl: './daylog.dialogType.html',
+})
+export class DaylogComponentDialogTypeComponent {
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogType) { }
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -23,6 +23,8 @@ public class DaylogEvent {
 	DaylogBoolEventDB daylogBoolEventDB;
 	@Inject
 	DaylogNumberEventDB daylogNumberEventDB;
+	@Inject
+	DaylogTypeDB daylogTypeDB;
 
 	/**
 	 * @throws SQLException
@@ -32,6 +34,7 @@ public class DaylogEvent {
 		daylogTextEventDB.initDB();
 		daylogBoolEventDB.initDB();
 		daylogNumberEventDB.initDB();
+		daylogTypeDB.initDB();
 	}
 
 	/**
