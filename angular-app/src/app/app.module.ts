@@ -73,7 +73,6 @@ import { DebugSeiteComponent } from './components/debugSeite/debugSeite.componen
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/daylog/daylog.component';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/dynpages/dynpages.component';
 import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.component';
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -1,5 +1,8 @@
 <div>
     <h3>Daylog</h3>
+    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+    <mat-icon svgIcon="thumbsup" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+
     <div class="list">
         <ng-container *ngIf="bShowWarning">
             Es ist ein Fehler aufgetreten!
@@ -24,7 +27,7 @@
         <div class="gridRow">
             <div class="gridCol">
                 <perfect-scrollbar class="pscroll">
-                    <table mat-table [dataSource]="daylistDataSource" matSort class="mat-elevation-z8">
+                    <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
                         <ng-container matColumnDef="id">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
                             <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -69,6 +72,7 @@
                                 </button> -->
                                 <button class="btn btn-default" (click)="deleteDay(element)">
                                     Löschen
+                                    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
                                 </button>
                             </td>
                         </ng-container>

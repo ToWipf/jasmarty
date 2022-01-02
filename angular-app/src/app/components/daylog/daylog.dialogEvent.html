@@ -6,7 +6,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Typ</mat-label>
                 <mat-select [(value)]="data.typ">
-                    <mat-option value='-1'>None</mat-option>
+                    <!-- <mat-option value='-1'>None</mat-option> -->
                     <ng-container *ngFor="let type of daylogTypes">
                         <mat-option value='{{type.id}}'>{{type.type}}</mat-option>
                     </ng-container>

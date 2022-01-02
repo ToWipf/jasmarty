@@ -24,13 +24,14 @@ export class DayLogComponent implements OnInit {
   public daylist: DaylogDay[] = [];
   public eventlist: DaylogEvent[] = [];
   public userid = 0;
-  public daylistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
-  public eventlistDisplayedColumns: string[] = ['id', 'dateid', 'typ', 'data', 'button'];
+  // public daylistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
+  // public eventlistDisplayedColumns: string[] = ['id', 'dateid', 'typ', 'data', 'button'];
+  public daylistDisplayedColumns: string[] = ['date', 'tagestext', 'button'];
+  public eventlistDisplayedColumns: string[] = ['typ', 'data', 'button'];
   public sFilter: String = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateCacheForLoad: DaylogDay = {};
-
 
   ngOnInit() {
     this.loadDays();
@@ -73,7 +74,7 @@ export class DayLogComponent implements OnInit {
   public loadEvents(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
-    
+
     // keine userid möglich -> unsicher!
     this.http.get(this.rest.gethost() + 'daylog/event/getAll').subscribe((resdata: DaylogEvent[]) => {
       this.eventlist = resdata;
