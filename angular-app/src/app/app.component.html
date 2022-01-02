@@ -6,8 +6,14 @@
             <div class="sidebar">
                 <div class="titlemenue">Hauptfunktionen</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('todolist')">Todo List</li>
-                    <li (click)="selectSite('daylog')">TagesLog</li>
+                    <li (click)="selectSite('todolist')">
+                        <mat-icon svgIcon="check_all" aria-hidden="false" title="TagesLog"></mat-icon>
+                        Todo List
+                    </li>
+                    <li (click)="selectSite('daylog')">
+                        <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
+                        TagesLog
+                    </li>
                     <li (click)="selectSite('filme')">Filme</li>
                     <li *ngIf="bDevActive" (click)="selectSite('crypt')">Crypt</li>
                     <li (click)="selectSite('wipfuservw')">
@@ -88,7 +94,7 @@
         </div>
         <div class="fullsite">
             <button class="mainMenueIcon" (click)="drawer.toggle()">
-                <mat-icon svgIcon="home" aria-hidden="false" title="TEST"></mat-icon>
+                <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
             </button>
             <!-- <button class="mainMenueButton" (click)="drawer.toggle()">
                 Menü Öffnen
