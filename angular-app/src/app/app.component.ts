@@ -27,6 +27,7 @@ const ICON_SUPPORT = `<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  vi
 const ICON_THUMBUP = `<svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"><path d="M0 0h24v24H0z" fill="none"/><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.` + `44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5` + `1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-1.91l-.01-.01L23 10z"/></svg>`;
 const ICON_TRASH = `<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 10 2 L 9 3 L 4 3 L 4 5 L 5 5 L 5 20 C 5 20.522222 5.1913289 21.05461 5.5683594 21.431641 C 5.9453899 21.808671 6.4777778 22 7 22 L 17 22 C 17.522222 22 18.05461 21.808671 18.431641 21.431641 C 18.808671 21.05461 19 20.522222 19 20 L 19 5 L 20 5 L 20 3 L 15 3 L 14 2 L 10 2 z M 7 5 L 17 5 L 17 20 L 7 20 L 7 5 z M 9 7 L 9 18 L 11 18 L 11 7 L 9 7 z M 13 7 L 13 18 L 15 18 L 15 7 L 13 7 z"/></svg>`;
 const ICON_UNAVAILABLE = `<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 13.85307 19.369262 15.55056 18.318359 16.904297 L 7.0957031 5.6816406 C 8.4494397 4.6307377 10.14693 4 12 4 z M 5.6816406 7.0957031 L 16.904297 18.318359 C 15.55056 19.369262 13.85307 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 10.14693 4.6307377 8.4494397 5.6816406 7.0957031 z"/></svg>`;
+const ICON_USER = `<svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 8 2 2 5 2 20 L 6.7285156 20 C 8.1385798 21.240809 9.9815281 22 12 22 C 14.018472 22 15.86142 21.240809 17.271484 20 L 22 20 C 22 5 16 2 12 2 z M 12 4 C 13.669 4 16.871734 4.75025 18.677734 10.03125 C 17.967734 9.39025 17.029 9 16 9 L 8 9 C 6.971 9 6.0322656 9.39025 5.3222656 10.03125 C 7.1282656 4.75025 10.331 4 12 4 z M 8 11 L 16 11 C 17.105 11 18 11.895 18 13 L 18 14 C 18 17.325562 15.325562 20 12 20 C 8.674438 20 6 17.325562 6 14 L 6 13 C 6 11.895 6.895 11 8 11 z"/></svg>`;
 
 @Component({
   selector: 'app-root',
@@ -57,6 +58,7 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('thumbsup', sanitizer.bypassSecurityTrustHtml(ICON_THUMBUP));
     iconRegistry.addSvgIconLiteral('trash', sanitizer.bypassSecurityTrustHtml(ICON_TRASH));
     iconRegistry.addSvgIconLiteral('unavailable', sanitizer.bypassSecurityTrustHtml(ICON_UNAVAILABLE));
+    iconRegistry.addSvgIconLiteral('user', sanitizer.bypassSecurityTrustHtml(ICON_USER));
   }
 
   @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;

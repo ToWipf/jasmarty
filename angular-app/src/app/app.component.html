@@ -10,8 +10,14 @@
                     <li (click)="selectSite('daylog')">TagesLog</li>
                     <li (click)="selectSite('filme')">Filme</li>
                     <li *ngIf="bDevActive" (click)="selectSite('crypt')">Crypt</li>
-                    <li (click)="selectSite('wipfuservw')">Wipf User</li>
-                    <li *ngIf="bDevActive" (click)="selectSite('debug')">Debug</li>
+                    <li (click)="selectSite('wipfuservw')">
+                        <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
+                        Wipf User
+                    </li>
+                    <li *ngIf="bDevActive" (click)="selectSite('debug')">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                        Debug
+                    </li>
                 </ul>
 
                 <div class="titlemenue">LCD</div>
@@ -23,13 +29,19 @@
                     <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864 Seiten</li>
                     <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">Char Generator</li>
                     <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">Funktionen</li>
-                    <li (click)="selectSite('config')">Einstellungen</li>
+                    <li (click)="selectSite('config')">
+                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                        Einstellungen
+                    </li>
                 </ul>
 
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
                     <li *ngIf="bTelegramActive" (click)="selectSite('chat')">Test Chat</li>
-                    <li (click)="selectSite('configtele')">Einstellungen</li>
+                    <li (click)="selectSite('configtele')">
+                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                        Einstellungen
+                    </li>
                     <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')">Nachrichten</li>
                     <li *ngIf="bTelegramActive" (click)="selectSite('tlog')">Logs</li>
                 </ul>
@@ -43,16 +55,25 @@
                 <div class="titlemenue">Anzeige</div>
                 <ul class="menueli">
                     <li (click)="getActiveModules()">
-                        Neu laden
                         <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
+                        Neu laden
                     </li>
                     <li *ngIf="!bDevActive" (click)="showDevModules()">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Zeige Dev
-                        <mat-icon svgIcon="support" aria-hidden="false" title="TEST"></mat-icon>
                     </li>
-                    <li *ngIf="bDevActive" (click)="showAll2004()">Zeige Alles 2004</li>
-                    <li *ngIf="bDevActive" (click)="showAll12864()">Zeige Alles 12864</li>
-                    <li *ngIf="bDevActive" (click)="showDevModules()">Verstecke Dev</li>
+                    <li *ngIf="bDevActive" (click)="showAll2004()">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                        Zeige Alles 2004
+                    </li>
+                    <li *ngIf="bDevActive" (click)="showAll12864()">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                        Zeige Alles 12864
+                    </li>
+                    <li *ngIf="bDevActive" (click)="showDevModules()">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                        Verstecke Dev
+                    </li>
                 </ul>
             </div>
         </perfect-scrollbar>
