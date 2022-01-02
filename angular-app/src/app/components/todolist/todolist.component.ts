@@ -103,7 +103,7 @@ export class TodolistComponent implements OnInit {
   private getNextId(): void {
     let nextIdTmp: number = 0;
     // Auch falls jetzt weginger in der Liste ist, die bisher höchste id nehmen
-    if (this.nextId != 0){
+    if (this.nextId != 0) {
       nextIdTmp = this.nextId;
     }
     this.toarry.forEach((item: TodoEntry) => {
@@ -111,7 +111,7 @@ export class TodolistComponent implements OnInit {
         nextIdTmp = item.id;
       }
     });
-    this.nextId =  nextIdTmp * 1 + 1;
+    this.nextId = nextIdTmp * 1 + 1;
   }
 
   private saveTodo(item: TodoEntry): void {

@@ -42,8 +42,14 @@
 
                 <div class="titlemenue">Anzeige</div>
                 <ul class="menueli">
-                    <li (click)="getActiveModules()">Menü neu Laden</li>
-                    <li *ngIf="!bDevActive" (click)="showDevModules()">Zeige Dev</li>
+                    <li (click)="getActiveModules()">
+                        Neu laden
+                        <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
+                    </li>
+                    <li *ngIf="!bDevActive" (click)="showDevModules()">
+                        Zeige Dev
+                        <mat-icon svgIcon="support" aria-hidden="false" title="TEST"></mat-icon>
+                    </li>
                     <li *ngIf="bDevActive" (click)="showAll2004()">Zeige Alles 2004</li>
                     <li *ngIf="bDevActive" (click)="showAll12864()">Zeige Alles 12864</li>
                     <li *ngIf="bDevActive" (click)="showDevModules()">Verstecke Dev</li>
