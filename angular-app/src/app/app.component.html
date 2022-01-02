@@ -7,15 +7,21 @@
                 <div class="titlemenue">Hauptfunktionen</div>
                 <ul class="menueli">
                     <li (click)="selectSite('todolist')">
-                        <mat-icon svgIcon="check_all" aria-hidden="false" title="TagesLog"></mat-icon>
+                        <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
                         Todo List
                     </li>
                     <li (click)="selectSite('daylog')">
                         <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
                         TagesLog
                     </li>
-                    <li (click)="selectSite('filme')">Filme</li>
-                    <li *ngIf="bDevActive" (click)="selectSite('crypt')">Crypt</li>
+                    <li (click)="selectSite('filme')">
+                        <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
+                        Filme
+                    </li>
+                    <li *ngIf="bDevActive" (click)="selectSite('crypt')">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                        Crypt
+                    </li>
                     <li (click)="selectSite('wipfuservw')">
                         <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
                         Wipf User
@@ -28,13 +34,34 @@
 
                 <div class="titlemenue">LCD</div>
                 <ul class="menueli">
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">2004Startseite</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">2004 Live Display</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">2004 Seiten</li>
-                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">12864 Panel</li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">12864 Seiten</li>
-                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">Char Generator</li>
-                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">Funktionen</li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">
+                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                        2004 Startseite
+                    </li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">
+                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                        2004 Live
+                    </li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">
+                        <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
+                        2004 Seiten
+                    </li>
+                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">
+                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                        12864 Panel
+                    </li>
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">
+                        <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
+                        12864 Seiten
+                    </li>
+                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                        Char Generator
+                    </li>
+                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">
+                        <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
+                        Funktionen
+                    </li>
                     <li (click)="selectSite('config')">
                         <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                         Einstellungen
@@ -43,19 +70,34 @@
 
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
-                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')">Test Chat</li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')">
+                        <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
+                        Test Chat
+                    </li>
                     <li (click)="selectSite('configtele')">
                         <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                         Einstellungen
                     </li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')">Nachrichten</li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')">Logs</li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')">
+                        <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
+                        Nachrichten
+                    </li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')">
+                        <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
+                        Logs
+                    </li>
                 </ul>
 
                 <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
                 <ul class="menueli">
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')">Dynpages VW</li>
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')">Zeige Dynpage</li>
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')">
+                        <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
+                        Dynpages VW
+                    </li>
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')">
+                        <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
+                        Zeige Dynpage
+                    </li>
                 </ul>
 
                 <div class="titlemenue">Anzeige</div>
