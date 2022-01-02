@@ -1,7 +1,5 @@
 <div>
     <h3>Daylog</h3>
-    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
-    <mat-icon svgIcon="thumbsup" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
 
     <div class="list">
         <ng-container *ngIf="bShowWarning">
@@ -71,8 +69,7 @@
                                     Event erstellen
                                 </button> -->
                                 <button class="btn btn-default" (click)="deleteDay(element)">
-                                    Löschen
-                                    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Example thumbs up SVG icon"></mat-icon>
+                                    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Löschen"></mat-icon>
                                 </button>
                             </td>
                         </ng-container>
@@ -127,7 +124,7 @@
                                     Bearbeiten
                                 </button>
                                 <button class="btn btn-default" (click)="deleteEvent(element)">
-                                    Löschen
+                                    <mat-icon svgIcon="trash" aria-hidden="false" aria-label="Löschen"></mat-icon>
                                 </button>
                             </td>
                         </ng-container>

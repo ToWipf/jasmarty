@@ -6,5 +6,6 @@
     "editor.fontSize": 12,
     "terminal.integrated.fontSize": 12,
     "prettier.printWidth": 300,
-    "html.format.wrapLineLength": 300
+    "html.format.wrapLineLength": 300,
+    "gitlens.codeLens.enabled": false
 }
