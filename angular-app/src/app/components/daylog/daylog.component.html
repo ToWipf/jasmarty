@@ -54,22 +54,21 @@
                         <ng-container matColumnDef="button">
                             <th th mat-header-cell *matHeaderCellDef>
                                 Verwalten
-                                <button class="btn btn-tr" (click)="newDay()">
+                                <button class="btn btn-default" (click)="newDay()">
                                     <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
                                 </button>
                             </th>
                             <td mat-cell *matCellDef="let element">
-                                <button class="btn btn-tr" (click)="editDay(element)">
+                                <button class="btn btn-default" (click)="editDay(element)">
                                     <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                                 </button>
                                 <button class="btn btn-default" (click)="loadEventsByDay(element)">
-                                    
                                     <mat-icon svgIcon="extern_link" aria-hidden="false" title="Tag anzeigen"></mat-icon>
                                 </button>
                                 <!-- <button class="btn btn-default" (click)="newEvent(element)">
                                     Event erstellen
                                 </button> -->
-                                <button class="btn btn-tr" (click)="deleteDay(element)">
+                                <button class="btn btn-default" (click)="deleteDay(element)">
                                     <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                                 </button>
                             </td>
@@ -117,14 +116,14 @@
                             <th th mat-header-cell *matHeaderCellDef>
                                 Verwalten
                                 <button *ngIf="dateCacheForLoad.id" class="btn btn-default" (click)="newEventBySelectedDay()">
-                                    Event erstellen
+                                    <mat-icon svgIcon="document" aria-hidden="false" title="Event erstellen"></mat-icon>
                                 </button>
                             </th>
                             <td mat-cell *matCellDef="let element">
-                                <button class="btn btn-tr" (click)="editEvent(element)">
+                                <button class="btn btn-default" (click)="editEvent(element)">
                                     <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                                 </button>
-                                <button class="btn btn-tr" (click)="deleteEvent(element)">
+                                <button class="btn btn-default" (click)="deleteEvent(element)">
                                     <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                                 </button>
                             </td>
