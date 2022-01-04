@@ -47,6 +47,10 @@ public class TeleMenue {
 	SendAndReceive sendAndReceive;
 	@Inject
 	TAppGrafana grafana;
+	@Inject
+	TAppDayLog appDayLog;
+	@Inject
+	TLastMessageFromUser tLastMessageFromUser;
 
 	/**
 	 * @param sJson
@@ -60,9 +64,19 @@ public class TeleMenue {
 	/**
 	 * @param t
 	 * @return
-	 * @throws SQLException
 	 */
 	public String menueMsg(Telegram t) {
+		String res = doMenue(t);
+		tLastMessageFromUser.saveByTelegram(t);
+		return res;
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 * @throws SQLException
+	 */
+	private String doMenue(Telegram t) {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
 
 		// Admin Befehle
@@ -196,6 +210,10 @@ public class TeleMenue {
 			case "d":
 			case "dev":
 				return grafana.telegramMenueDev(t);
+
+			case "live":
+			case "l":
+				return appDayLog.telegramMenue(t);
 
 			default:
 				break;
