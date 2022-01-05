@@ -434,17 +434,6 @@ public class Wipf {
 	}
 
 	/**
-	 * @param sName
-	 * @param json
-	 * @return
-	 */
-	public String jsonArrayToStringAsList(String sName, JSONArray json) {
-		JSONObject o = new JSONObject();
-		o.append(sName, json);
-		return jsonToStringAsList(o);
-	}
-
-	/**
 	 * Von:
 	 * https://stackoverflow.com/questions/30663430/json-to-yaml-conversion-does-not-work/30682637
 	 * 

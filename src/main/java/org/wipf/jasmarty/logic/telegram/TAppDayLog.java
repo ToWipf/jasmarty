@@ -67,7 +67,7 @@ public class TAppDayLog {
 				tUsercache.save(userCache); // Datum Id speichern
 
 				// Kategorien Übersicht ausgeben
-				return wipf.jsonArrayToStringAsList("Kategorienid wählen", daylogTypeDB.getAllAsJson());
+				return createTypeList();
 			} else {
 				return "Fehler mit den Datum";
 			}
@@ -109,6 +109,27 @@ public class TAppDayLog {
 	}
 
 	/**
+	 * @return
+	 */
+	private String createTypeList() {
+		StringBuilder sb = new StringBuilder();
+		try {
+			sb.append("Kategorienid wählen:");
+
+			for (DaylogType dt : daylogTypeDB.getAll()) {
+				sb.append(dt.getId());
+				sb.append(": ");
+				sb.append(dt.getType());
+				sb.append("\n");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "Fehler 643";
+		}
+		return sb.toString();
+	}
+
+	/**
 	 * datums id zurückgeben
 	 * 
 	 * @param t
@@ -147,19 +168,19 @@ public class TAppDayLog {
 	 * @return
 	 */
 	private String pruefeKategorie(Integer nKatId) {
-		try {
-			List<DaylogType> dt = daylogTypeDB.get(nKatId);
-			if (dt.size() == 1) {
-				return dt.get(0).getType();
-			} else {
+		if (nKatId != null) {
+			try {
+				List<DaylogType> dt = daylogTypeDB.get(nKatId);
+				if (dt.size() == 1) {
+					return dt.get(0).getType();
+				} else {
+					return null;
+				}
+			} catch (SQLException e) {
 				return null;
 			}
-
-		} catch (SQLException e) {
-			System.out.println("Fehler pruefeKategorie");
-			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 
 	/**
