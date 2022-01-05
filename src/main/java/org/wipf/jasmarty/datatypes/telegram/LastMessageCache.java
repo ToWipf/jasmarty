@@ -6,10 +6,11 @@ import org.json.JSONObject;
  * @author Wipf
  *
  */
-public class LastMessage {
+public class LastMessageCache {
 
 	private Integer nChatId;
 	private String sMsg;
+	private String sUsercache;
 
 	/**
 	 * @return
@@ -18,6 +19,7 @@ public class LastMessage {
 		JSONObject jo = new JSONObject();
 		jo.put("userid", this.nChatId);
 		jo.put("date", this.sMsg);
+		jo.put("usercache", this.sUsercache);
 		return jo;
 	}
 
@@ -25,10 +27,11 @@ public class LastMessage {
 	 * @param sJson
 	 * @return
 	 */
-	public LastMessage setByJson(String sJson) {
+	public LastMessageCache setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
-		this.nChatId = jo.getInt("userid");
+		this.nChatId = jo.getInt("chatid");
 		this.sMsg = jo.getString("date");
+		this.sUsercache = jo.getString("usercache");
 		return this;
 	}
 
@@ -58,6 +61,20 @@ public class LastMessage {
 	 */
 	public void setMsg(String date) {
 		this.sMsg = date;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getUsercache() {
+		return sUsercache;
+	}
+
+	/**
+	 * @param sUsercache
+	 */
+	public void setUsercache(String sUsercache) {
+		this.sUsercache = sUsercache;
 	}
 
 }

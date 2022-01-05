@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
-import org.wipf.jasmarty.datatypes.telegram.LastMessage;
+import org.wipf.jasmarty.datatypes.telegram.LastMessageCache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -28,15 +28,33 @@ public class TLastMessageFromUser {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS lastMsgFromUser (chatid INTEGER NOT NULL UNIQUE, msg TEXT, PRIMARY KEY(chatid));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS lastMsgFromUser (chatid INTEGER NOT NULL UNIQUE, msg TEXT, usercache TEXT, PRIMARY KEY(chatid));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
+	 * Usercache überschreiben
+	 * 
 	 * @param o
 	 * @throws SQLException
 	 */
-	public void save(LastMessage o) throws SQLException {
+	public void save(LastMessageCache o) throws SQLException {
+		// insert
+		String sUpdate = "INSERT OR REPLACE INTO lastMsgFromUser (chatid, msg, usercache) VALUES (?,?,?)";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+		statement.setInt(1, o.getChatId());
+		statement.setString(2, o.getMsg());
+		statement.setString(3, o.getUsercache());
+		statement.executeUpdate();
+	}
+
+	/**
+	 * Speichern ohne den Usercache zu ändern
+	 * 
+	 * @param o
+	 * @throws SQLException
+	 */
+	public void saveOhneUsercache(LastMessageCache o) throws SQLException {
 		// insert
 		String sUpdate = "INSERT OR REPLACE INTO lastMsgFromUser (chatid, msg) VALUES (?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
@@ -47,13 +65,15 @@ public class TLastMessageFromUser {
 	}
 
 	/**
+	 * Usercache überschreiben
+	 * 
 	 * @param jnRoot
 	 * @return
 	 * @throws SQLException
 	 */
 	public Boolean save(String jnRoot) throws SQLException {
 		try {
-			save(new LastMessage().setByJson(jnRoot));
+			save(new LastMessageCache().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -61,16 +81,18 @@ public class TLastMessageFromUser {
 	}
 
 	/**
+	 * Speichern ohne den Usercache anzufassen
+	 * 
 	 * @param t
 	 */
-	public void saveByTelegram(Telegram t) {
-		LastMessage lmsg = new LastMessage();
+	public void saveByTelegramOhneUsercache(Telegram t) {
+		LastMessageCache lmsg = new LastMessageCache();
 		lmsg.setChatId(t.getChatID());
 		lmsg.setMsg(t.getMessage());
 		try {
-			save(lmsg);
+			saveOhneUsercache(lmsg);
 		} catch (SQLException e) {
-			System.out.println("Fehler beim speichern von LastMessage: " + e);
+			System.out.println("Fehler1 beim speichern von LastMessage: " + e);
 			e.printStackTrace();
 		}
 	}
@@ -79,10 +101,10 @@ public class TLastMessageFromUser {
 	 * @param nChatid
 	 * @return
 	 */
-	public String getTheLastMessage(Telegram t) {
+	public LastMessageCache getLastMessage(Telegram t) {
 		try {
-			List<LastMessage> lmsg = get(t.getChatID());
-			return lmsg.get(0).getMsg();
+			List<LastMessageCache> lmsg = get(t.getChatID());
+			return lmsg.get(0);
 		} catch (SQLException e) {
 			// nichts vorhanden
 			return null;
@@ -96,8 +118,8 @@ public class TLastMessageFromUser {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<LastMessage> get(Integer nChatid) throws SQLException {
-		List<LastMessage> o = new LinkedList<>();
+	public List<LastMessageCache> get(Integer nChatid) throws SQLException {
+		List<LastMessageCache> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM lastMsgFromUser WHERE chatid = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
@@ -105,9 +127,10 @@ public class TLastMessageFromUser {
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
-			LastMessage d = new LastMessage();
+			LastMessageCache d = new LastMessageCache();
 			d.setChatId(rs.getInt("chatid"));
 			d.setMsg(rs.getString("msg"));
+			d.setUsercache(rs.getString("usercache"));
 			o.add(d);
 		}
 
@@ -120,9 +143,9 @@ public class TLastMessageFromUser {
 	 * @throws SQLException
 	 */
 	public JSONArray getAsJson(Integer nChatid) throws SQLException {
-		List<LastMessage> l = get(nChatid);
+		List<LastMessageCache> l = get(nChatid);
 		JSONArray ja = new JSONArray();
-		for (LastMessage d : l) {
+		for (LastMessageCache d : l) {
 			ja.put(d.toJson());
 		}
 		return ja;
@@ -144,17 +167,18 @@ public class TLastMessageFromUser {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<LastMessage> getAll() throws SQLException {
-		List<LastMessage> o = new LinkedList<>();
+	public List<LastMessageCache> getAll() throws SQLException {
+		List<LastMessageCache> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM lastMsgFromUser";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
-			LastMessage d = new LastMessage();
+			LastMessageCache d = new LastMessageCache();
 			d.setChatId(rs.getInt("chatid"));
 			d.setMsg(rs.getString("msg"));
+			d.setUsercache(rs.getString("usercache"));
 			o.add(d);
 		}
 		return o;
@@ -165,9 +189,9 @@ public class TLastMessageFromUser {
 	 * @throws SQLException
 	 */
 	public JSONArray getAllAsJson() throws SQLException {
-		List<LastMessage> l = getAll();
+		List<LastMessageCache> l = getAll();
 		JSONArray ja = new JSONArray();
-		for (LastMessage d : l) {
+		for (LastMessageCache d : l) {
 			ja.put(d.toJson());
 		}
 		return ja;

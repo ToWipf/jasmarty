@@ -67,7 +67,7 @@ public class TeleMenue {
 	 */
 	public String menueMsg(Telegram t) {
 		String res = doMenue(t);
-		tLastMessageFromUser.saveByTelegram(t);
+		tLastMessageFromUser.saveByTelegramOhneUsercache(t);
 		return res;
 	}
 
@@ -211,8 +211,8 @@ public class TeleMenue {
 			case "dev":
 				return grafana.telegramMenueDev(t);
 
-			case "live":
-			case "l":
+			case "dl":
+			case "daylog":
 				return appDayLog.telegramMenue(t);
 
 			default:
