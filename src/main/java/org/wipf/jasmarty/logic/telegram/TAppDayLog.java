@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogType;
-import org.wipf.jasmarty.datatypes.telegram.LastMessageCache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.datatypes.telegram.Usercache;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
 import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
@@ -27,7 +27,7 @@ import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
 public class TAppDayLog {
 
 	@Inject
-	TLastMessageFromUser tLastMessageFromUser;
+	TUsercache tUsercache;
 	@Inject
 	DaylogTypeDB daylogTypeDB;
 	@Inject
@@ -47,63 +47,66 @@ public class TAppDayLog {
 	}
 
 	public String doDayLog(Telegram t) throws SQLException {
-		LastMessageCache lastMsgCache = tLastMessageFromUser.getLastMessage(t);
+		Usercache userCache = tUsercache.getLastMessage(t);
 
-		if (lastMsgCache.getMsg().startsWith("dl start")) {
+		if (userCache == null) {
+			// Es ist noch kein Cache da -> eine normale nachricht schreiben und ihn zu
+			// erstellen
+			return "Fail 683";
+		} else if (t.getMessageFullWithoutFirstWord().toLowerCase().equals("start")) {
+			// Wenn start eingebene wurde, den Cache leeren
+			userCache.setUsercache("");
+			tUsercache.save(userCache);
+			return "Bitte das Datum eingeben:\n h für heute\n Format: yyyy-MM-dd";
+		} else if (userCache.getUsercache().equals("")) {
 			// Schritt 1
 			// Datum wählen
 			Integer dateId = waehleDatum(t.getMessageFullWithoutFirstWord());
 			if (dateId != null) {
 				// DateId im Cache speichern
-				lastMsgCache.setUsercache("dateid:" + dateId);
-				tLastMessageFromUser.save(lastMsgCache); // Datum Id speichern
+				userCache.setUsercache("dateid:" + dateId);
+				tUsercache.save(userCache); // Datum Id speichern
 
 				// Kategorien Übersicht ausgeben
 				return wipf.jsonArrayToStringAsList("Kategorienid wählen", daylogTypeDB.getAllAsJson());
 			} else {
 				return "Fehler mit den Datum";
 			}
-		} else if (lastMsgCache.getUsercache().startsWith("dateid:")) {
+		} else if (userCache.getUsercache().startsWith("dateid:")) {
 			// Schritt 2
 			// Kategorie wählen
 			Integer nKategorieId = t.getMessageIntPart(1);
 			String sKatName = pruefeKategorie(nKategorieId);
 			if (sKatName != null) {
 				// katid vorne anfügen und Datum weiterhin speichern
-				lastMsgCache.setUsercache("katid:" + nKategorieId + lastMsgCache.getUsercache());
-				tLastMessageFromUser.save(lastMsgCache);
+				userCache.setUsercache("katid:" + nKategorieId + userCache.getUsercache());
+				tUsercache.save(userCache);
 
 				return "Kategorie: " + sKatName + "\n\n Bitte Text eingeben";
 			} else {
 				return "Fehler mit der Kategorie";
 			}
-		} else if (lastMsgCache.getUsercache().startsWith("katid:")) {
+		} else if (userCache.getUsercache().startsWith("katid:")) {
 			// Schitt 3
 			// den Text holen und das event speichern
 			String sEventtext = t.getMessageFullWithoutFirstWord();
-			String sSaveResult = schreibeEvent(sEventtext, lastMsgCache);
+			String sSaveResult = schreibeEvent(sEventtext, userCache);
 			if (sSaveResult != null) {
-				lastMsgCache.setUsercache("");
-				tLastMessageFromUser.save(lastMsgCache);
+				userCache.setUsercache("");
+				tUsercache.save(userCache);
 				return sSaveResult;
 			}
 		}
 
-		// ertaufruf
-		switch (t.getMessageFullWithoutFirstWord()) {
-		case "start":
+		// Ansonsten die Hilfe zeigen
+		// @formatter:off
+		return "Syntax:\n" + "\n"
+				+ "1. dl start" + "\n"
+				+ "2. dl <DatumID oder h für Heute>" + "\n"
+				+ "3. dl <KATEGORIEID>" + "\n"
+				+ "4. dl <EventText>";
+		// @formatter:on
 
-		case "help":
-		default:
-			// @formatter:off
-				return "Syntax:\n" + "\n"
-						+ "1. dl start"
-						+ "1. dl <DatumID oder h für Heute>"
-						+ "2. dl <KATEGORIEID>"
-						+ "3. dl <EventText>";
-				// @formatter:on
-
-		}
 	}
 
 	/**
@@ -143,7 +146,7 @@ public class TAppDayLog {
 				return null;
 			}
 		} else {
-			System.out.println("TODO 7523489");
+			System.out.println("TODO 568");
 			// TODO: DATUM EINGEBEN UND DAY Ersteleln
 			return null;
 		}
@@ -179,7 +182,7 @@ public class TAppDayLog {
 	 * @return
 	 * @throws SQLException
 	 */
-	private String schreibeEvent(String sEventtext, LastMessageCache lastMsgCache) {
+	private String schreibeEvent(String sEventtext, Usercache lastMsgCache) {
 		try {
 			DaylogEvent dayEvent = new DaylogEvent();
 			String sCache = lastMsgCache.getUsercache();

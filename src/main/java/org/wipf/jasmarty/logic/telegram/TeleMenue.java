@@ -50,7 +50,7 @@ public class TeleMenue {
 	@Inject
 	TAppDayLog appDayLog;
 	@Inject
-	TLastMessageFromUser tLastMessageFromUser;
+	TUsercache tUsercache;
 
 	/**
 	 * @param sJson
@@ -67,7 +67,7 @@ public class TeleMenue {
 	 */
 	public String menueMsg(Telegram t) {
 		String res = doMenue(t);
-		tLastMessageFromUser.saveByTelegramOhneUsercache(t);
+		tUsercache.saveByTelegramOhneUsercache(t);
 		return res;
 	}
 

@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * @author Wipf
  *
  */
-public class LastMessageCache {
+public class Usercache {
 
 	private Integer nChatId;
 	private String sMsg;
@@ -27,7 +27,7 @@ public class LastMessageCache {
 	 * @param sJson
 	 * @return
 	 */
-	public LastMessageCache setByJson(String sJson) {
+	public Usercache setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		this.nChatId = jo.getInt("chatid");
 		this.sMsg = jo.getString("date");
@@ -67,6 +67,9 @@ public class LastMessageCache {
 	 * @return
 	 */
 	public String getUsercache() {
+		if (sUsercache == null) {
+			return "";
+		}
 		return sUsercache;
 	}
 
