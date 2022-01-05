@@ -9,7 +9,6 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogType;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -117,39 +116,26 @@ public class TAppDayLog {
 	 * @return
 	 */
 	private Integer waehleDatum(String sDate) {
-		if (sDate.equals("h")) {
+		try {
+			if (sDate.equals("h")) {
+				// Heute
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				String sDateNow = df.format(new Date());
 
-			// Heute
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			String sDateNow = df.format(new Date());
+				return daylogDayDB.getDateAndCrateIfNotExists(sDateNow).getId();
 
-			try {
-				// Tag heute erstellen
-				// TODO USERID nicht auf 0 setzen
-				DaylogDay dday = daylogDayDB.get(sDateNow, 0);
-				if (dday.getId() != null) {
-					// Tag existiert
-					return dday.getId();
-				} else {
-					// Tag erstellen
-					DaylogDay newDay = new DaylogDay();
-					newDay.setUserId(0);
-					newDay.setDate(sDateNow);
-					daylogDayDB.save(newDay);
+			} else {
+				if (sDate.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+					// Ein Datum
+					return daylogDayDB.getDateAndCrateIfNotExists(sDate).getId();
 
-					// Nochmals nach der Id suchen, sollte jetzt da sein
-					return daylogDayDB.get(sDateNow, 0).getId();
 				}
-			} catch (SQLException e) {
-				System.out.println("Fehler Datum erstellen");
-				e.printStackTrace();
-				return null;
 			}
-		} else {
-			System.out.println("TODO 568");
-			// TODO: DATUM EINGEBEN UND DAY erstellen
-			return null;
+		} catch (Exception e) {
+			System.out.println("Fehler Datum erstellen");
+			e.printStackTrace();
 		}
+		return null;
 	}
 
 	/**

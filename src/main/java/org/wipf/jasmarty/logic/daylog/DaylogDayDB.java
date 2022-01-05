@@ -71,6 +71,31 @@ public class DaylogDayDB {
 	}
 
 	/**
+	 * Get Day und erstelle ihn, wenn er noch nicht angelegt ist
+	 * 
+	 * @param sDate
+	 * @return
+	 * @throws SQLException
+	 */
+	public DaylogDay getDateAndCrateIfNotExists(String sDate) throws SQLException {
+		// TODO USERID nicht auf 0 setzen
+		DaylogDay dday = get(sDate, 0);
+		if (dday.getId() != null) {
+			// Tag existiert bereits
+			return dday;
+		} else {
+			// Tag erstellen
+			DaylogDay newDay = new DaylogDay();
+			newDay.setUserId(0);
+			newDay.setDate(sDate);
+			save(newDay);
+
+			// Nochmals nach der Id suchen, sollte jetzt da sein
+			return get(sDate, 0);
+		}
+	}
+
+	/**
 	 * @param sDate
 	 * @param nUserId
 	 * @return
