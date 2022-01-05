@@ -47,7 +47,7 @@ public class TAppDayLog {
 	}
 
 	public String doDayLog(Telegram t) throws SQLException {
-		Usercache userCache = tUsercache.getLastMessage(t);
+		Usercache userCache = tUsercache.getLastMessage(t.getChatID());
 
 		if (userCache == null) {
 			// Es ist noch kein Cache da -> eine normale nachricht schreiben und ihn zu
@@ -147,7 +147,7 @@ public class TAppDayLog {
 			}
 		} else {
 			System.out.println("TODO 568");
-			// TODO: DATUM EINGEBEN UND DAY Ersteleln
+			// TODO: DATUM EINGEBEN UND DAY erstellen
 			return null;
 		}
 	}
@@ -187,9 +187,9 @@ public class TAppDayLog {
 			DaylogEvent dayEvent = new DaylogEvent();
 			String sCache = lastMsgCache.getUsercache();
 			// Der Cache schaut so aus: katid:42dateid:99
-			Integer nDateId = Integer.valueOf(sCache.substring(sCache.indexOf(":"), sCache.indexOf("d")));
+			Integer nTyp = Integer.valueOf(sCache.substring(sCache.indexOf(":") + 1, sCache.indexOf("dateid")));
 			// Auch als int validieren, wird aber als String gespeichert
-			Integer nTyp = Integer.valueOf(sCache.substring(sCache.lastIndexOf(":"), sCache.length()));
+			Integer nDateId = Integer.valueOf(sCache.substring(sCache.lastIndexOf(":") + 1, sCache.length()));
 
 			dayEvent.setDateId(nDateId);
 			dayEvent.setTyp(nTyp.toString());

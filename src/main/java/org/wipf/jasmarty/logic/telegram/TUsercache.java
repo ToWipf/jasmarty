@@ -55,13 +55,9 @@ public class TUsercache {
 	 * @throws SQLException
 	 */
 	public void saveOhneUsercache(Usercache o) throws SQLException {
-		// insert
-		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg) VALUES (?,?)";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, o.getChatId());
-		statement.setString(2, o.getMsg());
-		statement.executeUpdate();
-
+		// Usercache vom letzten mal uebertragen
+		o.setUsercache(getLastMessage(o.getChatId()).getUsercache());
+		save(o);
 	}
 
 	/**
@@ -101,9 +97,9 @@ public class TUsercache {
 	 * @param nChatid
 	 * @return
 	 */
-	public Usercache getLastMessage(Telegram t) {
+	public Usercache getLastMessage(Integer nChatId) {
 		try {
-			List<Usercache> lmsg = get(t.getChatID());
+			List<Usercache> lmsg = get(nChatId);
 			return lmsg.get(0);
 		} catch (Exception e) {
 			// nichts vorhanden
