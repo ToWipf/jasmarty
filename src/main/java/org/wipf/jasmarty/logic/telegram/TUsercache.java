@@ -56,7 +56,12 @@ public class TUsercache {
 	 */
 	public void saveOhneUsercache(Usercache o) throws SQLException {
 		// Usercache vom letzten mal uebertragen
-		o.setUsercache(getLastMessage(o.getChatId()).getUsercache());
+
+		Usercache last = getLastMessage(o.getChatId());
+		if (last != null) {
+			o.setUsercache(last.getUsercache());
+		}
+
 		save(o);
 	}
 
