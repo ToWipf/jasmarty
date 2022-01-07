@@ -47,6 +47,12 @@ public class DaylogDayRest {
 		return Response.ok("{\"save\":\"" + daylogDayDB.save(jnRoot) + "\"}").build();
 	}
 
+	@POST
+	@Path("getDateAndCrateIfDateNotExistsByJSON")
+	public Response getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException {
+		return Response.ok(daylogDayDB.getDateAndCrateIfDateNotExistsByJSON(jnRoot)).build();
+	}
+
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) throws SQLException {

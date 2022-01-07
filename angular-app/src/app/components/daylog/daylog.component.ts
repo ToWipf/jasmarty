@@ -202,10 +202,12 @@ export class DayLogComponent implements OnInit {
 
   private saveDay(item: DaylogDay): void {
     this.bShowWarning = true;
-    this.http.post(this.rest.gethost() + 'daylog/day/save', item).subscribe((resdata: any) => {
+    this.http.post(this.rest.gethost() + 'daylog/day/getDateAndCrateIfDateNotExistsByJSON', item).subscribe((resdata: DaylogDay) => {
       this.loadDays();
-      if (resdata.save == "true") {
+      if (resdata.id != null) {
         this.bShowWarning = false;
+        // Nach speichern, den Tag laden
+        this.loadEventsByDay(resdata);
       }
     });
   }

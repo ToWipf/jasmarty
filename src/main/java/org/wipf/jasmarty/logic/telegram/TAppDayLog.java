@@ -143,12 +143,12 @@ public class TAppDayLog {
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
 
-				return daylogDayDB.getDateAndCrateIfNotExists(sDateNow).getId();
+				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow).getId();
 
 			} else {
 				if (sDate.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
-					return daylogDayDB.getDateAndCrateIfNotExists(sDate).getId();
+					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDate).getId();
 
 				}
 			}
