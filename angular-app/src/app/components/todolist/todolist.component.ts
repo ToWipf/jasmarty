@@ -25,7 +25,7 @@ export class TodolistComponent implements OnInit {
   public bNew: boolean = true;
   public bTodo: boolean = true;
   public bDone: boolean = false;
-  public bLater: boolean = true;
+  public bLater: boolean = false;
   public bZitat: boolean = true;
   public bShowWarning: boolean = false;
   public sFilter: String = "";

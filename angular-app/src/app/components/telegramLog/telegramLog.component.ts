@@ -20,10 +20,15 @@ export class TelegramLogComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
-  public logArry: Telegram[] = []
+  public logArry: Telegram[] = [];
+  public sFilter: String = "";
 
   ngOnInit() {
     // Kein init laden
+  }
+  
+  public applyFilter() {
+    this.dataSource.filter = this.sFilter.trim();
   }
 
   public loadAll(): void {
@@ -34,6 +39,7 @@ export class TelegramLogComponent implements OnInit {
       this.logArry = resdata;
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
       warten.close();
     });
   }
@@ -45,6 +51,7 @@ export class TelegramLogComponent implements OnInit {
       this.logArry = resdata;
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
       warten.close();
     });
   }

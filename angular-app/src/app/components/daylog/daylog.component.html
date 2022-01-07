@@ -9,6 +9,10 @@
 
         <div class="configline">
             <div class="box">
+                Zeige alle Splaten:
+                <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
+            </div>
+            <div class="box">
                 <button class="btn btn-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
             </div>
             <!-- <div class="box">

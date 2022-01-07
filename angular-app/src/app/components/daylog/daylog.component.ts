@@ -24,20 +24,31 @@ export class DayLogComponent implements OnInit {
   public daylist: DaylogDay[] = [];
   public eventlist: DaylogEvent[] = [];
   public userid = 0;
-  // public daylistDisplayedColumns: string[] = ['id', 'date', 'tagestext', 'userid', 'button'];
-  // public eventlistDisplayedColumns: string[] = ['id', 'dateid', 'typ', 'data', 'button'];
-  public daylistDisplayedColumns: string[] = ['date', 'tagestext', 'button'];
-  public eventlistDisplayedColumns: string[] = ['typ', 'data', 'button'];
+  public daylistDisplayedColumns: string[] = [];
+  public eventlistDisplayedColumns: string[] = [];
   public sFilter: String = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateCacheForLoad: DaylogDay = {};
+  public bShowAllTable: boolean = true;
 
   ngOnInit() {
     this.loadDays();
     this.loadDaylogTypes();
+    this.showAllTable();
     // TODO: laden detail -> nur von ausgewälten tag ->
     // this.loadEvents();
+  }
+
+  public showAllTable(): void {
+    this.bShowAllTable = !this.bShowAllTable;
+    if (this.bShowAllTable) {
+      this.daylistDisplayedColumns = ['id', 'date', 'tagestext', 'userid', 'button'];
+      this.eventlistDisplayedColumns = ['id', 'dateid', 'typ', 'data', 'button'];
+    } else {
+      this.daylistDisplayedColumns = ['date', 'tagestext', 'button'];
+      this.eventlistDisplayedColumns = ['typ', 'data', 'button'];
+    }
   }
 
   public openDialogTypeVW() {

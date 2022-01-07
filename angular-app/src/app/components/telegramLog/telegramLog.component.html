@@ -12,6 +12,9 @@
             <div class="box">
                 <button class="btn btn-default" (click)="openCleanLogDialog()">Clean Log</button>
             </div>
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
         </div>
 
         <perfect-scrollbar class="pscroll">
