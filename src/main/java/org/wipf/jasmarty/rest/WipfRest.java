@@ -39,7 +39,7 @@ public class WipfRest {
 	@GET
 	@Path("up")
 	@Produces(MediaType.TEXT_PLAIN)
-	@PermitAll
+	@RolesAllowed({ "admin", "check" })
 	public Response up() {
 		return Response.ok(1).build();
 	}
