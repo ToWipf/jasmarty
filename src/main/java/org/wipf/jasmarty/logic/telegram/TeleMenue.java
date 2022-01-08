@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -51,6 +52,8 @@ public class TeleMenue {
 	TAppDayLog appDayLog;
 	@Inject
 	TUsercache tUsercache;
+	@Inject
+	DaylogHome daylogHome;
 
 	/**
 	 * @param sJson
@@ -211,9 +214,13 @@ public class TeleMenue {
 			case "dev":
 				return grafana.telegramMenueDev(t);
 
+			// Daylog
 			case "dl":
 			case "daylog":
 				return appDayLog.telegramMenue(t);
+			case "di":
+			case "dayinfo":
+				return daylogHome.getTagesinfoByTelegram(t);
 
 			default:
 				break;

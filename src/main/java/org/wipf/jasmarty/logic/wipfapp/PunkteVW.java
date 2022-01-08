@@ -100,10 +100,13 @@ public class PunkteVW {
 	}
 
 	/**
-	 * positiv und negativ
+	 * Bis Max. 50
 	 */
 	public void appendNochSpiel(int n) {
-		setNochSpiele(getNochSpielen() + n);
+		Integer nNochSp = getNochSpielen();
+		if (nNochSp <= 50) {
+			setNochSpiele(nNochSp + n);
+		}
 	}
 
 	/**

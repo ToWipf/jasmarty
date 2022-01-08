@@ -50,6 +50,7 @@ public class ReadLoop {
 		if (!bLoopActive) {
 			bLoopActive = true;
 			LOGGER.info("Refresh an");
+			telegramVerwaltung.sendMsgToAdmin("Starte Telegram Refreshloop");
 		} else {
 			LOGGER.info("Refresh bereits an");
 			return;
@@ -70,7 +71,7 @@ public class ReadLoop {
 						if (lastMsgCounter == 0) {
 							wipf.sleep(60000); // warte 60 sec
 						} else {
-							// warte nur 20 sec, da gerade geschrieben wurde
+							// warte nur 15 sec, da gerade geschrieben wurde
 							wipf.sleep(15000);
 							lastMsgCounter--;
 						}

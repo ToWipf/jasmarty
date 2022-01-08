@@ -56,7 +56,7 @@ public class TAppDayLog {
 			// Wenn start eingebene wurde, den Cache leeren
 			userCache.setUsercache("");
 			tUsercache.save(userCache);
-			return "Bitte das Datum eingeben:\n h für heute\n Format: yyyy-MM-dd";
+			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd";
 		} else if (userCache.getUsercache().equals("")) {
 			// Schritt 1
 			// Datum wählen
@@ -81,7 +81,7 @@ public class TAppDayLog {
 				userCache.setUsercache("katid:" + nKategorieId + userCache.getUsercache());
 				tUsercache.save(userCache);
 
-				return "Kategorie: " + sKatName + "\n\n Bitte Text eingeben";
+				return "Kategorie: " + sKatName + "\n" + "Bitte Text eingeben";
 			} else {
 				return "Fehler mit der Kategorie";
 			}
@@ -114,7 +114,7 @@ public class TAppDayLog {
 	private String createTypeList() {
 		StringBuilder sb = new StringBuilder();
 		try {
-			sb.append("Kategorienid wählen:");
+			sb.append("Kategorienid wählen:\n\n");
 
 			for (DaylogType dt : daylogTypeDB.getAll()) {
 				sb.append(dt.getId());

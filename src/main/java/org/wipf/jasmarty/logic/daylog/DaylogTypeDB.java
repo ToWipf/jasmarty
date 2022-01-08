@@ -69,6 +69,15 @@ public class DaylogTypeDB {
 	}
 
 	/**
+	 * @param sId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DaylogType> get(String sId) throws Exception {
+		return get(Integer.valueOf(sId));
+	}
+
+	/**
 	 * @param sDate
 	 * @param nUserId
 	 * @return

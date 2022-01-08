@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -15,14 +16,16 @@ import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
  *
  */
 @ApplicationScoped
-public class DailyTask extends TimerTask {
+public class TaskDaily extends TimerTask {
 
 	@Inject
-	SendAndReceive verwaltung;
+	SendAndReceive tSendAndReceive;
 	@Inject
 	PunkteVW punkteVW;
 	@Inject
 	WipfConfig wipfConfig;
+	@Inject
+	DaylogHome daylogHome;
 
 	private static final Logger LOGGER = Logger.getLogger("DailyTask");
 
@@ -34,11 +37,13 @@ public class DailyTask extends TimerTask {
 		LOGGER.info("Starte DailyTask");
 		try {
 			if (wipfConfig.isAppActive("telegram")) {
-				verwaltung.sendDaylyInfo();
+				tSendAndReceive.sendDaylyInfo();
 				punkteVW.pluspunkt();
 				punkteVW.appendNochSpiel(5);
 				// TODO vorerst nicht mehr senden
 				// verwaltung.sendDaylyMotd();
+				tSendAndReceive.sendMsgToAdmin(daylogHome.getTagesinfo()); // TODO zur richtigen ID senden -> id 0
+																			// Problem
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Fail DailyTask");
