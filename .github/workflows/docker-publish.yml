@@ -5,9 +5,6 @@ on:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
   # Run tests for any PRs.
   pull_request:
     branches: [master]
@@ -23,14 +20,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        
-#      - name: install
-#        run: apt-get update && apt-get upgrade -y && \
-#             apt install -y maven npm && \
-#             npm install -g @angular/cli@latest && \
-      
-      - name: Log into registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
       
       - name: Build jar
         run: cd scripts && ./setup.sh && ./buildFull.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
@@ -40,19 +29,10 @@ jobs:
         with:
           name: jasmarty.jar
           path: scripts/jasmarty.jar
-      
-#      - name: Build dockerimage
-#        run: cd scripts && docker build . --tag $IMAGE_NAME
 
-      - name: Build dockerimage_arm
-        run: cd scripts && docker buildx build --platform linux/arm -t ${IMAGE_NAME}-arm -f Dockerfile.arm .
-
-      - name: Build dockerimage_arm_64
-        run: cd scripts && docker buildx build --platform linux/arm64 -t ${IMAGE_NAME}-arm_64 -f Dockerfile.arm_64 .
-
-      - name: Push dockerimage_arm
+      - name: Build and Push dockerimage_arm 32
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -62,12 +42,18 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag ${IMAGE_NAME}-arm $IMAGE_ID:${VERSION}-arm
-          docker push $IMAGE_ID:${VERSION}-arm
 
-      - name: Push dockerimage_arm_64
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          cd scripts && \
+          docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder && \
+          docker buildx use mybuilder && \
+          docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm -f Dockerfile.arm --push .
+
+# Geht nicht -> umstellen auf buildx mit builder und ghcr
+      - name: Build and Push dockerimage_arm 64
         run: |
-          IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
+          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
@@ -77,8 +63,10 @@ jobs:
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag ${IMAGE_NAME}-arm_64 $IMAGE_ID:${VERSION}-arm_64
-          docker push $IMAGE_ID:${VERSION}-arm_64
 
-#          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-#          docker push $IMAGE_ID:$VERSION       
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          cd scripts && \
+          docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder64 && \
+          docker buildx use mybuilder64 && \
+          docker buildx build --platform linux/arm64 -t $IMAGE_ID:${VERSION}-arm_64 -f Dockerfile.arm_64 --push .

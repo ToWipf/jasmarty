@@ -6,12 +6,12 @@ import org.json.JSONObject;
  * @author Wipf
  *
  */
-public class DaylogBoolEvent {
+public class DaylogEvent {
 
 	private Integer nId;
 	private Integer nDateId;
 	private String sTyp;
-	private Boolean bBool;
+	private String sText;
 
 	/**
 	 * @return
@@ -21,7 +21,7 @@ public class DaylogBoolEvent {
 		jo.put("id", this.nId);
 		jo.put("dateid", this.nDateId);
 		jo.put("typ", this.sTyp);
-		jo.put("bool", this.bBool);
+		jo.put("text", this.sText);
 		return jo;
 	}
 
@@ -29,14 +29,15 @@ public class DaylogBoolEvent {
 	 * @param sJson
 	 * @return
 	 */
-	public DaylogBoolEvent setByJson(String sJson) {
+	public DaylogEvent setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		if (jo.has("id")) {
 			this.nId = jo.getInt("id");
 		}
+
 		this.nDateId = jo.getInt("dateid");
 		this.sTyp = jo.getString("typ");
-		this.bBool = jo.getBoolean("bool");
+		this.sText = jo.get("text").toString(); // da hier String, Int und Bool kommt
 		return this;
 	}
 
@@ -52,6 +53,20 @@ public class DaylogBoolEvent {
 	 */
 	public void setTyp(String sTyp) {
 		this.sTyp = sTyp;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getText() {
+		return sText;
+	}
+
+	/**
+	 * @param sText
+	 */
+	public void setText(String sText) {
+		this.sText = sText;
 	}
 
 	/**
@@ -80,20 +95,6 @@ public class DaylogBoolEvent {
 	 */
 	public void setId(Integer nId) {
 		this.nId = nId;
-	}
-
-	/**
-	 * @return
-	 */
-	public Boolean getBool() {
-		return bBool;
-	}
-
-	/**
-	 * @param bool
-	 */
-	public void setBool(Boolean bool) {
-		this.bBool = bool;
 	}
 
 }

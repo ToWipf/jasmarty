@@ -4,6 +4,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { HttpClient } from '@angular/common/http';
 import { CroppedEvent } from 'ngx-photo-editor';
 import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogVariablenHilfeComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-jasmarty12864pages',
@@ -11,7 +13,7 @@ import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app
   styleUrls: ['./jasmarty12864Pages.component.less'],
 })
 export class Jasmarty12864PagesComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf) {
+  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
 
   }
 
@@ -139,6 +141,10 @@ export class Jasmarty12864PagesComponent implements OnInit {
         this.lcdDescription.static = [];
       }
     });
+  }
+
+  public openariablenHilfeDialog(): void {
+    this.dialog.open(DialogVariablenHilfeComponent, {});
   }
 
 }

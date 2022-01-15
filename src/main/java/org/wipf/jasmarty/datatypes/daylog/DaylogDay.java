@@ -34,7 +34,11 @@ public class DaylogDay {
 		if (jo.has("id")) {
 			this.nId = jo.getInt("id");
 		}
-		this.nUserId = jo.getInt("userid");
+		if (jo.has("userid")) {
+			this.nUserId = jo.getInt("userid");
+		} else {
+			this.nUserId = 0;
+		}
 		this.sDate = jo.getString("date");
 		this.sTagestext = jo.getString("tagestext");
 		return this;

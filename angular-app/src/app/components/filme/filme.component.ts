@@ -43,6 +43,11 @@ export class FilmeComponent implements OnInit {
     var td: FilmEntry = {};
 
     td.id = this.nextId;
+    td.art = "";
+    td.bewertung = 0;
+    td.gesehenDate = Math.round(Date.now() / 1000);
+    td.infotext = "";
+    td.titel = "";
 
     td.date = Math.round(Date.now() / 1000);
     td.editby = 'web';

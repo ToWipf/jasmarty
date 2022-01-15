@@ -12,6 +12,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+
 /**
  * @author wipf
  *
@@ -53,12 +55,15 @@ public class WipfUserVW {
 
 		if (lUserFromJasmartyDb.size() == 0) {
 			// Admin User nur erstellen wenn es kein anderen User gibt
-			createDefaultUserAuthDb();
-		} else {
-			// Alle User einspielen
-			for (WipfUser wu : lUserFromJasmartyDb) {
-				addOrUpdateUser(wu, true);
-			}
+			LOGGER.info("Standarduser admin erstellen");
+			lUserFromJasmartyDb.add(getDefaultUser());
+		}
+		// User für Healthcheck erstellen
+		lUserFromJasmartyDb.add(getHealthCheckUser());
+
+		// Alle User einspielen
+		for (WipfUser wu : lUserFromJasmartyDb) {
+			addOrUpdateUser(wu, true);
 		}
 	}
 
@@ -166,19 +171,31 @@ public class WipfUserVW {
 	}
 
 	/**
-	 * @throws SQLException
-	 * 
+	 * @return
 	 */
-	private void createDefaultUserAuthDb() throws SQLException {
+	private WipfUser getDefaultUser() {
 		WipfUser wu = new WipfUser();
 		wu.setUsername("admin");
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
-		// wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
-		wu.setPassword("jadmin");
+		wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
+		// wu.setPassword("jadmin");
 		wu.setRole("admin");
 		wu.setTelegramId(0);
-		addOrUpdateUser(wu, true);
-		LOGGER.info("Standarduser admin erstellt");
+		return wu;
+	}
+
+	/**
+	 * @return
+	 */
+	private WipfUser getHealthCheckUser() {
+		WipfUser wu = new WipfUser();
+		wu.setUsername("check");
+		// Mit bcrypt Verschluesselung (slow bei 32Bit)
+		wu.setPassword(BcryptUtil.bcryptHash("check"));
+		// wu.setPassword("check");
+		wu.setRole("check");
+		wu.setTelegramId(0);
+		return wu;
 	}
 
 }

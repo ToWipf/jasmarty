@@ -20,6 +20,7 @@ export class TelegramMsgComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
+  public sFilter: String = "";
 
   ngOnInit() {
     this.loadAllItems();
@@ -66,6 +67,10 @@ export class TelegramMsgComponent implements OnInit {
       this.dataSource.sort = this.sort;
       warten.close();
     });
+  }
+
+  public applyFilter() {
+    this.dataSource.filter = this.sFilter.trim();
   }
 
   private openDialog(item: Telegram): void {

@@ -107,6 +107,19 @@ export interface DaylogEvent {
   dateid?: number;
   typ?: string;
   text?: string;
-  bool?: boolean;
-  number?: number;
+}
+
+export interface DynpageEntry {
+  id?: number;
+  html?: string;
+  script?: string;
+  style?: string;
+  rechte?: string;
+  live?: boolean;
+}
+
+export interface DaylogType {
+  id?: number;
+  type?: string;
+  art?: string;
 }

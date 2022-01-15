@@ -32,6 +32,8 @@ public class TelegramHome {
 	ReadLoop tReadLoop;
 	@Inject
 	TeleLog tLog;
+	@Inject
+	TUsercache tUsercache;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
@@ -46,6 +48,7 @@ public class TelegramHome {
 		appMotd.initDB();
 		appEssen.initDB();
 		appFilme.initDB();
+		tUsercache.initDB();
 	}
 
 	/**

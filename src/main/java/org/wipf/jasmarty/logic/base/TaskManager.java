@@ -17,7 +17,7 @@ import org.jboss.logging.Logger;
 public class TaskManager {
 
 	@Inject
-	DailyTask dailyTask;
+	TaskDaily taskDaily;
 
 	private static final Logger LOGGER = Logger.getLogger("Daily Task");
 	private boolean bTaskRuns = false;
@@ -31,7 +31,7 @@ public class TaskManager {
 			LOGGER.info("Starte Daily Task");
 			bTaskRuns = true;
 			Timer t = new Timer();
-			TimerTask taskdaily = dailyTask;
+			TimerTask taskdaily = taskDaily;
 			LocalDateTime localDateTime = LocalDateTime.now();
 
 			long nSekundenBisMitternacht = (86400

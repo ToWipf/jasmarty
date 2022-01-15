@@ -9,6 +9,12 @@
             <div class="box">
                 <button class="btn btn-default" (click)="loadExt()">Externes laden</button>
             </div>
+            <div class="box">
+                <button class="btn btn-default" (click)="openCleanLogDialog()">Clean Log</button>
+            </div>
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
         </div>
 
         <perfect-scrollbar class="pscroll">
@@ -58,5 +64,6 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </perfect-scrollbar>
+        Treffer: {{logArry.length}}
     </div>
 </div>

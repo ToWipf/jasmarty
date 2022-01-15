@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -45,6 +46,14 @@ public class TeleMenue {
 	Infotext infotext;
 	@Inject
 	SendAndReceive sendAndReceive;
+	@Inject
+	TAppGrafana grafana;
+	@Inject
+	TAppDayLog appDayLog;
+	@Inject
+	TUsercache tUsercache;
+	@Inject
+	DaylogHome daylogHome;
 
 	/**
 	 * @param sJson
@@ -58,9 +67,19 @@ public class TeleMenue {
 	/**
 	 * @param t
 	 * @return
-	 * @throws SQLException
 	 */
 	public String menueMsg(Telegram t) {
+		String res = doMenue(t);
+		tUsercache.saveByTelegramOhneUsercache(t);
+		return res;
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 * @throws SQLException
+	 */
+	private String doMenue(Telegram t) {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
 
 		// Admin Befehle
@@ -148,11 +167,8 @@ public class TeleMenue {
 			case "temp":
 			case "temperature":
 				return appOthers.getTemperature();
-			case "sys":
-			case "system":
-				return appOthers.getSystem();
 
-			// Punkte
+			// Punkte - App
 			case "sp":
 			case "ps":
 			case "setpunkte":
@@ -185,12 +201,50 @@ public class TeleMenue {
 			case "itext":
 				infotext.setText(t.getMessageFullWithoutFirstWord());
 				return infotext.getText();
+
 			// System
 			case "kill":
+				// Noch ein Update machen, ansonsen wird nach einen neustart sofort wieder
+				// "kill" aufgerufen
 				sendAndReceive.readUpdateFromTelegram();
-
 				MainHome.stopApp();
 				return "killed";
+
+			case "d":
+			case "dev":
+				return grafana.telegramMenueDev(t);
+
+			// Daylog
+			case "dl":
+			case "daylog":
+				return appDayLog.telegramMenue(t);
+			case "di":
+			case "dayinfo":
+				return daylogHome.getTagesinfoByTelegram(t);
+
+			default:
+				break;
+			}
+		}
+
+		// Antworten für all User
+		if (userAndGroups.isUser(t)) {
+			switch (sInMsg) {
+			case "user":
+				return "User OK";
+
+			// Grafana
+			case "grafana":
+				grafana.testen(t.getChatID());
+				return "Testbild";
+			case "heizung":
+			case "h":
+				return grafana.telegramMenuehHeizung(t);
+
+			// System
+			case "sys":
+			case "system":
+				return appOthers.getSystem();
 
 			default:
 				break;

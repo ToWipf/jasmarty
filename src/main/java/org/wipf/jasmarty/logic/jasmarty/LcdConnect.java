@@ -205,6 +205,10 @@ public class LcdConnect {
 	 */
 	public Boolean startPort() {
 		try {
+			if (lconf.getPort() == null || lconf.getPort().equals("")) {
+				LOGGER.warn("LCD USB Port ist nicht definiert");
+				return false;
+			}
 			// LCD Connect
 			sp = null;
 			sp = SerialPort.getCommPort(lconf.getPort());

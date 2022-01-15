@@ -65,8 +65,75 @@ public class DaylogDayDB {
 			save(new DaylogDay().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * Get Day und erstelle ihn, wenn er noch nicht angelegt ist
+	 * 
+	 * @param sDate
+	 * @return
+	 * @throws SQLException
+	 */
+	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate) throws SQLException {
+		// TODO USERID nicht auf 0 setzen
+		DaylogDay dday = get(sDate, 0);
+		if (dday.getId() != null) {
+			// Tag existiert bereits
+			return dday;
+		} else {
+			// Tag erstellen
+			DaylogDay newDay = new DaylogDay();
+			newDay.setUserId(0);
+			newDay.setDate(sDate);
+			save(newDay);
+
+			// Nochmals nach der Id suchen, sollte jetzt da sein
+			return get(sDate, 0);
+		}
+	}
+
+	/**
+	 * 
+	 * Get Day und erstelle ihn, wenn er noch nicht angelegt ist
+	 * 
+	 * Die Date Info wird immer aktualisiert
+	 * 
+	 * @param sDate
+	 * @return
+	 * @throws SQLException
+	 */
+	public DaylogDay getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException {
+		DaylogDay ddayToCreate = new DaylogDay().setByJson(jnRoot);
+		// Wenn eine ID dabei ist, immer aktualisieren
+		if (ddayToCreate.getId() != null) {
+			// Nur aktualisieren, Id ist mit dabei
+			save(ddayToCreate);
+			return ddayToCreate;
+		} else {
+			// Keine Id -> Prüfen ob datum existiert
+			DaylogDay dayIfExists = get(ddayToCreate.getDate(), ddayToCreate.getUserId());
+
+			if (dayIfExists != null) {
+				// Tag existiert bereits -> Id übertagen
+				ddayToCreate.setId(dayIfExists.getId());
+
+				// Wenn im neuen Tag kein Tagestext übergeben wird -> übertagen
+				if (ddayToCreate.getTagestext() == null || ddayToCreate.getTagestext().length() == 0) {
+					ddayToCreate.setTagestext(dayIfExists.getTagestext());
+				}
+
+			}
+			// Tag immer speichern, da das Date Info aktualisiert wird
+
+			save(ddayToCreate);
+
+		}
+
+		// Nochmals nach der Id suchen, die jetzt da ist und Date zurückgeben
+		return get(ddayToCreate.getDate(), ddayToCreate.getUserId());
 	}
 
 	/**
@@ -119,7 +186,6 @@ public class DaylogDayDB {
 			d.setUserId(rs.getInt("userid"));
 			o.add(d);
 		}
-
 		return o;
 	}
 
@@ -147,5 +213,4 @@ public class DaylogDayDB {
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
-
 }

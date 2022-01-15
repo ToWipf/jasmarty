@@ -5,6 +5,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -34,6 +35,14 @@ public class WipfRest {
 	SerialConfig serialConfig;
 	@Inject
 	WipfInfo wipfInfo;
+
+	@GET
+	@Path("up")
+	@Produces(MediaType.TEXT_PLAIN)
+	@RolesAllowed({ "admin", "check" })
+	public Response up() {
+		return Response.ok(1).build();
+	}
 
 	@GET
 	@Path("ver")
@@ -69,4 +78,9 @@ public class WipfRest {
 		return Response.ok(BcryptUtil.bcryptHash(x)).build();
 	}
 
+	@DELETE
+	@Path("/garbage")
+	public void gc() {
+		System.gc();
+	}
 }

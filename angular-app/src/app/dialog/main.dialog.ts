@@ -22,3 +22,14 @@ export class DialogWartenComponent {
     this.dialogRef.close();
   }
 }
+
+@Component({
+  templateUrl: './variablen.hilfe.dialog.html',
+})
+export class DialogVariablenHilfeComponent {
+  constructor(public dialogRef: MatDialogRef<DialogVariablenHilfeComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

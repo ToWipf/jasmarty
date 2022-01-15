@@ -7,9 +7,10 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.daylog.DaylogEvent;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
+import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
@@ -33,16 +34,21 @@ public class MainHome {
 	@Inject
 	TaskManager taskmanager;
 	@Inject
-	DaylogEvent daylogEvent;
+	DaylogHome daylogHome;
+	@Inject
+	Dynpages dynpages;
+	@Inject
+	SqlLitePatcher sqlLitePatcher;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.28";
+	public static final String VERSION = "1.0.58";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
 	 * Stop App
 	 */
 	public static void stopApp() {
+		LOGGER.info("Stoppen...");
 		Quarkus.asyncExit();
 	}
 
@@ -53,12 +59,15 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+			wipfConfig.initDB();
+
+			sqlLitePatcher.doPatch();
 
 			wipfUserVW.initDB();
-			wipfConfig.initDB();
+			dynpages.initDB();
+			daylogHome.initDB();
 			wipfConfig.checkAppWorkId();
 			taskmanager.startDailyTask();
-			daylogEvent.initDB();
 
 			jHome.init();
 			tHome.init();

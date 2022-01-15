@@ -29,4 +29,12 @@ public class UserAndGroups {
 		return 798200105;
 	}
 
+	/**
+	 * @return
+	 */
+	public boolean isUser(Telegram t) {
+		return (isAdminUser(t) || t.getChatID() == 522467648 || t.getChatID() == 1750235711
+				|| t.getChatID() == -584490153);
+	}
+
 }

@@ -1,0 +1,46 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- TODO: LESS DATEI -->
+        <h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typ}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field appearance="fill">
+                <mat-label>Typ</mat-label>
+                <mat-select [(value)]="data.typ">
+                    <!-- <mat-option value='-1'>None</mat-option> -->
+                    <ng-container *ngFor="let type of daylogTypes">
+                        <mat-option value='{{type.id}}'>{{type.type}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+
+            <ng-container *ngFor="let type of daylogTypes">
+                <ng-container *ngIf="data.typ.toString()==type.id">
+                    <ng-container *ngIf="type.art==='TEXT'">
+                        <mat-form-field>
+                            <mat-label>Text</mat-label>
+                            <input matInput [(ngModel)]="data.text">
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="type.art==='NUMBER'">
+                        <mat-form-field>
+                            <mat-label>Nummer</mat-label>
+                            <input matInput type="number" [(ngModel)]="data.text">
+                        </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngIf="type.art==='BOOL'">
+                        Boolean<br>
+                        <input type="checkbox" [(ngModel)]="data.text" />
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+            <br>
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+</div>
