@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.telegram;
+package org.wipf.jasmarty.logic.daylog;
 
 import java.sql.SQLException;
 import java.text.DateFormat;
@@ -14,9 +14,7 @@ import org.wipf.jasmarty.datatypes.daylog.DaylogType;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.datatypes.telegram.Usercache;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
-import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
-import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
+import org.wipf.jasmarty.logic.telegram.TUsercache;
 
 /**
  * @author devbuntu

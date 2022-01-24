@@ -7,6 +7,11 @@ import { Injectable } from '@angular/core';
 
 export class ServiceWipf {
 
+  /**
+   * 
+   * @param oldObj 
+   * @returns 
+   */
   public deepCopy(oldObj: any) {
     var newObj = oldObj;
     if (oldObj && typeof oldObj === 'object') {
@@ -21,6 +26,11 @@ export class ServiceWipf {
     return newObj;
   }
 
+  /**
+   * 
+   * @param ms 
+   * @returns 
+   */
   public delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }

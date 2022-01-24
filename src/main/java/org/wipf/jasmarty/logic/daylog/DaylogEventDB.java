@@ -79,7 +79,7 @@ public class DaylogEventDB {
 	public List<DaylogEvent> get(Integer nDateId) throws SQLException {
 		List<DaylogEvent> o = new LinkedList<>();
 
-		String sQuery = "SELECT * FROM DaylogTextEvent WHERE dateid = ?;";
+		String sQuery = "SELECT * FROM DaylogTextEvent WHERE dateid = ? ORDER BY typ;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		statement.setInt(1, nDateId);
 		ResultSet rs = statement.executeQuery();
