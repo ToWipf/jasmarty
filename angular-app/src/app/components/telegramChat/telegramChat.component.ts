@@ -71,6 +71,7 @@ export class TelegramChatComponent implements OnInit {
   // TestChat
   public send(): void {
     this.http.post(this.rest.gethost() + 'telegram/chat', this.tMsg).subscribe((resdata: any) => {
+      this.tMsg.message = "";
       this.textOut = resdata.msg;
       this.load();
     });

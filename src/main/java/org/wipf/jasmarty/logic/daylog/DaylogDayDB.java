@@ -78,11 +78,22 @@ public class DaylogDayDB {
 	 * @throws SQLException
 	 */
 	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sTagestext) throws SQLException {
+		// wenn ein Tagestext mitgegeben wird > aktualisieren
+
 		// TODO USERID nicht auf 0 setzen
 		DaylogDay dday = get(sDate, 0);
 		if (dday.getId() != null) {
 			// Tag existiert bereits
-			return dday;
+			if (sTagestext == null || sTagestext.equals("")) {
+				// Es wurde kein neuer Tagestext mitgegeben
+				// Einfach den Tag zurückgeben
+				return dday;
+			} else {
+				// Tagestext updaten
+				dday.setTagestext(sTagestext);
+				save(dday);
+				return dday;
+			}
 		} else {
 			// Tag erstellen
 			DaylogDay newDay = new DaylogDay();

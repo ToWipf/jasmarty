@@ -54,7 +54,8 @@ public class TAppDayLog {
 			// Wenn start eingebene wurde, den Cache leeren
 			userCache.setUsercache("");
 			tUsercache.save(userCache);
-			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd";
+			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n"
+					+ "Optional kann ein Tagestext angegeben werden";
 		} else if (userCache.getUsercache().equals("")) {
 			// Schritt 1
 			// Datum wählen
@@ -99,7 +100,7 @@ public class TAppDayLog {
 		// @formatter:off
 		return "Syntax:\n" + "\n"
 				+ "1. dl start" + "\n"
-				+ "2. dl <DatumID oder h für Heute>" + "\n"
+				+ "2. dl <DatumID oder h für Heute> optionaler Text" + "\n"
 				+ "3. dl <KATEGORIEID>" + "\n"
 				+ "4. dl <EventText>";
 		// @formatter:on
@@ -137,13 +138,14 @@ public class TAppDayLog {
 	private Integer waehleDatum(String sDateInfoString) {
 		// Ersten part bekommen
 		// Mögliche syntax: h TEXT
+		// Mögliche syntax: 2022-02-02 TEXT
 		boolean bDatumIstHeute = sDateInfoString.startsWith("h");
 
 		// Prüfen ob es einen TagesText gibt
 		String sDateTagestext = "";
 		Integer nDateTextStart = sDateInfoString.indexOf(" ");
 		if (nDateTextStart > 0) {
-			sDateTagestext = sDateInfoString.substring(nDateTextStart);
+			sDateTagestext = sDateInfoString.substring(nDateTextStart).trim();
 		}
 
 		try {
@@ -155,9 +157,11 @@ public class TAppDayLog {
 				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext).getId();
 
 			} else {
-				if (sDateInfoString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+				String sDateString = sDateInfoString.substring(0, 10); // Länge des Datums ist immer fest
+
+				if (sDateString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
-					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateInfoString, sDateTagestext).getId();
+					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext).getId();
 
 				}
 			}
