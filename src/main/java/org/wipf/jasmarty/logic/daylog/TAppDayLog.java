@@ -134,19 +134,30 @@ public class TAppDayLog {
 	 * @param lastMsgCache
 	 * @return
 	 */
-	private Integer waehleDatum(String sDate) {
+	private Integer waehleDatum(String sDateInfoString) {
+		// Ersten part bekommen
+		// Mögliche syntax: h TEXT
+		boolean bDatumIstHeute = sDateInfoString.startsWith("h");
+
+		// Prüfen ob es einen TagesText gibt
+		String sDateTagestext = "";
+		Integer nDateTextStart = sDateInfoString.indexOf(" ");
+		if (nDateTextStart > 0) {
+			sDateTagestext = sDateInfoString.substring(nDateTextStart);
+		}
+
 		try {
-			if (sDate.equals("h")) {
+			if (bDatumIstHeute) {
 				// Heute
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
 
-				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow).getId();
+				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext).getId();
 
 			} else {
-				if (sDate.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
+				if (sDateInfoString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
-					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDate).getId();
+					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateInfoString, sDateTagestext).getId();
 
 				}
 			}

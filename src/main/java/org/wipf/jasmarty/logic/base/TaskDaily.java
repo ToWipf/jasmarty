@@ -42,8 +42,14 @@ public class TaskDaily extends TimerTask {
 				punkteVW.appendNochSpiel(5);
 				// TODO vorerst nicht mehr senden
 				// verwaltung.sendDaylyMotd();
-				tSendAndReceive.sendMsgToAdmin(daylogHome.getTagesinfo()); // TODO zur richtigen ID senden -> id 0
-																			// Problem
+
+				// TODO zur richtigen ID senden -> id 0 Problem
+				StringBuilder sb = new StringBuilder();
+				sb.append(daylogHome.getTagesInfo());
+				sb.append("\n\n");
+				sb.append(daylogHome.getGesternInfo());
+
+				tSendAndReceive.sendMsgToAdmin(sb.toString());
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Fail DailyTask");

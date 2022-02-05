@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.daylog;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +40,21 @@ public class DaylogHome {
 	/**
 	 * @return
 	 */
-	public String getTagesinfo() {
+	public String getTagesInfo() {
 		// Datum Heute
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String sDateNow = df.format(new Date());
+
+		return getTagesinfoByDate(sDateNow);
+	}
+
+	/**
+	 * @return
+	 */
+	public String getGesternInfo() {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		LocalDate dateGestern = LocalDate.now().minusDays(1);
+		String sDateNow = df.format(dateGestern);
 
 		return getTagesinfoByDate(sDateNow);
 	}
@@ -55,9 +67,8 @@ public class DaylogHome {
 		if (t.getMessageFullWithoutFirstWord().matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 			return getTagesinfoByDate(t.getMessageFullWithoutFirstWord());
 		}
-
-		return getTagesinfo();
-
+		// Kein Valides Datum mitgegeben -> gebe Heute zurück
+		return getTagesInfo();
 	}
 
 	/**
@@ -74,6 +85,7 @@ public class DaylogHome {
 			List<DaylogEvent> dEvents = daylogEventDB.get(dday.getId());
 
 			sb.append("Events für " + sDate + "\n-----------\n");
+			sb.append(dday.getTagestext() + "\n");
 
 			for (DaylogEvent dEvent : dEvents) {
 				// Typ Text:

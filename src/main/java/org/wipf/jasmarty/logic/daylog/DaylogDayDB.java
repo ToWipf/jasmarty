@@ -77,7 +77,7 @@ public class DaylogDayDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate) throws SQLException {
+	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sTagestext) throws SQLException {
 		// TODO USERID nicht auf 0 setzen
 		DaylogDay dday = get(sDate, 0);
 		if (dday.getId() != null) {
@@ -88,6 +88,7 @@ public class DaylogDayDB {
 			DaylogDay newDay = new DaylogDay();
 			newDay.setUserId(0);
 			newDay.setDate(sDate);
+			newDay.setTagestext(sTagestext);
 			save(newDay);
 
 			// Nochmals nach der Id suchen, sollte jetzt da sein
