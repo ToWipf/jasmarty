@@ -17,7 +17,7 @@ public class Usercache {
 	 */
 	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
-		jo.put("userid", this.nChatId);
+		jo.put("chatid", this.nChatId);
 		jo.put("date", this.sMsg);
 		jo.put("usercache", this.sUsercache);
 		return jo;

@@ -1,9 +1,25 @@
 .btn-default {
-    border: solid 1px black;
-    background-color: rgb(216, 216, 216);
-  
-    &:hover {
-      background-color: rgb(61, 61, 61);
-    }
+  border: solid 1px black;
+  background-color: rgb(216, 216, 216);
+
+  &:hover {
+    background-color: rgb(61, 61, 61);
   }
-  
+}
+
+.configline {
+  text-align: end;
+  display: block ruby;
+}
+
+.gridRow {
+  display: flex;
+  //flex-wrap: wrap;
+  margin: 0 -15px;
+}
+
+.gridCol {
+  padding: 0 15px;
+  flex: 1 0 250px;
+  width: 25%;
+}

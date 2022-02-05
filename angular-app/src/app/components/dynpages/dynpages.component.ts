@@ -50,7 +50,9 @@ export class DynpagesComponent implements OnInit {
   }
 
   public applyFilter() {
-    this.dataSource.filter = this.sFilter.trim();
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
+    });
   }
 
   public newItem(): void {

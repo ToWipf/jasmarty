@@ -157,7 +157,7 @@ public class TUsercache {
 	 * @throws SQLException
 	 */
 	public void del(Integer nId) throws SQLException {
-		String sUpdate = "DELETE FROM teleUsercache WHERE id = ?";
+		String sUpdate = "DELETE FROM teleUsercache WHERE chatid = ?";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
 		statement.executeUpdate();

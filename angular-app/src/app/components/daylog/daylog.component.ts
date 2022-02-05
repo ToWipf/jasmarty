@@ -148,7 +148,6 @@ export class DayLogComponent implements OnInit {
     this.serviceWipf.delay(200).then(() => {
       this.daylistDataSource.filter = this.sFilter.trim();
       this.eventlistDataSource.filter = this.sFilter.trim();
-
     });
   }
 

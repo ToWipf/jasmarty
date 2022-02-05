@@ -70,9 +70,10 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   public applyFilter() {
-    this.dataSource.filter = this.sFilter.trim();
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
+    });
   }
-
   private openDialog(item: Telegram): void {
     const edititem: Telegram = this.serviceWipf.deepCopy(item);
     edititem.from = "web";
