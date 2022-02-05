@@ -7,5 +7,6 @@
     "terminal.integrated.fontSize": 12,
     "prettier.printWidth": 300,
     "html.format.wrapLineLength": 300,
-    "gitlens.codeLens.enabled": false
+    "gitlens.codeLens.enabled": false,
+    "terminal.integrated.persistentSessionReviveProcess": "never"
 }
