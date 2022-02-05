@@ -23,6 +23,7 @@ export class FilmeComponent implements OnInit {
   public displayedColumns: string[] = ['titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
   public farry: FilmEntry[] = [];
   private nextId: number;
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
@@ -34,6 +35,7 @@ export class FilmeComponent implements OnInit {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
       this.nextId = this.getNextId();
       warten.close();
     });
@@ -74,6 +76,12 @@ export class FilmeComponent implements OnInit {
   private save(item: FilmEntry): void {
     this.http.post(this.rest.gethost() + 'filme/save', item).subscribe((resdata: any) => {
       this.load();
+    });
+  }
+
+  public applyFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
     });
   }
 

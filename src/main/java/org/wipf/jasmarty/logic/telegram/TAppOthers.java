@@ -98,10 +98,16 @@ public class TAppOthers {
 			sWitz = wipf.httpRequest(Wipf.httpRequestType.GET,
 					"https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
 			String s = sWitz.substring(41, sWitz.length() - 3).replaceAll("\\<.*?>", "");
-			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
+			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", " ").replaceAll("%22", "\n")
+					.replaceAll("%21", "!").replaceAll("%3F", "?").replaceAll("%3A", ":").replaceAll("%2C", ",")
+					.replaceAll("%2E", ".").replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C2%A4", "ä")
+					.replaceAll("%26uuml%3B", "ü").replaceAll("%C3%83%C5%B8", "ß").replaceAll("%26szlig%3B", "ß")
+					.replaceAll("%26ouml%3B", "ö").replaceAll("%C3%A2%E2%82%AC%CB%9C", "\"")
+					.replaceAll("%26uuml%3B", "Ü").replaceAll("%26%238242%3B%21", "\"").replaceAll("%26auml%3B", "ä")
+					.replaceAll("H%C3%83%C2%B6", "Ö");
 
 			// TODO
-			return x;
+			return x.substring(0, x.indexOf("Ein Witz von"));
 
 		} catch (IOException e) {
 			LOGGER.warn("getWitz: " + e);
