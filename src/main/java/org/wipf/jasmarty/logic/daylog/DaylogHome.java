@@ -52,11 +52,8 @@ public class DaylogHome {
 	 * @return
 	 */
 	public String getGesternInfo() {
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		LocalDate dateGestern = LocalDate.now().minusDays(1);
-		String sDateNow = df.format(dateGestern);
-
-		return getTagesinfoByDate(sDateNow);
+		return getTagesinfoByDate(dateGestern.toString());
 	}
 
 	/**
