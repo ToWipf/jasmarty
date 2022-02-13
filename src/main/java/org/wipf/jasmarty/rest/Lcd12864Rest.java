@@ -22,6 +22,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
  *
  */
 @Path("lcd12864")
+@RolesAllowed("admin")
 //@RolesAllowed("admin") TODO!
 @Produces(MediaType.APPLICATION_JSON)
 // @Consumes(MediaType.APPLICATION_JSON)
