@@ -35,4 +35,17 @@ export class ServiceWipf {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  /**
+   * Nummer zu String mit führender Null
+   * 
+   * @param num 
+   * @param size 
+   * @returns 
+   */
+  public pad(num, size) {
+    num = num.toString();
+    while (num.length < size) num = "0" + num;
+    return num;
+  }
+
 }

@@ -19,7 +19,10 @@
                 <button class="btn btn-default" (click)="load()">Neu laden</button>
             </div> -->
             <div class="box">
-                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter" />
+                Filter Tag: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterDay" />
+            </div>
+            <div class="box">
+                Filter Event: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterEvent" />
             </div>
             <div class="box">
                 <button class="btn btn-default" (click)="loadEvents()">Alle Events Laden</button>

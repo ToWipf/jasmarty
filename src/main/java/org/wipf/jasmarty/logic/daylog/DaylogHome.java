@@ -82,7 +82,9 @@ public class DaylogHome {
 			List<DaylogEvent> dEvents = daylogEventDB.get(dday.getId());
 
 			sb.append("Events für " + sDate + "\n-----------\n");
-			sb.append(dday.getTagestext() + "\n");
+			if (dday.getTagestext() != null) {
+				sb.append(dday.getTagestext() + "\n\n");
+			}
 
 			for (DaylogEvent dEvent : dEvents) {
 				// Typ Text:

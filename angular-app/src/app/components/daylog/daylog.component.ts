@@ -26,18 +26,18 @@ export class DayLogComponent implements OnInit {
   public userid = 0;
   public daylistDisplayedColumns: string[] = [];
   public eventlistDisplayedColumns: string[] = [];
-  public sFilter: String = "";
+  public sFilterDay: String = "";
+  public sFilterEvent: String = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateCacheForLoad: DaylogDay = {};
   public bShowAllTable: boolean = true;
 
   ngOnInit() {
+    this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad(new Date(Date.now()).getMonth(), 2);
     this.loadDays();
     this.loadDaylogTypes();
     this.showAllTable();
-    // TODO: laden detail -> nur von ausgewälten tag ->
-    // this.loadEvents();
   }
 
   public showAllTable(): void {
@@ -78,10 +78,14 @@ export class DayLogComponent implements OnInit {
 
       this.daylistDataSource = new MatTableDataSource(this.daylist);
       this.daylistDataSource.sort = this.sortDay;
+      this.daylistDataSource.filter = this.sFilterDay.trim();
       warten.close();
     });
   }
 
+  /**
+  * Alle Events Laden 
+  */
   public loadEvents(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.eventlist = [];
@@ -92,6 +96,7 @@ export class DayLogComponent implements OnInit {
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);
       this.eventlistDataSource.sort = this.sortEvent;
+      this.eventlistDataSource.filter = this.sFilterEvent.trim();
       warten.close();
     });
   }
@@ -106,6 +111,7 @@ export class DayLogComponent implements OnInit {
 
       this.eventlistDataSource = new MatTableDataSource(this.eventlist);
       this.eventlistDataSource.sort = this.sortEvent;
+      this.eventlistDataSource.filter = this.sFilterEvent.trim();
       warten.close();
     });
   }
@@ -146,8 +152,8 @@ export class DayLogComponent implements OnInit {
 
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
-      this.daylistDataSource.filter = this.sFilter.trim();
-      this.eventlistDataSource.filter = this.sFilter.trim();
+      this.daylistDataSource.filter = this.sFilterDay.trim();
+      this.eventlistDataSource.filter = this.sFilterEvent.trim();
     });
   }
 
