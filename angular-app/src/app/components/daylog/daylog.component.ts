@@ -34,7 +34,7 @@ export class DayLogComponent implements OnInit {
   public bShowAllTable: boolean = true;
 
   ngOnInit() {
-    this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad(new Date(Date.now()).getMonth(), 2);
+    this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad((new Date(Date.now()).getMonth() + 1), 2);
     this.loadDays();
     this.loadDaylogTypes();
     this.showAllTable();
