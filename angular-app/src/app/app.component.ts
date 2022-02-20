@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
   public selectedSite: string = 'firstpage';
 
   ngOnInit(): void {
+    this.rest.sethostExpect();
     this.getActiveModules();
   }
 
