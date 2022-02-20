@@ -202,6 +202,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 @Component({
   selector: 'app-daylog-dialogtypelist',
   templateUrl: './daylog.dialogTypeList.html',
+  styleUrls: ['./daylog.component.less']
 })
 export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -317,6 +318,7 @@ export class DaylogComponentDialogTypeComponent {
 @Component({
   selector: 'app-daylog-eventlist',
   templateUrl: './daylog.eventlist.html',
+  styleUrls: ['./daylog.component.less']
 })
 export class DaylogComponentEventlist implements OnChanges, OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -327,7 +329,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
   @Input("daylogTypes") public daylogTypes: DaylogType;
 
   @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
-  public bShowWarning: boolean = false; // TODO OUTPUT
+  public bShowWarning: boolean = false;
   public eventlistDataSource;
   public eventlistDisplayedColumns: string[] = [];
   public eventlist: DaylogEvent[] = [];
@@ -423,10 +425,9 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
   }
 
   public loadEventsByDay(d: DaylogDay): void {
-    if (d != undefined) {
+    if (d.id != undefined) {
       const warten = this.dialog.open(DialogWartenComponent, {});
       this.eventlist = [];
-      //this.dateCacheForLoad = d; TODO nötig?
 
       this.http.get(this.rest.gethost() + 'daylog/event/get/' + d.id).subscribe((resdata: DaylogEvent[]) => {
         this.eventlist = resdata;
