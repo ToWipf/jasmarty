@@ -70,7 +70,7 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { CharGeneratorComponent } from './components/charGenerator/charGenerator.component';
 import { DebugSeiteComponent } from './components/debugSeite/debugSeite.component';
-import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/daylog/daylog.component';
+import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogEventComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent, DaylogComponentEventlist } from './components/daylog/daylog.component';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/dynpages/dynpages.component';
 import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.component';
 @NgModule({
@@ -112,7 +112,8 @@ import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.compo
     WipfUserVwComponent,
     WipfUserVWComponentDialogComponent,
     DaylogComponentDialogTypeComponent,
-    DaylogComponentDialogTypeListComponent
+    DaylogComponentDialogTypeListComponent,
+    DaylogComponentEventlist
   ],
   imports: [
     A11yModule,

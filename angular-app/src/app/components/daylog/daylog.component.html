@@ -25,7 +25,7 @@
                 Filter Event: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterEvent" />
             </div>
             <div class="box">
-                <button class="btn btn-default" (click)="loadEvents()">Alle Events Laden</button>
+                <button class="btn btn-default" (click)="loadAllEventsViaVar()">Alle Events Laden</button>
             </div>
         </div>
 
@@ -82,66 +82,17 @@
                         </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="daylistDisplayedColumns"></tr>
-                        <tr mat-row (click)="loadEventsByDay(row)" [class.day-row-is-clicked]="dateCacheForLoad == (row)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
+                        <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="dateForLoad == (row)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
                     </table>
                 </perfect-scrollbar>
-                Anzahl Tage: {{ daylist.length }} <br>
-                Anzahl Events: {{ eventlist.length }}
             </div>
-
             <div class="gridCol">
                 <perfect-scrollbar class="pscroll">
-                    <table mat-table [dataSource]="eventlistDataSource" matSort matSortActive="typ" matSortDirection="asc" class="mat-elevation-z8">
-                        <ng-container matColumnDef="id">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-                            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="dateid">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>DateId</th>
-                            <td mat-cell *matCellDef="let element">{{ element.dateid }}</td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="typ">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
-                            <td mat-cell *matCellDef="let element">
-                                <ng-container *ngFor="let type of daylogTypes">
-                                    <ng-container *ngIf='type.id.toString()==element.typ'>
-                                        {{type.type}}
-                                    </ng-container>
-                                </ng-container>
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="data">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
-                            <td mat-cell *matCellDef="let element">{{ element.text }}</td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="button">
-                            <th th mat-header-cell *matHeaderCellDef>
-                                Verwalten
-                                <button *ngIf="dateCacheForLoad.id" class="btn btn-default" (click)="newEventBySelectedDay()">
-                                    <mat-icon svgIcon="document" aria-hidden="false" title="Event erstellen"></mat-icon>
-                                </button>
-                            </th>
-                            <td mat-cell *matCellDef="let element">
-                                <!-- <button class="btn btn-default" (click)="editEvent(element)">
-                                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                                </button> -->
-                                <button class="btn btn-default" (click)="deleteEvent(element)">
-                                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                                </button>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
-                        <!-- <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
-                        <tr mat-row (click)="editEvent(row)" *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
-
-                    </table>
+                    <app-daylog-eventlist [filterEvent]="sFilterEvent" [showAllTable]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
                 </perfect-scrollbar>
             </div>
+
         </div>
+        Anzahl Tage: {{ daylist.length }} <br>
     </div>
 </div>
