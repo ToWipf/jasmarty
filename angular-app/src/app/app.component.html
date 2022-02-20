@@ -6,27 +6,27 @@
             <div class="sidebar">
                 <div class="titlemenue">Hauptfunktionen</div>
                 <ul class="menueli">
-                    <li (click)="selectSite('todolist')">
+                    <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
                         <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
                         Todo List
                     </li>
-                    <li (click)="selectSite('daylog')">
+                    <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
                         <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
                         TagesLog
                     </li>
-                    <li (click)="selectSite('filme')">
+                    <li (click)="selectSite('filme')" [ngClass]="{'isSelected' : selectedSite == 'filme'}">
                         <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
                         Filme
                     </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('crypt')">
+                    <li *ngIf="bDevActive" (click)="selectSite('crypt')" [ngClass]="{'isSelected' : selectedSite == 'crypt'}">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
                         Crypt
                     </li>
-                    <li (click)="selectSite('wipfuservw')">
+                    <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
                         <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
                         Wipf User
                     </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('debug')">
+                    <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
                         Debug
                     </li>
@@ -34,35 +34,35 @@
 
                 <div class="titlemenue">LCD</div>
                 <ul class="menueli">
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('main')">
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         2004 Startseite
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')">
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         2004 Live
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')">
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
                         2004 Seiten
                     </li>
-                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')">
+                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         12864 Panel
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')">
+                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
                         12864 Seiten
                     </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')">
+                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')" [ngClass]="{'isSelected' : selectedSite == 'charGenerator'}">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Char Generator
                     </li>
-                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')">
+                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
                         <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
                         Funktionen
                     </li>
-                    <li (click)="selectSite('config')">
+                    <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
                         <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                         Einstellungen
                     </li>
@@ -70,19 +70,19 @@
 
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
-                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')">
+                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
                         <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
                         Test Chat
                     </li>
-                    <li (click)="selectSite('configtele')">
+                    <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
                         <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                         Einstellungen
                     </li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')">
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
                         Nachrichten
                     </li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')">
+                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
                         <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
                         Logs
                     </li>
@@ -90,11 +90,11 @@
 
                 <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
                 <ul class="menueli">
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')">
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
                         Dynpages VW
                     </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')">
+                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
                         <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
                         Zeige Dynpage
                     </li>
@@ -156,7 +156,7 @@
                     <ng-container *ngIf="selectedSite==='config'">
                         <app-jasmartyConfig></app-jasmartyConfig>
                     </ng-container>
-                    <ng-container *ngIf="selectedSite==='main'">
+                    <ng-container *ngIf="selectedSite==='lcdmain'">
                         <app-jasmartyMain></app-jasmartyMain>
                     </ng-container>
                     <ng-container *ngIf="selectedSite==='configtele'">

@@ -364,7 +364,9 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   }
 
   public applyFilter() {
-    this.daylogTypeDataSource.filter = this.sFilter.trim();
+    this.serviceWipf.delay(200).then(() => {
+      this.daylogTypeDataSource.filter = this.sFilter.trim();
+    });
   }
 
   onNoClick(): void {
