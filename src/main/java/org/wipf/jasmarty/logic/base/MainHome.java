@@ -41,7 +41,7 @@ public class MainHome {
 	SqlLitePatcher sqlLitePatcher;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.61";
+	public static final String VERSION = "1.0.62";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**

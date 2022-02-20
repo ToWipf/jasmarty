@@ -63,6 +63,9 @@ public class DaylogHome {
 	public String getTagesinfoByTelegram(Telegram t) {
 		if (t.getMessageFullWithoutFirstWord().matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 			return getTagesinfoByDate(t.getMessageFullWithoutFirstWord());
+		} else if (t.getMessageFullWithoutFirstWord().toLowerCase().equals("g")) {
+			// Gestern
+			return getGesternInfo();
 		}
 		// Kein Valides Datum mitgegeben -> gebe Heute zurück
 		return getTagesInfo();
