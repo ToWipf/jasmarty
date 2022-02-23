@@ -10,6 +10,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogType;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -34,6 +35,8 @@ public class TAppDayLog {
 	DaylogEventDB daylogEventDB;
 	@Inject
 	Wipf wipf;
+
+	private static final Logger LOGGER = Logger.getLogger("Telegram Daylog");
 
 	public String telegramMenue(Telegram t) {
 		try {
@@ -169,8 +172,7 @@ public class TAppDayLog {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Fehler Datum erstellen");
-			e.printStackTrace();
+			LOGGER.info("Fehler Datum erstellen: " + e);
 		}
 		return null;
 	}
@@ -222,8 +224,7 @@ public class TAppDayLog {
 			return "Speicheren von DateId: " + nDateId + " TypId: " + nTyp + " Text: " + sEventtext;
 
 		} catch (SQLException e) {
-			System.out.println("Fehler schreibeEvent");
-			e.printStackTrace();
+			LOGGER.info("Fehler schreibeEvent " + e);
 			return null;
 		}
 

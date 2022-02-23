@@ -15,7 +15,7 @@ public class SqlLitePatcher {
 	@Inject
 	SqlLite sqlLite;
 
-	public static final Integer DB_PATCH_VERSION = 2;
+	public static final Integer DB_PATCH_VERSION = 4;
 	private static final Logger LOGGER = Logger.getLogger("Patcher");
 
 	/**
@@ -27,8 +27,8 @@ public class SqlLitePatcher {
 
 		try {
 			if (nLastVersion == null || nLastVersion < DB_PATCH_VERSION) {
-				LOGGER.warn("ALTER TABLE daylogType ADD art TEXT;");
-				String sUpdate = "ALTER TABLE daylogType ADD art TEXT;";
+				LOGGER.warn("ALTER TABLE teleUsercache ADD counter INTEGER;");
+				String sUpdate = "ALTER TABLE teleUsercache ADD counter INTEGER;";
 				sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 			}
 		} catch (Exception e) {

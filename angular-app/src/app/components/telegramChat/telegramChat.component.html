@@ -43,6 +43,11 @@
                         <td mat-cell *matCellDef="let element"> {{element.usercache}} </td>
                     </ng-container>
 
+                    <ng-container matColumnDef="counter">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Counter </th>
+                        <td mat-cell *matCellDef="let element"> {{element.counter}} </td>
+                    </ng-container>
+
                     <ng-container matColumnDef="button">
                         <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                         <td mat-cell *matCellDef="let element">

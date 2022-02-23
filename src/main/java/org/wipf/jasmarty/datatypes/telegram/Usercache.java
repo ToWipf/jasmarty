@@ -11,6 +11,7 @@ public class Usercache {
 	private Integer nChatId;
 	private String sMsg;
 	private String sUsercache;
+	private Integer nCounter;
 
 	/**
 	 * @return
@@ -20,6 +21,7 @@ public class Usercache {
 		jo.put("chatid", this.nChatId);
 		jo.put("date", this.sMsg);
 		jo.put("usercache", this.sUsercache);
+		jo.put("counter", this.nCounter);
 		return jo;
 	}
 
@@ -32,6 +34,7 @@ public class Usercache {
 		this.nChatId = jo.getInt("chatid");
 		this.sMsg = jo.getString("date");
 		this.sUsercache = jo.getString("usercache");
+		this.nCounter = jo.getInt("counter");
 		return this;
 	}
 
@@ -78,6 +81,20 @@ public class Usercache {
 	 */
 	public void setUsercache(String sUsercache) {
 		this.sUsercache = sUsercache;
+	}
+
+	/**
+	 * @return
+	 */
+	public Integer getCounter() {
+		return nCounter;
+	}
+
+	/**
+	 * @param nCounter
+	 */
+	public void setCounter(Integer nCounter) {
+		this.nCounter = nCounter;
 	}
 
 }

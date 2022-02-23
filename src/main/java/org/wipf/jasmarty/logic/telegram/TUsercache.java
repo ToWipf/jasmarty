@@ -28,7 +28,7 @@ public class TUsercache {
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS teleUsercache (chatid INTEGER NOT NULL UNIQUE, msg TEXT, usercache TEXT, PRIMARY KEY(chatid));";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS teleUsercache (chatid INTEGER NOT NULL UNIQUE, msg TEXT, usercache TEXT, counter INTEGER, PRIMARY KEY(chatid));";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -40,11 +40,12 @@ public class TUsercache {
 	 */
 	public void save(Usercache o) throws SQLException {
 		// insert
-		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache) VALUES (?,?,?)";
+		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, o.getChatId());
 		statement.setString(2, o.getMsg());
 		statement.setString(3, o.getUsercache());
+		statement.setInt(4, o.getCounter());
 		statement.executeUpdate();
 	}
 
@@ -56,10 +57,14 @@ public class TUsercache {
 	 */
 	public void saveOhneUsercache(Usercache o) throws SQLException {
 		// Usercache vom letzten mal uebertragen
-
 		Usercache last = getLastMessage(o.getChatId());
 		if (last != null) {
+			// Daten nur übertagen
 			o.setUsercache(last.getUsercache());
+			o.setCounter(last.getCounter());
+		} else {
+			// Neuer User
+			o.setCounter(1);
 		}
 
 		save(o);
@@ -94,7 +99,6 @@ public class TUsercache {
 			saveOhneUsercache(lmsg);
 		} catch (SQLException e) {
 			System.out.println("Fehler1 beim speichern von LastMessage: " + e);
-			e.printStackTrace();
 		}
 	}
 
@@ -105,9 +109,17 @@ public class TUsercache {
 	public Usercache getLastMessage(Integer nChatId) {
 		try {
 			List<Usercache> lmsg = get(nChatId);
-			return lmsg.get(0);
+			Usercache u = lmsg.get(0);
+			// Bei jeden Laden den Counter hochzählen um beim speichern aktuell zu sein
+			if (u.getCounter() != null) {
+				u.setCounter(u.getCounter() + 1);
+			} else {
+				// neuer User
+				u.setCounter(1);
+			}
+
+			return u;
 		} catch (Exception e) {
-			// nichts vorhanden
 			return null;
 		}
 
@@ -132,9 +144,9 @@ public class TUsercache {
 			d.setChatId(rs.getInt("chatid"));
 			d.setMsg(rs.getString("msg"));
 			d.setUsercache(rs.getString("usercache"));
+			d.setCounter(rs.getInt("counter"));
 			o.add(d);
 		}
-
 		return o;
 	}
 
@@ -180,6 +192,7 @@ public class TUsercache {
 			d.setChatId(rs.getInt("chatid"));
 			d.setMsg(rs.getString("msg"));
 			d.setUsercache(rs.getString("usercache"));
+			d.setCounter(rs.getInt("counter"));
 			o.add(d);
 		}
 		return o;

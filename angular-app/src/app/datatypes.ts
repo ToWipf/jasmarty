@@ -128,4 +128,5 @@ export interface TelegramUserCache {
   chatid?: number;
   date?: string;
   usercache?: string;
+  counter?: number;
 }
