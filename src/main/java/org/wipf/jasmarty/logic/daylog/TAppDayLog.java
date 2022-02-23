@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.daylog;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -139,7 +140,6 @@ public class TAppDayLog {
 		// Ersten part bekommen
 		// Mögliche syntax: h TEXT
 		// Mögliche syntax: 2022-02-02 TEXT
-		boolean bDatumIstHeute = sDateInfoString.startsWith("h");
 
 		// Prüfen ob es einen TagesText gibt
 		String sDateTagestext = "";
@@ -149,16 +149,19 @@ public class TAppDayLog {
 		}
 
 		try {
-			if (bDatumIstHeute) {
+			if (sDateInfoString.startsWith("h")) {
 				// Heute
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
-
 				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext).getId();
 
+			} else if (sDateInfoString.startsWith("g")) {
+				// Gestern
+				LocalDate dateGestern = LocalDate.now().minusDays(1);
+				return daylogDayDB.getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext).getId();
 			} else {
+				// Exakt
 				String sDateString = sDateInfoString.substring(0, 10); // Länge des Datums ist immer fest
-
 				if (sDateString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
 					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext).getId();
