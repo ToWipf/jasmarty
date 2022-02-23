@@ -39,6 +39,17 @@ public class TUsercache {
 	 * @throws SQLException
 	 */
 	public void save(Usercache o) throws SQLException {
+		// Usercache uLast = getLastMessage(o.getChatId());
+		// if (uLast != null) {
+		//
+		// // Beim speichern den Counter hochzählen
+		// if (uLast.getCounter() != null) {
+		// o.setCounter(uLast.getCounter() + 1);
+		// }
+		// } else {
+		// // neuer User
+		// o.setCounter(1);
+		// }
 		// insert
 		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);

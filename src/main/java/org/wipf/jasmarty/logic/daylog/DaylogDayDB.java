@@ -178,6 +178,30 @@ public class DaylogDayDB {
 	}
 
 	/**
+	 * @param nId
+	 * @return
+	 * @throws SQLException
+	 */
+	public DaylogDay getById(Integer nId) throws SQLException {
+		String sQuery = "SELECT * FROM daylogDay WHERE id = ?;";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setInt(1, nId);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			// Es gibt nur einen oder keinen Eintrag
+			DaylogDay o = new DaylogDay();
+			o.setId(rs.getInt("id"));
+			o.setDate(rs.getString("date"));
+			o.setTagestext(rs.getString("tagestext"));
+			o.setUserId(rs.getInt("userid"));
+			return o;
+		}
+
+		return null;
+	}
+
+	/**
 	 * @param nUserId
 	 * @return
 	 * @throws SQLException

@@ -72,7 +72,7 @@ public class TAppDayLog {
 				// Kategorien Übersicht ausgeben
 				return createTypeList();
 			} else {
-				return "Fehler mit den Datum";
+				return "Fehler mit den Datum -> Anleitung: dl Start";
 			}
 		} else if (userCache.getUsercache().startsWith("dateid:")) {
 			// Schritt 2
@@ -172,7 +172,7 @@ public class TAppDayLog {
 				}
 			}
 		} catch (Exception e) {
-			LOGGER.info("Fehler Datum erstellen: " + e);
+			// LOGGER.info("Fehler Datum erstellen: " + e);
 		}
 		return null;
 	}
@@ -221,7 +221,18 @@ public class TAppDayLog {
 			dayEvent.setText(sEventtext);
 
 			daylogEventDB.save(dayEvent);
-			return "Speicheren von DateId: " + nDateId + " TypId: " + nTyp + " Text: " + sEventtext;
+
+			// Nochmals den Tag laden um das Datum zu zeigen
+			String sDatum = "Fehler 726";
+			try {
+
+				sDatum = daylogDayDB.getById(nDateId).getDate();
+			} catch (Exception e) {
+				System.err.println("Fehler 726");
+				e.printStackTrace();
+			}
+
+			return "Speicheren von " + sDatum + " mit der TypId: " + nTyp + " und den Text: " + sEventtext;
 
 		} catch (SQLException e) {
 			LOGGER.info("Fehler schreibeEvent " + e);
