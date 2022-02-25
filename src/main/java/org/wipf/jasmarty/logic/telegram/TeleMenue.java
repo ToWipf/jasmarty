@@ -140,9 +140,13 @@ public class TeleMenue {
 			case "getmotd":
 				return appMotd.getRndMotd();
 
+			// Cache und Log Stats
+			case "s":
 			case "stats":
 			case "telestats":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
+			case "cache":
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.countMsg() + "\n\n"
+						+ tUsercache.getAllAsText();
 			case "res":
 			case "response":
 				return t.getMessage();
@@ -304,7 +308,7 @@ public class TeleMenue {
 		case "countmsg":
 			return appMsg.countMsg();
 		case "countsend":
-			return msglog.count();
+			return msglog.countMsg();
 		case "punkte":
 		case "p":
 			return punkteVW.getPunkte().toString();

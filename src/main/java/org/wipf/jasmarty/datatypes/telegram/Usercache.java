@@ -97,4 +97,13 @@ public class Usercache {
 		this.nCounter = nCounter;
 	}
 
+	/**
+	 *
+	 */
+	@Override
+	public String toString() {
+		return "Chat Id: " + this.nChatId + "\nDatum: " + this.sMsg + "\nCache" + this.sUsercache + "\nCounter: "
+				+ this.nCounter;
+	}
+
 }

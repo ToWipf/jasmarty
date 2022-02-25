@@ -72,7 +72,7 @@ public class TAppTodoList {
 			return getAllAsJson().toString();
 		case "la":
 		case "listall":
-			return getAllAsList();
+			return getAllAsText();
 		case "c":
 		case "count":
 			return count(t.getFromIdOnly());
@@ -139,7 +139,7 @@ public class TAppTodoList {
 		return ja;
 	}
 
-	public String getAllAsList() {
+	public String getAllAsText() {
 		StringBuilder sb = new StringBuilder();
 
 		try {

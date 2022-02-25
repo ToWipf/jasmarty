@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 
 /**
- * @author devbuntu
+ * @author wipf
  *
  */
 @ApplicationScoped
@@ -38,6 +38,12 @@ public class TAppDayLog {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Daylog");
 
+	/**
+	 * dl
+	 * 
+	 * @param t
+	 * @return
+	 */
 	public String telegramMenue(Telegram t) {
 		try {
 			return doDayLog(t);
@@ -47,6 +53,11 @@ public class TAppDayLog {
 		}
 	}
 
+	/**
+	 * @param t
+	 * @return
+	 * @throws SQLException
+	 */
 	public String doDayLog(Telegram t) throws SQLException {
 		Usercache userCache = tUsercache.getLastMessage(t.getChatID());
 
