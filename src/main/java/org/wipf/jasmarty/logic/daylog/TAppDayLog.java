@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogType;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -74,14 +75,14 @@ public class TAppDayLog {
 		} else if (userCache.getUsercache().equals("")) {
 			// Schritt 1
 			// Datum wählen
-			Integer dateId = waehleDatum(t.getMessageFullWithoutFirstWord());
-			if (dateId != null) {
+			DaylogDay ddate = waehleDatum(t.getMessageFullWithoutFirstWord());
+			if (ddate != null) {
 				// DateId im Cache speichern
-				userCache.setUsercache("dateid:" + dateId);
+				userCache.setUsercache("dateid:" + ddate.getId());
 				tUsercache.save(userCache); // Datum Id speichern
 
 				// Kategorien Übersicht ausgeben
-				return createTypeList();
+				return "Datum: " + ddate.getDate() + "\n" + ddate.getTagestext() + "\n" + createTypeList();
 			} else {
 				return "Fehler mit den Datum -> Anleitung: dl Start";
 			}
@@ -150,7 +151,7 @@ public class TAppDayLog {
 	 * @param lastMsgCache
 	 * @return
 	 */
-	private Integer waehleDatum(String sDateInfoString) {
+	private DaylogDay waehleDatum(String sDateInfoString) {
 		// Ersten part bekommen
 		// Mögliche syntax: h TEXT
 		// Mögliche syntax: 2022-02-02 TEXT
@@ -167,18 +168,18 @@ public class TAppDayLog {
 				// Heute
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
-				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext).getId();
+				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext);
 
 			} else if (sDateInfoString.startsWith("g")) {
 				// Gestern
 				LocalDate dateGestern = LocalDate.now().minusDays(1);
-				return daylogDayDB.getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext).getId();
+				return daylogDayDB.getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext);
 			} else {
 				// Exakt
 				String sDateString = sDateInfoString.substring(0, 10); // Länge des Datums ist immer fest
 				if (sDateString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
-					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext).getId();
+					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext);
 
 				}
 			}
