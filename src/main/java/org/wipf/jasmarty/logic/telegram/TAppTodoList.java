@@ -66,10 +66,7 @@ public class TAppTodoList {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return getAllUnDone().toString();
-		case "lj":
-		case "listjson":
-			return getAllAsJson().toString();
+			return getAllAsTextUnDone();
 		case "la":
 		case "listall":
 			return getAllAsText();
@@ -91,7 +88,7 @@ public class TAppTodoList {
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getAllUnDone() {
+	public List<TodoEntry> getAllUnDone() {
 		List<TodoEntry> liTodoE = new ArrayList<>();
 
 		try {
@@ -112,15 +109,7 @@ public class TAppTodoList {
 			LOGGER.warn("getAllAsJson A: " + e);
 		}
 
-		JSONArray ja = new JSONArray();
-		try {
-			for (TodoEntry tItem : liTodoE) {
-				ja.put(tItem.toJson());
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getAllAsJson B: " + e);
-		}
-		return ja;
+		return liTodoE;
 	}
 
 	/**
@@ -139,6 +128,26 @@ public class TAppTodoList {
 		return ja;
 	}
 
+	/**
+	 * @return
+	 */
+	public String getAllAsTextUnDone() {
+		StringBuilder sb = new StringBuilder();
+
+		for (TodoEntry tItem : getAllUnDone()) {
+			if (sb.length() > 0) {
+				sb.append("\n");
+			}
+			sb.append(wipf.jsonToStringAsList(tItem.toJsonRelevantOnly()));
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
+	/**
+	 * @return
+	 */
 	public String getAllAsText() {
 		StringBuilder sb = new StringBuilder();
 

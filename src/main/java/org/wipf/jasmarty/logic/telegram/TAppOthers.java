@@ -156,4 +156,24 @@ public class TAppOthers {
 			return "getSystem failed";
 		}
 	}
+
+	/**
+	 * Debug Text n Zeilen
+	 * 
+	 * @param n
+	 * 
+	 * @return
+	 */
+	public String langerText(Integer n) {
+		if (n == null) {
+			return "langerText <ANZAHL>";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 1; i < n + 1; i++) {
+			sb.append("Nummer: " + i + "\n");
+		}
+		return sb.toString();
+	}
 }

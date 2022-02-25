@@ -145,8 +145,8 @@ public class TeleMenue {
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.countMsg() + "\n\n"
-						+ tUsercache.getAllAsText();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.countMsg()
+						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "response":
 				return t.getMessage();
@@ -226,6 +226,10 @@ public class TeleMenue {
 			case "di":
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);
+
+			case "lt":
+			case "langertext":
+				return appOthers.langerText(t.getMessageIntPart(1));
 
 			default:
 				break;

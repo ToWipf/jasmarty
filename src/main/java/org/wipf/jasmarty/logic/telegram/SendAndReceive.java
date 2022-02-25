@@ -155,7 +155,7 @@ public class SendAndReceive {
 	public void sendTelegram(Telegram t) {
 		// Lange Nachrichten splitten (max 4096 chars)
 		String sAntwortToSend = t.getAntwort();
-		for (String sPart : sAntwortToSend.split("(?<=\\G.{3900})")) {
+		for (String sPart : sAntwortToSend.split("(?<=\\G.{3900})")) { // TODO auch bei 220 Zeilen
 			t.setAntwort(sPart);
 			sendToTelegram(t);
 			// Um das Maximale Sendelimit nicht zu erreichen
