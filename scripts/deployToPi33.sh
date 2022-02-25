@@ -5,8 +5,7 @@ VERSION=$(date '+%Y-%m-%d')
 
 echo VERSION=$VERSION
 
-#./buildFull.sh
-echo "s"
+./buildFull.sh
 if [ $? -eq 0 ];
 then
 	echo "build OK"

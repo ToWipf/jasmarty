@@ -19,7 +19,7 @@ public class Usercache {
 	public JSONObject toJson() {
 		JSONObject jo = new JSONObject();
 		jo.put("chatid", this.nChatId);
-		jo.put("date", this.sMsg);
+		jo.put("msg", this.sMsg);
 		jo.put("usercache", this.sUsercache);
 		jo.put("counter", this.nCounter);
 		return jo;
@@ -32,7 +32,7 @@ public class Usercache {
 	public Usercache setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
 		this.nChatId = jo.getInt("chatid");
-		this.sMsg = jo.getString("date");
+		this.sMsg = jo.getString("msg");
 		this.sUsercache = jo.getString("usercache");
 		this.nCounter = jo.getInt("counter");
 		return this;
@@ -102,8 +102,8 @@ public class Usercache {
 	 */
 	@Override
 	public String toString() {
-		return "Chat Id: " + this.nChatId + "\nDatum: " + this.sMsg + "\nCache" + this.sUsercache + "\nCounter: "
-				+ this.nCounter;
+		return "Chat Id: '" + this.nChatId + "'\nLetzte Nachricht: '" + this.sMsg + "'\nCache:'" + this.sUsercache
+				+ "'\nCounter: '" + this.nCounter + "'";
 	}
 
 }

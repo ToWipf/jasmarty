@@ -240,7 +240,7 @@ public class TUsercache {
 		} catch (SQLException e) {
 			sb.append("Fehler 012 " + e);
 		}
-		return sb.toString() + " Anzahl: " + n;
+		return sb.toString() + "\n\nAnzahl: " + n;
 	}
 
 }

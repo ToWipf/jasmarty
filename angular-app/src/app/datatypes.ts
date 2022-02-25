@@ -126,7 +126,7 @@ export interface DaylogType {
 
 export interface TelegramUserCache {
   chatid?: number;
-  date?: string;
+  msg?: string;
   usercache?: string;
   counter?: number;
 }

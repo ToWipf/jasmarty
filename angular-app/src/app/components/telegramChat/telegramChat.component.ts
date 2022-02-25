@@ -20,7 +20,7 @@ export class TelegramChatComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['chatid', 'date', 'usercache', 'counter', 'button'];
+  public displayedColumns: string[] = ['chatid', 'msg', 'usercache', 'counter', 'button'];
   public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
   public textOut: string = '-';
   public usercachearry: TelegramUserCache[] = [];
