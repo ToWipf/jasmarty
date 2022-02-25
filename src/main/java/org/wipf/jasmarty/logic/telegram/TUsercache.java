@@ -228,17 +228,19 @@ public class TUsercache {
 	 */
 	public String getAllAsText() {
 		StringBuilder sb = new StringBuilder();
+		Integer n = 0;
 		try {
 			for (Usercache uc : getAll()) {
 				if (sb.length() > 1) {
 					sb.append("\n\n");
 				}
 				sb.append(uc.toString());
+				n++;
 			}
 		} catch (SQLException e) {
 			sb.append("Fehler 012 " + e);
 		}
-		return sb.toString();
+		return sb.toString() + " Anzahl: " + n;
 	}
 
 }
