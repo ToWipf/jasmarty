@@ -3,7 +3,7 @@ JASMARTY_SERVER_SSH=pi@192.168.2.33
 IMAGE_ID=jasmarty
 VERSION=$(date '+%Y-%m-%d')
 
-echo VERSION=$VERSION
+echo Name= $IMAGE_ID:${VERSION}
 
 ./buildFull.sh
 if [ $? -eq 0 ];
@@ -14,6 +14,6 @@ else
 fi
 
 pscp ../target/jasmarty-1.0-SNAPSHOT-runner.jar wipf@192.168.2.33:/home/wipf/jasmarty.jar
-pscp Dockerfile.arm_64 pi@192.168.2.33:/home/wipf/Dockerfile
+pscp Dockerfile.arm_64 wipf@192.168.2.33:/home/wipf/Dockerfile
 
 plink -batch -ssh pi@192.168.2.33 "cd /home/wipf/ && sudo docker build . -t $IMAGE_ID:${VERSION}"

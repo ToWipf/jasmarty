@@ -168,6 +168,9 @@ public class SendAndReceive {
 
 			if (nZeile < 240) {
 				// 239 Zeilen nehmen dann splitten
+				if (sb.length() != 0) {
+					sb.append("\n");
+				}
 				sb.append(sZeile);
 			} else {
 				// Zeile 240
@@ -175,6 +178,8 @@ public class SendAndReceive {
 				output.add(sb.toString());
 				// Cache leerern
 				sb.delete(0, sb.length());
+				// Die Zeile dieses Duchlaufs auch cachen
+				sb.append(sZeile);
 				// Neu zählen
 				nZeile = 0;
 			}
