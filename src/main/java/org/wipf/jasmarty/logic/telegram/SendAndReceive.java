@@ -3,6 +3,8 @@ package org.wipf.jasmarty.logic.telegram;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -149,18 +151,51 @@ public class SendAndReceive {
 	}
 
 	/**
+	 * TODO Maximal 4000 Zeichen splitten (max 4096 chars) oder 240 Zeilen
+	 * 
+	 * Lange Nachrichten aufteilen
+	 * 
+	 * @return
+	 */
+	private List<String> splitStringToMsg(String sNachricht) {
+		List<String> output = new LinkedList<>();
+		String[] lines = sNachricht.split("\r\n|\r|\n");
+
+		Integer nZeile = 0;
+		StringBuilder sb = new StringBuilder();
+		for (String sZeile : lines) {
+			nZeile++;
+
+			if (nZeile < 240) {
+				// 239 Zeilen nehmen dann splitten
+				sb.append(sZeile);
+			} else {
+				// Zeile 240
+				// Output wegspeichern
+				output.add(sb.toString());
+				// Cache leerern
+				sb.delete(0, sb.length());
+				// Neu zählen
+				nZeile = 0;
+			}
+		}
+		// Den Restlichen Cache bearbeiten
+		output.add(sb.toString());
+		return output;
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */
 	public void sendTelegram(Telegram t) {
-		// Lange Nachrichten splitten (max 4096 chars)
-		String sAntwortToSend = t.getAntwort();
-		for (String sPart : sAntwortToSend.split("(?<=\\G.{3900})")) { // TODO auch bei 220 Zeilen
+		for (String sPart : splitStringToMsg(t.getAntwort())) {
 			t.setAntwort(sPart);
 			sendToTelegram(t);
-			// Um das Maximale Sendelimit nicht zu erreichen
+			// Um das Maximale Sendelimit nicht zu erreichen, 4 sek. warten
 			wipf.sleep(4000);
 		}
+
 	}
 
 	/**
