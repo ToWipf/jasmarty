@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,18 +23,32 @@ export class DayLogComponent implements OnInit {
   public userid = 0;
   public daylistDisplayedColumns: string[] = [];
   public sFilterDay: String = "";
-  public sFilterEvent: String = "";
+  public sFilterTextEvent: String = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateForLoad: DaylogDay = {};
   public bShowAllTable: boolean = true;
+  public typelistForEventFilter: DaylogType[] = [];
+  public selectedEventTypeFilter: any;
 
   ngOnInit() {
     this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad((new Date(Date.now()).getMonth() + 1), 2);
     this.loadDays();
     this.loadDaylogTypes();
     this.showAllTable();
+    this.loadTypeListForEventFilter();
   }
+
+  public loadTypeListForEventFilter(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.typelistForEventFilter = [];
+
+    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogType[]) => {
+      this.typelistForEventFilter = resdata;
+      warten.close();
+    });
+  }
+
 
   public loadEventsByDaySetVar(ddl: DaylogDay): void {
     this.dateForLoad = ddl;

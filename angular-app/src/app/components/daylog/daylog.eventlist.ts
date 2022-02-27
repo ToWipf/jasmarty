@@ -16,14 +16,16 @@ import { MatSort } from '@angular/material/sort';
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-    @Input("filterEvent") public sFilterEvent: String;
+    @Input("filterTextEvent") public sFilterTextEvent: String;
     @Input("showAllTable") public bShowAllTable: Boolean;
     @Input("dateForLoad") public dateForLoad: DaylogDay;
     @Input("daylogTypes") public daylogTypes: DaylogType;
+    @Input("filterEventType") public filterEventType: DaylogType;
 
     @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
     public bShowWarning: boolean = false;
     public eventlistDataSource;
+    // public eventlistDataSource: MatTableDataSource<Component>;
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
 
@@ -41,15 +43,23 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             this.showAllTable();
         }
 
-        if (changes?.sFilterEvent) {
+        if (changes?.sFilterTextEvent) {
             this.applyFilter();
+        }
+
+        if (changes?.filterEventType) {
+            this.applyFilterByType();
+        } else{
+            // Filter immer leeren
+            this.filterEventType = undefined;
+            console.log("leeren");
         }
     }
 
     ngOnInit(): void {
         this.eventlistDataSource = new MatTableDataSource(this.eventlist);
         this.eventlistDataSource.sort = this.sortEvent;
-        this.eventlistDataSource.filter = this.sFilterEvent.trim();
+        this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
         this.showAllTable;
     }
 
@@ -85,8 +95,25 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     public applyFilter() {
         this.serviceWipf.delay(200).then(() => {
-            this.eventlistDataSource.filter = this.sFilterEvent.trim();
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
         });
+    }
+
+    public applyFilterByType() {
+        let eventlistToShow: DaylogEvent[] = [];
+        if (this.filterEventType != undefined){
+
+            this.eventlist.forEach((event: DaylogEvent) => {
+                if (event.typ == this.filterEventType.id.toString()) {
+                    eventlistToShow.push(event);
+                }
+            });
+            this.eventlistDataSource = new MatTableDataSource(eventlistToShow);
+        } else {
+            // Wie Normal -> alles anzeigen
+            this.eventlistDataSource = new MatTableDataSource(this.eventlist);
+        }
+
     }
 
     public showAllTable(): void {
@@ -111,7 +138,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
             this.eventlistDataSource.sort = this.sortEvent;
-            this.eventlistDataSource.filter = this.sFilterEvent.trim();
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
             warten.close();
         });
     }
@@ -126,7 +153,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
                 this.eventlistDataSource = new MatTableDataSource(this.eventlist);
                 this.eventlistDataSource.sort = this.sortEvent;
-                this.eventlistDataSource.filter = this.sFilterEvent.trim();
+                this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
                 warten.close();
             });
         }
