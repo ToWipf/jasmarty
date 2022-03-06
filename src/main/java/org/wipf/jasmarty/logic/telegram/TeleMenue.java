@@ -119,7 +119,9 @@ public class TeleMenue {
 					"itext TEXT IN DER APP\n" +
 					"kill\n" +
 					"system\n" +
-					"temperature \n";
+					"temperature\n" +
+					"infozuid\n"
+					;
 				// @formatter:on
 
 			// Anbindung an msg datenbank
@@ -230,6 +232,10 @@ public class TeleMenue {
 			case "lt":
 			case "langertext":
 				return appOthers.langerText(t.getMessageIntPart(1));
+
+			case "izi":
+			case "infozuid":
+				return msglog.infoZuId(t.getMessageFullWithoutFirstWord());
 
 			default:
 				break;

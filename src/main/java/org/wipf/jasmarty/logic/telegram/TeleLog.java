@@ -2,6 +2,7 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
+import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
  * @author wipf
@@ -22,6 +24,8 @@ public class TeleLog {
 
 	@Inject
 	SqlLite sqlLite;
+	@Inject
+	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram Log");
 
@@ -204,6 +208,42 @@ public class TeleLog {
 
 		// Systemmeldungen löschen
 		delItem(-1);
+	}
+
+	/**
+	 * Eine Id auflößen
+	 * 
+	 * @param sId
+	 */
+	public String infoZuId(String sId) {
+		return wipf.escapeStringSaveCode(infoZuIdSql(sId));
+	}
+
+	/**
+	 * Eine Id auflößen
+	 * 
+	 * @param sId
+	 * @return
+	 * @throws SQLException
+	 */
+	private String infoZuIdSql(String sId) {
+		try {
+
+			String sQuery = "SELECT * FROM telegramlog WHERE msgfrom LIKE ?;";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+			statement.setString(1, "%" + sId + "%");
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				// Das erst besste zurückgeben
+				return (rs.getString("msgfrom"));
+			}
+		} catch (Exception e) {
+			LOGGER.warn("infoZuId " + e);
+			e.printStackTrace();
+		}
+
+		return "Nicht gefunden";
 	}
 
 }
