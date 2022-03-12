@@ -118,34 +118,20 @@ public class SendAndReceive {
 					if (joMsg.has("text")) {
 						// Normale Textnachricht
 						t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
+						t.setAntwort(menue.menueMsg(t));
+					} else if (joMsg.has("photo")) {
+						t.setAntwort(saveBestPhoto(joMsg));
+					} else if (joMsg.has("document")) {
+						t.setAntwort(saveDocument(joMsg));
+					} else if (joMsg.has("voice")) {
+						t.setAntwort(saveVoice(joMsg));
+					} else if (joMsg.has("location")) {
+						t.setAntwort(joMsg.get("location").toString());
+					} else {
+						t.setAntwort("Dies konnte nicht bearbeitet werden");
 					}
-					if (joMsg.has("photo")) {
-						// TODO nur eines holen -> sauber machen
-						JSONArray jap = new JSONArray(joMsg.get("photo").toString());
+					System.out.println(joMsg.toString());
 
-						jap.forEach((j) -> {
-							JSONObject o = new JSONObject(j.toString());
-							String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id="
-									+ o.get("file_id").toString();
-
-							try {
-								JSONObject picName = new JSONObject(
-										wipf.httpRequest(Wipf.httpRequestType.GET, sFileInfoPath));
-								JSONObject picNam1 = new JSONObject(picName.get("result").toString());
-								String sPicPath = picNam1.get("file_path").toString();
-								String sPicUrl = "https://api.telegram.org/file/" + this.sBotKey + "/" + sPicPath;
-
-								wipf.downloadFile(sPicUrl, t.getMid() + sPicPath.replace('/', '-'));
-
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						});
-
-					}
-
-					t.setAntwort(menue.menueMsg(t));
 					sendTelegram(t);
 				}
 				// Fertig mit neuen Nachrichten
@@ -158,6 +144,87 @@ public class SendAndReceive {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
 			return 'f';
 		}
+	}
+
+	/**
+	 * @param joMsg
+	 * @return
+	 */
+	private String saveVoice(JSONObject joMsg) {
+		JSONObject jd = new JSONObject(joMsg.get("voice").toString());
+
+		String sFileId = jd.get("file_id").toString();
+		String sFileName = "voice_" + joMsg.get("message_id").toString() + ".oga";
+
+		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
+		return teleFileDownload(sFileInfoPath, sFileName);
+	}
+
+	/**
+	 * @param joMsg
+	 * @return
+	 */
+	private String saveDocument(JSONObject joMsg) {
+		JSONObject jd = new JSONObject(joMsg.get("document").toString());
+
+		String sFileId = jd.get("file_id").toString();
+		String sFileName = "doc_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
+
+		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
+		return teleFileDownload(sFileInfoPath, sFileName);
+	}
+
+	/**
+	 * @param joMsg
+	 */
+	private String saveBestPhoto(JSONObject joMsg) {
+		JSONArray jap = new JSONArray(joMsg.get("photo").toString());
+		JSONObject oBiggestSize = null;
+		Integer nBiggestSize = 0;
+
+		for (Object j : jap) {
+			// Besste Auflösung finden
+			JSONObject o = new JSONObject(j.toString());
+			Integer nFSize = Integer.valueOf(o.get("file_size").toString());
+			if (nBiggestSize < nFSize) {
+				nBiggestSize = nFSize;
+				oBiggestSize = o;
+			}
+		}
+
+		if (oBiggestSize == null) {
+			return "Fehler bei Photo F1";
+		}
+
+		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id="
+				+ oBiggestSize.get("file_id").toString();
+		String sFilename = "pic_" + joMsg.get("message_id").toString() + ".jpg";
+
+		return teleFileDownload(sFileInfoPath, sFilename);
+	}
+
+	/**
+	 * @param sFileInfoPath
+	 * @param sFilename
+	 * @return
+	 */
+	private String teleFileDownload(String sFileInfoPath, String sFilename) {
+		try {
+			JSONObject joDownload = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.GET, sFileInfoPath));
+			JSONObject picNam1 = new JSONObject(joDownload.get("result").toString());
+			String sPicPath = picNam1.get("file_path").toString();
+			String sPicUrl = "https://api.telegram.org/file/" + this.sBotKey + "/" + sPicPath;
+
+			if (wipf.downloadFile(sPicUrl, sFilename)) {
+				return "speichern als " + sFilename;
+			} else {
+				return "Fehler bei teleFileDownload F1";
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "Fehler bei teleFileDownload F2";
 	}
 
 	/**

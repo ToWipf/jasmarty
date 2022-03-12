@@ -101,7 +101,7 @@ public class Wipf {
 	 * @param sFilePathAndName
 	 * @throws MalformedURLException
 	 */
-	public void downloadFile(String sUrl, String sFilePathAndName) {
+	public boolean downloadFile(String sUrl, String sFilePathAndName) {
 		System.out.println("Donwload File " + sUrl + " nach " + sFilePathAndName);
 		try {
 			URL urld = new URL(sUrl);
@@ -109,9 +109,11 @@ public class Wipf {
 			FileOutputStream fos = new FileOutputStream(sFilePathAndName);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.close();
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	/**
