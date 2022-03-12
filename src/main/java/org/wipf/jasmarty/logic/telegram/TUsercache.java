@@ -23,6 +23,8 @@ public class TUsercache {
 
 	@Inject
 	SqlLite sqlLite;
+	@Inject
+	TeleLog telelog;
 
 	/**
 	 * @throws SQLException
@@ -235,12 +237,15 @@ public class TUsercache {
 					sb.append("\n\n");
 				}
 				sb.append(uc.toString());
+
+				// Chatid zu Name
+				sb.append("\n" + telelog.infoZuId(uc.getChatId().toString()));
 				n++;
 			}
 		} catch (SQLException e) {
 			sb.append("Fehler 012 " + e);
 		}
-		return sb.toString() + "\n\nAnzahl: " + n;
+		return "Anzahl: " + n + "\n\n" + sb.toString();
 	}
 
 }

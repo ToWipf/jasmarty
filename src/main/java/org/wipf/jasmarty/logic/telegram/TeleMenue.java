@@ -32,7 +32,7 @@ public class TeleMenue {
 	@Inject
 	TAppEssen appEssen;
 	@Inject
-	TeleLog msglog;
+	TeleLog telelog;
 	@Inject
 	UserAndGroups userAndGroups;
 	@Inject
@@ -147,7 +147,7 @@ public class TeleMenue {
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.countMsg()
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
 						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "response":
@@ -235,7 +235,7 @@ public class TeleMenue {
 
 			case "izi":
 			case "infozuid":
-				return msglog.infoZuId(t.getMessageFullWithoutFirstWord());
+				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
 
 			default:
 				break;
@@ -318,7 +318,7 @@ public class TeleMenue {
 		case "countmsg":
 			return appMsg.countMsg();
 		case "countsend":
-			return msglog.countMsg();
+			return telelog.countMsg();
 		case "punkte":
 		case "p":
 			return punkteVW.getPunkte().toString();

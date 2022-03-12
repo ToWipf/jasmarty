@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -216,7 +217,11 @@ public class TeleLog {
 	 * @param sId
 	 */
 	public String infoZuId(String sId) {
-		return wipf.escapeStringSaveCode(infoZuIdSql(sId));
+		String s = infoZuIdSql(sId);
+		if (s != null) {
+			return wipf.escapeStringSaveCode(wipf.jsonToStringAsList(new JSONObject(s)));
+		}
+		return "nicht gefunden";
 	}
 
 	/**
@@ -243,7 +248,7 @@ public class TeleLog {
 			e.printStackTrace();
 		}
 
-		return "Nicht gefunden";
+		return null;
 	}
 
 }
