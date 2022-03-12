@@ -83,7 +83,6 @@ public class SendAndReceive {
 	 */
 	@Metered
 	public char readUpdateFromTelegram() {
-
 		try {
 			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST,
 					"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID));
@@ -335,7 +334,7 @@ public class SendAndReceive {
 		MultipartUtility multipart = new MultipartUtility(
 				"https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("photo", new File(sFilePath));
+		multipart.addFilePart("photo", new File("files/" + sFilePath));
 		String response = multipart.finish();
 		return (response);
 	}
@@ -363,7 +362,7 @@ public class SendAndReceive {
 		MultipartUtility multipart = new MultipartUtility(
 				"https://api.telegram.org/" + this.sBotKey + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("document", new File(sFilePath));
+		multipart.addFilePart("document", new File("files/" + sFilePath));
 		String response = multipart.finish();
 		return (response);
 	}

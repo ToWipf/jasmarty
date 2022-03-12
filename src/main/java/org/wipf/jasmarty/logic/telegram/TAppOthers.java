@@ -3,7 +3,6 @@ package org.wipf.jasmarty.logic.telegram;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -181,7 +180,8 @@ public class TAppOthers {
 	 * @return
 	 */
 	public String getFilelist() {
-		File f = new File(Paths.get("").toAbsolutePath().toString());
+		// File f = new File(Paths.get("").toAbsolutePath().toString() );
+		File f = new File("files/");
 
 		StringBuilder sb = new StringBuilder();
 		for (String sL : f.list()) {

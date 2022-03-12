@@ -1,5 +1,8 @@
 package org.wipf.jasmarty.logic.base;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -59,6 +62,7 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+			createFileFolder();
 			wipfConfig.initDB();
 
 			sqlLitePatcher.doPatch();
@@ -98,6 +102,20 @@ public class MainHome {
 		tHome.telegramStop();
 
 		LOGGER.info("Gestoppt");
+	}
+
+	/**
+	 * 
+	 */
+	private void createFileFolder() {
+		// Fileorder erstellen
+		try {
+			Path path = Paths.get(Paths.get("").toAbsolutePath().toString() + "/files");
+			Files.createDirectories(path);
+		} catch (Exception e) {
+			LOGGER.error("createFileFolder");
+		}
+
 	}
 
 }

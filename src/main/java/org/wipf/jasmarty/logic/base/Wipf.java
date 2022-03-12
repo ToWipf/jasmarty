@@ -26,6 +26,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
+import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
@@ -36,6 +37,8 @@ import org.wipf.jasmarty.datatypes.Base32;
  */
 @ApplicationScoped
 public class Wipf {
+
+	private static final Logger LOGGER = Logger.getLogger("Wipf");
 
 	public enum httpRequestType {
 		GET, POST
@@ -102,11 +105,11 @@ public class Wipf {
 	 * @throws MalformedURLException
 	 */
 	public boolean downloadFile(String sUrl, String sFilePathAndName) {
-		System.out.println("Donwload File " + sUrl + " nach " + sFilePathAndName);
+		LOGGER.info("Donwload File " + sUrl + " nach " + sFilePathAndName);
 		try {
 			URL urld = new URL(sUrl);
 			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
-			FileOutputStream fos = new FileOutputStream(sFilePathAndName);
+			FileOutputStream fos = new FileOutputStream("files/" + sFilePathAndName);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.close();
 			return true;
@@ -120,14 +123,14 @@ public class Wipf {
 	 * 
 	 */
 	public void printLogo() {
-		System.out.println("__          ___        __");
-		System.out.println("\\ \\        / (_)      / _|");
-		System.out.println(" \\ \\  /\\  / / _ _ __ | |");
-		System.out.println("  \\ \\/  \\/ / | | '_ \\|  _|");
-		System.out.println("   \\  /\\  /  | | |_) | |");
-		System.out.println("    \\/  \\/   |_| .__/|_|");
-		System.out.println("               | |");
-		System.out.println("               |_|");
+		LOGGER.info("__          ___        __");
+		LOGGER.info("\\ \\        / (_)      / _|");
+		LOGGER.info(" \\ \\  /\\  / / _ _ __ | |");
+		LOGGER.info("  \\ \\/  \\/ / | | '_ \\|  _|");
+		LOGGER.info("   \\  /\\  /  | | |_) | |");
+		LOGGER.info("    \\/  \\/   |_| .__/|_|");
+		LOGGER.info("               | |");
+		LOGGER.info("               |_|");
 
 	}
 
