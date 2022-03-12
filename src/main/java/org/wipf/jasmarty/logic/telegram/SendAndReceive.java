@@ -135,7 +135,6 @@ public class SendAndReceive {
 						// z.B. poll - Umfrage
 						t.setAntwort("Dies konnte nicht bearbeitet werden");
 					}
-					System.out.println(joMsg.toString());
 
 					sendTelegram(t);
 				}
@@ -315,7 +314,6 @@ public class SendAndReceive {
 		try {
 			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + this.sBotKey
 					+ "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
-
 			JSONObject jo = new JSONObject(sResJson);
 
 			if (!jo.getBoolean("ok")) {
@@ -338,6 +336,34 @@ public class SendAndReceive {
 				"https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
 		multipart.addFilePart("photo", new File(sFilePath));
+		String response = multipart.finish();
+		return (response);
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public String sendDocumentToTelegram(Telegram t) {
+		try {
+			sendDocumentToTelegram(t.getChatID(), t.getMessageFullWithoutFirstWord());
+			return "Ok";
+		} catch (IOException e) {
+			return "Fehler " + e;
+		}
+	}
+
+	/**
+	 * @param nChatId
+	 * @param sFilePath
+	 * @return
+	 * @throws IOException
+	 */
+	private String sendDocumentToTelegram(Integer nChatId, String sFilePath) throws IOException {
+		MultipartUtility multipart = new MultipartUtility(
+				"https://api.telegram.org/" + this.sBotKey + "/sendDocument?chat_id=" + nChatId, "UTF-8");
+		// multipart.addFormField("param_name_1", "param_value");
+		multipart.addFilePart("document", new File(sFilePath));
 		String response = multipart.finish();
 		return (response);
 	}

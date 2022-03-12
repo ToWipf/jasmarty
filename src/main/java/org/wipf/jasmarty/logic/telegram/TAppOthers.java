@@ -1,7 +1,9 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -161,8 +163,6 @@ public class TAppOthers {
 	 * Debug Text n Zeilen
 	 * 
 	 * @param n
-	 * 
-	 * @return
 	 */
 	public String langerText(Integer n) {
 		if (n == null) {
@@ -174,6 +174,23 @@ public class TAppOthers {
 		for (int i = 1; i < n + 1; i++) {
 			sb.append("Nummer: " + i + "\n");
 		}
+		return sb.toString();
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFilelist() {
+		File f = new File(Paths.get("").toAbsolutePath().toString());
+
+		StringBuilder sb = new StringBuilder();
+		for (String sL : f.list()) {
+			if (sb.length() > 0) {
+				sb.append("\n");
+			}
+			sb.append(sL);
+		}
+
 		return sb.toString();
 	}
 }

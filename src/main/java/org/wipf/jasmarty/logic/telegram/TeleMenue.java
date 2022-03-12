@@ -120,7 +120,8 @@ public class TeleMenue {
 					"kill\n" +
 					"system\n" +
 					"temperature\n" +
-					"infozuid\n"
+					"infozuid\n" +
+					"getfile"
 					;
 				// @formatter:on
 
@@ -236,6 +237,16 @@ public class TeleMenue {
 			case "izi":
 			case "infozuid":
 				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
+
+			case "gf":
+			case "fg":
+			case "getfile":
+				return sendAndReceive.sendDocumentToTelegram(t);
+
+			case "fl":
+			case "filelist":
+			case "fileliste":
+				return appOthers.getFilelist();
 
 			default:
 				break;

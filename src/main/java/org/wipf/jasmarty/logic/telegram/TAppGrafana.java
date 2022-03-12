@@ -160,15 +160,10 @@ public class TAppGrafana {
 			throws IOException {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
-		URL URLGrafana = new URL("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
-				+ "&from=now-" + sTime + "&to=now");
+		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
+		wipf.downloadFile("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+				+ "&from=now-" + sTime + "&to=now", sFilename);
 
-		String sFilename = (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-
-		ReadableByteChannel rbc = Channels.newChannel(URLGrafana.openStream());
-		FileOutputStream fos = new FileOutputStream(sFilename);
-		fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-		fos.close();
 		sendAndReceive.sendPictureToTelegram(nChatId, sFilename);
 		return sFilename;
 	}
