@@ -125,9 +125,14 @@ public class SendAndReceive {
 						t.setAntwort(saveDocument(joMsg));
 					} else if (joMsg.has("voice")) {
 						t.setAntwort(saveVoice(joMsg));
+					} else if (joMsg.has("audio")) {
+						t.setAntwort(saveAudio(joMsg));
 					} else if (joMsg.has("location")) {
 						t.setAntwort(joMsg.get("location").toString());
+					} else if (joMsg.has("contact")) {
+						t.setAntwort(joMsg.get("contact").toString());
 					} else {
+						// z.B. poll - Umfrage
 						t.setAntwort("Dies konnte nicht bearbeitet werden");
 					}
 					System.out.println(joMsg.toString());
@@ -155,6 +160,20 @@ public class SendAndReceive {
 
 		String sFileId = jd.get("file_id").toString();
 		String sFileName = "voice_" + joMsg.get("message_id").toString() + ".oga";
+
+		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
+		return teleFileDownload(sFileInfoPath, sFileName);
+	}
+
+	/**
+	 * @param joMsg
+	 * @return
+	 */
+	private String saveAudio(JSONObject joMsg) {
+		JSONObject jd = new JSONObject(joMsg.get("document").toString());
+
+		String sFileId = jd.get("file_id").toString();
+		String sFileName = "audio_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
 
 		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
 		return teleFileDownload(sFileInfoPath, sFileName);
