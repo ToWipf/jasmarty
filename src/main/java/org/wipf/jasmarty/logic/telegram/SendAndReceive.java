@@ -12,7 +12,6 @@ import javax.inject.Inject;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.MainHome;
@@ -85,16 +84,6 @@ public class SendAndReceive {
 	@Metered
 	public char readUpdateFromTelegram() {
 
-		StringBuilder sbHttpRequestTelegram = new StringBuilder();
-		sbHttpRequestTelegram.append("https://api.telegram.org/");
-		sbHttpRequestTelegram.append(this.sBotKey);
-		sbHttpRequestTelegram.append("/getUpdates");
-
-		if (this.nOffsetID != 0) {
-			sbHttpRequestTelegram.append("?offset=");
-			sbHttpRequestTelegram.append(this.nOffsetID);
-		}
-
 		try {
 			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST,
 					"https://api.telegram.org/" + this.sBotKey + "/getUpdates?offset=" + this.nOffsetID));
@@ -126,13 +115,34 @@ public class SendAndReceive {
 					t.setDate(joMsg.getInt("date"));
 					t.setFrom(joMsg.get("from").toString());
 
-					try {
+					if (joMsg.has("text")) {
 						// Normale Textnachricht
 						t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
+					}
+					if (joMsg.has("photo")) {
+						// TODO nur eines holen -> sauber machen
+						JSONArray jap = new JSONArray(joMsg.get("photo").toString());
 
-					} catch (JSONException e) {
-						// Sticker oder ähnliches
-						t.setMessage("fail");
+						jap.forEach((j) -> {
+							JSONObject o = new JSONObject(j.toString());
+							String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id="
+									+ o.get("file_id").toString();
+
+							try {
+								JSONObject picName = new JSONObject(
+										wipf.httpRequest(Wipf.httpRequestType.GET, sFileInfoPath));
+								JSONObject picNam1 = new JSONObject(picName.get("result").toString());
+								String sPicPath = picNam1.get("file_path").toString();
+								String sPicUrl = "https://api.telegram.org/file/" + this.sBotKey + "/" + sPicPath;
+
+								wipf.downloadFile(sPicUrl, t.getMid() + sPicPath.replace('/', '-'));
+
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						});
+
 					}
 
 					t.setAntwort(menue.menueMsg(t));
