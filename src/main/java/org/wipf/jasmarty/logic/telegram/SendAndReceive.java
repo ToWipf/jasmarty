@@ -182,13 +182,19 @@ public class SendAndReceive {
 	 * @return
 	 */
 	private String saveDocument(JSONObject joMsg) {
-		JSONObject jd = new JSONObject(joMsg.get("document").toString());
+		// nur bestimme Ids zulassen
+		Integer nChatId = joMsg.getJSONObject("chat").getInt("id");
+		if (userAndGroups.isUser(nChatId)) {
+			JSONObject jd = new JSONObject(joMsg.get("document").toString());
 
-		String sFileId = jd.get("file_id").toString();
-		String sFileName = "doc_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
+			String sFileId = jd.get("file_id").toString();
+			String sFileName = "doc_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
 
-		String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
-		return teleFileDownload(sFileInfoPath, sFileName);
+			String sFileInfoPath = "https://api.telegram.org/" + this.sBotKey + "/getFile?file_id=" + sFileId;
+			return teleFileDownload(sFileInfoPath, sFileName);
+		} else {
+			return "Nich erlaubt";
+		}
 	}
 
 	/**

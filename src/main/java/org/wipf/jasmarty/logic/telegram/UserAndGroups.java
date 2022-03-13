@@ -37,4 +37,14 @@ public class UserAndGroups {
 				|| t.getChatID() == -584490153);
 	}
 
+	/**
+	 * @param ChatId
+	 * @return
+	 */
+	public boolean isUser(Integer ChatId) {
+		Telegram t = new Telegram();
+		t.setChatID(ChatId);
+		return isUser(t);
+	}
+
 }

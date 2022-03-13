@@ -349,6 +349,12 @@ public class TeleMenue {
 		case "mills":
 		case "ts":
 			return String.valueOf(new Date().getTime());
+
+		case "is":
+		case "rechte":
+		case "valide":
+			return "Rechte: " + String.valueOf(userAndGroups.isUser(t));
+
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);
