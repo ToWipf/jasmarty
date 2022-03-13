@@ -232,7 +232,7 @@ public class SendAndReceive {
 			String sPicPath = picNam1.get("file_path").toString();
 			String sPicUrl = "https://api.telegram.org/file/" + this.sBotKey + "/" + sPicPath;
 
-			if (wipf.downloadFile(sPicUrl, sFilename)) {
+			if (wipf.downloadFileToDisk(sPicUrl, sFilename)) {
 				return "speichern als " + sFilename;
 			} else {
 				return "Fehler bei teleFileDownload F1";
@@ -330,14 +330,17 @@ public class SendAndReceive {
 	 * @return
 	 * @throws IOException
 	 */
-	public String sendPictureToTelegram(Integer nChatId, String sFilePath) throws IOException {
-		MultipartUtility multipart = new MultipartUtility(
-				"https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId, "UTF-8");
-		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("photo", new File("files/" + sFilePath));
-		String response = multipart.finish();
-		return (response);
-	}
+	// TODO löschen
+	// public String sendPictureToTelegram(Integer nChatId, String sFilePath) throws
+	// IOException {
+	// MultipartUtility multipart = new MultipartUtility(
+	// "https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId,
+	// "UTF-8");
+	// // multipart.addFormField("param_name_1", "param_value");
+	// multipart.addFilePart("photo", new File("files/" + sFilePath));
+	// String response = multipart.finish();
+	// return (response);
+	// }
 
 	/**
 	 * @param t
@@ -358,12 +361,13 @@ public class SendAndReceive {
 	 * @return
 	 * @throws IOException
 	 */
-	private String sendDocumentToTelegram(Integer nChatId, String sFilePath) throws IOException {
+	public String sendDocumentToTelegram(Integer nChatId, String sFilePath) throws IOException {
 		MultipartUtility multipart = new MultipartUtility(
 				"https://api.telegram.org/" + this.sBotKey + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
 		multipart.addFilePart("document", new File("files/" + sFilePath));
 		String response = multipart.finish();
+		LOGGER.info("upload File to " + nChatId + " files/" + sFilePath);
 		return (response);
 	}
 

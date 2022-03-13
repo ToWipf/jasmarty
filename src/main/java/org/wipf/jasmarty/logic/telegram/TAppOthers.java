@@ -137,7 +137,7 @@ public class TAppOthers {
 	 */
 	public String getTemperature() {
 		try {
-			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.0.14:80");
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.14:80");
 
 		} catch (IOException e) {
 			LOGGER.warn("getTemperature: " + e);
@@ -150,7 +150,7 @@ public class TAppOthers {
 	 */
 	public String getSystem() {
 		try {
-			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:80/metrics");
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.33:80/metrics");
 
 		} catch (IOException e) {
 			LOGGER.warn("getSystem: " + e);
@@ -179,17 +179,23 @@ public class TAppOthers {
 	/**
 	 * @return
 	 */
-	public String getFilelist() {
+	public String getFileList() {
 		// File f = new File(Paths.get("").toAbsolutePath().toString() );
 		File f = new File("files/");
 
 		StringBuilder sb = new StringBuilder();
 		for (String sL : f.list()) {
-			if (sb.length() > 0) {
-				sb.append("\n");
+			// Grafana Bilder nicht listen
+			if (!sL.startsWith("grafana_")) {
+				if (sb.length() > 0) {
+					sb.append("\n");
+				}
+				sb.append(sL);
 			}
-			sb.append(sL);
 		}
+
+		// Freier Platz in GB
+		sb.append("\n\nFrei: " + new File("/").getUsableSpace() / Math.pow(1024, 3) + " GB");
 
 		return sb.toString();
 	}

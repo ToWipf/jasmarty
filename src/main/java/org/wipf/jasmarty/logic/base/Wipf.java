@@ -104,7 +104,7 @@ public class Wipf {
 	 * @param sFilePathAndName
 	 * @throws MalformedURLException
 	 */
-	public boolean downloadFile(String sUrl, String sFilePathAndName) {
+	public boolean downloadFileToDisk(String sUrl, String sFilePathAndName) {
 		LOGGER.info("Donwload File " + sUrl + " nach " + sFilePathAndName);
 		try {
 			URL urld = new URL(sUrl);

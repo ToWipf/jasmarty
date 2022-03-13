@@ -161,10 +161,12 @@ public class TAppGrafana {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-		wipf.downloadFile("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+		wipf.downloadFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
 				+ "&from=now-" + sTime + "&to=now", sFilename);
 
-		sendAndReceive.sendPictureToTelegram(nChatId, sFilename);
+		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);
+
+		// TODO grafana Bilder löschen
 		return sFilename;
 	}
 

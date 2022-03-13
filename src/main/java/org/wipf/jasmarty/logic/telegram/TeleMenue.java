@@ -121,7 +121,8 @@ public class TeleMenue {
 					"system\n" +
 					"temperature\n" +
 					"infozuid\n" +
-					"getfile"
+					"getfile\n" +
+					"filelist"
 					;
 				// @formatter:on
 
@@ -153,6 +154,11 @@ public class TeleMenue {
 			case "res":
 			case "response":
 				return t.getMessage();
+			case "izi":
+			case "infozuid":
+				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
+
+			// Listen
 			case "to":
 			case "todo":
 				return appTodoList.telegramMenueTodoList(t);
@@ -196,11 +202,9 @@ public class TeleMenue {
 			case "punkteChange":
 				punkteVW.appendPunkt(t.getMessageIntPart(1));
 				return punkteVW.getPunkte().toString();
-
 			case "ns":
 			case "nochspiele":
 				return punkteVW.getNochSpielen().toString();
-
 			case "sns":
 			case "setnochspiele":
 				punkteVW.setNochSpiele(t.getMessageIntPart(1));
@@ -222,6 +226,10 @@ public class TeleMenue {
 			case "dev":
 				return grafana.telegramMenueDev(t);
 
+			case "lt":
+			case "langertext":
+				return appOthers.langerText(t.getMessageIntPart(1));
+
 			// Daylog
 			case "dl":
 			case "daylog":
@@ -230,23 +238,16 @@ public class TeleMenue {
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);
 
-			case "lt":
-			case "langertext":
-				return appOthers.langerText(t.getMessageIntPart(1));
-
-			case "izi":
-			case "infozuid":
-				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
-
+			// Files
 			case "gf":
 			case "fg":
 			case "getfile":
 				return sendAndReceive.sendDocumentToTelegram(t);
-
+			case "df":
 			case "fl":
 			case "filelist":
 			case "fileliste":
-				return appOthers.getFilelist();
+				return appOthers.getFileList();
 
 			default:
 				break;
