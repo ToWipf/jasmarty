@@ -23,7 +23,7 @@
         "ng-sidebar": "9.4.3",
         "ngx-perfect-scrollbar": "10.1.1",
         "ngx-photo-editor": "0.3.6",
-        "zone.js": "0.11.4"
+        "zone.js": "0.11.5"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "0.1102.12",
