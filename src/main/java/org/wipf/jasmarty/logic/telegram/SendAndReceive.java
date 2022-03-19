@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -14,6 +13,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -42,6 +42,8 @@ public class SendAndReceive {
 	UserAndGroups userAndGroups;
 	@Inject
 	WipfConfig wipfConfig;
+	@Inject
+	FileVW fileVw;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
@@ -371,9 +373,9 @@ public class SendAndReceive {
 		MultipartUtility multipart = new MultipartUtility(
 				"https://api.telegram.org/" + this.sBotKey + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("document", new File("files/" + sFilePath));
+		multipart.addFilePart("document", fileVw.getFile(sFilePath));
 		String response = multipart.finish();
-		LOGGER.info("upload File to " + nChatId + " files/" + sFilePath);
+		LOGGER.info("upload File to " + nChatId + " / " + sFilePath);
 		return (response);
 	}
 

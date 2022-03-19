@@ -48,4 +48,23 @@ public class FileVW {
 		return sb.toString();
 	}
 
+	/**
+	 * @param sFilePath
+	 */
+	public File getFile(String sFilePath) {
+		return new File("files/" + sFilePath);
+	}
+
+	/**
+	 * @param sName
+	 * @return
+	 */
+	public boolean delFile(String sName) {
+		// Zur sicherheit
+		if (!sName.contains("..")) {
+			return getFile(sName).delete();
+		}
+		return false;
+	}
+
 }

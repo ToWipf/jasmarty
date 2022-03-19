@@ -14,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.WipfInfo;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
@@ -36,8 +35,6 @@ public class WipfRest {
 	SerialConfig serialConfig;
 	@Inject
 	WipfInfo wipfInfo;
-	@Inject
-	FileVW fileVw;
 
 	@GET
 	@Path("up")
@@ -81,14 +78,8 @@ public class WipfRest {
 		return Response.ok(BcryptUtil.bcryptHash(x)).build();
 	}
 
-	@GET
-	@Path("filelist")
-	public Response filelist() {
-		return Response.ok(fileVw.getAllFiles()).build();
-	}
-
 	@DELETE
-	@Path("/garbage")
+	@Path("garbage")
 	public void gc() {
 		System.gc();
 	}
