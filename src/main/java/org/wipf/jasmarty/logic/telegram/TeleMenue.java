@@ -125,7 +125,8 @@ public class TeleMenue {
 					"temperature\n" +
 					"infozuid\n" +
 					"getfile\n" +
-					"filelist"
+					"filelist\n" +
+					"txt"
 					;
 				// @formatter:on
 
@@ -251,6 +252,11 @@ public class TeleMenue {
 			case "filelist":
 			case "fileliste":
 				return fileVw.getFilesForTelegram();
+
+			case "stf":
+			case "txt":
+			case "stringtofile":
+				return fileVw.telegramToFile(t);
 
 			default:
 				break;

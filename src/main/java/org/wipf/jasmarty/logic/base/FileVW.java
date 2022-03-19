@@ -6,12 +6,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
+import org.apache.commons.io.FileUtils;
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
 /**
  * @author Wipf
@@ -19,6 +23,9 @@ import org.jboss.logging.Logger;
  */
 @ApplicationScoped
 public class FileVW {
+
+	@Inject
+	Wipf wipf;
 
 	private static final Logger LOGGER = Logger.getLogger("Files");
 
@@ -98,9 +105,21 @@ public class FileVW {
 		return false;
 	}
 
-	public boolean upload(File f) {
-		// f.path
-		return false;
+	/**
+	 * @param t
+	 * @return
+	 */
+	public String telegramToFile(Telegram t) {
+		wipf.jsonToStringAsList(t.toJson());
+
+		try {
+			FileUtils.writeStringToFile(new File("files/" + "txt_" + t.getMid() + "_" + t.getDate()),
+					t.getMessageFullWithoutFirstWord(), Charset.defaultCharset());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+
+		return "txt_" + t.getMid() + "_" + t.getDate();
 	}
 
 }
