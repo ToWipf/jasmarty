@@ -164,7 +164,7 @@ public class TAppGrafana {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-		fileVw.downloadFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+		fileVw.saveFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
 				+ "&from=now-" + sTime + "&to=now", sFilename);
 
 		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);

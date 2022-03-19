@@ -72,9 +72,9 @@ export class FileVwComponent implements OnInit {
     window.open(this.rest.gethost() + 'file/download/' + name);
   }
 
-  public uploadFile(files: FileList) {
-    this.fileToUpload = files.item(0);
-    //TODO
-  }
+  // public uploadFile(files: FileList) {
+  //   this.fileToUpload = files.item(0);
+    
+  // }
 
 }

@@ -240,7 +240,7 @@ public class SendAndReceive {
 			String sPicPath = picNam1.get("file_path").toString();
 			String sPicUrl = "https://api.telegram.org/file/" + this.sBotKey + "/" + sPicPath;
 
-			if (fileVw.downloadFileToDisk(sPicUrl, sFilename)) {
+			if (fileVw.saveFileToDisk(sPicUrl, sFilename)) {
 				return "speichern als " + sFilename;
 			} else {
 				return "Fehler bei teleFileDownload F1";

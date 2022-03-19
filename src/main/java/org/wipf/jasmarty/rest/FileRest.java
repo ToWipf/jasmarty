@@ -36,14 +36,14 @@ public class FileRest {
 
 	@GET
 	@Path("getAll")
-	public Response list() {
+	public Response getAll() {
 		return Response.ok(fileVw.getAllFiles()).build();
 	}
 
 	@GET
 	@Produces(MediaType.MULTIPART_FORM_DATA)
 	@Path("download/{name}")
-	public Response filelist(@PathParam("name") String sName) {
+	public Response download(@PathParam("name") String sName) {
 		return Response.ok(fileVw.getFile(sName)).build();
 	}
 
@@ -52,4 +52,5 @@ public class FileRest {
 	public Response del(@PathParam("name") String sName) {
 		return Response.ok("{\"del\":\"" + fileVw.delFile(sName) + "\"}").build();
 	}
+
 }

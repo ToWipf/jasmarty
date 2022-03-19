@@ -80,21 +80,26 @@ public class FileVW {
 
 	/**
 	 * @param sUrl
-	 * @param sFilePathAndName
+	 * @param sFileName
 	 * @throws MalformedURLException
 	 */
-	public boolean downloadFileToDisk(String sUrl, String sFilePathAndName) {
-		LOGGER.info("Donwload File " + sUrl + " nach " + sFilePathAndName);
+	public boolean saveFileToDisk(String sUrl, String sFileName) {
+		LOGGER.info("Speichere File " + sUrl + " nach " + sFileName);
 		try {
 			URL urld = new URL(sUrl);
 			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
-			FileOutputStream fos = new FileOutputStream("files/" + sFilePathAndName);
+			FileOutputStream fos = new FileOutputStream("files/" + sFileName);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
 			fos.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
+	}
+
+	public boolean upload(File f) {
+		// f.path
 		return false;
 	}
 
