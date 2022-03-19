@@ -35,14 +35,14 @@ public class FileRest {
 	FileVW fileVw;
 
 	@GET
-	@Path("list")
+	@Path("getAll")
 	public Response list() {
 		return Response.ok(fileVw.getAllFiles()).build();
 	}
 
 	@GET
 	@Produces(MediaType.MULTIPART_FORM_DATA)
-	@Path("get/{name}")
+	@Path("download/{name}")
 	public Response filelist(@PathParam("name") String sName) {
 		return Response.ok(fileVw.getFile(sName)).build();
 	}

@@ -26,6 +26,10 @@
                         <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
                         Wipf User
                     </li>
+                    <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
+                        <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
+                        Dateien
+                    </li>
                     <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
                         Debug
@@ -203,6 +207,9 @@
                     </ng-container>
                     <ng-container *ngIf="selectedSite==='dynpageShow'">
                         <app-dynpageShow></app-dynpageShow>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='filevw'">
+                        <app-file-vw></app-file-vw>
                     </ng-container>
                 </perfect-scrollbar>
             </div>

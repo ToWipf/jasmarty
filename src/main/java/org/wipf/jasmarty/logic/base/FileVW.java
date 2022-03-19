@@ -1,10 +1,17 @@
 package org.wipf.jasmarty.logic.base;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+
+import org.jboss.logging.Logger;
 
 /**
  * @author Wipf
@@ -12,6 +19,8 @@ import javax.enterprise.context.ApplicationScoped;
  */
 @ApplicationScoped
 public class FileVW {
+
+	private static final Logger LOGGER = Logger.getLogger("Files");
 
 	/**
 	 * @return
@@ -52,6 +61,7 @@ public class FileVW {
 	 * @param sFilePath
 	 */
 	public File getFile(String sFilePath) {
+		LOGGER.info("Get File " + sFilePath);
 		return new File("files/" + sFilePath);
 	}
 
@@ -60,9 +70,30 @@ public class FileVW {
 	 * @return
 	 */
 	public boolean delFile(String sName) {
+		LOGGER.info("Delete File " + sName);
 		// Zur sicherheit
 		if (!sName.contains("..")) {
 			return getFile(sName).delete();
+		}
+		return false;
+	}
+
+	/**
+	 * @param sUrl
+	 * @param sFilePathAndName
+	 * @throws MalformedURLException
+	 */
+	public boolean downloadFileToDisk(String sUrl, String sFilePathAndName) {
+		LOGGER.info("Donwload File " + sUrl + " nach " + sFilePathAndName);
+		try {
+			URL urld = new URL(sUrl);
+			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
+			FileOutputStream fos = new FileOutputStream("files/" + sFilePathAndName);
+			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			fos.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return false;
 	}

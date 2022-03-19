@@ -1,16 +1,12 @@
 package org.wipf.jasmarty.logic.base;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -97,26 +93,6 @@ public class Wipf {
 			return "";
 		}
 		return new String(new char[times]).replace('\0', c);
-	}
-
-	/**
-	 * @param sUrl
-	 * @param sFilePathAndName
-	 * @throws MalformedURLException
-	 */
-	public boolean downloadFileToDisk(String sUrl, String sFilePathAndName) {
-		LOGGER.info("Donwload File " + sUrl + " nach " + sFilePathAndName);
-		try {
-			URL urld = new URL(sUrl);
-			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
-			FileOutputStream fos = new FileOutputStream("files/" + sFilePathAndName);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			fos.close();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	/**

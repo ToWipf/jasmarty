@@ -74,6 +74,7 @@ import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDial
 import { DaylogComponentEventlist, DaylogComponentDialogEventComponent } from './components/daylog/daylog.eventlist';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/dynpages/dynpages.component';
 import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.component';
+import { FileVwComponent } from './components/fileVw/fileVw.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,7 +115,8 @@ import { DynpageShowComponent } from './components/dynpageShow/dynpageShow.compo
     WipfUserVWComponentDialogComponent,
     DaylogComponentDialogTypeComponent,
     DaylogComponentDialogTypeListComponent,
-    DaylogComponentEventlist
+    DaylogComponentEventlist,
+    FileVwComponent
   ],
   imports: [
     A11yModule,

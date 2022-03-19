@@ -11,6 +11,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfig;
@@ -24,6 +25,8 @@ public class TAppGrafana {
 	WipfConfig wipfConfig;
 	@Inject
 	SendAndReceive sendAndReceive;
+	@Inject
+	FileVW fileVw;
 
 	public String telegramMenuehHeizung(Telegram t) {
 		String sPanelId = "";
@@ -161,7 +164,7 @@ public class TAppGrafana {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-		wipf.downloadFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+		fileVw.downloadFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
 				+ "&from=now-" + sTime + "&to=now", sFilename);
 
 		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);

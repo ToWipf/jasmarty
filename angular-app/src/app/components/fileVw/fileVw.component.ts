@@ -9,35 +9,34 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-telegram-chat',
-  templateUrl: './telegramChat.component.html',
-  styleUrls: ['./telegramChat.component.less'],
+  selector: 'app-file-vw',
+  templateUrl: './fileVw.component.html',
+  styleUrls: ['./fileVw.component.less'],
 })
-export class TelegramChatComponent implements OnInit {
+export class FileVwComponent implements OnInit {
   constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
 
   }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['chatid', 'msg', 'usercache', 'counter', 'button'];
-  public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
-  public textOut: string = '-';
-  public usercachearry: TelegramUserCache[] = [];
+  public displayedColumns: string[] = ['name', 'button'];
+  public filenames: String[] = [];
   public sFilter: string = "";
+  public fileToUpload: File | null = null;
 
   ngOnInit(): void {
     this.load();
   }
 
   public load(): void {
-    this.usercachearry = [];
+    this.filenames = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'telegram/usercache/getAll').subscribe((resdata: TelegramUserCache[]) => {
-      this.usercachearry = resdata;
+    this.http.get(this.rest.gethost() + 'file/getAll').subscribe((resdata: String[]) => {
+      this.filenames = resdata;
 
-      this.dataSource = new MatTableDataSource(this.usercachearry);
+      this.dataSource = new MatTableDataSource(this.filenames);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
@@ -51,8 +50,9 @@ export class TelegramChatComponent implements OnInit {
     });
   }
 
-  public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.chatid;
+  public deleteItem(name: String): void {
+    let item: any = {};
+    item.infotext = "Wirklich löschen? \n" + name;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -61,20 +61,20 @@ export class TelegramChatComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'telegram/usercache/delete/' + item.chatid).subscribe((resdata: any) => {
+        this.http.delete(this.rest.gethost() + 'file/del/' + name).subscribe((resdata: any) => {
           this.load();
         });
       }
     });
   }
 
-  // TestChat
-  public send(): void {
-    this.http.post(this.rest.gethost() + 'telegram/chat', this.tMsg).subscribe((resdata: any) => {
-      this.tMsg.message = "";
-      this.textOut = resdata.msg;
-      this.load();
-    });
+  public downloadItem(name: String): void {
+    window.open(this.rest.gethost() + 'file/download/' + name);
+  }
+
+  public uploadFile(files: FileList) {
+    this.fileToUpload = files.item(0);
+    //TODO
   }
 
 }
