@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -176,27 +175,4 @@ public class TAppOthers {
 		return sb.toString();
 	}
 
-	/**
-	 * @return
-	 */
-	public String getFileList() {
-		// File f = new File(Paths.get("").toAbsolutePath().toString() );
-		File f = new File("files/");
-
-		StringBuilder sb = new StringBuilder();
-		for (String sL : f.list()) {
-			// Grafana Bilder nicht listen
-			if (!sL.startsWith("grafana_")) {
-				if (sb.length() > 0) {
-					sb.append("\n");
-				}
-				sb.append(sL);
-			}
-		}
-
-		// Freier Platz in GB
-		sb.append("\n\nFrei: " + new File("/").getUsableSpace() / Math.pow(1024, 3) + " GB");
-
-		return sb.toString();
-	}
 }

@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
@@ -55,6 +56,8 @@ public class TeleMenue {
 	TUsercache tUsercache;
 	@Inject
 	DaylogHome daylogHome;
+	@Inject
+	FileVW fileVw;
 
 	/**
 	 * @param sJson
@@ -247,7 +250,7 @@ public class TeleMenue {
 			case "fl":
 			case "filelist":
 			case "fileliste":
-				return appOthers.getFileList();
+				return fileVw.getFilesForTelegram();
 
 			default:
 				break;
