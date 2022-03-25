@@ -57,6 +57,7 @@ public class FileVW {
 					sb.append("\n");
 				}
 			}
+			sb.append(sF);
 		}
 		// Freier Platz in GB
 		sb.append("\n\nFrei: " + new File("/").getUsableSpace() / Math.pow(1024, 3) + " GB");
@@ -111,15 +112,16 @@ public class FileVW {
 	 */
 	public String telegramToFile(Telegram t) {
 		wipf.jsonToStringAsList(t.toJson());
+		String sFilename = "files/" + "txt_" + t.getMid() + ".txt";
 
 		try {
-			FileUtils.writeStringToFile(new File("files/" + "txt_" + t.getMid() + "_" + t.getDate()),
-					t.getMessageFullWithoutFirstWord(), Charset.defaultCharset());
+			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(),
+					Charset.defaultCharset());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
-		return "txt_" + t.getMid() + "_" + t.getDate();
+		return sFilename;
 	}
 
 }
