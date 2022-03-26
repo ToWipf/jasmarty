@@ -33,7 +33,6 @@ public class CronDiscord {
 
 	@PostConstruct
 	public void Init() {
-		LOGGER.info("Init Discord Task");
 		try {
 			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
 		} catch (SQLException e) {
@@ -41,6 +40,8 @@ public class CronDiscord {
 		}
 		if (this.sDiscordId == null) {
 			LOGGER.info("Init Discord Fail F2");
+		} else {
+			LOGGER.info("Init Discord Task: " + sDiscordId);
 		}
 	}
 
