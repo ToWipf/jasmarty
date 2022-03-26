@@ -1,5 +1,8 @@
 package org.wipf.jasmarty.rest;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -15,7 +18,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.base.WipfInfo;
+import org.wipf.jasmarty.logic.discord.Discord;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -35,6 +40,28 @@ public class WipfRest {
 	SerialConfig serialConfig;
 	@Inject
 	WipfInfo wipfInfo;
+	@Inject
+	Discord discord;
+	@Inject
+	WipfConfig wipfConfig;
+
+	@GET
+	@PermitAll
+	@Path("discord/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response discord(@PathParam("id") String sId) throws IOException {
+		return Response.ok(discord.isOnline(sId)).build();
+	}
+
+	@GET
+	@POST
+	@PermitAll
+	@Path("setDiscordId/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response discordSetId(@PathParam("id") String sId) throws IOException, SQLException {
+		wipfConfig.setConfParam("discord_id", sId);
+		return Response.ok(wipfConfig.getConfParamString("discord_id")).build();
+	}
 
 	@GET
 	@Path("up")

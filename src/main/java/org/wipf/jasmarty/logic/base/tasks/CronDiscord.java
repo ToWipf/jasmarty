@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.base.tasks;
 
+import java.sql.SQLException;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,37 +29,45 @@ public class CronDiscord {
 
 	private static final Logger LOGGER = Logger.getLogger("DiscordTask");
 	private Boolean bLastResult = false;
-	private String sDiscordId = "";
+	private String sDiscordId;
 
 	@PostConstruct
 	public void Init() {
 		LOGGER.info("Init Discord Task");
-		this.sDiscordId = "";
+		try {
+			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
+		} catch (SQLException e) {
+			LOGGER.info("Init Discord Fail F1");
+		}
+		if (this.sDiscordId == null) {
+			LOGGER.info("Init Discord Fail F2");
+		}
 	}
 
 	/**
 	 *
-	 */
+	*/
 	@Scheduled(cron = "0 */5 * ? * *")
 	public void isOnline() {
-		System.out.println("NOW");
-		Boolean bNow = discord.isOnline(this.sDiscordId);
+		if (sDiscordId != null && sDiscordId != "") {
+			Boolean bNow = discord.isOnline(this.sDiscordId);
 
-		// Nur bei wechselnden Status eine Nachricht erstellen
-		if (bNow == null && bLastResult != null) {
-			LOGGER.error("Fail Discord");
-			tSendAndReceive.sendMsgToAdmin("Fail Discord");
-		}
-		if (bNow == true && bLastResult == false) {
-			LOGGER.info("Discord Online");
-			tSendAndReceive.sendMsgToAdmin("Discord Online");
-		}
-		if (bNow == false && bLastResult == true) {
-			LOGGER.info("Discord Offline");
-			tSendAndReceive.sendMsgToAdmin("Discord Offline");
-		}
+			// Nur bei wechselnden Status eine Nachricht erstellen
+			if (bNow == null && bLastResult != null) {
+				LOGGER.error("Fail Discord");
+				tSendAndReceive.sendMsgToAdmin("Fail Discord");
+			}
+			if (bNow == true && bLastResult == false) {
+				LOGGER.info("Discord Online");
+				tSendAndReceive.sendMsgToAdmin("Discord Online");
+			}
+			if (bNow == false && bLastResult == true) {
+				LOGGER.info("Discord Offline");
+				tSendAndReceive.sendMsgToAdmin("Discord Offline");
+			}
 
-		bLastResult = bNow;
+			bLastResult = bNow;
+		}
 	}
 
 }
