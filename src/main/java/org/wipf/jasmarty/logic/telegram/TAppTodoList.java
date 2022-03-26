@@ -96,7 +96,7 @@ public class TAppTodoList {
 		try {
 			String sQuery = "SELECT * FROM todolist ORDER BY id DESC LIMIT ?;";
 			PreparedStatement req = sqlLite.getDbApp().prepareStatement(sQuery);
-			req.setInt(0, messageIntPart);
+			req.setInt(1, messageIntPart);
 			ResultSet rs = req.executeQuery();
 
 			while (rs.next()) {

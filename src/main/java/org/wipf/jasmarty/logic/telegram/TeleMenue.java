@@ -12,6 +12,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.daylog.TAppDayLog;
+import org.wipf.jasmarty.logic.discord.Discord;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -58,6 +59,8 @@ public class TeleMenue {
 	DaylogHome daylogHome;
 	@Inject
 	FileVW fileVw;
+	@Inject
+	Discord discord;
 
 	/**
 	 * @param sJson
@@ -257,6 +260,10 @@ public class TeleMenue {
 			case "txt":
 			case "stringtofile":
 				return fileVw.telegramToFile(t);
+
+			case "dis":
+			case "discord":
+				return discord.isOnlineDefault();
 
 			default:
 				break;

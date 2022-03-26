@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.Wipf.httpRequestType;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 
 /**
  * @author devbuntu
@@ -19,6 +20,8 @@ public class Discord {
 
 	@Inject
 	Wipf wipf;
+	@Inject
+	WipfConfig wipfConfig;
 
 	/**
 	 * @param sId
@@ -44,6 +47,17 @@ public class Discord {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public String isOnlineDefault() {
+		try {
+			return isOnline(wipfConfig.getConfParamString("discord_id")).toString();
+		} catch (Exception e) {
+			return "Fehler 017" + e;
 		}
 	}
 
