@@ -76,12 +76,51 @@ public class TAppTodoList {
 		case "ca":
 		case "countall":
 			return countAll();
+		case "ll":
+		case "gl":
+			return getLast(t.getMessageIntPart(2));
 		case "get":
 			return wipf.jsonToStringAsList(getById(t.getMessageIntPart(2)).toJson());
 		default:
 			return saveItem(t).toString();
 		}
 
+	}
+
+	/**
+	 * @param messageIntPart
+	 * @return
+	 */
+	private String getLast(Integer messageIntPart) {
+		StringBuilder sb = new StringBuilder();
+		try {
+			String sQuery = "SELECT * FROM todolist ORDER BY id DESC LIMIT ?;";
+			PreparedStatement req = sqlLite.getDbApp().prepareStatement(sQuery);
+			req.setInt(0, messageIntPart);
+			ResultSet rs = req.executeQuery();
+
+			while (rs.next()) {
+				if (sb.length() > 0) {
+					sb.append("\n");
+				}
+				TodoEntry entry = new TodoEntry();
+				entry.setId(rs.getInt("id"));
+				entry.setData(rs.getString("data"));
+				entry.setEditBy(rs.getString("editby"));
+				entry.setActive(rs.getString("active"));
+				entry.setRemind(rs.getString("remind"));
+				entry.setDate(rs.getInt("date"));
+
+				sb.append(wipf.jsonToStringAsList(entry.toJsonRelevantOnly()));
+				sb.append("\n");
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Fehler 5234: " + e;
+		}
+
+		return sb.toString();
 	}
 
 	/**

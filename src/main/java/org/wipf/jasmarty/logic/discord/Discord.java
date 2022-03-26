@@ -30,10 +30,7 @@ public class Discord {
 			String sRes = wipf.httpRequest(httpRequestType.GET,
 					"https://discord.com/api/guilds/" + sId + "/widget.json");
 
-			System.out.println(sRes);
-
 			JSONObject jo = new JSONObject(sRes);
-
 			JSONArray ja = (JSONArray) jo.get("members");
 
 			for (Object j : ja) {
