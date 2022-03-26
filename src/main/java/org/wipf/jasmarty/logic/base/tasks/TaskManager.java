@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.base;
+package org.wipf.jasmarty.logic.base.tasks;
 
 import java.time.LocalDateTime;
 import java.util.Timer;

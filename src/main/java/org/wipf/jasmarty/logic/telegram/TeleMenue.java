@@ -271,8 +271,6 @@ public class TeleMenue {
 
 			// Grafana
 			case "grafana":
-				grafana.testen(t.getChatID());
-				return "Testbild";
 			case "heizung":
 			case "h":
 				return grafana.telegramMenuehHeizung(t);

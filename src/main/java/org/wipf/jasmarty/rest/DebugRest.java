@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.annotation.security.PermitAll;
@@ -21,6 +22,7 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfDebug;
+import org.wipf.jasmarty.logic.discord.Discord;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
@@ -58,6 +60,16 @@ public class DebugRest {
 	Wipf wipf;
 	@Inject
 	WipfDebug debug;
+	@Inject
+	Discord discord;
+
+	@GET
+	@PermitAll
+	@Path("discord/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response discord(@PathParam("id") String sId) throws IOException {
+		return Response.ok(discord.isOnline(sId)).build();
+	}
 
 	@POST
 	@GET
@@ -225,14 +237,6 @@ public class DebugRest {
 		PunktePlay pb = new PunktePlay(b);
 
 		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
-	}
-
-	@GET
-	@PermitAll
-	@Path("grafana")
-	public Response grafana() throws Exception {
-		tAppGrafana.testen(798200105);
-		return Response.ok("{\"test\": \"" + "ok" + "\"}").build();
 	}
 
 	/**

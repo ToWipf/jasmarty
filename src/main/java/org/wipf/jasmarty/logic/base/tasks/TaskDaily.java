@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.base;
+package org.wipf.jasmarty.logic.base.tasks;
 
 import java.sql.SQLException;
 import java.util.TimerTask;
@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
