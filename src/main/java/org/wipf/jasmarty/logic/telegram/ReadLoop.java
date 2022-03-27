@@ -19,11 +19,12 @@ public class ReadLoop {
 	@Inject
 	Wipf wipf;
 	@Inject
-	SendAndReceive telegramVerwaltung;
+	SendAndReceive sendAndReceive;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
 	private boolean bLoopActive = false;
 	private int lastMsgCounter = 4;
+	private int nFailconter = 0;
 
 	/**
 	 * 
@@ -50,7 +51,7 @@ public class ReadLoop {
 		if (!bLoopActive) {
 			bLoopActive = true;
 			LOGGER.info("Refresh an");
-			telegramVerwaltung.sendMsgToAdmin("Starte Telegram Refreshloop");
+			sendAndReceive.sendMsgToAdmin("Starte Telegram Refreshloop");
 		} else {
 			LOGGER.info("Refresh bereits an");
 			return;
@@ -65,7 +66,7 @@ public class ReadLoop {
 				boolean bLastFailed = true;
 				while (bLoopActive) {
 
-					switch (telegramVerwaltung.readUpdateFromTelegram()) {
+					switch (sendAndReceive.readUpdateFromTelegram()) {
 					case 'o':
 						// Es gab keine neue Nachrichten
 						if (lastMsgCounter == 0) {
@@ -79,7 +80,9 @@ public class ReadLoop {
 							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
 							// senden:
 							// Das hat keine Prio -> erst wenn keine neuen Nachrichten ausstehen senden
-							telegramVerwaltung.sendExtIp();
+							sendAndReceive.sendMsgToAdmin(
+									"Telegram online nach: " + nFailconter + ". IP: " + wipf.getExternalIp());
+
 							bLastFailed = false;
 							LOGGER.info("Telegram ist erreichbar");
 						}
@@ -95,12 +98,13 @@ public class ReadLoop {
 						bLastFailed = true;
 						wipf.sleep(60000);
 						LOGGER.warn("Telegram hatte einen Fehler -> Warte 1min ");
+						nFailconter++;
 						break;
 
 					default:
 						LOGGER.warn("Telegram unnormales Verhalten");
 						bLastFailed = true;
-						telegramVerwaltung.sendMsgToAdmin("Abnormales verhalten!");
+						sendAndReceive.sendMsgToAdmin("Abnormales verhalten!");
 						wipf.sleep(20000);
 						break;
 					}

@@ -416,13 +416,6 @@ public class SendAndReceive {
 	/**
 	 * 
 	 */
-	public void sendExtIp() {
-		sendMsgToAdmin("Neue IP: " + wipf.getExternalIp());
-	}
-
-	/**
-	 * 
-	 */
 	public void sendMsgToAdmin(String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);

@@ -56,8 +56,8 @@ public class FileVW {
 				if (sb.length() > 0) {
 					sb.append("\n");
 				}
+				sb.append(sF);
 			}
-			sb.append(sF);
 		}
 		// Freier Platz in GB
 		sb.append("\n\nFrei: " + new File("/").getUsableSpace() / Math.pow(1024, 3) + " GB");
