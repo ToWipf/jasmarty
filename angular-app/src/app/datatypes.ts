@@ -100,6 +100,7 @@ export interface DaylogDay {
   userid?: number;
   date?: string;
   tagestext?: string;
+  extrafeld_wochentag?: string; 
 }
 
 export interface DaylogEvent {

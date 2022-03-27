@@ -75,6 +75,8 @@ public class ReadLoop {
 							// warte nur 15 sec, da gerade geschrieben wurde
 							wipf.sleep(15000);
 							lastMsgCounter--;
+							// Failcounter zurücksetzen
+							nFailconter = 0;
 						}
 						if (bLastFailed) {
 							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
