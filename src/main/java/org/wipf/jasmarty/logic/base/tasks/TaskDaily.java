@@ -10,7 +10,6 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.SendAndReceive;
-import org.wipf.jasmarty.logic.telegram.TUsercache;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -28,8 +27,6 @@ public class TaskDaily extends TimerTask {
 	WipfConfig wipfConfig;
 	@Inject
 	DaylogHome daylogHome;
-	@Inject
-	TUsercache tUsercache;
 
 	private static final Logger LOGGER = Logger.getLogger("DailyTask");
 
@@ -52,8 +49,6 @@ public class TaskDaily extends TimerTask {
 				sb.append(daylogHome.getTagesInfo());
 				sb.append("\n\n");
 				sb.append(daylogHome.getGesternInfo());
-				sb.append("\n\n");
-				sb.append("User: " + tUsercache.getAnzahl());
 
 				tSendAndReceive.sendMsgToAdmin(sb.toString());
 			}

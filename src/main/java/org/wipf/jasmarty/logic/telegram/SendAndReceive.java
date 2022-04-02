@@ -44,6 +44,8 @@ public class SendAndReceive {
 	WipfConfig wipfConfig;
 	@Inject
 	FileVW fileVw;
+	@Inject
+	TUsercache tUsercache;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
@@ -385,7 +387,8 @@ public class SendAndReceive {
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
 		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd()
-				+ "\n" + tLog.countMsg() + "\n\nVersion:" + MainHome.VERSION);
+				+ "\n" + tLog.countMsg() + "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: "
+				+ tUsercache.getAnzahl());
 		t.setChatID(userAndGroups.getAdminId());
 
 		sendTelegram(t);

@@ -63,8 +63,6 @@ public class CronDiscord {
 			} else if (bNow == false && bLastResult == true) {
 				LOGGER.info("Discord Offline");
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
-			} else {
-				LOGGER.error("Fail 521 Discord");
 			}
 
 			bLastResult = bNow;
