@@ -1,6 +1,9 @@
 <footer class="page-footer font-small blue">
     <div class="footer-copyright text-center py-3">
         <div (click)="openSetServer()" *ngIf="bCantLoad" class="warn">Server nicht erreichbar (Server einstellen)</div>
+        
+        <button (click)="getVersion()" *ngIf="bCantLoad">Reload</button>
+        
         <ng-container *ngIf="!bCantLoad">
             <div *ngIf="bOldVersionWarn" class="warn">
                 Seite bitte neu Laden. Java: {{sJavaVersion}} Angular: {{sAppVersion}}

@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit {
     this.getVersion();
   }
 
-  private getVersion(): void {
+  public getVersion(): void {
     this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
         this.bCantLoad = false;
