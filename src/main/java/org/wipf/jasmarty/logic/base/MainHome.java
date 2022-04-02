@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -62,6 +63,7 @@ public class MainHome {
 	void onStart(@Observes StartupEvent ev) {
 		try {
 			LOGGER.info("Starte " + VERSION);
+			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			createFileFolder();
 			wipfConfig.initDB();
