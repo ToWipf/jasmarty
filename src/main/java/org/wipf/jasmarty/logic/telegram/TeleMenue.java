@@ -1,13 +1,20 @@
 package org.wipf.jasmarty.logic.telegram;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
+import org.wipf.jasmarty.logic.daylog.TAppDayLog;
+import org.wipf.jasmarty.logic.discord.Discord;
+import org.wipf.jasmarty.logic.wipfapp.Infotext;
+import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
  * @author wipf
@@ -27,7 +34,7 @@ public class TeleMenue {
 	@Inject
 	TAppEssen appEssen;
 	@Inject
-	TeleLog msglog;
+	TeleLog telelog;
 	@Inject
 	UserAndGroups userAndGroups;
 	@Inject
@@ -36,6 +43,24 @@ public class TeleMenue {
 	TAppMotd appMotd;
 	@Inject
 	TAppFilm appFilme;
+	@Inject
+	PunkteVW punkteVW;
+	@Inject
+	Infotext infotext;
+	@Inject
+	SendAndReceive sendAndReceive;
+	@Inject
+	TAppGrafana grafana;
+	@Inject
+	TAppDayLog appDayLog;
+	@Inject
+	TUsercache tUsercache;
+	@Inject
+	DaylogHome daylogHome;
+	@Inject
+	FileVW fileVw;
+	@Inject
+	Discord discord;
 
 	/**
 	 * @param sJson
@@ -49,9 +74,19 @@ public class TeleMenue {
 	/**
 	 * @param t
 	 * @return
-	 * @throws SQLException
 	 */
 	public String menueMsg(Telegram t) {
+		String res = doMenue(t);
+		tUsercache.saveByTelegramOhneUsercache(t);
+		return res;
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 * @throws SQLException
+	 */
+	private String doMenue(Telegram t) {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
 
 		// Admin Befehle
@@ -79,7 +114,23 @@ public class TeleMenue {
 				    "response" + "\n" +
 				    "filme" + "\n" +
 				    "todo" + "\n" +
-					"Essen (Hilfe für essen)";
+					"Essen (Hilfe für essen) \n" +
+					"punkte \n" +
+					"pp \n" +
+					"pm / mp\n" +
+					"ns / nochSpiele\n" +
+					"sns / setNochSpiele\n" +
+					"setpunkte / sp / ps / mp\n" +
+					"changepunkte / pc / pa N\n" +
+					"itext TEXT IN DER APP\n" +
+					"kill\n" +
+					"system\n" +
+					"temperature\n" +
+					"infozuid\n" +
+					"getfile\n" +
+					"filelist\n" +
+					"txt"
+					;
 				// @formatter:on
 
 			// Anbindung an msg datenbank
@@ -100,20 +151,21 @@ public class TeleMenue {
 			case "getmotd":
 				return appMotd.getRndMotd();
 
-			case "doping":
-				return wipf.ping(t.getMessageStringPartLow(1)).toString();
-
-			case "getip":
-				return wipf.getExternalIp();
-
+			// Cache und Log Stats
+			case "s":
 			case "stats":
 			case "telestats":
-				return wipf.time("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + msglog.count();
-
+			case "cache":
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
+						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "response":
 				return t.getMessage();
+			case "izi":
+			case "infozuid":
+				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
 
+			// Listen
 			case "to":
 			case "todo":
 				return appTodoList.telegramMenueTodoList(t);
@@ -124,9 +176,116 @@ public class TeleMenue {
 			case "e":
 				return appEssen.menueEssen(t);
 
+			// Web
+			case "getip":
+				return wipf.getExternalIp();
+			case "doping":
+				return wipf.ping(t.getMessageStringPartLow(1)).toString();
 			case "online":
 			case "scan":
 				return appOthers.getOnline();
+			case "tm":
+			case "temp":
+			case "temperature":
+				return appOthers.getTemperature();
+
+			// Punkte - App
+			case "sp":
+			case "ps":
+			case "setpunkte":
+				punkteVW.setPunkte(t.getMessageIntPart(1));
+				return punkteVW.getPunkte().toString();
+			case "mp":
+			case "pm":
+			case "minuspunkte":
+				punkteVW.minuspunkt();
+				return punkteVW.getPunkte().toString();
+			case "pp":
+			case "pluspunkte":
+				punkteVW.pluspunkt();
+				return punkteVW.getPunkte().toString();
+			case "pa":
+			case "pc":
+			case "punkteChange":
+				punkteVW.appendPunkt(t.getMessageIntPart(1));
+				return punkteVW.getPunkte().toString();
+			case "ns":
+			case "nochspiele":
+				return punkteVW.getNochSpielen().toString();
+			case "sns":
+			case "setnochspiele":
+				punkteVW.setNochSpiele(t.getMessageIntPart(1));
+				return punkteVW.getNochSpielen().toString();
+
+			case "itext":
+				infotext.setText(t.getMessageFullWithoutFirstWord());
+				return infotext.getText();
+
+			// System
+			case "kill":
+				// Noch ein Update machen, ansonsen wird nach einen neustart sofort wieder
+				// "kill" aufgerufen
+				sendAndReceive.readUpdateFromTelegram();
+				MainHome.stopApp();
+				return "killed";
+
+			case "d":
+			case "dev":
+				return grafana.telegramMenueDev(t);
+
+			case "lt":
+			case "langertext":
+				return appOthers.langerText(t.getMessageIntPart(1));
+
+			// Daylog
+			case "dl":
+			case "daylog":
+				return appDayLog.telegramMenue(t);
+			case "di":
+			case "dayinfo":
+				return daylogHome.getTagesinfoByTelegram(t);
+
+			// Files
+			case "gf":
+			case "fg":
+			case "getfile":
+				return sendAndReceive.sendDocumentToTelegram(t);
+			case "df":
+			case "fl":
+			case "filelist":
+			case "fileliste":
+				return fileVw.getFilesForTelegram();
+
+			case "stf":
+			case "txt":
+			case "stringtofile":
+				return fileVw.telegramToFile(t);
+
+			case "dis":
+			case "discord":
+				return discord.isOnlineDefault();
+
+			default:
+				break;
+			}
+		}
+
+		// Antworten für all User
+		if (userAndGroups.isUser(t)) {
+			switch (sInMsg) {
+			case "user":
+				return "User OK";
+
+			// Grafana
+			case "grafana":
+			case "heizung":
+			case "h":
+				return grafana.telegramMenuehHeizung(t);
+
+			// System
+			case "sys":
+			case "system":
+				return appOthers.getSystem();
 
 			default:
 				break;
@@ -176,7 +335,7 @@ public class TeleMenue {
 		case "zeit":
 		case "clock":
 		case "z":
-			return wipf.time("dd.MM.yyyy HH:mm:ss");
+			return wipf.getTime("dd.MM.yyyy HH:mm:ss");
 		case "witz":
 		case "fun":
 		case "w":
@@ -185,7 +344,10 @@ public class TeleMenue {
 		case "countmsg":
 			return appMsg.countMsg();
 		case "countsend":
-			return msglog.count();
+			return telelog.countMsg();
+		case "punkte":
+		case "p":
+			return punkteVW.getPunkte().toString();
 		case "getmyid":
 		case "id":
 		case "whoami":
@@ -198,6 +360,15 @@ public class TeleMenue {
 		case "math":
 		case "m":
 			return String.valueOf(wipf.doMathByString(t.getMessageFullWithoutFirstWord()));
+		case "mills":
+		case "ts":
+			return String.valueOf(new Date().getTime());
+
+		case "is":
+		case "rechte":
+		case "valide":
+			return "Rechte: " + String.valueOf(userAndGroups.isUser(t));
+
 		default:
 			// Alle db aktionen
 			t = appMsg.getMsg(t);

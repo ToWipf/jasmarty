@@ -61,17 +61,19 @@ public class JasmartyHome {
 
 		switch (lcdConnect.getType()) {
 		case LCD_2004:
-			lcd2004.startLCD();
-			lcdRefreshLoop.startRefresh2004();
+			if (lcd2004.startLCD()) {
+				lcdRefreshLoop.startRefresh2004();
+			}
 			break;
 		case LCD_12864:
-			lcd12864.startLCD();
-			lcdRefreshLoop.startRefresh12864();
+			if (lcd12864.startLCD()) {
+				lcdRefreshLoop.startRefresh12864();
+			}
 			break;
 		default:
 			break;
 		}
-		LOGGER.info("Gestartet");
+		LOGGER.info("jasmarty init ende");
 	}
 
 	/**

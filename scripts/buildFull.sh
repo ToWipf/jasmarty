@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "buildFull"
 
 ./buildApp.sh
 if [ $? -eq 0 ];

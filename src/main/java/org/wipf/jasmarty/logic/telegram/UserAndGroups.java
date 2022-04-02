@@ -23,19 +23,28 @@ public class UserAndGroups {
 	}
 
 	/**
-	 * TODO to DB
-	 * 
 	 * @return
 	 */
-	public int getGroupId() {
-		return -387871959;
+	public int getAdminId() {
+		return 798200105;
 	}
 
 	/**
 	 * @return
 	 */
-	public int getAdminId() {
-		return 798200105;
+	public boolean isUser(Telegram t) {
+		return (isAdminUser(t) || t.getChatID() == 522467648 || t.getChatID() == 1750235711
+				|| t.getChatID() == -584490153);
+	}
+
+	/**
+	 * @param ChatId
+	 * @return
+	 */
+	public boolean isUser(Integer ChatId) {
+		Telegram t = new Telegram();
+		t.setChatID(ChatId);
+		return isUser(t);
 	}
 
 }

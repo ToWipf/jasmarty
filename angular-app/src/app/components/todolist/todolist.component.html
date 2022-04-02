@@ -9,10 +9,6 @@
 
         <div class="configline">
             <div class="box">
-                Löschen
-                <input type="checkbox" [(ngModel)]="bDeleteEnable">
-            </div>
-            <div class="box">
                 Neu:
                 <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bNew">
             </div>
@@ -28,6 +24,10 @@
                 Fertig:
                 <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bDone">
             </div>
+            <div class="box">
+                Zitate:
+                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bZitat">
+            </div>
             <!-- <div class="box">
                 <button class="btn btn-default" (click)="load()">Neu laden</button>
             </div> -->
@@ -40,11 +40,11 @@
         </div>
 
         <perfect-scrollbar class="pscroll">
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
                         {{element.id}} </td>
                 </ng-container>
 
@@ -67,10 +67,12 @@
                     <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-default" (click)="newItem()">Neu</button></th> -->
                     <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                     <td mat-cell *matCellDef="let element">
-                        <button class="btn btn-default" (click)="openDialog(element)">Edit</button>
-                        <ng-container *ngIf="bDeleteEnable">
-                            <button class="btn btn-default" (click)="deleteItem(element)">Löschen</button>
-                        </ng-container>
+                        <button class="btn btn-default" (click)="openDialog(element)">
+                            <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+                        </button>
+                        <button class="btn btn-default" (click)="deleteItem(element)">
+                            <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+                        </button>
                     </td>
                 </ng-container>
 

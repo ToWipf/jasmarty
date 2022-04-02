@@ -29,6 +29,17 @@ public class TodoEntry extends Telegram {
 	}
 
 	/**
+	 * @return
+	 */
+	public JSONObject toJsonRelevantOnly() {
+		JSONObject jo = new JSONObject();
+		jo.put("id", this.nId);
+		jo.put("data", this.sData);
+		jo.put("active", this.sActive);
+		return jo;
+	}
+
+	/**
 	 * @param sJson
 	 * @return
 	 */

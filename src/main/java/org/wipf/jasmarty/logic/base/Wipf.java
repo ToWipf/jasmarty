@@ -22,6 +22,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import javax.enterprise.context.ApplicationScoped;
 
+import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
@@ -32,6 +33,8 @@ import org.wipf.jasmarty.datatypes.Base32;
  */
 @ApplicationScoped
 public class Wipf {
+
+	private static final Logger LOGGER = Logger.getLogger("Wipf");
 
 	public enum httpRequestType {
 		GET, POST
@@ -65,6 +68,17 @@ public class Wipf {
 		return getRandomInt(Integer.valueOf(sMax));
 	}
 
+	/**
+	 * @return
+	 */
+	public boolean getRandomBoolean() {
+		Random wuerfel = new Random();
+		return wuerfel.nextBoolean();
+	}
+
+	/**
+	 * @return
+	 */
 	public String getRandomUUID() {
 		return UUID.randomUUID().toString();
 	}
@@ -85,23 +99,15 @@ public class Wipf {
 	 * 
 	 */
 	public void printLogo() {
-		System.out.println("__          ___        __");
-		System.out.println("\\ \\        / (_)      / _|");
-		System.out.println(" \\ \\  /\\  / / _ _ __ | |");
-		System.out.println("  \\ \\/  \\/ / | | '_ \\|  _|");
-		System.out.println("   \\  /\\  /  | | |_) | |");
-		System.out.println("    \\/  \\/   |_| .__/|_|");
-		System.out.println("               | |");
-		System.out.println("               |_|");
+		LOGGER.info("__          ___        __");
+		LOGGER.info("\\ \\        / (_)      / _|");
+		LOGGER.info(" \\ \\  /\\  / / _ _ __ | |");
+		LOGGER.info("  \\ \\/  \\/ / | | '_ \\|  _|");
+		LOGGER.info("   \\  /\\  /  | | |_) | |");
+		LOGGER.info("    \\/  \\/   |_| .__/|_|");
+		LOGGER.info("               | |");
+		LOGGER.info("               |_|");
 
-	}
-
-	/**
-	 * @param str
-	 * @return
-	 */
-	public double doMathByString(String str) {
-		return doMath(str);
 	}
 
 	/**
@@ -133,6 +139,18 @@ public class Wipf {
 		}
 		br.close();
 		return sbOut.toString();
+	}
+
+	/**
+	 * @param str
+	 * @return
+	 */
+	public double doMathByString(String str) {
+		try {
+			return doMath(str);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	/**
@@ -278,14 +296,11 @@ public class Wipf {
 		// @formatter:off
 		return s.replaceAll("\t", " ")
 				.replaceAll("\\|", "_")
-				.replaceAll("<", "_")
-				.replaceAll(">", "_")
 				.replaceAll("'", "_")
 				.replaceAll("\"", "_")
 				.replaceAll("\\{", "(")
 				.replaceAll("\\}", ")")
 				.replaceAll("\\\\", "")
-				.replaceAll("/", "")
 				.trim();
 		// @formatter:on
 	}
@@ -395,7 +410,7 @@ public class Wipf {
 	/**
 	 * @return
 	 */
-	public String time(String sPara) {
+	public String getTime(String sPara) {
 		try {
 			SimpleDateFormat time = new SimpleDateFormat(sPara);
 			return time.format(new Date());
@@ -417,23 +432,6 @@ public class Wipf {
 				sb.append("\n");
 			}
 			sb.append(entry.getKey() + ":" + entry.getValue());
-		}
-		return sb.toString();
-	}
-
-	/**
-	 * @param json
-	 * @return
-	 */
-	public String jsonToStringAsList(JSONArray json) {
-		StringBuilder sb = new StringBuilder();
-		List<Object> l = toList(json);
-
-		for (Object o : l) {
-			if (sb.length() > 1) {
-				sb.append("\n");
-			}
-			sb.append(o.toString());
 		}
 		return sb.toString();
 	}

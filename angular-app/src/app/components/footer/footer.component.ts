@@ -12,7 +12,6 @@ import { version } from '../../../../package.json';
 export class FooterComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) { }
 
-
   public sAppVersion: string = version;
   public sJavaVersion: string = '0.0';
   public bOldVersionWarn: boolean = false;
@@ -23,11 +22,6 @@ export class FooterComponent implements OnInit {
   }
 
   private getVersion(): void {
-    this.rest.sethostExpect();
-    if (this.rest.gethost() === 'http://') {
-      this.rest.sethost('http://localhost:8080/');
-    }
-
     this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
         this.bCantLoad = false;

@@ -6,6 +6,7 @@ import { TodoEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-todolist',
@@ -20,12 +21,12 @@ export class TodolistComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['id', 'data', 'date', 'editby', 'button'];
   public toarry: TodoEntry[] = [];
-  private nextId: number;
+  private nextId: number = 0;
   public bNew: boolean = true;
   public bTodo: boolean = true;
   public bDone: boolean = false;
-  public bLater: boolean = true;
-  public bDeleteEnable: boolean = false;
+  public bLater: boolean = false;
+  public bZitat: boolean = false;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -35,6 +36,7 @@ export class TodolistComponent implements OnInit {
 
   public load(): void {
     this.toarry = [];
+    const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
       resdata.forEach((element) => {
@@ -51,18 +53,24 @@ export class TodolistComponent implements OnInit {
         if (element.active === 'NEW' && this.bNew) {
           this.toarry.push(element);
         }
+        if (element.active === 'ZITAT' && this.bZitat) {
+          this.toarry.push(element);
+        }
       });
 
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
-      this.nextId = this.getNextId();
+      this.getNextId();
       this.applyFilter();
+      warten.close();
     });
   }
 
   public applyFilter() {
-    this.dataSource.filter = this.sFilter.trim();
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
+    });
   }
 
   public newItem(): void {
@@ -77,22 +85,35 @@ export class TodolistComponent implements OnInit {
     this.openDialog(td);
   }
 
-  public deleteItem(item: TodoEntry): void {
-    // TODO: ADD nachfragen dialog
-    this.bDeleteEnable = false;
-    this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
-      this.load();
+  public deleteItem(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.data;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
+          this.load();
+        });
+      }
     });
   }
 
-  private getNextId(): number {
-    let nextId: number = 0;
+  private getNextId(): void {
+    let nextIdTmp: number = 0;
+    // Auch falls jetzt weginger in der Liste ist, die bisher höchste id nehmen
+    if (this.nextId != 0) {
+      nextIdTmp = this.nextId;
+    }
     this.toarry.forEach((item: TodoEntry) => {
-      if (item.id > nextId) {
-        nextId = item.id;
+      if (item.id > nextIdTmp) {
+        nextIdTmp = item.id;
       }
     });
-    return nextId * 1 + 1;
+    this.nextId = nextIdTmp * 1 + 1;
   }
 
   private saveTodo(item: TodoEntry): void {

@@ -1,5 +1,8 @@
 package org.wipf.jasmarty.logic.base;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -7,8 +10,11 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.logic.base.tasks.TaskManager;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
+import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
@@ -29,15 +35,24 @@ public class MainHome {
 	JasmartyHome jHome;
 	@Inject
 	TelegramHome tHome;
+	@Inject
+	TaskManager taskmanager;
+	@Inject
+	DaylogHome daylogHome;
+	@Inject
+	Dynpages dynpages;
+	@Inject
+	SqlLitePatcher sqlLitePatcher;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.07";
+	public static final String VERSION = "1.0.76";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
 	 * Stop App
 	 */
 	public static void stopApp() {
+		LOGGER.info("Stoppen...");
 		Quarkus.asyncExit();
 	}
 
@@ -48,10 +63,16 @@ public class MainHome {
 		try {
 			LOGGER.info("Starte " + VERSION);
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+			createFileFolder();
+			wipfConfig.initDB();
+
+			sqlLitePatcher.doPatch();
 
 			wipfUserVW.initDB();
-			wipfConfig.initDB();
+			dynpages.initDB();
+			daylogHome.initDB();
 			wipfConfig.checkAppWorkId();
+			taskmanager.startDailyTask();
 
 			jHome.init();
 			tHome.init();
@@ -82,6 +103,20 @@ public class MainHome {
 		tHome.telegramStop();
 
 		LOGGER.info("Gestoppt");
+	}
+
+	/**
+	 * 
+	 */
+	private void createFileFolder() {
+		// Fileorder erstellen
+		try {
+			Path path = Paths.get(Paths.get("").toAbsolutePath().toString() + "/files");
+			Files.createDirectories(path);
+		} catch (Exception e) {
+			LOGGER.error("createFileFolder");
+		}
+
 	}
 
 }

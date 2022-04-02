@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,12 +18,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
+import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
+import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfDebug;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
+import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 
 /**
  * @author wipf
@@ -47,6 +52,12 @@ public class DebugRest {
 	Lcd12864 lcd12864;
 	@Inject
 	Lcd12864Cache lcd12864Cache;
+	@Inject
+	TAppGrafana tAppGrafana;
+	@Inject
+	Wipf wipf;
+	@Inject
+	WipfDebug debug;
 
 	@POST
 	@GET
@@ -195,4 +206,36 @@ public class DebugRest {
 	public Response test() {
 		return Response.ok("{\"test\": \"ok\"}").build();
 	}
+
+	@GET
+	@PermitAll
+	@Path("vergleiche/{a}")
+	public Response vergleicheRND(@PathParam("a") String a) {
+		PunktePlay pa = new PunktePlay(a);
+		PunktePlay pb = new PunktePlay(String.valueOf(wipf.getRandomInt(Integer.MAX_VALUE)));
+
+		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
+	}
+
+	@GET
+	@PermitAll
+	@Path("vergleiche/{a}/{b}")
+	public Response vergleiche(@PathParam("a") String a, @PathParam("b") String b) {
+		PunktePlay pa = new PunktePlay(a);
+		PunktePlay pb = new PunktePlay(b);
+
+		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+
+	@GET
+	@Path("lasttest")
+	public Response lasttest() throws Exception {
+		return Response.ok(debug.lasttestAsJson().toString()).build();
+	}
+
 }

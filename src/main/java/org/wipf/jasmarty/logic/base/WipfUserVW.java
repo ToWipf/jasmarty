@@ -12,6 +12,8 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
+import io.quarkus.elytron.security.common.BcryptUtil;
+
 /**
  * @author wipf
  *
@@ -31,7 +33,7 @@ public class WipfUserVW {
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS users (username TEXT UNIQUE, password TEXT, role TEXT, telegramid INTEGER);";
 		sqlLite.getDbAuth().prepareStatement(sUpdate).executeUpdate();
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 		syncUsers();
 	}
 
@@ -53,12 +55,15 @@ public class WipfUserVW {
 
 		if (lUserFromJasmartyDb.size() == 0) {
 			// Admin User nur erstellen wenn es kein anderen User gibt
-			createDefaultUserAuthDb();
-		} else {
-			// Alle User einspielen
-			for (WipfUser wu : lUserFromJasmartyDb) {
-				addOrUpdateUser(wu, true);
-			}
+			LOGGER.info("Standarduser admin erstellen");
+			lUserFromJasmartyDb.add(getDefaultUser());
+		}
+		// User für Healthcheck erstellen
+		lUserFromJasmartyDb.add(getHealthCheckUser());
+
+		// Alle User einspielen
+		for (WipfUser wu : lUserFromJasmartyDb) {
+			addOrUpdateUser(wu, true);
 		}
 	}
 
@@ -74,7 +79,7 @@ public class WipfUserVW {
 		if (bAuthDb) {
 			statement = sqlLite.getDbAuth().prepareStatement(sUpdate);
 		} else {
-			statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		}
 
 		statement.setString(1, user.getUsername());
@@ -93,6 +98,24 @@ public class WipfUserVW {
 			addOrUpdateUser(new WipfUser().setByJson(sJson), false);
 		} catch (SQLException e) {
 			LOGGER.warn("addOrUpdateUser " + e);
+		}
+	}
+
+	/**
+	 * @param sUsername
+	 */
+	public void deleteUser(String sUsername) {
+		try {
+			String sUpdate = "DELETE FROM users WHERE username = ?";
+
+			PreparedStatement statement = null;
+
+			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+
+			statement.setString(1, sUsername);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			LOGGER.warn("deleteUser " + e);
 		}
 	}
 
@@ -133,7 +156,7 @@ public class WipfUserVW {
 		if (bAuthDb) {
 			rs = sqlLite.getDbAuth().prepareStatement(sQuery).executeQuery();
 		} else {
-			rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		}
 
 		while (rs.next()) {
@@ -148,17 +171,31 @@ public class WipfUserVW {
 	}
 
 	/**
-	 * @throws SQLException
-	 * 
+	 * @return
 	 */
-	private void createDefaultUserAuthDb() throws SQLException {
+	private WipfUser getDefaultUser() {
 		WipfUser wu = new WipfUser();
 		wu.setUsername("admin");
-		wu.setPassword("jadmin");
+		// Mit bcrypt Verschluesselung (slow bei 32Bit)
+		wu.setPassword(BcryptUtil.bcryptHash("jadmin"));
+		// wu.setPassword("jadmin");
 		wu.setRole("admin");
 		wu.setTelegramId(0);
-		addOrUpdateUser(wu, true);
-		LOGGER.info("Standarduser admin erstellt");
+		return wu;
+	}
+
+	/**
+	 * @return
+	 */
+	private WipfUser getHealthCheckUser() {
+		WipfUser wu = new WipfUser();
+		wu.setUsername("check");
+		// Mit bcrypt Verschluesselung (slow bei 32Bit)
+		wu.setPassword(BcryptUtil.bcryptHash("check"));
+		// wu.setPassword("check");
+		wu.setRole("check");
+		wu.setTelegramId(0);
+		return wu;
 	}
 
 }

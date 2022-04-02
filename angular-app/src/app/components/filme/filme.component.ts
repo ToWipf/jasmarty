@@ -6,6 +6,7 @@ import { FilmEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-filme',
@@ -22,17 +23,21 @@ export class FilmeComponent implements OnInit {
   public displayedColumns: string[] = ['titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
   public farry: FilmEntry[] = [];
   private nextId: number;
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
   }
 
   private load(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: FilmEntry[]) => {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
       this.nextId = this.getNextId();
+      warten.close();
     });
   }
 
@@ -40,6 +45,11 @@ export class FilmeComponent implements OnInit {
     var td: FilmEntry = {};
 
     td.id = this.nextId;
+    td.art = "";
+    td.bewertung = 0;
+    td.gesehenDate = Math.round(Date.now() / 1000);
+    td.infotext = "";
+    td.titel = "";
 
     td.date = Math.round(Date.now() / 1000);
     td.editby = 'web';
@@ -66,6 +76,12 @@ export class FilmeComponent implements OnInit {
   private save(item: FilmEntry): void {
     this.http.post(this.rest.gethost() + 'filme/save', item).subscribe((resdata: any) => {
       this.load();
+    });
+  }
+
+  public applyFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
     });
   }
 

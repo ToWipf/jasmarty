@@ -1,6 +1,13 @@
 <div>
     <h3>Filme</h3>
     <div class="filme">
+
+        <div class="configline">
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
+        </div>
+
         <perfect-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -56,5 +63,6 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
         </perfect-scrollbar>
+        Treffer: {{farry.length}}
     </div>
 </div>

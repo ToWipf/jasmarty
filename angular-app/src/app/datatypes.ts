@@ -91,6 +91,43 @@ export interface Lcd12864PageDescriptionDynamic {
   type?: string;
   font?: string;
   data?: string;
-  x?: number;
-  y?: number;
+  x?: string;
+  y?: string;
+}
+
+export interface DaylogDay {
+  id?: number;
+  userid?: number;
+  date?: string;
+  tagestext?: string;
+  extrafeld_wochentag?: string; 
+}
+
+export interface DaylogEvent {
+  id?: number;
+  dateid?: number;
+  typ?: string;
+  text?: string;
+}
+
+export interface DynpageEntry {
+  id?: number;
+  html?: string;
+  script?: string;
+  style?: string;
+  rechte?: string;
+  live?: boolean;
+}
+
+export interface DaylogType {
+  id?: number;
+  type?: string;
+  art?: string;
+}
+
+export interface TelegramUserCache {
+  chatid?: number;
+  msg?: string;
+  usercache?: string;
+  counter?: number;
 }

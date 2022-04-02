@@ -6,6 +6,7 @@ import { WipfUser } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-wipfuservw',
@@ -26,6 +27,7 @@ export class WipfUserVwComponent implements OnInit {
   }
 
   public load(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.wuArray = [];
 
     this.http.get(this.rest.gethost() + 'wipfuservw/getAll').subscribe((resdata: WipfUser[]) => {
@@ -36,13 +38,14 @@ export class WipfUserVwComponent implements OnInit {
       });
       this.dataSource = new MatTableDataSource(this.wuArray);
       this.dataSource.sort = this.sort;
+      warten.close();
     });
   }
 
   public newItem(): void {
     let td: WipfUser = {};
     td.role = 'user';
-    this.openDialog(td);
+    this.openDialogEdit(td);
   }
 
   private saveWipfUser(item: WipfUser): void {
@@ -51,7 +54,7 @@ export class WipfUserVwComponent implements OnInit {
     });
   }
 
-  public openDialog(item: WipfUser): void {
+  public openDialogEdit(item: WipfUser): void {
     const edititem: WipfUser = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(WipfUserVWComponentDialogComponent, {
@@ -66,6 +69,24 @@ export class WipfUserVwComponent implements OnInit {
       }
     });
   }
+
+  public deleteUser(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.username;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'wipfuservw/delete/' + item.username).subscribe((resdata: any) => {
+          this.load();
+        });
+      }
+    });
+  }
+
 }
 
 @Component({

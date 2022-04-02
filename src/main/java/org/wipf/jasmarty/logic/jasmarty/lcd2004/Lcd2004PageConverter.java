@@ -268,7 +268,7 @@ public class Lcd2004PageConverter {
 			// echten größe?
 			return sBefore + wipf.repeat(' ', (Integer.valueOf(sParameter) - nIndexStart)) + sAfter;
 		case "time":
-			return sBefore + wipf.time(sParameter) + sAfter;
+			return sBefore + wipf.getTime(sParameter) + sAfter;
 		case "bar":
 			return sBefore + varBar(sParameter) + sAfter;
 		case "math":

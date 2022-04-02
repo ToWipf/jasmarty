@@ -1,4 +1,4 @@
-<h3>Einstellungen</h3>
+<h3>Jasmarty Einstellungen</h3>
 <hr>
 <div class="settings">
     <div class="gridRow">
@@ -25,17 +25,19 @@
                         <span class="title">Port</span>
                         <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
 
-                        <span class="title">Baud Rate</span>
+                        <span class="title">Baud Rate</span> (9600, 57600)
                         <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
 
                         <span class="title">Refesh Rate</span>
                         <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
 
-                        <span class="title">Breite</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
-
-                        <span class="title">Höhe</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
+                        <ng-container *ngIf="jaconfig.type==='LCD_2004'">
+                            <span class="title">Breite</span>
+                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
+                            
+                            <span class="title">Höhe</span>
+                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
+                        </ng-container>
 
 
                     </ng-container>

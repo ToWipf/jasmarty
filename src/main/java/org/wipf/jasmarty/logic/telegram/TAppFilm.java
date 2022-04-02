@@ -36,7 +36,7 @@ public class TAppFilm {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
-		sqlLite.getDbJasmarty().prepareStatement(sUpdate).executeUpdate();
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class TAppFilm {
 			return delByID(t.getMessageIntPart(2));
 		case "l":
 		case "list":
-			return wipf.jsonToStringAsList(getAllAsJson());
+			return getAllAsList();
 		case "c":
 		case "count":
 			return countItems().toString();
@@ -71,8 +71,23 @@ public class TAppFilm {
 	}
 
 	/**
-	 * TODO Array hier?
-	 * 
+	 * @return
+	 */
+	public String getAllAsList() {
+		StringBuilder sb = new StringBuilder();
+
+		for (FilmEntry tItem : getAll()) {
+			if (sb.length() > 0) {
+				sb.append("\n");
+			}
+			sb.append(wipf.jsonToStringAsList(tItem.toJsonRelevantOnly()));
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
+
+	/**
 	 * @return
 	 */
 	public JSONArray getAllAsJson() {
@@ -91,26 +106,31 @@ public class TAppFilm {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<FilmEntry> getAll() throws SQLException {
-		List<FilmEntry> liTodoE = new ArrayList<>();
+	public List<FilmEntry> getAll() {
+		try {
+			List<FilmEntry> liTodoE = new ArrayList<>();
 
-		String sQuery = "select * from filme;";
-		PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sQuery);
-		ResultSet rs = statement.executeQuery();
+			String sQuery = "select * from filme;";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+			ResultSet rs = statement.executeQuery();
 
-		while (rs.next()) {
-			FilmEntry entry = new FilmEntry();
-			entry.setId(rs.getInt("id"));
-			entry.setArt(rs.getString("art"));
-			entry.setEditBy(rs.getString("editby"));
-			entry.setTitel(rs.getString("titel"));
-			entry.setInfotext(rs.getString("infotext"));
-			entry.setGesehenDate(rs.getInt("gesehendate"));
-			entry.setBewertung(rs.getInt("bewertung"));
-			entry.setDate(rs.getInt("date"));
-			liTodoE.add(entry);
+			while (rs.next()) {
+				FilmEntry entry = new FilmEntry();
+				entry.setId(rs.getInt("id"));
+				entry.setArt(rs.getString("art"));
+				entry.setEditBy(rs.getString("editby"));
+				entry.setTitel(rs.getString("titel"));
+				entry.setInfotext(rs.getString("infotext"));
+				entry.setGesehenDate(rs.getInt("gesehendate"));
+				entry.setBewertung(rs.getInt("bewertung"));
+				entry.setDate(rs.getInt("date"));
+				liTodoE.add(entry);
+			}
+			return liTodoE;
+		} catch (Exception e) {
+			LOGGER.warn("getAll " + e);
+			return null;
 		}
-		return liTodoE;
 	}
 
 	/**
@@ -121,7 +141,7 @@ public class TAppFilm {
 		try {
 			String sUpdate = "INSERT OR REPLACE INTO filme (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, filmE.getId());
 			statement.setString(2, filmE.getTitel());
 			statement.setString(3, filmE.getArt());
@@ -172,7 +192,7 @@ public class TAppFilm {
 	public void deleteItem(Integer nId) {
 		try {
 			String sUpdate = "DELETE FROM filme WHERE id LIKE ?;";
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nId);
 			statement.executeUpdate();
 		} catch (Exception e) {
@@ -204,7 +224,7 @@ public class TAppFilm {
 	private Integer countItems() {
 		try {
 			String sQuery = "SELECT COUNT(*) FROM filme;";
-			ResultSet rs = sqlLite.getDbJasmarty().prepareStatement(sQuery).executeQuery();
+			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 
 				int n = rs.getInt("COUNT(*)");
@@ -223,7 +243,7 @@ public class TAppFilm {
 	private String delByID(Integer nID) {
 		try {
 			String sUpdate = "DELETE FROM filme WHERE id = " + nID;
-			PreparedStatement statement = sqlLite.getDbJasmarty().prepareStatement(sUpdate);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nID);
 			statement.executeUpdate();
 

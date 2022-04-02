@@ -98,10 +98,19 @@ public class TAppOthers {
 			sWitz = wipf.httpRequest(Wipf.httpRequestType.GET,
 					"https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
 			String s = sWitz.substring(41, sWitz.length() - 3).replaceAll("\\<.*?>", "");
-			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", "%20");
+			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", " ").replaceAll("%22", "\n")
+					.replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!").replaceAll("%3F", "?")
+					.replaceAll("%3A", ":").replaceAll("%2C", ",").replaceAll("%2E", ". ")
+					.replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26uuml%3B", "ü")
+					.replaceAll("%C3%83%C5%B8", "ß").replaceAll("%26szlig%3B", "ß").replaceAll("%26ouml%3B", "ö")
+					.replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26uuml%3B", "Ü")
+					.replaceAll("%26%238242%3B%21", "\"").replaceAll("%26auml%3B", "ä").replaceAll("H%C3%83%C2%B6", "Ö")
+					.replaceAll("%26quot%3B", "").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26%2339%3B", "")
+					.replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "")
+					.replaceAll("%C3%83%E2%80%93", "Ö").replaceAll("%C3%83%E2%80%9E", "Ä");
 
 			// TODO
-			return x;
+			return x.substring(0, x.indexOf("Ein Witz von"));
 
 		} catch (IOException e) {
 			LOGGER.warn("getWitz: " + e);
@@ -121,4 +130,49 @@ public class TAppOthers {
 			return "getOnline failed";
 		}
 	}
+
+	/**
+	 * @return
+	 */
+	public String getTemperature() {
+		try {
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.14:80");
+
+		} catch (IOException e) {
+			LOGGER.warn("getTemperature: " + e);
+			return "getTemperature failed";
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public String getSystem() {
+		try {
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.33:80/metrics");
+
+		} catch (IOException e) {
+			LOGGER.warn("getSystem: " + e);
+			return "getSystem failed";
+		}
+	}
+
+	/**
+	 * Debug Text n Zeilen
+	 * 
+	 * @param n
+	 */
+	public String langerText(Integer n) {
+		if (n == null) {
+			return "langerText <ANZAHL>";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 1; i < n + 1; i++) {
+			sb.append("Nummer: " + i + "\n");
+		}
+		return sb.toString();
+	}
+
 }

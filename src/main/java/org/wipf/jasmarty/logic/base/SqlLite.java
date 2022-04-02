@@ -30,7 +30,7 @@ public class SqlLite {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Connection getDbJasmarty() throws SQLException {
+	public Connection getDbApp() throws SQLException {
 		if (cjasmarty == null) {
 			cjasmarty = sqliteDbJasmarty.getConnection();
 		}
@@ -48,8 +48,4 @@ public class SqlLite {
 		return cauth;
 	}
 
-	// Update einspielen:
-	// String sUpdated = "ALTER TABLE lcd_pages12864 ADD COLUMN timeouttime
-	// INTEGER;";
-	// sqlLite.getDbJasmarty().prepareStatement(sUpdated).executeUpdate();
 }

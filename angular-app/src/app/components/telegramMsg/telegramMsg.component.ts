@@ -6,6 +6,7 @@ import { Telegram } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-telegramMsg',
@@ -18,8 +19,8 @@ export class TelegramMsgComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public bDeleteEnable: boolean = false;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
+  public sFilter: String = "";
 
   ngOnInit() {
     this.loadAllItems();
@@ -34,11 +35,22 @@ export class TelegramMsgComponent implements OnInit {
     this.openDialog(t);
   }
 
-  public deleteItem(i: Telegram): void {
-    this.bDeleteEnable = false;
-    this.http.delete(this.rest.gethost() + 'telegram/delMsg/' + i.mid).subscribe((resdata: any) => {
-      this.loadAllItems();
+  public deleteItem(item: any): void {
+    item.infotext = "Wirklich löschen? " + item.message;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
     });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.http.delete(this.rest.gethost() + 'telegram/delMsg/' + item.mid).subscribe((resdata: any) => {
+          this.loadAllItems();
+        });
+      }
+    });
+
   }
 
   private saveItem(t: Telegram): void {
@@ -48,13 +60,20 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   private loadAllItems(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
     this.http.get(this.rest.gethost() + 'telegram/msgall').subscribe((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
+      warten.close();
     });
   }
 
+  public applyFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
+    });
+  }
   private openDialog(item: Telegram): void {
     const edititem: Telegram = this.serviceWipf.deepCopy(item);
     edititem.from = "web";

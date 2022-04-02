@@ -1,18 +1,29 @@
 package org.wipf.jasmarty.rest;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfInfo;
+import org.wipf.jasmarty.logic.discord.Discord;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
+
+import io.quarkus.elytron.security.common.BcryptUtil;
 
 /**
  * @author wipf
@@ -28,7 +39,37 @@ public class WipfRest {
 	@Inject
 	SerialConfig serialConfig;
 	@Inject
-	MainHome qMain;
+	WipfInfo wipfInfo;
+	@Inject
+	Discord discord;
+	@Inject
+	WipfConfig wipfConfig;
+
+	@GET
+	@PermitAll
+	@Path("discord/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response discord(@PathParam("id") String sId) throws IOException {
+		return Response.ok(discord.isOnline(sId)).build();
+	}
+
+	@GET
+	@POST
+	@PermitAll
+	@Path("setDiscordId/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response discordSetId(@PathParam("id") String sId) throws IOException, SQLException {
+		wipfConfig.setConfParam("discord_id", sId);
+		return Response.ok(wipfConfig.getConfParamString("discord_id")).build();
+	}
+
+	@GET
+	@Path("up")
+	@Produces(MediaType.TEXT_PLAIN)
+	@RolesAllowed({ "admin", "check" })
+	public Response up() {
+		return Response.ok(1).build();
+	}
 
 	@GET
 	@Path("ver")
@@ -42,6 +83,14 @@ public class WipfRest {
 		return Response.ok(serialConfig.getPorts().toString()).build();
 	}
 
+	@GET
+	@Path("tinfo")
+	@Produces(MediaType.TEXT_PLAIN)
+	@PermitAll
+	public Response tinfo() {
+		return Response.ok(wipfInfo.getThreadInfo()).build();
+	}
+
 	@POST
 	@Path("stop")
 	public Response stopAll() {
@@ -49,4 +98,16 @@ public class WipfRest {
 		return Response.ok().build();
 	}
 
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("bct/{x}")
+	public Response bct(@PathParam("x") String x) {
+		return Response.ok(BcryptUtil.bcryptHash(x)).build();
+	}
+
+	@DELETE
+	@Path("garbage")
+	public void gc() {
+		System.gc();
+	}
 }
