@@ -226,6 +226,25 @@ public class TUsercache {
 
 	/**
 	 * @return
+	 */
+	public Integer getAnzahl() {
+		try {
+			String sQuery = "SELECT count(*) AS c from teleUsercache";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+			ResultSet rs;
+			rs = statement.executeQuery();
+
+			while (rs.next()) {
+				return rs.getInt("c");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * @return
 	 * @throws SQLException
 	 */
 	public String getAllAsText() {
@@ -245,7 +264,7 @@ public class TUsercache {
 		} catch (SQLException e) {
 			sb.append("Fehler 012 " + e);
 		}
-		return "Anzahl: " + n + "\n\n" + sb.toString();
+		return "Anzahl der Benutzer: " + n + "\n\n" + sb.toString();
 	}
 
 }
