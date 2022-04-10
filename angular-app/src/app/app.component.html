@@ -74,14 +74,6 @@
 
                 <div class="titlemenue">Telegram</div>
                 <ul class="menueli">
-                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
-                        <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
-                        Test Chat
-                    </li>
-                    <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
-                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                        Einstellungen
-                    </li>
                     <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
                         Nachrichten
@@ -89,6 +81,14 @@
                     <li *ngIf="bTelegramActive" (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
                         <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
                         Logs
+                    </li>
+                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
+                        <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
+                        Test Chat
+                    </li>
+                    <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
+                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                        Einstellungen
                     </li>
                 </ul>
 
