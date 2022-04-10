@@ -2,7 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { version } from '../../../../package.json';
+//import { version } from '../../../../package.json';
+import packageJson from '../../../../package.json';
 
 @Component({
   selector: 'app-footer',
@@ -12,7 +13,7 @@ import { version } from '../../../../package.json';
 export class FooterComponent implements OnInit {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) { }
 
-  public sAppVersion: string = version;
+  public sAppVersion: string = packageJson.version;
   public sJavaVersion: string = '0.0';
   public bOldVersionWarn: boolean = false;
   public bCantLoad: boolean = true;
@@ -21,7 +22,7 @@ export class FooterComponent implements OnInit {
     this.getVersion();
   }
 
-  private getVersion(): void {
+  public getVersion(): void {
     this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
       (resdata: any) => {
         this.bCantLoad = false;

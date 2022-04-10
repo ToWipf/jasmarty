@@ -57,9 +57,9 @@ export class DayLogComponent implements OnInit {
   public showAllTable(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
-      this.daylistDisplayedColumns = ['id', 'date', 'tagestext', 'userid', 'button'];
+      this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'userid', 'button'];
     } else {
-      this.daylistDisplayedColumns = ['date', 'tagestext', 'button'];
+      this.daylistDisplayedColumns = ['day', 'date', 'tagestext', 'button'];
     }
   }
 
@@ -86,6 +86,10 @@ export class DayLogComponent implements OnInit {
     this.daylist = [];
 
     this.http.get(this.rest.gethost() + 'daylog/day/getAll/' + this.userid).subscribe((resdata: DaylogDay[]) => {
+      resdata.forEach((d: DaylogDay) => {
+        d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
+      });
+
       this.daylist = resdata;
 
       this.daylistDataSource = new MatTableDataSource(this.daylist);

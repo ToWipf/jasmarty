@@ -36,10 +36,10 @@ public class CronDiscord {
 		try {
 			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
 		} catch (SQLException e) {
-			LOGGER.info("Init Discord Fail F1");
+			LOGGER.info("Init Discord Fail");
 		}
 		if (this.sDiscordId == null) {
-			LOGGER.info("Init Discord Fail F2");
+			LOGGER.info("Init Discord Fail, id ist null");
 		} else {
 			LOGGER.info("Init Discord Task: " + sDiscordId);
 		}
@@ -57,12 +57,10 @@ public class CronDiscord {
 			if (bNow == null && bLastResult != null) {
 				LOGGER.error("Fail Discord");
 				tSendAndReceive.sendMsgToAdmin("Fail Discord");
-			}
-			if (bNow == true && bLastResult == false) {
+			} else if (bNow == true && bLastResult == false) {
 				LOGGER.info("Discord Online");
 				tSendAndReceive.sendMsgToAdmin("Discord Online");
-			}
-			if (bNow == false && bLastResult == true) {
+			} else if (bNow == false && bLastResult == true) {
 				LOGGER.info("Discord Offline");
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
 			}

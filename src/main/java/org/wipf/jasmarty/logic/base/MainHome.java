@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.TimeZone;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
@@ -45,7 +46,7 @@ public class MainHome {
 	SqlLitePatcher sqlLitePatcher;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.0.76";
+	public static final String VERSION = "1.0.77";
 	public static final String DB_PATH = "jasmarty.db";
 
 	/**
@@ -62,6 +63,7 @@ public class MainHome {
 	void onStart(@Observes StartupEvent ev) {
 		try {
 			LOGGER.info("Starte " + VERSION);
+			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			createFileFolder();
 			wipfConfig.initDB();

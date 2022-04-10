@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -22,6 +23,8 @@ public class Discord {
 	Wipf wipf;
 	@Inject
 	WipfConfig wipfConfig;
+
+	private static final Logger LOGGER = Logger.getLogger("Discord");
 
 	/**
 	 * @param sId
@@ -45,7 +48,7 @@ public class Discord {
 
 			return false;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Fail: " + e);
 			return null;
 		}
 	}
