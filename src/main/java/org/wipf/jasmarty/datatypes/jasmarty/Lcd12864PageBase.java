@@ -106,7 +106,7 @@ public class Lcd12864PageBase {
 	/**
 	 * Json:
 	 * 
-	 * [[true,false,true,...(128x)],[],...(64x)]
+	 * [[0,1,1,...(128x)],[],...(64x)]
 	 * 
 	 * @param a
 	 */
@@ -119,7 +119,7 @@ public class Lcd12864PageBase {
 				JSONArray line = (JSONArray) o;
 
 				for (Object by : line) {
-					boolean b = (boolean) by;
+					boolean b = ((Integer) by != 0);
 					baTmpFull[cTmp] = b;
 					cTmp++;
 				}
