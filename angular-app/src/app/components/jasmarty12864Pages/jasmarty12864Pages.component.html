@@ -13,6 +13,7 @@
         <mat-label>Timeout Zeit</mat-label>
         <input matInput type="number" min="0" [(ngModel)]="lcdDescription.timeouttime">
     </mat-form-field>
+
     <button type="button" class="btn btn-primary" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
     <button type="button" class="btn btn-green" (click)="sendSelectedPage()" title="Speichern und zeigen">
         <mat-icon svgIcon="check_circle" aria-hidden="false"></mat-icon>
@@ -25,17 +26,25 @@
 
     <div class="images">
 
-        Hintergrundbild Bild hochladen:
-        <input type="file" (change)="fileChangeEvent($event)" />
+        <!-- Hintergrundbild Bild hochladen: -->
+        <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
 
+        <button type="button" (click)="fileInput.click()">
+            <span>Hintergrundbild Bild hochladen</span>
+            <input #fileInput type="file" (change)="fileChangeEvent($event)" style="display:none;" />
+        </button>
 
         <ng-container *ngIf="base64">
             <img [src]="base64" alt="" height="128" width="256">
 
-            <mat-form-field appearance="fill">
+            <!-- <mat-form-field appearance="fill">
                 <mat-label>Kontrast</mat-label>
                 <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
-            </mat-form-field>
+            </mat-form-field> -->
+            <!-- TODO: https://stackoverflow.com/questions/48254696/angular-slider-with-scroll -->
+
+            <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider>
+
         </ng-container>
 
         <ng-container *ngIf="lcdDescription.static">
