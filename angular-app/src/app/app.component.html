@@ -34,19 +34,23 @@
                         <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
                         Debug
                     </li>
+                    <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
+                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                        Einstellungen
+                    </li>
                 </ul>
 
-                <div class="titlemenue">LCD</div>
-                <ul class="menueli">
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
+                <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
+                <ul *ngIf="bJasmartyActive" class="menueli">
+                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         2004 Startseite
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
+                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         2004 Live
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
+                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
                         2004 Seiten
                     </li>
@@ -54,7 +58,7 @@
                         <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
                         12864 Panel
                     </li>
-                    <li *ngIf="bJasmartyActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
+                    <li *ngIf="jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
                         12864 Seiten
                     </li>
@@ -62,7 +66,7 @@
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Char Generator
                     </li>
-                    <li *ngIf="bJasmartyActive" (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
+                    <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
                         <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
                         Funktionen
                     </li>
@@ -72,17 +76,17 @@
                     </li>
                 </ul>
 
-                <div class="titlemenue">Telegram</div>
-                <ul class="menueli">
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
+                <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
+                <ul *ngIf="bTelegramActive" class="menueli">
+                    <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
                         Nachrichten
                     </li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
+                    <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
                         <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
                         Logs
                     </li>
-                    <li *ngIf="bTelegramActive" (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
+                    <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
                         <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
                         Test Chat
                     </li>
@@ -210,6 +214,9 @@
                     </ng-container>
                     <ng-container *ngIf="selectedSite==='filevw'">
                         <app-file-vw></app-file-vw>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='settings'">
+                        <app-settings></app-settings>
                     </ng-container>
                 </perfect-scrollbar>
             </div>
