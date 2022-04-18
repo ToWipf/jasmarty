@@ -129,7 +129,9 @@ public class TeleMenue {
 					"infozuid\n" +
 					"getfile\n" +
 					"filelist\n" +
-					"txt"
+					"txt\n"+
+					"\n" +
+					"dl dh di |daylog"
 					;
 				// @formatter:on
 
@@ -245,6 +247,7 @@ public class TeleMenue {
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);
 			case "dt":
+			case "daytype":
 				return daylogHome.getAllUniqueEventTextByTyp(t);
 
 			// Files
