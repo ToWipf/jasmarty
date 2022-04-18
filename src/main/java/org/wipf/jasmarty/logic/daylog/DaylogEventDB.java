@@ -76,7 +76,7 @@ public class DaylogEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogEvent> get(Integer nDateId) throws SQLException {
+	public List<DaylogEvent> getByDateId(Integer nDateId) throws SQLException {
 		List<DaylogEvent> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM DaylogTextEvent WHERE dateid = ? ORDER BY typ;";
@@ -97,12 +97,37 @@ public class DaylogEventDB {
 	}
 
 	/**
+	 * @param nTypId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<DaylogEvent> getByTypId(Integer nTypId) throws SQLException {
+		List<DaylogEvent> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM DaylogTextEvent WHERE typ = ?;";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setInt(1, nTypId);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			DaylogEvent d = new DaylogEvent();
+			d.setId(rs.getInt("id"));
+			d.setDateId(rs.getInt("dateid"));
+			d.setTyp(rs.getString("typ"));
+			d.setText(rs.getString("text"));
+			o.add(d);
+		}
+
+		return o;
+	}
+
+	/**
 	 * @param nDateId
 	 * @return
 	 * @throws SQLException
 	 */
 	public JSONArray getAsJson(Integer nDateId) throws SQLException {
-		List<DaylogEvent> l = get(nDateId);
+		List<DaylogEvent> l = getByDateId(nDateId);
 		JSONArray ja = new JSONArray();
 		for (DaylogEvent d : l) {
 			ja.put(d.toJson());

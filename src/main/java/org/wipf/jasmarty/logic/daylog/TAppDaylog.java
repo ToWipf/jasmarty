@@ -24,7 +24,7 @@ import org.wipf.jasmarty.logic.telegram.TUsercache;
  *
  */
 @ApplicationScoped
-public class TAppDayLog {
+public class TAppDaylog {
 
 	@Inject
 	TUsercache tUsercache;

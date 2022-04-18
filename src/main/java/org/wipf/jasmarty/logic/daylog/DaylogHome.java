@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -72,6 +73,36 @@ public class DaylogHome {
 	}
 
 	/**
+	 * @param t
+	 * @return
+	 */
+	public String getAllUniqueEventTextByTyp(Telegram t) {
+		try {
+			List<DaylogEvent> events = daylogEventDB.getByTypId(t.getMessageIntPart(1));
+
+			List<String> elist = new LinkedList<String>();
+			for (DaylogEvent ev : events) {
+				if (!elist.contains(ev.getText())) {
+					elist.add(ev.getText());
+				}
+			}
+
+			StringBuilder sb = new StringBuilder();
+			for (String s : elist) {
+				if (sb.length() > 0) {
+					sb.append("\n");
+				}
+				sb.append(s);
+			}
+			return sb.toString();
+
+		} catch (SQLException e) {
+
+			return "Fehler 498: " + e;
+		}
+	}
+
+	/**
 	 * @param sDate
 	 * @return
 	 */
@@ -82,7 +113,7 @@ public class DaylogHome {
 			if (dday.getId() == null) {
 				return "Für den Tag " + sDate + " gibt es keine Events";
 			}
-			List<DaylogEvent> dEvents = daylogEventDB.get(dday.getId());
+			List<DaylogEvent> dEvents = daylogEventDB.getByDateId(dday.getId());
 
 			sb.append("Events für " + sDate + "\n-----------\n");
 			if (dday.getTagestext() != null) {

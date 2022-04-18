@@ -11,7 +11,7 @@ import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
-import org.wipf.jasmarty.logic.daylog.TAppDayLog;
+import org.wipf.jasmarty.logic.daylog.TAppDaylog;
 import org.wipf.jasmarty.logic.discord.Discord;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
@@ -52,7 +52,7 @@ public class TeleMenue {
 	@Inject
 	TAppGrafana grafana;
 	@Inject
-	TAppDayLog appDayLog;
+	TAppDaylog appDaylog;
 	@Inject
 	TUsercache tUsercache;
 	@Inject
@@ -240,10 +240,12 @@ public class TeleMenue {
 			// Daylog
 			case "dl":
 			case "daylog":
-				return appDayLog.telegramMenue(t);
+				return appDaylog.telegramMenue(t);
 			case "di":
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);
+			case "dt":
+				return daylogHome.getAllUniqueEventTextByTyp(t);
 
 			// Files
 			case "gf":
