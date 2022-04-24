@@ -101,13 +101,14 @@ public class TAppOthers {
 			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\+", " ").replaceAll("%22", "\n")
 					.replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!").replaceAll("%3F", "?")
 					.replaceAll("%3A", ":").replaceAll("%2C", ",").replaceAll("%2E", ". ")
-					.replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26uuml%3B", "ü")
-					.replaceAll("%C3%83%C5%B8", "ß").replaceAll("%26szlig%3B", "ß").replaceAll("%26ouml%3B", "ö")
-					.replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26uuml%3B", "Ü")
-					.replaceAll("%26%238242%3B%21", "\"").replaceAll("%26auml%3B", "ä").replaceAll("H%C3%83%C2%B6", "Ö")
-					.replaceAll("%26quot%3B", "").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26%2339%3B", "")
-					.replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "")
-					.replaceAll("%C3%83%E2%80%93", "Ö").replaceAll("%C3%83%E2%80%9E", "Ä");
+					.replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26%238242%3B%21", "\"")
+					.replaceAll("%26quot%3B", "").replaceAll("%26%2339%3B", "").replaceAll("%26%238242%3B", "")
+					.replaceAll("%C3%A2%E2%82%AC%C5%BE", "").replaceAll("%C3%83%E2%80%9E", "Ä")
+					.replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26auml%3B", "ä").replaceAll("%C3%83%E2%80%93", "Ö")
+					.replaceAll("H%C3%83%C2%B6", "Ö").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26ouml%3B", "ö")
+					.replaceAll("%C3%B6", "ö").replaceAll("%26uuml%3B", "Ü").replaceAll("%26uuml%3B", "ü")
+					.replaceAll("%C3%BC", "ü").replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C5%B8", "ß")
+					.replaceAll("%26szlig%3B", "ß").replaceAll("%C3%9F", "ß");
 
 			// TODO
 			return x.substring(0, x.indexOf("Ein Witz von"));

@@ -57,6 +57,8 @@ public class CronDiscord {
 			if (bNow == null && bLastResult != null) {
 				LOGGER.error("Fail Discord");
 				tSendAndReceive.sendMsgToAdmin("Fail Discord");
+			} else if (bLastResult == null) {
+				// nichts senden
 			} else if (bNow == true && bLastResult == false) {
 				LOGGER.info("Discord Online");
 				tSendAndReceive.sendMsgToAdmin("Discord Online");

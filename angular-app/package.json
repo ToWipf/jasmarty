@@ -1,6 +1,6 @@
 {
   "name": "jasmarty-app",
-  "version": "1.0.77",
+  "version": "1.0.78",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host localhost --port 3000",
