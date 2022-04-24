@@ -30,27 +30,26 @@ jobs:
           name: jasmarty.jar
           path: scripts/jasmarty.jar
 
-      - name: Build and Push dockerimage_arm 32
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
+      # - name: Build and Push dockerimage_arm 32
+      #   run: |
+      #     IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
 
-          # Change all uppercase to lowercase
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+      #     # Change all uppercase to lowercase
+      #     IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          # Strip git ref prefix from version
-          VERSION=$(date '+%Y-%m-%d')
+      #     # Strip git ref prefix from version
+      #     VERSION=$(date '+%Y-%m-%d')
 
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
+      #     echo IMAGE_ID=$IMAGE_ID
+      #     echo VERSION=$VERSION
 
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      #     echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-          cd scripts && \
-          docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder && \
-          docker buildx use mybuilder && \
-          docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm -f Dockerfile.arm --push .
+      #     cd scripts && \
+      #     docker buildx create --driver-opt image=moby/buildkit:master --name mybuilder && \
+      #     docker buildx use mybuilder && \
+      #     docker buildx build --platform linux/arm -t $IMAGE_ID:${VERSION}-arm -f Dockerfile.arm --push .
 
-# Geht nicht -> umstellen auf buildx mit builder und ghcr
       - name: Build and Push dockerimage_arm 64
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository }}/$IMAGE_NAME
