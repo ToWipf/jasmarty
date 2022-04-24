@@ -6,13 +6,13 @@
             <div mat-dialog-content>
                 <mat-form-field>
                     <mat-label>Nachricht</mat-label>
-                    <input matInput [(ngModel)]="tMsg.message">
+                    <input matInput (keyup.enter)="send()" [(ngModel)]="tMsg.message">
                 </mat-form-field>
             </div>
 
             <button class="btn btn-default" (click)="send()">Send</button>
 
-            <pre>Antwort: {{textOut}}</pre>
+            <pre>{{textOut}}</pre>
         </div>
 
         <div class="gridCol">
