@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -51,6 +52,25 @@ public class WipfConfigRest {
 			e.printStackTrace();
 			return Response.serverError().build();
 		}
+	}
+
+	@GET
+	@Path("getAll")
+	public Response getConfig() {
+		return Response.ok(wipfConfig.getAllAsJson().toString()).build();
+	}
+
+	@POST
+	@Path("save")
+	public Response saveTodo(String jnRoot) {
+		return Response.ok("{\"save\":\"" + wipfConfig.saveItem(jnRoot) + "\"}").build();
+	}
+
+	@DELETE
+	@Path("delete/{id}")
+	public Response delete(@PathParam("id") String sKey) {
+		wipfConfig.deleteItem(sKey);
+		return Response.ok().build();
 	}
 
 }

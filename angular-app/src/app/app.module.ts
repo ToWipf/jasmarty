@@ -68,7 +68,7 @@ import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsComponent, SettingsComponentDialogComponent } from './components/settings/settings.component';
 import { SidebarModule } from 'ng-sidebar';
 import { TelegramChatComponent } from './components/telegramChat/telegramChat.component';
 import { TelegramConfigComponent } from './components/telegramConfig/telegramConfig.component';
@@ -119,7 +119,8 @@ import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './compo
     TodolistComponent,
     TodolistComponentDialogComponent,
     WipfUserVwComponent,
-    WipfUserVWComponentDialogComponent
+    WipfUserVWComponentDialogComponent,
+    SettingsComponentDialogComponent
   ],
   imports: [
     A11yModule,

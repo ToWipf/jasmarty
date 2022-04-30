@@ -3,12 +3,17 @@ package org.wipf.jasmarty.logic.base;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * @author wipf
@@ -96,6 +101,48 @@ public class WipfConfig {
 	/**
 	 * @param sConfParam
 	 * @return
+	 */
+	public Map<String, String> getAll() {
+		Map<String, String> mapData = new HashMap<String, String>();
+
+		try {
+			String sQuery = "SELECT * FROM config;";
+
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				mapData.put(rs.getString("key"), rs.getString("val"));
+			}
+		} catch (SQLException e) {
+			LOGGER.warn("getAll " + e);
+			e.printStackTrace();
+		}
+		return mapData;
+	}
+
+	/**
+	 * @return
+	 */
+	public JSONArray getAllAsJson() {
+		JSONArray ja = new JSONArray();
+		try {
+			getAll().forEach((key, val) -> {
+				JSONObject o = new JSONObject();
+				o.put("key", key);
+				o.put("val", val);
+				ja.put(o);
+			});
+		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson " + e);
+			e.printStackTrace();
+		}
+		return ja;
+	}
+
+	/**
+	 * @param sConfParam
+	 * @return
 	 * @throws SQLException
 	 */
 	public String getConfParamString(String sConfParam) throws SQLException {
@@ -155,6 +202,39 @@ public class WipfConfig {
 		statement.setString(1, sConfParam);
 		statement.setInt(2, nVal);
 		statement.executeUpdate();
+	}
+
+	/**
+	 * @param jnRoot
+	 * @return
+	 */
+	public Boolean saveItem(String jnRoot) {
+		JSONObject jo = new JSONObject(jnRoot);
+
+		try {
+			setConfParam(jo.getString("key"), jo.getString("val"));
+		} catch (JSONException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * @param sKey
+	 */
+	public void deleteItem(String sKey) {
+		try {
+			String sUpdate = "DELETE FROM config WHERE key LIKE ?;";
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setString(1, sKey);
+			statement.executeUpdate();
+			LOGGER.info("delete " + sKey);
+
+		} catch (Exception e) {
+			LOGGER.warn("del " + e);
+		}
 	}
 
 }

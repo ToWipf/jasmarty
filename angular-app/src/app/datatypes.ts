@@ -131,3 +131,9 @@ export interface TelegramUserCache {
   usercache?: string;
   counter?: number;
 }
+
+export interface SettingEntry {
+  key?: string;
+  val?: string;
+}
+
