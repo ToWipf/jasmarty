@@ -7,6 +7,15 @@
         <input type="checkbox" [(ngModel)]="bShowWarning">
     </ng-container>
 
+    <div class="configline">
+        <div class="box">
+            Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+        </div>
+        <div class="box">
+            <button class="btn btn-default" (click)="newItem()">Neuen Eintrag erstellen</button>
+        </div>
+    </div>
+
     <perfect-scrollbar class="pscroll">
         <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
 
@@ -21,15 +30,15 @@
             </ng-container>
 
             <ng-container matColumnDef="button">
-                <th mat-header-cell *matHeaderCellDef><button class="btn btn-default" (click)="newItem()">Neu</button></th> 
+                <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-default" (click)="newItem()">Neu</button></th>  -->
                 <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                 <td mat-cell *matCellDef="let element">
                     <button class="btn btn-default" (click)="openDialog(element)">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                     </button>
-                    <!-- <button class="btn btn-default" (click)="deleteItem(element)">
+                    <button class="btn btn-default" (click)="deleteItem(element)">
                         <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                    </button> -->
+                    </button> 
                 </td>
             </ng-container>
 

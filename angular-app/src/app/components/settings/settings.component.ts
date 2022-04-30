@@ -56,7 +56,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen? " + item.key;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -65,7 +65,7 @@ export class SettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'basesettings/delete/' + item.id).subscribe((resdata: any) => {
+        this.http.delete(this.rest.gethost() + 'basesettings/delete/' + item.key).subscribe((resdata: any) => {
           this.load();
         });
       }
