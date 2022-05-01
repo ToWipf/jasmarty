@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,7 +21,7 @@ import org.wipf.jasmarty.logic.base.WipfConfig;
  * @author wipf
  *
  */
-@Path("basesettings") // TODO anpassen
+@Path("basesettings")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
@@ -30,25 +31,25 @@ public class WipfConfigRest {
 	@Inject
 	WipfConfig wipfConfig;
 
+	@GET
+	@PermitAll
+	@Path("get/{appname}")
+	public Response getConfig(@PathParam("appname") String sAppname) {
+		try {
+			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return Response.serverError().build();
+		}
+	}
+
 	@POST
 	@Path("set/{appname}/{status}")
 	public Response setConfig(@PathParam("appname") String sAppname, @PathParam("status") boolean bStatus) {
 		try {
-			wipfConfig.setAppStatus(sAppname, bStatus); // TODO
+			wipfConfig.setAppStatus(sAppname, bStatus);
+			return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Response.ok("{\"save\":\"" + "todo" + "\"}").build(); // TODO
-	}
-
-	@GET
-	@Path("get/{appname}")
-	public Response getConfig(@PathParam("appname") String sAppname) {
-		try { // TODO
-			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Response.serverError().build();
 		}

@@ -53,9 +53,7 @@ public class WipfRest {
 		return Response.ok(discord.isOnline(sId)).build();
 	}
 
-	@GET
 	@POST
-	@PermitAll
 	@Path("setDiscordId/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response discordSetId(@PathParam("id") String sId) throws IOException, SQLException {
@@ -73,6 +71,7 @@ public class WipfRest {
 
 	@GET
 	@Path("ver")
+	@PermitAll
 	public Response getver() {
 		return Response.ok("{\"ver\":\"" + MainHome.VERSION + "\"}").build();
 	}
