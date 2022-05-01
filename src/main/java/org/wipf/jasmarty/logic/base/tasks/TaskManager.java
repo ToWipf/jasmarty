@@ -41,7 +41,7 @@ public class TaskManager {
 			t.scheduleAtFixedRate(taskdaily, nSekundenBisMitternacht * 1000, 86400000);
 			// TODO t.cancel(); -> stop task
 		} else {
-			LOGGER.info("Daily Task ist bereits aktiv");
+			LOGGER.error("Daily Task ist gerade aktiv!");
 		}
 	}
 

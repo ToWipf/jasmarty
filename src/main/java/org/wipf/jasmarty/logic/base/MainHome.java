@@ -33,9 +33,9 @@ public class MainHome {
 	@Inject
 	WipfUserVW wipfUserVW;
 	@Inject
-	JasmartyHome jHome;
+	JasmartyHome jasmartyHome;
 	@Inject
-	TelegramHome tHome;
+	TelegramHome telegramHome;
 	@Inject
 	TaskManager taskmanager;
 	@Inject
@@ -71,19 +71,21 @@ public class MainHome {
 			sqlLitePatcher.doPatch();
 
 			wipfUserVW.initDB();
-			dynpages.initDB();
-			daylogHome.initDB();
-			wipfConfig.checkAppWorkId();
 			taskmanager.startDailyTask();
 
-			jHome.init();
-			tHome.init();
+			if (wipfConfig.isAppActive("wipf")) {
+				wipfConfig.checkAppWorkId();
+				dynpages.initDB();
+				daylogHome.initDB();
+			}
 
 			if (wipfConfig.isAppActive("jasmarty")) {
-				jHome.jasmartyStart();
+				jasmartyHome.init();
+				jasmartyHome.jasmartyStart();
 			}
 			if (wipfConfig.isAppActive("telegram")) {
-				tHome.telegramStart();
+				telegramHome.init();
+				telegramHome.telegramStart();
 			}
 
 		} catch (SQLException e) {
@@ -101,8 +103,8 @@ public class MainHome {
 		LOGGER.info("Stoppe");
 
 		// Alles beenden -> keine db zum fragen vorhanden // TODO evtl jetzt möglich
-		jHome.jasmartyStop();
-		tHome.telegramStop();
+		jasmartyHome.jasmartyStop();
+		telegramHome.telegramStop();
 
 		LOGGER.info("Gestoppt");
 	}
