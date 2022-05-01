@@ -4,8 +4,8 @@
         <perfect-scrollbar class="pscroll">
 
             <div class="sidebar">
-                <div class="titlemenue">Hauptfunktionen</div>
-                <ul class="menueli">
+                <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
+                <ul *ngIf="bWipfActive" class="menueli">
                     <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
                         <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
                         Todo List
@@ -29,14 +29,6 @@
                     <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
                         <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
                         Dateien
-                    </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                        Debug
-                    </li>
-                    <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
-                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                        Einstellungen
                     </li>
                 </ul>
 
@@ -97,12 +89,12 @@
                 </ul>
 
                 <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
-                <ul class="menueli">
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
+                <ul *ngIf="bDevActive" class="menueli">
+                    <li (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
                         <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
                         Dynpages VW
                     </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
+                    <li (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
                         <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
                         Zeige Dynpage
                     </li>
@@ -114,10 +106,10 @@
                         <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
                         Neu laden
                     </li>
-                    <li *ngIf="!bDevActive" (click)="showDevModules()">
+                    <!-- <li *ngIf="!bDevActive" (click)="showDevModules()">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Zeige Dev
-                    </li>
+                    </li> -->
                     <li *ngIf="bDevActive" (click)="showAll2004()">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Zeige Alles 2004
@@ -129,6 +121,14 @@
                     <li *ngIf="bDevActive" (click)="showDevModules()">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Verstecke Dev
+                    </li>
+                    <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                        Debug
+                    </li>
+                    <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
+                        <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
+                        Einstellungen
                     </li>
                 </ul>
             </div>

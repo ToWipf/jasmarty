@@ -23,7 +23,7 @@ public class SqlLitePatcher {
 	 */
 	public void doPatch() throws SQLException {
 		Integer nLastVersion = wipfConfig.getConfParamInteger("lastversion");
-		LOGGER.warn("TODO: Aufräumen von Bool und Number Tabellen");
+		// LOGGER.warn("TODO: Aufräumen von Bool und Number Tabellen");
 
 		try {
 			if (nLastVersion == null || nLastVersion < DB_PATCH_VERSION) {

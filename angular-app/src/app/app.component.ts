@@ -66,6 +66,7 @@ export class AppComponent implements OnInit {
   public bTelegramActive: boolean = false;
   public bJasmartyActive: boolean = false;
   public bDevActive: boolean = false;
+  public bWipfActive: boolean = false;
   public jasmartyType: string;
   public selectedSite: string = 'firstpage';
 
@@ -81,17 +82,30 @@ export class AppComponent implements OnInit {
 
   public getActiveModules(): void {
     this.bDevActive = false;
+
+    this.http.get(this.rest.gethost() + 'basesettings/get/wipf').subscribe((resdata: any) => {
+      this.bWipfActive = resdata.active;
+    });
+
     this.http.get(this.rest.gethost() + 'basesettings/get/telegram').subscribe((resdata: any) => {
       this.bTelegramActive = resdata.active;
     });
+
     this.http.get(this.rest.gethost() + 'basesettings/get/jasmarty').subscribe((resdata: any) => {
       this.bJasmartyActive = resdata.active;
+
+      if (this.bJasmartyActive) {
+        // Wenn Jasmarty true ist, den Typ holen
+        this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
+          var jaconfig: Jaconfig = resdata;
+          this.jasmartyType = jaconfig.type;
+        });
+      }
+    });
+    this.http.get(this.rest.gethost() + 'basesettings/get/debug').subscribe((resdata: any) => {
+      this.bDevActive = resdata.active;
     });
 
-    this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
-      var jaconfig: Jaconfig = resdata;
-      this.jasmartyType = jaconfig.type;
-    });
   }
 
   public showDevModules(): void {

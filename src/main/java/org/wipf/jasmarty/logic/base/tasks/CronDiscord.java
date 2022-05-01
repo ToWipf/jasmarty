@@ -36,7 +36,7 @@ public class CronDiscord {
 		try {
 			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
 		} catch (SQLException e) {
-			LOGGER.info("Init Discord Fail");
+			// LOGGER.info("Init Discord Fail");
 		}
 		if (this.sDiscordId == null) {
 			LOGGER.info("Init Discord Fail, id ist null");
