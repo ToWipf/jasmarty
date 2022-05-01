@@ -39,7 +39,7 @@ public class CronDiscord {
 			// LOGGER.info("Init Discord Fail");
 		}
 		if (this.sDiscordId == null) {
-			LOGGER.info("Init Discord Fail, id ist null");
+			// LOGGER.info("Init Discord Fail, id ist null");
 		} else {
 			LOGGER.info("Init Discord Task: " + sDiscordId);
 		}
@@ -55,15 +55,12 @@ public class CronDiscord {
 
 			// Nur bei wechselnden Status eine Nachricht erstellen
 			if (bNow == null && bLastResult != null) {
-				LOGGER.error("Fail Discord");
 				tSendAndReceive.sendMsgToAdmin("Fail Discord");
 			} else if (bLastResult == null) {
 				// nichts senden
 			} else if (bNow == true && bLastResult == false) {
-				LOGGER.info("Discord Online");
 				tSendAndReceive.sendMsgToAdmin("Discord Online");
 			} else if (bNow == false && bLastResult == true) {
-				LOGGER.info("Discord Offline");
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
 			}
 

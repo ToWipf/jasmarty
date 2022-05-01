@@ -115,12 +115,14 @@ export class AppComponent implements OnInit {
   public showAll2004(): void {
     this.bJasmartyActive = true;
     this.bTelegramActive = true;
+    this.bWipfActive = true;
     this.jasmartyType = "LCD_2004";
   }
 
   public showAll12864(): void {
     this.bJasmartyActive = true;
     this.bTelegramActive = true;
+    this.bWipfActive = true;
     this.jasmartyType = "LCD_12864";
   }
 }
