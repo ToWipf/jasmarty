@@ -151,7 +151,7 @@ public class TAppOthers {
 	 */
 	public String getSystem() {
 		try {
-			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.33:80/metrics");
+			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:80/metrics");
 
 		} catch (IOException e) {
 			LOGGER.warn("getSystem: " + e);

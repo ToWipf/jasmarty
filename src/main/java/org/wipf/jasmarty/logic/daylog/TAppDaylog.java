@@ -164,13 +164,13 @@ public class TAppDaylog {
 		}
 
 		try {
-			if (sDateInfoString.startsWith("h")) {
+			if (sDateInfoString.startsWith("h") || sDateInfoString.startsWith("H")) {
 				// Heute
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
 				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext);
 
-			} else if (sDateInfoString.startsWith("g")) {
+			} else if (sDateInfoString.startsWith("g") || sDateInfoString.startsWith("G")) {
 				// Gestern
 				LocalDate dateGestern = LocalDate.now().minusDays(1);
 				return daylogDayDB.getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext);
