@@ -494,4 +494,12 @@ public class Wipf {
 		return list;
 	}
 
+	/**
+	 * @param s
+	 * @return
+	 */
+	public boolean isValid(String s) {
+		return (s != null && !s.equals(""));
+	}
+
 }

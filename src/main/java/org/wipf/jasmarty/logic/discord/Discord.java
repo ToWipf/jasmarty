@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.discord;
 
-import java.io.IOException;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -29,9 +27,11 @@ public class Discord {
 	/**
 	 * @param sId
 	 * @return
-	 * @throws IOException
 	 */
-	public Boolean isOnline(String sId) {
+	public Integer countOnline(String sId) {
+		if (!wipf.isValid(sId)) {
+			return -1;
+		}
 		try {
 			String sRes = wipf.httpRequest(httpRequestType.GET,
 					"https://discord.com/api/guilds/" + sId + "/widget.json");
@@ -39,14 +39,15 @@ public class Discord {
 			JSONObject jo = new JSONObject(sRes);
 			JSONArray ja = (JSONArray) jo.get("members");
 
+			int n = 0;
 			for (Object j : ja) {
 				JSONObject o = new JSONObject(j.toString());
 				if (o.has("channel_id")) {
-					return true;
+					n++;
 				}
 			}
 
-			return false;
+			return n;
 		} catch (Exception e) {
 			LOGGER.error("Fail: " + e);
 			return null;
@@ -54,11 +55,20 @@ public class Discord {
 	}
 
 	/**
+	 * @param sDiscordId
+	 * @return
+	 */
+	public Boolean isOnline(String sDiscordId) {
+		return (countOnline(sDiscordId) > 0);
+	}
+
+	/**
 	 * @return
 	 */
 	public String isOnlineDefault() {
 		try {
-			return isOnline(wipfConfig.getConfParamString("discord_id")).toString();
+			String sDid = wipfConfig.getConfParamString("discord_id");
+			return sDid + ":" + countOnline(sDid);
 		} catch (Exception e) {
 			return "Fehler 017" + e;
 		}
