@@ -11,7 +11,7 @@ import org.wipf.jasmarty.logic.base.Wipf.httpRequestType;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
 /**
- * @author devbuntu
+ * @author wipf
  *
  */
 @ApplicationScoped
