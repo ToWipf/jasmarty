@@ -61,7 +61,7 @@ public class TeleLog {
 			statement.setInt(1, t.getMid());
 			statement.setString(2, t.getMessage().replaceAll("'", "_"));
 			statement.setString(3, t.getAntwort().replaceAll("'", "_"));
-			statement.setInt(4, t.getChatID());
+			statement.setLong(4, t.getChatID());
 			statement.setString(5, t.getFrom());
 			statement.setInt(6, t.getDate());
 			statement.setString(7, t.getType());
@@ -138,7 +138,7 @@ public class TeleLog {
 				t.setMid(rs.getInt("msgid"));
 				t.setMessage(rs.getString("msg"));
 				t.setAntwort(rs.getString("antw"));
-				t.setChatID(rs.getInt("chatid"));
+				t.setChatID(rs.getLong("chatid"));
 				t.setFrom(rs.getString("msgfrom"));
 				t.setDate((int) rs.getLong("msgdate"));
 				t.setType(rs.getString("type"));

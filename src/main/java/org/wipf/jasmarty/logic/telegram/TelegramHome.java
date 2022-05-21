@@ -40,7 +40,7 @@ public class TelegramHome {
 	/**
 	 * @throws SQLException
 	 */
-	public void init() throws SQLException {
+	private void init() throws SQLException {
 		tLog.initDB();
 		appTodoList.initDB();
 		appTicTacToe.initDB();
@@ -57,6 +57,7 @@ public class TelegramHome {
 	 */
 	public void telegramStart() throws SQLException {
 		LOGGER.info("starten");
+		init();
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();

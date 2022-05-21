@@ -85,7 +85,7 @@ public class TelegramRest {
 	@POST
 	@PermitAll
 	@Path("sendMsgTo/{gid}/{msg}")
-	public Response sendMsgTo(@PathParam("gid") Integer nGid, @PathParam("msg") String sMsg) {
+	public Response sendMsgTo(@PathParam("gid") Long nGid, @PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgTo(nGid, sMsg);
 		// TODO:
 		return Response.ok("{}").build();

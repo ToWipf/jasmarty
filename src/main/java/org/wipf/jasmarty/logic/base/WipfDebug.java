@@ -42,7 +42,7 @@ public class WipfDebug {
 			to.setDate((int) (System.currentTimeMillis() / 1000));
 
 			to.setEditBy("lasttest");
-			to.setChatID(0);
+			to.setChatID(0l);
 			to.setType("");
 			to.setActive("NEW");
 			to.setData(UUID.randomUUID().toString());

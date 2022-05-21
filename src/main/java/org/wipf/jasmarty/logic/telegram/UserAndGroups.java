@@ -25,8 +25,8 @@ public class UserAndGroups {
 	/**
 	 * @return
 	 */
-	public int getAdminId() {
-		return 798200105;
+	public Long getAdminId() {
+		return (long) 798200105;
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class UserAndGroups {
 	 * @param ChatId
 	 * @return
 	 */
-	public boolean isUser(Integer ChatId) {
+	public boolean isUser(Long ChatId) {
 		Telegram t = new Telegram();
 		t.setChatID(ChatId);
 		return isUser(t);

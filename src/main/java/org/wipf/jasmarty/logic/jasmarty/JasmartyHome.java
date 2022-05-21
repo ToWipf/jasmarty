@@ -37,7 +37,7 @@ public class JasmartyHome {
 	/**
 	 * @throws SQLException
 	 */
-	public void init() throws SQLException {
+	private void init() throws SQLException {
 		actionVerwaltung.initDB();
 
 	}
@@ -57,6 +57,7 @@ public class JasmartyHome {
 	 */
 	public void jasmartyStart() throws SQLException {
 		LOGGER.info("Starten");
+		init();
 		lcdConnect.setConfig(serialConfig.getConfig());
 
 		switch (lcdConnect.getType()) {

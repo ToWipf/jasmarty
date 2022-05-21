@@ -81,7 +81,7 @@ public class TAppMsg {
 				t.setFrom(rs.getString("editby"));
 				t.setDate((int) rs.getLong("date"));
 				t.setType(rs.getString("options")); // options TEXT; Derzeit nicht benutzt
-				t.setChatID(0);
+				t.setChatID(0l);
 
 				tList.add(t);
 			}

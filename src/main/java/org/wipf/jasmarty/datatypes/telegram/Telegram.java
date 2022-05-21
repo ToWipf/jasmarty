@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public class Telegram {
 
 	private Integer nMid; // Die Message Id
-	private Integer nChatID;
+	private Long nChatID;
 	private Integer nDate;
 	private String sType;
 	private String sFrom;
@@ -77,7 +77,7 @@ public class Telegram {
 		JSONObject jo = new JSONObject(sJson);
 
 		try {
-			this.setChatID(jo.getInt("chatid"));
+			this.setChatID(jo.getLong("chatid"));
 		} catch (Exception ignore) {
 			// Ignore
 		}
@@ -249,14 +249,14 @@ public class Telegram {
 	/**
 	 * @return
 	 */
-	public Integer getChatID() {
+	public Long getChatID() {
 		return nChatID;
 	}
 
 	/**
 	 * @param nChatID
 	 */
-	public void setChatID(Integer nChatID) {
+	public void setChatID(Long nChatID) {
 		this.nChatID = nChatID;
 	}
 

@@ -168,7 +168,7 @@ public class TAppTicTacToe {
 			String sUpdate = "INSERT OR REPLACE INTO tictactoe (chatid, feld, msgdate, type) VALUES (?,?,?,?)";
 
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setInt(1, ttt.getChatID());
+			statement.setLong(1, ttt.getChatID());
 			statement.setString(2, ttt.getFieldString());
 			statement.setInt(3, ttt.getDate());
 			statement.setString(4, ttt.getType());
@@ -185,11 +185,11 @@ public class TAppTicTacToe {
 	 * @param sChatid
 	 * @return
 	 */
-	private TicTacToe loadTicTacToe(Integer nChatid) {
+	private TicTacToe loadTicTacToe(Long nChatid) {
 		try {
 			String sQuery = "SELECT * FROM tictactoe WHERE chatid = ?;";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-			statement.setInt(1, nChatid);
+			statement.setLong(1, nChatid);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				// Es gibt nur einen oder keinen Treffer

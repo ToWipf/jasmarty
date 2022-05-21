@@ -55,7 +55,7 @@ public class TUsercache {
 		// insert
 		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, o.getChatId());
+		statement.setLong(1, o.getChatId());
 		statement.setString(2, o.getMsg());
 		statement.setString(3, o.getUsercache());
 		statement.setInt(4, o.getCounter());
@@ -119,7 +119,7 @@ public class TUsercache {
 	 * @param nChatid
 	 * @return
 	 */
-	public Usercache getLastMessage(Integer nChatId) {
+	public Usercache getLastMessage(Long nChatId) {
 		try {
 			List<Usercache> lmsg = get(nChatId);
 			Usercache u = lmsg.get(0);
@@ -144,17 +144,17 @@ public class TUsercache {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<Usercache> get(Integer nChatid) throws SQLException {
+	public List<Usercache> get(Long nChatid) throws SQLException {
 		List<Usercache> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM teleUsercache WHERE chatid = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setInt(1, nChatid);
+		statement.setLong(1, nChatid);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {
 			Usercache d = new Usercache();
-			d.setChatId(rs.getInt("chatid"));
+			d.setChatId(rs.getLong("chatid"));
 			d.setMsg(rs.getString("msg"));
 			d.setUsercache(rs.getString("usercache"));
 			d.setCounter(rs.getInt("counter"));
@@ -168,7 +168,7 @@ public class TUsercache {
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getAsJson(Integer nChatid) throws SQLException {
+	public JSONArray getAsJson(Long nChatid) throws SQLException {
 		List<Usercache> l = get(nChatid);
 		JSONArray ja = new JSONArray();
 		for (Usercache d : l) {
@@ -202,7 +202,7 @@ public class TUsercache {
 
 		while (rs.next()) {
 			Usercache d = new Usercache();
-			d.setChatId(rs.getInt("chatid"));
+			d.setChatId(rs.getLong("chatid"));
 			d.setMsg(rs.getString("msg"));
 			d.setUsercache(rs.getString("usercache"));
 			d.setCounter(rs.getInt("counter"));

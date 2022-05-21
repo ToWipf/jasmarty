@@ -113,7 +113,7 @@ public class SendAndReceive {
 					JSONObject joMsg = joMsgFull.getJSONObject("message");
 
 					t.setMid(joMsg.getInt("message_id"));
-					t.setChatID(joMsg.getJSONObject("chat").getInt("id"));
+					t.setChatID(joMsg.getJSONObject("chat").getLong("id"));
 					t.setType(joMsg.getJSONObject("chat").getString("type"));
 					t.setDate(joMsg.getInt("date"));
 					t.setFrom(joMsg.get("from").toString());
@@ -187,7 +187,7 @@ public class SendAndReceive {
 	 */
 	private String saveDocument(JSONObject joMsg) {
 		// nur bestimme Ids zulassen
-		Integer nChatId = joMsg.getJSONObject("chat").getInt("id");
+		Long nChatId = joMsg.getJSONObject("chat").getLong("id");
 		if (userAndGroups.isUser(nChatId)) {
 			JSONObject jd = new JSONObject(joMsg.get("document").toString());
 
@@ -331,6 +331,7 @@ public class SendAndReceive {
 
 		} catch (Exception e) {
 			LOGGER.warn("Telegram senden " + e);
+			e.printStackTrace();
 		}
 	}
 
@@ -341,7 +342,7 @@ public class SendAndReceive {
 	 * @throws IOException
 	 */
 	// TODO löschen
-	// public String sendPictureToTelegram(Integer nChatId, String sFilePath) throws
+	// public String sendPictureToTelegram(Long nChatId, String sFilePath) throws
 	// IOException {
 	// MultipartUtility multipart = new MultipartUtility(
 	// "https://api.telegram.org/" + this.sBotKey + "/sendPhoto?chat_id=" + nChatId,
@@ -371,7 +372,7 @@ public class SendAndReceive {
 	 * @return
 	 * @throws IOException
 	 */
-	public String sendDocumentToTelegram(Integer nChatId, String sFilePath) throws IOException {
+	public String sendDocumentToTelegram(Long nChatId, String sFilePath) throws IOException {
 		MultipartUtility multipart = new MultipartUtility(
 				"https://api.telegram.org/" + this.sBotKey + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
@@ -397,7 +398,7 @@ public class SendAndReceive {
 	/**
 	 * @param sMsg
 	 */
-	public void sendMsgTo(Integer nGroupId, String sMsg) {
+	public void sendMsgTo(Long nGroupId, String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
 		t.setChatID(nGroupId);
@@ -408,7 +409,7 @@ public class SendAndReceive {
 	/**
 	 * 
 	 */
-	public void sendDaylyMotd(Integer nGroupId) {
+	public void sendDaylyMotd(Long nGroupId) {
 		Telegram t = new Telegram();
 		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(nGroupId);
@@ -431,7 +432,7 @@ public class SendAndReceive {
 	 * 
 	 */
 	// TODO einbinden
-	public void sendDaylyEssen(Integer nGroupId) throws SQLException {
+	public void sendDaylyEssen(Long nGroupId) throws SQLException {
 		Telegram t = new Telegram();
 		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
 		t.setChatID(nGroupId);

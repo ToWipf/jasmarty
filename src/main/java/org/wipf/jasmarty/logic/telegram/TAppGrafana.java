@@ -153,7 +153,7 @@ public class TAppGrafana {
 	 * @return
 	 * @throws IOException
 	 */
-	private String sendGrafanaPictureToTelegram(Integer nChatId, String sDashboard, String sPanel, String sTime)
+	private String sendGrafanaPictureToTelegram(Long nChatId, String sDashboard, String sPanel, String sTime)
 			throws IOException {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now

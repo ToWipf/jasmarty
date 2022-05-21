@@ -80,11 +80,9 @@ public class MainHome {
 			}
 
 			if (wipfConfig.isAppActive("jasmarty")) {
-				jasmartyHome.init();
 				jasmartyHome.jasmartyStart();
 			}
 			if (wipfConfig.isAppActive("telegram")) {
-				telegramHome.init();
 				telegramHome.telegramStart();
 			}
 

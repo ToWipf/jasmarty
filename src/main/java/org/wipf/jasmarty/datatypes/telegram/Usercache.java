@@ -8,7 +8,7 @@ import org.json.JSONObject;
  */
 public class Usercache {
 
-	private Integer nChatId;
+	private Long nChatId;
 	private String sMsg;
 	private String sUsercache;
 	private Integer nCounter;
@@ -31,7 +31,7 @@ public class Usercache {
 	 */
 	public Usercache setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
-		this.nChatId = jo.getInt("chatid");
+		this.nChatId = jo.getLong("chatid");
 		this.sMsg = jo.getString("msg");
 		this.sUsercache = jo.getString("usercache");
 		this.nCounter = jo.getInt("counter");
@@ -41,14 +41,14 @@ public class Usercache {
 	/**
 	 * @return
 	 */
-	public Integer getChatId() {
+	public Long getChatId() {
 		return nChatId;
 	}
 
 	/**
 	 * @param userId
 	 */
-	public void setChatId(Integer userId) {
+	public void setChatId(Long userId) {
 		this.nChatId = userId;
 	}
 
