@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest;
 
 import java.sql.SQLException;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,12 +39,12 @@ public class LcdRest {
 	SerialConfig serialConfig;
 
 	@GET
+	@PermitAll
 	@Path("config/get")
 	public Response getConfig() {
 		try {
 			return Response.ok(serialConfig.getConfig().toJson()).build();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -56,7 +57,6 @@ public class LcdRest {
 			serialConfig.setConfig(jnRoot);
 			return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
