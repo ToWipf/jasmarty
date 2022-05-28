@@ -87,7 +87,7 @@ public class TeleMenue {
 	 * @throws SQLException
 	 */
 	private String doMenue(Telegram t) {
-		String sInMsg = wipf.escapeStringSatzzeichen(t.getMessageStringPartLow(0));
+		String sInMsg = wipf.escapeStringSatzzeichen(t.getBeginnStringFromMessage());
 
 		// Admin Befehle
 		if (userAndGroups.isAdminUser(t)) {
@@ -170,6 +170,8 @@ public class TeleMenue {
 			// Listen
 			case "to":
 			case "todo":
+			case "http":
+			case "https":
 				return appTodoList.telegramMenueTodoList(t);
 			case "filme":
 			case "f":

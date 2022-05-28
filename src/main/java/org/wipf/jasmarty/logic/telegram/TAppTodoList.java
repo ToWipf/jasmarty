@@ -289,6 +289,24 @@ public class TAppTodoList {
 	 * @param t
 	 * @return
 	 */
+	public String telegramSaveLink(Telegram t) {
+		int nId = genNextId();
+		TodoEntry te = new TodoEntry();
+		te.setData(t.getMessage());
+		te.setEditBy(t.getFromIdOnly().toString());
+		te.setDate(t.getDate());
+		te.setRemind("");
+		te.setActive("NEW");
+		te.setId(nId);
+		saveItem(te);
+
+		return Integer.valueOf(nId).toString();
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
 	private Integer saveItem(Telegram t) {
 		int nId = genNextId();
 		TodoEntry te = new TodoEntry();

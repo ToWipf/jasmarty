@@ -134,17 +134,37 @@ public class Telegram {
 	}
 
 	/**
+	 * gibt den ersten String zurück, der im Menü verarbeitet wird
+	 * 
+	 * @return
+	 */
+	public String getBeginnStringFromMessage() {
+		// Links speziell behandeln
+		String sIn = getMessageStringPartLow(0);
+		if (sIn.startsWith("http")) {
+			return "to-link";
+		}
+
+		for (String s : sIn.split("\n")) {
+			return s;
+		}
+		return null;
+	}
+
+	/**
 	 * @param nStelle
 	 * @return
 	 */
 	public String getMessageStringPartLow(int nStelle) {
 		int n = 0;
+		// Split by Space
 		for (String part : this.sMessage.split(" ")) {
 			if (n == nStelle) {
 				return part.trim().toLowerCase();
 			}
 			n++;
 		}
+
 		// Wenn nichts gefunden wird
 		return null;
 	}
