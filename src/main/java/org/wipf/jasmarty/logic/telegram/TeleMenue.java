@@ -170,9 +170,9 @@ public class TeleMenue {
 			// Listen
 			case "to":
 			case "todo":
-			case "http":
-			case "https":
 				return appTodoList.telegramMenueTodoList(t);
+			case "to-link": // Spezielle funktion
+				return appTodoList.telegramSaveLink(t);
 			case "filme":
 			case "f":
 				return appFilme.telegramMenueFilme(t);
