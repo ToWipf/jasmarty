@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 //import { version } from '../../../../package.json';
-import packageJson from '../../../../package.json';
+import packageJson from '../../../../../package.json';
 
 @Component({
   selector: 'app-footer',
