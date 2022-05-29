@@ -76,12 +76,6 @@ export class JasmartyConfigComponent implements OnInit {
     });
   }
 
-  public stopApp(): void {
-    this.http.post(this.rest.gethost() + 'wipf/stop', '').subscribe((resdata: any) => {
-      console.log(resdata);
-    });
-  }
-
   public getJasmartyActive(): void {
     this.http.get(this.rest.gethost() + 'basesettings/get/jasmarty').subscribe((resdata: any) => {
       this.bJasmartyActive = resdata.active;

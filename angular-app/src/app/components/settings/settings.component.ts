@@ -96,6 +96,12 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
+  
+  public stopApp(): void {
+    this.http.post(this.rest.gethost() + 'wipf/stop','').subscribe((resdata: any) => {
+      console.log(resdata);
+    });
+  }
 
 }
 

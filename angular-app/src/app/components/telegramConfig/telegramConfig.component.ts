@@ -45,12 +45,6 @@ export class TelegramConfigComponent implements OnInit {
     });
   }
 
-  public stopApp(): void {
-    this.http.post(this.rest.gethost() + 'wipf/stop','').subscribe((resdata: any) => {
-      console.log(resdata);
-    });
-  }
-
   public sendMsgToGroup(): void {
     if (this.sText) {
       //TODO: escape input String (TEXTBOX?)
