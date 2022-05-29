@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "buildFull"
+echo "start build All"
 
 ./buildFrontend.sh
 if [ $? -eq 0 ]; then
@@ -14,3 +14,5 @@ if [ $? -eq 0 ]; then
 else
 	exit 1
 fi
+
+echo "end build All"
