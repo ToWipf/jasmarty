@@ -9,7 +9,7 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
  *
  */
 @ApplicationScoped
-public class UserAndGroups {
+public class TUserAndGroups {
 
 	/**
 	 * TODO ids zu db

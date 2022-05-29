@@ -24,7 +24,7 @@ import org.wipf.jasmarty.logic.base.WipfConfig;
  *
  */
 @ApplicationScoped
-public class SendAndReceive {
+public class TSendAndReceive {
 
 	@Inject
 	Wipf wipf;
@@ -39,7 +39,7 @@ public class SendAndReceive {
 	@Inject
 	TeleMenue menue;
 	@Inject
-	UserAndGroups userAndGroups;
+	TUserAndGroups userAndGroups;
 	@Inject
 	WipfConfig wipfConfig;
 	@Inject

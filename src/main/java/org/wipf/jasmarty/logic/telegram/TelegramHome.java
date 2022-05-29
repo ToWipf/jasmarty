@@ -27,9 +27,9 @@ public class TelegramHome {
 	@Inject
 	TAppFilm appFilme;
 	@Inject
-	SendAndReceive tVerwaltung;
+	TSendAndReceive tVerwaltung;
 	@Inject
-	ReadLoop tReadLoop;
+	TReadLoop tReadLoop;
 	@Inject
 	TeleLog tLog;
 	@Inject

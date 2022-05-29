@@ -18,7 +18,7 @@ public class TAppGrafana {
 	@Inject
 	WipfConfig wipfConfig;
 	@Inject
-	SendAndReceive sendAndReceive;
+	TSendAndReceive sendAndReceive;
 	@Inject
 	FileVW fileVw;
 

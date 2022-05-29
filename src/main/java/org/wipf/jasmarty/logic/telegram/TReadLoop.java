@@ -14,12 +14,12 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @ApplicationScoped
-public class ReadLoop {
+public class TReadLoop {
 
 	@Inject
 	Wipf wipf;
 	@Inject
-	SendAndReceive sendAndReceive;
+	TSendAndReceive sendAndReceive;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramTask");
 	private boolean bLoopActive = false;

@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.SendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 import org.wipf.jasmarty.logic.telegram.TeleLog;
@@ -33,7 +33,7 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
 public class TelegramRest {
 
 	@Inject
-	SendAndReceive tVerwaltung;
+	TSendAndReceive tVerwaltung;
 	@Inject
 	TelegramHome tHome;
 	@Inject

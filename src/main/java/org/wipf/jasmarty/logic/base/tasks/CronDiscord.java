@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.discord.Discord;
-import org.wipf.jasmarty.logic.telegram.SendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 
 import io.quarkus.scheduler.Scheduled;
 
@@ -25,7 +25,7 @@ public class CronDiscord {
 	@Inject
 	WipfConfig wipfConfig;
 	@Inject
-	SendAndReceive tSendAndReceive;
+	TSendAndReceive tSendAndReceive;
 
 	private static final Logger LOGGER = Logger.getLogger("DiscordTask");
 	private Boolean bLastResult = false;

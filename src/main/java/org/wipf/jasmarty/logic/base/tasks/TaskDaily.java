@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
-import org.wipf.jasmarty.logic.telegram.SendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 public class TaskDaily extends TimerTask {
 
 	@Inject
-	SendAndReceive tSendAndReceive;
+	TSendAndReceive tSendAndReceive;
 	@Inject
 	PunkteVW punkteVW;
 	@Inject

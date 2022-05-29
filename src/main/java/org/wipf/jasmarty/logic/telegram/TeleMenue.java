@@ -36,7 +36,7 @@ public class TeleMenue {
 	@Inject
 	TeleLog telelog;
 	@Inject
-	UserAndGroups userAndGroups;
+	TUserAndGroups userAndGroups;
 	@Inject
 	TAppMsg appMsg;
 	@Inject
@@ -48,7 +48,7 @@ public class TeleMenue {
 	@Inject
 	Infotext infotext;
 	@Inject
-	SendAndReceive sendAndReceive;
+	TSendAndReceive sendAndReceive;
 	@Inject
 	TAppGrafana grafana;
 	@Inject
