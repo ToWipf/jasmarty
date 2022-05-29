@@ -20,12 +20,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Vorbereiten
-        run: echo "Starting..." && cd scripts && chmod +x *.sh
       
       - name: Build jar
-        run: echo "Starting..." && cd scripts && chmod +x *.sh && ./setup.sh && ./buildAll.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
+        run: echo "Starting..." && cd scripts && ./setup.sh && ./buildAll.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
         
       - name: Save jar
         uses: actions/upload-artifact@v2
