@@ -1,10 +1,9 @@
 #!/bin/bash
 cd ../angular-app
 npm run build
-if [ $? -eq 0 ];
-then
+if [ $? -eq 0 ]; then
   echo 'build app OK'
-else 
+else
   exit 1
 fi
 
@@ -12,9 +11,8 @@ cd ..
 rm -rf src/main/resources/META-INF/resources/app
 mkdir src/main/resources/META-INF/resources/app
 mv angular-app/dist/* src/main/resources/META-INF/resources/
-if [ $? -eq 0 ];
-then
-	echo "move OK"
+if [ $? -eq 0 ]; then
+  echo "move OK"
 else
-	exit 1
+  exit 1
 fi

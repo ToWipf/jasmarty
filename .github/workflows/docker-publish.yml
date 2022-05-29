@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Build jar
-        run: cd scripts && ./setup.sh && ./buildFull.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
+        run: cd scripts && ./setup.sh && ./buildAll.sh && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
         
       - name: Save jar
         uses: actions/upload-artifact@v2
