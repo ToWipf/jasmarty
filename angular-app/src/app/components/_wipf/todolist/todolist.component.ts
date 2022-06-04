@@ -130,7 +130,7 @@ export class TodolistComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TodolistComponentDialogComponent, {
       width: '350px',
-      height: '350px',
+      height: '420px',
       data: edititem,
     });
 

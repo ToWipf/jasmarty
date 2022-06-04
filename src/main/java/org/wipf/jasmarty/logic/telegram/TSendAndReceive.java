@@ -35,7 +35,7 @@ public class TSendAndReceive {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppEssen appEssen;
+	TAppRndEvents appRndEvent;
 	@Inject
 	TeleMenue menue;
 	@Inject
@@ -432,9 +432,9 @@ public class TSendAndReceive {
 	 * 
 	 */
 	// TODO einbinden
-	public void sendDaylyEssen(Long nGroupId) throws SQLException {
+	public void sendDaylyRndEvent(Long nGroupId) throws SQLException {
 		Telegram t = new Telegram();
-		t.setAntwort("Vorschlag für heute:" + "\n" + appEssen.getEssenRnd());
+		t.setAntwort("Vorschlag für heute:" + "\n" + appRndEvent.getRndEventRnd());
 		t.setChatID(nGroupId);
 
 		sendTelegram(t);

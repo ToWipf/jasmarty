@@ -32,7 +32,7 @@ public class TeleMenue {
 	@Inject
 	TAppTodoList appTodoList;
 	@Inject
-	TAppEssen appEssen;
+	TAppRndEvents appRndEvent;
 	@Inject
 	TeleLog telelog;
 	@Inject
@@ -178,7 +178,7 @@ public class TeleMenue {
 				return appFilme.telegramMenueFilme(t);
 			case "essen":
 			case "e":
-				return appEssen.menueEssen(t);
+				return appRndEvent.menueRndEvent(t);
 
 			// Web
 			case "getip":

@@ -23,7 +23,7 @@ public class TelegramHome {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppEssen appEssen;
+	TAppRndEvents appEssen;
 	@Inject
 	TAppFilm appFilme;
 	@Inject
