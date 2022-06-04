@@ -1,0 +1,24 @@
+<div style="display: flex">
+    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+        <!-- TODO: LESS DATEI -->
+        <h1 mat-dialog-title>Id: {{data.id}}</h1>
+        <div mat-dialog-content>
+            <mat-form-field>
+                <mat-label>Data</mat-label>
+                <!-- <input matInput [(ngModel)]="data.data"> -->
+                <textarea [(ngModel)]="data.eventtext" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <input matInput type="checkbox" [(ngModel)]="data.active">
+            </mat-form-field>
+
+        </div>
+
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Abbrechen</button>
+            <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+    </div>
+</div>

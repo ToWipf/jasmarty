@@ -132,6 +132,12 @@ export interface TelegramUserCache {
   counter?: number;
 }
 
+export interface RndEvent {
+  id?: number;
+  eventtext?: string;
+  active?: boolean;
+}
+
 export interface SettingEntry {
   key?: string;
   val?: string;
