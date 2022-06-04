@@ -114,7 +114,7 @@ public class TeleMenue {
 				    "response" + "\n" +
 				    "filme" + "\n" +
 				    "todo" + "\n" +
-					"Essen (Hilfe für essen) \n" +
+					"rndEvent\n" +
 					"punkte \n" +
 					"pp \n" +
 					"pm / mp\n" +
@@ -176,8 +176,8 @@ public class TeleMenue {
 			case "filme":
 			case "f":
 				return appFilme.telegramMenueFilme(t);
-			case "essen":
 			case "e":
+			case "rndevent":
 				return appRndEvent.menueRndEvent(t);
 
 			// Web

@@ -49,27 +49,36 @@ public class TAppRndEvents {
 			}
 
 			switch (sAction) {
+			case "on":
+			case "off":
+			case "aus":
+			case "stop":
+			case "start":
+			case "a":
 			case "add":
 				return save(t);
-			case "del":
-				return del(t.getMessageIntPart(1));
+//			case "del":
+//				return del(t.getMessageIntPart(1));
 //			case "list":
 //				return getAllRndEvent();
+			case "c":
 			case "count":
 				return count();
+			case "g":
+			case "e":
 			case "get":
 				return getRndEventRnd();
 			default:
 				return
 			//@formatter:off
 					"rndEvent Add: rndEvent hinzufügen\n" +
-					"rndEvent Del: id löschen\n" + 
+//					"rndEvent Del: id löschen\n" + 
 //					"rndEvent List: alles auflisten\n" +
 					"rndEvent Get: ZufallsrndEvent\n" +
 					"rndEvent Count: Anzahl der Einträge\n";
 			//@formatter:on
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			LOGGER.error("menueRndEvent");
 			e.printStackTrace();
 			return "Fehler 018: " + e;
@@ -81,7 +90,7 @@ public class TAppRndEvents {
 	 * @throws SQLException
 	 */
 	public String getRndEventRnd() throws SQLException {
-		String sQuery = "select eventtext from rndEvent ORDER BY RANDOM() WHERE active = 1 LIMIT 1;";
+		String sQuery = "select eventtext from rndEvent WHERE active = 1 ORDER BY RANDOM() LIMIT 1;";
 
 		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
@@ -98,7 +107,7 @@ public class TAppRndEvents {
 	 */
 	private String save(Telegram t) throws SQLException {
 		RndEvent re = new RndEvent();
-		re.setEventText(t.getMessageFullWithoutFirstWord());
+		re.setEventText(t.getMessageFullWithoutSecondWord());
 		re.setActive(true);
 		return save(re);
 	}

@@ -398,6 +398,22 @@ public class TSendAndReceive {
 	}
 
 	/**
+	 * @throws SQLException
+	 */
+	public void sendRndEventToAdmin() {
+		try {
+			Telegram t = new Telegram();
+			t.setAntwort("Vorschlag für jetzt:" + "\n" + appRndEvent.getRndEventRnd());
+			t.setChatID(userAndGroups.getAdminId());
+			sendTelegram(t);
+		} catch (SQLException e) {
+			System.err.println("Fehler 024:" + e);
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
 	 * @param sMsg
 	 */
 	public void sendMsgTo(Long nGroupId, String sMsg) {
@@ -426,19 +442,6 @@ public class TSendAndReceive {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
 		t.setChatID(userAndGroups.getAdminId());
-		sendTelegram(t);
-	}
-
-	/**
-	 * @throws SQLException
-	 * 
-	 */
-	// TODO einbinden
-	public void sendDaylyRndEvent(Long nGroupId) throws SQLException {
-		Telegram t = new Telegram();
-		t.setAntwort("Vorschlag für heute:" + "\n" + appRndEvent.getRndEventRnd());
-		t.setChatID(nGroupId);
-
 		sendTelegram(t);
 	}
 

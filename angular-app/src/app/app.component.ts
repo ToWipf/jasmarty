@@ -106,6 +106,10 @@ export class AppComponent implements OnInit {
     });
     this.http.get(this.rest.gethost() + 'basesettings/get/debug').subscribe((resdata: any) => {
       this.bDevActive = resdata.active;
+      if (this.bDevActive) {
+        // Beim einschalten auch 12864 zeigen
+        this.showAll12864();
+      }
     });
 
   }
