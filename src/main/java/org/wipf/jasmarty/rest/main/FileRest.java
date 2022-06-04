@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest;
+package org.wipf.jasmarty.rest.main;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;

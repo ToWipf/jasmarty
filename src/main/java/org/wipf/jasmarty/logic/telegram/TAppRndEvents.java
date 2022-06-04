@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.telegram.RndEvent;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
@@ -49,9 +50,9 @@ public class TAppRndEvents {
 
 			switch (sAction) {
 			case "add":
-				return addRndEvent(t);
+				return save(t);
 			case "del":
-				return delRndEvent(t.getMessageIntPart(1));
+				return del(t.getMessageIntPart(1));
 //			case "list":
 //				return getAllRndEvent();
 			case "count":
@@ -95,11 +96,25 @@ public class TAppRndEvents {
 	 * @return
 	 * @throws SQLException
 	 */
-	private String addRndEvent(Telegram t) throws SQLException {
+	private String save(Telegram t) throws SQLException {
 		RndEvent re = new RndEvent();
 		re.setEventText(t.getMessageFullWithoutFirstWord());
 		re.setActive(true);
-		return addRndEvent(re);
+		return save(re);
+	}
+
+	/**
+	 * @param jnRoot
+	 * @return
+	 * @throws SQLException
+	 */
+	public Boolean save(String jnRoot) throws SQLException {
+		try {
+			save(new RndEvent().setByJson(jnRoot));
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	/**
@@ -107,7 +122,7 @@ public class TAppRndEvents {
 	 * @return
 	 * @throws SQLException
 	 */
-	private String addRndEvent(RndEvent o) throws SQLException {
+	public String save(RndEvent o) throws SQLException {
 		if (o.getId() != null) {
 			// update
 			String sUpdate = "INSERT OR REPLACE INTO rndEvent (id, eventtext, active) VALUES (?,?,?)";
@@ -147,7 +162,7 @@ public class TAppRndEvents {
 	 * @return
 	 * @throws SQLException
 	 */
-	private String delRndEvent(Integer nId) throws SQLException {
+	public String del(Integer nId) throws SQLException {
 		String sUpdate = "DELETE FROM rndEvent WHERE id = ?";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 		statement.setInt(1, nId);
@@ -160,7 +175,7 @@ public class TAppRndEvents {
 	 * @return
 	 * @throws SQLException
 	 */
-	private List<RndEvent> getAllRndEvent() throws SQLException {
+	public List<RndEvent> getAll() throws SQLException {
 		List<RndEvent> lr = new LinkedList<>();
 		String sQuery = "select * from rndEvent;";
 
@@ -173,6 +188,19 @@ public class TAppRndEvents {
 			lr.add(re);
 		}
 		return lr;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllAsJson() throws SQLException {
+		List<RndEvent> l = getAll();
+		JSONArray ja = new JSONArray();
+		for (RndEvent d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
 	}
 
 }

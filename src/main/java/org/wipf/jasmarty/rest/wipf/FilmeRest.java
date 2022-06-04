@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest;
+package org.wipf.jasmarty.rest.wipf;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -12,38 +12,38 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TAppTodoList;
+import org.wipf.jasmarty.logic.telegram.TAppFilm;
 
 /**
  * @author wipf
  *
  */
-@Path("todolist")
+@Path("filme")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class TodoListRest {
+public class FilmeRest {
 
 	@Inject
-	TAppTodoList todoList;
+	TAppFilm appFilme;
 
 	@POST
-	@Path("saveTodo")
-	public Response saveTodo(String jnRoot) {
-		return Response.ok("{\"save\":\"" + todoList.saveItem(jnRoot) + "\"}").build();
+	@Path("save")
+	public Response save(String jnRoot) {
+		return Response.ok("{\"save\":\"" + appFilme.saveItem(jnRoot) + "\"}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		todoList.deleteItem(nId);
+		appFilme.deleteItem(nId);
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
 	public Response getall() {
-		return Response.ok(todoList.getAllAsJson().toString()).build();
+		return Response.ok(appFilme.getAllAsJson().toString()).build();
 	}
 
 }

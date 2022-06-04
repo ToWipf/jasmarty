@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest;
+package org.wipf.jasmarty.rest.daylog;
 
 import java.sql.SQLException;
 
@@ -14,43 +14,43 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
+import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
 
 /**
  * @author Wipf
  *
  */
-@Path("daylog/event")
+@Path("daylog/type")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class DaylogEventRest {
+public class DaylogTypeRest {
 
 	@Inject
-	DaylogEventDB daylogEventDB;
+	DaylogTypeDB daylogTypeDB;
 
 	@GET
 	@Path("get/{dateid}")
 	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogEventDB.getAsJson(nDateid).toString()).build();
+		return Response.ok(daylogTypeDB.getAsJson(nDateid).toString()).build();
 	}
 
 	@GET
 	@Path("getAll")
 	public Response getall() throws SQLException {
-		return Response.ok(daylogEventDB.getAllAsJson().toString()).build();
+		return Response.ok(daylogTypeDB.getAllAsJson().toString()).build();
 	}
 
 	@POST
 	@Path("save")
 	public Response save(String jnRoot) throws SQLException {
-		return Response.ok("{\"save\":\"" + daylogEventDB.save(jnRoot) + "\"}").build();
+		return Response.ok("{\"save\":\"" + daylogTypeDB.save(jnRoot) + "\"}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) throws SQLException {
-		daylogEventDB.del(nId);
+		daylogTypeDB.del(nId);
 		return Response.ok().build();
 	}
 

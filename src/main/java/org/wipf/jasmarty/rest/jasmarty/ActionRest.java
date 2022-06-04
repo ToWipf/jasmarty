@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest;
+package org.wipf.jasmarty.rest.jasmarty;
 
 import java.sql.SQLException;
 

@@ -1,3 +1,4 @@
+package org.wipf.jasmarty.rest.debug;
 //package org.wipf.jasmarty.rest;
 //
 //import java.sql.ResultSet;
