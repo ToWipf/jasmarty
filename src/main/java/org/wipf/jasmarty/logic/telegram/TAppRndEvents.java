@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.telegram.RndEvent;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
+import org.wipf.jasmarty.logic.base.tasks.RndTask;
 
 /**
  * @author wipf
@@ -24,6 +25,8 @@ public class TAppRndEvents {
 
 	@Inject
 	SqlLite sqlLite;
+	@Inject
+	RndTask rndTask;
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram rndEvent");
 
@@ -50,10 +53,14 @@ public class TAppRndEvents {
 
 			switch (sAction) {
 			case "on":
-			case "off":
+			case "start":
+				rndTask.startRndTask();
+				return "ok";
 			case "aus":
 			case "stop":
-			case "start":
+			case "off":
+				rndTask.stopRndTask();
+				return "ok";
 			case "a":
 			case "add":
 				return save(t);
