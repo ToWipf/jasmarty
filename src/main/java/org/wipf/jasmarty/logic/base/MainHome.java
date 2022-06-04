@@ -3,7 +3,6 @@ package org.wipf.jasmarty.logic.base;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.SQLException;
 import java.util.TimeZone;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -86,8 +85,8 @@ public class MainHome {
 				telegramHome.telegramStart();
 			}
 
-		} catch (SQLException e) {
-			LOGGER.info("SQLException");
+		} catch (Exception e) {
+			LOGGER.error("Fehler 610: " + e);
 			e.printStackTrace();
 		}
 

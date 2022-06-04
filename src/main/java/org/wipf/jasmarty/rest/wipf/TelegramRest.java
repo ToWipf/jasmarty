@@ -15,8 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.logic.telegram.TAppMsg;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 import org.wipf.jasmarty.logic.telegram.TeleLog;
 import org.wipf.jasmarty.logic.telegram.TeleMenue;
@@ -50,7 +51,7 @@ public class TelegramRest {
 	public Response on() {
 		try {
 			tHome.telegramStart();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -69,8 +70,7 @@ public class TelegramRest {
 	public Response setbot(@PathParam("bot") String sBot) {
 		try {
 			return Response.ok("{\"status\":\"" + tVerwaltung.setbot(sBot) + "\"}").build();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -78,7 +78,7 @@ public class TelegramRest {
 
 	@GET
 	@Path("getbot")
-	public Response getbot() {
+	public Response getbot() throws WipfException {
 		return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKey() + "\"}").build();
 	}
 

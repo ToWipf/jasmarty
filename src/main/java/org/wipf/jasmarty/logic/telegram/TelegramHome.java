@@ -23,7 +23,7 @@ public class TelegramHome {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppRndEvents appEssen;
+	TAppRndEvents appRndEvent;
 	@Inject
 	TAppFilm appFilme;
 	@Inject
@@ -46,7 +46,7 @@ public class TelegramHome {
 		appTicTacToe.initDB();
 		appTeleMsg.initDB();
 		appMotd.initDB();
-		appEssen.initDB();
+		appRndEvent.initDB();
 		appFilme.initDB();
 		tUsercache.initDB();
 	}
@@ -55,7 +55,7 @@ public class TelegramHome {
 	 * @throws SQLException
 	 * 
 	 */
-	public void telegramStart() throws SQLException {
+	public void telegramStart() throws Exception {
 		LOGGER.info("starten");
 		init();
 

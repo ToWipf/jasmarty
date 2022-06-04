@@ -154,7 +154,7 @@ public class TAppGrafana {
 	 * @throws IOException
 	 */
 	private String sendGrafanaPictureToTelegram(Long nChatId, String sDashboard, String sPanel, String sTime)
-			throws IOException {
+			throws Exception {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
