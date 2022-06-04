@@ -63,7 +63,7 @@ public class TAppRndEvents {
 //				return getAllRndEvent();
 			case "c":
 			case "count":
-				return count();
+				return count().toString();
 			case "g":
 			case "e":
 			case "get":
@@ -157,14 +157,14 @@ public class TAppRndEvents {
 	 * @return
 	 * @throws SQLException
 	 */
-	private String count() throws SQLException {
-		String sQuery = ("SELECT COUNT(*) FROM rndEvent;");
+	public Integer count() throws SQLException {
+		String sQuery = ("SELECT COUNT(*) c FROM rndEvent;");
 		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
-			return rs.getString("COUNT(*)") + " Einträge in der DB";
+			return rs.getInt("c");
 		}
 
-		return "FAIL";
+		return -1;
 	}
 
 	/**

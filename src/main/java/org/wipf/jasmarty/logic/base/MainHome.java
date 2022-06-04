@@ -10,7 +10,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.base.tasks.TaskManager;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
@@ -36,8 +35,6 @@ public class MainHome {
 	@Inject
 	TelegramHome telegramHome;
 	@Inject
-	TaskManager taskmanager;
-	@Inject
 	DaylogHome daylogHome;
 	@Inject
 	Dynpages dynpages;
@@ -61,6 +58,7 @@ public class MainHome {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		try {
+
 			LOGGER.info("Starte " + VERSION);
 			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
@@ -70,7 +68,6 @@ public class MainHome {
 			sqlLitePatcher.doPatch();
 
 			wipfUserVW.initDB();
-			taskmanager.startDailyTask();
 
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();

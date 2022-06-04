@@ -12,12 +12,14 @@ import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
+import io.quarkus.scheduler.Scheduled;
+
 /**
  * @author wipf
  *
  */
 @ApplicationScoped
-public class TaskDaily extends TimerTask {
+public class CronDaily  {
 
 	@Inject
 	TSendAndReceive tSendAndReceive;
@@ -33,8 +35,8 @@ public class TaskDaily extends TimerTask {
 	/**
 	 *
 	 */
-	@Override
-	public void run() {
+	@Scheduled(cron = "0 0 0 1/1 * ? *")
+	public void dailyTask() {
 		LOGGER.info("Starte DailyTask");
 		try {
 			if (wipfConfig.isAppActive("telegram")) {
