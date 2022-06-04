@@ -32,7 +32,7 @@ public class TAppRndEvents {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS rndEvent (id INTEGER primary key autoincrement, eventtext TEXT, aktiv INTEGER);";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS rndEvent (id INTEGER primary key autoincrement, eventtext TEXT, active INTEGER);";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -81,7 +81,7 @@ public class TAppRndEvents {
 	 * @throws SQLException
 	 */
 	public String getRndEventRnd() throws SQLException {
-		String sQuery = "select eventtext from rndEvent ORDER BY RANDOM() WHERE aktiv = 1 LIMIT 1;";
+		String sQuery = "select eventtext from rndEvent ORDER BY RANDOM() WHERE active = 1 LIMIT 1;";
 
 		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 		while (rs.next()) {
@@ -113,6 +113,7 @@ public class TAppRndEvents {
 			save(new RndEvent().setByJson(jnRoot));
 			return true;
 		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}

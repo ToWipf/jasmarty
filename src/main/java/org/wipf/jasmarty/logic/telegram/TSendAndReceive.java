@@ -447,7 +447,7 @@ public class TSendAndReceive {
 	 * @throws WipfException
 	 */
 	public String getBotKey() throws WipfException {
-		if (this.sBotKey != null && !this.sBotKey.equals("null"))
+		if (this.sBotKey != null && !this.sBotKey.equals("null") && !this.sBotKey.equals("undefined"))
 			return this.sBotKey;
 		throw new WipfException("Kein Botkey gesetzt!");
 	}

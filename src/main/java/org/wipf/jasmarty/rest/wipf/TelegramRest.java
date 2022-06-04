@@ -78,8 +78,13 @@ public class TelegramRest {
 
 	@GET
 	@Path("getbot")
-	public Response getbot() throws WipfException {
-		return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKey() + "\"}").build();
+	public Response getbot() {
+		try {
+			return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKey() + "\"}").build();
+		} catch (WipfException e) {
+			System.out.println("getbot:" + e);
+			return null;
+		}
 	}
 
 	@POST

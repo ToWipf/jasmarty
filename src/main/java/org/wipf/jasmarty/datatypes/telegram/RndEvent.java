@@ -28,8 +28,7 @@ public class RndEvent {
 	 * @return
 	 */
 	public RndEvent setByJson(String sJson) {
-		JSONObject jo = new JSONObject();
-
+		JSONObject jo = new JSONObject(sJson);
 		this.nId = jo.getInt("id");
 		this.sEventText = jo.getString("eventtext");
 		this.bActive = jo.getBoolean("active");
