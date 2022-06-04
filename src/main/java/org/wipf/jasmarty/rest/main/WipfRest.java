@@ -92,6 +92,8 @@ public class WipfRest {
 
 	@POST
 	@Path("stop")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
 	public Response stopAll() {
 		MainHome.stopApp();
 		return Response.ok().build();
