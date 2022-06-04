@@ -108,7 +108,7 @@ export class RndEventComponent implements OnInit {
 
     const dialogRef = this.dialog.open(RndEventComponentDialogComponent, {
       width: '350px',
-      height: '320px',
+      height: '360px',
       data: edititem,
     });
 
