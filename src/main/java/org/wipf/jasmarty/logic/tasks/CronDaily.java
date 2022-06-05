@@ -1,7 +1,6 @@
-package org.wipf.jasmarty.logic.base.tasks;
+package org.wipf.jasmarty.logic.tasks;
 
 import java.sql.SQLException;
-import java.util.TimerTask;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -19,7 +18,7 @@ import io.quarkus.scheduler.Scheduled;
  *
  */
 @ApplicationScoped
-public class CronDaily  {
+public class CronDaily {
 
 	@Inject
 	TSendAndReceive tSendAndReceive;

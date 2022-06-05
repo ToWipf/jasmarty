@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.base.tasks;
+package org.wipf.jasmarty.logic.tasks;
 
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;

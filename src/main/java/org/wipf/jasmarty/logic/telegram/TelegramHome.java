@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfig;
-import org.wipf.jasmarty.logic.base.tasks.RndTask;
+import org.wipf.jasmarty.logic.tasks.RndTask;
 
 /**
  * @author wipf

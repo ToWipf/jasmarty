@@ -14,7 +14,7 @@ import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.telegram.RndEvent;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
-import org.wipf.jasmarty.logic.base.tasks.RndTask;
+import org.wipf.jasmarty.logic.tasks.RndTask;
 
 /**
  * @author wipf
