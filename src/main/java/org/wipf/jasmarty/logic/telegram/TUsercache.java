@@ -185,10 +185,10 @@ public class TUsercache {
 	 * @param sDate
 	 * @throws SQLException
 	 */
-	public void del(Integer nId) throws SQLException {
+	public void del(Long nId) throws SQLException {
 		String sUpdate = "DELETE FROM teleUsercache WHERE chatid = ?";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, nId);
+		statement.setLong(1, nId);
 		statement.executeUpdate();
 	}
 

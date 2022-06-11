@@ -81,12 +81,12 @@ public class TeleLog {
 	 * @param nId
 	 * @return
 	 */
-	public String delItem(Integer nId) {
+	public String delItem(Long nId) {
 		LOGGER.info("del log id:" + nId);
 		try {
 			String sUpdate = "DELETE FROM telegramlog WHERE msgid LIKE ?;";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setInt(1, nId);
+			statement.setLong(1, nId);
 			statement.executeUpdate();
 		} catch (Exception e) {
 			LOGGER.warn("del log " + e);
@@ -188,19 +188,19 @@ public class TeleLog {
 	public void cleanLog() {
 		LOGGER.info("clean Logs");
 
-		List<Integer> lIds = new ArrayList<>();
-		lIds.add(798200105);
-		lIds.add(-385659721);
-		lIds.add(-387871959);
-		lIds.add(-387712260);
-		lIds.add(0);
-		lIds.add(-1);
+		List<Long> lIds = new ArrayList<>();
+		lIds.add(798200105l);
+		lIds.add(-385659721l);
+		lIds.add(-387871959l);
+		lIds.add(-387712260l);
+		lIds.add(0l);
+		lIds.add(-1l);
 
 		lIds.forEach((nCid) -> {
 
 			String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
 			try (PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate)) {
-				statement.setInt(1, nCid);
+				statement.setLong(1, nCid);
 				statement.executeUpdate();
 			} catch (Exception e) {
 				LOGGER.warn("clean log " + e);
@@ -208,7 +208,7 @@ public class TeleLog {
 		});
 
 		// Systemmeldungen löschen
-		delItem(-1);
+		delItem(-1l);
 	}
 
 	/**

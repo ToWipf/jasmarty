@@ -119,7 +119,7 @@ public class TelegramRest {
 
 	@DELETE
 	@Path("delLog/{id}")
-	public Response delLog(@PathParam("id") Integer nId) {
+	public Response delLog(@PathParam("id") Long nId) {
 		return Response.ok("{\"del\":\"" + tlog.delItem(nId) + "\"}").build();
 	}
 
@@ -164,7 +164,7 @@ public class TelegramRest {
 
 	@DELETE
 	@Path("usercache/delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Long nId) throws SQLException {
 		tUsercache.del(nId);
 		return Response.ok().build();
 	}
