@@ -34,7 +34,7 @@ public class RndTask {
 	 * @throws Exception
 	 * 
 	 */
-	public void startRndTask() throws SQLException {
+	public boolean startRndTask() throws SQLException {
 		if (wipfConfig.isAppActive("rndEventTask") && !this.bRun) {
 
 			LOGGER.info("start");
@@ -48,7 +48,7 @@ public class RndTask {
 
 					while (bRun) {
 						Integer nHour = Integer.valueOf(wipf.getTime("HH"));
-						if (nHour > 7 && nHour < 20) {
+						if (nHour >= 7 && nHour <= 20) {
 							// Nur Tagsüber seinden
 							sendAndReceive.sendRndEventToAdmin();
 						}
@@ -57,14 +57,17 @@ public class RndTask {
 				}
 			});
 		}
+		return this.bRun;
 	}
 
 	/**
+	 * @return
 	 * 
 	 */
-	public void stopRndTask() {
+	public boolean stopRndTask() {
 		LOGGER.info("stop");
 		this.bRun = false;
+		return this.bRun;
 	}
 
 }

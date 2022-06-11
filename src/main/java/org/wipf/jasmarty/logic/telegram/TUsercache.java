@@ -25,6 +25,8 @@ public class TUsercache {
 	SqlLite sqlLite;
 	@Inject
 	TeleLog telelog;
+	@Inject
+	TSendAndReceive sendAndReceive;
 
 	/**
 	 * @throws SQLException
@@ -78,6 +80,8 @@ public class TUsercache {
 		} else {
 			// Neuer User
 			o.setCounter(1);
+			// Bei einen neuen Nutzer -> Info an Admin
+			sendAndReceive.sendMsgToAdmin("Neuer Telegram Nutzer\n" + o.toString());
 		}
 
 		save(o);

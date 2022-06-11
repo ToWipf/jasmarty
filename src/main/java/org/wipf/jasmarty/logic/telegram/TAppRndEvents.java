@@ -54,13 +54,11 @@ public class TAppRndEvents {
 			switch (sAction) {
 			case "on":
 			case "start":
-				rndTask.startRndTask();
-				return "ok";
+				return "Aktiv: " + rndTask.startRndTask();
 			case "aus":
 			case "stop":
 			case "off":
-				rndTask.stopRndTask();
-				return "ok";
+				return "Aktiv: " + rndTask.stopRndTask();
 			case "a":
 			case "add":
 				return save(t);

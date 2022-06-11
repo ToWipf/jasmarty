@@ -49,8 +49,16 @@ public class TAppTodoList {
 			// @formatter:off
 			return "text (add)" + 
 					"\n" + 
-					"done ID" + "\n" + "undone ID" + "\n" + "delete ID" + "\n" + "get ID" + "\n"
-					+ "list" + "\n" + "listall" + "\n" + "listjson" + "\n" + "count" + "\n" + "countall";
+					"done ID" +"\n" +
+					"undone ID" + "\n" +
+					"delete ID" + "\n" +
+					"get ID" + "\n" +
+					"list" + "\n" +
+					"listall" + "\n" +
+					"listjson" + "\n" +
+					"getlast" + "\n" +
+					"count" + "\n" +
+					"countall";
 			// @formatter:on
 		}
 
@@ -76,9 +84,11 @@ public class TAppTodoList {
 		case "ca":
 		case "countall":
 			return countAll();
-		case "ll":
 		case "gl":
+		case "getl":
+		case "getlast":
 			return getLast(t.getMessageIntPart(2));
+		case "g":
 		case "get":
 			return wipf.jsonToStringAsList(getById(t.getMessageIntPart(2)).toJson());
 		default:

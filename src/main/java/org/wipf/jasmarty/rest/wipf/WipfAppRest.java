@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
  *
  */
 @Path("wipfapp")
-@RolesAllowed("admin")
+@RolesAllowed({ "admin", "user" })
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class WipfAppRest {
