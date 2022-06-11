@@ -36,6 +36,13 @@ public class DaylogDayRest {
 	}
 
 	@GET
+	@Path("getAllByDateQuery/{dateQuery}/{userid}")
+	public Response getByDateQuery(@PathParam("dateQuery") String sDateQuery, @PathParam("userid") Integer nUserid)
+			throws SQLException {
+		return Response.ok(daylogDayDB.getAllByDateQuery(sDateQuery, nUserid)).build();
+	}
+
+	@GET
 	@Path("getAll/{userid}")
 	public Response getall(@PathParam("userid") Integer nUserid) throws SQLException {
 		return Response.ok(daylogDayDB.getAllAsJson(nUserid).toString()).build();

@@ -30,6 +30,7 @@ export class DayLogComponent implements OnInit {
   public bShowAllTable: boolean = true;
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: any;
+  private filterActiveCache: boolean = false;
 
   ngOnInit() {
     this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad((new Date(Date.now()).getMonth() + 1), 2);
@@ -85,7 +86,11 @@ export class DayLogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.daylist = [];
 
-    this.http.get(this.rest.gethost() + 'daylog/day/getAll/' + this.userid).subscribe((resdata: DaylogDay[]) => {
+    if (this.sFilterDay.length == 0) {
+      this.sFilterDay = "-";
+    }
+
+    this.http.get(this.rest.gethost() + 'daylog/day/getAllByDateQuery/' + this.sFilterDay + "/" + this.userid).subscribe((resdata: DaylogDay[]) => {
       resdata.forEach((d: DaylogDay) => {
         d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
       });
@@ -114,6 +119,18 @@ export class DayLogComponent implements OnInit {
         });
       }
     });
+  }
+
+  public dayFilter() {
+    if (!this.filterActiveCache) {
+      this.filterActiveCache = true;
+      this.serviceWipf.delay(500).then(() => {
+        if (this.filterActiveCache) {
+          this.loadDays();
+          this.filterActiveCache = false;
+        }
+      });
+    }
   }
 
   public applyFilter() {

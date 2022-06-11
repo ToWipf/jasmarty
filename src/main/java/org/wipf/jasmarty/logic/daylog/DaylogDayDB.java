@@ -202,6 +202,32 @@ public class DaylogDayDB {
 	}
 
 	/**
+	 * @param sDateQuery
+	 * @param nUserId
+	 * @return
+	 */
+	public List<DaylogDay> getAllByDateQuery(String sDateQuery, Integer nUserId) throws SQLException {
+		List<DaylogDay> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM daylogDay WHERE date LIKE ? AND userid = ?;";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setString(1, "%" + sDateQuery + "%");
+		statement.setInt(2, nUserId);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			DaylogDay d = new DaylogDay();
+			d.setId(rs.getInt("id"));
+			d.setDate(rs.getString("date"));
+			d.setTagestext(rs.getString("tagestext"));
+			d.setUserId(rs.getInt("userid"));
+			o.add(d);
+		}
+
+		return o;
+	}
+
+	/**
 	 * @param nUserId
 	 * @return
 	 * @throws SQLException
@@ -249,4 +275,5 @@ public class DaylogDayDB {
 		statement.setInt(1, nId);
 		statement.executeUpdate();
 	}
+
 }
