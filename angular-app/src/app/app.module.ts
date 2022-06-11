@@ -67,6 +67,7 @@ import { NgModule } from '@angular/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PortalModule } from '@angular/cdk/portal';
+import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SettingsComponent, SettingsComponentDialogComponent } from './components/_main/settings/settings.component';
 import { SidebarModule } from 'ng-sidebar';
@@ -76,7 +77,6 @@ import { TelegramLogComponent } from './components/_telegram/telegramLog/telegra
 import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './components/_telegram/telegramMsg/telegramMsg.component';
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/_wipf/todolist/todolist.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
-import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +111,10 @@ import { RndEventComponent, RndEventComponentDialogComponent } from './component
     JasmartyMainComponent,
     JasmartyPagesComponent,
     JasmartyPagesComponentGoToDialog,
+    RndEventComponent,
+    RndEventComponentDialogComponent,
     SettingsComponent,
+    SettingsComponentDialogComponent,
     TelegramChatComponent,
     TelegramConfigComponent,
     TelegramLogComponent,
@@ -121,9 +124,6 @@ import { RndEventComponent, RndEventComponentDialogComponent } from './component
     TodolistComponentDialogComponent,
     WipfUserVwComponent,
     WipfUserVWComponentDialogComponent,
-    SettingsComponentDialogComponent,
-    RndEventComponent,
-    RndEventComponentDialogComponent
   ],
   imports: [
     A11yModule,
