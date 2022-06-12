@@ -131,7 +131,8 @@ public class TeleMenue {
 					"filelist\n" +
 					"txt\n"+
 					"\n" +
-					"dl dh di |daylog"
+					"dl dh di |daylog\n" +
+					"backup"
 					;
 				// @formatter:on
 
@@ -262,6 +263,9 @@ public class TeleMenue {
 			case "filelist":
 			case "fileliste":
 				return fileVw.getFilesForTelegram();
+			case "b":
+			case "backup":
+				return sendAndReceive.sendDatabaseToTelegram(t);
 
 			case "stf":
 			case "txt":

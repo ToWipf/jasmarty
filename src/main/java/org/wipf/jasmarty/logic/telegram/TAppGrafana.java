@@ -88,6 +88,17 @@ public class TAppGrafana {
 	}
 
 	/**
+	 * 
+	 */
+	public void deletePictureCache() {
+		for (String sFName : fileVw.getAllFiles()) {
+			if (sFName.startsWith("grafana_")) {
+				fileVw.delFile(sFName);
+			}
+		}
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */

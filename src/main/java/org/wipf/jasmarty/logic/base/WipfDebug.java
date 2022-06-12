@@ -35,7 +35,7 @@ public class WipfDebug {
 		// Erstelle ein großen Objekt
 
 		List<TodoEntry> lte = new LinkedList<>();
-		for (int i = 0; i < 1000000; i++) {
+		for (int i = 0; i < 10000; i++) {
 			TodoEntry to = new TodoEntry();
 
 			to.setId(i);

@@ -27,6 +27,7 @@ import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
+import org.wipf.jasmarty.logic.tasks.CronDaily;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 
 /**
@@ -58,6 +59,8 @@ public class DebugRest {
 	Wipf wipf;
 	@Inject
 	WipfDebug debug;
+	@Inject
+	CronDaily cronDaily;
 
 	@POST
 	@GET
@@ -225,6 +228,14 @@ public class DebugRest {
 		PunktePlay pb = new PunktePlay(b);
 
 		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
+	}
+
+	@POST
+	@GET
+	@Path("dailyTask")
+	public Response dailyTask() {
+		cronDaily.dailyTask();
+		return Response.ok().build();
 	}
 
 	/**

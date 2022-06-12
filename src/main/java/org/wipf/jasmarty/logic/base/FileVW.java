@@ -66,22 +66,32 @@ public class FileVW {
 	}
 
 	/**
-	 * @param sFilePath
+	 * @param sFileName
 	 */
-	public File getFile(String sFilePath) {
-		LOGGER.info("Get File " + sFilePath);
-		return new File("files/" + sFilePath);
+	public File getFile(String sFileName) {
+		if (isSaveFileName(sFileName)) {
+			LOGGER.info("Get File " + sFileName);
+			return new File("files/" + sFileName);
+		}
+		return null;
 	}
 
 	/**
-	 * @param sName
 	 * @return
 	 */
-	public boolean delFile(String sName) {
-		LOGGER.info("Delete File " + sName);
-		// Zur sicherheit
-		if (!sName.contains("..")) {
-			return getFile(sName).delete();
+	public File getDataBaseAsFile() {
+		LOGGER.info("Get Database");
+		return new File("jasmarty.db");
+	}
+
+	/**
+	 * @param sFileName
+	 * @return
+	 */
+	public boolean delFile(String sFileName) {
+		if (isSaveFileName(sFileName)) {
+			LOGGER.info("Delete File " + sFileName);
+			return getFile(sFileName).delete();
 		}
 		return false;
 	}
@@ -124,4 +134,11 @@ public class FileVW {
 		return sFilename;
 	}
 
+	/**
+	 * @param sFileName
+	 * @return
+	 */
+	private boolean isSaveFileName(String sFileName) {
+		return (!sFileName.contains("..") && !sFileName.contains("/") && !sFileName.contains("\\"));
+	}
 }

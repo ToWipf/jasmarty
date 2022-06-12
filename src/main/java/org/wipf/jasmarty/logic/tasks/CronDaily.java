@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
+import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -28,6 +29,8 @@ public class CronDaily {
 	WipfConfig wipfConfig;
 	@Inject
 	DaylogHome daylogHome;
+	@Inject
+	TAppGrafana appGrafana;
 
 	private static final Logger LOGGER = Logger.getLogger("DailyTask");
 
@@ -42,6 +45,7 @@ public class CronDaily {
 				tSendAndReceive.sendDaylyInfo();
 				punkteVW.pluspunkt();
 				punkteVW.appendNochSpiel(5);
+				appGrafana.deletePictureCache();
 				// TODO vorerst nicht mehr senden
 				// verwaltung.sendDaylyMotd();
 

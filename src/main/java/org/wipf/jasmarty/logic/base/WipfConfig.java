@@ -164,16 +164,20 @@ public class WipfConfig {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Integer getConfParamInteger(String sConfParam) throws SQLException {
-		String sQuery = "SELECT val FROM config WHERE key IS ?;";
+	public Integer getConfParamInteger(String sConfParam) {
+		try {
+			String sQuery = "SELECT val FROM config WHERE key IS ?;";
 
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setString(1, sConfParam);
-		ResultSet rs = statement.executeQuery();
-		while (rs.next()) {
-			// Es gibt nur einen oder keinen Eintrag
-			Integer sVal = rs.getInt("val");
-			return (sVal);
+			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+			statement.setString(1, sConfParam);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				// Es gibt nur einen oder keinen Eintrag
+				Integer sVal = rs.getInt("val");
+				return (sVal);
+			}
+		} catch (Exception e) {
+			LOGGER.warn("getConfParamInteger bei: " + sConfParam + " fehler");
 		}
 		return null;
 	}

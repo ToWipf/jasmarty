@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -361,8 +362,7 @@ public class TSendAndReceive {
 	 */
 	public String sendDocumentToTelegram(Telegram t) {
 		try {
-			sendDocumentToTelegram(t.getChatID(), t.getMessageFullWithoutFirstWord());
-			return "Ok";
+			return sendDocumentToTelegram(t.getChatID(), t.getMessageFullWithoutFirstWord());
 		} catch (Exception e) {
 			return "Fehler " + e;
 		}
@@ -375,13 +375,19 @@ public class TSendAndReceive {
 	 * @throws IOException
 	 */
 	public String sendDocumentToTelegram(Long nChatId, String sFilePath) throws Exception {
-		MultipartUtility multipart = new MultipartUtility(
-				"https://api.telegram.org/" + getBotKey() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
-		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("document", fileVw.getFile(sFilePath));
-		String response = multipart.finish();
-		LOGGER.info("upload File to " + nChatId + " / " + sFilePath);
-		return (response);
+		return sendFileToTelegram(nChatId, fileVw.getFile(sFilePath));
+	}
+
+	/**
+	 * @return
+	 * @throws Exception
+	 */
+	public String sendDatabaseToTelegram(Telegram t) {
+		try {
+			return sendFileToTelegram(t.getChatID(), fileVw.getDataBaseAsFile());
+		} catch (Exception e) {
+			return "Fehler " + e;
+		}
 	}
 
 	/**
@@ -453,6 +459,23 @@ public class TSendAndReceive {
 		if (this.sBotKey != null && !this.sBotKey.equals("null") && !this.sBotKey.equals("undefined"))
 			return this.sBotKey;
 		throw new WipfException("Kein Botkey gesetzt!");
+	}
+
+	/**
+	 * @param nChatId
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
+	private String sendFileToTelegram(Long nChatId, File f) throws Exception {
+		MultipartUtility multipart = new MultipartUtility(
+				"https://api.telegram.org/" + getBotKey() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
+		// multipart.addFormField("param_name_1", "param_value");
+		multipart.addFilePart("document", f);
+		String response = multipart.finish();
+		LOGGER.info("upload File to " + nChatId + " / " + f.getPath());
+		JSONObject jo = new JSONObject(response);
+		return (jo.get("ok").toString());
 	}
 
 }

@@ -28,18 +28,19 @@ public class PunkteVW {
 	 * @return
 	 */
 	public Integer getPunkte() {
-		try {
-			return wipfConfig.getConfParamInteger(PUNKTE);
-		} catch (Exception e) {
-			LOGGER.warn("getPunkte " + e);
-			return -99999;
+
+		Integer n = wipfConfig.getConfParamInteger(PUNKTE);
+		if (n != null) {
+			return n;
 		}
+
+		return -999;
 	}
 
 	/**
 	 * @param n
 	 */
-	public void setPunkte(int n) {
+	public void setPunkte(Integer n) {
 		try {
 			wipfConfig.setConfParam(PUNKTE, n);
 		} catch (Exception e) {
@@ -51,12 +52,12 @@ public class PunkteVW {
 	 * @return
 	 */
 	public Integer getNochSpielen() {
-		try {
-			return wipfConfig.getConfParamInteger(NOCH_SPIELE);
-		} catch (Exception e) {
-			LOGGER.warn("getNochSpiele " + e);
-			return -1;
+		Integer n = wipfConfig.getConfParamInteger(NOCH_SPIELE);
+		if (n != null) {
+			return n;
 		}
+
+		return -999;
 	}
 
 	/**
