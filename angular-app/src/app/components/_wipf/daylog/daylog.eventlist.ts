@@ -52,7 +52,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         } else{
             // Filter immer leeren
             this.filterEventType = undefined;
-            console.log("leeren");
         }
     }
 
