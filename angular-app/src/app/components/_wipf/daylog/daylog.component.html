@@ -9,12 +9,18 @@
 
         <div class="configline">
             <div class="box">
+                <button (click)="ngOnInit()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+            </div>
+            <div class="box">
                 Zeige alle Splaten:
                 <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
             </div>
             <div class="box">
                 <button class="btn btn-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
             </div>
+            <br>
             <!-- <div class="box">
                 <button class="btn btn-default" (click)="load()">Neu laden</button>
             </div> -->

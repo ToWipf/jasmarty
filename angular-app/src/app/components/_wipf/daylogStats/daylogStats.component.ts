@@ -25,6 +25,7 @@ export class DaylogStatsComponent implements OnInit {
 
   ngOnInit(): void {
     this.load();
+    this.showAllTable();
   }
 
   public showAllTable(): void {

@@ -9,6 +9,11 @@
 
         <div class="configline">
             <div class="box">
+                <button (click)="load()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+            </div>
+            <div class="box">
                 Neu:
                 <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bNew">
             </div>

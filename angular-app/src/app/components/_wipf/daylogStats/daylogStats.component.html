@@ -8,7 +8,9 @@
                 <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
             </div>
             <div class="box">
-               <button (click)="load()" >Neu Laden</button>
+                <button (click)="load()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
             </div>
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
