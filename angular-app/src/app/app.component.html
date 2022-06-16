@@ -14,6 +14,10 @@
                         <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
                         TagesLog
                     </li>
+                    <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
+                        <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
+                        TagesLog Stats
+                    </li>
                     <li (click)="selectSite('filme')" [ngClass]="{'isSelected' : selectedSite == 'filme'}">
                         <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
                         Filme
@@ -225,6 +229,9 @@
                     </ng-container>
                     <ng-container *ngIf="selectedSite==='rndEvent'">
                         <app-rndEvent></app-rndEvent>
+                    </ng-container>
+                    <ng-container *ngIf="selectedSite==='daylogStats'">
+                        <app-daylogStats></app-daylogStats>
                     </ng-container>
                 </perfect-scrollbar>
             </div>

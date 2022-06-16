@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -180,6 +181,28 @@ public class DaylogEventDB {
 			ja.put(d.toJson());
 		}
 		return ja;
+	}
+
+	/**
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getStats() throws SQLException {
+		JSONArray ar = new JSONArray();
+		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ = 1 OR typ = 2 OR typ = 3 OR typ = 9 GROUP by text ORDER by anz DESC";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			JSONObject oo = new JSONObject();
+			oo.put("anz", rs.getInt("anz"));
+			oo.put("first_id", rs.getInt("id"));
+			oo.put("first_dateid", rs.getInt("dateid"));
+			oo.put("frist_typ", rs.getInt("typ"));
+			oo.put("text", rs.getString("text"));
+			ar.put(oo);
+		}
+		return ar;
 	}
 
 }

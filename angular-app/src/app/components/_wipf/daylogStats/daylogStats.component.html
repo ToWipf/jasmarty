@@ -1,0 +1,53 @@
+<div>
+    <h3>Statistiken</h3>
+    <div class="list">
+
+        <div class="configline">
+            <div class="box">
+                Zeige alle Splaten:
+                <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
+            </div>
+            <div class="box">
+               <button (click)="load()" >Neu Laden</button>
+            </div>
+            <div class="box">
+                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+            </div>
+        </div>
+
+        <perfect-scrollbar class="pscroll">
+            <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
+
+                <ng-container matColumnDef="anz">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </th>
+                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                        {{element.anz}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="text">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
+                    <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="first_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> first_id </th>
+                    <td mat-cell *matCellDef="let element"> {{element.first_id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="first_dateid">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> first_dateid </th>
+                    <td mat-cell *matCellDef="let element"> {{element.first_dateid}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="frist_typ">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> frist_typ </th>
+                    <td mat-cell *matCellDef="let element"> {{element.frist_typ}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </perfect-scrollbar>
+        Treffer: {{statsarry.length}}
+    </div>
+</div>

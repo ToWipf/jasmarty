@@ -54,4 +54,10 @@ public class DaylogEventRest {
 		return Response.ok().build();
 	}
 
+	@GET
+	@Path("getStats")
+	public Response getStats() throws SQLException {
+		return Response.ok(daylogEventDB.getStats().toString()).build();
+	}
+
 }

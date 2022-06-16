@@ -77,6 +77,7 @@ import { TelegramLogComponent } from './components/_telegram/telegramLog/telegra
 import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './components/_telegram/telegramMsg/telegramMsg.component';
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/_wipf/todolist/todolist.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
+import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './compo
     DaylogComponentDialogTypeComponent,
     DaylogComponentDialogTypeListComponent,
     DaylogComponentEventlist,
+    DaylogStatsComponent,
     DebugSeiteComponent,
     DialogJaNeinComponent,
     DialogVariablenHilfeComponent,
