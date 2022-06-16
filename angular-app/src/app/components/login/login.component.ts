@@ -17,7 +17,7 @@ export class LoginComponent {
 
   send() {
     this.rest.setLoginData(this.sUsername, this.sPasswort);
-    this.rest.doHttpGet("wipf/up").then(res => {
+    this.rest.httpGet("wipf/up").then(res => {
       if (res == 1){
         this.sUsername = "";
         this.sPasswort = "";

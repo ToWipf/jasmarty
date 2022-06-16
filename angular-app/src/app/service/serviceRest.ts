@@ -42,7 +42,7 @@ export class ServiceRest {
     }
   }
 
-  public doHttpGet(path: string): Promise<any> {
+  public httpGet(path: string): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
@@ -53,7 +53,7 @@ export class ServiceRest {
       });
   }
 
-  public doHttpPost(path: string, item: any): Promise<any> {
+  public httpPost(path: string, item: any): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
@@ -64,7 +64,7 @@ export class ServiceRest {
       });
   }
 
-  public doHttpDelete(path: string): Promise<any> {
+  public httpDelete(path: string): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});

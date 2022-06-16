@@ -33,7 +33,7 @@ export class RndEventComponent implements OnInit {
     this.rndarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.doHttpGet('rndevent/getAll').then((resdata: RndEvent[]) => {
+    this.rest.httpGet('rndevent/getAll').then((resdata: RndEvent[]) => {
       resdata.forEach((element) => {
         this.rndarry.push(element);
       });
@@ -73,7 +73,7 @@ export class RndEventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.doHttpDelete('rndevent/delete/' + item.id).then((resdata: any) => {
+        this.rest.httpDelete('rndevent/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -95,7 +95,7 @@ export class RndEventComponent implements OnInit {
   }
 
   private save(item: RndEvent): void {
-    this.rest.doHttpPost('rndevent/save', item).then((resdata: any) => {
+    this.rest.httpPost('rndevent/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;
