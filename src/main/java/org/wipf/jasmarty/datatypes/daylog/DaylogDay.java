@@ -40,7 +40,7 @@ public class DaylogDay {
 			this.nUserId = 0;
 		}
 		this.sDate = jo.getString("date");
-		this.sTagestext = jo.getString("tagestext");
+		this.sTagestext = jo.getString("tagestext").trim();
 		return this;
 	}
 

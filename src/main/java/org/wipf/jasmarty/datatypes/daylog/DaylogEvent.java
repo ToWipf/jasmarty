@@ -37,7 +37,7 @@ public class DaylogEvent {
 
 		this.nDateId = jo.getInt("dateid");
 		this.sTyp = jo.getString("typ");
-		this.sText = jo.get("text").toString(); // da hier String, Int und Bool kommt
+		this.sText = jo.get("text").toString().trim(); // da hier String, Int und Bool kommt
 		return this;
 	}
 
