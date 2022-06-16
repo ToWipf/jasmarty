@@ -13,9 +13,17 @@ export class LoginComponent {
 
   public sUsername: string;
   public sPasswort: string;
-  
+  public bLoginOk: boolean = false;
+
   send() {
     this.rest.setLoginData(this.sUsername, this.sPasswort);
+    this.rest.doHttpGet("wipf/up").then(res => {
+      if (res == 1){
+        this.sUsername = "";
+        this.sPasswort = "";
+        this.bLoginOk = true;
+      }
+    });
   }
 
 }

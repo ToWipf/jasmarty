@@ -1,8 +1,12 @@
 <h1>Login</h1>
 
-Anmelden:
+<ng-container *ngIf="!bLoginOk">
+    Anmelden:
+    <input type="text" class="form-control inbutton" [(ngModel)]="sUsername" placeholder="Username">
+    <input type="password" class="form-control inbutton" [(ngModel)]="sPasswort" placeholder="Passwort">
+    <button class="btn btn-default" (click)="send()">Ok</button>
+</ng-container>
 
-<input type="text" class="form-control inbutton" [(ngModel)]="sUsername" placeholder="Username">
-<input type="text" class="form-control inbutton" [(ngModel)]="sPasswort" placeholder="Passwort">
-
-<button class="btn btn-green" (click)="send()" >Ok</button>
+<ng-container *ngIf="bLoginOk">
+    Anmeldung Ok
+</ng-container>
