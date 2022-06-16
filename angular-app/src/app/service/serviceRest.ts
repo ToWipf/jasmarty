@@ -24,14 +24,12 @@ export class ServiceRest {
   }
 
   public setLoginData(user: string, passwort: string) {
-   // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
-
-   this.httpOptions = {
-    headers: new HttpHeaders({
-      "Authorization": "Basic " + btoa(user + ":" + passwort)
-    })
-  };
-
+    // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        "Authorization": "Basic " + btoa(user + ":" + passwort)
+      })
+    };
   }
 
   public sethostExpect(): void {
@@ -40,7 +38,6 @@ export class ServiceRest {
     const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
     // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
     if (sHostExp.length > 10) {
-      console.log(sHostExp);
       this.sHost = sHostExp;
     }
   }
@@ -52,7 +49,6 @@ export class ServiceRest {
         this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
-          //return resdata;
         });
       });
   }
@@ -64,7 +60,6 @@ export class ServiceRest {
         this.http.post(this.gethost() + path, item, this.httpOptions).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
-          //return resdata;
         });
       });
   }
@@ -76,7 +71,6 @@ export class ServiceRest {
         this.http.delete(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
-          //return resdata;
         });
       });
   }
