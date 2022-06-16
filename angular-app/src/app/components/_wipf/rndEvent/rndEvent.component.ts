@@ -33,7 +33,7 @@ export class RndEventComponent implements OnInit {
     this.rndarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'rndevent/getAll').subscribe((resdata: RndEvent[]) => {
+    this.rest.doHttp('rndevent/getAll').then((resdata: RndEvent[]) => {
       resdata.forEach((element) => {
         this.rndarry.push(element);
       });

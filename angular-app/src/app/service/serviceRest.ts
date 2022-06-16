@@ -11,40 +11,53 @@ import { ServiceWipf } from './serviceWipf';
 })
 
 export class ServiceRest {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
-  private host: string = '';
-  //private host: string = 'http://localhost:8080/';
+  //private host: string = '';
+  private sHost: string = 'http://localhost:8080/';
+  private sAuth: string = "";
 
   public gethost(): string {
-    return this.host;
+    return this.sHost;
   }
 
   public sethost(host: string): void {
-    this.host = host;
+    this.sHost = host;
+  }
+
+  public setLoginData(user: string, passwort: string) {
+    this.sAuth = btoa(user + ":" + passwort);
+   // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
   }
 
   public sethostExpect(): void {
     let sHref = window.location.href;
     let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
-    this.host = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+    const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+    // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
+    if (sHostExp.length > 10) {
+      console.log(sHostExp);
+      this.sHost = sHostExp;
+    }
   }
 
-  public doHttp(path: string): any {
-
+  public doHttp(path: string): Promise<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic my-auth-token'
+        "Authorization": "Basic " + this.sAuth
+
       })
     };
 
-
-    const warten = this.dialog.open(DialogWartenComponent, {});
-    this.http.get(this.rest.gethost() + path, httpOptions).subscribe((resdata: any) => {
-      warten.close();
-      return resdata;
-    });
+    return new Promise(
+      resolve => {
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.http.get(this.gethost() + path, httpOptions).subscribe((resdata: any) => {
+          warten.close();
+          resolve(resdata);
+          //return resdata;
+        });
+      });
   }
 
 }

@@ -78,6 +78,7 @@ import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './com
 import { TodolistComponent, TodolistComponentDialogComponent } from './components/_wipf/todolist/todolist.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats
     TodolistComponentDialogComponent,
     WipfUserVwComponent,
     WipfUserVWComponentDialogComponent,
+    LoginComponent,
   ],
   imports: [
     A11yModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -8,15 +8,14 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
 })
-export class loginComponent implements OnInit {
+export class LoginComponent {
   constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
 
   public sUsername: string;
   public sPasswort: string;
-  public bLoginOk: boolean;
   
-  ngOnInit() {
-    // TODO: login Seite
+  send() {
+    this.rest.setLoginData(this.sUsername, this.sPasswort);
   }
 
 }

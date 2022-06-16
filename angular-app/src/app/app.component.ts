@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
   public jasmartyType: string;
-  public selectedSite: string = 'firstpage';
+  public selectedSite: string = 'login';
 
   ngOnInit(): void {
     this.rest.sethostExpect();
