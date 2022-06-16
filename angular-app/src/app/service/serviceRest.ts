@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Telegram } from '../datatypes';
 import { DialogWartenComponent } from '../dialog/main.dialog';
 import { ServiceWipf } from './serviceWipf';
 
@@ -15,7 +13,7 @@ export class ServiceRest {
 
   //private host: string = '';
   private sHost: string = 'http://localhost:8080/';
-  private sAuth: string = "";
+  private httpOptions: any;
 
   public gethost(): string {
     return this.sHost;
@@ -26,8 +24,14 @@ export class ServiceRest {
   }
 
   public setLoginData(user: string, passwort: string) {
-    this.sAuth = btoa(user + ":" + passwort);
    // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
+
+   this.httpOptions = {
+    headers: new HttpHeaders({
+      "Authorization": "Basic " + btoa(user + ":" + passwort)
+    })
+  };
+
   }
 
   public sethostExpect(): void {
@@ -41,18 +45,35 @@ export class ServiceRest {
     }
   }
 
-  public doHttp(path: string): Promise<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "Authorization": "Basic " + this.sAuth
-
-      })
-    };
-
+  public doHttpGet(path: string): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
-        this.http.get(this.gethost() + path, httpOptions).subscribe((resdata: any) => {
+        this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
+          warten.close();
+          resolve(resdata);
+          //return resdata;
+        });
+      });
+  }
+
+  public doHttpPost(path: string, item: any): Promise<any> {
+    return new Promise(
+      resolve => {
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.http.post(this.gethost() + path, item, this.httpOptions).subscribe((resdata: any) => {
+          warten.close();
+          resolve(resdata);
+          //return resdata;
+        });
+      });
+  }
+
+  public doHttpDelete(path: string): Promise<any> {
+    return new Promise(
+      resolve => {
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.http.delete(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
           //return resdata;

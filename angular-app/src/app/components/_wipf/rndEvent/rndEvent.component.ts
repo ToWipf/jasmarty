@@ -33,7 +33,7 @@ export class RndEventComponent implements OnInit {
     this.rndarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.doHttp('rndevent/getAll').then((resdata: RndEvent[]) => {
+    this.rest.doHttpGet('rndevent/getAll').then((resdata: RndEvent[]) => {
       resdata.forEach((element) => {
         this.rndarry.push(element);
       });
@@ -64,7 +64,7 @@ export class RndEventComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen? " + item.eventtext;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -73,7 +73,7 @@ export class RndEventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'rndevent/delete/' + item.id).subscribe((resdata: any) => {
+        this.rest.doHttpDelete('rndevent/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -95,7 +95,7 @@ export class RndEventComponent implements OnInit {
   }
 
   private save(item: RndEvent): void {
-    this.http.post(this.rest.gethost() + 'rndevent/save', item).subscribe((resdata: any) => {
+    this.rest.doHttpPost('rndevent/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;
