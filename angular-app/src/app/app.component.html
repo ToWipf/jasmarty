@@ -139,6 +139,10 @@
                         <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
                         Einstellungen
                     </li>
+                    <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
+                        <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
+                        An/Abmelden
+                    </li>
                 </ul>
             </div>
         </perfect-scrollbar>

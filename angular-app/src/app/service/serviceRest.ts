@@ -13,18 +13,23 @@ export class ServiceRest {
 
   private sHost: string = 'http://localhost:8080/';
   private httpOptions: any;
+  private bLoginOk: boolean = false;
 
-  public setLoginData(user: string, passwort: string) {
+  public setLoginData(user: string, passwort: string): void {
     // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
-    const sAuth =  btoa(user + ":" + passwort)
-    
+    const sAuth = btoa(user + ":" + passwort)
+
     this.setLogin(sAuth);
 
     // Anmeldedaten speichern
     localStorage.setItem('auth', sAuth);
   }
-  
-  private setLogin(base64Auth: string){
+
+  public clearLogin(): void {
+    localStorage.removeItem('auth');
+  }
+
+  private setLogin(base64Auth: string) {
     this.httpOptions = {
       headers: new HttpHeaders({
         "Authorization": "Basic " + base64Auth
@@ -55,11 +60,19 @@ export class ServiceRest {
   public sethost(host: string): void {
     this.sHost = host;
   }
-  
+
+  public getLoginOk(): boolean {
+    return this.bLoginOk;
+  }
+
+  public setLoginOk(b: boolean): void {
+    this.bLoginOk = b;
+  }
+
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  
+
   /**
    * http get
    * 

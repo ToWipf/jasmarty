@@ -8,21 +8,26 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent {
-  constructor(public dialog: MatDialog, private rest: ServiceRest) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest) { }
 
   public sUsername: string;
   public sPasswort: string;
-  public bLoginOk: boolean = false;
 
-  send() {
+  public login() {
     this.rest.setLoginData(this.sUsername, this.sPasswort);
     this.rest.get("wipf/up").then(res => {
       if (res == 1) {
         this.sUsername = "";
         this.sPasswort = "";
-        this.bLoginOk = true;
+        this.rest.setLoginOk(true);
       }
     });
+  }
+
+  public logoff() {
+    this.rest.setLoginData("", "");
+    this.rest.setLoginOk(false);
+    this.rest.clearLogin();
   }
 
 }
