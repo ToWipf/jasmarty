@@ -86,30 +86,32 @@ export class AppComponent implements OnInit {
 
     this.rest.get('basesettings/get/wipf').then((resdata: any) => {
       this.bWipfActive = resdata.active;
+
+      // Weiteres nur laden, wenn das erste funktioniert
+      this.rest.get('basesettings/get/telegram').then((resdata: any) => {
+        this.bTelegramActive = resdata.active;
+      });
+
+      this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
+        this.bJasmartyActive = resdata.active;
+
+        if (this.bJasmartyActive) {
+          // Wenn Jasmarty true ist, den Typ holen
+          this.rest.get('lcd/config/get').then((resdata) => {
+            var jaconfig: Jaconfig = resdata;
+            this.jasmartyType = jaconfig.type;
+          });
+        }
+      });
+      this.rest.get('basesettings/get/debug').then((resdata: any) => {
+        this.bDevActive = resdata.active;
+        if (this.bDevActive) {
+          // Beim einschalten auch 12864 zeigen
+          this.showAll12864();
+        }
+      });
     });
 
-    this.rest.get('basesettings/get/telegram').then((resdata: any) => {
-      this.bTelegramActive = resdata.active;
-    });
-
-    this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
-      this.bJasmartyActive = resdata.active;
-
-      if (this.bJasmartyActive) {
-        // Wenn Jasmarty true ist, den Typ holen
-        this.rest.get('lcd/config/get').then((resdata) => {
-          var jaconfig: Jaconfig = resdata;
-          this.jasmartyType = jaconfig.type;
-        });
-      }
-    });
-    this.rest.get('basesettings/get/debug').then((resdata: any) => {
-      this.bDevActive = resdata.active;
-      if (this.bDevActive) {
-        // Beim einschalten auch 12864 zeigen
-        this.showAll12864();
-      }
-    });
 
   }
 
