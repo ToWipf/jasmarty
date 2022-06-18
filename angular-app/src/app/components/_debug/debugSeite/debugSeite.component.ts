@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
@@ -8,7 +7,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./debugSeite.component.less'],
 })
 export class DebugSeiteComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest) { }
+  constructor(private rest: ServiceRest) { }
 
   public sSQL_IN: string;
   public sSQL_OUT: string;
@@ -17,7 +16,7 @@ export class DebugSeiteComponent implements OnInit {
   }
 
   public doSQL(): void {
-    this.http.post(this.rest.gethost() + 'sql/query/' + this.sSQL_IN, '').subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
       this.sSQL_OUT = resdata.res;
     });
   }

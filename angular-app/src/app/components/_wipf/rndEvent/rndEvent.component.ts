@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { RndEvent } from 'src/app/datatypes';
@@ -14,7 +13,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
   styleUrls: ['./rndEvent.component.less'],
 })
 export class RndEventComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -33,7 +32,7 @@ export class RndEventComponent implements OnInit {
     this.rndarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.httpGet('rndevent/getAll').then((resdata: RndEvent[]) => {
+    this.rest.get('rndevent/getAll').then((resdata: RndEvent[]) => {
       resdata.forEach((element) => {
         this.rndarry.push(element);
       });
@@ -73,7 +72,7 @@ export class RndEventComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.httpDelete('rndevent/delete/' + item.id).then((resdata: any) => {
+        this.rest.delete('rndevent/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -95,7 +94,7 @@ export class RndEventComponent implements OnInit {
   }
 
   private save(item: RndEvent): void {
-    this.rest.httpPost('rndevent/save', item).then((resdata: any) => {
+    this.rest.post('rndevent/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;

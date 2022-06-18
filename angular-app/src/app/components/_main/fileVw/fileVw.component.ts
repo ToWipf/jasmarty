@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Telegram, TelegramUserCache } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
@@ -14,9 +12,8 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./fileVw.component.less'],
 })
 export class FileVwComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
+  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-  }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
@@ -33,7 +30,7 @@ export class FileVwComponent implements OnInit {
     this.filenames = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'file/getAll').subscribe((resdata: String[]) => {
+    this.rest.get(this.rest.gethost() + 'file/getAll').then((resdata: String[]) => {
       this.filenames = resdata;
 
       this.dataSource = new MatTableDataSource(this.filenames);
@@ -61,7 +58,7 @@ export class FileVwComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'file/del/' + name).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'file/del/' + name).then((resdata: any) => {
           this.load();
         });
       }
@@ -74,7 +71,6 @@ export class FileVwComponent implements OnInit {
 
   // public uploadFile(files: FileList) {
   //   this.fileToUpload = files.item(0);
-    
   // }
 
 }

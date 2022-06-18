@@ -42,7 +42,13 @@ export class ServiceRest {
     }
   }
 
-  public httpGet(path: string): Promise<any> {
+  /**
+   * http get
+   * 
+   * @param path 
+   * @returns 
+   */
+  public get(path: string): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
@@ -53,7 +59,14 @@ export class ServiceRest {
       });
   }
 
-  public httpPost(path: string, item: any): Promise<any> {
+  /**
+   * http post
+   * 
+   * @param path 
+   * @param item 
+   * @returns 
+   */
+  public post(path: string, item: any): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
@@ -64,7 +77,13 @@ export class ServiceRest {
       });
   }
 
-  public httpDelete(path: string): Promise<any> {
+  /**
+   * http delete
+   * 
+   * @param path 
+   * @returns 
+   */
+  public delete(path: string): Promise<any> {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});

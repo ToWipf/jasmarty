@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -14,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./daylog.component.less'],
 })
 export class DayLogComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sortDay: MatSort;
 
@@ -44,7 +43,7 @@ export class DayLogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.typelistForEventFilter = [];
 
-    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogType[]) => {
+    this.rest.get(this.rest.gethost() + 'daylog/type/getAll').then((resdata: DaylogType[]) => {
       this.typelistForEventFilter = resdata;
       warten.close();
     });
@@ -77,7 +76,7 @@ export class DayLogComponent implements OnInit {
   }
 
   private loadDaylogTypes(): void {
-    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogDay[]) => {
+    this.rest.get(this.rest.gethost() + 'daylog/type/getAll').then((resdata: DaylogDay[]) => {
       this.daylogTypes = resdata;
     });
   }
@@ -90,7 +89,7 @@ export class DayLogComponent implements OnInit {
       this.sFilterDay = "-";
     }
 
-    this.http.get(this.rest.gethost() + 'daylog/day/getAllByDateQuery/' + this.sFilterDay + "/" + this.userid).subscribe((resdata: DaylogDay[]) => {
+    this.rest.get(this.rest.gethost() + 'daylog/day/getAllByDateQuery/' + this.sFilterDay + "/" + this.userid).then((resdata: DaylogDay[]) => {
       resdata.forEach((d: DaylogDay) => {
         d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
       });
@@ -114,7 +113,7 @@ export class DayLogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'daylog/day/delete/' + item.id).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'daylog/day/delete/' + item.id).then((resdata: any) => {
           this.loadDays();
         });
       }
@@ -173,7 +172,7 @@ export class DayLogComponent implements OnInit {
 
   private saveDay(item: DaylogDay): void {
     this.bShowWarning = true;
-    this.http.post(this.rest.gethost() + 'daylog/day/getDateAndCrateIfDateNotExistsByJSON', item).subscribe((resdata: DaylogDay) => {
+    this.rest.post(this.rest.gethost() + 'daylog/day/getDateAndCrateIfDateNotExistsByJSON', item).then((resdata: DaylogDay) => {
       this.loadDays();
       if (resdata.id != null) {
         this.bShowWarning = false;
@@ -212,7 +211,7 @@ export class DaylogComponentDialogDayComponent {
   styleUrls: ['./daylog.component.less']
 })
 export class DaylogComponentDialogTypeListComponent implements OnInit {
-  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'button'];
   public sFilter: String = "";
@@ -253,7 +252,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 
   private saveType(item: DaylogType): void {
     this.bShowWarning = true;
-    this.http.post(this.rest.gethost() + 'daylog/type/save', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'daylog/type/save', item).then((resdata: any) => {
       if (resdata.save == "true") {
         this.bShowWarning = false;
         this.loadType();
@@ -265,7 +264,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.typelist = [];
 
-    this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogType[]) => {
+    this.rest.get(this.rest.gethost() + 'daylog/type/getAll').then((resdata: DaylogType[]) => {
       this.typelist = resdata;
 
       this.daylogTypeDataSource = new MatTableDataSource(this.typelist);
@@ -284,7 +283,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'daylog/type/delete/' + item.id).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'daylog/type/delete/' + item.id).then((resdata: any) => {
           this.loadType();
         });
       }
@@ -317,8 +316,3 @@ export class DaylogComponentDialogTypeComponent {
     this.dialogRef.close();
   }
 }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-

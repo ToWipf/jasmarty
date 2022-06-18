@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { HttpClient } from '@angular/common/http';
 import { CroppedEvent } from 'ngx-photo-editor';
 import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,7 +12,7 @@ import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/di
   styleUrls: ['./jasmarty12864Pages.component.less'],
 })
 export class Jasmarty12864PagesComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
+  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
 
   }
 
@@ -88,7 +87,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public selectLcdDescription(): void {
-    this.http.post(this.rest.gethost() + 'lcd12864/selectPage/' + this.lcdDescription.id, null).subscribe((res) => {
+    this.rest.post(this.rest.gethost() + 'lcd12864/selectPage/' + this.lcdDescription.id, null).then((res) => {
       console.log(res);
     });
   }
@@ -126,14 +125,14 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   private saveLcdDescription(): void {
     console.log(this.lcdDescription);
-    this.http.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).subscribe((res) => {
+    this.rest.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).then((res) => {
       console.log(res);
     });
   }
 
   private loadLcdDescription(): void {
     this.base64 = null;
-    this.http.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).subscribe((res) => {
+    this.rest.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).then((res) => {
       this.lcdDescription = res;
 
       if (!this.lcdDescription.dynamic) {

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Buttonaction } from 'src/app/datatypes';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +13,7 @@ import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
   styleUrls: ['./jasmartyActions.component.less'],
 })
 export class JasmartyActionsComponent implements OnInit, OnDestroy {
-  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) {}
+  constructor(public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -41,7 +40,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   public deleteItem(item: Buttonaction): void {
     // TODO: ADD nachfragen dialog
-    this.http.delete(this.rest.gethost() + 'actions/delete/' + item.id).subscribe((resdata: any) => {
+    this.rest.delete(this.rest.gethost() + 'actions/delete/' + item.id).then((resdata: any) => {
       this.load();
     });
   }
@@ -66,13 +65,13 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public testAction(item: Buttonaction): void {
-    this.http.get(this.rest.gethost() + 'actions/doaction/' + item.id).subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'actions/doaction/' + item.id).then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   private save(item: Buttonaction): void {
-    this.http.post(this.rest.gethost() + 'actions/set', JSON.stringify(item)).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'actions/set', JSON.stringify(item)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
         this.load();
@@ -85,7 +84,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.http.get(this.rest.gethost() + 'actions/getall').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'actions/getall').then((resdata: any) => {
       console.log(resdata);
       this.Buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.Buttonactions);
@@ -105,7 +104,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.http.get(this.rest.gethost() + 'actions/currentPressed').subscribe(
+    this.rest.get(this.rest.gethost() + 'actions/currentPressed').then(
       (resdata: any) => {
         console.log(resdata.btn);
         if (resdata.btn) {
@@ -125,7 +124,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   styleUrls: ['./jasmartyActions.component.less'],
 })
 export class JasmartyActionsComponentDialog {
-  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) {}
+  constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) { }
 
   onNoClick(): void {
     this.dialogRef.close();

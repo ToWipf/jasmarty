@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DisplayLcd, JapageForList } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
@@ -9,13 +8,13 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./jasmartyMain.component.less'],
 })
 export class JasmartyMainComponent implements OnInit, OnDestroy {
-  constructor(private http: HttpClient, private rest: ServiceRest) {}
+  constructor(private rest: ServiceRest) { }
 
   public displayLive: DisplayLcd;
   public display: string[] = [];
   public pagelist: JapageForList[] = [];
   public bLoopStop: boolean = false;
-  
+
   ngOnInit() {
     this.loopLoadNew();
     this.getAllPages();
@@ -26,13 +25,13 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   public refreshNow(): void {
-    this.http.get(this.rest.gethost() + 'refresh/refreshCache').subscribe((res: any) => {
+    this.rest.get(this.rest.gethost() + 'refresh/refreshCache').then((res: any) => {
       console.log(res);
     });
   }
 
   public selectSite(item: JapageForList): void {
-    this.http.get(this.rest.gethost() + 'pages/select/' + item.id).subscribe(() => {
+    this.rest.get(this.rest.gethost() + 'pages/select/' + item.id).then(() => {
       this.refreshNow();
     });
   }
@@ -48,7 +47,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getLcdSoll(): void {
-    this.http.get(this.rest.gethost() + 'lcd/soll').subscribe(
+    this.rest.get(this.rest.gethost() + 'lcd/soll').then(
       (resdata: DisplayLcd) => {
         this.displayLive = resdata;
         this.displayLive.display.forEach((line) => {
@@ -62,7 +61,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getAllPages(): void {
-    this.http.get(this.rest.gethost() + 'pages/getAllPages').subscribe((resdata: JapageForList[]) => {
+    this.rest.get(this.rest.gethost() + 'pages/getAllPages').then((resdata: JapageForList[]) => {
       this.pagelist = resdata;
       this.pagelist.sort((a, b) => a.name.localeCompare(b.name));
     });

@@ -1,5 +1,4 @@
 import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -14,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
     styleUrls: ['./daylog.component.less']
 })
 export class DaylogComponentEventlist implements OnChanges, OnInit {
-    constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+    constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
     @Input("filterTextEvent") public sFilterTextEvent: String;
     @Input("showAllTable") public bShowAllTable: Boolean;
@@ -49,7 +48,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
         if (changes?.filterEventType) {
             this.applyFilterByType();
-        } else{
+        } else {
             // Filter immer leeren
             this.filterEventType = undefined;
         }
@@ -64,7 +63,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     private saveEvent(item: DaylogEvent): void {
         this.bShowWarning = true;
-        this.http.post(this.rest.gethost() + 'daylog/event/save', item).subscribe((resdata: any) => {
+        this.rest.post(this.rest.gethost() + 'daylog/event/save', item).then((resdata: any) => {
             this.loadEventsByDay(this.dateForLoad);
             if (resdata.save == "true") {
                 this.bShowWarning = false;
@@ -100,7 +99,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     public applyFilterByType() {
         let eventlistToShow: DaylogEvent[] = [];
-        if (this.filterEventType != undefined){
+        if (this.filterEventType != undefined) {
 
             this.eventlist.forEach((event: DaylogEvent) => {
                 if (event.typ == this.filterEventType.id.toString()) {
@@ -132,7 +131,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.eventlist = [];
 
         // keine userid möglich -> unsicher!
-        this.http.get(this.rest.gethost() + 'daylog/event/getAll').subscribe((resdata: DaylogEvent[]) => {
+        this.rest.get(this.rest.gethost() + 'daylog/event/getAll').then((resdata: DaylogEvent[]) => {
             this.eventlist = resdata;
 
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
@@ -147,7 +146,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             const warten = this.dialog.open(DialogWartenComponent, {});
             this.eventlist = [];
 
-            this.http.get(this.rest.gethost() + 'daylog/event/get/' + d.id).subscribe((resdata: DaylogEvent[]) => {
+            this.rest.get(this.rest.gethost() + 'daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
                 this.eventlist = resdata;
 
                 this.eventlistDataSource = new MatTableDataSource(this.eventlist);
@@ -182,7 +181,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.http.delete(this.rest.gethost() + 'daylog/event/delete/' + item.id).subscribe((resdata: any) => {
+                this.rest.delete(this.rest.gethost() + 'daylog/event/delete/' + item.id).then((resdata: any) => {
                     //this.loadDays(); TODO warum war das hier?
                     this.loadEventsByDay(this.dateForLoad);
                 });
@@ -200,7 +199,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     templateUrl: './daylog.dialogEvent.html',
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
-    constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private http: HttpClient, private rest: ServiceRest) { }
+    constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
 
     public daylogTypes: DaylogType[] = [];
 
@@ -209,7 +208,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadDaylogTypes(): void {
-        this.http.get(this.rest.gethost() + 'daylog/type/getAll').subscribe((resdata: DaylogDay[]) => {
+        this.rest.get(this.rest.gethost() + 'daylog/type/getAll').then((resdata: DaylogDay[]) => {
             this.daylogTypes = resdata;
         });
     }

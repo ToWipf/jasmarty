@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Jaconfig } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
@@ -9,7 +8,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./jasmartyConfig.component.less'],
 })
 export class JasmartyConfigComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest) { }
+  constructor( private rest: ServiceRest) { }
 
   public jaconfig: Jaconfig = {};
   public ports: [{ name: string }];
@@ -22,13 +21,13 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public load(): void {
-    this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
+    this.rest.get(this.rest.gethost() + 'lcd/config/get').then((resdata) => {
       this.jaconfig = resdata;
     });
   }
 
   public save(): void {
-    this.http.post(this.rest.gethost() + 'lcd/config/set', JSON.stringify(this.jaconfig)).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'lcd/config/set', JSON.stringify(this.jaconfig)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
         this.startLcdAgain();
@@ -40,50 +39,50 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public startLcdAgain(): void {
-    this.http.get(this.rest.gethost() + 'debug/jasmarty/restart').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'debug/jasmarty/restart').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public getPorts(): void {
-    this.http.get(this.rest.gethost() + 'wipf/ports').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'wipf/ports').then((resdata: any) => {
       console.log(resdata);
       this.ports = resdata.list;
     });
   }
 
   public start(): void {
-    this.http.get(this.rest.gethost() + 'lcd/open').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'lcd/open').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public stop(): void {
-    this.http.get(this.rest.gethost() + 'lcd/open').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'lcd/open').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public refreshOn(): void {
-    this.http.get(this.rest.gethost() + 'refresh/on').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'refresh/on').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public refreshOff(): void {
-    this.http.get(this.rest.gethost() + 'refresh/off').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'refresh/off').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public getJasmartyActive(): void {
-    this.http.get(this.rest.gethost() + 'basesettings/get/jasmarty').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/get/jasmarty').then((resdata: any) => {
       this.bJasmartyActive = resdata.active;
     });
   }
 
   public setJasmartyActive(bStatus: boolean): void {
-    this.http.post(this.rest.gethost() + 'basesettings/set/jasmarty/' + bStatus, '').subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'basesettings/set/jasmarty/' + bStatus, '').then((resdata: any) => {
       console.log(resdata);
     });
   }

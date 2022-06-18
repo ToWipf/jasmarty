@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatDrawer } from '@angular/material/sidenav';
@@ -36,7 +35,7 @@ const ICON_DOWNLOAD = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 2
   styleUrls: ['./app.component.less'],
 })
 export class AppComponent implements OnInit {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private http: HttpClient, private rest: ServiceRest) {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private rest: ServiceRest) {
 
     iconRegistry.addSvgIconLiteral('box', sanitizer.bypassSecurityTrustHtml(ICON_BOX));
     iconRegistry.addSvgIconLiteral('cancel', sanitizer.bypassSecurityTrustHtml(ICON_CANCEL));
@@ -85,26 +84,26 @@ export class AppComponent implements OnInit {
   public getActiveModules(): void {
     this.bDevActive = false;
 
-    this.http.get(this.rest.gethost() + 'basesettings/get/wipf').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/get/wipf').then((resdata: any) => {
       this.bWipfActive = resdata.active;
     });
 
-    this.http.get(this.rest.gethost() + 'basesettings/get/telegram').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/get/telegram').then((resdata: any) => {
       this.bTelegramActive = resdata.active;
     });
 
-    this.http.get(this.rest.gethost() + 'basesettings/get/jasmarty').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/get/jasmarty').then((resdata: any) => {
       this.bJasmartyActive = resdata.active;
 
       if (this.bJasmartyActive) {
         // Wenn Jasmarty true ist, den Typ holen
-        this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
+        this.rest.get(this.rest.gethost() + 'lcd/config/get').then((resdata) => {
           var jaconfig: Jaconfig = resdata;
           this.jasmartyType = jaconfig.type;
         });
       }
     });
-    this.http.get(this.rest.gethost() + 'basesettings/get/debug').subscribe((resdata: any) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/get/debug').then((resdata: any) => {
       this.bDevActive = resdata.active;
       if (this.bDevActive) {
         // Beim einschalten auch 12864 zeigen

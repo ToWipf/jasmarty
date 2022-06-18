@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DynpageEntry } from 'src/app/datatypes';
@@ -14,7 +13,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
   styleUrls: ['./dynpages.component.less'],
 })
 export class DynpagesComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -33,7 +32,7 @@ export class DynpagesComponent implements OnInit {
     this.dynpagearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'dynpages/getAll').subscribe((resdata: DynpageEntry[]) => {
+    this.rest.get(this.rest.gethost() + 'dynpages/getAll').then((resdata: DynpageEntry[]) => {
       resdata.forEach((element) => {
 
         if (this.bLive || element.live) {
@@ -75,7 +74,7 @@ export class DynpagesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'dynpages/delete/' + item.id).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'dynpages/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -83,7 +82,7 @@ export class DynpagesComponent implements OnInit {
   }
 
   private save(item: DynpageEntry): void {
-    this.http.post(this.rest.gethost() + 'dynpages/save', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'dynpages/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;

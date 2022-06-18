@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { FilmEntry } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-filme',
@@ -14,7 +13,7 @@ import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
   styleUrls: ['./filme.component.less'],
 })
 export class FilmeComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) {}
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -31,7 +30,7 @@ export class FilmeComponent implements OnInit {
 
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.http.get(this.rest.gethost() + 'filme/getAll').subscribe((resdata: FilmEntry[]) => {
+    this.rest.get(this.rest.gethost() + 'filme/getAll').then((resdata: FilmEntry[]) => {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
@@ -57,9 +56,19 @@ export class FilmeComponent implements OnInit {
   }
 
   public deleteItem(item: FilmEntry): void {
-    // TODO: ADD nachfragen dialog
-    this.http.delete(this.rest.gethost() + 'filme/delete/' + item.id).subscribe((resdata: any) => {
-      this.load();
+    item.infotext = "Wirklich löschen? " + item.titel;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      width: '250px',
+      height: '250px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.rest.delete(this.rest.gethost() + 'filme/delete/' + item.id).then((resdata: any) => {
+          this.load();
+        });
+      }
     });
   }
 
@@ -74,7 +83,7 @@ export class FilmeComponent implements OnInit {
   }
 
   private save(item: FilmEntry): void {
-    this.http.post(this.rest.gethost() + 'filme/save', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'filme/save', item).then((resdata: any) => {
       this.load();
     });
   }
@@ -109,7 +118,7 @@ export class FilmeComponent implements OnInit {
   templateUrl: './filme.dialog.html',
 })
 export class FilmeComponentDialog {
-  constructor(public dialogRef: MatDialogRef<FilmeComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: FilmEntry) {}
+  constructor(public dialogRef: MatDialogRef<FilmeComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: FilmEntry) { }
 
   onNoClick(): void {
     this.dialogRef.close();

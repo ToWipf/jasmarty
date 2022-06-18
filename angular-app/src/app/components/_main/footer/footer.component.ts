@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-//import { version } from '../../../../package.json';
 import packageJson from '../../../../../package.json';
 
 @Component({
@@ -11,7 +9,7 @@ import packageJson from '../../../../../package.json';
   styleUrls: ['./footer.component.less'],
 })
 export class FooterComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest) { }
 
   public sAppVersion: string = packageJson.version;
   public sJavaVersion: string = '0.0';
@@ -23,7 +21,7 @@ export class FooterComponent implements OnInit {
   }
 
   public getVersion(): void {
-    this.http.get(this.rest.gethost() + 'wipf/ver').subscribe(
+    this.rest.get(this.rest.gethost() + 'wipf/ver').then(
       (resdata: any) => {
         this.bCantLoad = false;
         this.sJavaVersion = resdata.ver.toString();

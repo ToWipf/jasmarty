@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Jaconfig, Japage } from 'src/app/datatypes';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -11,7 +10,7 @@ import { DialogVariablenHilfeComponent } from 'src/app/dialog/main.dialog';
   styleUrls: ['./jasmartyPages.component.less'],
 })
 export class JasmartyPagesComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
+  constructor(public dialog: MatDialog, private rest: ServiceRest) { }
 
   public sText: string;
   public sStatus: string;
@@ -27,14 +26,14 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public getCurrentSelectedSite(): void {
-    this.http.get(this.rest.gethost() + 'pages/current').subscribe((resdata: Japage) => {
+    this.rest.get(this.rest.gethost() + 'pages/current').then((resdata: Japage) => {
       this.selectedPage = resdata.id;
       this.Japage = resdata;
     });
   }
 
   public loadConfig(): void {
-    this.http.get(this.rest.gethost() + 'lcd/config/get').subscribe((resdata) => {
+    this.rest.get(this.rest.gethost() + 'lcd/config/get').then((resdata) => {
       this.Jaconfig = resdata;
     });
   }
@@ -57,7 +56,7 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public save(): void {
-    this.http.post(this.rest.gethost() + 'pages/save', JSON.stringify(this.Japage)).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'pages/save', JSON.stringify(this.Japage)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
       } else {
@@ -72,7 +71,7 @@ export class JasmartyPagesComponent implements OnInit {
       this.selectedPage = 1;
     }
 
-    this.http.get(this.rest.gethost() + 'pages/get/' + this.selectedPage).subscribe((resdata: Japage) => {
+    this.rest.get(this.rest.gethost() + 'pages/get/' + this.selectedPage).then((resdata: Japage) => {
       this.Japage = resdata;
 
       if (this.Japage.id == 0) {
@@ -82,13 +81,13 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public selectPage(): void {
-    this.http.get(this.rest.gethost() + 'pages/select/' + this.selectedPage).subscribe((resdata) => {
+    this.rest.get(this.rest.gethost() + 'pages/select/' + this.selectedPage).then((resdata) => {
       console.log(resdata);
     });
   }
 
   public deletePage(): void {
-    this.http.delete(this.rest.gethost() + 'pages/delete/' + this.selectedPage).subscribe((resdata) => {
+    this.rest.delete(this.rest.gethost() + 'pages/delete/' + this.selectedPage).then((resdata) => {
       this.getSite();
     });
   }
@@ -144,7 +143,7 @@ export class JasmartyPagesComponent implements OnInit {
   templateUrl: './jasmartyPages.goToDialog.html',
 })
 export class JasmartyPagesComponentGoToDialog {
-  constructor(public dialogRef: MatDialogRef<JasmartyPagesComponentGoToDialog>, @Inject(MAT_DIALOG_DATA) public data: number) {}
+  constructor(public dialogRef: MatDialogRef<JasmartyPagesComponentGoToDialog>, @Inject(MAT_DIALOG_DATA) public data: number) { }
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { Telegram } from 'src/app/datatypes';
@@ -14,7 +13,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
   styleUrls: ['./telegramMsg.component.less'],
 })
 export class TelegramMsgComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -45,7 +44,7 @@ export class TelegramMsgComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'telegram/delMsg/' + item.mid).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'telegram/delMsg/' + item.mid).then((resdata: any) => {
           this.loadAllItems();
         });
       }
@@ -54,7 +53,7 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   private saveItem(t: Telegram): void {
-    this.http.post(this.rest.gethost() + 'telegram/saveMsg', t).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'telegram/saveMsg', t).then((resdata: any) => {
       this.loadAllItems();
     });
   }
@@ -62,7 +61,7 @@ export class TelegramMsgComponent implements OnInit {
   private loadAllItems(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
-    this.http.get(this.rest.gethost() + 'telegram/msgall').subscribe((resdata: Telegram[]) => {
+    this.rest.get(this.rest.gethost() + 'telegram/msgall').then((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();

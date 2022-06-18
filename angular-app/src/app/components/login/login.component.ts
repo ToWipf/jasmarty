@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
@@ -9,7 +8,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest) {}
+  constructor(public dialog: MatDialog, private rest: ServiceRest) { }
 
   public sUsername: string;
   public sPasswort: string;
@@ -17,8 +16,8 @@ export class LoginComponent {
 
   send() {
     this.rest.setLoginData(this.sUsername, this.sPasswort);
-    this.rest.httpGet("wipf/up").then(res => {
-      if (res == 1){
+    this.rest.get("wipf/up").then(res => {
+      if (res == 1) {
         this.sUsername = "";
         this.sPasswort = "";
         this.bLoginOk = true;

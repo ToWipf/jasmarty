@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Telegram, TelegramUserCache } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -14,7 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./telegramChat.component.less'],
 })
 export class TelegramChatComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
+  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
 
   }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,7 +33,7 @@ export class TelegramChatComponent implements OnInit {
     this.usercachearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'telegram/usercache/getAll').subscribe((resdata: TelegramUserCache[]) => {
+    this.rest.get(this.rest.gethost() + 'telegram/usercache/getAll').then((resdata: TelegramUserCache[]) => {
       this.usercachearry = resdata;
 
       this.dataSource = new MatTableDataSource(this.usercachearry);
@@ -61,7 +60,7 @@ export class TelegramChatComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'telegram/usercache/delete/' + item.chatid).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'telegram/usercache/delete/' + item.chatid).then((resdata: any) => {
           this.load();
         });
       }
@@ -70,7 +69,7 @@ export class TelegramChatComponent implements OnInit {
 
   // TestChat
   public send(): void {
-    this.http.post(this.rest.gethost() + 'telegram/chat', this.tMsg).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'telegram/chat', this.tMsg).then((resdata: any) => {
       this.tMsg.message = "";
       this.textOut = resdata.msg;
       this.load();

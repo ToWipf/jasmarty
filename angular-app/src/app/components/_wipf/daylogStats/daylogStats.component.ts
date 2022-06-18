@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -13,7 +12,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./daylogStats.component.less']
 })
 export class DaylogStatsComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -41,7 +40,7 @@ export class DaylogStatsComponent implements OnInit {
     this.statsarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'daylog/event/getStats').subscribe((resdata: StatsEntry[]) => {
+    this.rest.get(this.rest.gethost() + 'daylog/event/getStats').then((resdata: StatsEntry[]) => {
       resdata.forEach((element) => {
         this.statsarry.push(element);
       });

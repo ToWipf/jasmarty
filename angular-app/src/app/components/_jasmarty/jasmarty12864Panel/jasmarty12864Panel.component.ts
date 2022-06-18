@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-jasmarty12864panel',
@@ -9,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./jasmarty12864Panel.component.less'],
 })
 export class Jasmarty12864PanelComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf) {
+  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf) {
 
   }
   public screen: boolean[][] = new Array(64).fill(false).map(() => new Array(128).fill(false));
@@ -28,20 +27,20 @@ export class Jasmarty12864PanelComponent implements OnInit {
   }
 
   public send(): void {
-    this.http.post(this.rest.gethost() + 'lcd12864/setScreen', this.screen).subscribe((res) => {
+    this.rest.post(this.rest.gethost() + 'lcd12864/setScreen', this.screen).then((res) => {
       console.log(res);
     });
   }
 
   public load(): void {
-    this.http.get(this.rest.gethost() + 'lcd12864/getScreen').subscribe((res: any) => {
+    this.rest.get(this.rest.gethost() + 'lcd12864/getScreen').then((res: any) => {
       this.screen = res;
       console.log(res);
     });
   }
 
   public refreshLcdNow(): void {
-    this.http.post(this.rest.gethost() + 'lcd12864/refreshNow', null).subscribe((res) => {
+    this.rest.post(this.rest.gethost() + 'lcd12864/refreshNow', null).then((res) => {
       console.log(res);
     });
   }

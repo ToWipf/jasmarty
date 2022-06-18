@@ -1,5 +1,4 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { SettingEntry } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -14,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./settings.component.less'],
 })
 export class SettingsComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor( public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -33,7 +32,7 @@ export class SettingsComponent implements OnInit {
     this.settingsearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'basesettings/getAll').subscribe((resdata: SettingEntry[]) => {
+    this.rest.get(this.rest.gethost() + 'basesettings/getAll').then((resdata: SettingEntry[]) => {
       this.settingsearry = resdata;
 
       this.dataSource = new MatTableDataSource(this.settingsearry);
@@ -65,7 +64,7 @@ export class SettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'basesettings/delete/' + item.key).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'basesettings/delete/' + item.key).then((resdata: any) => {
           this.load();
         });
       }
@@ -73,7 +72,7 @@ export class SettingsComponent implements OnInit {
   }
 
   private save(item: SettingEntry): void {
-    this.http.post(this.rest.gethost() + 'basesettings/save', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'basesettings/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;
@@ -98,7 +97,7 @@ export class SettingsComponent implements OnInit {
   }
   
   public stopApp(): void {
-    this.http.post(this.rest.gethost() + 'wipf/stop','').subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'wipf/stop','').then((resdata: any) => {
       console.log(resdata);
     });
   }

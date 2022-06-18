@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DisplayLcd } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
@@ -9,7 +8,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./jasmartyFullView.component.less'],
 })
 export class JasmartyFullViewComponent implements OnInit {
-  constructor(private http: HttpClient, private rest: ServiceRest) {}
+  constructor( private rest: ServiceRest) {}
 
   public displayLive: DisplayLcd;
   public bLoopStop: boolean = false;
@@ -34,7 +33,7 @@ export class JasmartyFullViewComponent implements OnInit {
   }
 
   private getLcdSoll(): void {
-    this.http.get(this.rest.gethost() + 'lcd/soll').subscribe(
+    this.rest.get(this.rest.gethost() + 'lcd/soll').then(
       (resdata: DisplayLcd) => {
         this.displayLive = resdata;
         this.displayLive.display.forEach((line) => {

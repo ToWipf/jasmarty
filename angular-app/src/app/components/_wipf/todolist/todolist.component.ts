@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { TodoEntry } from 'src/app/datatypes';
@@ -14,7 +13,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
   styleUrls: ['./todolist.component.less'],
 })
 export class TodolistComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -38,7 +37,7 @@ export class TodolistComponent implements OnInit {
     this.toarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.http.get(this.rest.gethost() + 'todolist/getAll').subscribe((resdata: TodoEntry[]) => {
+    this.rest.get(this.rest.gethost() + 'todolist/getAll').then((resdata: TodoEntry[]) => {
       resdata.forEach((element) => {
 
         if (element.active === 'LATER' && this.bLater) {
@@ -95,7 +94,7 @@ export class TodolistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'todolist/delete/' + item.id).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'todolist/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -117,7 +116,7 @@ export class TodolistComponent implements OnInit {
   }
 
   private saveTodo(item: TodoEntry): void {
-    this.http.post(this.rest.gethost() + 'todolist/saveTodo', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'todolist/saveTodo', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;

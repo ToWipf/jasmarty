@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { WipfUser } from 'src/app/datatypes';
@@ -14,7 +13,7 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
   styleUrls: ['./wipfUserVw.component.less'],
 })
 export class WipfUserVwComponent implements OnInit {
-  constructor(private http: HttpClient, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -30,7 +29,7 @@ export class WipfUserVwComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.wuArray = [];
 
-    this.http.get(this.rest.gethost() + 'wipfuservw/getAll').subscribe((resdata: WipfUser[]) => {
+    this.rest.get(this.rest.gethost() + 'wipfuservw/getAll').then((resdata: WipfUser[]) => {
       resdata.forEach((element) => {
 
         this.wuArray.push(element);
@@ -49,7 +48,7 @@ export class WipfUserVwComponent implements OnInit {
   }
 
   private saveWipfUser(item: WipfUser): void {
-    this.http.post(this.rest.gethost() + 'wipfuservw/createOrUpdate', item).subscribe((resdata: any) => {
+    this.rest.post(this.rest.gethost() + 'wipfuservw/createOrUpdate', item).then((resdata: any) => {
       this.load();
     });
   }
@@ -80,7 +79,7 @@ export class WipfUserVwComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.http.delete(this.rest.gethost() + 'wipfuservw/delete/' + item.username).subscribe((resdata: any) => {
+        this.rest.delete(this.rest.gethost() + 'wipfuservw/delete/' + item.username).then((resdata: any) => {
           this.load();
         });
       }
