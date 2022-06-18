@@ -26,14 +26,14 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public getCurrentSelectedSite(): void {
-    this.rest.get(this.rest.gethost() + 'pages/current').then((resdata: Japage) => {
+    this.rest.get('pages/current').then((resdata: Japage) => {
       this.selectedPage = resdata.id;
       this.Japage = resdata;
     });
   }
 
   public loadConfig(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/config/get').then((resdata) => {
+    this.rest.get('lcd/config/get').then((resdata) => {
       this.Jaconfig = resdata;
     });
   }
@@ -56,7 +56,7 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public save(): void {
-    this.rest.post(this.rest.gethost() + 'pages/save', JSON.stringify(this.Japage)).then((resdata: any) => {
+    this.rest.post('pages/save', JSON.stringify(this.Japage)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
       } else {
@@ -71,7 +71,7 @@ export class JasmartyPagesComponent implements OnInit {
       this.selectedPage = 1;
     }
 
-    this.rest.get(this.rest.gethost() + 'pages/get/' + this.selectedPage).then((resdata: Japage) => {
+    this.rest.get('pages/get/' + this.selectedPage).then((resdata: Japage) => {
       this.Japage = resdata;
 
       if (this.Japage.id == 0) {
@@ -81,13 +81,13 @@ export class JasmartyPagesComponent implements OnInit {
   }
 
   public selectPage(): void {
-    this.rest.get(this.rest.gethost() + 'pages/select/' + this.selectedPage).then((resdata) => {
+    this.rest.get('pages/select/' + this.selectedPage).then((resdata) => {
       console.log(resdata);
     });
   }
 
   public deletePage(): void {
-    this.rest.delete(this.rest.gethost() + 'pages/delete/' + this.selectedPage).then((resdata) => {
+    this.rest.delete('pages/delete/' + this.selectedPage).then((resdata) => {
       this.getSite();
     });
   }

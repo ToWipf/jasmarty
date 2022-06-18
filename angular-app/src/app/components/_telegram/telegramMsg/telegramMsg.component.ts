@@ -44,7 +44,7 @@ export class TelegramMsgComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'telegram/delMsg/' + item.mid).then((resdata: any) => {
+        this.rest.delete('telegram/delMsg/' + item.mid).then((resdata: any) => {
           this.loadAllItems();
         });
       }
@@ -53,7 +53,7 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   private saveItem(t: Telegram): void {
-    this.rest.post(this.rest.gethost() + 'telegram/saveMsg', t).then((resdata: any) => {
+    this.rest.post('telegram/saveMsg', t).then((resdata: any) => {
       this.loadAllItems();
     });
   }
@@ -61,7 +61,7 @@ export class TelegramMsgComponent implements OnInit {
   private loadAllItems(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
-    this.rest.get(this.rest.gethost() + 'telegram/msgall').then((resdata: Telegram[]) => {
+    this.rest.get('telegram/msgall').then((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();

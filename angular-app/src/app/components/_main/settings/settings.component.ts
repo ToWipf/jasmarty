@@ -32,7 +32,7 @@ export class SettingsComponent implements OnInit {
     this.settingsearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'basesettings/getAll').then((resdata: SettingEntry[]) => {
+    this.rest.get('basesettings/getAll').then((resdata: SettingEntry[]) => {
       this.settingsearry = resdata;
 
       this.dataSource = new MatTableDataSource(this.settingsearry);
@@ -64,7 +64,7 @@ export class SettingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'basesettings/delete/' + item.key).then((resdata: any) => {
+        this.rest.delete('basesettings/delete/' + item.key).then((resdata: any) => {
           this.load();
         });
       }
@@ -72,7 +72,7 @@ export class SettingsComponent implements OnInit {
   }
 
   private save(item: SettingEntry): void {
-    this.rest.post(this.rest.gethost() + 'basesettings/save', item).then((resdata: any) => {
+    this.rest.post('basesettings/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;
@@ -97,7 +97,7 @@ export class SettingsComponent implements OnInit {
   }
   
   public stopApp(): void {
-    this.rest.post(this.rest.gethost() + 'wipf/stop','').then((resdata: any) => {
+    this.rest.post('wipf/stop','').then((resdata: any) => {
       console.log(resdata);
     });
   }

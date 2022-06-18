@@ -16,13 +16,13 @@ export class CryptComponent {
   // TODO: out !
 
   public crypt(): void {
-    this.rest.post(this.rest.gethost() + 'crypt/encrypt', this.crItem).then((resdata: any) => {
+    this.rest.post('crypt/encrypt', this.crItem).then((resdata: any) => {
       this.textOut = resdata.data;
     });
   }
 
   public decrypt(): void {
-    this.rest.post(this.rest.gethost() + 'crypt/decrypt', this.crItem).then((resdata: any) => {
+    this.rest.post('crypt/decrypt', this.crItem).then((resdata: any) => {
       this.textOut = resdata.data;
     });
   }

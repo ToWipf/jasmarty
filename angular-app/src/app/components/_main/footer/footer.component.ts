@@ -21,7 +21,7 @@ export class FooterComponent implements OnInit {
   }
 
   public getVersion(): void {
-    this.rest.get(this.rest.gethost() + 'wipf/ver').then(
+    this.rest.get('wipf/ver').then(
       (resdata: any) => {
         this.bCantLoad = false;
         this.sJavaVersion = resdata.ver.toString();

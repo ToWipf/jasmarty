@@ -25,13 +25,13 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   public refreshNow(): void {
-    this.rest.get(this.rest.gethost() + 'refresh/refreshCache').then((res: any) => {
+    this.rest.get('refresh/refreshCache').then((res: any) => {
       console.log(res);
     });
   }
 
   public selectSite(item: JapageForList): void {
-    this.rest.get(this.rest.gethost() + 'pages/select/' + item.id).then(() => {
+    this.rest.get('pages/select/' + item.id).then(() => {
       this.refreshNow();
     });
   }
@@ -47,7 +47,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getLcdSoll(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/soll').then(
+    this.rest.get('lcd/soll').then(
       (resdata: DisplayLcd) => {
         this.displayLive = resdata;
         this.displayLive.display.forEach((line) => {
@@ -61,7 +61,7 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
   }
 
   private getAllPages(): void {
-    this.rest.get(this.rest.gethost() + 'pages/getAllPages').then((resdata: JapageForList[]) => {
+    this.rest.get('pages/getAllPages').then((resdata: JapageForList[]) => {
       this.pagelist = resdata;
       this.pagelist.sort((a, b) => a.name.localeCompare(b.name));
     });

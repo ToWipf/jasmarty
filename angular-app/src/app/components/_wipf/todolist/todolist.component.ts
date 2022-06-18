@@ -37,7 +37,7 @@ export class TodolistComponent implements OnInit {
     this.toarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'todolist/getAll').then((resdata: TodoEntry[]) => {
+    this.rest.get('todolist/getAll').then((resdata: TodoEntry[]) => {
       resdata.forEach((element) => {
 
         if (element.active === 'LATER' && this.bLater) {
@@ -94,7 +94,7 @@ export class TodolistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'todolist/delete/' + item.id).then((resdata: any) => {
+        this.rest.delete('todolist/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -116,7 +116,7 @@ export class TodolistComponent implements OnInit {
   }
 
   private saveTodo(item: TodoEntry): void {
-    this.rest.post(this.rest.gethost() + 'todolist/saveTodo', item).then((resdata: any) => {
+    this.rest.post('todolist/saveTodo', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;

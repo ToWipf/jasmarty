@@ -30,7 +30,7 @@ export class FilmeComponent implements OnInit {
 
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get(this.rest.gethost() + 'filme/getAll').then((resdata: FilmEntry[]) => {
+    this.rest.get('filme/getAll').then((resdata: FilmEntry[]) => {
       this.farry = resdata;
       this.dataSource = new MatTableDataSource(this.farry);
       this.dataSource.sort = this.sort;
@@ -65,7 +65,7 @@ export class FilmeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'filme/delete/' + item.id).then((resdata: any) => {
+        this.rest.delete('filme/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -83,7 +83,7 @@ export class FilmeComponent implements OnInit {
   }
 
   private save(item: FilmEntry): void {
-    this.rest.post(this.rest.gethost() + 'filme/save', item).then((resdata: any) => {
+    this.rest.post('filme/save', item).then((resdata: any) => {
       this.load();
     });
   }

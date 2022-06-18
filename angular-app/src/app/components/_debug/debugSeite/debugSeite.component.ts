@@ -16,7 +16,7 @@ export class DebugSeiteComponent implements OnInit {
   }
 
   public doSQL(): void {
-    this.rest.post(this.rest.gethost() + 'sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
+    this.rest.post('sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
       this.sSQL_OUT = resdata.res;
     });
   }

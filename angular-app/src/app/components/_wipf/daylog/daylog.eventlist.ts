@@ -63,7 +63,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     private saveEvent(item: DaylogEvent): void {
         this.bShowWarning = true;
-        this.rest.post(this.rest.gethost() + 'daylog/event/save', item).then((resdata: any) => {
+        this.rest.post('daylog/event/save', item).then((resdata: any) => {
             this.loadEventsByDay(this.dateForLoad);
             if (resdata.save == "true") {
                 this.bShowWarning = false;
@@ -131,7 +131,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.eventlist = [];
 
         // keine userid möglich -> unsicher!
-        this.rest.get(this.rest.gethost() + 'daylog/event/getAll').then((resdata: DaylogEvent[]) => {
+        this.rest.get('daylog/event/getAll').then((resdata: DaylogEvent[]) => {
             this.eventlist = resdata;
 
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
@@ -146,7 +146,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             const warten = this.dialog.open(DialogWartenComponent, {});
             this.eventlist = [];
 
-            this.rest.get(this.rest.gethost() + 'daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
+            this.rest.get('daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
                 this.eventlist = resdata;
 
                 this.eventlistDataSource = new MatTableDataSource(this.eventlist);
@@ -181,7 +181,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
-                this.rest.delete(this.rest.gethost() + 'daylog/event/delete/' + item.id).then((resdata: any) => {
+                this.rest.delete('daylog/event/delete/' + item.id).then((resdata: any) => {
                     //this.loadDays(); TODO warum war das hier?
                     this.loadEventsByDay(this.dateForLoad);
                 });
@@ -208,7 +208,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadDaylogTypes(): void {
-        this.rest.get(this.rest.gethost() + 'daylog/type/getAll').then((resdata: DaylogDay[]) => {
+        this.rest.get('daylog/type/getAll').then((resdata: DaylogDay[]) => {
             this.daylogTypes = resdata;
         });
     }

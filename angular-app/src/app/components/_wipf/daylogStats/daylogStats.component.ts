@@ -40,7 +40,7 @@ export class DaylogStatsComponent implements OnInit {
     this.statsarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'daylog/event/getStats').then((resdata: StatsEntry[]) => {
+    this.rest.get('daylog/event/getStats').then((resdata: StatsEntry[]) => {
       resdata.forEach((element) => {
         this.statsarry.push(element);
       });

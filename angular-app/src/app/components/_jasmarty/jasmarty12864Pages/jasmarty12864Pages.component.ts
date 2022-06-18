@@ -87,7 +87,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public selectLcdDescription(): void {
-    this.rest.post(this.rest.gethost() + 'lcd12864/selectPage/' + this.lcdDescription.id, null).then((res) => {
+    this.rest.post('lcd12864/selectPage/' + this.lcdDescription.id, null).then((res) => {
       console.log(res);
     });
   }
@@ -125,14 +125,14 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   private saveLcdDescription(): void {
     console.log(this.lcdDescription);
-    this.rest.post(this.rest.gethost() + 'lcd12864/savePage', this.lcdDescription).then((res) => {
+    this.rest.post('lcd12864/savePage', this.lcdDescription).then((res) => {
       console.log(res);
     });
   }
 
   private loadLcdDescription(): void {
     this.base64 = null;
-    this.rest.get(this.rest.gethost() + 'lcd12864/getPage/' + this.lcdDescription.id).then((res) => {
+    this.rest.get('lcd12864/getPage/' + this.lcdDescription.id).then((res) => {
       this.lcdDescription = res;
 
       if (!this.lcdDescription.dynamic) {

@@ -33,7 +33,7 @@ export class TelegramChatComponent implements OnInit {
     this.usercachearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'telegram/usercache/getAll').then((resdata: TelegramUserCache[]) => {
+    this.rest.get('telegram/usercache/getAll').then((resdata: TelegramUserCache[]) => {
       this.usercachearry = resdata;
 
       this.dataSource = new MatTableDataSource(this.usercachearry);
@@ -60,7 +60,7 @@ export class TelegramChatComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'telegram/usercache/delete/' + item.chatid).then((resdata: any) => {
+        this.rest.delete('telegram/usercache/delete/' + item.chatid).then((resdata: any) => {
           this.load();
         });
       }
@@ -69,7 +69,7 @@ export class TelegramChatComponent implements OnInit {
 
   // TestChat
   public send(): void {
-    this.rest.post(this.rest.gethost() + 'telegram/chat', this.tMsg).then((resdata: any) => {
+    this.rest.post('telegram/chat', this.tMsg).then((resdata: any) => {
       this.tMsg.message = "";
       this.textOut = resdata.msg;
       this.load();

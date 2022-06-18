@@ -24,7 +24,7 @@ export class DynpageShowComponent {
   public load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'dynpages/get/' + this.nPageId).then((resdata: DynpageEntry) => {
+    this.rest.get('dynpages/get/' + this.nPageId).then((resdata: DynpageEntry) => {
       this.sHtml = resdata.html;
       this.sScript = resdata.script;
       this.sStyle = resdata.style;
@@ -39,7 +39,7 @@ export class DynpageShowComponent {
 
   // public getRest(sPath: string): any {
   //   const warten = this.dialog.open(DialogWartenComponent, {});
-  //   this.http.get(this.rest.gethost() + sPath).subscribe((result: any) => {
+  //   this.http.get(sPath).subscribe((result: any) => {
   //     warten.close();
   //     return result;
   //   });

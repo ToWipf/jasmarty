@@ -21,13 +21,13 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public load(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/config/get').then((resdata) => {
+    this.rest.get('lcd/config/get').then((resdata) => {
       this.jaconfig = resdata;
     });
   }
 
   public save(): void {
-    this.rest.post(this.rest.gethost() + 'lcd/config/set', JSON.stringify(this.jaconfig)).then((resdata: any) => {
+    this.rest.post('lcd/config/set', JSON.stringify(this.jaconfig)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
         this.startLcdAgain();
@@ -39,50 +39,50 @@ export class JasmartyConfigComponent implements OnInit {
   }
 
   public startLcdAgain(): void {
-    this.rest.get(this.rest.gethost() + 'debug/jasmarty/restart').then((resdata: any) => {
+    this.rest.get('debug/jasmarty/restart').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public getPorts(): void {
-    this.rest.get(this.rest.gethost() + 'wipf/ports').then((resdata: any) => {
+    this.rest.get('wipf/ports').then((resdata: any) => {
       console.log(resdata);
       this.ports = resdata.list;
     });
   }
 
   public start(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/open').then((resdata: any) => {
+    this.rest.get('lcd/open').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public stop(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/open').then((resdata: any) => {
+    this.rest.get('lcd/open').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public refreshOn(): void {
-    this.rest.get(this.rest.gethost() + 'refresh/on').then((resdata: any) => {
+    this.rest.get('refresh/on').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public refreshOff(): void {
-    this.rest.get(this.rest.gethost() + 'refresh/off').then((resdata: any) => {
+    this.rest.get('refresh/off').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public getJasmartyActive(): void {
-    this.rest.get(this.rest.gethost() + 'basesettings/get/jasmarty').then((resdata: any) => {
+    this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
       this.bJasmartyActive = resdata.active;
     });
   }
 
   public setJasmartyActive(bStatus: boolean): void {
-    this.rest.post(this.rest.gethost() + 'basesettings/set/jasmarty/' + bStatus, '').then((resdata: any) => {
+    this.rest.post('basesettings/set/jasmarty/' + bStatus, '').then((resdata: any) => {
       console.log(resdata);
     });
   }

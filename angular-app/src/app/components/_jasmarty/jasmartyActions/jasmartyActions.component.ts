@@ -40,7 +40,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   public deleteItem(item: Buttonaction): void {
     // TODO: ADD nachfragen dialog
-    this.rest.delete(this.rest.gethost() + 'actions/delete/' + item.id).then((resdata: any) => {
+    this.rest.delete('actions/delete/' + item.id).then((resdata: any) => {
       this.load();
     });
   }
@@ -65,13 +65,13 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public testAction(item: Buttonaction): void {
-    this.rest.get(this.rest.gethost() + 'actions/doaction/' + item.id).then((resdata: any) => {
+    this.rest.get('actions/doaction/' + item.id).then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   private save(item: Buttonaction): void {
-    this.rest.post(this.rest.gethost() + 'actions/set', JSON.stringify(item)).then((resdata: any) => {
+    this.rest.post('actions/set', JSON.stringify(item)).then((resdata: any) => {
       if (resdata.save) {
         console.log('saved');
         this.load();
@@ -84,7 +84,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get(this.rest.gethost() + 'actions/getall').then((resdata: any) => {
+    this.rest.get('actions/getall').then((resdata: any) => {
       console.log(resdata);
       this.Buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.Buttonactions);
@@ -104,7 +104,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.rest.get(this.rest.gethost() + 'actions/currentPressed').then(
+    this.rest.get('actions/currentPressed').then(
       (resdata: any) => {
         console.log(resdata.btn);
         if (resdata.btn) {

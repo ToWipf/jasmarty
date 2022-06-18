@@ -11,23 +11,23 @@ import { ServiceWipf } from './serviceWipf';
 export class ServiceRest {
   constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
-  //private host: string = '';
   private sHost: string = 'http://localhost:8080/';
   private httpOptions: any;
 
-  public gethost(): string {
-    return this.sHost;
-  }
-
-  public sethost(host: string): void {
-    this.sHost = host;
-  }
-
   public setLoginData(user: string, passwort: string) {
     // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
+    const sAuth =  btoa(user + ":" + passwort)
+    
+    this.setLogin(sAuth);
+
+    // Anmeldedaten speichern
+    localStorage.setItem('auth', sAuth);
+  }
+  
+  private setLogin(base64Auth: string){
     this.httpOptions = {
       headers: new HttpHeaders({
-        "Authorization": "Basic " + btoa(user + ":" + passwort)
+        "Authorization": "Basic " + base64Auth
       })
     };
   }
@@ -40,8 +40,26 @@ export class ServiceRest {
     if (sHostExp.length > 10) {
       this.sHost = sHostExp;
     }
+
+    // den letzen auth laden, wenn vorhanden
+    const lastAuth = localStorage.getItem('auth')
+    if (lastAuth) {
+      this.setLogin(lastAuth);
+    }
   }
 
+  public gethost(): string {
+    return this.sHost;
+  }
+
+  public sethost(host: string): void {
+    this.sHost = host;
+  }
+  
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  
   /**
    * http get
    * 

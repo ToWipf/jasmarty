@@ -29,7 +29,7 @@ export class WipfUserVwComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.wuArray = [];
 
-    this.rest.get(this.rest.gethost() + 'wipfuservw/getAll').then((resdata: WipfUser[]) => {
+    this.rest.get('wipfuservw/getAll').then((resdata: WipfUser[]) => {
       resdata.forEach((element) => {
 
         this.wuArray.push(element);
@@ -48,7 +48,7 @@ export class WipfUserVwComponent implements OnInit {
   }
 
   private saveWipfUser(item: WipfUser): void {
-    this.rest.post(this.rest.gethost() + 'wipfuservw/createOrUpdate', item).then((resdata: any) => {
+    this.rest.post('wipfuservw/createOrUpdate', item).then((resdata: any) => {
       this.load();
     });
   }
@@ -79,7 +79,7 @@ export class WipfUserVwComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'wipfuservw/delete/' + item.username).then((resdata: any) => {
+        this.rest.delete('wipfuservw/delete/' + item.username).then((resdata: any) => {
           this.load();
         });
       }

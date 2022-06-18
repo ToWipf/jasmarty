@@ -32,7 +32,7 @@ export class DynpagesComponent implements OnInit {
     this.dynpagearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'dynpages/getAll').then((resdata: DynpageEntry[]) => {
+    this.rest.get('dynpages/getAll').then((resdata: DynpageEntry[]) => {
       resdata.forEach((element) => {
 
         if (this.bLive || element.live) {
@@ -74,7 +74,7 @@ export class DynpagesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'dynpages/delete/' + item.id).then((resdata: any) => {
+        this.rest.delete('dynpages/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -82,7 +82,7 @@ export class DynpagesComponent implements OnInit {
   }
 
   private save(item: DynpageEntry): void {
-    this.rest.post(this.rest.gethost() + 'dynpages/save', item).then((resdata: any) => {
+    this.rest.post('dynpages/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
         this.bShowWarning = true;

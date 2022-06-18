@@ -20,26 +20,26 @@ export class TelegramConfigComponent implements OnInit {
   }
 
   public getBotKey(): void {
-    this.rest.get(this.rest.gethost() + 'telegram/getbot').then((resdata: any) => {
+    this.rest.get('telegram/getbot').then((resdata: any) => {
       this.sBotKey = resdata.botkey;
     });
   }
 
   public setBotKey(): void {
-    this.rest.post(this.rest.gethost() + 'telegram/setbot/' + this.sBotKey, '').then((resdata: any) => {
+    this.rest.post('telegram/setbot/' + this.sBotKey, '').then((resdata: any) => {
       console.log(resdata);
       this.refreshOn();
     });
   }
 
   public refreshOn(): void {
-    this.rest.get(this.rest.gethost() + 'telegram/on').then((resdata: any) => {
+    this.rest.get('telegram/on').then((resdata: any) => {
       console.log(resdata);
     });
   }
 
   public refreshOff(): void {
-    this.rest.get(this.rest.gethost() + 'telegram/off').then((resdata: any) => {
+    this.rest.get('telegram/off').then((resdata: any) => {
       console.log(resdata);
     });
   }
@@ -47,7 +47,7 @@ export class TelegramConfigComponent implements OnInit {
   public sendMsgToGroup(): void {
     if (this.sText) {
       //TODO: escape input String (TEXTBOX?)
-      this.rest.post(this.rest.gethost() + 'telegram/sendMsgToAdmin/' + this.sText, null).then((resdata) => {
+      this.rest.post('telegram/sendMsgToAdmin/' + this.sText, null).then((resdata) => {
         this.sStatus = resdata.toString();
         this.sText = null;
       });
@@ -55,13 +55,13 @@ export class TelegramConfigComponent implements OnInit {
   }
 
   public getTelegramActive(): void {
-    this.rest.get(this.rest.gethost() + 'basesettings/get/telegram').then((resdata: any) => {
+    this.rest.get('basesettings/get/telegram').then((resdata: any) => {
       this.bTelegramActive = resdata.active;
     });
   }
 
   public setTelegramActive(bStatus: boolean): void {
-    this.rest.post(this.rest.gethost() + 'basesettings/set/telegram/' + bStatus, '').then((resdata: any) => {
+    this.rest.post('basesettings/set/telegram/' + bStatus, '').then((resdata: any) => {
       console.log(resdata);
     });
   }

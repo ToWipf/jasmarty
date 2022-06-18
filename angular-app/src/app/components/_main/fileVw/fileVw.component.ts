@@ -30,7 +30,7 @@ export class FileVwComponent implements OnInit {
     this.filenames = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get(this.rest.gethost() + 'file/getAll').then((resdata: String[]) => {
+    this.rest.get('file/getAll').then((resdata: String[]) => {
       this.filenames = resdata;
 
       this.dataSource = new MatTableDataSource(this.filenames);
@@ -58,7 +58,7 @@ export class FileVwComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete(this.rest.gethost() + 'file/del/' + name).then((resdata: any) => {
+        this.rest.delete('file/del/' + name).then((resdata: any) => {
           this.load();
         });
       }
@@ -66,7 +66,7 @@ export class FileVwComponent implements OnInit {
   }
 
   public downloadItem(name: String): void {
-    window.open(this.rest.gethost() + 'file/download/' + name);
+    window.open('file/download/' + name);
   }
 
   // public uploadFile(files: FileList) {

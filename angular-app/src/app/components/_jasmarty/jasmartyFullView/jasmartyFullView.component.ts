@@ -33,7 +33,7 @@ export class JasmartyFullViewComponent implements OnInit {
   }
 
   private getLcdSoll(): void {
-    this.rest.get(this.rest.gethost() + 'lcd/soll').then(
+    this.rest.get('lcd/soll').then(
       (resdata: DisplayLcd) => {
         this.displayLive = resdata;
         this.displayLive.display.forEach((line) => {
