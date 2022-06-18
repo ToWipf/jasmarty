@@ -19,14 +19,14 @@ export class LoginComponent {
       if (res == 1) {
         this.sUsername = "";
         this.sPasswort = "";
-        this.rest.setLoginOk(true);
+        this.rest.setLoginOk("true");
       }
     });
   }
 
   public logoff() {
     this.rest.setLoginData("", "");
-    this.rest.setLoginOk(false);
+    this.rest.setLoginOk("false");
     this.rest.clearLogin();
   }
 

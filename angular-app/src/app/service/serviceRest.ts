@@ -13,7 +13,7 @@ export class ServiceRest {
 
   private sHost: string = 'http://localhost:8080/';
   private httpOptions: any;
-  private bLoginOk: boolean = false;
+  private bLoginOk: string = "false";
 
   public setLoginData(user: string, passwort: string): void {
     // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
@@ -50,6 +50,7 @@ export class ServiceRest {
     const lastAuth = localStorage.getItem('auth')
     if (lastAuth) {
       this.setLogin(lastAuth);
+      this.setLoginOk("may");
     }
   }
 
@@ -61,11 +62,11 @@ export class ServiceRest {
     this.sHost = host;
   }
 
-  public getLoginOk(): boolean {
+  public getLoginOk(): string {
     return this.bLoginOk;
   }
 
-  public setLoginOk(b: boolean): void {
+  public setLoginOk(b: string): void {
     this.bLoginOk = b;
   }
 

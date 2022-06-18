@@ -1,15 +1,23 @@
 <h1>Login</h1>
 
-<ng-container *ngIf="!rest.getLoginOk()">
+<ng-container *ngIf="rest.getLoginOk()=='false'">
     Anmelden:
     <input type="text" class="form-control inbutton" [(ngModel)]="sUsername" placeholder="Username">
     <input type="password" class="form-control inbutton" [(ngModel)]="sPasswort" placeholder="Passwort" (keyup.enter)="login()">
     <button class="btn btn-default" (click)="login()">Ok</button>
 </ng-container>
 
-<ng-container *ngIf="rest.getLoginOk()">
+<ng-container *ngIf="rest.getLoginOk()=='true'">
     <div class="infobox">
         Anmeldung Ok
+    </div>
+
+    <button class="btn btn-default" (click)="logoff()">Abmelden</button>
+</ng-container>
+
+<ng-container *ngIf="rest.getLoginOk()=='may'">
+    <div class="infobox">
+        Anmeldung noch vorhanden
     </div>
 
     <button class="btn btn-default" (click)="logoff()">Abmelden</button>
