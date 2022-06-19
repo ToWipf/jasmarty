@@ -102,6 +102,10 @@ public class TAppTodoList {
 	 * @return
 	 */
 	private String getLast(Integer messageIntPart) {
+		// Wenn nicht übergeben wird, eins nehmen
+		if (messageIntPart == null) {
+			messageIntPart = 1;
+		}
 		StringBuilder sb = new StringBuilder();
 		try {
 			String sQuery = "SELECT * FROM todolist ORDER BY id DESC LIMIT ?;";

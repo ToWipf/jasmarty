@@ -33,17 +33,6 @@ public class FilmEntry extends Telegram {
 	}
 
 	/**
-	 * @return
-	 */
-	public JSONObject toJsonRelevantOnly() {
-		JSONObject jo = super.toJson();
-		jo.put("id", nId);
-		jo.put("titel", sTitel);
-		jo.put("infotext", sInfotext);
-		return jo;
-	}
-
-	/**
 	 * @param sJson
 	 * @return
 	 */

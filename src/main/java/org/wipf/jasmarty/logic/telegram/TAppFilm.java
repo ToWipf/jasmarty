@@ -80,7 +80,10 @@ public class TAppFilm {
 			if (sb.length() > 0) {
 				sb.append("\n");
 			}
-			sb.append(wipf.jsonToStringAsList(tItem.toJsonRelevantOnly()));
+
+			sb.append(tItem.getTitel() + "\n");
+			sb.append(tItem.getInfotext() + "\n");
+			sb.append(tItem.getDate() + "\n");
 			sb.append("\n");
 		}
 
