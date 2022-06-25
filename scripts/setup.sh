@@ -5,3 +5,6 @@ npm install
 echo "Setup end"
 
 # npm install -g @angular/cli
+
+# fix warns:
+# npm i -f

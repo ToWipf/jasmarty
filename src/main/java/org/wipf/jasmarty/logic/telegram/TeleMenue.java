@@ -116,7 +116,7 @@ public class TeleMenue {
 				    "todo" + "\n" +
 					"rndEvent\n" +
 					"punkte \n" +
-					"pp \n" +
+					"pp"+ "\n" +
 					"pm / mp\n" +
 					"ns / nochSpiele\n" +
 					"sns / setNochSpiele\n" +
@@ -130,9 +130,10 @@ public class TeleMenue {
 					"getfile\n" +
 					"filelist\n" +
 					"txt\n"+
-					"\n" +
 					"dl dh di |daylog\n" +
-					"backup"
+					"backup\n" +
+					"discord\n" +
+					"discordlist"
 					;
 				// @formatter:on
 
@@ -264,6 +265,7 @@ public class TeleMenue {
 			case "fileliste":
 				return fileVw.getFilesForTelegram();
 			case "b":
+			case "db":
 			case "backup":
 				return sendAndReceive.sendDatabaseToTelegram(t);
 
@@ -275,6 +277,11 @@ public class TeleMenue {
 			case "dis":
 			case "discord":
 				return discord.isOnlineDefault();
+			case "disl":
+			case "discordlist":
+			case "disn":
+			case "discordnames":
+				return discord.getOnlineNamesDefault();
 
 			default:
 				break;

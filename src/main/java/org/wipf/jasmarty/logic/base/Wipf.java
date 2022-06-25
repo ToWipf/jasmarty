@@ -502,4 +502,19 @@ public class Wipf {
 		return (s != null && !s.equals(""));
 	}
 
+	/**
+	 * @param list
+	 * @return
+	 */
+	public String toList(List<String> list) {
+		StringBuilder sb = new StringBuilder();
+		for (String s : list) {
+			if (!s.isEmpty()) {
+				sb.append("\n");
+			}
+			sb.append(s);
+		}
+		return null;
+	}
+
 }
