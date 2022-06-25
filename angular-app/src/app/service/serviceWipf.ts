@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Blowfish } from 'javascript-blowfish';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class ServiceWipf {
    * @param oldObj 
    * @returns 
    */
-  public deepCopy(oldObj: any) {
+  public deepCopy(oldObj: any): any {
     var newObj = oldObj;
     if (oldObj && typeof oldObj === 'object') {
       if (oldObj instanceof Date) {
@@ -30,7 +31,7 @@ export class ServiceWipf {
    * @param ms 
    * @returns 
    */
-  public delay(ms: number) {
+  public delay(ms: number): any {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
@@ -41,10 +42,32 @@ export class ServiceWipf {
    * @param size 
    * @returns 
    */
-  public pad(num, size) {
+  public pad(num, size): any {
     num = num.toString();
     while (num.length < size) num = "0" + num;
     return num;
+  }
+
+  /**
+   * 
+   * @param str 
+   * @param key 
+   * @returns 
+   */
+  public crypt(str: string, key: string): string {
+    var bf = new Blowfish(key);
+    return bf.encrypt(str);
+  }
+
+  /**
+   * 
+   * @param str 
+   * @param key 
+   * @returns 
+   */
+  public decrypt(str: string, key: string): string {
+    var bf = new Blowfish(key);
+    return bf.decrypt(str);
   }
 
 }

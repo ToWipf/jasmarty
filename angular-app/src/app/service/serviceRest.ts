@@ -22,7 +22,8 @@ export class ServiceRest {
     this.setLogin(sAuth);
 
     // Anmeldedaten speichern
-    localStorage.setItem('auth', sAuth);
+
+    localStorage.setItem('auth', this.serviceWipf.crypt(sAuth, "TODO:KEY"));
   }
 
   public clearLogin(): void {
@@ -47,7 +48,7 @@ export class ServiceRest {
     }
 
     // den letzen auth laden, wenn vorhanden
-    const lastAuth = localStorage.getItem('auth')
+    const lastAuth = this.serviceWipf.decrypt(localStorage.getItem('auth'), "TODO:KEY");
     if (lastAuth) {
       this.setLogin(lastAuth);
       this.setLoginOk("may");
