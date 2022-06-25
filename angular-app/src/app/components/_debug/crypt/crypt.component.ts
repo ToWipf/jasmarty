@@ -13,7 +13,6 @@ export class CryptComponent {
 
   public crItem: CryptItem = { data: '', key: '' };
   public textOut: string = '-';
-  // TODO: out !
 
   public crypt(): void {
     this.rest.post('crypt/encrypt', this.crItem).then((resdata: any) => {

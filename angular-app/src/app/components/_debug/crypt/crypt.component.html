@@ -11,16 +11,16 @@
     <button class="btn btn-default" (click)="crypt()">Crypt</button>
     <button class="btn btn-default" (click)="decrypt()">Decrypt</button>
 
-    <!--
-        TODO: Style
-    -->
-
-    IN:
+    <br>
+    Eingabe:
     <mat-form-field>
         <mat-label>Input data</mat-label>
         <textarea [(ngModel)]="crItem.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
     </mat-form-field>
+    <br>
+    Ausgabe:
 
-    OUT: {{textOut}}
+    <br>
+    {{textOut}}
 
 </div>
