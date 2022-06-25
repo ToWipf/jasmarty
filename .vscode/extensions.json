@@ -1,10 +1,11 @@
 {
     "recommendations": [
-      "Angular.ng-template",
+      "angular.ng-template",
       "eamodio.gitlens",
       "eg2.tslint",
       "esbenp.prettier-vscode",
-      "Mikael.Angular-BeastCode",
-      "shinnn.stylelint"
+      "mikael.angular-beastcode",
+      "shinnn.stylelint",
+      "smcpeak.default-keys-windows"
     ]
   }
