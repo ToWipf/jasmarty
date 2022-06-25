@@ -164,83 +164,81 @@
             </button> -->
 
             <div class="maincontainer">
-                <perfect-scrollbar class="pscroll">
-                    <ng-container *ngIf="selectedSite==='pages'">
-                        <app-jasmartyPages></app-jasmartyPages>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='liveFull'">
-                        <app-jasmartyFullView></app-jasmartyFullView>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='actions'">
-                        <app-jasmartyActions></app-jasmartyActions>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='config'">
-                        <app-jasmartyConfig></app-jasmartyConfig>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='lcdmain'">
-                        <app-jasmartyMain></app-jasmartyMain>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='configtele'">
-                        <app-telegram-config></app-telegram-config>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='todolist'">
-                        <app-todolist></app-todolist>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='filme'">
-                        <app-filme></app-filme>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='crypt'">
-                        <app-crypt></app-crypt>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='chat'">
-                        <app-telegram-chat></app-telegram-chat>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='tlog'">
-                        <app-telegram-log></app-telegram-log>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='tmsg'">
-                        <app-telegramMsg></app-telegramMsg>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='wipfuservw'">
-                        <app-wipfuservw></app-wipfuservw>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='12864panel'">
-                        <app-jasmarty12864panel></app-jasmarty12864panel>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='12864pages'">
-                        <app-jasmarty12864pages></app-jasmarty12864pages>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='charGenerator'">
-                        <app-charGenerator></app-charGenerator>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='debug'">
-                        <app-debugSeite></app-debugSeite>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='daylog'">
-                        <app-daylog></app-daylog>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='dynpages'">
-                        <app-dynpages></app-dynpages>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='dynpageShow'">
-                        <app-dynpageShow></app-dynpageShow>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='filevw'">
-                        <app-file-vw></app-file-vw>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='settings'">
-                        <app-settings></app-settings>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='rndEvent'">
-                        <app-rndEvent></app-rndEvent>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='daylogStats'">
-                        <app-daylogStats></app-daylogStats>
-                    </ng-container>
-                    <ng-container *ngIf="selectedSite==='login'">
-                        <app-login></app-login>
-                    </ng-container>
-                </perfect-scrollbar>
+                <ng-container *ngIf="selectedSite==='pages'">
+                    <app-jasmartyPages></app-jasmartyPages>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='liveFull'">
+                    <app-jasmartyFullView></app-jasmartyFullView>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='actions'">
+                    <app-jasmartyActions></app-jasmartyActions>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='config'">
+                    <app-jasmartyConfig></app-jasmartyConfig>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='lcdmain'">
+                    <app-jasmartyMain></app-jasmartyMain>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='configtele'">
+                    <app-telegram-config></app-telegram-config>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='todolist'">
+                    <app-todolist></app-todolist>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='filme'">
+                    <app-filme></app-filme>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='crypt'">
+                    <app-crypt></app-crypt>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='chat'">
+                    <app-telegram-chat></app-telegram-chat>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='tlog'">
+                    <app-telegram-log></app-telegram-log>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='tmsg'">
+                    <app-telegramMsg></app-telegramMsg>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='wipfuservw'">
+                    <app-wipfuservw></app-wipfuservw>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='12864panel'">
+                    <app-jasmarty12864panel></app-jasmarty12864panel>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='12864pages'">
+                    <app-jasmarty12864pages></app-jasmarty12864pages>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='charGenerator'">
+                    <app-charGenerator></app-charGenerator>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='debug'">
+                    <app-debugSeite></app-debugSeite>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='daylog'">
+                    <app-daylog></app-daylog>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='dynpages'">
+                    <app-dynpages></app-dynpages>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='dynpageShow'">
+                    <app-dynpageShow></app-dynpageShow>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='filevw'">
+                    <app-file-vw></app-file-vw>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='settings'">
+                    <app-settings></app-settings>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='rndEvent'">
+                    <app-rndEvent></app-rndEvent>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='daylogStats'">
+                    <app-daylogStats></app-daylogStats>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='login'">
+                    <app-login></app-login>
+                </ng-container>
             </div>
         </div>
         <app-footer class="myfooter"></app-footer>

@@ -9,6 +9,9 @@
 
 <hr>
 
-<script>{{sScript}}</script>
+<!-- TODO: geht nicht -->
+<script>{ { sScript } }</script>
 
-<div [ngStyle]="getSytle()" [innerHTML]="sHtml"></div>
+<perfect-scrollbar class="pscroll">
+    <div [ngStyle]="getSytle()" [innerHTML]="sHtml"></div>
+</perfect-scrollbar>
