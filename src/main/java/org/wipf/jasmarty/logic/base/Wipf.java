@@ -507,6 +507,9 @@ public class Wipf {
 	 * @return
 	 */
 	public String toList(List<String> list) {
+		if (list == null) {
+			return "Fehler 060";
+		}
 		StringBuilder sb = new StringBuilder();
 		for (String s : list) {
 			if (!s.isEmpty()) {
