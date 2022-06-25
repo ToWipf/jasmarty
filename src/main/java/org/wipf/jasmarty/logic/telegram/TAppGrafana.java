@@ -80,7 +80,7 @@ public class TAppGrafana {
 			try {
 				return sendGrafanaPictureToTelegram(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
-				return "Fehler 8 " + e;
+				return "Fehler 112 " + e;
 			}
 		} else {
 			return "Fehlerhafte Eingabe\nHilfe mit 'Heizung'";
@@ -134,7 +134,7 @@ public class TAppGrafana {
 			try {
 				return sendGrafanaPictureToTelegram(t.getChatID(), "FYv3KbWgk/netzwerk", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
-				return "Fehler 8 " + e;
+				return "Fehler 113 " + e;
 			}
 		} else {
 			return "Fehlerhafte Eingabe\nHilfe mit 'dev'";

@@ -50,7 +50,7 @@ public class TAppDaylog {
 			return doDayLog(t);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "Fehler 672";
+			return "Fehler 106";
 		}
 	}
 
@@ -139,7 +139,7 @@ public class TAppDaylog {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return "Fehler 643";
+			return "Fehler 107";
 		}
 		return sb.toString();
 	}
@@ -235,12 +235,12 @@ public class TAppDaylog {
 			daylogEventDB.save(dayEvent);
 
 			// Nochmals den Tag laden um das Datum zu zeigen
-			String sDatum = "Fehler 726";
+			String sDatum = "Fehler 108";
 			try {
 
 				sDatum = daylogDayDB.getById(nDateId).getDate();
 			} catch (Exception e) {
-				System.err.println("Fehler 726");
+				System.err.println("Fehler 109");
 				e.printStackTrace();
 			}
 

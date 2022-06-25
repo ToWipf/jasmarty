@@ -129,7 +129,7 @@ public class PunkteVW {
 
 			return pRes.getsText();
 		}
-		return "fehler 809";
+		return "fehler 118";
 	}
 
 	/**

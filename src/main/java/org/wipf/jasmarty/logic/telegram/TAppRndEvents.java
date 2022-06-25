@@ -86,7 +86,7 @@ public class TAppRndEvents {
 		} catch (Exception e) {
 			LOGGER.error("menueRndEvent");
 			e.printStackTrace();
-			return "Fehler 018: " + e;
+			return "Fehler 114: " + e;
 		}
 	}
 

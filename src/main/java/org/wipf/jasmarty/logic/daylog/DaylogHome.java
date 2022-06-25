@@ -98,7 +98,7 @@ public class DaylogHome {
 
 		} catch (SQLException e) {
 
-			return "Fehler 498: " + e;
+			return "Fehler 105: " + e;
 		}
 	}
 

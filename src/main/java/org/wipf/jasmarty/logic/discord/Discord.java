@@ -73,7 +73,7 @@ public class Discord {
 			String sDid = wipfConfig.getConfParamString("discord_id");
 			return sDid + ":" + countOnline(sDid);
 		} catch (Exception e) {
-			return "Fehler 017" + e;
+			return "Fehler 110" + e;
 		}
 	}
 
@@ -85,7 +85,7 @@ public class Discord {
 			String sDid = wipfConfig.getConfParamString("discord_id");
 			return wipf.toList(listOnlineNames(sDid));
 		} catch (Exception e) {
-			return "Fehler 017" + e;
+			return "Fehler 111" + e;
 		}
 	}
 

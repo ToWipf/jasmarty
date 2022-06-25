@@ -270,7 +270,7 @@ public class Wipf {
 			String ip = in.readLine(); // you get the IP as a String
 			return ip;
 		} catch (Exception e) {
-			return "Fehler 21a";
+			return "Fehler 102";
 		}
 	}
 
@@ -321,7 +321,7 @@ public class Wipf {
 		try {
 			return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
 		} catch (Exception e) {
-			return "Fehler 51";
+			return "Fehler 103";
 		}
 	}
 
@@ -508,7 +508,7 @@ public class Wipf {
 	 */
 	public String toList(List<String> list) {
 		if (list == null) {
-			return "Fehler 060";
+			return "Fehler 104";
 		}
 		StringBuilder sb = new StringBuilder();
 		for (String s : list) {
@@ -517,7 +517,7 @@ public class Wipf {
 			}
 			sb.append(s);
 		}
-		return null;
+		return sb.toString();
 	}
 
 }

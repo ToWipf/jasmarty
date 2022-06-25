@@ -83,7 +83,7 @@ public class MainHome {
 			}
 
 		} catch (Exception e) {
-			LOGGER.error("Fehler 610: " + e);
+			LOGGER.error("Fehler 101: " + e);
 			e.printStackTrace();
 		}
 

@@ -266,7 +266,7 @@ public class TUsercache {
 				n++;
 			}
 		} catch (SQLException e) {
-			sb.append("Fehler 012 " + e);
+			sb.append("Fehler 117 " + e);
 		}
 		return "Anzahl der Benutzer: " + n + "\n\n" + sb.toString();
 	}
