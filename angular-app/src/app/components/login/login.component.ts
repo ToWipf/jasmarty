@@ -13,7 +13,7 @@ export class LoginComponent {
   public sUsername: string;
   public sPasswort: string;
 
-  public login() {
+  public login(): void {
     this.rest.setLoginData(this.sUsername, this.sPasswort);
     this.rest.get("wipf/up").then(res => {
       if (res == 1) {
@@ -24,7 +24,7 @@ export class LoginComponent {
     });
   }
 
-  public logoff() {
+  public logoff(): void {
     this.rest.setLoginData("", "");
     this.rest.setLoginOk("false");
     this.rest.clearLogin();

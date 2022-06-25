@@ -67,7 +67,7 @@ export class ServiceWipf {
    */
   public decrypt(str: string, key: string): string {
     var bf = new Blowfish(key);
-    return bf.decrypt(str);
+    return bf.trimZeros(bf.decrypt(str));
   }
 
 }
