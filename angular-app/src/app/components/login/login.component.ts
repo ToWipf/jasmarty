@@ -20,6 +20,7 @@ export class LoginComponent {
         this.sUsername = "";
         this.sPasswort = "";
         this.rest.setLoginOk("true");
+        //window.location.reload(); TODO: neuladen des Menüs
       }
     });
   }

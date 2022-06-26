@@ -55,8 +55,10 @@ export class ServiceWipf {
    * @returns 
    */
   public crypt(str: string, key: string): string {
-    var bf = new Blowfish(key);
-    return bf.encrypt(str);
+    if (str) {
+      var bf = new Blowfish(key);
+      return bf.encrypt(str);
+    }
   }
 
   /**
@@ -66,8 +68,10 @@ export class ServiceWipf {
    * @returns 
    */
   public decrypt(str: string, key: string): string {
-    var bf = new Blowfish(key);
-    return bf.trimZeros(bf.decrypt(str));
+    if (str) {
+      var bf = new Blowfish(key);
+      return bf.trimZeros(bf.decrypt(str));
+    }
   }
 
 }

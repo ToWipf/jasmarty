@@ -4,5 +4,6 @@
 /angular-app/dist/
 /angular-app/.angular/cache/
 /src/main/resources/META-INF/resources/app/
+*auth.db
 *jasmarty.db
 *jasmarty.jar
