@@ -2,39 +2,47 @@
     <h3>Daylog</h3>
 
     <div class="list">
-        <perfect-scrollbar class="pscroll">
+        <perfect-scrollbar class="pscrollConfigline">
             <ng-container *ngIf="bShowWarning">
                 Es ist ein Fehler aufgetreten!
                 <input type="checkbox" [(ngModel)]="bShowWarning" />
             </ng-container>
 
             <div class="configline">
-                <div class="box">
-                    <button class="btn btn-default btn-mini" (click)="ngOnInit()">
+                <div class="iconbox">
+                    Neu Laden:
+                    <button class="btn btn-default btn-for-icon" (click)="ngOnInit()">
                         <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+
+                    <br>
+                    Zeige Alles:
+                    <button class="btn btn-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                    <button class="btn btn-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
                 <div class="box">
-                    Zeige alle Splaten:
-                    <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
+                    <mat-form-field>
+                        <mat-label>Tag Filtern</mat-label>
+                        <input matInput (ngModelChange)="dayFilter()" [(ngModel)]="sFilterDay">
+                    </mat-form-field>
+                    <!-- Filter Tag: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterDay" /> -->
                 </div>
                 <div class="box">
                     <button class="btn btn-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
                 </div>
-                <br>
-                <!-- <div class="box">
-                <button class="btn btn-default" (click)="load()">Neu laden</button>
-            </div> -->
                 <div class="box">
-                    DayFilter: <input (ngModelChange)="dayFilter()" [(ngModel)]="sFilterDay" />
-                    <!-- Filter Tag: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterDay" /> -->
-                </div>
-                <div class="box">
-                    Filter Event: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterTextEvent" />
+                    <mat-form-field>
+                        <mat-label>Event Filtern</mat-label>
+                        <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilterTextEvent">
+                    </mat-form-field>
                 </div>
                 <div class="box">
                     <mat-form-field appearance="fill">
-                        <mat-label>Event Filtern</mat-label>
+                        <mat-label>Event Typ Filtern</mat-label>
                         <mat-select [(value)]="selectedEventTypeFilter">
                             <mat-option [value]="undefined">Kein Filter</mat-option>
                             <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent">{{itemEvent.type}}</mat-option>
@@ -43,10 +51,12 @@
                 </div>
 
                 <div class="box">
-                    <button class="btn btn-default" (click)="loadAllEventsViaVar()">Alle Events Laden</button>
+                    <button class="btn btn-default" (click)="loadAllEventsViaVar()">Lade_alle Events</button>
                 </div>
             </div>
+        </perfect-scrollbar>
 
+        <perfect-scrollbar class="pscrollTabellen">
             <div class="gridRow_ohne_rand">
                 <div class="gridCol">
                     <perfect-scrollbar class="pscroll">
@@ -116,7 +126,7 @@
                 </div>
 
             </div>
-            Anzahl Tage: {{ daylist.length }} <br>
         </perfect-scrollbar>
+        Anzahl Tage: {{ daylist.length }} <br>
     </div>
 </div>
