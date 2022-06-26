@@ -1,48 +1,59 @@
 <div>
     <h3>ToDo Liste</h3>
     <div class="todolist">
+        <perfect-scrollbar class="pscrollConfigline">
+            <ng-container *ngIf="bShowWarning">
+                Es ist ein Fehler aufgetreten!
+                <input type="checkbox" [(ngModel)]="bShowWarning">
+            </ng-container>
 
-        <ng-container *ngIf="bShowWarning">
-            Es ist ein Fehler aufgetreten!
-            <input type="checkbox" [(ngModel)]="bShowWarning">
-        </ng-container>
+            <div class="configline">
+                <div class="iconbox">
+                    Neu Laden:
+                    <button class="btn btn-default btn-for-icon" (click)="load()">
+                        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
 
-        <div class="configline">
-            <div class="box">
-                <button class="btn btn-default btn-for-icon" (click)="load()">
-                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-                </button>
+                    <br>
+                    Zeige Alles:
+                    <button class="btn btn-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                    <button class="btn btn-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                </div>
+                <div class="iconbox">
+                    Neu:
+                    <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bNew">
+                    <br>
+                    Zu Tun:
+                    <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bTodo">
+                </div>
+                <div class="iconbox">
+                    Später:
+                    <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bLater">
+                    <br>
+                    Fertig:
+                    <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bDone">
+                    <br>
+                    Zitate:
+                    <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bZitat">
+                </div>
+                <div class="box">
+                    <mat-form-field>
+                        <mat-label>Filtern</mat-label>
+                        <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                    </mat-form-field>
+                </div>
+                <div class="box">
+                    Hinzufügen:
+                    <button class="btn btn-default" (click)="newItem()">
+                        <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                    </button>
+                </div>
             </div>
-            <div class="box">
-                Neu:
-                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bNew">
-            </div>
-            <div class="box">
-                Zu Tun:
-                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bTodo">
-            </div>
-            <div class="box">
-                Später:
-                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bLater">
-            </div>
-            <div class="box">
-                Fertig:
-                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bDone">
-            </div>
-            <div class="box">
-                Zitate:
-                <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bZitat">
-            </div>
-            <!-- <div class="box">
-                <button class="btn btn-default" (click)="load()">Neu laden</button>
-            </div> -->
-            <div class="box">
-                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-            </div>
-            <div class="box">
-                <button class="btn btn-default" (click)="newItem()">Neuen Eintrag erstellen</button>
-            </div>
-        </div>
+        </perfect-scrollbar>
 
         <perfect-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">

@@ -18,7 +18,7 @@ export class TodolistComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['id', 'data', 'date', 'editby', 'button'];
+  public displayedColumns: string[] = [];
   public toarry: TodoEntry[] = [];
   private nextId: number = 0;
   public bNew: boolean = true;
@@ -28,9 +28,20 @@ export class TodolistComponent implements OnInit {
   public bZitat: boolean = false;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
+  public bShowAllTable: boolean = true;
 
   ngOnInit() {
     this.load();
+    this.showAllTable();
+  }
+
+  public showAllTable(): void {
+    this.bShowAllTable = !this.bShowAllTable;
+    if (this.bShowAllTable) {
+      this.displayedColumns = ['id', 'data', 'date', 'editby', 'button'];
+    } else {
+      this.displayedColumns = ['id', 'data', 'button'];
+    }
   }
 
   public load(): void {

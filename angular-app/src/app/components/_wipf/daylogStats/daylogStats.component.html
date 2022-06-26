@@ -3,17 +3,26 @@
     <div class="list">
 
         <div class="configline">
-            <div class="box">
-                Zeige alle Splaten:
-                <input type="checkbox" (ngModelChange)="showAllTable()" [(ngModel)]="bShowAllTable">
-            </div>
-            <div class="box">
+            <div class="iconbox">
+                Neu Laden:
                 <button class="btn btn-default btn-for-icon" (click)="load()">
                     <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
                 </button>
+
+                <br>
+                Zeige Alles:
+                <button class="btn btn-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+                <button class="btn btn-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
             </div>
             <div class="box">
-                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                <mat-form-field>
+                    <mat-label>Filtern</mat-label>
+                    <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                </mat-form-field>
             </div>
         </div>
 
