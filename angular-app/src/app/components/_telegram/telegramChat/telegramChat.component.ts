@@ -24,6 +24,8 @@ export class TelegramChatComponent implements OnInit {
   public textOut: string = '-';
   public usercachearry: TelegramUserCache[] = [];
   public sFilter: string = "";
+  public sTextOnlineTelegram: string;
+  public sStatus: string;
 
   ngOnInit(): void {
     this.load();
@@ -68,7 +70,7 @@ export class TelegramChatComponent implements OnInit {
   }
 
   // TestChat
-  public send(): void {
+  public sendLocal(): void {
     this.rest.post('telegram/chat', this.tMsg).then((resdata: any) => {
       this.tMsg.message = "";
       this.textOut = resdata.msg;
@@ -76,4 +78,13 @@ export class TelegramChatComponent implements OnInit {
     });
   }
 
+  public sendMsgToGroup(): void {
+    if (this.sTextOnlineTelegram) {
+      //TODO: escape input String
+      this.rest.post('telegram/sendMsgToAdmin/' + this.sTextOnlineTelegram, null).then((resdata) => {
+        this.sStatus = resdata.toString();
+        this.sTextOnlineTelegram = null;
+      });
+    }
+  }
 }

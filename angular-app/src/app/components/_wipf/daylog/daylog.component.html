@@ -11,16 +11,16 @@
             <div class="configline">
                 <div class="iconbox">
                     Neu Laden:
-                    <button class="btn btn-default btn-for-icon" (click)="ngOnInit()">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
                         <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
 
                     <br>
                     Zeige Alles:
-                    <button class="btn btn-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
                         <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
-                    <button class="btn btn-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
                         <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
@@ -32,7 +32,7 @@
                     <!-- Filter Tag: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterDay" /> -->
                 </div>
                 <div class="box">
-                    <button class="btn btn-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
+                    <button class="btn btn-wipf-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
                 </div>
                 <div class="box">
                     <mat-form-field>
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="box">
-                    <button class="btn btn-default" (click)="loadAllEventsViaVar()">Lade_alle Events</button>
+                    <button class="btn btn-wipf-default" (click)="loadAllEventsViaVar()">Lade_alle Events</button>
                 </div>
             </div>
         </perfect-scrollbar>
@@ -94,21 +94,21 @@
 
                             <ng-container matColumnDef="button">
                                 <th th mat-header-cell *matHeaderCellDef>
-                                    <button class="btn btn-default" (click)="newDay()">
+                                    <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
                                         <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
                                     </button>
                                 </th>
                                 <td mat-cell *matCellDef="let element">
-                                    <button class="btn btn-default" (click)="editDay(element)">
+                                    <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
                                         <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                                     </button>
-                                    <!-- <button class="btn btn-default" (click)="loadEventsByDay(element)">
+                                    <!-- <button class="btn btn-wipf-default" (click)="loadEventsByDay(element)">
                                     <mat-icon svgIcon="extern_link" aria-hidden="false" title="Tag anzeigen"></mat-icon>
                                 </button> -->
-                                    <!-- <button class="btn btn-default" (click)="newEvent(element)">
+                                    <!-- <button class="btn btn-wipf-default" (click)="newEvent(element)">
                                     Event erstellen
                                 </button> -->
-                                    <button class="btn btn-default" (click)="deleteDay(element)">
+                                    <button class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
                                         <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                                     </button>
                                 </td>
@@ -124,9 +124,8 @@
                         <app-daylog-eventlist [(filterEventType)]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTable]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
                     </perfect-scrollbar>
                 </div>
-
             </div>
         </perfect-scrollbar>
-        Anzahl Tage: {{ daylist.length }} <br>
+        Anzahl Tage: {{ daylist.length }}
     </div>
 </div>

@@ -27,15 +27,15 @@
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 Verwalten
-                <button class="btn btn-default" (click)="newType()">
+                <button class="btn btn-wipf-default" (click)="newType()">
                     <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Eintrag erstellen"></mat-icon>
                 </button>
             </th>
             <td mat-cell *matCellDef="let element">
-                <button class="btn btn-default" (click)="editType(element)">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="editType(element)">
                     <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                 </button>
-                <button class="btn btn-default" (click)="deleteType(element)">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteType(element)">
                     <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                 </button>
             </td>

@@ -4,7 +4,7 @@
     Anmelden:
     <input type="text" class="form-control inbutton" [(ngModel)]="sUsername" placeholder="Username">
     <input type="password" class="form-control inbutton" [(ngModel)]="sPasswort" placeholder="Passwort" (keyup.enter)="login()">
-    <button class="btn btn-default" (click)="login()">Ok</button>
+    <button class="btn btn-wipf-default" (click)="login()">Ok</button>
 </ng-container>
 
 <ng-container *ngIf="rest.getLoginOk()=='true'">
@@ -12,7 +12,7 @@
         Anmeldung Ok
     </div>
 
-    <button class="btn btn-default" (click)="logoff()">Abmelden</button>
+    <button class="btn btn-wipf-default" (click)="logoff()">Abmelden</button>
 </ng-container>
 
 <ng-container *ngIf="rest.getLoginOk()=='may'">
@@ -20,5 +20,5 @@
         Anmeldung noch vorhanden
     </div>
 
-    <button class="btn btn-default" (click)="logoff()">Abmelden</button>
+    <button class="btn btn-wipf-default" (click)="logoff()">Abmelden</button>
 </ng-container>

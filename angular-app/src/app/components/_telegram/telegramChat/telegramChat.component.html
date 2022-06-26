@@ -1,18 +1,28 @@
 <div>
     <div class="gridRow">
         <div class="gridCol">
-            <h3>Online Chat</h3>
+            <h3>Lokaler Chat</h3>
 
             <div mat-dialog-content>
                 <mat-form-field>
-                    <mat-label>Nachricht</mat-label>
-                    <input matInput (keyup.enter)="send()" [(ngModel)]="tMsg.message">
+                    <mat-label>Lokale Chat Nachricht</mat-label>
+                    <textarea (keyup.enter)="sendLocal()" [(ngModel)]="tMsg.message" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
                 </mat-form-field>
             </div>
 
-            <button class="btn btn-default" (click)="send()">Send</button>
-
+            <button class="btn btn-wipf-default" (click)="sendLocal()">Lokaler Chat Senden</button>
             <pre>{{textOut}}</pre>
+            <hr>
+
+            <h4>Telegram Nachricht senden:</h4>
+
+            <mat-form-field>
+                <mat-label>Nachrichten Text</mat-label>
+                <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+            </mat-form-field>
+
+            <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
+
         </div>
 
         <div class="gridCol">
@@ -26,7 +36,6 @@
 
             <perfect-scrollbar class="pscroll">
                 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
 
                     <ng-container matColumnDef="chatid">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> ChatId </th>
@@ -51,7 +60,7 @@
                     <ng-container matColumnDef="button">
                         <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
                         <td mat-cell *matCellDef="let element">
-                            <button class="btn btn-default" (click)="deleteItem(element)">
+                            <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                                 <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                             </button>
                         </td>

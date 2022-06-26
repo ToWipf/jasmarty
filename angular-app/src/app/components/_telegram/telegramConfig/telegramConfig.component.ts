@@ -9,8 +9,6 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 export class TelegramConfigComponent implements OnInit {
   constructor( private rest: ServiceRest) {}
 
-  public sText: string;
-  public sStatus: string;
   public sBotKey: string;
   public bTelegramActive: boolean;
 
@@ -42,16 +40,6 @@ export class TelegramConfigComponent implements OnInit {
     this.rest.get('telegram/off').then((resdata: any) => {
       console.log(resdata);
     });
-  }
-
-  public sendMsgToGroup(): void {
-    if (this.sText) {
-      //TODO: escape input String (TEXTBOX?)
-      this.rest.post('telegram/sendMsgToAdmin/' + this.sText, null).then((resdata) => {
-        this.sStatus = resdata.toString();
-        this.sText = null;
-      });
-    }
   }
 
   public getTelegramActive(): void {

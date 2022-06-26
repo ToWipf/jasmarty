@@ -4,13 +4,13 @@
 
         <div class="configline">
             <div class="box">
-                <button class="btn btn-default" (click)="loadAll()">Alles laden</button>
+                <button class="btn btn-wipf-default" (click)="loadAll()">Alles laden</button>
             </div>
             <div class="box">
-                <button class="btn btn-default" (click)="loadExt()">Externes laden</button>
+                <button class="btn btn-wipf-default" (click)="loadExt()">Externes laden</button>
             </div>
             <div class="box">
-                <button class="btn btn-default" (click)="openCleanLogDialog()">Clean Log</button>
+                <button class="btn btn-wipf-default" (click)="openCleanLogDialog()">Clean Log</button>
             </div>
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
@@ -62,7 +62,7 @@
                 <ng-container matColumnDef="edit">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
                     <td mat-cell *matCellDef="let element">
-                        <button class="btn btn-default" (click)="openDelItemDialog(element)">
+                        <button class="btn btn-wipf-default btn-for-icon" (click)="openDelItemDialog(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                         </button>
                     </td>

@@ -33,15 +33,15 @@
     <ng-container matColumnDef="button">
         <th th mat-header-cell *matHeaderCellDef>
             Verwalten
-            <button *ngIf="dateForLoad.id" class="btn btn-default" (click)="newEventBySelectedDay()">
+            <button *ngIf="dateForLoad.id" class="btn btn-wipf-default  btn-for-icon" (click)="newEventBySelectedDay()">
                 <mat-icon svgIcon="document" aria-hidden="false" title="Event erstellen"></mat-icon>
             </button>
         </th>
         <td mat-cell *matCellDef="let element">
-            <button class="btn btn-default" (click)="editEvent(element)">
+            <button class="btn btn-wipf-default btn-for-icon" (click)="editEvent(element)">
                 <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
             </button>
-            <button class="btn btn-default" (click)="deleteEvent(element)">
+            <button class="btn btn-wipf-default btn-for-icon" (click)="deleteEvent(element)">
                 <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
             </button>
         </td>
