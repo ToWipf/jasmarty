@@ -25,7 +25,39 @@ public class WipfDebug {
 	 */
 	public static void main(String[] args) {
 		System.out.println("Test");
+		code();
 
+	}
+
+	public static void code() {
+		int nAnz = 0;
+		int nMAXZAHL = 7;
+
+		for (int a = 0; a <= nMAXZAHL; a++) {
+			for (int b = 0; b <= nMAXZAHL; b++) {
+				for (int c = 0; c <= nMAXZAHL; c++) {
+					for (int d = 0; d <= nMAXZAHL; d++) {
+
+						if (isGerade(a) && isGerade(b) && !isGerade(c) && d == 0) {
+
+							if (!(a == b || a == c || a == d || b == c || b == d || c == d)) {
+								// keine doppelten
+								nAnz++;
+								System.out.println(a + " " + b + " " + c + " " + d);
+							}
+
+						}
+
+					}
+				}
+			}
+		}
+		System.err.println(nAnz);
+
+	}
+
+	private static boolean isGerade(int n) {
+		return (n == 0 || n == 2 || n == 4 || n == 6 || n == 8);
 	}
 
 	/**
