@@ -138,7 +138,7 @@ export interface RndEvent {
   active?: boolean;
 }
 
-export interface SettingEntry {
+export interface KeyValEntry {
   key?: string;
   val?: string;
 }

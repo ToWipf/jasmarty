@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
-import { SettingEntry } from 'src/app/datatypes';
+import { KeyValEntry } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -19,10 +19,9 @@ export class SettingsComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['key', 'val', 'button'];
-  public settingsearry: SettingEntry[] = [];
+  public settingsearry: KeyValEntry[] = [];
   public bShowWarning: boolean = false;
   public sFilter: String = "";
-
 
   ngOnInit() {
     this.load();
@@ -32,7 +31,7 @@ export class SettingsComponent implements OnInit {
     this.settingsearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get('basesettings/getAll').then((resdata: SettingEntry[]) => {
+    this.rest.get('basesettings/getAll').then((resdata: KeyValEntry[]) => {
       this.settingsearry = resdata;
 
       this.dataSource = new MatTableDataSource(this.settingsearry);
@@ -50,7 +49,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public newItem(): void {
-    let e: SettingEntry = {};
+    let e: KeyValEntry = {};
     this.openDialog(e);
   }
 
@@ -71,7 +70,7 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  private save(item: SettingEntry): void {
+  private save(item: KeyValEntry): void {
     this.rest.post('basesettings/save', item).then((resdata: any) => {
       this.load();
       if (!resdata) {
@@ -80,8 +79,8 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  public openDialog(item: SettingEntry): void {
-    const edititem: SettingEntry = this.serviceWipf.deepCopy(item);
+  public openDialog(item: KeyValEntry): void {
+    const edititem: KeyValEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(SettingsComponentDialogComponent, {
       width: '350px',
@@ -89,7 +88,7 @@ export class SettingsComponent implements OnInit {
       data: edititem,
     });
 
-    dialogRef.afterClosed().subscribe((result: SettingEntry) => {
+    dialogRef.afterClosed().subscribe((result: KeyValEntry) => {
       if (result) {
         this.save(result);
       }
@@ -109,7 +108,7 @@ export class SettingsComponent implements OnInit {
   templateUrl: './settings.dialog.html',
 })
 export class SettingsComponentDialogComponent {
-  constructor(public dialogRef: MatDialogRef<SettingsComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: SettingEntry) { }
+  constructor(public dialogRef: MatDialogRef<SettingsComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }
 
   onNoClick(): void {
     this.dialogRef.close();

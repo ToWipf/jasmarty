@@ -43,7 +43,7 @@ public class MitlesenRest {
 	@GET
 	@Path("list")
 	public Response list() {
-		return Response.ok(mitlesen.getList()).build();
+		return Response.ok(mitlesen.getList().toString()).build();
 	}
 
 	@GET

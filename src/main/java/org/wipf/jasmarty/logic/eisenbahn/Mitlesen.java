@@ -8,6 +8,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Wipf
@@ -71,8 +73,20 @@ public class Mitlesen {
 	/**
 	 * @return
 	 */
-	public HashMap<String, Integer> getList() {
-		return itemMap;
+	public JSONArray getList() {
+		JSONArray ja = new JSONArray();
+		try {
+			itemMap.forEach((key, val) -> {
+				JSONObject o = new JSONObject();
+				o.put("key", key);
+				o.put("val", val);
+				ja.put(o);
+			});
+		} catch (Exception e) {
+			LOGGER.warn("getAllAsJson " + e);
+			e.printStackTrace();
+		}
+		return ja;
 	}
 
 	/**
