@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.logic.eisenbahn;
 
+import java.util.LinkedHashSet;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,6 +17,7 @@ public class Mitlesen {
 
 	private static final Logger LOGGER = Logger.getLogger("Eisenbahn Mitlesen");
 	private boolean bActive = false;
+	private LinkedHashSet<String> items;
 
 	/**
 	 * 
@@ -23,6 +25,7 @@ public class Mitlesen {
 	public void doStartMitlesen() {
 		if (!bActive) {
 			LOGGER.info("starten");
+			items = new LinkedHashSet<String>();
 			bActive = true;
 			ExecutorService service = Executors.newFixedThreadPool(1);
 			service.submit(new Runnable() {
@@ -30,7 +33,15 @@ public class Mitlesen {
 				@Override
 				public void run() {
 					while (bActive) {
-						LOGGER.info(connect.readInput());
+						char[] nIn = connect.readInput();
+						if (nIn != null) {
+							StringBuilder sb = new StringBuilder();
+							for (char c : nIn) {
+								sb.append(c);
+							}
+							LOGGER.info(sb.toString());
+
+						}
 					}
 				}
 			});
@@ -47,5 +58,9 @@ public class Mitlesen {
 		bActive = false;
 
 	}
+
+//	pirvate void addItem() {
+
+//	}
 
 }

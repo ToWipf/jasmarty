@@ -66,12 +66,12 @@ public class MitlesenConnect {
 	/**
 	 * @return
 	 */
-	public Integer readInput() {
-		char[] in = new char[1];
+	public char[] readInput() {
+		char[] in = new char[100];
 
 		try (BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()))) {
 			input.read(in);
-			return (int) in[0];
+			return in;
 		} catch (IOException e) {
 			// Kein input
 			return null;

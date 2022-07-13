@@ -16,6 +16,8 @@ public class MitlesenHome {
 	MitlesenConnect mitlesenConnect;
 	@Inject
 	WipfConfig wipfConfig;
+	@Inject
+	Mitlesen mitlesen;
 
 	private static final String PORT = "arduino_Port";
 	private static final String BAUDRATE = "arduino_BaudRate";
@@ -32,7 +34,9 @@ public class MitlesenHome {
 		ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
 		if (ac.isValid()) {
 			LOGGER.info("Config ok");
+			mitlesenConnect.setConfig(ac);
 			mitlesenConnect.startSerialLcdPort();
+			mitlesen.doStartMitlesen();
 		} else {
 			LOGGER.error("Problem mit der Config");
 			wipfConfig.setConfParam(PORT, "");
