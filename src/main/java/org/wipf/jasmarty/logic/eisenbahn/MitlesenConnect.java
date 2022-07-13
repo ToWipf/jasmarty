@@ -66,7 +66,23 @@ public class MitlesenConnect {
 	/**
 	 * @return
 	 */
-	public char[] readInput() {
+	public String getLine() {
+		char[] nIn = readInput();
+		if (nIn != null) {
+			StringBuilder sb = new StringBuilder();
+			for (char c : nIn) {
+				sb.append(c);
+			}
+			LOGGER.info(sb.toString());
+			return sb.toString().trim();
+		}
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	private char[] readInput() {
 		char[] in = new char[100];
 
 		try (BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()))) {

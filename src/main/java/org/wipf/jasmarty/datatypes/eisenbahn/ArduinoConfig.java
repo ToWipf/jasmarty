@@ -8,6 +8,14 @@ public class ArduinoConfig {
 
 	protected String sPort;
 	protected Integer nBaudRate;
+	private Integer nLineLength;
+
+	/**
+	 * @return
+	 */
+	public boolean isValid() {
+		return (sPort != null && nBaudRate != null && nLineLength != null && nBaudRate > 1 && nLineLength > 0);
+	}
 
 	/**
 	 * @return
@@ -40,7 +48,14 @@ public class ArduinoConfig {
 	/**
 	 * @return
 	 */
-	public boolean isValid() {
-		return (sPort != null && nBaudRate > 1);
+	public Integer getLineLength() {
+		return nLineLength;
+	}
+
+	/**
+	 * @param nLineLength
+	 */
+	public void setLineLength(Integer nLineLength) {
+		this.nLineLength = nLineLength;
 	}
 }

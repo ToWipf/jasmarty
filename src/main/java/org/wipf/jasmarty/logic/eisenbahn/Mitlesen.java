@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.eisenbahn;
 
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -9,6 +9,10 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 
+/**
+ * @author Wipf
+ *
+ */
 @ApplicationScoped
 public class Mitlesen {
 
@@ -17,7 +21,7 @@ public class Mitlesen {
 
 	private static final Logger LOGGER = Logger.getLogger("Eisenbahn Mitlesen");
 	private boolean bActive = false;
-	private LinkedHashSet<String> items;
+	private HashMap<String, Integer> itemMap = new HashMap<String, Integer>();
 
 	/**
 	 * 
@@ -25,7 +29,6 @@ public class Mitlesen {
 	public void doStartMitlesen() {
 		if (!bActive) {
 			LOGGER.info("starten");
-			items = new LinkedHashSet<String>();
 			bActive = true;
 			ExecutorService service = Executors.newFixedThreadPool(1);
 			service.submit(new Runnable() {
@@ -33,14 +36,9 @@ public class Mitlesen {
 				@Override
 				public void run() {
 					while (bActive) {
-						char[] nIn = connect.readInput();
-						if (nIn != null) {
-							StringBuilder sb = new StringBuilder();
-							for (char c : nIn) {
-								sb.append(c);
-							}
-							LOGGER.info(sb.toString());
-
+						String sIn = connect.getLine();
+						if (sIn != null) {
+							addItem(sIn);
 						}
 					}
 				}
@@ -59,8 +57,29 @@ public class Mitlesen {
 
 	}
 
-//	pirvate void addItem() {
+	/**
+	 * @param s
+	 */
+	private void addItem(String s) {
+		Integer nOldAnzahl = itemMap.get(s);
+		if (nOldAnzahl == null) {
+			nOldAnzahl = 0;
+		}
+		itemMap.put(s, nOldAnzahl + 1);
+	}
 
-//	}
+	/**
+	 * @return
+	 */
+	public HashMap<String, Integer> getList() {
+		return itemMap;
+	}
+
+	/**
+	 * @param s
+	 */
+	public void addDebugItem(String s) {
+		addItem(s);
+	}
 
 }

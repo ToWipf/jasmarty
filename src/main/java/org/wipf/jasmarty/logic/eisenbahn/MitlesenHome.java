@@ -9,6 +9,10 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.eisenbahn.ArduinoConfig;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 
+/**
+ * @author Wipf
+ *
+ */
 @ApplicationScoped
 public class MitlesenHome {
 
@@ -21,6 +25,7 @@ public class MitlesenHome {
 
 	private static final String PORT = "arduino_Port";
 	private static final String BAUDRATE = "arduino_BaudRate";
+	private static final String LINELENGTH = "arduino_LineLength";
 
 	private static final Logger LOGGER = Logger.getLogger("Eisenbahn Mitlesen Home");
 
@@ -32,6 +37,7 @@ public class MitlesenHome {
 		ArduinoConfig ac = new ArduinoConfig();
 		ac.setPort(wipfConfig.getConfParamString(PORT));
 		ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
+		ac.setLineLength(wipfConfig.getConfParamInteger(LINELENGTH));
 		if (ac.isValid()) {
 			LOGGER.info("Config ok");
 			mitlesenConnect.setConfig(ac);
@@ -39,8 +45,9 @@ public class MitlesenHome {
 			mitlesen.doStartMitlesen();
 		} else {
 			LOGGER.error("Problem mit der Config");
-			wipfConfig.setConfParam(PORT, "");
-			wipfConfig.setConfParam(BAUDRATE, 0);
+			wipfConfig.setConfParam(PORT, "COM3");
+			wipfConfig.setConfParam(BAUDRATE, 57600);
+			wipfConfig.setConfParam(LINELENGTH, 50);
 		}
 
 	}
