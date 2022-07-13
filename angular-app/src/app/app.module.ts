@@ -79,6 +79,7 @@ import { TodolistComponent, TodolistComponentDialogComponent } from './component
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats.component';
 import { LoginComponent } from './components/login/login.component';
+import { EisenbahnMitlesenComponent } from './components/_eisenbahn/mitlesen/eisenbahn-mitlesen.component';
 
 @NgModule({
     declarations: [
@@ -99,6 +100,7 @@ import { LoginComponent } from './components/login/login.component';
         DynpagesComponent,
         DynpagesComponentDialogComponent,
         DynpageShowComponent,
+        EisenbahnMitlesenComponent,
         FileVwComponent,
         FilmeComponent,
         FilmeComponentDialog,

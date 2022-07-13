@@ -22,6 +22,7 @@ public class Mitlesen {
 	 */
 	public void doStartMitlesen() {
 		if (!bActive) {
+			LOGGER.info("starten");
 			bActive = true;
 			ExecutorService service = Executors.newFixedThreadPool(1);
 			service.submit(new Runnable() {
@@ -33,6 +34,8 @@ public class Mitlesen {
 					}
 				}
 			});
+		} else {
+			LOGGER.info("bereits aktiv");
 		}
 	}
 
@@ -40,6 +43,7 @@ public class Mitlesen {
 	 * 
 	 */
 	public void doStopMitlesen() {
+		LOGGER.info("stop");
 		bActive = false;
 
 	}
