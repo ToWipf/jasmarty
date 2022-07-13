@@ -1,21 +1,20 @@
 package org.wipf.jasmarty.datatypes.jasmarty;
 
 import org.json.JSONObject;
+import org.wipf.jasmarty.datatypes.eisenbahn.ArduinoConfig;
 
 /**
  * @author wipf
  *
  */
-public class LcdConfig {
+public class LcdConfig extends ArduinoConfig {
 
 	public enum lcdType {
 		LCD_2004, LCD_12864
 	};
 
-	private String sPort;
 	private Integer nHeight = 0;
 	private Integer nWidth = 0;
-	private Integer nBaudRate;
 	private int nRefreshRate;
 	private lcdType type;
 
@@ -27,7 +26,7 @@ public class LcdConfig {
 		jo.put("port", sPort);
 		jo.put("width", nWidth);
 		jo.put("height", nHeight);
-		jo.put("baudrate", nBaudRate);
+		jo.put("baudrate", this.nBaudRate);
 		jo.put("refreshrate", nRefreshRate);
 		jo.put("type", type.name());
 		return jo.toString();
@@ -47,20 +46,6 @@ public class LcdConfig {
 		setRefreshRate(jo.getInt("refreshrate"));
 		setType(jo.getString("type"));
 		return this;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getPort() {
-		return sPort;
-	}
-
-	/**
-	 * @param sPort
-	 */
-	public void setPort(String sPort) {
-		this.sPort = sPort;
 	}
 
 	/**
@@ -89,20 +74,6 @@ public class LcdConfig {
 	 */
 	public void setWidth(Integer nWidth) {
 		this.nWidth = nWidth;
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getBaudRate() {
-		return nBaudRate;
-	}
-
-	/**
-	 * @param nBaudRate
-	 */
-	public void setBaudRate(Integer nBaudRate) {
-		this.nBaudRate = nBaudRate;
 	}
 
 	/**
