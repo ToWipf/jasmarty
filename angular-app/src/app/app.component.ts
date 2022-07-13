@@ -68,6 +68,7 @@ export class AppComponent implements OnInit {
   public bJasmartyActive: boolean = false;
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
+  public bEisenbahnMitlesenActive: boolean = false;
   public jasmartyType: string;
   public selectedSite: string = 'login';
 
@@ -85,11 +86,15 @@ export class AppComponent implements OnInit {
     this.bDevActive = false;
 
     this.rest.get('basesettings/get/wipf').then((resdata: any) => {
+      // Weiteres nur laden, wenn das erste funktioniert
       this.bWipfActive = resdata.active;
 
-      // Weiteres nur laden, wenn das erste funktioniert
       this.rest.get('basesettings/get/telegram').then((resdata: any) => {
         this.bTelegramActive = resdata.active;
+      });
+
+      this.rest.get('basesettings/get/eisenbahn_mitlesen').then((resdata: any) => {
+        this.bEisenbahnMitlesenActive = resdata.active;
       });
 
       this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
@@ -111,8 +116,6 @@ export class AppComponent implements OnInit {
         }
       });
     });
-
-
   }
 
   public showDevModules(): void {
@@ -120,16 +123,19 @@ export class AppComponent implements OnInit {
   }
 
   public showAll2004(): void {
-    this.bJasmartyActive = true;
-    this.bTelegramActive = true;
-    this.bWipfActive = true;
+    this.showAll();
     this.jasmartyType = "LCD_2004";
   }
 
   public showAll12864(): void {
+    this.showAll();
+    this.jasmartyType = "LCD_12864";
+  }
+
+  private showAll(): void {
     this.bJasmartyActive = true;
     this.bTelegramActive = true;
     this.bWipfActive = true;
-    this.jasmartyType = "LCD_12864";
+    this.bEisenbahnMitlesenActive = true;
   }
 }

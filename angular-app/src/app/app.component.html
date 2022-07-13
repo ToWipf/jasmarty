@@ -76,6 +76,14 @@
                     </li>
                 </ul>
 
+                <div *ngIf="bEisenbahnMitlesenActive" class="titlemenue">Eisenbahn</div>
+                <ul *ngIf="bEisenbahnMitlesenActive" class="menueli">
+                    <li (click)="selectSite('eisenbahnMitlesen')" [ngClass]="{'isSelected' : selectedSite == 'eisenbahnMitlesen'}">
+                        <mat-icon svgIcon="search" aria-hidden="false" title="Eisenbahn Mitlesen"></mat-icon>
+                        <span class="buttonInhalt"> Mitlesen </span>
+                    </li>
+                </ul>
+
                 <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
                 <ul *ngIf="bTelegramActive" class="menueli">
                     <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">

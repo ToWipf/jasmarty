@@ -15,8 +15,6 @@ public class MitlesenHome {
 	@Inject
 	MitlesenConnect mitlesenConnect;
 	@Inject
-	Mitlesen mitlesen;
-	@Inject
 	WipfConfig wipfConfig;
 
 	private static final String PORT = "arduino_Port";
@@ -41,7 +39,6 @@ public class MitlesenHome {
 			wipfConfig.setConfParam(BAUDRATE, 0);
 		}
 
-		mitlesen.doMitlesen();
 	}
 
 }
