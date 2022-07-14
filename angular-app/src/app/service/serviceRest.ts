@@ -93,6 +93,21 @@ export class ServiceRest {
   }
 
   /**
+   * http get ohne Warten Dialog
+   * 
+   * @param path 
+   * @returns 
+   */
+  public getNoWarten(path: string): Promise<any> {
+    return new Promise(
+      resolve => {
+        this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
+          resolve(resdata);
+        });
+      });
+  }
+
+  /**
    * http post
    * 
    * @param path 

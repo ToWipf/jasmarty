@@ -11,7 +11,6 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
-import org.wipf.jasmarty.logic.eisenbahn.MitlesenHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import org.wipf.jasmarty.logic.wipfapp.Dynpages;
@@ -36,9 +35,7 @@ public class MainHome {
 	@Inject
 	TelegramHome telegramHome;
 	@Inject
-	DaylogHome daylogHome;
-	@Inject
-	MitlesenHome mitlesenHome;
+	DaylogHome daylogHome;;
 	@Inject
 	Dynpages dynpages;
 	@Inject
@@ -85,7 +82,7 @@ public class MainHome {
 				telegramHome.telegramStart();
 			}
 			if (wipfConfig.isAppActive("eisenbahn_mitlesen")) {
-				mitlesenHome.start();
+				System.out.println("eisenbahn_mitlesen aktiv");
 			}
 
 		} catch (Exception e) {

@@ -39,8 +39,15 @@ export class EisenbahnMitlesenComponent implements OnInit {
     });
   }
 
+  public connect(): void {
+    this.rest.get('eisenbahn/mitlesen/connect').then((resdata) => {
+      console.log(resdata);
+      this.bRun = false;
+    });
+  }
+
   public reloadList(): void {
-    this.rest.get('eisenbahn/mitlesen/list').then((resdata: KeyValEntry[]) => {
+    this.rest.getNoWarten('eisenbahn/mitlesen/list').then((resdata: KeyValEntry[]) => {
       this.itemarry = resdata;
 
       this.dataSource = new MatTableDataSource(this.itemarry);
@@ -57,11 +64,10 @@ export class EisenbahnMitlesenComponent implements OnInit {
   }
 
   private loopResfresh(): void {
-    if (!this.bRun) {
-      // get current button
+    if (this.bRun) {
       setTimeout(() => {
         this.loopResfresh();
-      }, 100);
+      }, 150);
       this.reloadList();
     }
   }

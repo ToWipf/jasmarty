@@ -40,6 +40,14 @@ public class MitlesenRest {
 		return Response.ok().build();
 	}
 
+	@POST
+	@GET
+	@Path("connect")
+	public Response connect() {
+		mitlesen.connect();
+		return Response.ok().build();
+	}
+
 	@GET
 	@Path("list")
 	public Response list() {
