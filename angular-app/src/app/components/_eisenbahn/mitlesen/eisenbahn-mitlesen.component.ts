@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { KeyValEntry } from 'src/app/datatypes';
+import { DialogJaNeinComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
@@ -11,7 +13,7 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
   styleUrls: ['./eisenbahn-mitlesen.component.less'],
 })
 export class EisenbahnMitlesenComponent implements OnInit {
-  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -33,16 +35,28 @@ export class EisenbahnMitlesenComponent implements OnInit {
   }
 
   public stop(): void {
+    this.bRun = false;
     this.rest.get('eisenbahn/mitlesen/stop').then((resdata) => {
       console.log(resdata);
-      this.bRun = false;
     });
   }
 
   public connect(): void {
     this.rest.get('eisenbahn/mitlesen/connect').then((resdata) => {
-      console.log(resdata);
-      this.bRun = false;
+      if (resdata.ok == "true") {
+        resdata.infotext = "Verbindung Ok, Starten?";
+        const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+          width: '250px',
+          height: '250px',
+          data: resdata,
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.start();
+          }
+        });
+      }
     });
   }
 

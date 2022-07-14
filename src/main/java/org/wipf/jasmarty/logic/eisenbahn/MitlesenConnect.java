@@ -52,23 +52,6 @@ public class MitlesenConnect {
 	/**
 	 * @return
 	 */
-	public Boolean closeSerialLcdPort() {
-		try {
-			if (sp.closePort()) {
-				LOGGER.info("Port " + aConf.getPort() + " geschlossen");
-				return true;
-			} else {
-				LOGGER.warn("Port " + aConf.getPort() + " nicht geschlossen!");
-				return false;
-			}
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
-	/**
-	 * @return
-	 */
 	public String getLine() {
 		char[] nIn = readInput();
 		if (nIn != null) {

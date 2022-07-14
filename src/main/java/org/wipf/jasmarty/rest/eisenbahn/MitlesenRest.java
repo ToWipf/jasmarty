@@ -44,8 +44,7 @@ public class MitlesenRest {
 	@GET
 	@Path("connect")
 	public Response connect() {
-		mitlesen.connect();
-		return Response.ok().build();
+		return Response.ok("{\"ok\":\"" + mitlesen.connect() + "\"}").build();
 	}
 
 	@GET

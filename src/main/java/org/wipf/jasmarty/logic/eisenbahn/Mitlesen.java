@@ -106,14 +106,16 @@ public class Mitlesen {
 	}
 
 	/**
-	 * 
+	 * @return
 	 */
-	public void connect() {
-		connect.closeSerialLcdPort();
-		connect.startSerialPort();
+	public Boolean connect() {
 		setConfig();
+		return connect.startSerialPort();
 	}
 
+	/**
+	 * 
+	 */
 	public void setConfig() {
 		try {
 			ArduinoConfig ac = new ArduinoConfig();
