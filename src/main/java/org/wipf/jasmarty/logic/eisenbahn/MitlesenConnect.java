@@ -34,7 +34,7 @@ public class MitlesenConnect {
 	/**
 	 * @return
 	 */
-	public Boolean startSerialLcdPort() {
+	public Boolean startSerialPort() {
 		if (!bConnectOk) {
 			if (startPort()) {
 				LOGGER.info("Port " + aConf.getPort() + " geöffnet");
@@ -83,7 +83,7 @@ public class MitlesenConnect {
 	 * @return
 	 */
 	private char[] readInput() {
-		char[] in = new char[100];
+		char[] in = new char[aConf.getLineLength()];
 
 		try (BufferedReader input = new BufferedReader(new InputStreamReader(sp.getInputStream()))) {
 			input.read(in);
@@ -97,7 +97,7 @@ public class MitlesenConnect {
 	/**
 	 * @return
 	 */
-	public Boolean startPort() {
+	private Boolean startPort() {
 		try {
 			if (aConf.getPort() == null || aConf.getPort().equals("")) {
 				LOGGER.warn("LCD USB Port ist nicht definiert");

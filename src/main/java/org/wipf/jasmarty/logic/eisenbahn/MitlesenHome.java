@@ -33,23 +33,29 @@ public class MitlesenHome {
 	 * @throws SQLException
 	 * 
 	 */
-	public void start() throws SQLException {
-		ArduinoConfig ac = new ArduinoConfig();
-		ac.setPort(wipfConfig.getConfParamString(PORT));
-		ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
-		ac.setLineLength(wipfConfig.getConfParamInteger(LINELENGTH));
-		if (ac.isValid()) {
-			LOGGER.info("Config ok");
-			mitlesenConnect.setConfig(ac);
-			mitlesenConnect.startSerialLcdPort();
-			mitlesen.doStartMitlesen();
-		} else {
-			LOGGER.error("Problem mit der Config");
-			wipfConfig.setConfParam(PORT, "COM3");
-			wipfConfig.setConfParam(BAUDRATE, 57600);
-			wipfConfig.setConfParam(LINELENGTH, 50);
-		}
+	public void start() {
+		try {
+			ArduinoConfig ac = new ArduinoConfig();
+			ac.setPort(wipfConfig.getConfParamString(PORT));
+			ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
+			ac.setLineLength(wipfConfig.getConfParamInteger(LINELENGTH));
+			if (ac.isValid()) {
+				LOGGER.info("Config ok");
+				mitlesenConnect.setConfig(ac);
+				// mitlesenConnect.startSerialPort();
+				// mitlesen.doStartMitlesen();
+			} else {
+				LOGGER.error("Problem mit der Config");
+				wipfConfig.setConfParam(PORT, "COM3");
+				wipfConfig.setConfParam(BAUDRATE, 57600);
+				wipfConfig.setConfParam(LINELENGTH, 50);
+			}
 
+			ac.setPort(wipfConfig.getConfParamString(PORT));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

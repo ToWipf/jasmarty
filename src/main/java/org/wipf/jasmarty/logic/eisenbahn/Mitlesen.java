@@ -20,6 +20,8 @@ public class Mitlesen {
 
 	@Inject
 	MitlesenConnect connect;
+	@Inject
+	MitlesenHome home;
 
 	private static final Logger LOGGER = Logger.getLogger("Eisenbahn Mitlesen");
 	private boolean bActive = false;
@@ -31,6 +33,9 @@ public class Mitlesen {
 	public void doStartMitlesen() {
 		if (!bActive) {
 			LOGGER.info("starten");
+			home.start();
+			connect.startSerialPort();
+
 			bActive = true;
 			ExecutorService service = Executors.newFixedThreadPool(1);
 			service.submit(new Runnable() {
@@ -56,6 +61,7 @@ public class Mitlesen {
 	public void doStopMitlesen() {
 		LOGGER.info("stop");
 		bActive = false;
+		connect.closeSerialLcdPort();
 
 	}
 

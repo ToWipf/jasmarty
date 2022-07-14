@@ -19,6 +19,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public displayedColumns: string[] = ['key', 'val'];
   public itemarry: KeyValEntry[] = [];
   public sFilter: String = "";
+  public bRun: Boolean = false;
 
   ngOnInit() {
   }
@@ -26,12 +27,15 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public start(): void {
     this.rest.get('eisenbahn/mitlesen/start').then((resdata) => {
       console.log(resdata);
+      this.bRun = true;
+      this.loopResfresh();
     });
   }
 
   public stop(): void {
     this.rest.get('eisenbahn/mitlesen/stop').then((resdata) => {
       console.log(resdata);
+      this.bRun = false;
     });
   }
 
@@ -50,6 +54,16 @@ export class EisenbahnMitlesenComponent implements OnInit {
     this.serviceWipf.delay(200).then(() => {
       this.dataSource.filter = this.sFilter.trim();
     });
+  }
+
+  private loopResfresh(): void {
+    if (!this.bRun) {
+      // get current button
+      setTimeout(() => {
+        this.loopResfresh();
+      }, 100);
+      this.reloadList();
+    }
   }
 
 }
