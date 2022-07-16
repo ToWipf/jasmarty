@@ -98,7 +98,7 @@ export class ServiceRest {
    * @param path 
    * @returns 
    */
-  public getNoWarten(path: string): Promise<any> {
+  public getNoWartenDialog(path: string): Promise<any> {
     return new Promise(
       resolve => {
         this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {

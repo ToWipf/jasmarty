@@ -85,30 +85,30 @@ export class AppComponent implements OnInit {
   public getActiveModules(): void {
     this.bDevActive = false;
 
-    this.rest.get('basesettings/get/wipf').then((resdata: any) => {
+    this.rest.getNoWartenDialog('basesettings/get/wipf').then((resdata: any) => {
       // Weiteres nur laden, wenn das erste funktioniert
       this.bWipfActive = resdata.active;
 
-      this.rest.get('basesettings/get/telegram').then((resdata: any) => {
+      this.rest.getNoWartenDialog('basesettings/get/telegram').then((resdata: any) => {
         this.bTelegramActive = resdata.active;
       });
 
-      this.rest.get('basesettings/get/eisenbahn_mitlesen').then((resdata: any) => {
+      this.rest.getNoWartenDialog('basesettings/get/eisenbahn_mitlesen').then((resdata: any) => {
         this.bEisenbahnMitlesenActive = resdata.active;
       });
 
-      this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
+      this.rest.getNoWartenDialog('basesettings/get/jasmarty').then((resdata: any) => {
         this.bJasmartyActive = resdata.active;
 
         if (this.bJasmartyActive) {
           // Wenn Jasmarty true ist, den Typ holen
-          this.rest.get('lcd/config/get').then((resdata) => {
+          this.rest.getNoWartenDialog('lcd/config/get').then((resdata) => {
             var jaconfig: Jaconfig = resdata;
             this.jasmartyType = jaconfig.type;
           });
         }
       });
-      this.rest.get('basesettings/get/debug').then((resdata: any) => {
+      this.rest.getNoWartenDialog('basesettings/get/debug').then((resdata: any) => {
         this.bDevActive = resdata.active;
         if (this.bDevActive) {
           // Beim einschalten auch 12864 zeigen

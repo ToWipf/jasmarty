@@ -61,7 +61,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
   }
 
   public reloadList(): void {
-    this.rest.getNoWarten('eisenbahn/mitlesen/list').then((resdata: KeyValEntry[]) => {
+    this.rest.getNoWartenDialog('eisenbahn/mitlesen/list').then((resdata: KeyValEntry[]) => {
       this.itemarry = resdata;
 
       this.dataSource = new MatTableDataSource(this.itemarry);

@@ -104,7 +104,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private getCurrentPressed(): void {
-    this.rest.get('actions/currentPressed').then(
+    this.rest.getNoWartenDialog('actions/currentPressed').then(
       (resdata: any) => {
         console.log(resdata.btn);
         if (resdata.btn) {
