@@ -3,25 +3,34 @@
         <div class="gridCol">
             <h3>Lokaler Chat</h3>
 
-            <div mat-dialog-content>
-                <mat-form-field>
-                    <mat-label>Lokale Chat Nachricht</mat-label>
-                    <textarea (keyup.enter)="sendLocal()" [(ngModel)]="tMsg.message" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-                </mat-form-field>
+            <div class="gridRow">
+                <div class="gridCol">
+                    <div mat-dialog-content>
+                        <mat-form-field>
+                            <mat-label>Lokale Chat Nachricht</mat-label>
+                            <textarea (keyup.enter)="sendLocal()" [(ngModel)]="tMsg.message" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="gridCol">
+                    <button class="btn btn-wipf-default" (click)="sendLocal()">Lokaler Chat Senden</button>
+                    <pre>{{textOut}}</pre>
+                </div>
             </div>
-
-            <button class="btn btn-wipf-default" (click)="sendLocal()">Lokaler Chat Senden</button>
-            <pre>{{textOut}}</pre>
             <hr>
 
             <h4>Telegram Nachricht senden:</h4>
-
-            <mat-form-field>
-                <mat-label>Nachrichten Text</mat-label>
-                <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-            </mat-form-field>
-
-            <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
+            <div class="gridRow">
+                <div class="gridCol">
+                    <mat-form-field>
+                        <mat-label>Nachrichten Text</mat-label>
+                        <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="gridCol">
+                    <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
+                </div>
+            </div>
 
         </div>
 

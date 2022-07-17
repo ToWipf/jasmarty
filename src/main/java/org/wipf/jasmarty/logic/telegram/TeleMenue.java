@@ -283,6 +283,12 @@ public class TeleMenue {
 			case "discordnames":
 				return discord.getOnlineNamesDefault();
 
+			case "cleanlog:":
+			case "clearlog:":
+			case "cl":
+				telelog.cleanLog();
+				return "CleanLog";
+
 			default:
 				break;
 			}

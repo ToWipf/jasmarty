@@ -58,8 +58,8 @@ public class MainHome {
 	 */
 	void onStart(@Observes StartupEvent ev) {
 		try {
-
 			LOGGER.info("Starte " + VERSION);
+			LOGGER.debug("Debug Log aktiv");
 			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			createFileFolder();

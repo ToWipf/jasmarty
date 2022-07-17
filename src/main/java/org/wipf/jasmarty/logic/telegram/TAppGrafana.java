@@ -36,8 +36,8 @@ public class TAppGrafana {
 					"- de/Digitaleingänge\n" +
 					"- a/Ausen\n" +
 					"- wt/Wasser\n" +
-					"- fb/Fusboden\n" +
-					"- fbd/Fusbodendifferenz\n" +
+					"- fb/Fußboden\n" +
+					"- fbd/Fußbodendifferenz\n" +
 					"\n" +
 					"Zeit (die letzten xx) Beispiele:\n" +
 					"- 15m (Minuten)\n" +
@@ -64,11 +64,11 @@ public class TAppGrafana {
 			sPanelId = "8";
 			break;
 		case "fb":
-		case "fusboden":
+		case "fußboden":
 			sPanelId = "7";
 			break;
 		case "fbd":
-		case "fusbodendifferenz":
+		case "fußbodendifferenz":
 			sPanelId = "23";
 			break;
 		default:
