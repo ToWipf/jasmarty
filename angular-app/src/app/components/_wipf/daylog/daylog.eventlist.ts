@@ -230,7 +230,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     private loadTextVorschlag(): void {
         if (this.data.text.length > 0) {
             this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text + '/' + this.data.typ).then((resdata: String[]) => {
-                this.sTextVorschlag = resdata.toString();
+                this.sTextVorschlag = resdata.toString().replace("/,/gm",", "); // TODO: geht nicht
             });
         } else {
             this.sTextVorschlag = "-";

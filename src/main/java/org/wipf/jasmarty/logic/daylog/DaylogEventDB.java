@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.daylog;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -211,8 +212,8 @@ public class DaylogEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<String> getTextBySearchAndType(String sSearch, String sType) throws SQLException {
-		List<String> o = new LinkedList<>();
+	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) throws SQLException {
+		LinkedHashSet<String> o = new LinkedHashSet<>();
 
 		String sQuery = "SELECT * FROM daylogTextEvent WHERE text LIKE ? AND typ = ?;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
