@@ -205,4 +205,26 @@ public class DaylogEventDB {
 		return ar;
 	}
 
+	/**
+	 * @param sSearch
+	 * @param sType
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<String> getTextBySearchAndType(String sSearch, String sType) throws SQLException {
+		List<String> o = new LinkedList<>();
+
+		String sQuery = "SELECT * FROM daylogTextEvent WHERE text LIKE ? AND typ = ?;";
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setString(1, "%" + sSearch + "%");
+		statement.setString(2, sType);
+		ResultSet rs = statement.executeQuery();
+
+		while (rs.next()) {
+			o.add(rs.getString("text"));
+		}
+
+		return o;
+	}
+
 }

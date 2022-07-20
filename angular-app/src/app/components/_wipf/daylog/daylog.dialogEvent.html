@@ -18,8 +18,10 @@
                     <ng-container *ngIf="type.art==='TEXT'">
                         <mat-form-field>
                             <mat-label>Text</mat-label>
-                            <input matInput [(ngModel)]="data.text">
+                            <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
                         </mat-form-field>
+                        <br>
+                        Vorschläge: {{sTextVorschlag}}
                     </ng-container>
 
                     <ng-container *ngIf="type.art==='NUMBER'">

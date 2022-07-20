@@ -49,7 +49,6 @@ export class DayLogComponent implements OnInit {
     });
   }
 
-
   public loadEventsByDaySetVar(ddl: DaylogDay): void {
     this.dateForLoad = ddl;
   }
@@ -210,6 +209,7 @@ export class DaylogComponentDialogDayComponent {
   templateUrl: './daylog.dialogTypeList.html',
   styleUrls: ['./daylog.component.less']
 })
+
 export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 

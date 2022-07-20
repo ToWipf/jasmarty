@@ -199,9 +199,11 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     templateUrl: './daylog.dialogEvent.html',
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
-    constructor(public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
+    constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
 
     public daylogTypes: DaylogType[] = [];
+    public sTextVorschlag: String = "";
+    private bSucheAktiv: boolean = false;
 
     ngOnInit(): void {
         this.loadDaylogTypes();
@@ -211,6 +213,28 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         this.rest.get('daylog/type/getAll').then((resdata: DaylogDay[]) => {
             this.daylogTypes = resdata;
         });
+    }
+
+    public getTextVorschlag(): void {
+        if (!this.bSucheAktiv) {
+            this.bSucheAktiv = true;
+            this.serviceWipf.delay(300).then(() => {
+                if (this.bSucheAktiv) {
+                    this.loadTextVorschlag();
+                    this.bSucheAktiv = false;
+                }
+            });
+        }
+    }
+
+    private loadTextVorschlag(): void {
+        if (this.data.text.length > 0) {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text + '/' + this.data.typ).then((resdata: String[]) => {
+                this.sTextVorschlag = resdata.toString();
+            });
+        } else {
+            this.sTextVorschlag = "-";
+        }
     }
 
     onNoClick(): void {

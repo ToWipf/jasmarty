@@ -41,6 +41,12 @@ public class DaylogEventRest {
 		return Response.ok(daylogEventDB.getAllAsJson().toString()).build();
 	}
 
+	@GET
+	@Path("getTextBySearchAndType/{search}/{type}")
+	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType) throws SQLException {
+		return Response.ok(daylogEventDB.getTextBySearchAndType(sSearch, sType)).build();
+	}
+
 	@POST
 	@Path("save")
 	public Response save(String jnRoot) throws SQLException {
