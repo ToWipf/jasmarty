@@ -22,7 +22,7 @@ export class LoginComponent {
         this.rest.setLoginOk("true");
         //window.location.reload(); TODO: neuladen des Menüs
       } else {
-        this.rest.setLoginOk("false");
+        this.logoff();
       }
     });
   }
