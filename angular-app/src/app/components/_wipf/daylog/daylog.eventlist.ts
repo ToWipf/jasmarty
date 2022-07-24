@@ -230,6 +230,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     private loadTextVorschlag(): void {
         if (this.data.text.length > 0) {
             this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text + '/' + this.data.typ).then((resdata: String[]) => {
+                this.sTextVorschlag = "";
                 resdata.forEach((str: String) => {
                     if (this.sTextVorschlag.length > 0) {
                         this.sTextVorschlag = this.sTextVorschlag + ", ";
