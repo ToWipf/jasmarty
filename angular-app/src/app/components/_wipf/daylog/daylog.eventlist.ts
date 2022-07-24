@@ -203,6 +203,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     public daylogTypes: DaylogType[] = [];
     public sTextVorschlag: String = "";
+    public nAnzahlVorschlag: Number = 0;
     private bSucheAktiv: boolean = false;
 
     ngOnInit(): void {
@@ -231,6 +232,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         if (this.data.text.length > 0) {
             this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text + '/' + this.data.typ).then((resdata: String[]) => {
                 this.sTextVorschlag = "";
+                this.nAnzahlVorschlag = resdata.length;
                 resdata.forEach((str: String) => {
                     if (this.sTextVorschlag.length > 0) {
                         this.sTextVorschlag = this.sTextVorschlag + ", ";

@@ -21,7 +21,7 @@
                             <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
                         </mat-form-field>
                         <br>
-                        Vorschläge: {{sTextVorschlag}}
+                        Vorschläge({{nAnzahlVorschlag}}): {{sTextVorschlag}}
                     </ng-container>
 
                     <ng-container *ngIf="type.art==='NUMBER'">

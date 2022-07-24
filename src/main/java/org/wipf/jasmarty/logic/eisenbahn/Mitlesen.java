@@ -33,6 +33,7 @@ public class Mitlesen {
 	private static final Logger LOGGER = Logger.getLogger("Eisenbahn Mitlesen");
 	private boolean bActive = false;
 	private HashMap<String, Integer> itemMap = new HashMap<String, Integer>();
+	private Integer nAnzahlLeerstring = 0;
 
 	/**
 	 * 
@@ -42,6 +43,7 @@ public class Mitlesen {
 			LOGGER.info("starten");
 
 			bActive = true;
+			nAnzahlLeerstring = 0;
 			ExecutorService service = Executors.newFixedThreadPool(1);
 			service.submit(new Runnable() {
 
@@ -50,7 +52,18 @@ public class Mitlesen {
 					while (bActive) {
 						String sIn = connect.getLine();
 						if (sIn != null) {
+
 							addItem(sIn);
+
+							if (sIn.isEmpty()) {
+								nAnzahlLeerstring++;
+
+								// Leere Antworten sind Fehler!
+								if (nAnzahlLeerstring > 150) {
+									LOGGER.warn("Zu viele Fehler/Leere Antworten");
+									bActive = false;
+								}
+							}
 						}
 					}
 				}
@@ -83,6 +96,10 @@ public class Mitlesen {
 	 * @return
 	 */
 	public JSONArray getList() {
+		if (!bActive) {
+			return null;
+		}
+
 		JSONArray ja = new JSONArray();
 		try {
 			itemMap.forEach((key, val) -> {

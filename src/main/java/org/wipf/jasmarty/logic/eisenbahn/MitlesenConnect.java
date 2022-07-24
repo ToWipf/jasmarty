@@ -59,7 +59,7 @@ public class MitlesenConnect {
 			for (char c : nIn) {
 				sb.append(c);
 			}
-			LOGGER.info(sb.toString().trim());
+			LOGGER.info("'" + sb.toString().trim() + "'");
 			return sb.toString().trim();
 		}
 		return null;

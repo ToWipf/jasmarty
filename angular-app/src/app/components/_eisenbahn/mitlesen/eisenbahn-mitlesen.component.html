@@ -7,7 +7,7 @@
             <button class="btn btn-wipf-default" (click)="connect()">Verbinden</button>
         </div>
 
-        <div *ngIf="!bIsError">
+        <div *ngIf="bIsVerbunden">
             <div class="box" *ngIf="!bRun">
                 <button class="btn btn-wipf-default" (click)="start()">Start</button>
             </div>
@@ -16,8 +16,8 @@
                 <button class="btn btn-wipf-default" (click)="stop()">Stop</button>
             </div>
         </div>
-        <div *ngIf="bIsError">
-            Fehler beim Verbinden
+        <div *ngIf="!bIsVerbunden">
+            Nicht Verbunden
         </div>
 
         <!-- <div class="box">
@@ -46,5 +46,5 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
     </perfect-scrollbar>
-    Anzahl: {{itemarry.length}}
+    Anzahl: {{itemarry.length}} Events: {{nAnzahlEvents}}
 </div>
