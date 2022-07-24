@@ -32,10 +32,10 @@
 
     <ng-container matColumnDef="button">
         <th th mat-header-cell *matHeaderCellDef>
-            Verwalten
             <button *ngIf="dateForLoad.id" class="btn btn-wipf-default  btn-for-icon" (click)="newEventBySelectedDay()">
                 <mat-icon svgIcon="document" aria-hidden="false" title="Event erstellen"></mat-icon>
             </button>
+            ∑: {{ eventlist.length }}
         </th>
         <td mat-cell *matCellDef="let element">
             <button class="btn btn-wipf-default btn-for-icon" (click)="editEvent(element)">
@@ -52,4 +52,3 @@
     <!-- <tr mat-row (click)="editEvent(row)" *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
     <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
 </table>
-Anzahl Events: {{ eventlist.length }}

@@ -46,12 +46,6 @@
                         <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
                     </mat-form-field>
                 </div>
-                <div class="box">
-                    Neu hinzufügen:
-                    <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                        <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
-                    </button>
-                </div>
             </div>
         </perfect-scrollbar>
 
@@ -83,7 +77,12 @@
 
                 <ng-container matColumnDef="button">
                     <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
-                    <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
+                    <th th mat-header-cell *matHeaderCellDef>
+                        <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                            <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                        </button>
+                        ∑: {{toarry.length}}
+                    </th>
                     <td mat-cell *matCellDef="let element">
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
@@ -99,6 +98,5 @@
                 <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
         </perfect-scrollbar>
-        Treffer: {{toarry.length}}
     </div>
 </div>

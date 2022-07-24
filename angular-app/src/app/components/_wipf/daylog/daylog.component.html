@@ -97,6 +97,7 @@
                                     <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
                                         <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
                                     </button>
+                                    ∑: {{ daylist.length }}
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
