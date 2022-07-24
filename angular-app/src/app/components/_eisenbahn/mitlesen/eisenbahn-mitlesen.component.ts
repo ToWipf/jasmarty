@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { KeyValEntry } from 'src/app/datatypes';
 import { DialogJaNeinComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -22,6 +23,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public itemarry: KeyValEntry[] = [];
   public sFilter: String = "";
   public bRun: Boolean = false;
+  public bIsError: Boolean = false;
 
   ngOnInit() {
   }
@@ -44,6 +46,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public connect(): void {
     this.rest.get('eisenbahn/mitlesen/connect').then((resdata) => {
       if (resdata.ok == "true") {
+        this.bIsError = false;
         resdata.infotext = "Verbindung Ok, Starten?";
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
           width: '250px',
@@ -56,7 +59,11 @@ export class EisenbahnMitlesenComponent implements OnInit {
             this.start();
           }
         });
+      } else {
+        this.bIsError = true;
       }
+    }).catch(() => {
+      this.bIsError = true;
     });
   }
 
@@ -68,6 +75,8 @@ export class EisenbahnMitlesenComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
+    }).catch(() => {
+      this.bRun = false;
     });
   }
 

@@ -7,12 +7,17 @@
             <button class="btn btn-wipf-default" (click)="connect()">Verbinden</button>
         </div>
 
-        <div class="box" *ngIf="!bRun">
-            <button class="btn btn-wipf-default" (click)="start()">Start</button>
-        </div>
+        <div *ngIf="!bIsError">
+            <div class="box" *ngIf="!bRun">
+                <button class="btn btn-wipf-default" (click)="start()">Start</button>
+            </div>
 
-        <div class="box" *ngIf="bRun">
-            <button class="btn btn-wipf-default" (click)="stop()">Stop</button>
+            <div class="box" *ngIf="bRun">
+                <button class="btn btn-wipf-default" (click)="stop()">Stop</button>
+            </div>
+        </div>
+        <div *ngIf="bIsError">
+            Fehler beim Verbinden
         </div>
 
         <!-- <div class="box">
