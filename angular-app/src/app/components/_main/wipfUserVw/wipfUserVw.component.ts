@@ -19,7 +19,6 @@ export class WipfUserVwComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['username', 'role', 'telegramid', 'button'];
-  public wuArray: WipfUser[] = [];
 
   ngOnInit() {
     this.load();
@@ -27,15 +26,9 @@ export class WipfUserVwComponent implements OnInit {
 
   public load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.wuArray = [];
 
     this.rest.get('wipfuservw/getAll').then((resdata: WipfUser[]) => {
-      resdata.forEach((element) => {
-
-        this.wuArray.push(element);
-
-      });
-      this.dataSource = new MatTableDataSource(this.wuArray);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();
     });

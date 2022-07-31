@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <perfect-scrollbar class="pscroll">
+        <ng-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
                 <ng-container matColumnDef="mid">
@@ -60,7 +60,12 @@
                 </ng-container>
 
                 <ng-container matColumnDef="edit">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                    <th mat-header-cell *matHeaderCellDef>
+                        <div class="tableVW">
+                            ∑: {{logArry.length}}
+                        </div>
+                    </th>
+
                     <td mat-cell *matCellDef="let element">
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDelItemDialog(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
@@ -71,7 +76,6 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-        </perfect-scrollbar>
-        Treffer: {{logArry.length}}
+        </ng-scrollbar>
     </div>
 </div>
