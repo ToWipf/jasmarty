@@ -94,10 +94,12 @@
 
                             <ng-container matColumnDef="button">
                                 <th th mat-header-cell *matHeaderCellDef>
-                                    <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
-                                        <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
-                                    </button>
-                                    ∑: {{ daylist.length }}
+                                    <div class="tableVW">
+                                        <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
+                                            <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
+                                        </button>
+                                        ∑: {{ daylist.length }}
+                                    </div>
                                 </th>
                                 <td mat-cell *matCellDef="let element">
                                     <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
@@ -127,6 +129,5 @@
                 </div>
             </div>
         </perfect-scrollbar>
-        Anzahl Tage: {{ daylist.length }}
     </div>
 </div>

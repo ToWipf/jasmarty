@@ -49,7 +49,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
         this.bIsVerbunden = true;
         resdata.infotext = "Verbindung Ok, Starten?";
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-          width: '250px',
+          minWidth: '200px',
           height: '250px',
           data: resdata,
         });

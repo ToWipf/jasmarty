@@ -12,7 +12,7 @@
                     </ng-container>
                 </mat-select>
             </mat-form-field>
-
+            <br>
             <ng-container *ngFor="let type of daylogTypes">
                 <ng-container *ngIf="data.typ.toString()==type.id">
                     <ng-container *ngIf="type.art==='TEXT'">
@@ -23,7 +23,7 @@
                         <br>
                         Vorschläge({{sListVorschlag.length}}):
 
-                        <div class="displayInline" *ngFor="let sItem of sListVorschlag; let x = index">
+                        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
                             <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
                         </div>
 

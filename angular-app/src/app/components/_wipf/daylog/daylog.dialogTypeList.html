@@ -26,10 +26,12 @@
 
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
-                Verwalten
-                <button class="btn btn-wipf-default" (click)="newType()">
-                    <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Eintrag erstellen"></mat-icon>
-                </button>
+                <div class="tableVW">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="newType()">
+                        <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Eintrag erstellen"></mat-icon>
+                    </button>
+                    ∑:: {{ typelist.length }}
+                </div>
             </th>
             <td mat-cell *matCellDef="let element">
                 <button class="btn btn-wipf-default btn-for-icon" (click)="editType(element)">
@@ -45,4 +47,3 @@
         <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
     </table>
 </perfect-scrollbar>
-Anzahl Typen: {{ typelist.length }}
