@@ -24,6 +24,20 @@
                         <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
+
+                <div class="iconbox">
+                    Typ VW:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
+                        <mat-icon svgIcon="support" aria-hidden="false" title="Typenverwaltung öffnen"></mat-icon>
+                    </button>
+
+                    <br>
+                    Alle Events:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="loadAllEventsViaVar()">
+                        <mat-icon svgIcon="download" aria-hidden="false" title="Lade alle Events"></mat-icon>
+                    </button>
+                </div>
+
                 <div class="box">
                     <mat-form-field>
                         <mat-label>Tag Filtern</mat-label>
@@ -31,9 +45,7 @@
                     </mat-form-field>
                     <!-- Filter Tag: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilterDay" /> -->
                 </div>
-                <div class="box">
-                    <button class="btn btn-wipf-default" (click)="openDialogTypeVW()">Typenverwaltung öffnen</button>
-                </div>
+
                 <div class="box">
                     <mat-form-field>
                         <mat-label>Event Filtern</mat-label>
@@ -50,9 +62,6 @@
                     </mat-form-field>
                 </div>
 
-                <div class="box">
-                    <button class="btn btn-wipf-default" (click)="loadAllEventsViaVar()">Lade_alle Events</button>
-                </div>
             </div>
         </perfect-scrollbar>
 
