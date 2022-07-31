@@ -1,159 +1,156 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
     <mat-drawer #drawer [mode]="mode.value">
-        <perfect-scrollbar class="pscroll">
+        <ng-scrollbar class="sidebar">
+            <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
+            <ul *ngIf="bWipfActive" class="menueli">
+                <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
+                    <span class="buttonInhalt"> Todo List </span>
+                </li>
+                <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
+                    <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
+                    <span class="buttonInhalt"> TagesLog </span>
+                </li>
+                <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
+                    <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
+                    <span class="buttonInhalt"> TagesLog Stats </span>
+                </li>
+                <li (click)="selectSite('filme')" [ngClass]="{'isSelected' : selectedSite == 'filme'}">
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
+                    <span class="buttonInhalt"> Filme </span>
+                </li>
+                <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
+                    <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
+                    <span class="buttonInhalt"> RndEvent </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="selectSite('crypt')" [ngClass]="{'isSelected' : selectedSite == 'crypt'}">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                    <span class="buttonInhalt"> Crypt </span>
+                </li>
+                <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
+                    <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
+                    <span class="buttonInhalt"> Wipf User </span>
+                </li>
+                <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
+                    <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
+                    <span class="buttonInhalt"> Dateien </span>
+                </li>
+            </ul>
 
-            <div class="sidebar">
-                <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
-                <ul *ngIf="bWipfActive" class="menueli">
-                    <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
-                        <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
-                        <span class="buttonInhalt"> Todo List </span>
-                    </li>
-                    <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
-                        <mat-icon svgIcon="document" aria-hidden="false" title="TagesLog"></mat-icon>
-                        <span class="buttonInhalt"> TagesLog </span>
-                    </li>
-                    <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
-                        <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
-                        <span class="buttonInhalt"> TagesLog Stats </span>
-                    </li>
-                    <li (click)="selectSite('filme')" [ngClass]="{'isSelected' : selectedSite == 'filme'}">
-                        <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
-                        <span class="buttonInhalt"> Filme </span>
-                    </li>
-                    <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
-                        <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
-                        <span class="buttonInhalt"> RndEvent </span>
-                    </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('crypt')" [ngClass]="{'isSelected' : selectedSite == 'crypt'}">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                        <span class="buttonInhalt"> Crypt </span>
-                    </li>
-                    <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
-                        <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
-                        <span class="buttonInhalt"> Wipf User </span>
-                    </li>
-                    <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
-                        <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
-                        <span class="buttonInhalt"> Dateien </span>
-                    </li>
-                </ul>
+            <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
+            <ul *ngIf="bJasmartyActive" class="menueli">
+                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                    <span class="buttonInhalt"> 2004 Startseite </span>
+                </li>
+                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                    <span class="buttonInhalt"> 2004 Live </span>
+                </li>
+                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
+                    <span class="buttonInhalt"> 2004 Seiten </span>
+                </li>
+                <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                    <span class="buttonInhalt"> 12864 Panel </span>
+                </li>
+                <li *ngIf="jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
+                    <span class="buttonInhalt"> 12864 Seiten </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="selectSite('charGenerator')" [ngClass]="{'isSelected' : selectedSite == 'charGenerator'}">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                    <span class="buttonInhalt"> Char Generator </span>
+                </li>
+                <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
+                    <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
+                    <span class="buttonInhalt"> Funktionen </span>
+                </li>
+                <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
+                    <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                    <span class="buttonInhalt"> Einstellungen </span>
+                </li>
+            </ul>
 
-                <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
-                <ul *ngIf="bJasmartyActive" class="menueli">
-                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
-                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                        <span class="buttonInhalt"> 2004 Startseite </span>
-                    </li>
-                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
-                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                        <span class="buttonInhalt"> 2004 Live </span>
-                    </li>
-                    <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
-                        <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
-                        <span class="buttonInhalt"> 2004 Seiten </span>
-                    </li>
-                    <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
-                        <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                        <span class="buttonInhalt"> 12864 Panel </span>
-                    </li>
-                    <li *ngIf="jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
-                        <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
-                        <span class="buttonInhalt"> 12864 Seiten </span>
-                    </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('charGenerator')" [ngClass]="{'isSelected' : selectedSite == 'charGenerator'}">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                        <span class="buttonInhalt"> Char Generator </span>
-                    </li>
-                    <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
-                        <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
-                        <span class="buttonInhalt"> Funktionen </span>
-                    </li>
-                    <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
-                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                        <span class="buttonInhalt"> Einstellungen </span>
-                    </li>
-                </ul>
+            <div *ngIf="bEisenbahnMitlesenActive" class="titlemenue">Eisenbahn</div>
+            <ul *ngIf="bEisenbahnMitlesenActive" class="menueli">
+                <li (click)="selectSite('eisenbahnMitlesen')" [ngClass]="{'isSelected' : selectedSite == 'eisenbahnMitlesen'}">
+                    <mat-icon svgIcon="search" aria-hidden="false" title="Eisenbahn Mitlesen"></mat-icon>
+                    <span class="buttonInhalt"> Mitlesen </span>
+                </li>
+            </ul>
 
-                <div *ngIf="bEisenbahnMitlesenActive" class="titlemenue">Eisenbahn</div>
-                <ul *ngIf="bEisenbahnMitlesenActive" class="menueli">
-                    <li (click)="selectSite('eisenbahnMitlesen')" [ngClass]="{'isSelected' : selectedSite == 'eisenbahnMitlesen'}">
-                        <mat-icon svgIcon="search" aria-hidden="false" title="Eisenbahn Mitlesen"></mat-icon>
-                        <span class="buttonInhalt"> Mitlesen </span>
-                    </li>
-                </ul>
+            <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
+            <ul *ngIf="bTelegramActive" class="menueli">
+                <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
+                    <span class="buttonInhalt"> Nachrichten </span>
+                </li>
+                <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
+                    <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
+                    <span class="buttonInhalt"> Logs </span>
+                </li>
+                <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
+                    <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
+                    <span class="buttonInhalt"> Test Chat </span>
+                </li>
+                <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
+                    <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+                    <span class="buttonInhalt"> Einstellungen </span>
+                </li>
+            </ul>
 
-                <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
-                <ul *ngIf="bTelegramActive" class="menueli">
-                    <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
-                        <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
-                        <span class="buttonInhalt"> Nachrichten </span>
-                    </li>
-                    <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
-                        <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
-                        <span class="buttonInhalt"> Logs </span>
-                    </li>
-                    <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
-                        <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
-                        <span class="buttonInhalt"> Test Chat </span>
-                    </li>
-                    <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
-                        <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                        <span class="buttonInhalt"> Einstellungen </span>
-                    </li>
-                </ul>
+            <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
+            <ul *ngIf="bDevActive" class="menueli">
+                <li (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
+                    <span class="buttonInhalt"> Dynpages VW </span>
+                </li>
+                <li (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
+                    <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
+                    <span class="buttonInhalt"> Zeige Dynpage </span>
+                </li>
+            </ul>
 
-                <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
-                <ul *ngIf="bDevActive" class="menueli">
-                    <li (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
-                        <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
-                        <span class="buttonInhalt"> Dynpages VW </span>
-                    </li>
-                    <li (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
-                        <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
-                        <span class="buttonInhalt"> Zeige Dynpage </span>
-                    </li>
-                </ul>
-
-                <div class="titlemenue">Anzeig<span (click)="showDevModules()">e</span>
-                </div>
-                <ul class="menueli">
-                    <li (click)="getActiveModules()">
-                        <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
-                        <span class="buttonInhalt"> Neu laden </span>
-                    </li>
-                    <!-- <li *ngIf="!bDevActive" (click)="showDevModules()">
+            <div class="titlemenue">Anzeig<span (click)="showDevModules()">e</span>
+            </div>
+            <ul class="menueli">
+                <li (click)="getActiveModules()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
+                    <span class="buttonInhalt"> Neu laden </span>
+                </li>
+                <!-- <li *ngIf="!bDevActive" (click)="showDevModules()">
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Zeige Dev
                     </li> -->
-                    <li *ngIf="bDevActive" (click)="showAll2004()">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                        <span class="buttonInhalt"> Zeige Alles 2004 </span>
-                    </li>
-                    <li *ngIf="bDevActive" (click)="showAll12864()">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                        <span class="buttonInhalt"> Zeige Alles 12864 </span>
-                    </li>
-                    <li *ngIf="bDevActive" (click)="showDevModules()">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                        <span class="buttonInhalt">Verstecke Dev </span>
-                    </li>
-                    <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                        <span class="buttonInhalt"> Debug </span>
-                    </li>
-                    <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
-                        <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
-                        <span class="buttonInhalt"> Einstellungen </span>
-                    </li>
-                    <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
-                        <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
-                        <span class="buttonInhalt"> An/Abmelden </span>
-                    </li>
-                </ul>
-            </div>
-        </perfect-scrollbar>
+                <li *ngIf="bDevActive" (click)="showAll2004()">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                    <span class="buttonInhalt"> Zeige Alles 2004 </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="showAll12864()">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                    <span class="buttonInhalt"> Zeige Alles 12864 </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="showDevModules()">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
+                    <span class="buttonInhalt">Verstecke Dev </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                    <span class="buttonInhalt"> Debug </span>
+                </li>
+                <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
+                    <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
+                    <span class="buttonInhalt"> Einstellungen </span>
+                </li>
+                <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
+                    <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
+                    <span class="buttonInhalt"> An/Abmelden </span>
+                </li>
+            </ul>
+        </ng-scrollbar>
     </mat-drawer>
 
     <mat-drawer-content>

@@ -32,7 +32,7 @@
     </div>
 
     <div *ngIf="bIsVerbunden">
-        <perfect-scrollbar class="pscroll">
+        <ng-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="val" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="key">
@@ -48,7 +48,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-        </perfect-scrollbar>
+        </ng-scrollbar>
         Anzahl: {{itemarry.length}} Events: {{nAnzahlEvents}}
     </div>
 </div>
