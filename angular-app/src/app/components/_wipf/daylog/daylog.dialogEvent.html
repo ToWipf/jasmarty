@@ -21,7 +21,12 @@
                             <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
                         </mat-form-field>
                         <br>
-                        Vorschläge({{nAnzahlVorschlag}}): {{sTextVorschlag}}
+                        Vorschläge({{sListVorschlag.length}}):
+
+                        <div class="displayInline" *ngFor="let sItem of sListVorschlag; let x = index">
+                            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
+                        </div>
+
                     </ng-container>
 
                     <ng-container *ngIf="type.art==='NUMBER'">

@@ -174,9 +174,10 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public deleteEvent(item: any): void {
         item.infotext = "Wirklich löschen? " + item.id;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-            width: '250px',
-            height: '250px',
+            width: '200px',
+            height: '200px',
             data: item,
+            autoFocus: true
         });
 
         dialogRef.afterClosed().subscribe((result) => {
@@ -197,17 +198,21 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 @Component({
     selector: 'app-daylog-dialogevent',
     templateUrl: './daylog.dialogEvent.html',
+    styleUrls: ['./daylog.component.less'],
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
 
     public daylogTypes: DaylogType[] = [];
-    public sTextVorschlag: String = "";
-    public nAnzahlVorschlag: Number = 0;
+    public sListVorschlag: String[] = [];
     private bSucheAktiv: boolean = false;
 
     ngOnInit(): void {
         this.loadDaylogTypes();
+        // Beim bearbeiten die Vorschläge bereits vorladen
+        if (this.data.text.length > 1) {
+            this.getTextVorschlag();
+        }
     }
 
     private loadDaylogTypes(): void {
@@ -230,22 +235,19 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     private loadTextVorschlag(): void {
         if (this.data.text.length > 0) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text + '/' + this.data.typ).then((resdata: String[]) => {
-                this.sTextVorschlag = "";
-                this.nAnzahlVorschlag = resdata.length;
-                resdata.forEach((str: String) => {
-                    if (this.sTextVorschlag.length > 0) {
-                        this.sTextVorschlag = this.sTextVorschlag + ", ";
-                    }
-                    this.sTextVorschlag = this.sTextVorschlag + str.toString();
-                });
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: String[]) => {
+                this.sListVorschlag = resdata;
             });
         } else {
-            this.sTextVorschlag = "-";
+            this.sListVorschlag = [];
         }
     }
 
     onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    public vorschlagToData(sItem: string): void {
+        this.data.text = sItem;
     }
 }
