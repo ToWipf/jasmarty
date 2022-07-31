@@ -57,7 +57,7 @@
                             <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
                                 <mat-icon svgIcon="box" aria-hidden="false" title="Neu"></mat-icon>
                             </button>
-                            ∑: {{farry.length}}
+                            ∑: {{dataSource?._data?._value?.length}}
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let element">

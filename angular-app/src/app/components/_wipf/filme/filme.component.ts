@@ -20,7 +20,6 @@ export class FilmeComponent implements OnInit {
   public dataSource;
   //public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
   public displayedColumns: string[] = ['titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
-  public farry: FilmEntry[] = [];
   private nextId: number;
   public sFilter: string = "";
 
@@ -31,8 +30,7 @@ export class FilmeComponent implements OnInit {
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('filme/getAll').then((resdata: FilmEntry[]) => {
-      this.farry = resdata;
-      this.dataSource = new MatTableDataSource(this.farry);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.nextId = this.getNextId();
@@ -72,9 +70,10 @@ export class FilmeComponent implements OnInit {
     });
   }
 
+  // TODO ausbauen -> über DB
   private getNextId(): number {
     var nextId: number = 0;
-    this.farry.forEach((item: FilmEntry) => {
+    this.dataSource._data._value.forEach((item: FilmEntry) => {
       if (item.id > nextId) {
         nextId = item.id;
       }

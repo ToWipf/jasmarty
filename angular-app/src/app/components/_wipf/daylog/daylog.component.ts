@@ -18,7 +18,6 @@ export class DayLogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sortDay: MatSort;
 
   public daylistDataSource;
-  public daylist: DaylogDay[] = [];
   public userid = 0;
   public daylistDisplayedColumns: string[] = [];
   public sFilterDay: String = "";
@@ -82,7 +81,6 @@ export class DayLogComponent implements OnInit {
 
   public loadDays(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.daylist = [];
 
     if (this.sFilterDay.length == 0) {
       this.sFilterDay = "-";
@@ -93,9 +91,7 @@ export class DayLogComponent implements OnInit {
         d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
       });
 
-      this.daylist = resdata;
-
-      this.daylistDataSource = new MatTableDataSource(this.daylist);
+      this.daylistDataSource = new MatTableDataSource(resdata);
       this.daylistDataSource.sort = this.sortDay;
       this.daylistDataSource.filter = this.sFilterDay.trim();
       warten.close();
