@@ -61,14 +61,13 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-
             </div>
         </perfect-scrollbar>
 
-        <perfect-scrollbar class="pscrollTabellen">
+        <ng-scrollbar class="pscrollTabellen" track="horizontal">
             <div class="gridRow_ohne_rand">
                 <div class="gridCol">
-                    <perfect-scrollbar class="pscroll">
+                    <ng-scrollbar class="pscroll">
                         <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
                             <ng-container matColumnDef="id">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -129,14 +128,14 @@
                             <tr mat-header-row *matHeaderRowDef="daylistDisplayedColumns"></tr>
                             <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="dateForLoad == (row)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
                         </table>
-                    </perfect-scrollbar>
+                    </ng-scrollbar>
                 </div>
                 <div class="gridCol">
-                    <perfect-scrollbar class="pscroll">
+                    <ng-scrollbar class="pscroll">
                         <app-daylog-eventlist [(filterEventType)]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTable]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
-                    </perfect-scrollbar>
+                    </ng-scrollbar>
                 </div>
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
     </div>
 </div>

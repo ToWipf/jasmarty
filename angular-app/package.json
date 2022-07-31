@@ -26,6 +26,7 @@
     "ng-sidebar": "9.4.3",
     "ngx-perfect-scrollbar": "10.1.1",
     "ngx-photo-editor": "0.3.6",
+    "ngx-scrollbar": "10.0.0",
     "rxjs": "7.5.6",
     "zone.js": "0.11.6"
   },
