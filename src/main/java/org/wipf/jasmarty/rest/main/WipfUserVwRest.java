@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.logic.base.WipfUserVW;
 
 /**
@@ -40,7 +41,7 @@ public class WipfUserVwRest {
 
 	@POST
 	@Path("createOrUpdate")
-	public Response createOrUpdate(String sJson) {
+	public Response createOrUpdate(String sJson) throws WipfException {
 		wipfUserVW.addOrUpdateUser(sJson);
 		return Response.ok().build();
 	}

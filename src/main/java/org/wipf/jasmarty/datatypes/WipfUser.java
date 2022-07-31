@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.datatypes;
 
 import org.json.JSONObject;
+import org.wipf.jasmarty.WipfException;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
 
@@ -29,10 +30,15 @@ public class WipfUser {
 	/**
 	 * @param sJson
 	 * @return
+	 * @throws WipfException
 	 */
-	public WipfUser setByJson(String sJson) {
+	public WipfUser setByJson(String sJson) throws WipfException {
 		JSONObject jo = new JSONObject(sJson);
-		setUsername(jo.getString("username"));
+		String sUsername = jo.getString("username").trim();
+		if (sUsername.contains(" ")) {
+			throw new WipfException("Keine Leerzeichen im Benutzernamen erlaubt");
+		}
+		setUsername(sUsername);
 		// Mit bcrypt Verschluesselung (slow 32bit)
 		setPassword(BcryptUtil.bcryptHash(jo.getString("password")));
 		// setPassword(jo.getString("password"));

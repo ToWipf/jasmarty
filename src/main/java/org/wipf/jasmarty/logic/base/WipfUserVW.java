@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.datatypes.WipfUser;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -92,8 +93,9 @@ public class WipfUserVW {
 	/**
 	 * @param sJson
 	 * @return
+	 * @throws WipfException
 	 */
-	public void addOrUpdateUser(String sJson) {
+	public void addOrUpdateUser(String sJson) throws WipfException {
 		try {
 			addOrUpdateUser(new WipfUser().setByJson(sJson), false);
 		} catch (SQLException e) {

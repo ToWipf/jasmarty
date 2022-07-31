@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <perfect-scrollbar class="pscroll">
+    <ng-scrollbar class="pscroll">
         <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
             <ng-container matColumnDef="name">
@@ -32,7 +32,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-    </perfect-scrollbar>
+    </ng-scrollbar>
     Treffer: {{filenames.length}}
 
     <!-- <div class="form-group">
