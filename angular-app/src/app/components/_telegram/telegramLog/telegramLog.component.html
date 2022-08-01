@@ -3,6 +3,16 @@
     <div class="loglist">
 
         <div class="configline">
+            <div class="iconbox">
+                Zeige Alles:
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+            </div>
+            
             <div class="box">
                 <button class="btn btn-wipf-default" (click)="loadAll()">Alles laden</button>
             </div>
@@ -17,7 +27,7 @@
             </div>
         </div>
 
-        <ng-scrollbar class="pscroll">
+        <ng-scrollbar class="pscroll" track="horizontal">
             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
                 <ng-container matColumnDef="mid">

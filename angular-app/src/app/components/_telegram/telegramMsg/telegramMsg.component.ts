@@ -20,9 +20,20 @@ export class TelegramMsgComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
   public sFilter: String = "";
+  public bShowAllTable: Boolean = true;
 
   ngOnInit() {
+    this.showAllTable();
     this.loadAllItems();
+  }
+
+  public showAllTable(): void {
+    this.bShowAllTable = !this.bShowAllTable;
+    if (this.bShowAllTable) {
+      this.displayedColumns = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
+    } else {
+      this.displayedColumns = ['message', 'antwort', 'edit'];
+    }
   }
 
   public editItem(t: Telegram): void {

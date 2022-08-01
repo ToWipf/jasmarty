@@ -2,6 +2,15 @@
     <h3>Nachrichteneditor</h3>
     <div class="msglist">
         <div class="configline">
+            <div class="iconbox">
+                Zeige Alles:
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+            </div>
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
             </div>

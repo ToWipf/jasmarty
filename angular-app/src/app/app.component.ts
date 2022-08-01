@@ -118,6 +118,11 @@ export class AppComponent implements OnInit {
     });
   }
 
+  public showDevModulesBySecretKey(): void {
+    this.bDevActive = true
+    this.showAll12864();
+  }
+
   public showDevModules(): void {
     this.bDevActive = !this.bDevActive;
   }

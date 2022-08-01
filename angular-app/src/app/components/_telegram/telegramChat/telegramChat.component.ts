@@ -22,7 +22,6 @@ export class TelegramChatComponent implements OnInit {
   public displayedColumns: string[] = ['chatid', 'msg', 'usercache', 'counter', 'button'];
   public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
   public textOut: string = '-';
-  public usercachearry: TelegramUserCache[] = [];
   public sFilter: string = "";
   public sTextOnlineTelegram: string;
   public sStatus: string;
@@ -32,13 +31,11 @@ export class TelegramChatComponent implements OnInit {
   }
 
   public load(): void {
-    this.usercachearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('telegram/usercache/getAll').then((resdata: TelegramUserCache[]) => {
-      this.usercachearry = resdata;
 
-      this.dataSource = new MatTableDataSource(this.usercachearry);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
