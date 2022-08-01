@@ -12,7 +12,7 @@
     Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter" />
 </div>
 
-<perfect-scrollbar class="pscroll">
+<ng-scrollbar class="pscroll">
     <table mat-table [dataSource]="daylogTypeDataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -51,4 +51,4 @@
         <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
     </table>
-</perfect-scrollbar>
+</ng-scrollbar>

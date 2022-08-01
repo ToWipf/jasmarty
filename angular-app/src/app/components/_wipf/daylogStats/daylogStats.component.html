@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <perfect-scrollbar class="pscroll">
+        <ng-scrollbar class="pscroll">
             <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
 
                 <ng-container matColumnDef="anz">
@@ -58,7 +58,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
-        </perfect-scrollbar>
-        Treffer: {{statsarry.length}}
+        </ng-scrollbar>
+        Anzahl einmaliger Events: {{statsarry.length}}
     </div>
 </div>
