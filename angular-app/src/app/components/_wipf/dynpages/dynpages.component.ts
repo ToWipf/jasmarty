@@ -19,8 +19,6 @@ export class DynpagesComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['id', 'html', 'script', 'style', 'rechte', 'live', 'button'];
-  public dynpagearry: DynpageEntry[] = [];
-  public bLive: boolean = true;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -29,18 +27,10 @@ export class DynpagesComponent implements OnInit {
   }
 
   public load(): void {
-    this.dynpagearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('dynpages/getAll').then((resdata: DynpageEntry[]) => {
-      resdata.forEach((element) => {
-
-        if (this.bLive || element.live) {
-          this.dynpagearry.push(element);
-        }
-      });
-
-      this.dataSource = new MatTableDataSource(this.dynpagearry);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
@@ -65,7 +55,7 @@ export class DynpagesComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen? " + item.id;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

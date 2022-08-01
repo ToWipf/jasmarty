@@ -18,7 +18,6 @@ export class FileVwComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['name', 'button'];
-  public filenames: String[] = [];
   public sFilter: string = "";
   public fileToUpload: File | null = null;
 
@@ -27,13 +26,10 @@ export class FileVwComponent implements OnInit {
   }
 
   public load(): void {
-    this.filenames = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('file/getAll').then((resdata: String[]) => {
-      this.filenames = resdata;
-
-      this.dataSource = new MatTableDataSource(this.filenames);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();

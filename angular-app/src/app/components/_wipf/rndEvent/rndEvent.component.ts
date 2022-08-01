@@ -19,8 +19,6 @@ export class RndEventComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['id', 'eventtext', 'active', 'button'];
-  public rndarry: RndEvent[] = [];
-  private nextId: number = 0;
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -29,18 +27,12 @@ export class RndEventComponent implements OnInit {
   }
 
   public load(): void {
-    this.rndarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('rndevent/getAll').then((resdata: RndEvent[]) => {
-      resdata.forEach((element) => {
-        this.rndarry.push(element);
-      });
-
-      this.dataSource = new MatTableDataSource(this.rndarry);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
-      this.getNextId();
       this.applyFilter();
       warten.close();
     });
@@ -55,7 +47,6 @@ export class RndEventComponent implements OnInit {
   public newItem(): void {
     let td: RndEvent = {};
 
-    td.id = this.nextId;
     td.eventtext = '';
     td.active = true;
 
@@ -77,20 +68,6 @@ export class RndEventComponent implements OnInit {
         });
       }
     });
-  }
-
-  private getNextId(): void {
-    let nextIdTmp: number = 0;
-    // Auch falls jetzt weginger in der Liste ist, die bisher höchste id nehmen
-    if (this.nextId != 0) {
-      nextIdTmp = this.nextId;
-    }
-    this.rndarry.forEach((item: RndEvent) => {
-      if (item.id > nextIdTmp) {
-        nextIdTmp = item.id;
-      }
-    });
-    this.nextId = nextIdTmp * 1 + 1;
   }
 
   private save(item: RndEvent): void {

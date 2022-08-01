@@ -252,5 +252,6 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     public vorschlagToData(sItem: string): void {
         this.data.text = sItem;
+        this.loadTextVorschlag();
     }
 }

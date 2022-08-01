@@ -11,12 +11,9 @@
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
             </div>
-            <div class="box">
-                <button class="btn btn-wipf-default" (click)="newItem()">Neuen Eintrag erstellen</button>
-            </div>
         </div>
 
-        <perfect-scrollbar class="pscroll">
+        <ng-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">
@@ -41,7 +38,14 @@
 
                 <ng-container matColumnDef="button">
                     <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
-                    <th th mat-header-cell *matHeaderCellDef>Verwalten</th>
+                    <th th mat-header-cell *matHeaderCellDef>
+                        <div class="tableVW">
+                            <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                                <mat-icon svgIcon="box" aria-hidden="false" title="Neu"></mat-icon>
+                            </button>
+                            ∑: {{dataSource?._data?._value?.length}}
+                        </div>
+                    </th>
                     <td mat-cell *matCellDef="let element">
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
@@ -56,7 +60,6 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns"></tr>
             </table>
-        </perfect-scrollbar>
-        Treffer: {{rndarry.length}}
+        </ng-scrollbar>
     </div>
 </div>

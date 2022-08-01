@@ -19,7 +19,6 @@ export class SettingsComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['key', 'val', 'button'];
-  public settingsearry: KeyValEntry[] = [];
   public bShowWarning: boolean = false;
   public sFilter: String = "";
 
@@ -28,13 +27,10 @@ export class SettingsComponent implements OnInit {
   }
 
   public load(): void {
-    this.settingsearry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('basesettings/getAll').then((resdata: KeyValEntry[]) => {
-      this.settingsearry = resdata;
-
-      this.dataSource = new MatTableDataSource(this.settingsearry);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
