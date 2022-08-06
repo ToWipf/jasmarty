@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.json.JSONArray;
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.logic.base.SqlLite;
 
@@ -116,8 +117,9 @@ public class DaylogDayDB {
 	 * @param sDate
 	 * @return
 	 * @throws SQLException
+	 * @throws WipfException
 	 */
-	public DaylogDay getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException {
+	public DaylogDay getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException, WipfException {
 		DaylogDay ddayToCreate = new DaylogDay().setByJson(jnRoot);
 		// Wenn eine ID dabei ist, immer aktualisieren
 		if (ddayToCreate.getId() != null) {

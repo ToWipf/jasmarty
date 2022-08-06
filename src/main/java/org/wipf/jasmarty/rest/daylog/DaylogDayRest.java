@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
 
 /**
@@ -56,7 +57,7 @@ public class DaylogDayRest {
 
 	@POST
 	@Path("getDateAndCrateIfDateNotExistsByJSON")
-	public Response getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException {
+	public Response getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException, WipfException {
 		return Response.ok(daylogDayDB.getDateAndCrateIfDateNotExistsByJSON(jnRoot)).build();
 	}
 

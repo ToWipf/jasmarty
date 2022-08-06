@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.datatypes.daylog;
 
 import org.json.JSONObject;
+import org.wipf.jasmarty.WipfException;
 
 /**
  * @author Wipf
@@ -28,8 +29,9 @@ public class DaylogDay {
 	/**
 	 * @param sJson
 	 * @return
+	 * @throws WipfException
 	 */
-	public DaylogDay setByJson(String sJson) {
+	public DaylogDay setByJson(String sJson) throws WipfException {
 		JSONObject jo = new JSONObject(sJson);
 		if (jo.has("id")) {
 			this.nId = jo.getInt("id");
@@ -41,6 +43,11 @@ public class DaylogDay {
 		}
 		this.sDate = jo.getString("date");
 		this.sTagestext = jo.getString("tagestext").trim();
+
+		if (sDate.isBlank()) {
+			throw new WipfException("Datum darf nicht leer sein");
+		}
+
 		return this;
 	}
 
