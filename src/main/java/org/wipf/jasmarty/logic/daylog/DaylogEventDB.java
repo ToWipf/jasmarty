@@ -215,7 +215,7 @@ public class DaylogEventDB {
 	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) throws SQLException {
 		LinkedHashSet<String> o = new LinkedHashSet<>();
 
-		String sQuery = "SELECT DISTINCT text FROM daylogTextEvent WHERE text LIKE '%?%' AND typ = ? ORDER BY length(text) ASC;";
+		String sQuery = "SELECT DISTINCT text FROM daylogTextEvent WHERE text LIKE ? AND typ = ? ORDER BY length(text) ASC;";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		statement.setString(1, "%" + sSearch + "%");
 		statement.setString(2, sType);
