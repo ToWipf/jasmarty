@@ -15,6 +15,7 @@ public class MedienEntry extends Telegram {
 	private String sInfotext;
 	private Integer nBewertung;
 	private String sEditBy;
+	private String sTyp;
 
 	/**
 	 * @return
@@ -29,6 +30,7 @@ public class MedienEntry extends Telegram {
 		jo.put("infotext", sInfotext);
 		jo.put("bewertung", nBewertung);
 		jo.put("editby", sEditBy);
+		jo.put("typ", sTyp);
 		return jo;
 	}
 
@@ -48,6 +50,7 @@ public class MedienEntry extends Telegram {
 		this.setInfotext(jo.getString("infotext"));
 		this.setBewertung(jo.getInt("bewertung"));
 		this.setEditBy(jo.getString("editby"));
+		this.setTyp(jo.getString("typ"));
 
 		return this;
 	}
@@ -148,6 +151,20 @@ public class MedienEntry extends Telegram {
 	 */
 	public void setEditBy(String sEditBy) {
 		this.sEditBy = sEditBy;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getTyp() {
+		return sTyp;
+	}
+
+	/**
+	 * @param sEditBy
+	 */
+	public void setTyp(String sTyp) {
+		this.sTyp = sTyp;
 	}
 
 }

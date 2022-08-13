@@ -41,7 +41,7 @@ export interface TodoEntry {
   chatid?: number;
 }
 
-export interface FilmEntry {
+export interface MedienEntry {
   id?: number;
   titel?: string;
   art?: string;
@@ -50,6 +50,7 @@ export interface FilmEntry {
   bewertung?: number;
   gesehenDate?: number;
   infotext?: string;
+  typ?: string
 }
 
 export interface CryptItem {

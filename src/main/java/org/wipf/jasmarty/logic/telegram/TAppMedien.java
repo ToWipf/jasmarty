@@ -127,6 +127,7 @@ public class TAppMedien {
 				entry.setGesehenDate(rs.getInt("gesehendate"));
 				entry.setBewertung(rs.getInt("bewertung"));
 				entry.setDate(rs.getInt("date"));
+				entry.setTyp(rs.getString("typ"));
 				liTodoE.add(entry);
 			}
 			return liTodoE;
@@ -144,7 +145,7 @@ public class TAppMedien {
 		try {
 			if (medienE.getId() != null) {
 				// update
-				String sUpdate = "INSERT OR REPLACE INTO medien (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
+				String sUpdate = "INSERT OR REPLACE INTO medien (id, titel, art, gesehendate, infotext, bewertung, editby, date, typ) VALUES (?,?,?,?,?,?,?,?,?)";
 
 				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 				statement.setInt(1, medienE.getId());
@@ -155,12 +156,13 @@ public class TAppMedien {
 				statement.setInt(6, medienE.getBewertung());
 				statement.setString(7, medienE.getEditBy());
 				statement.setInt(8, medienE.getDate());
+				statement.setString(9, medienE.getTyp());
 				statement.executeUpdate();
 
 				return medienE.getId();
 			} else {
 				// insert
-				String sUpdate = "INSERT INTO medien (titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?)";
+				String sUpdate = "INSERT INTO medien (titel, art, gesehendate, infotext, bewertung, editby, date, typ) VALUES (?,?,?,?,?,?,?,?)";
 
 				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 				statement.setString(1, medienE.getTitel());
@@ -170,6 +172,7 @@ public class TAppMedien {
 				statement.setInt(5, medienE.getBewertung());
 				statement.setString(6, medienE.getEditBy());
 				statement.setInt(7, medienE.getDate());
+				statement.setString(8, medienE.getTyp());
 				statement.executeUpdate();
 
 				return -999; // TODO echte ID holen

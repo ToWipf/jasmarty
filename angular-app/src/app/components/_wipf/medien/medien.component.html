@@ -3,6 +3,21 @@
     <div class="medien">
 
         <div class="configline">
+            <div class="iconbox">
+                Neu Laden:
+                <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+
+                <br>
+                Zeige Alles:
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                </button>
+            </div>
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
             </div>
@@ -24,6 +39,11 @@
                 <ng-container matColumnDef="bewertung">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Bewertung </th>
                     <td mat-cell *matCellDef="let element"> {{element.bewertung}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="typ">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Typ </th>
+                    <td mat-cell *matCellDef="let element"> {{element.typ}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="gesehen">
