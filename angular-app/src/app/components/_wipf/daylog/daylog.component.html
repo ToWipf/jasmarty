@@ -38,7 +38,7 @@
                     </button>
                 </div>
 
-                <div class="box">
+                <div class="box" *ngIf="bShowDayTable">
                     <mat-form-field>
                         <mat-label>Tag Filtern</mat-label>
                         <input matInput (ngModelChange)="dayFilter()" [(ngModel)]="sFilterDay">
@@ -52,7 +52,7 @@
                         <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilterTextEvent">
                     </mat-form-field>
                 </div>
-                <div class="box">
+                <div class="box" *ngIf="!bShowDayTable">
                     <mat-form-field appearance="fill">
                         <mat-label>Event Typ Filtern</mat-label>
                         <mat-select [(value)]="selectedEventTypeFilter">
