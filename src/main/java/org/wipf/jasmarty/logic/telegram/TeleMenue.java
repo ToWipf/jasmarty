@@ -174,7 +174,7 @@ public class TeleMenue {
 			case "todo":
 				return appTodoList.telegramMenueTodoList(t);
 			case "to-link": // Spezielle funktion
-				return appTodoList.telegramSaveLink(t);
+				return appTodoList.telegramSaveLink(t).toString();
 			case "filme":
 			case "f":
 				return appFilme.telegramMenueFilme(t);

@@ -48,10 +48,13 @@ public class TodoEntry extends Telegram {
 
 		JSONObject jo = new JSONObject(sJson);
 
+		if (jo.has("id")) {
+			this.nId = jo.getInt("id");
+		}
+
 		this.setEditBy(jo.getString("editby"));
 		this.sData = jo.getString("data");
 		this.sActive = jo.getString("active");
-		this.nId = jo.getInt("id");
 		this.sRemind = jo.getString("remind");
 
 		return this;

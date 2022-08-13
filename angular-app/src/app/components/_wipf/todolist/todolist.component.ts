@@ -20,7 +20,6 @@ export class TodolistComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = [];
   public toarry: TodoEntry[] = [];
-  private nextId: number = 0;
   public bNew: boolean = true;
   public bTodo: boolean = true;
   public bDone: boolean = false;
@@ -71,7 +70,6 @@ export class TodolistComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.toarry);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
-      this.getNextId();
       this.applyFilter();
       warten.close();
     });
@@ -85,11 +83,8 @@ export class TodolistComponent implements OnInit {
 
   public newItem(): void {
     let td: TodoEntry = {};
-
-    td.id = this.nextId;
     td.remind = '';
     td.active = 'NEW';
-
     td.date = Math.round(Date.now() / 1000);
     td.editby = 'web';
     this.openDialog(td);
@@ -110,20 +105,6 @@ export class TodolistComponent implements OnInit {
         });
       }
     });
-  }
-
-  private getNextId(): void {
-    let nextIdTmp: number = 0;
-    // Auch falls jetzt weginger in der Liste ist, die bisher höchste id nehmen
-    if (this.nextId != 0) {
-      nextIdTmp = this.nextId;
-    }
-    this.toarry.forEach((item: TodoEntry) => {
-      if (item.id > nextIdTmp) {
-        nextIdTmp = item.id;
-      }
-    });
-    this.nextId = nextIdTmp * 1 + 1;
   }
 
   private saveTodo(item: TodoEntry): void {

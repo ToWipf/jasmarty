@@ -35,7 +35,7 @@ public class TAppTodoList {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS todolist (id INTEGER UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS todolist (id INTEGER primary key autoincrement UNIQUE, data TEXT, remind TEXT, active TEXT, editby TEXT, date INTEGER);";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -278,24 +278,42 @@ public class TAppTodoList {
 	/**
 	 * @param tE
 	 * @return id
+	 * @throws SQLException
 	 */
 	public Integer saveItem(TodoEntry tE) {
 		try {
-			String sUpdate = "INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES (?,?,?,?,?,?)";
+			if (tE.getId() != null) {
+				// update
+				String sUpdate = "INSERT OR REPLACE INTO todolist (id, data, editby, date, remind, active) VALUES (?,?,?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setInt(1, tE.getId());
-			statement.setString(2, tE.getData());
-			statement.setString(3, tE.getEditBy());
-			statement.setInt(4, tE.getDate());
-			statement.setString(5, tE.getRemind());
-			statement.setString(6, tE.getActive());
-			statement.executeUpdate();
+				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+				statement.setInt(1, tE.getId());
+				statement.setString(2, tE.getData());
+				statement.setString(3, tE.getEditBy());
+				statement.setInt(4, tE.getDate());
+				statement.setString(5, tE.getRemind());
+				statement.setString(6, tE.getActive());
+				statement.executeUpdate();
 
-			return tE.getId();
+				return tE.getId();
+			} else {
+				// insert
+				String sUpdate = "INSERT INTO todolist (data, editby, date, remind, active) VALUES (?,?,?,?,?)";
+
+				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+				statement.setString(1, tE.getData());
+				statement.setString(2, tE.getEditBy());
+				statement.setInt(3, tE.getDate());
+				statement.setString(4, tE.getRemind());
+				statement.setString(5, tE.getActive());
+				statement.executeUpdate();
+
+				return -999; // TODO echte ID holen
+			}
 		} catch (Exception e) {
-			LOGGER.warn("save " + e);
-			return null;
+			LOGGER.error("Fehler beim Speichern des ToDos");
+			e.printStackTrace();
+			return -1;
 		}
 	}
 
@@ -303,18 +321,14 @@ public class TAppTodoList {
 	 * @param t
 	 * @return
 	 */
-	public String telegramSaveLink(Telegram t) {
-		int nId = genNextId();
+	public Integer telegramSaveLink(Telegram t) {
 		TodoEntry te = new TodoEntry();
 		te.setData(t.getMessage());
 		te.setEditBy(t.getFromIdOnly().toString());
 		te.setDate(t.getDate());
 		te.setRemind("");
 		te.setActive("NEW");
-		te.setId(nId);
-		saveItem(te);
-
-		return Integer.valueOf(nId).toString();
+		return saveItem(te);
 	}
 
 	/**
@@ -322,17 +336,13 @@ public class TAppTodoList {
 	 * @return
 	 */
 	private Integer saveItem(Telegram t) {
-		int nId = genNextId();
 		TodoEntry te = new TodoEntry();
 		te.setData(t.getMessageFullWithoutFirstWord());
 		te.setEditBy(t.getFromIdOnly().toString());
 		te.setDate(t.getDate());
 		te.setRemind("");
 		te.setActive("NEW");
-		te.setId(nId);
-		saveItem(te);
-
-		return nId;
+		return saveItem(te);
 	}
 
 	/**
@@ -356,23 +366,6 @@ public class TAppTodoList {
 		} catch (Exception e) {
 			LOGGER.warn("del todo " + e);
 		}
-	}
-
-	/**
-	 * @return
-	 */
-	private int genNextId() {
-		int nNextId = 0;
-		try {
-			for (TodoEntry te : this.getAll()) {
-				if (te.getId() > nNextId) {
-					nNextId = te.getId();
-				}
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getNextId " + e);
-		}
-		return nNextId + 1;
 	}
 
 	/**
