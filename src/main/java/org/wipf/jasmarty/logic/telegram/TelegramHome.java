@@ -27,7 +27,7 @@ public class TelegramHome {
 	@Inject
 	TAppRndEvents appRndEvent;
 	@Inject
-	TAppFilm appFilme;
+	TAppMedien appMedien;
 	@Inject
 	TSendAndReceive tVerwaltung;
 	@Inject
@@ -53,7 +53,7 @@ public class TelegramHome {
 		appTeleMsg.initDB();
 		appMotd.initDB();
 		appRndEvent.initDB();
-		appFilme.initDB();
+		appMedien.initDB();
 		tUsercache.initDB();
 	}
 

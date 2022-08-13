@@ -16,7 +16,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/_wipf/dynpages/dynpages.component';
 import { DynpageShowComponent } from './components/_wipf/dynpageShow/dynpageShow.component';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
-import { FilmeComponent, FilmeComponentDialog } from './components/_wipf/filme/filme.component';
+import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
 import { FooterComponent, FooterComponentSetServerDialog } from './components/_main/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -103,8 +103,8 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         DynpageShowComponent,
         EisenbahnMitlesenComponent,
         FileVwComponent,
-        FilmeComponent,
-        FilmeComponentDialog,
+        MedienComponent,
+        MedienComponentDialog,
         FooterComponent,
         FooterComponentSetServerDialog,
         Jasmarty12864PagesComponent,

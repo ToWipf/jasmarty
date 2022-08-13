@@ -42,7 +42,7 @@ public class TeleMenue {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppFilm appFilme;
+	TAppMedien appMedien;
 	@Inject
 	PunkteVW punkteVW;
 	@Inject
@@ -112,7 +112,7 @@ public class TeleMenue {
 					"online" + "\n" + 
 				    "scan" + "\n" +
 				    "response" + "\n" +
-				    "filme" + "\n" +
+				    "medien" + "\n" +
 				    "todo" + "\n" +
 					"rndEvent\n" +
 					"punkte \n" +
@@ -177,7 +177,9 @@ public class TeleMenue {
 				return appTodoList.telegramSaveLink(t).toString();
 			case "filme":
 			case "f":
-				return appFilme.telegramMenueFilme(t);
+			case "m":
+			case "medien":
+				return appMedien.telegramMenueMedien(t);
 			case "e":
 			case "rndevent":
 				return appRndEvent.menueRndEvent(t);

@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * @author wipf
  *
  */
-public class FilmEntry extends Telegram {
+public class MedienEntry extends Telegram {
 
 	private Integer nId;
 	private String sTitel;
@@ -36,7 +36,7 @@ public class FilmEntry extends Telegram {
 	 * @param sJson
 	 * @return
 	 */
-	public FilmEntry setByJson(String sJson) {
+	public MedienEntry setByJson(String sJson) {
 		this.setByTelegram(this.setByJsonTelegram(sJson));
 		JSONObject jo = new JSONObject(sJson);
 		if (jo.has("id")) {

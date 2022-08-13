@@ -8,11 +8,11 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-filme',
-  templateUrl: './filme.component.html',
-  styleUrls: ['./filme.component.less'],
+  selector: 'app-medien',
+  templateUrl: './medien.component.html',
+  styleUrls: ['./medien.component.less'],
 })
-export class FilmeComponent implements OnInit {
+export class MedienComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -28,7 +28,7 @@ export class FilmeComponent implements OnInit {
 
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('filme/getAll').then((resdata: FilmEntry[]) => {
+    this.rest.get('medien/getAll').then((resdata: FilmEntry[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
@@ -58,7 +58,7 @@ export class FilmeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.rest.delete('filme/delete/' + item.id).then((resdata: any) => {
+        this.rest.delete('medien/delete/' + item.id).then((resdata: any) => {
           this.load();
         });
       }
@@ -66,7 +66,7 @@ export class FilmeComponent implements OnInit {
   }
 
   private save(item: FilmEntry): void {
-    this.rest.post('filme/save', item).then((resdata: any) => {
+    this.rest.post('medien/save', item).then((resdata: any) => {
       this.load();
     });
   }
@@ -80,7 +80,7 @@ export class FilmeComponent implements OnInit {
   public openDialog(item: FilmEntry): void {
     const edititem: FilmEntry = this.serviceWipf.deepCopy(item);
 
-    const dialogRef = this.dialog.open(FilmeComponentDialog, {
+    const dialogRef = this.dialog.open(MedienComponentDialog, {
       width: '350px',
       height: '550px',
       data: edititem,
@@ -97,11 +97,11 @@ export class FilmeComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-filme-dialog',
-  templateUrl: './filme.dialog.html',
+  selector: 'app-medien-dialog',
+  templateUrl: './medien.dialog.html',
 })
-export class FilmeComponentDialog {
-  constructor(public dialogRef: MatDialogRef<FilmeComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: FilmEntry) { }
+export class MedienComponentDialog {
+  constructor(public dialogRef: MatDialogRef<MedienComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: FilmEntry) { }
 
   onNoClick(): void {
     this.dialogRef.close();

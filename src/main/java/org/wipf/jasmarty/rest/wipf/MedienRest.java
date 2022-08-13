@@ -12,38 +12,38 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TAppFilm;
+import org.wipf.jasmarty.logic.telegram.TAppMedien;
 
 /**
  * @author wipf
  *
  */
-@Path("filme")
+@Path("medien")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class FilmeRest {
+public class MedienRest {
 
 	@Inject
-	TAppFilm appFilme;
+	TAppMedien appMedien;
 
 	@POST
 	@Path("save")
 	public Response save(String jnRoot) {
-		return Response.ok("{\"save\":\"" + appFilme.saveItem(jnRoot) + "\"}").build();
+		return Response.ok("{\"save\":\"" + appMedien.saveItem(jnRoot) + "\"}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		appFilme.deleteItem(nId);
+		appMedien.deleteItem(nId);
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
 	public Response getall() {
-		return Response.ok(appFilme.getAllAsJson().toString()).build();
+		return Response.ok(appMedien.getAllAsJson().toString()).build();
 	}
 
 }

@@ -16,9 +16,9 @@
                     <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
                     <span class="buttonInhalt"> TagesLog Stats </span>
                 </li>
-                <li (click)="selectSite('filme')" [ngClass]="{'isSelected' : selectedSite == 'filme'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Filme"></mat-icon>
-                    <span class="buttonInhalt"> Filme </span>
+                <li (click)="selectSite('medien')" [ngClass]="{'isSelected' : selectedSite == 'medien'}">
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Medien"></mat-icon>
+                    <span class="buttonInhalt"> Medien </span>
                 </li>
                 <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
                     <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
@@ -190,8 +190,8 @@
                 <ng-container *ngIf="selectedSite==='todolist'">
                     <app-todolist></app-todolist>
                 </ng-container>
-                <ng-container *ngIf="selectedSite==='filme'">
-                    <app-filme></app-filme>
+                <ng-container *ngIf="selectedSite==='medien'">
+                    <app-medien></app-medien>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='crypt'">
                     <app-crypt></app-crypt>

@@ -11,7 +11,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
-import org.wipf.jasmarty.datatypes.telegram.FilmEntry;
+import org.wipf.jasmarty.datatypes.telegram.MedienEntry;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -21,41 +21,29 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @ApplicationScoped
-public class TAppFilm {
+public class TAppMedien {
 
 	@Inject
 	SqlLite sqlLite;
 	@Inject
 	Wipf wipf;
 
-	private static final Logger LOGGER = Logger.getLogger("Telegram Filme");
+	private static final Logger LOGGER = Logger.getLogger("Telegram Medien");
 
 	/**
 	 * @throws SQLException
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		System.out.println("UPDATING HIER");
-		// PATCH
-		sqlLite.getDbApp().prepareStatement(
-				"CREATE TABLE medien (id INTEGER primary key autoincrement UNIQUE, titel TEXT, art TEXT, typ TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);")
-				.executeUpdate();
-
-		sqlLite.getDbApp().prepareStatement(
-				"INSERT INTO medien(id, titel, art, gesehendate, infotext, bewertung, editby, date) SELECT id, titel, art, gesehendate, infotext, bewertung, editby, date FROM filme;")
-				.executeUpdate();
-
-		// String sUpdate = "CREATE TABLE IF NOT EXISTS medien (id INTEGER primary key
-		// autoincrement UNIQUE, titel TEXT, art TEXT, typ TEXT, gesehendate INTEGER,
-		// infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
-		// sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
+		String sUpdate = "CREATE TABLE IF NOT EXISTS medien (id INTEGER primary key autoincrement UNIQUE, titel TEXT, art TEXT, typ TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
+		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
 	 * @param t
 	 * @return
 	 */
-	public String telegramMenueFilme(Telegram t) {
+	public String telegramMenueMedien(Telegram t) {
 		String sAction = t.getMessageStringPartLow(1);
 		if (sAction == null) {
 			// @formatter:off
@@ -88,7 +76,7 @@ public class TAppFilm {
 	public String getAllAsList() {
 		StringBuilder sb = new StringBuilder();
 
-		for (FilmEntry tItem : getAll()) {
+		for (MedienEntry tItem : getAll()) {
 			if (sb.length() > 0) {
 				sb.append("\n");
 			}
@@ -108,7 +96,7 @@ public class TAppFilm {
 	public JSONArray getAllAsJson() {
 		JSONArray ja = new JSONArray();
 		try {
-			for (FilmEntry tItem : getAll()) {
+			for (MedienEntry tItem : getAll()) {
 				ja.put(tItem.toJson());
 			}
 		} catch (Exception e) {
@@ -121,16 +109,16 @@ public class TAppFilm {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<FilmEntry> getAll() {
+	public List<MedienEntry> getAll() {
 		try {
-			List<FilmEntry> liTodoE = new ArrayList<>();
+			List<MedienEntry> liTodoE = new ArrayList<>();
 
 			String sQuery = "select * from medien;";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
-				FilmEntry entry = new FilmEntry();
+				MedienEntry entry = new MedienEntry();
 				entry.setId(rs.getInt("id"));
 				entry.setArt(rs.getString("art"));
 				entry.setEditBy(rs.getString("editby"));
@@ -149,39 +137,39 @@ public class TAppFilm {
 	}
 
 	/**
-	 * @param filmE
+	 * @param medienE
 	 * @return id
 	 */
-	public Integer saveItem(FilmEntry filmE) {
+	public Integer saveItem(MedienEntry medienE) {
 		try {
-			if (filmE.getId() != null) {
+			if (medienE.getId() != null) {
 				// update
 				String sUpdate = "INSERT OR REPLACE INTO medien (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
 
 				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-				statement.setInt(1, filmE.getId());
-				statement.setString(2, filmE.getTitel());
-				statement.setString(3, filmE.getArt());
-				statement.setInt(4, filmE.getGesehenDate());
-				statement.setString(5, filmE.getInfotext());
-				statement.setInt(6, filmE.getBewertung());
-				statement.setString(7, filmE.getEditBy());
-				statement.setInt(8, filmE.getDate());
+				statement.setInt(1, medienE.getId());
+				statement.setString(2, medienE.getTitel());
+				statement.setString(3, medienE.getArt());
+				statement.setInt(4, medienE.getGesehenDate());
+				statement.setString(5, medienE.getInfotext());
+				statement.setInt(6, medienE.getBewertung());
+				statement.setString(7, medienE.getEditBy());
+				statement.setInt(8, medienE.getDate());
 				statement.executeUpdate();
 
-				return filmE.getId();
+				return medienE.getId();
 			} else {
 				// insert
 				String sUpdate = "INSERT INTO medien (titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?)";
 
 				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-				statement.setString(1, filmE.getTitel());
-				statement.setString(2, filmE.getArt());
-				statement.setInt(3, filmE.getGesehenDate());
-				statement.setString(4, filmE.getInfotext());
-				statement.setInt(5, filmE.getBewertung());
-				statement.setString(6, filmE.getEditBy());
-				statement.setInt(7, filmE.getDate());
+				statement.setString(1, medienE.getTitel());
+				statement.setString(2, medienE.getArt());
+				statement.setInt(3, medienE.getGesehenDate());
+				statement.setString(4, medienE.getInfotext());
+				statement.setInt(5, medienE.getBewertung());
+				statement.setString(6, medienE.getEditBy());
+				statement.setInt(7, medienE.getDate());
 				statement.executeUpdate();
 
 				return -999; // TODO echte ID holen
@@ -199,14 +187,14 @@ public class TAppFilm {
 	 * @return
 	 */
 	private Integer saveItem(Telegram t) {
-		FilmEntry filmE = new FilmEntry();
-		filmE.setTitel(t.getMessageFullWithoutFirstWord());
-		filmE.setEditBy(t.getFromIdOnly().toString());
-		filmE.setDate(t.getDate());
-		filmE.setGesehenDate(0);
-		filmE.setBewertung(0);
+		MedienEntry medienE = new MedienEntry();
+		medienE.setTitel(t.getMessageFullWithoutFirstWord());
+		medienE.setEditBy(t.getFromIdOnly().toString());
+		medienE.setDate(t.getDate());
+		medienE.setGesehenDate(0);
+		medienE.setBewertung(0);
 
-		return saveItem(filmE);
+		return saveItem(medienE);
 	}
 
 	/**
@@ -214,7 +202,7 @@ public class TAppFilm {
 	 * @return
 	 */
 	public Integer saveItem(String jnRoot) {
-		return saveItem(new FilmEntry().setByJson(jnRoot));
+		return saveItem(new MedienEntry().setByJson(jnRoot));
 	}
 
 	/**
