@@ -26,16 +26,19 @@ export class DayLogComponent implements OnInit {
   public daylogTypes: DaylogType[] = [];
   public dateForLoad: DaylogDay = {};
   public bShowAllTable: boolean = true;
+  public bShowDayTable: boolean = true;
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: any;
   private filterActiveCache: boolean = false;
 
   ngOnInit() {
     this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad((new Date(Date.now()).getMonth() + 1), 2);
+    this.dateForLoad = { date: "" };
     this.loadDays();
     this.loadDaylogTypes();
     this.showAllTable();
     this.loadTypeListForEventFilter();
+    this.bShowDayTable = true;
   }
 
   public loadTypeListForEventFilter(): void {
@@ -162,6 +165,7 @@ export class DayLogComponent implements OnInit {
 
   public loadAllEventsViaVar(): void {
     let d: DaylogDay = { date: "LOADALL" };
+    this.bShowDayTable = false;
     this.dateForLoad = d;
   }
 

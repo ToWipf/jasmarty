@@ -6,6 +6,7 @@ import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { empty } from 'rxjs';
 
 @Component({
     selector: 'app-daylog-eventlist',
@@ -30,11 +31,8 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     // Auf Änderungen achten und aktionen starten
     ngOnChanges(changes: SimpleChanges) {
-        if (changes?.dateForLoad?.currentValue?.date === "LOADALL") {
-            this.loadAllEvents();
-            this.applyFilter();
-        } else if (changes?.dateForLoad) {
-            this.loadEventsByDay(this.dateForLoad);
+        if (changes?.dateForLoad) {
+            this.doLoadEventList();
             this.applyFilter();
         }
 
@@ -64,11 +62,25 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     private saveEvent(item: DaylogEvent): void {
         this.bShowWarning = true;
         this.rest.post('daylog/event/save', item).then((resdata: any) => {
-            this.loadEventsByDay(this.dateForLoad);
+            this.doLoadEventList();
             if (resdata.save == "true") {
                 this.bShowWarning = false;
             }
         });
+    }
+
+    private doLoadEventList(): void {
+        // Je nachdem die gesamte Liste oder nur den Tag laden bzw. leeren
+        if (this.dateForLoad.date === "") {
+            this.eventlistDataSource = new MatTableDataSource();;
+        }
+        else if (this.dateForLoad.date === "LOADALL") {
+            this.loadAllEvents();
+            this.applyFilter();
+        } else {
+            this.loadEventsByDay(this.dateForLoad);
+            this.applyFilter();
+        }
     }
 
     public newEventBySelectedDay(): void {
@@ -144,7 +156,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         });
     }
 
-    public loadEventsByDay(d: DaylogDay): void {
+    private loadEventsByDay(d: DaylogDay): void {
         if (d.id != undefined) {
             const warten = this.dialog.open(DialogWartenComponent, {});
             this.eventlist = [];
