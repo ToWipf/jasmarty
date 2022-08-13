@@ -39,8 +39,9 @@ public class FilmEntry extends Telegram {
 	public FilmEntry setByJson(String sJson) {
 		this.setByTelegram(this.setByJsonTelegram(sJson));
 		JSONObject jo = new JSONObject(sJson);
-
-		this.setId(jo.getInt("id"));
+		if (jo.has("id")) {
+			this.setId(jo.getInt("id"));
+		}
 		this.setTitel(jo.getString("titel"));
 		this.setArt(jo.getString("art"));
 		this.setGesehenDate(jo.getInt("gesehenDate"));

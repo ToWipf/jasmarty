@@ -35,8 +35,20 @@ public class TAppFilm {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS filme (id INTEGER UNIQUE, titel TEXT, art TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
-		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
+		System.out.println("UPDATING HIER");
+		// PATCH
+		sqlLite.getDbApp().prepareStatement(
+				"CREATE TABLE medien (id INTEGER primary key autoincrement UNIQUE, titel TEXT, art TEXT, typ TEXT, gesehendate INTEGER, infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);")
+				.executeUpdate();
+
+		sqlLite.getDbApp().prepareStatement(
+				"INSERT INTO medien(id, titel, art, gesehendate, infotext, bewertung, editby, date) SELECT id, titel, art, gesehendate, infotext, bewertung, editby, date FROM filme;")
+				.executeUpdate();
+
+		// String sUpdate = "CREATE TABLE IF NOT EXISTS medien (id INTEGER primary key
+		// autoincrement UNIQUE, titel TEXT, art TEXT, typ TEXT, gesehendate INTEGER,
+		// infotext TEXT, bewertung INTEGER, editby TEXT, date INTEGER);";
+		// sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
 	/**
@@ -113,7 +125,7 @@ public class TAppFilm {
 		try {
 			List<FilmEntry> liTodoE = new ArrayList<>();
 
-			String sQuery = "select * from filme;";
+			String sQuery = "select * from medien;";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 			ResultSet rs = statement.executeQuery();
 
@@ -142,20 +154,38 @@ public class TAppFilm {
 	 */
 	public Integer saveItem(FilmEntry filmE) {
 		try {
-			String sUpdate = "INSERT OR REPLACE INTO filme (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
+			if (filmE.getId() != null) {
+				// update
+				String sUpdate = "INSERT OR REPLACE INTO medien (id, titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?,?)";
 
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setInt(1, filmE.getId());
-			statement.setString(2, filmE.getTitel());
-			statement.setString(3, filmE.getArt());
-			statement.setInt(4, filmE.getGesehenDate());
-			statement.setString(5, filmE.getInfotext());
-			statement.setInt(6, filmE.getBewertung());
-			statement.setString(7, filmE.getEditBy());
-			statement.setInt(8, filmE.getDate());
-			statement.executeUpdate();
+				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+				statement.setInt(1, filmE.getId());
+				statement.setString(2, filmE.getTitel());
+				statement.setString(3, filmE.getArt());
+				statement.setInt(4, filmE.getGesehenDate());
+				statement.setString(5, filmE.getInfotext());
+				statement.setInt(6, filmE.getBewertung());
+				statement.setString(7, filmE.getEditBy());
+				statement.setInt(8, filmE.getDate());
+				statement.executeUpdate();
 
-			return filmE.getId();
+				return filmE.getId();
+			} else {
+				// insert
+				String sUpdate = "INSERT INTO medien (titel, art, gesehendate, infotext, bewertung, editby, date) VALUES (?,?,?,?,?,?,?)";
+
+				PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+				statement.setString(1, filmE.getTitel());
+				statement.setString(2, filmE.getArt());
+				statement.setInt(3, filmE.getGesehenDate());
+				statement.setString(4, filmE.getInfotext());
+				statement.setInt(5, filmE.getBewertung());
+				statement.setString(6, filmE.getEditBy());
+				statement.setInt(7, filmE.getDate());
+				statement.executeUpdate();
+
+				return -999; // TODO echte ID holen
+			}
 		} catch (Exception e) {
 			LOGGER.warn("save " + e);
 			return null;
@@ -169,9 +199,7 @@ public class TAppFilm {
 	 * @return
 	 */
 	private Integer saveItem(Telegram t) {
-		int nId = genNextId();
 		FilmEntry filmE = new FilmEntry();
-		filmE.setId(nId);
 		filmE.setTitel(t.getMessageFullWithoutFirstWord());
 		filmE.setEditBy(t.getFromIdOnly().toString());
 		filmE.setDate(t.getDate());
@@ -194,7 +222,7 @@ public class TAppFilm {
 	 */
 	public void deleteItem(Integer nId) {
 		try {
-			String sUpdate = "DELETE FROM filme WHERE id LIKE ?;";
+			String sUpdate = "DELETE FROM medien WHERE id LIKE ?;";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nId);
 			statement.executeUpdate();
@@ -205,28 +233,11 @@ public class TAppFilm {
 
 	/**
 	 * @return
-	 */
-	private int genNextId() {
-		int nNextId = 0;
-		try {
-			for (FilmEntry fe : this.getAll()) {
-				if (fe.getId() > nNextId) {
-					nNextId = fe.getId();
-				}
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getNextId " + e);
-		}
-		return nNextId + 1;
-	}
-
-	/**
-	 * @return
 	 * @throws SQLException
 	 */
 	private Integer countItems() {
 		try {
-			String sQuery = "SELECT COUNT(*) FROM filme;";
+			String sQuery = "SELECT COUNT(*) FROM medien;";
 			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
 			while (rs.next()) {
 
@@ -245,7 +256,7 @@ public class TAppFilm {
 	 */
 	private String delByID(Integer nID) {
 		try {
-			String sUpdate = "DELETE FROM filme WHERE id = " + nID;
+			String sUpdate = "DELETE FROM medien WHERE id = " + nID;
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, nID);
 			statement.executeUpdate();
