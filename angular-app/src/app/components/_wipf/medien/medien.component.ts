@@ -20,7 +20,6 @@ export class MedienComponent implements OnInit {
   public dataSource;
   public bShowAllTable: boolean = true;
   public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
-  //public displayedColumns: string[] = ['titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
   public sFilter: string = "";
 
   ngOnInit() {

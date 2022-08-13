@@ -66,7 +66,7 @@
 
         <ng-scrollbar class="pscrollTabellen" track="horizontal">
             <div class="gridRow_ohne_rand">
-                <div class="gridCol" *ngIf="bShowDayTable">
+                <div class="gridCol" [ngClass]="{'hide': !bShowDayTable }">
                     <ng-scrollbar class="pscroll">
                         <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
                             <ng-container matColumnDef="id">
