@@ -168,8 +168,14 @@ public class TAppGrafana {
 			throws Exception {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
+		String sGrafanaHost = wipfConfig.getConfParamString("grafana_host");
+
+		if (sGrafanaHost.isBlank()) {
+			return "Fehler 119: Kein Grafana Host";
+		}
+
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-		fileVw.saveFileToDisk("http://192.168.2.11:3000/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
+		fileVw.saveFileToDisk(sGrafanaHost + "/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
 				+ "&from=now-" + sTime + "&to=now", sFilename);
 
 		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);
