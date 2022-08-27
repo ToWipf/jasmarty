@@ -1,10 +1,7 @@
 package org.wipf.jasmarty.logic.daylog;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,6 +27,15 @@ public class DaylogHome {
 	DaylogTypeDB daylogTypeDB;
 
 	/**
+	 * Hilfsklasse für etliche Ausgaben
+	 *
+	 */
+	class TagesInfo {
+		public String sInfo;
+		public Integer nAnzahlEvents;
+	}
+
+	/**
 	 * @throws SQLException
 	 */
 	public void initDB() throws SQLException {
@@ -39,22 +45,43 @@ public class DaylogHome {
 	}
 
 	/**
+	 * Datum Heute
+	 * 
 	 * @return
 	 */
-	public String getTagesInfo() {
-		// Datum Heute
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		String sDateNow = df.format(new Date());
-
-		return getTagesinfoByDate(sDateNow);
+	private TagesInfo getTagesInfo() {
+		return getTagesinfoByDate(LocalDate.now().toString());
 	}
 
 	/**
 	 * @return
 	 */
-	public String getGesternInfo() {
-		LocalDate dateGestern = LocalDate.now().minusDays(1);
-		return getTagesinfoByDate(dateGestern.toString());
+	private TagesInfo getGesternInfo() {
+		return getTagesinfoByDate(LocalDate.now().minusDays(1).toString());
+	}
+
+	/**
+	 * Inhalt wenn morgen ein oder mehr Events vorhanden
+	 * 
+	 * Inhalt wenn gestern weniger als 4 einträge da sind
+	 * 
+	 * @return
+	 */
+	public String getDailyInfo() {
+		StringBuilder sb = new StringBuilder();
+		TagesInfo tiHeute = getTagesInfo();
+		TagesInfo tiGestern = getGesternInfo();
+
+		if (tiHeute.nAnzahlEvents > 0) {
+			sb.append(tiHeute.sInfo);
+			sb.append("\n\n");
+		}
+
+		if (tiGestern.nAnzahlEvents <= 4) {
+			sb.append(tiGestern.sInfo);
+		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -63,13 +90,13 @@ public class DaylogHome {
 	 */
 	public String getTagesinfoByTelegram(Telegram t) {
 		if (t.getMessageFullWithoutFirstWord().matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
-			return getTagesinfoByDate(t.getMessageFullWithoutFirstWord());
+			return getTagesinfoByDate(t.getMessageFullWithoutFirstWord()).toString();
 		} else if (t.getMessageFullWithoutFirstWord().toLowerCase().equals("g")) {
 			// Gestern
-			return getGesternInfo();
+			return getGesternInfo().sInfo;
 		}
 		// Kein Valides Datum mitgegeben -> gebe Heute zurück
-		return getTagesInfo();
+		return getTagesInfo().sInfo;
 	}
 
 	/**
@@ -106,12 +133,16 @@ public class DaylogHome {
 	 * @param sDate
 	 * @return
 	 */
-	private String getTagesinfoByDate(String sDate) {
+	private TagesInfo getTagesinfoByDate(String sDate) {
+		TagesInfo ti = new TagesInfo();
+		ti.nAnzahlEvents = 0;
+
 		StringBuilder sb = new StringBuilder();
 		try {
 			DaylogDay dday = daylogDayDB.get(sDate, 0);
 			if (dday.getId() == null) {
-				return "Für den Tag " + sDate + " gibt es keine Events";
+				ti.sInfo = "Für den Tag " + sDate + " gibt es keine Events";
+				return ti;
 			}
 			List<DaylogEvent> dEvents = daylogEventDB.getByDateId(dday.getId());
 
@@ -126,13 +157,15 @@ public class DaylogHome {
 				sb.append(": \n");
 				sb.append(dEvent.getText());
 				sb.append("\n\n");
+				ti.nAnzahlEvents++;
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			sb.append("Fehler getTagesinfo: " + e);
 		}
-		return sb.toString();
+		ti.sInfo = sb.toString();
+		return ti;
 	}
 
 }

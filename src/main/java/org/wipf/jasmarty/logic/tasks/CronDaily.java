@@ -49,13 +49,10 @@ public class CronDaily {
 				// TODO vorerst nicht mehr senden
 				// verwaltung.sendDaylyMotd();
 
-				// TODO zur richtigen ID senden -> id 0 Problem
-				StringBuilder sb = new StringBuilder();
-				sb.append(daylogHome.getTagesInfo());
-				sb.append("\n\n");
-				sb.append(daylogHome.getGesternInfo());
-
-				tSendAndReceive.sendMsgToAdmin(sb.toString());
+				String sDayLogInfo = daylogHome.getDailyInfo();
+				if (!sDayLogInfo.isBlank()) {
+					tSendAndReceive.sendMsgToAdmin(sDayLogInfo);
+				}
 			}
 		} catch (SQLException e) {
 			LOGGER.error("Fail DailyTask");
