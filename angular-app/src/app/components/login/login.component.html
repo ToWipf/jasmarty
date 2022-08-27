@@ -2,8 +2,8 @@
 
 <ng-container *ngIf="rest.getLoginOk()=='false'">
     Anmelden:
-    <input type="text" class="form-control inbutton" [(ngModel)]="sUsername" placeholder="Username">
-    <input type="password" class="form-control inbutton" [(ngModel)]="sPasswort" placeholder="Passwort" (keyup.enter)="login()">
+    <input type="text" class="form-control" [(ngModel)]="sUsername" placeholder="Username">
+    <input type="password" class="form-control" [(ngModel)]="sPasswort" placeholder="Passwort" (keyup.enter)="login()">
     <button class="btn btn-wipf-default" (click)="login()">Ok</button>
 </ng-container>
 
