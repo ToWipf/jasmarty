@@ -14,9 +14,9 @@
     <hr>
     <div class="sitebuttonlist">
         <div *ngFor="let page of pagelist;">
-            <button class="btn btn-primary sitebutton" (click)="selectSite(page)">{{page.name}}</button>
+            <button class="btn btn-wipf-default sitebutton" (click)="selectSite(page)">{{page.name}}</button>
         </div>
     </div>
 </div>
 
-<button class="btn btn-primary" (click)="refreshNow()">Display Aktualisieren</button>
+<button class="btn btn-wipf-default" (click)="refreshNow()">Display Aktualisieren</button>

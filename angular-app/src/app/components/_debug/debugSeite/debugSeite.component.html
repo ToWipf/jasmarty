@@ -4,16 +4,16 @@
     <div class="gridRow">
         <div class="gridCol">
             <h4>SQL</h4>
-            <input type="text" class="form-control inbutton" [(ngModel)]="sSQL_IN" placeholder="Query">
+            <input type="text" class="form-control" [(ngModel)]="sSQL_IN" placeholder="Query">
 
-            <button type="button" class="btn btn-primary inbutton" (click)="doSQL()">SEND</button>
+            <button type="button" class="btn btn-wipf-default" (click)="doSQL()">SEND</button>
         </div>
         <div class="gridCol">
             <div [innerHTML]="sSQL_OUT"></div>
         </div>
     </div>
 
-    Alle ICONS:
+    Alle Icons:
     <mat-icon svgIcon="trash" aria-hidden="false" title="trash"></mat-icon>
     <mat-icon svgIcon="thumbsup" aria-hidden="false" title="thumbsup"></mat-icon>
     <mat-icon svgIcon="box" aria-hidden="false" title="box"></mat-icon>

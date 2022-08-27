@@ -1,17 +1,17 @@
 <h3>Telegram Einstellungen</h3>
 <hr>
-<div class="settings">
-    <mat-checkbox class="example-margin" (ngModelChange)="setTelegramActive($event)" [(ngModel)]="bTelegramActive">
-        Telegram Aktivieren
-    </mat-checkbox>
 
-    <mat-form-field>
-        <mat-label>BotKey</mat-label>
-        <input matInput [(ngModel)]="sBotKey" placeholder="Beginnend mit bot...">
-    </mat-form-field>
-    <button type="button" class="btn btn-primary inbutton" (click)="setBotKey()">Bot Key Speichern und neu laden</button>
+<mat-checkbox class="example-margin" (ngModelChange)="setTelegramActive($event)" [(ngModel)]="bTelegramActive">
+    Telegram Aktivieren
+</mat-checkbox>
+<hr>
 
-    <hr>
-    <button type="button" class="btn btn-primary inbutton" (click)="refreshOn() ">Refesh Telegram An</button>
-    <button type="button" class="btn btn-primary inbutton" (click)="refreshOff() ">Refesh Telegram Aus</button>
-</div>
+<mat-form-field>
+    <mat-label>BotKey</mat-label>
+    <input matInput [(ngModel)]="sBotKey" placeholder="Beginnend mit bot...">
+</mat-form-field>
+<button type="button" class="btn btn-wipf-default" (click)="setBotKey()">Bot Key Speichern und neu laden</button>
+
+<hr>
+<button type="button" class="btn btn-wipf-default" (click)="refreshOn()">Refesh Telegram An</button>
+<button type="button" class="btn btn-wipf-default" (click)="refreshOff()">Refesh Telegram Aus</button>
