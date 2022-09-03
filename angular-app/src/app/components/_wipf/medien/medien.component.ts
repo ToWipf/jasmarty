@@ -32,7 +32,7 @@ export class MedienComponent implements OnInit {
     if (this.bShowAllTable) {
       this.displayedColumns = ['id', 'typ', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
     } else {
-      this.displayedColumns = [ 'typ' ,'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
+      this.displayedColumns = [ 'typ' ,'titel', 'art', 'gesehen', 'infotext', 'button'];
     }
   }
 
