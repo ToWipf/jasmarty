@@ -249,7 +249,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadTextVorschlag(): void {
-        if (this.data.text.length > 0) {
+        if (this.data.text.length > 1) {
             this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: String[]) => {
                 this.sListVorschlag = resdata;
             });
@@ -258,12 +258,13 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         }
     }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-
     public vorschlagToData(sItem: string): void {
         this.data.text = sItem;
         this.loadTextVorschlag();
     }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
 }

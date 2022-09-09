@@ -44,10 +44,15 @@
         </div>
 
         <br>
-        Vorschläge({{sListVorschlag.length}}):
 
-        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
-            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
-        </div>
+        <ng-container *ngIf="sListVorschlag.length != 0">
+            Vorschläge({{sListVorschlag.length}}):
+
+            <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
+                <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
+            </div>
+        </ng-container>
+
+
     </div>
 </div>

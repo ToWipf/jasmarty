@@ -53,7 +53,7 @@ export class DaylogStatsComponent implements OnInit {
       warten.close();
     });
 
-    this.rest.get('daylog/event/getAllById/10').then((resdata: any[]) => {
+    this.rest.get('daylog/event/getAllById/8').then((resdata: any[]) => {
       resdata.forEach((element: any) => {
         var data = { name: element.dateid, value: element.text };
         this.bvData.push(data);
