@@ -12,6 +12,14 @@ export class DebugSeiteComponent implements OnInit {
   public sSQL_IN: string;
   public sSQL_OUT: string;
 
+  public testData = [
+    { name: "ABC", value: 2 },
+    { name: "Etwas", value: 4 },
+    { name: "bbb", value: 2 },
+    { name: "xyz", value: 0 },
+    { name: "20.20.20", value: 10 }
+  ];
+
   ngOnInit() {
   }
 

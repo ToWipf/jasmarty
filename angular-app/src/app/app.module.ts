@@ -81,6 +81,7 @@ import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats
 import { LoginComponent } from './components/login/login.component';
 import { EisenbahnMitlesenComponent } from './components/_eisenbahn/mitlesen/eisenbahn-mitlesen.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
     declarations: [
@@ -133,6 +134,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         LoginComponent,
     ],
     imports: [
+        NgxChartsModule,
         A11yModule,
         BrowserAnimationsModule,
         BrowserModule,
