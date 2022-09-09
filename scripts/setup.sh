@@ -1,7 +1,10 @@
 #!/bin/bash
 echo "Setup start"
 cd ../angular-app
-npm install
+npm install --force
+echo "USED force !!!"
+echo "USED force !!!"
+echo "USED force !!!"
 echo "Setup end"
 
 # install ng
