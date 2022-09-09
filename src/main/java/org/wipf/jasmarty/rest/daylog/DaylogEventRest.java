@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 
 /**
  * @author Wipf
@@ -28,6 +29,8 @@ public class DaylogEventRest {
 
 	@Inject
 	DaylogEventDB daylogEventDB;
+	@Inject
+	DaylogHome daylogHome;
 
 	@GET
 	@Path("get/{dateid}")
@@ -38,7 +41,7 @@ public class DaylogEventRest {
 	@GET
 	@Path("getAllById/{id}")
 	public Response getAllById(@PathParam("id") Integer nId) throws SQLException {
-		return Response.ok(daylogEventDB.getAllByTypIdAsJson(nId).toString()).build();
+		return Response.ok(daylogHome.getAllByTypIdAsJson(nId).toString()).build();
 	}
 
 	@GET

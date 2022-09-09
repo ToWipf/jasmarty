@@ -128,20 +128,6 @@ public class DaylogEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getAllByTypIdAsJson(Integer nDateId) throws SQLException {
-		List<DaylogEvent> l = getAllByTypId(nDateId);
-		JSONArray ja = new JSONArray();
-		for (DaylogEvent d : l) {
-			ja.put(d.toJson());
-		}
-		return ja;
-	}
-
-	/**
-	 * @param nDateId
-	 * @return
-	 * @throws SQLException
-	 */
 	public JSONArray getAsJson(Integer nDateId) throws SQLException {
 		List<DaylogEvent> l = getByDateId(nDateId);
 		JSONArray ja = new JSONArray();

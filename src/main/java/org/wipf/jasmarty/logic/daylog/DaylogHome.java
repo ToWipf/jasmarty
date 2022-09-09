@@ -8,6 +8,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -166,6 +168,24 @@ public class DaylogHome {
 		}
 		ti.sInfo = sb.toString();
 		return ti;
+	}
+
+	/**
+	 * mit Datumsauflösung
+	 * 
+	 * @param nDateId
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllByTypIdAsJson(Integer nId) throws SQLException {
+		List<DaylogEvent> l = daylogEventDB.getAllByTypId(nId);
+		JSONArray ja = new JSONArray();
+		for (DaylogEvent d : l) {
+			JSONObject jo = d.toJson();
+			jo.put("datum", daylogDayDB.getById(d.getDateId()).getDate());
+			ja.put(jo);
+		}
+		return ja;
 	}
 
 }
