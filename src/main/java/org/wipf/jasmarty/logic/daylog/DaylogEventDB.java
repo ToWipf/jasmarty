@@ -103,7 +103,7 @@ public class DaylogEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogEvent> getByTypId(Integer nTypId) throws SQLException {
+	public List<DaylogEvent> getAllByTypId(Integer nTypId) throws SQLException {
 		List<DaylogEvent> o = new LinkedList<>();
 
 		String sQuery = "SELECT * FROM DaylogTextEvent WHERE typ = ?;";
@@ -121,6 +121,20 @@ public class DaylogEventDB {
 		}
 
 		return o;
+	}
+
+	/**
+	 * @param nDateId
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllByTypIdAsJson(Integer nDateId) throws SQLException {
+		List<DaylogEvent> l = getAllByTypId(nDateId);
+		JSONArray ja = new JSONArray();
+		for (DaylogEvent d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
 	}
 
 	/**

@@ -60,5 +60,23 @@
             </table>
         </ng-scrollbar>
         Anzahl einmaliger Events: {{statsarry.length}}
+
+        <hr>
+
+
+        <ngx-charts-bar-vertical *ngIf="bvData.length > 0"
+        [view]="[1000,400]"
+        [results]="bvData"
+        [xAxisLabel]="'Testing'"
+        [legendTitle]="'Titel'"
+        [yAxisLabel]="'xxx'"
+        [legend]="false"
+        [showXAxisLabel]="true"
+        [showYAxisLabel]="true"
+        [xAxis]="true"
+        [yAxis]="true"
+        [gradient]="true">
+        </ngx-charts-bar-vertical> 
+
     </div>
 </div>
