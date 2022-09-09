@@ -1,5 +1,6 @@
 #!/bin/bash
 cd devproxy
+docker-compose down
 docker-compose up -d
 if [ $? -eq 0 ]; then
     echo "docker OK"
