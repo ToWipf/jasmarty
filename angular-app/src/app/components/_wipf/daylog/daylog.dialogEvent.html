@@ -20,13 +20,6 @@
                             <mat-label>Text</mat-label>
                             <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
                         </mat-form-field>
-                        <br>
-                        Vorschläge({{sListVorschlag.length}}):
-
-                        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
-                            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
-                        </div>
-
                     </ng-container>
 
                     <ng-container *ngIf="type.art==='NUMBER'">
@@ -48,6 +41,13 @@
         <div mat-dialog-actions>
             <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
             <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
+        </div>
+
+        <br>
+        Vorschläge({{sListVorschlag.length}}):
+
+        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
+            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
         </div>
     </div>
 </div>

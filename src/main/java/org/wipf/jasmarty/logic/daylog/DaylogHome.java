@@ -77,7 +77,7 @@ public class DaylogHome {
 			sb.append("\n\n");
 		}
 
-		if (tiGestern.nAnzahlEvents <= 4) {
+		if (tiGestern.nAnzahlEvents < 4) {
 			sb.append(tiGestern.sInfo);
 		}
 

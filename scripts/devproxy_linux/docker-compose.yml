@@ -1,0 +1,12 @@
+version: "2"
+services:
+  haproxy:
+    image: haproxy
+#    ports:
+#      - 0.0.0.0:80:8077
+#      - 0.0.0.0:7777:8077
+    volumes:
+      - ./:/usr/local/etc/haproxy/
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+    network_mode: host
