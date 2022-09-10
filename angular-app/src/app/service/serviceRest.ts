@@ -26,10 +26,6 @@ export class ServiceRest {
     localStorage.setItem('auth', this.serviceWipf.crypt(sAuth, "TODO:KEY"));
   }
 
-  public clearLogin(): void {
-    localStorage.removeItem('auth');
-  }
-
   private setLogin(base64Auth: string) {
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -53,6 +49,12 @@ export class ServiceRest {
       this.setLogin(lastAuth);
       this.setLoginOk("may");
     }
+  }
+
+  public doLogout(): void {
+    this.setLoginData("", "");
+    this.setLoginOk("false");
+    localStorage.removeItem('auth');
   }
 
   public gethost(): string {

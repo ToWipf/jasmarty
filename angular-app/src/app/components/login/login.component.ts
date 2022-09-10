@@ -28,9 +28,7 @@ export class LoginComponent {
   }
 
   public logoff(): void {
-    this.rest.setLoginData("", "");
-    this.rest.setLoginOk("false");
-    this.rest.clearLogin();
+    this.rest.doLogout();
   }
 
 }

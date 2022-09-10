@@ -1,83 +1,74 @@
 <div>
     <h3>Statistiken</h3>
     <div class="list">
+        <ng-scrollbar class="pscroll" track="all">
 
-        <div class="configline">
-            <div class="iconbox">
-                Neu Laden:
-                <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
-                    <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-                </button>
+            <div class="configline">
+                <div class="iconbox">
+                    Neu Laden:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+                        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
 
-                <br>
-                Zeige Alles:
-                <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
-                    <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
-                </button>
-                <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
-                    <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
-                </button>
+                    <br>
+                    Zeige Alles:
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                        <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                </div>
+                <div class="box">
+                    <mat-form-field>
+                        <mat-label>Filtern</mat-label>
+                        <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                    </mat-form-field>
+                </div>
             </div>
-            <div class="box">
-                <mat-form-field>
-                    <mat-label>Filtern</mat-label>
-                    <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-                </mat-form-field>
+
+            <ng-scrollbar class="pscroll">
+                <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
+
+                    <ng-container matColumnDef="anz">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </th>
+                        <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                            {{element.anz}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="text">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
+                        <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_id">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first_id </th>
+                        <td mat-cell *matCellDef="let element"> {{element.first_id}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="first_dateid">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first_dateid </th>
+                        <td mat-cell *matCellDef="let element"> {{element.first_dateid}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="frist_typ">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> frist_typ </th>
+                        <td mat-cell *matCellDef="let element"> {{element.frist_typ}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </ng-scrollbar>
+            Anzahl einmaliger Events: {{statsarry.length}}
+
+            <hr>
+            <!-- [view]="[1200,400]" -->
+            <div class="chart">
+                <ngx-charts-bar-vertical *ngIf="bvData.length > 0" [results]="bvData" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+                </ngx-charts-bar-vertical>
             </div>
-        </div>
 
-        <ng-scrollbar class="pscroll">
-            <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
-
-                <ng-container matColumnDef="anz">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
-                        {{element.anz}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="text">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
-                    <td mat-cell *matCellDef="let element"> {{element.text}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="first_id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> first_id </th>
-                    <td mat-cell *matCellDef="let element"> {{element.first_id}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="first_dateid">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> first_dateid </th>
-                    <td mat-cell *matCellDef="let element"> {{element.first_dateid}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="frist_typ">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> frist_typ </th>
-                    <td mat-cell *matCellDef="let element"> {{element.frist_typ}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
         </ng-scrollbar>
-        Anzahl einmaliger Events: {{statsarry.length}}
-
-        <hr>
-        
-    <ng-scrollbar class="pscroll" track="all">
-        <ngx-charts-bar-vertical *ngIf="bvData.length > 0"
-        [view]="[1200,400]"
-        [results]="bvData"
-        [xAxisLabel]="'Testing'"
-        [legendTitle]="'Titel'"
-        [yAxisLabel]="'xxx'"
-        [legend]="true"
-        [showXAxisLabel]="true"
-        [showYAxisLabel]="true"
-        [xAxis]="true"
-        [yAxis]="true"
-        [gradient]="true">
-        </ngx-charts-bar-vertical> 
-    </ng-scrollbar>
-    
     </div>
 </div>
