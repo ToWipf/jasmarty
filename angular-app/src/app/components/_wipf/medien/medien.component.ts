@@ -55,6 +55,7 @@ export class MedienComponent implements OnInit {
     td.titel = "";
     td.date = Math.round(Date.now() / 1000);
     td.editby = 'web';
+    td.typ = "";
     this.openDialog(td);
   }
 

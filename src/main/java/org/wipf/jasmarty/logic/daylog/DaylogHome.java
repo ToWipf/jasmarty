@@ -182,7 +182,7 @@ public class DaylogHome {
 		JSONArray ja = new JSONArray();
 		for (DaylogEvent d : l) {
 			JSONObject jo = d.toJson();
-			jo.put("datum", daylogDayDB.getById(d.getDateId()).getDate());
+			jo.put("date", daylogDayDB.getById(d.getDateId()).getDate());
 			ja.put(jo);
 		}
 		return ja;

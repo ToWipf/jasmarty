@@ -21,7 +21,8 @@ export class DaylogStatsComponent implements OnInit {
   public sFilter: String = "";
   public displayedColumns: string[] = [];
   public bShowAllTable: boolean = true;
-  public bvData = [];
+  public bvDataForDateChart = [];
+  public bvDataForWochentagVorkomnisseChart = [];
 
 
 
@@ -58,10 +59,19 @@ export class DaylogStatsComponent implements OnInit {
     this.rest.get('daylog/event/getAllById/8').then((resdata: any[]) => {
       resdata.forEach((element: any) => {
         let nVal = element.text.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
-        let data = { name: element.datum, orgname: element.dateid, value: nVal, orgvalue: element.text };
-        this.bvData.push(data);
+        let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
+        let dataDate = { name: element.date, orgname: element.dateid, value: nVal, orgvalue: element.text, wtag: wochentag };
+        this.bvDataForDateChart.push(dataDate);
       });
-      console.log(this.bvData);
+
+      let aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+      aWochentage.forEach((wotag) => {
+        let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
+        this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
+      });
+
+      console.log(this.bvDataForDateChart);
+      console.log(this.bvDataForWochentagVorkomnisseChart);
     });
   }
 

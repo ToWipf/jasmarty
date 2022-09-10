@@ -63,9 +63,14 @@
             Anzahl einmaliger Events: {{statsarry.length}}
 
             <hr>
-            <!-- [view]="[1200,400]" -->
             <div class="chart">
-                <ngx-charts-bar-vertical *ngIf="bvData.length > 0" [results]="bvData" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false" [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
+                <ngx-charts-bar-vertical *ngIf="bvDataForDateChart.length > 0" [results]="bvDataForDateChart" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false" [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
+                </ngx-charts-bar-vertical>
+            </div>
+
+            <hr>
+            <div class="chart">
+                <ngx-charts-bar-vertical *ngIf="bvDataForWochentagVorkomnisseChart.length > 0" [results]="bvDataForWochentagVorkomnisseChart" [xAxisLabel]="'Wochentag'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false">
                 </ngx-charts-bar-vertical>
             </div>
 
