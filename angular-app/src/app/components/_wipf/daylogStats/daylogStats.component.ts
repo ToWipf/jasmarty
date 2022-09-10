@@ -23,6 +23,8 @@ export class DaylogStatsComponent implements OnInit {
   public bShowAllTable: boolean = true;
   public bvData = [];
 
+
+
   ngOnInit(): void {
     this.load();
     this.showAllTable();
@@ -56,7 +58,7 @@ export class DaylogStatsComponent implements OnInit {
     this.rest.get('daylog/event/getAllById/8').then((resdata: any[]) => {
       resdata.forEach((element: any) => {
         let nVal = element.text.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
-        let data = { name: element.datum, orgname: element.dateid, value: nVal , orgvalue: element.text };
+        let data = { name: element.datum, orgname: element.dateid, value: nVal, orgvalue: element.text };
         this.bvData.push(data);
       });
       console.log(this.bvData);
@@ -67,6 +69,10 @@ export class DaylogStatsComponent implements OnInit {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
     });
+  }
+
+  public getNamedColor = (statName: string) => {
+    return 'red';
   }
 
 }

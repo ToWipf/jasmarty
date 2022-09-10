@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <ng-scrollbar class="pscroll">
+            <ng-scrollbar class="pscrollInside">
                 <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
 
                     <ng-container matColumnDef="anz">
@@ -65,7 +65,7 @@
             <hr>
             <!-- [view]="[1200,400]" -->
             <div class="chart">
-                <ngx-charts-bar-vertical *ngIf="bvData.length > 0" [results]="bvData" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+                <ngx-charts-bar-vertical *ngIf="bvData.length > 0" [results]="bvData" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false" [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
                 </ngx-charts-bar-vertical>
             </div>
 
