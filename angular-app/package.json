@@ -23,7 +23,7 @@
     "@popperjs/core": "2.11.6",
     "@swimlane/ngx-charts": "20.1.0",
     "@types/popper.js": "1.11.0",
-    "bootstrap": "5.1.3",
+    "bootstrap": "5.2.1",
     "javascript-blowfish": "1.0.4",
     "ng-sidebar": "9.4.3",
     "ngx-perfect-scrollbar": "10.1.1",
@@ -33,7 +33,7 @@
     "zone.js": "0.11.7"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "14.1.1",
+    "@angular-devkit/build-angular": "14.2.2",
     "@angular/cli": "14.1.1",
     "@angular/compiler-cli": "14.1.1",
     "@types/node": "18.6.4",
