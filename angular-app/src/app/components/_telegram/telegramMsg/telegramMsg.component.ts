@@ -19,7 +19,7 @@ export class TelegramMsgComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bShowAllTable: Boolean = true;
 
   ngOnInit() {

@@ -18,17 +18,22 @@ export class DaylogStatsComponent implements OnInit {
 
   public statsDataSource;
   public statsarry = [];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public displayedColumns: string[] = [];
   public bShowAllTable: boolean = true;
   public bvDataForDateChart = [];
   public bvDataForWochentagVorkomnisseChart = [];
-
-
+  public sTableTypIDs: string = "1,2,3,9";
+  public nDiagramTypID: number = 8;
 
   ngOnInit(): void {
-    this.load();
     this.showAllTable();
+    this.load();
+  }
+
+  public load(): void {
+    this.loadTabelle();
+    this.loadDiagramme();
   }
 
   public showAllTable(): void {
@@ -40,11 +45,13 @@ export class DaylogStatsComponent implements OnInit {
     }
   }
 
-  public load(): void {
+  public loadTabelle(): void {
+    this.bvDataForDateChart = [];
+    this.bvDataForWochentagVorkomnisseChart = [];
     this.statsarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get('daylog/event/getStats').then((resdata: StatsEntry[]) => {
+    this.rest.get('daylog/event/getStats/' + this.sTableTypIDs).then((resdata: StatsEntry[]) => {
       resdata.forEach((element) => {
         this.statsarry.push(element);
       });
@@ -55,15 +62,17 @@ export class DaylogStatsComponent implements OnInit {
       this.applyFilter();
       warten.close();
     });
+  }
 
-    this.rest.get('daylog/event/getAllById/8').then((resdata: any[]) => {
+  public loadDiagramme(): void {
+    this.rest.get('daylog/event/getAllById/' + this.nDiagramTypID).then((resdata: any[]) => {
       resdata.forEach((element: any) => {
-        let nVal = element.text.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
         let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
-        let dataDate = { name: element.date, orgname: element.dateid, value: nVal, orgvalue: element.text, wtag: wochentag };
-        this.bvDataForDateChart.push(dataDate);
+        let nVal = this.textToDigNumber(element.text);
+        this.bvDataForDateChart.push({ name: element.date, value: nVal, wtag: wochentag });
       });
 
+      // Zweites Diagramm
       let aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
       aWochentage.forEach((wotag) => {
         let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
@@ -75,6 +84,25 @@ export class DaylogStatsComponent implements OnInit {
     });
   }
 
+  private textToDigNumber(input: any): number {
+    console.log(input);
+    if (input == null) {
+      return -1;
+    } else if (input === "true") {
+      return 1;
+    } else if (input === "false") {
+      return 0;
+    } else if (this.serviceWipf.isNumber(input)) {
+      // Wenn es eine Zahl ist
+      return input;
+    } else if (this.serviceWipf.startsWithNumber(input)){
+      // Keine Zahl - bei text mit Zahl zu beginn - nur die Zahl ausgeben
+      return input.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
+    } else {
+      return -1;
+    }
+  }
+
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
@@ -84,7 +112,6 @@ export class DaylogStatsComponent implements OnInit {
   public getNamedColor = (statName: string) => {
     return 'red';
   }
-
 }
 
 export interface StatsEntry {

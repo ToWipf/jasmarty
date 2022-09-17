@@ -185,12 +185,14 @@ public class DaylogEventDB {
 	}
 
 	/**
+	 * @param sTypes = "1,2,3,9";
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getStats() throws SQLException {
+	public JSONArray getStats(String sTypes) throws SQLException {
 		JSONArray ar = new JSONArray();
-		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ = 1 OR typ = 2 OR typ = 3 OR typ = 9 GROUP by text ORDER by anz DESC";
+		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypes
+				+ ") GROUP by text ORDER by anz DESC";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		ResultSet rs = statement.executeQuery();
 

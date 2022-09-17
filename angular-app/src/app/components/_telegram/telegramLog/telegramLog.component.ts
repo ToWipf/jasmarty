@@ -19,7 +19,7 @@ export class TelegramLogComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bShowAllTable: Boolean = true;
 
   ngOnInit() {

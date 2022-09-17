@@ -52,7 +52,8 @@ public class DaylogEventRest {
 
 	@GET
 	@Path("getTextBySearchAndType/{search}/{type}")
-	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType) throws SQLException {
+	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType)
+			throws SQLException {
 		return Response.ok(daylogEventDB.getTextBySearchAndType(sSearch, sType)).build();
 	}
 
@@ -70,9 +71,9 @@ public class DaylogEventRest {
 	}
 
 	@GET
-	@Path("getStats")
-	public Response getStats() throws SQLException {
-		return Response.ok(daylogEventDB.getStats().toString()).build();
+	@Path("getStats/{types}")
+	public Response getStats(@PathParam("types") String sTypes) throws SQLException {
+		return Response.ok(daylogEventDB.getStats(sTypes).toString()).build();
 	}
 
 }

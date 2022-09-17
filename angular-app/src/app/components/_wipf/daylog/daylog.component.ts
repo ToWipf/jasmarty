@@ -20,8 +20,8 @@ export class DayLogComponent implements OnInit {
   public daylistDataSource;
   public userid = 0;
   public daylistDisplayedColumns: string[] = [];
-  public sFilterDay: String = "";
-  public sFilterTextEvent: String = "";
+  public sFilterDay: string = "";
+  public sFilterTextEvent: string = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateForLoad: DaylogDay = {};
@@ -218,7 +218,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'button'];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bShowWarning: boolean = false;
   public daylogTypeDataSource;
   public typelist: DaylogType[] = [];

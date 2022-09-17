@@ -16,7 +16,7 @@ import { empty } from 'rxjs';
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-    @Input("filterTextEvent") public sFilterTextEvent: String;
+    @Input("filterTextEvent") public sFilterTextEvent: string;
     @Input("showAllTable") public bShowAllTable: Boolean;
     @Input("dateForLoad") public dateForLoad: DaylogDay;
     @Input("daylogTypes") public daylogTypes: DaylogType;
@@ -219,7 +219,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
 
     public daylogTypes: DaylogType[] = [];
-    public sListVorschlag: String[] = [];
+    public sListVorschlag: string[] = [];
     private bSucheAktiv: boolean = false;
 
     ngOnInit(): void {
@@ -250,7 +250,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     private loadTextVorschlag(): void {
         if (this.data.text.length > 1) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: String[]) => {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {

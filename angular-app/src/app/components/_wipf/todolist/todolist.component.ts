@@ -26,7 +26,7 @@ export class TodolistComponent implements OnInit {
   public bLater: boolean = false;
   public bZitat: boolean = false;
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bShowAllTable: boolean = true;
 
   ngOnInit() {

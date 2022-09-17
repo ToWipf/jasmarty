@@ -20,7 +20,7 @@ export class RndEventComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['id', 'eventtext', 'active', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();

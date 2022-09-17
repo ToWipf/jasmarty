@@ -20,7 +20,7 @@ export class DynpagesComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['id', 'html', 'script', 'style', 'rechte', 'live', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();

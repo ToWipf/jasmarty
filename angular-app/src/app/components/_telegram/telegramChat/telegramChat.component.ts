@@ -77,7 +77,7 @@ export class TelegramChatComponent implements OnInit {
 
   public sendMsgToGroup(): void {
     if (this.sTextOnlineTelegram) {
-      //TODO: escape input String
+      //TODO: escape input string
       this.rest.post('telegram/sendMsgToAdmin/' + this.sTextOnlineTelegram, null).then((resdata) => {
         this.sStatus = resdata.toString();
         this.sTextOnlineTelegram = null;

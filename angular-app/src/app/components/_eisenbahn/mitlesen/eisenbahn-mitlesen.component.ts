@@ -20,7 +20,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['key', 'val'];
   public itemarry: KeyValEntry[] = [];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bRun: Boolean = false;
   public bIsVerbunden: Boolean = false;
   public nAnzahlEvents: Number = 0;

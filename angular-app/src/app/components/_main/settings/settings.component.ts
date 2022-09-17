@@ -20,7 +20,7 @@ export class SettingsComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['key', 'val', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
