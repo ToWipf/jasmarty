@@ -26,6 +26,7 @@ export class DaylogStatsComponent implements OnInit {
   public bvDataForWochentagVorkomnisseChart = [];
   public typelistForSelect: DaylogType[] = [];
   public selectedTypes: DaylogType[] = [];
+  public diagramRawData: any[];
 
   ngOnInit(): void {
     this.showAllTableColumns();
@@ -33,7 +34,6 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   public load(): void {
-    console.log(this.selectedTypes);
     this.loadTabelle();
     this.loadDiagramme();
   }
@@ -48,38 +48,52 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   public loadTabelle(): void {
-    this.bvDataForDateChart = [];
-    this.bvDataForWochentagVorkomnisseChart = [];
     this.statsarry = [];
-    const warten = this.dialog.open(DialogWartenComponent, {});
+    if (this.getSelectedTypes().length > 0) {
+      const warten = this.dialog.open(DialogWartenComponent, {});
+      this.rest.get('daylog/event/getStats/' + this.getSelectedTypes()).then((resdata: StatsEntry[]) => {
+        resdata.forEach((element) => {
+          this.statsarry.push(element);
+        });
 
-    this.rest.get('daylog/event/getStats/' + this.getSelectedTypes()).then((resdata: StatsEntry[]) => {
-      resdata.forEach((element) => {
-        this.statsarry.push(element);
+        this.statsDataSource = new MatTableDataSource(this.statsarry);
+        this.statsDataSource.sort = this.sort;
+        this.statsDataSource.filter = this.sFilter.trim();
+        this.applyFilter();
+        warten.close();
       });
-
-      this.statsDataSource = new MatTableDataSource(this.statsarry);
-      this.statsDataSource.sort = this.sort;
-      this.statsDataSource.filter = this.sFilter.trim();
-      this.applyFilter();
-      warten.close();
-    });
+    } else {
+      this.statsDataSource = new MatTableDataSource();
+    }
   }
 
   public loadDiagramme(): void {
-    this.rest.get('daylog/event/getAllById/' + this.getSelectedTypes()).then((resdata: any[]) => {
-      resdata.forEach((element: any) => {
-        let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
-        let nVal = this.textToDigNumber(element.text);
-        this.bvDataForDateChart.push({ name: element.date, value: nVal, wtag: wochentag });
+    if (this.getSelectedTypes().length > 0) {
+      this.rest.get('daylog/event/getAllById/' + this.getSelectedTypes()).then((resdata: any[]) => {
+        this.diagramRawData = resdata;
+        this.genDiagramme(this.diagramRawData);
       });
+    } else {
+      // Diagramme nur leeren
+      this.bvDataForDateChart = [];
+      this.bvDataForWochentagVorkomnisseChart = [];
+    }
+  }
 
-      // Zweites Diagramm
-      let aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
-      aWochentage.forEach((wotag) => {
-        let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
-        this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
-      });
+  private genDiagramme(indata: any[]): void {
+    this.bvDataForDateChart = [];
+    this.bvDataForWochentagVorkomnisseChart = [];
+    indata.forEach((element: any) => {
+      let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
+      let nVal = this.textToDigNumber(element.text);
+      this.bvDataForDateChart.push({ name: element.date, value: nVal, wtag: wochentag });
+    });
+
+    // Zweites Diagramm
+    let aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+    aWochentage.forEach((wotag) => {
+      let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
+      this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
     });
   }
 
@@ -104,6 +118,14 @@ export class DaylogStatsComponent implements OnInit {
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
+      var fileredDate = this.diagramRawData.filter((i) => {
+        if (i.text) {
+          return i.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase());
+        } else {
+          return false;
+        }
+      });
+      this.genDiagramme(fileredDate);
     });
   }
 
