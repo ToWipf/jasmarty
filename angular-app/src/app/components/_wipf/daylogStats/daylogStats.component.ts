@@ -18,7 +18,6 @@ export class DaylogStatsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public statsDataSource;
-  public statsarry = [];
   public sFilter: string = "";
   public displayedColumns: string[] = [];
   public bShowAllTable: boolean = true;
@@ -48,15 +47,10 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   public loadTabelle(): void {
-    this.statsarry = [];
     if (this.getSelectedTypes().length > 0) {
       const warten = this.dialog.open(DialogWartenComponent, {});
       this.rest.get('daylog/event/getStats/' + this.getSelectedTypes()).then((resdata: StatsEntry[]) => {
-        resdata.forEach((element) => {
-          this.statsarry.push(element);
-        });
-
-        this.statsDataSource = new MatTableDataSource(this.statsarry);
+        this.statsDataSource = new MatTableDataSource(resdata);
         this.statsDataSource.sort = this.sort;
         this.statsDataSource.filter = this.sFilter.trim();
         this.applyFilter();
@@ -122,6 +116,7 @@ export class DaylogStatsComponent implements OnInit {
         if (i.text) {
           return i.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase());
         } else {
+          // diser Fall sollte nicht passieren -> Im Fehlerfall ausfiltern
           return false;
         }
       });
