@@ -49,7 +49,7 @@
                             </ng-container>
 
                             <ng-container matColumnDef="text">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Text / ∑: {{statsDataSource?._data?._value?.length}} </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
                                 <td mat-cell *matCellDef="let element"> {{element.text}} </td>
                             </ng-container>
 
@@ -75,16 +75,17 @@
                 </div>
 
                 <div class="gridCol">
+                    Anzahl einzigartiger Events: {{statsDataSource?._data?._value?.length}}
+                    <hr>
                     <div class="chartWT">
-                        Vorkomnisse pro Wochentag:
+                        Vorkomnisse pro Wochentag
                         <ngx-charts-advanced-pie-chart *ngIf="bvDataForWochentagVorkomnisseChart.length > 0" [results]="bvDataForWochentagVorkomnisseChart" [gradient]="false">
                         </ngx-charts-advanced-pie-chart>
                     </div>
                 </div>
             </div>
 
-            <hr>
-            Vorkomnisse Zeitsteifen:
+            Vorkomnisse Zeitsteifen (Wert)
             <div class="chart">
                 <ngx-charts-bar-vertical *ngIf="bvDataForDateChart.length > 0" [results]="bvDataForDateChart" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false"
                     [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
