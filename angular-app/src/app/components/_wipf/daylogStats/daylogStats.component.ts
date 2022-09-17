@@ -85,7 +85,6 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   private textToDigNumber(input: any): number {
-    console.log(input);
     if (input == null) {
       return -1;
     } else if (input === "true") {
