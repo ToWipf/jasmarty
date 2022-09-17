@@ -39,9 +39,9 @@ public class DaylogEventRest {
 	}
 
 	@GET
-	@Path("getAllById/{id}")
-	public Response getAllById(@PathParam("id") Integer nId) throws SQLException {
-		return Response.ok(daylogHome.getAllByTypIdAsJson(nId).toString()).build();
+	@Path("getAllById/{ids}")
+	public Response getAllById(@PathParam("ids") String nIds) throws SQLException {
+		return Response.ok(daylogHome.getAllByTypIdAsJson(nIds).toString()).build();
 	}
 
 	@GET

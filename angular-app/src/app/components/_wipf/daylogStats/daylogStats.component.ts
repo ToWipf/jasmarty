@@ -5,6 +5,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
+import { DaylogType } from 'src/app/datatypes';
 
 @Component({
   selector: 'app-daylogStats',
@@ -23,20 +24,21 @@ export class DaylogStatsComponent implements OnInit {
   public bShowAllTable: boolean = true;
   public bvDataForDateChart = [];
   public bvDataForWochentagVorkomnisseChart = [];
-  public sTableTypIDs: string = "1,2,3,9";
-  public nDiagramTypID: number = 8;
+  public typelistForSelect: DaylogType[] = [];
+  public selectedTypes: DaylogType[] = [];
 
   ngOnInit(): void {
-    this.showAllTable();
-    this.load();
+    this.showAllTableColumns();
+    this.loadAllTypes();
   }
 
   public load(): void {
+    console.log(this.selectedTypes);
     this.loadTabelle();
     this.loadDiagramme();
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.displayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typ'];
@@ -51,7 +53,7 @@ export class DaylogStatsComponent implements OnInit {
     this.statsarry = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get('daylog/event/getStats/' + this.sTableTypIDs).then((resdata: StatsEntry[]) => {
+    this.rest.get('daylog/event/getStats/' + this.getSelectedTypes()).then((resdata: StatsEntry[]) => {
       resdata.forEach((element) => {
         this.statsarry.push(element);
       });
@@ -65,7 +67,7 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   public loadDiagramme(): void {
-    this.rest.get('daylog/event/getAllById/' + this.nDiagramTypID).then((resdata: any[]) => {
+    this.rest.get('daylog/event/getAllById/' + this.getSelectedTypes()).then((resdata: any[]) => {
       resdata.forEach((element: any) => {
         let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
         let nVal = this.textToDigNumber(element.text);
@@ -78,9 +80,6 @@ export class DaylogStatsComponent implements OnInit {
         let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
         this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
       });
-
-      console.log(this.bvDataForDateChart);
-      console.log(this.bvDataForWochentagVorkomnisseChart);
     });
   }
 
@@ -94,7 +93,7 @@ export class DaylogStatsComponent implements OnInit {
     } else if (this.serviceWipf.isNumber(input)) {
       // Wenn es eine Zahl ist
       return input;
-    } else if (this.serviceWipf.startsWithNumber(input)){
+    } else if (this.serviceWipf.startsWithNumber(input)) {
       // Keine Zahl - bei text mit Zahl zu beginn - nur die Zahl ausgeben
       return input.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
     } else {
@@ -110,6 +109,27 @@ export class DaylogStatsComponent implements OnInit {
 
   public getNamedColor = (statName: string) => {
     return 'red';
+  }
+
+  public loadAllTypes(): void {
+    this.rest.get('daylog/type/getAll').then((resdata: DaylogType[]) => {
+      this.typelistForSelect = resdata;
+    });
+  }
+
+  /**
+  * Zusammenbau der Auswahlids
+  * @returns 
+  */
+  private getSelectedTypes(): string {
+    var tlist: string = "";
+    this.selectedTypes.forEach((dt) => {
+      if (tlist.length > 0) {
+        tlist = tlist + ",";
+      }
+      tlist = tlist + dt.id;
+    });
+    return tlist;
   }
 }
 

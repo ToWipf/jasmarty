@@ -24,10 +24,10 @@ export class MedienComponent implements OnInit {
 
   ngOnInit() {
     this.load();
-    this.showAllTable();
+    this.showAllTableColumns();
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.displayedColumns = ['id', 'typ', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];

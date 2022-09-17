@@ -23,11 +23,11 @@ export class TelegramMsgComponent implements OnInit {
   public bShowAllTable: Boolean = true;
 
   ngOnInit() {
-    this.showAllTable();
+    this.showAllTableColumns();
     this.loadAllItems();
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.displayedColumns = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];

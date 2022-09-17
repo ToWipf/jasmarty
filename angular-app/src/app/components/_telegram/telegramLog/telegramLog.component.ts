@@ -24,10 +24,10 @@ export class TelegramLogComponent implements OnInit {
 
   ngOnInit() {
     // Kein init laden
-    this.showAllTable();
+    this.showAllTableColumns();
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.displayedColumns = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];

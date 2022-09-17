@@ -36,7 +36,7 @@ export class DayLogComponent implements OnInit {
     this.dateForLoad = { date: "" };
     this.loadDays();
     this.loadDaylogTypes();
-    this.showAllTable();
+    this.showAllTableColumns();
     this.loadTypeListForEventFilter();
     this.bShowDayTable = true;
   }
@@ -55,7 +55,7 @@ export class DayLogComponent implements OnInit {
     this.dateForLoad = ddl;
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'userid', 'button'];

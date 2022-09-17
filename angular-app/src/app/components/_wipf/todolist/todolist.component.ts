@@ -31,10 +31,10 @@ export class TodolistComponent implements OnInit {
 
   ngOnInit() {
     this.load();
-    this.showAllTable();
+    this.showAllTableColumns();
   }
 
-  public showAllTable(): void {
+  public showAllTableColumns(): void {
     this.bShowAllTable = !this.bShowAllTable;
     if (this.bShowAllTable) {
       this.displayedColumns = ['id', 'data', 'date', 'editby', 'button'];

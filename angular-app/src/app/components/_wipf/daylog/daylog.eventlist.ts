@@ -17,7 +17,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
     @Input("filterTextEvent") public sFilterTextEvent: string;
-    @Input("showAllTable") public bShowAllTable: Boolean;
+    @Input("showAllTableColumns") public bShowAllTable: Boolean;
     @Input("dateForLoad") public dateForLoad: DaylogDay;
     @Input("daylogTypes") public daylogTypes: DaylogType;
     @Input("filterEventType") public filterEventType: DaylogType;
@@ -37,7 +37,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         }
 
         if (changes?.bShowAllTable) {
-            this.showAllTable();
+            this.showAllTableColumns();
         }
 
         if (changes?.sFilterTextEvent) {
@@ -56,7 +56,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.eventlistDataSource = new MatTableDataSource(this.eventlist);
         this.eventlistDataSource.sort = this.sortEvent;
         this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
-        this.showAllTable;
+        this.showAllTableColumns;
     }
 
     private saveEvent(item: DaylogEvent): void {
@@ -129,7 +129,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     }
 
-    public showAllTable(): void {
+    public showAllTableColumns(): void {
         this.bShowAllTable = !this.bShowAllTable;
         if (this.bShowAllTable) {
             this.eventlistDisplayedColumns = ['typ', 'data', 'button'];

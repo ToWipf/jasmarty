@@ -107,7 +107,7 @@ public class DaylogHome {
 	 */
 	public String getAllUniqueEventTextByTyp(Telegram t) {
 		try {
-			List<DaylogEvent> events = daylogEventDB.getAllByTypId(t.getMessageIntPart(1));
+			List<DaylogEvent> events = daylogEventDB.getAllByTypId(t.getMessageIntPart(1).toString());
 
 			List<String> elist = new LinkedList<String>();
 			for (DaylogEvent ev : events) {
@@ -177,11 +177,12 @@ public class DaylogHome {
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getAllByTypIdAsJson(Integer nId) throws SQLException {
-		List<DaylogEvent> l = daylogEventDB.getAllByTypId(nId);
+	public JSONArray getAllByTypIdAsJson(String sIds) throws SQLException {
+		List<DaylogEvent> l = daylogEventDB.getAllByTypId(sIds);
 		JSONArray ja = new JSONArray();
 		for (DaylogEvent d : l) {
 			JSONObject jo = d.toJson();
+			// Das Datum auslösen und mitgeben
 			jo.put("date", daylogDayDB.getById(d.getDateId()).getDate());
 			ja.put(jo);
 		}

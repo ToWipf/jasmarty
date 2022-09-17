@@ -103,14 +103,11 @@ public class DaylogEventDB {
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<DaylogEvent> getAllByTypId(Integer nTypId) throws SQLException {
+	public List<DaylogEvent> getAllByTypId(String sTypIds) throws SQLException {
 		List<DaylogEvent> o = new LinkedList<>();
-
-		String sQuery = "SELECT * FROM DaylogTextEvent WHERE typ = ?;";
+		String sQuery = "SELECT * FROM DaylogTextEvent WHERE typ IN (" + sTypIds + ")";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setInt(1, nTypId);
 		ResultSet rs = statement.executeQuery();
-
 		while (rs.next()) {
 			DaylogEvent d = new DaylogEvent();
 			d.setId(rs.getInt("id"));
@@ -119,7 +116,6 @@ public class DaylogEventDB {
 			d.setText(rs.getString("text"));
 			o.add(d);
 		}
-
 		return o;
 	}
 
@@ -185,15 +181,16 @@ public class DaylogEventDB {
 	}
 
 	/**
-	 * @param sTypes = "1,2,3,9";
+	 * @param sTypIds = "1,2,3,9";
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getStats(String sTypes) throws SQLException {
+	public JSONArray getStats(String sTypIds) throws SQLException {
 		JSONArray ar = new JSONArray();
-		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypes
+		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds
 				+ ") GROUP by text ORDER by anz DESC";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setString(1, sTypIds);
 		ResultSet rs = statement.executeQuery();
 
 		while (rs.next()) {

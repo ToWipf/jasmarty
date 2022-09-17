@@ -17,10 +17,10 @@
 
                     <br>
                     Zeige Alles:
-                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTableColumns()">
                         <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
-                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTableColumns()">
                         <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="gridCol">
                     <ng-scrollbar class="pscroll">
-                        <app-daylog-eventlist [(filterEventType)]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTable]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
+                        <app-daylog-eventlist [(filterEventType)]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
                     </ng-scrollbar>
                 </div>
             </div>
