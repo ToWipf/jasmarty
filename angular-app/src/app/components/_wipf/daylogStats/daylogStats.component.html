@@ -31,7 +31,7 @@
                     </mat-form-field>
 
                     <mat-form-field>
-                        <mat-label>DiagramTypIDs</mat-label>
+                        <mat-label>DiagramTypID</mat-label>
                         <input matInput type="number" [(ngModel)]="nDiagramTypID">
                     </mat-form-field>
                 </div>
@@ -73,6 +73,7 @@
             Anzahl einmaliger Events: {{statsarry.length}}
 
             <hr>
+            Vorkomnisse Zeitsteifen:
             <div class="chart">
                 <ngx-charts-bar-vertical *ngIf="bvDataForDateChart.length > 0" [results]="bvDataForDateChart" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false"
                     [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
@@ -80,6 +81,7 @@
             </div>
 
             <hr>
+            Vorkomnisse pro Wochentag:
             <div class="chart">
                 <ngx-charts-advanced-pie-chart *ngIf="bvDataForWochentagVorkomnisseChart.length > 0" [results]="bvDataForWochentagVorkomnisseChart" [gradient]="false">
                 </ngx-charts-advanced-pie-chart>
