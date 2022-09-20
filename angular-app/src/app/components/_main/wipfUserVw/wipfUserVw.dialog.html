@@ -1,38 +1,36 @@
-<div style="display: flex">
-    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
-        <!-- // TODO: LESS DATEI -->
-        <h1 mat-dialog-title>Username: {{data.username}}</h1>
-        <div mat-dialog-content>
-            <mat-form-field>
-                <mat-label>Username</mat-label>
-                <input matInput [(ngModel)]="data.username">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Passwort</mat-label>
-                <input matInput [(ngModel)]="data.password">
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Telegram Id</mat-label>
-                <input type="number" matInput [(ngModel)]="data.telegramid">
-            </mat-form-field>
-            <br>
+<div class="dialogbox">
+    <!-- // TODO: LESS DATEI -->
+    <h1 mat-dialog-title>Username: {{data.username}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Username</mat-label>
+            <input matInput [(ngModel)]="data.username">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Passwort</mat-label>
+            <input matInput [(ngModel)]="data.password">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Telegram Id</mat-label>
+            <input type="number" matInput [(ngModel)]="data.telegramid">
+        </mat-form-field>
+        <br>
 
-            <!-- <mat-label>Status</mat-label> -->
-            <!-- <input matInput [(ngModel)]="data.active"> -->
+        <!-- <mat-label>Status</mat-label> -->
+        <!-- <input matInput [(ngModel)]="data.active"> -->
 
-            <mat-form-field appearance="fill">
-                <mat-label>Role</mat-label>
-                <mat-select [(value)]="data.role">
-                    <mat-option value="admin">admin</mat-option>
-                    <mat-option value="user">user</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Role</mat-label>
+            <mat-select [(value)]="data.role">
+                <mat-option value="admin">admin</mat-option>
+                <mat-option value="user">user</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-        </div>
+    </div>
 
-        <div mat-dialog-actions>
-            <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-            <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
-        </div>
+    <div mat-dialog-actions>
+        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
     </div>
 </div>
