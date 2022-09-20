@@ -151,9 +151,10 @@ export class DayLogComponent implements OnInit {
     const edititem: DaylogDay = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(DaylogComponentDialogDayComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
@@ -242,9 +243,10 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(DaylogComponentDialogTypeComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogEvent) => {

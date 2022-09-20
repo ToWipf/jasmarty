@@ -92,9 +92,10 @@ export class MedienComponent implements OnInit {
     const edititem: MedienEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(MedienComponentDialog, {
-      width: '350px',
-      height: '550px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: MedienEntry) => {

@@ -91,8 +91,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
 
         const dialogRef = this.dialog.open(DaylogComponentDialogEventComponent, {
-            //width: '350px',
-            //height: '350px',
             data: edititem,
             autoFocus: true,
             minWidth: '300px',

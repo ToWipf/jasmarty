@@ -83,9 +83,10 @@ export class RndEventComponent implements OnInit {
     const edititem: RndEvent = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(RndEventComponentDialogComponent, {
-      width: '350px',
-      height: '390px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: RndEvent) => {
