@@ -1,26 +1,24 @@
-<div style="display: flex">
-    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
-        <!-- TODO: LESS DATEI -->
-        <h1 mat-dialog-title>Id: {{data.id}}</h1>
-        <div mat-dialog-content>
-            <mat-form-field>
-                <mat-label>Typ</mat-label>
-                <input matInput [(ngModel)]="data.type">
-            </mat-form-field>
-        </div>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Art</mat-label>
-            <mat-select [(value)]="data.art">
-                <mat-option value="TEXT">Text</mat-option>
-                <mat-option value="NUMBER">Zahl</mat-option>
-                <mat-option value="BOOL">Boolean</mat-option>
-            </mat-select>
+<div class="dialogbox">
+    <!-- TODO: LESS DATEI -->
+    <h1 mat-dialog-title>Id: {{data.id}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Typ</mat-label>
+            <input matInput [(ngModel)]="data.type">
         </mat-form-field>
+    </div>
 
-        <div mat-dialog-actions>
-            <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-            <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
-        </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Art</mat-label>
+        <mat-select [(value)]="data.art">
+            <mat-option value="TEXT">Text</mat-option>
+            <mat-option value="NUMBER">Zahl</mat-option>
+            <mat-option value="BOOL">Boolean</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
     </div>
 </div>

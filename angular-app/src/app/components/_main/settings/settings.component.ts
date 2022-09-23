@@ -79,9 +79,10 @@ export class SettingsComponent implements OnInit {
     const edititem: KeyValEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(SettingsComponentDialogComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: KeyValEntry) => {

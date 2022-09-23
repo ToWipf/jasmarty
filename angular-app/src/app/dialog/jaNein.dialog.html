@@ -1,15 +1,12 @@
-<div style="display: flex">
-    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
+<div class="dialogbox">
+    <h1 mat-dialog-title>Sicher ?</h1>
 
-        <h1 mat-dialog-title>Sicher ?</h1>
+    <div mat-dialog-content>
+        {{data.infotext}}
+    </div>
 
-        <div mat-dialog-content>
-            {{data.infotext}}
-        </div>
-
-        <div mat-dialog-actions>
-            <button class="btn btn-wipf-dialog" (click)="onNoClick()">Nein</button>
-            <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Ja</button>
-        </div>
+    <div mat-dialog-actions>
+        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Nein</button>
+        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Ja</button>
     </div>
 </div>
