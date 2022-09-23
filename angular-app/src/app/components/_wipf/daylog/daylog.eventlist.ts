@@ -6,7 +6,6 @@ import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empty } from 'rxjs';
 
 @Component({
     selector: 'app-daylog-eventlist',
@@ -19,7 +18,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     @Input("filterTextEvent") public sFilterTextEvent: string;
     @Input("showAllTableColumns") public bShowAllTable: Boolean;
     @Input("dateForLoad") public dateForLoad: DaylogDay;
-    @Input("daylogTypes") public daylogTypes: DaylogType;
+    @Input("daylogTypes") public daylogTypes: DaylogType[];
     @Input("filterEventType") public filterEventType: DaylogType;
 
     @ViewChild(MatSort, { static: true }) sortEvent: MatSort;

@@ -13,7 +13,7 @@
         </mat-form-field>
         <br>
         <ng-container *ngFor="let type of daylogTypes">
-            <ng-container *ngIf="data.typ.toString()==type.id">
+            <ng-container *ngIf="data.typ.toString()==type.id.toString()">
                 <ng-container *ngIf="type.art==='TEXT'">
                     <mat-form-field>
                         <mat-label>Text</mat-label>
