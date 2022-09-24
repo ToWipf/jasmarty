@@ -35,12 +35,18 @@ export class ServiceRest {
   }
 
   public sethostExpect(): void {
-    let sHref = window.location.href;
-    let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
-    const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
-    // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
-    if (sHostExp.length > 10) {
-      this.sHost = sHostExp;
+    // den letzen Apihost laden
+    let apihost = localStorage.getItem("apihost");
+    if (!apihost) { 
+      let sHref = window.location.href;
+      let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
+      const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+      // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
+      if (sHostExp.length > 10) {
+        this.sHost = sHostExp;
+      }
+    } else {
+      this.sHost = apihost;
     }
 
     // den letzen auth laden, wenn vorhanden
@@ -55,6 +61,7 @@ export class ServiceRest {
     this.setLoginData("", "");
     this.setLoginOk("false");
     localStorage.removeItem('auth');
+    localStorage.removeItem('apihost');
   }
 
   public gethost(): string {
@@ -63,6 +70,7 @@ export class ServiceRest {
 
   public sethost(host: string): void {
     this.sHost = host;
+    localStorage.setItem("apihost", host);
   }
 
   public getLoginOk(): string {
