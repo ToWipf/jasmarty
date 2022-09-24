@@ -88,7 +88,6 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   public selectLcdDescription(): void {
     this.rest.post('lcd12864/selectPage/' + this.lcdDescription.id, null).then((res) => {
-      console.log(res);
     });
   }
 
@@ -124,9 +123,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   private saveLcdDescription(): void {
-    console.log(this.lcdDescription);
     this.rest.post('lcd12864/savePage', this.lcdDescription).then((res) => {
-      console.log(res);
     });
   }
 

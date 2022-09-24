@@ -82,7 +82,6 @@ export class JasmartyPagesComponent implements OnInit {
 
   public selectPage(): void {
     this.rest.get('pages/select/' + this.selectedPage).then((resdata) => {
-      console.log(resdata);
     });
   }
 

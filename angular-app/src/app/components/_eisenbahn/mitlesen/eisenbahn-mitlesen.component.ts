@@ -30,7 +30,6 @@ export class EisenbahnMitlesenComponent implements OnInit {
 
   public start(): void {
     this.rest.get('eisenbahn/mitlesen/start').then((resdata) => {
-      console.log(resdata);
       this.bRun = true;
       this.loopResfresh();
     });
@@ -39,7 +38,6 @@ export class EisenbahnMitlesenComponent implements OnInit {
   public stop(): void {
     this.bRun = false;
     this.rest.get('eisenbahn/mitlesen/stop').then((resdata) => {
-      console.log(resdata);
     });
   }
 

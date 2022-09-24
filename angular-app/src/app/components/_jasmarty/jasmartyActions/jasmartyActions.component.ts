@@ -66,14 +66,12 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 
   public testAction(item: Buttonaction): void {
     this.rest.get('actions/doaction/' + item.id).then((resdata: any) => {
-      console.log(resdata);
     });
   }
 
   private save(item: Buttonaction): void {
     this.rest.post('actions/set', JSON.stringify(item)).then((resdata: any) => {
       if (resdata.save) {
-        console.log('saved');
         this.load();
       } else {
         //TODO: Meldung Fehler
@@ -85,7 +83,6 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   private load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('actions/getall').then((resdata: any) => {
-      console.log(resdata);
       this.Buttonactions = resdata;
       this.tableDataSource = new MatTableDataSource(this.Buttonactions);
       this.tableDataSource.sort = this.sort;
@@ -106,7 +103,6 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   private getCurrentPressed(): void {
     this.rest.getNoWartenDialog('actions/currentPressed').then(
       (resdata: any) => {
-        console.log(resdata.btn);
         if (resdata.btn) {
           this.lastPressed = resdata.btn;
         }

@@ -26,7 +26,6 @@ export class JasmartyMainComponent implements OnInit, OnDestroy {
 
   public refreshNow(): void {
     this.rest.get('refresh/refreshCache').then((res: any) => {
-      console.log(res);
     });
   }
 

@@ -94,7 +94,6 @@ export class SettingsComponent implements OnInit {
   
   public stopApp(): void {
     this.rest.post('wipf/stop','').then((resdata: any) => {
-      console.log(resdata);
     });
   }
 

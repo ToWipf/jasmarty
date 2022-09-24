@@ -24,7 +24,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
     public bShowWarning: boolean = false;
     public eventlistDataSource;
-    // public eventlistDataSource: MatTableDataSource<Component>;
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
 

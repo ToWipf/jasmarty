@@ -25,20 +25,17 @@ export class TelegramConfigComponent implements OnInit {
 
   public setBotKey(): void {
     this.rest.post('telegram/setbot/' + this.sBotKey, '').then((resdata: any) => {
-      console.log(resdata);
       this.refreshOn();
     });
   }
 
   public refreshOn(): void {
     this.rest.get('telegram/on').then((resdata: any) => {
-      console.log(resdata);
     });
   }
 
   public refreshOff(): void {
     this.rest.get('telegram/off').then((resdata: any) => {
-      console.log(resdata);
     });
   }
 
@@ -50,7 +47,6 @@ export class TelegramConfigComponent implements OnInit {
 
   public setTelegramActive(bStatus: boolean): void {
     this.rest.post('basesettings/set/telegram/' + bStatus, '').then((resdata: any) => {
-      console.log(resdata);
     });
   }
 }
