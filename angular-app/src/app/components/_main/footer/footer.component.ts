@@ -33,17 +33,8 @@ export class FooterComponent implements OnInit {
   }
 
   public openSetServer(): void {
-    const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
-      width: '250px',
-      height: '300px',
-      data: this.rest.gethost(),
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.rest.sethost(result);
-        this.getVersion();
-      }
+    this.rest.openSetServer().then((b) => {
+      this.getVersion();
     });
   }
 }

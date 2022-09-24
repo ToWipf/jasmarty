@@ -57,8 +57,16 @@
         </table>
     </ng-scrollbar>
 
-    <div class="system">
-        <button type="button" class="btn btn-danger" (click)="stopApp()">System Beenden!</button>
+    <div class="configline">
+        <div class="box">
+            <button type="button" class="btn btn-wipf-default" (click)="reloadApp()">Client neu laden</button>
+        </div>
+        <div class="box">
+            <button type="button" class="btn btn-wipf-default" (click)="openSetServer()">Api setzen</button>
+        </div>
+        <div class="box">
+            <button type="button" class="btn btn-danger" (click)="stopApp()">System Beenden!</button>
+        </div>
     </div>
 
 </div>

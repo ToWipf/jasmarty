@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { FooterComponentSetServerDialog } from '../components/_main/footer/footer.component';
 import { DialogWartenComponent } from '../dialog/main.dialog';
 import { ServiceWipf } from './serviceWipf';
 
@@ -37,7 +38,7 @@ export class ServiceRest {
   public sethostExpect(): void {
     // den letzen Apihost laden
     let apihost = localStorage.getItem("apihost");
-    if (!apihost) { 
+    if (!apihost) {
       let sHref = window.location.href;
       let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
       const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
@@ -79,6 +80,25 @@ export class ServiceRest {
 
   public setLoginOk(b: string): void {
     this.bLoginOk = b;
+  }
+
+  public openSetServer(): Promise<boolean> {
+    return new Promise(resolve => {
+      const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
+        width: '250px',
+        height: '300px',
+        data: this.gethost(),
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.sethost(result);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
