@@ -7,7 +7,7 @@
         </ng-container>
 
         <ng-container *ngIf="!bCantLoad">
-            <span *ngIf="bOldVersionWarn" class="alertBox">
+            <span *ngIf="bOldVersionWarn" class="alertBox" (click)="reloadPage()">
                 Versionen passen nicht, Seite bitte neu Laden. Java: {{sJavaVersion}} Angular: {{sAppVersion}}
             </span>
             <span *ngIf="!bOldVersionWarn">Wipf | Version: {{sJavaVersion}}</span>

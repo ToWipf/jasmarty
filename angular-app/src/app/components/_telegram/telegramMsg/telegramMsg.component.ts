@@ -20,7 +20,7 @@ export class TelegramMsgComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
   public sFilter: string = "";
-  public bShowAllTable: Boolean = true;
+  public bShowAllTableColumns: Boolean = true;
 
   ngOnInit() {
     this.showAllTableColumns();
@@ -28,8 +28,8 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
     } else {
       this.displayedColumns = ['message', 'antwort', 'edit'];

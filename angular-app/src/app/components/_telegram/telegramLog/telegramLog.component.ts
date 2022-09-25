@@ -20,7 +20,7 @@ export class TelegramLogComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
   public sFilter: string = "";
-  public bShowAllTable: Boolean = true;
+  public bShowAllTableColumns: Boolean = true;
 
   ngOnInit() {
     // Kein init laden
@@ -28,8 +28,8 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
     } else {
       this.displayedColumns = ['type', 'chatid', 'message', 'antwort', 'date', 'edit'];

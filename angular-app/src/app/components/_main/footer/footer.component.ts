@@ -37,6 +37,10 @@ export class FooterComponent implements OnInit {
       this.getVersion();
     });
   }
+
+  public reloadPage(): void {
+    window.location.reload();
+  }
 }
 
 @Component({

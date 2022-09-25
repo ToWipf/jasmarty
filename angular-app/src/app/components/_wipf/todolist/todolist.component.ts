@@ -27,7 +27,7 @@ export class TodolistComponent implements OnInit {
   public bZitat: boolean = false;
   public bShowWarning: boolean = false;
   public sFilter: string = "";
-  public bShowAllTable: boolean = true;
+  public bShowAllTableColumns: boolean = true;
 
   ngOnInit() {
     this.load();
@@ -35,8 +35,8 @@ export class TodolistComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['id', 'data', 'date', 'editby', 'button'];
     } else {
       this.displayedColumns = ['id', 'data', 'button'];

@@ -18,7 +18,7 @@ export class MedienComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public bShowAllTable: boolean = true;
+  public bShowAllTableColumns: boolean = true;
   public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
   public sFilter: string = "";
 
@@ -28,8 +28,8 @@ export class MedienComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['id', 'typ', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
     } else {
       this.displayedColumns = [ 'typ' ,'titel', 'art', 'gesehen', 'infotext', 'button'];

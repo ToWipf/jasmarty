@@ -25,7 +25,7 @@ export class DayLogComponent implements OnInit {
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateForLoad: DaylogDay = {};
-  public bShowAllTable: boolean = true;
+  public bShowAllTableColumns: boolean = true;
   public bShowDayTable: boolean = true;
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: any;
@@ -56,8 +56,8 @@ export class DayLogComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'userid', 'button'];
     } else {
       this.daylistDisplayedColumns = ['day', 'date', 'tagestext', 'button'];

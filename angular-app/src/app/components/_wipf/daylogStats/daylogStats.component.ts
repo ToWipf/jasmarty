@@ -20,7 +20,7 @@ export class DaylogStatsComponent implements OnInit {
   public statsDataSource;
   public sFilter: string = "";
   public displayedColumns: string[] = [];
-  public bShowAllTable: boolean = true;
+  public bShowAllTableColumns: boolean = true;
   public bvDataForDateChart = [];
   public bvDataForWochentagVorkomnisseChart = [];
   public typelistForSelect: DaylogType[] = [];
@@ -38,8 +38,8 @@ export class DaylogStatsComponent implements OnInit {
   }
 
   public showAllTableColumns(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typ'];
     } else {
       this.displayedColumns = ['anz', 'text'];
