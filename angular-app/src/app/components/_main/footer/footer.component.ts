@@ -42,15 +42,3 @@ export class FooterComponent implements OnInit {
     window.location.reload();
   }
 }
-
-@Component({
-  selector: 'app-footer-setServer',
-  templateUrl: './footer.setServer.html',
-})
-export class FooterComponentSetServerDialog {
-  constructor(public dialogRef: MatDialogRef<FooterComponentSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}

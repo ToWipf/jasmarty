@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
-import { FooterComponentSetServerDialog } from '../footer/footer.component';
+import { CookieDialog } from 'src/app/dialog/cookie.dialog';
 
 @Component({
   selector: 'app-settings',
@@ -102,8 +102,16 @@ export class SettingsComponent implements OnInit {
     window.location.reload();
   }
 
-  public openSetServer(): void {
+  public openSetServerDialog(): void {
     this.rest.openSetServer();
+  }
+
+  public openCookieDialog(): void {
+    const dialogRef = this.dialog.open(CookieDialog, {
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
+    });
   }
 
 }

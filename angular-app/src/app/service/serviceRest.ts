@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FooterComponentSetServerDialog } from '../components/_main/footer/footer.component';
 import { DialogWartenComponent } from '../dialog/main.dialog';
+import { ElementSetServerDialog } from '../dialog/setServer.dialog';
 import { ServiceWipf } from './serviceWipf';
 
 @Injectable({
@@ -84,7 +84,7 @@ export class ServiceRest {
 
   public openSetServer(): Promise<boolean> {
     return new Promise(resolve => {
-      const dialogRef = this.dialog.open(FooterComponentSetServerDialog, {
+      const dialogRef = this.dialog.open(ElementSetServerDialog, {
         width: '250px',
         height: '300px',
         data: this.gethost(),

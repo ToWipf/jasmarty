@@ -17,7 +17,6 @@ import { DynpagesComponent, DynpagesComponentDialogComponent } from './component
 import { DynpageShowComponent } from './components/_wipf/dynpageShow/dynpageShow.component';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
-import { FooterComponent, FooterComponentSetServerDialog } from './components/_main/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty12864Pages/jasmarty12864Pages.component';
@@ -82,6 +81,9 @@ import { LoginComponent } from './components/login/login.component';
 import { EisenbahnMitlesenComponent } from './components/_eisenbahn/mitlesen/eisenbahn-mitlesen.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ElementSetServerDialog } from './dialog/setServer.dialog';
+import { FooterComponent } from './components/_main/footer/footer.component';
+import { CookieDialog } from './dialog/cookie.dialog';
 
 @NgModule({
     declarations: [
@@ -107,7 +109,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         MedienComponent,
         MedienComponentDialog,
         FooterComponent,
-        FooterComponentSetServerDialog,
+        ElementSetServerDialog,
         Jasmarty12864PagesComponent,
         Jasmarty12864PanelComponent,
         JasmartyActionsComponent,
@@ -132,6 +134,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
         WipfUserVwComponent,
         WipfUserVWComponentDialogComponent,
         LoginComponent,
+        CookieDialog
     ],
     imports: [
         NgxChartsModule,
