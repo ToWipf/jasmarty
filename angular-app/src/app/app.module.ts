@@ -83,7 +83,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ElementSetServerDialog } from './dialog/setServer.dialog';
 import { FooterComponent } from './components/_main/footer/footer.component';
-import { CookieDialog } from './dialog/cookie.dialog';
+import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie.dialog';
 
 @NgModule({
     declarations: [
@@ -134,7 +134,8 @@ import { CookieDialog } from './dialog/cookie.dialog';
         WipfUserVwComponent,
         WipfUserVWComponentDialogComponent,
         LoginComponent,
-        CookieDialog
+        CookieDialogComponent,
+        CookieAddDialogComponent
     ],
     imports: [
         NgxChartsModule,

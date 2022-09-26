@@ -1,45 +1,63 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { KeyValEntry } from '../datatypes';
+import { ServiceWipf } from '../service/serviceWipf';
 
 @Component({
   selector: 'app-cookie',
   templateUrl: './cookie.dialog.html',
+  styleUrls: ['./cookie.dialog.less']
 })
-export class CookieDialog {
-  constructor(public dialogRef: MatDialogRef<CookieDialog>) { }
+export class CookieDialogComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<CookieDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
-  public inData: KeyValEntry = {key:"", val:""};
-  public cookies: string = "";
+
+  public dataSource;
+  public displayedColumns: string[] = ['key', 'val', 'button'];
+  public inData: KeyValEntry = { key: "", val: "" };
+
+  ngOnInit(): void {
+    this.loadCookies();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  public listCookies(): void {
-    var theCookies = document.cookie.split(';');
-    var aString = '';
-    for (var i = 1; i <= theCookies.length; i++) {
-      aString += i + ' ' + theCookies[i - 1] + "\n";
-    }
-    this.cookies = aString;
+  public loadCookies(): void {
+
+    let output = [];
+    document.cookie.split(/\s*;\s*/).forEach((pair) => {
+      var name = decodeURIComponent(pair.substring(0, pair.indexOf('=')));
+      var value = decodeURIComponent(pair.substring(pair.indexOf('=') + 1));
+      output.push({ key: name, val: value });
+    });
+
+    this.dataSource = new MatTableDataSource(output);
   }
 
-  // public getCookie(cname: string): string {
-  //   let name = cname + "=";
-  //   let decodedCookie = decodeURIComponent(document.cookie);
-  //   let ca = decodedCookie.split(';');
-  //   for (let i = 0; i < ca.length; i++) {
-  //     let c = ca[i];
-  //     while (c.charAt(0) == ' ') {
-  //       c = c.substring(1);
-  //     }
-  //     if (c.indexOf(name) == 0) {
-  //       return c.substring(name.length, c.length);
-  //     }
-  //   }
-  //   return "";
-  // }
+  public newItem(): void {
+    let e: KeyValEntry = {};
+    this.openDialog(e);
+  }
+
+  public openDialog(item: KeyValEntry): void {
+    const edititem: KeyValEntry = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(CookieAddDialogComponent, {
+      data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: KeyValEntry) => {
+      if (result) {
+        this.setCookie(result.key, result.val);
+      }
+    });
+  }
 
   public setCookie(cname: String, val: String): void {
     console.log(val);
@@ -49,7 +67,25 @@ export class CookieDialog {
     xnow.setTime(expireTime);
     document.cookie = cname + '=' + val + ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
 
-    this.listCookies();
+    this.loadCookies();
   }
 
+  public deleteItem(cname: string): void {
+    document.cookie = cname + '=DEL; expires=' + new Date() + ';path=/;SameSite=Strict';
+
+    this.loadCookies();
+  }
+
+}
+
+@Component({
+  selector: 'app-cookie-add-dialog',
+  templateUrl: './cookie.add.dialog.html',
+})
+export class CookieAddDialogComponent {
+  constructor(public dialogRef: MatDialogRef<CookieAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

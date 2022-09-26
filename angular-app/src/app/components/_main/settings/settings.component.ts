@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
-import { CookieDialog } from 'src/app/dialog/cookie.dialog';
+import { CookieDialogComponent } from 'src/app/dialog/cookie.dialog';
 
 @Component({
   selector: 'app-settings',
@@ -107,7 +107,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public openCookieDialog(): void {
-    const dialogRef = this.dialog.open(CookieDialog, {
+    const dialogRef = this.dialog.open(CookieDialogComponent, {
       autoFocus: true,
       minWidth: '300px',
       minHeight: '250px',
