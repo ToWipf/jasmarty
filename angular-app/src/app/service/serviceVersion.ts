@@ -14,6 +14,9 @@ export class ServiceVersion {
 
     private sBackend: string;
 
+    /**
+     * 
+     */
     public loadBackend(): void {
         // Set Backend
         this.rest.getNoWartenDialog('wipf/ver').then((resdata: any) => {
@@ -21,29 +24,53 @@ export class ServiceVersion {
         });
     }
 
+    /**
+     * 
+     * @returns 
+     */
     public checkVersions(): boolean {
         return (this.getFrontendVersion() !== this.getBackendVersion());
     }
 
+    /**
+     * 
+     * @returns 
+     */
     public getBackendVersion(): string {
         return this.sBackend;
     }
 
+    /**
+     * 
+     * @returns 
+     */
     public getFrontendVersion(): string {
         return packageJson.version;
     }
 
+    /**
+     * 
+     */
     public openCookieDialog(): void {
         this.dialog.open(CookieDialogComponent, {
-          autoFocus: true,
-          minWidth: '300px',
-          minHeight: '250px',
+            autoFocus: true,
+            minWidth: '300px',
+            minHeight: '250px',
         });
-      }
-  /**
-   * 
-   */
-   public reloadApp(): void {
-    window.location.reload();
-  }
+    }
+
+    /**
+     * 
+     */
+    public reloadApp(): void {
+        window.location.reload();
+    }
+
+    /**
+     * 
+     */
+    public redirectToApiFrontend(): void {
+        //window.location.replace(this.rest.gethost());
+        window.location.href = this.rest.gethost();
+    }
 }

@@ -22,6 +22,7 @@ export class SettingsComponent implements OnInit {
   public displayedColumns: string[] = ['key', 'val', 'button'];
   public bShowWarning: boolean = false;
   public sFilter: string = "";
+  public bSicherheitNochmalKlicken: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -94,8 +95,12 @@ export class SettingsComponent implements OnInit {
   }
 
   public stopApp(): void {
-    this.rest.post('wipf/stop', '').then((resdata: any) => {
-    });
+    if (this.bSicherheitNochmalKlicken) {
+      this.rest.post('wipf/stop', '').then((resdata: any) => {
+      });
+    } else {
+      this.bSicherheitNochmalKlicken = true;
+    }
   }
 
 }

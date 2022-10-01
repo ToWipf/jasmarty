@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
-import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +8,7 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent {
-  constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceVersion: ServiceVersion) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest) { }
 
   public sUsername: string;
   public sPasswort: string;
@@ -21,7 +20,6 @@ export class LoginComponent {
         this.sUsername = "";
         this.sPasswort = "";
         this.rest.setLoginOk("true");
-        //window.location.reload(); TODO: neuladen des Menüs
       } else {
         this.logoff();
       }

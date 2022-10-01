@@ -35,13 +35,17 @@ export class ServiceRest {
     };
   }
 
+  public getHostExpectFromUrl(): string {
+    let sHref = window.location.href;
+    let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
+    return sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+  }
+
   public setHostExpect(): void {
     // den letzen Apihost laden
     let apihost = localStorage.getItem("apihost");
     if (!apihost) {
-      let sHref = window.location.href;
-      let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
-      const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+      let sHostExp = this.getHostExpectFromUrl();
       // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
       if (sHostExp.length > 10) {
         this.sHost = sHostExp;

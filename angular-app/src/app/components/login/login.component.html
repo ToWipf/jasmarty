@@ -22,17 +22,3 @@
 
     <button class="btn btn-wipf-default" (click)="logoff()">Abmelden</button>
 </ng-container>
-
-<ng-container *ngIf="serviceVersion.checkVersions()">
-    <div class="configline sysbuttons">
-        <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.openCookieDialog()">Cookies</button>
-        </div>
-        <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.reloadApp()">Client neu laden</button>
-        </div>
-        <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="rest.openSetServerDialog()">Api setzen</button>
-        </div>
-    </div>
-</ng-container>

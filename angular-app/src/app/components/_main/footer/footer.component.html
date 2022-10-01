@@ -2,7 +2,7 @@
     <div class="wipf-footer text-center">
         <ng-container *ngIf="!(serviceVersion.getBackendVersion())">
             Server nicht erreichbar - {{serviceVersion.getFrontendVersion()}} -
-            <span class="alertBox" (click)="openSetServer()">Server einstellen</span>
+            <span class="alertBox" (click)="rest.openSetServerDialog()">Server einstellen</span>
             <span class="alertBox" (click)="serviceVersion.reloadApp()">Neu laden</span>
         </ng-container>
 

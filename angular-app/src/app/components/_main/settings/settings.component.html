@@ -68,7 +68,10 @@
             <button type="button" class="btn btn-wipf-default" (click)="rest.openSetServerDialog()">Api setzen</button>
         </div>
         <div class="box">
-            <button type="button" class="btn btn-danger" (click)="stopApp()">System Beenden!</button>
+            <button type="button" class="btn btn-danger" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
+        </div>
+        <div class="box">
+            <button type="button" class="btn btn-danger" (click)="stopApp()"><span *ngIf="bSicherheitNochmalKlicken">SICHER? </span>System Beenden!</button>
         </div>
     </div>
 
