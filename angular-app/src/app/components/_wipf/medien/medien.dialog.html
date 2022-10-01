@@ -2,6 +2,18 @@
     <!-- // TODO: LESS DATEI -->
     <h1 mat-dialog-title>Id: {{data.id}}</h1>
     <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Typ</mat-label>
+            <mat-select [(value)]="data.typ">
+                <!-- <mat-option>None</mat-option> -->
+                <mat-option value="Serie">Serie</mat-option>
+                <mat-option value="Film">Film</mat-option>
+                <mat-option value="Buch">Buch</mat-option>
+                <mat-option value="Brettspiel">Brettspiel</mat-option>
+                <mat-option value="Band">Band</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
         <mat-form-field>
             <mat-label>Titel</mat-label>
             <input matInput [(ngModel)]="data.titel">
@@ -25,11 +37,6 @@
         <mat-form-field>
             <mat-label>Gesehen</mat-label>
             <input matInput [(ngModel)]="data.gesehenDate">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Typ</mat-label>
-            <input matInput [(ngModel)]="data.typ">
         </mat-form-field>
     </div>
 
