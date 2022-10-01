@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
+import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent {
-  constructor(public dialog: MatDialog, public rest: ServiceRest) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest, public version: ServiceVersion) { }
 
   public sUsername: string;
   public sPasswort: string;

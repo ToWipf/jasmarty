@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import packageJson from '../../../../../package.json';
+import { MatDialog } from '@angular/material/dialog';
+import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
   selector: 'app-footer',
@@ -9,32 +9,17 @@ import packageJson from '../../../../../package.json';
   styleUrls: ['./footer.component.less'],
 })
 export class FooterComponent implements OnInit {
-  constructor(public dialog: MatDialog, private rest: ServiceRest) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public version: ServiceVersion) { }
 
-  public sAppVersion: string = packageJson.version;
-  public sJavaVersion: string = '0.0';
-  public bOldVersionWarn: boolean = false;
-  public bCantLoad: boolean = true;
+  public sFrontendVersion: string = "0.0"
 
   ngOnInit() {
-    this.getVersion();
-  }
-
-  public getVersion(): void {
-    this.rest.get('wipf/ver').then(
-      (resdata: any) => {
-        this.bCantLoad = false;
-        this.sJavaVersion = resdata.ver.toString();
-        if (this.sAppVersion !== this.sJavaVersion) {
-          this.bOldVersionWarn = true;
-        }
-      },
-    );
+    this.version.loadBackend();
+    this.sFrontendVersion = this.version.getFrontendVersion();
   }
 
   public openSetServer(): void {
     this.rest.openSetServer().then((b) => {
-      this.getVersion();
     });
   }
 
