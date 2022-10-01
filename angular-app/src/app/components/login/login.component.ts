@@ -9,7 +9,7 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent {
-  constructor(public dialog: MatDialog, public rest: ServiceRest, public version: ServiceVersion) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceVersion: ServiceVersion) { }
 
   public sUsername: string;
   public sPasswort: string;

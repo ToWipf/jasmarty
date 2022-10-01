@@ -59,13 +59,13 @@
 
     <div class="configline sysbuttons">
         <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="openCookieDialog()">Cookies</button>
+            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.openCookieDialog()">Cookies</button>
         </div>
         <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="reloadApp()">Client neu laden</button>
+            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.reloadApp()">Client neu laden</button>
         </div>
         <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="openSetServerDialog()">Api setzen</button>
+            <button type="button" class="btn btn-wipf-default" (click)="rest.openSetServerDialog()">Api setzen</button>
         </div>
         <div class="box">
             <button type="button" class="btn btn-danger" (click)="stopApp()">System Beenden!</button>

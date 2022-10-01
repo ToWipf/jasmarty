@@ -6,7 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
-import { CookieDialogComponent } from 'src/app/dialog/cookie.dialog';
+import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
   selector: 'app-settings',
@@ -14,7 +14,7 @@ import { CookieDialogComponent } from 'src/app/dialog/cookie.dialog';
   styleUrls: ['./settings.component.less'],
 })
 export class SettingsComponent implements OnInit {
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceVersion: ServiceVersion) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -95,22 +95,6 @@ export class SettingsComponent implements OnInit {
 
   public stopApp(): void {
     this.rest.post('wipf/stop', '').then((resdata: any) => {
-    });
-  }
-
-  public reloadApp(): void {
-    window.location.reload();
-  }
-
-  public openSetServerDialog(): void {
-    this.rest.openSetServer();
-  }
-
-  public openCookieDialog(): void {
-    const dialogRef = this.dialog.open(CookieDialogComponent, {
-      autoFocus: true,
-      minWidth: '300px',
-      minHeight: '250px',
     });
   }
 

@@ -35,7 +35,7 @@ export class ServiceRest {
     };
   }
 
-  public sethostExpect(): void {
+  public setHostExpect(): void {
     // den letzen Apihost laden
     let apihost = localStorage.getItem("apihost");
     if (!apihost) {
@@ -82,7 +82,7 @@ export class ServiceRest {
     this.bLoginOk = b;
   }
 
-  public openSetServer(): Promise<boolean> {
+  public openSetServerDialog(): Promise<boolean> {
     return new Promise(resolve => {
       const dialogRef = this.dialog.open(ElementSetServerDialog, {
         width: '250px',

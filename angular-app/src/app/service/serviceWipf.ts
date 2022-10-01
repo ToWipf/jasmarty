@@ -92,4 +92,6 @@ export class ServiceWipf {
   public startsWithNumber(str: string): boolean {
     return /^\d/.test(str);
   }
+
+
 }

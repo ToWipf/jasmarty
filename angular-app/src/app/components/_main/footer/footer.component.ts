@@ -8,22 +8,11 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.less'],
 })
-export class FooterComponent implements OnInit {
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public version: ServiceVersion) { }
-
-  public sFrontendVersion: string = "0.0"
-
-  ngOnInit() {
-    this.version.loadBackend();
-    this.sFrontendVersion = this.version.getFrontendVersion();
-  }
+export class FooterComponent {
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceVersion: ServiceVersion) { }
 
   public openSetServer(): void {
-    this.rest.openSetServer().then((b) => {
+    this.rest.openSetServerDialog().then((b) => {
     });
-  }
-
-  public reloadPage(): void {
-    window.location.reload();
   }
 }
