@@ -7,8 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.datatypes.Discord;
 import org.wipf.jasmarty.logic.base.WipfConfig;
-import org.wipf.jasmarty.logic.discord.Discord;
+import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 
 import io.quarkus.scheduler.Scheduled;
@@ -21,14 +22,14 @@ import io.quarkus.scheduler.Scheduled;
 public class CronDiscord {
 
 	@Inject
-	Discord discord;
+	DiscordHome discord;
 	@Inject
 	WipfConfig wipfConfig;
 	@Inject
 	TSendAndReceive tSendAndReceive;
 
 	private static final Logger LOGGER = Logger.getLogger("DiscordTask");
-	private Boolean bLastResult = false;
+	private Discord dLast = new Discord();
 	private String sDiscordId;
 
 	@PostConstruct
@@ -48,23 +49,21 @@ public class CronDiscord {
 	/**
 	 *
 	*/
-	@Scheduled(cron = "0 */5 * ? * *")
+	@Scheduled(cron = "0 */5 * ? * *") // Jede 5. Minute
 	public void isOnline() {
 		if (sDiscordId != null && sDiscordId != "") {
-			Boolean bNow = discord.isOnline(this.sDiscordId);
+			Discord dNow = discord.getById(this.sDiscordId);
 
-			// Nur bei wechselnden Status eine Nachricht erstellen
-			if (bNow == null && bLastResult != null) {
+			// Nur bei wechselnden is Valid Status eine Nachricht erstellen
+			if (!dNow.isValid() && dLast.isValid()) {
 				tSendAndReceive.sendMsgToAdmin("Fail Discord");
-			} else if (bLastResult == null) {
-				// nichts senden
-			} else if (bNow == true && bLastResult == false) {
-				tSendAndReceive.sendMsgToAdmin("Discord Online");
-			} else if (bNow == false && bLastResult == true) {
+			} else if (dNow.countUser() > dLast.countUser()) {
+				tSendAndReceive.sendMsgToAdmin("Discord Online\n\n" + dNow.userToString());
+			} else if (dNow.countUser() < dLast.countUser()) {
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
 			}
 
-			bLastResult = bNow;
+			dLast = dNow;
 		}
 	}
 

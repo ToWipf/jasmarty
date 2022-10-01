@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.WipfConfig;
 import org.wipf.jasmarty.logic.base.WipfInfo;
-import org.wipf.jasmarty.logic.discord.Discord;
+import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -41,17 +41,9 @@ public class WipfRest {
 	@Inject
 	WipfInfo wipfInfo;
 	@Inject
-	Discord discord;
+	DiscordHome discord;
 	@Inject
 	WipfConfig wipfConfig;
-
-	@GET
-	@PermitAll
-	@Path("discord/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response discord(@PathParam("id") String sId) throws IOException {
-		return Response.ok(discord.isOnline(sId)).build();
-	}
 
 	@POST
 	@Path("setDiscordId/{id}")

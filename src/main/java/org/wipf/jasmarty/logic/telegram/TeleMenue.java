@@ -12,7 +12,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.daylog.TAppDaylog;
-import org.wipf.jasmarty.logic.discord.Discord;
+import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -60,7 +60,7 @@ public class TeleMenue {
 	@Inject
 	FileVW fileVw;
 	@Inject
-	Discord discord;
+	DiscordHome discord;
 
 	/**
 	 * @param sJson
@@ -278,12 +278,11 @@ public class TeleMenue {
 
 			case "dis":
 			case "discord":
-				return discord.isOnlineDefault();
 			case "disl":
 			case "discordlist":
 			case "disn":
 			case "discordnames":
-				return discord.getOnlineNamesDefault();
+				return discord.getUserAsString();
 
 			case "cleanlog:":
 			case "clearlog:":
