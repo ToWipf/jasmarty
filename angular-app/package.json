@@ -29,7 +29,7 @@
     "ngx-perfect-scrollbar": "10.1.1",
     "ngx-photo-editor": "0.3.6",
     "ngx-scrollbar": "10.0.1",
-    "rxjs": "7.5.6",
+    "rxjs": "7.5.7",
     "zone.js": "0.11.7"
   },
   "devDependencies": {
