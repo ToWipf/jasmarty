@@ -23,10 +23,12 @@
                 <h3>Telegram Nachricht senden:</h3>
                 <div class="gridRow">
                     <div class="gridCol">
-                        <mat-form-field>
-                            <mat-label>Nachrichten Text</mat-label>
-                            <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-                        </mat-form-field>
+                        <div mat-dialog-content>
+                            <mat-form-field>
+                                <mat-label>Nachrichten Text</mat-label>
+                                <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+                            </mat-form-field>
+                        </div>
 
                         <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
                     </div>

@@ -59,7 +59,9 @@ public class CronDiscord {
 				tSendAndReceive.sendMsgToAdmin("Fail Discord");
 			} else if (dNow.countUser() > dLast.countUser()) {
 				tSendAndReceive.sendMsgToAdmin("Discord Online\n\n" + dNow.userToString());
-			} else if (dNow.countUser() < dLast.countUser()) {
+			} else if (dNow.countUser() > 0 && dNow.countUser() < dLast.countUser()) {
+				tSendAndReceive.sendMsgToAdmin("Discord weniger Online\n\n" + dNow.userToString());
+			} else if (dNow.countUser() == 0 && dNow.countUser() < dLast.countUser()) {
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
 			}
 
