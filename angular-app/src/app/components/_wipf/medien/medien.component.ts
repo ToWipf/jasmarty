@@ -19,8 +19,9 @@ export class MedienComponent implements OnInit {
 
   public dataSource;
   public bShowAllTableColumns: boolean = true;
-  public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
+  public displayedColumns: string[] = [];
   public sFilter: string = "";
+  public listTypFilter: string[] = ["Serie", "Film", "Buch", "Brettspiel", "Band"];
 
   ngOnInit() {
     this.load();
@@ -32,7 +33,7 @@ export class MedienComponent implements OnInit {
     if (this.bShowAllTableColumns) {
       this.displayedColumns = ['id', 'typ', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
     } else {
-      this.displayedColumns = [ 'typ' ,'titel', 'art', 'gesehen', 'infotext', 'button'];
+      this.displayedColumns = ['typ', 'titel', 'art', 'gesehen', 'infotext', 'button'];
     }
   }
 
@@ -84,7 +85,11 @@ export class MedienComponent implements OnInit {
 
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
-      this.dataSource.filter = this.sFilter.trim();
+      if (this.sFilter) {
+        this.dataSource.filter = this.sFilter.trim();
+      } else {
+        this.dataSource.filter = "";
+      }
     });
   }
 

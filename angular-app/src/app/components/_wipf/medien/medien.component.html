@@ -18,6 +18,16 @@
                     <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                 </button>
             </div>
+            
+            <div class="box">
+                <mat-form-field appearance="fill">
+                    <mat-label>Typ Filtern</mat-label>
+                    <mat-select (selectionChange)="applyFilter()" [(value)]="sFilter">
+                        <mat-option [value]=""><b>Kein Filter</b></mat-option>
+                        <mat-option *ngFor="let item of listTypFilter" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
             <div class="box">
                 Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
             </div>

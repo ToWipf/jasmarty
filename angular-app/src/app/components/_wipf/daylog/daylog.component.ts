@@ -165,7 +165,7 @@ export class DayLogComponent implements OnInit {
   }
 
   public loadAllEventsViaVar(): void {
-    let d: DaylogDay = { date: "LOADALL" };
+    let d: DaylogDay = { date: "Alle-Events" };
     this.bShowDayTable = false;
     this.dateForLoad = d;
   }

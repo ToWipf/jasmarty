@@ -72,7 +72,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         if (this.dateForLoad.date === "") {
             this.eventlistDataSource = new MatTableDataSource();;
         }
-        else if (this.dateForLoad.date === "LOADALL") {
+        else if (this.dateForLoad.date === "Alle-Events") {
             this.loadAllEvents();
             this.applyFilter();
         } else {
