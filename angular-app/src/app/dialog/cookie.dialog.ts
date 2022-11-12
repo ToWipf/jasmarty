@@ -14,11 +14,13 @@ export class CookieDialogComponent implements OnInit {
 
 
   public dataSource;
+  public pageurl: string = "";
   public displayedColumns: string[] = ['key', 'val', 'button'];
   public inData: KeyValEntry = { key: "", val: "" };
 
   ngOnInit(): void {
     this.loadCookies();
+    this.pageurl = window.location.href;
   }
 
   onNoClick(): void {

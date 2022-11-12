@@ -84,6 +84,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ElementSetServerDialog } from './dialog/setServer.dialog';
 import { FooterComponent } from './components/_main/footer/footer.component';
 import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie.dialog';
+import { AppRoutingModule } from './app-routing.module';
+import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
 
 @NgModule({
     declarations: [
@@ -135,7 +137,8 @@ import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie
         WipfUserVWComponentDialogComponent,
         LoginComponent,
         CookieDialogComponent,
-        CookieAddDialogComponent
+        CookieAddDialogComponent,
+        MainmenueComponent,
     ],
     imports: [
         NgxChartsModule,
@@ -193,6 +196,7 @@ import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie
         ReactiveFormsModule,
         ScrollingModule,
         SidebarModule.forRoot(),
+        AppRoutingModule,
     ],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
     bootstrap: [AppComponent]

@@ -1,10 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MatDrawer } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Jaconfig } from './datatypes';
-import { ServiceRest } from './service/serviceRest';
-import { ServiceVersion } from './service/serviceVersion';
 
 const ICON_BOX = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 5.75 3 A 1.0001 1.0001 0 0 0 4.8867188 3.4960938 L 3.1367188 6.4960938 A 1.0001 1.0001 0 0 0 3 7 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 7 A 1.0001 1.0001 0 0 0 20.863281 6.4960938 L 19.113281 3.4960938 A 1.0001 1.0001 0 0 0 18.25 3 L 5.75 3 z M 6.3242188 5 L 17.675781 5 L 18.841797 7 L 5.1582031 7 L 6.3242188 5 z M 5 9 L 19 9 L 19 19 L 5 19 L 5 9 z M 9 11 L 9 13 L 15 13 L 15 11 L 9 11 z"/></svg>`;
 const ICON_CANCEL = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 8.7070312 7.2929688 L 7.2929688 8.7070312 L 10.585938 12 L 7.2929688 15.292969 L 8.7070312 16.707031 L 12 13.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13.414062 12 L 16.707031 8.7070312 L 15.292969 7.2929688 L 12 10.585938 L 8.7070312 7.2929688 z"/></svg>`;
@@ -36,8 +32,8 @@ const ICON_UHR = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" w
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
-export class AppComponent implements OnInit {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private rest: ServiceRest, private serviceVersion: ServiceVersion) {
+export class AppComponent {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
 
     iconRegistry.addSvgIconLiteral('box', sanitizer.bypassSecurityTrustHtml(ICON_BOX));
     iconRegistry.addSvgIconLiteral('cancel', sanitizer.bypassSecurityTrustHtml(ICON_CANCEL));
@@ -63,88 +59,5 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('user', sanitizer.bypassSecurityTrustHtml(ICON_USER));
     iconRegistry.addSvgIconLiteral('download', sanitizer.bypassSecurityTrustHtml(ICON_DOWNLOAD));
     iconRegistry.addSvgIconLiteral('uhr', sanitizer.bypassSecurityTrustHtml(ICON_UHR));
-  }
-
-  @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
-
-  public bTelegramActive: boolean = false;
-  public bJasmartyActive: boolean = false;
-  public bDevActive: boolean = false;
-  public bWipfActive: boolean = false;
-  public bEisenbahnMitlesenActive: boolean = false;
-  public jasmartyType: string;
-  public selectedSite: string = 'login';
-
-  ngOnInit(): void {
-    this.rest.setHostExpect();
-    this.serviceVersion.loadBackend();
-    this.getActiveModules();
-  }
-
-  public selectSite(s: string) {
-    this.drawer.toggle();
-    this.selectedSite = s;
-  }
-
-  public getActiveModules(): void {
-    this.bDevActive = false;
-
-    this.rest.getNoWartenDialog('basesettings/get/wipf').then((resdata: any) => {
-      // Weiteres nur laden, wenn das erste funktioniert
-      this.bWipfActive = resdata.active;
-
-      this.rest.getNoWartenDialog('basesettings/get/telegram').then((resdata: any) => {
-        this.bTelegramActive = resdata.active;
-      });
-
-      this.rest.getNoWartenDialog('basesettings/get/eisenbahn_mitlesen').then((resdata: any) => {
-        this.bEisenbahnMitlesenActive = resdata.active;
-      });
-
-      this.rest.getNoWartenDialog('basesettings/get/jasmarty').then((resdata: any) => {
-        this.bJasmartyActive = resdata.active;
-
-        if (this.bJasmartyActive) {
-          // Wenn Jasmarty true ist, den Typ holen
-          this.rest.getNoWartenDialog('lcd/config/get').then((resdata) => {
-            var jaconfig: Jaconfig = resdata;
-            this.jasmartyType = jaconfig.type;
-          });
-        }
-      });
-      this.rest.getNoWartenDialog('basesettings/get/debug').then((resdata: any) => {
-        this.bDevActive = resdata.active;
-        if (this.bDevActive) {
-          // Beim einschalten auch 12864 zeigen
-          this.showAll12864();
-        }
-      });
-    });
-  }
-
-  public showDevModulesBySecretKey(): void {
-    this.bDevActive = true
-    this.showAll12864();
-  }
-
-  public showDevModules(): void {
-    this.bDevActive = !this.bDevActive;
-  }
-
-  public showAll2004(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_2004";
-  }
-
-  public showAll12864(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_12864";
-  }
-
-  private showAll(): void {
-    this.bJasmartyActive = true;
-    this.bTelegramActive = true;
-    this.bWipfActive = true;
-    this.bEisenbahnMitlesenActive = true;
   }
 }
