@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -115,7 +116,7 @@ public class Wipf {
 	 * @return
 	 * @throws IOException
 	 */
-	public String httpRequest(httpRequestType method, String sUrl) throws IOException {
+	public String httpRequest(httpRequestType method, String sUrl) throws IOException, UnknownHostException {
 		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
