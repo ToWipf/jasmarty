@@ -1,0 +1,88 @@
+<div>
+    <h3>ToDo Liste</h3>
+    <div class="todolist">
+        <perfect-scrollbar class="pscrollConfigline">
+            <ng-container *ngIf="bShowWarning">
+                Es ist ein Fehler aufgetreten!
+                <input type="checkbox" [(ngModel)]="bShowWarning">
+            </ng-container>
+
+            <div class="configline">
+                <div class="iconbox">
+                    Neu Laden:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+                        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+
+                    <br>
+                    Zeige Alles:
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
+                        <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
+                        <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                </div>
+ 
+                <div class="box">
+                    <mat-form-field>
+                        <mat-label>Filtern</mat-label>
+                        <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                    </mat-form-field>
+                </div>
+            </div>
+        </perfect-scrollbar>
+
+        <ng-scrollbar class="pscroll">
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.id}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="data">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.data}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                    <td mat-cell *matCellDef="let element"> {{element.date * 1000 | date: 'dd.MM.yyyy HH:mm:ss'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="editby">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> EditBy </th>
+                    <td mat-cell *matCellDef="let element"> {{element.editby}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="button">
+                    <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
+                    <th th mat-header-cell *matHeaderCellDef>
+                        <div class="tableVW">
+                            <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                                <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                            </button>
+                            ∑: {{dataSource?._data?._value?.length}}
+                        </div>
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
+                            <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+                        </button>
+                        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+                            <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </ng-scrollbar>
+    </div>
+</div>

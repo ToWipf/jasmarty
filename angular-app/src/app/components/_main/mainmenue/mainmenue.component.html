@@ -8,6 +8,10 @@
                     <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
                     <span class="buttonInhalt"> Todo List </span>
                 </li>
+                <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Neue Liste"></mat-icon>
+                    <span class="buttonInhalt"> Neue Liste </span>
+                </li>
                 <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
                     <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
                     <span class="buttonInhalt"> TagesLog </span>
@@ -246,6 +250,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
                     <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='liste'">
+                    <app-liste></app-liste>
                 </ng-container>
             </div>
         </div>

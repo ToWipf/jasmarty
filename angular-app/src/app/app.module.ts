@@ -86,6 +86,7 @@ import { FooterComponent } from './components/_main/footer/footer.component';
 import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie.dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
+import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
 
 @NgModule({
     declarations: [
@@ -139,6 +140,8 @@ import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.compo
         CookieDialogComponent,
         CookieAddDialogComponent,
         MainmenueComponent,
+        ListeComponent,
+        ListeComponentDialogComponent,
     ],
     imports: [
         NgxChartsModule,

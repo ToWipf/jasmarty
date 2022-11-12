@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -18,6 +19,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  * @author Wipf
  *
  */
+@ApplicationScoped
 public class ListeDB {
 
 	@Inject

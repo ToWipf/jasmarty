@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
+import org.wipf.jasmarty.logic.liste.ListeDB;
+import org.wipf.jasmarty.logic.liste.ListeTypeDB;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
@@ -40,6 +42,10 @@ public class MainHome {
 	Dynpages dynpages;
 	@Inject
 	SqlLitePatcher sqlLitePatcher;
+	@Inject
+	ListeDB listeDB;
+	@Inject
+	ListeTypeDB listeTypeDB;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.2.45";
@@ -73,6 +79,8 @@ public class MainHome {
 				wipfConfig.checkAppWorkId();
 				dynpages.initDB();
 				daylogHome.initDB();
+				listeDB.initDB();
+				listeTypeDB.initDB();
 			}
 
 			if (wipfConfig.isAppActive("jasmarty")) {
