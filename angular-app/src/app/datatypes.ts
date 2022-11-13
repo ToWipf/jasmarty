@@ -148,10 +148,10 @@ export interface ListeEntry {
   id?: number;
   data?: string;
   typeid?: number;
-  date?: number;
+  date?: string;
 }
 
-export interface ListeTypeEntry {
+export interface ListeType {
   id?: number;
   typename?: string;
 }

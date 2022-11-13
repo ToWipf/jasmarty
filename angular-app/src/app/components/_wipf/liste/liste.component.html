@@ -23,13 +23,21 @@
                         <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
- 
+
                 <div class="box">
                     <mat-form-field>
                         <mat-label>Filtern</mat-label>
                         <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
                     </mat-form-field>
                 </div>
+
+                <div class="box">
+                    Typenverwaltung:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
+                        <mat-icon svgIcon="box" aria-hidden="false" title="Typenverwaltung"></mat-icon>
+                    </button>
+                </div>
+
             </div>
         </perfect-scrollbar>
 
@@ -56,7 +64,13 @@
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-                    <td mat-cell *matCellDef="let element"> {{element.typeid}} </td>
+                    <td mat-cell *matCellDef="let element">
+                        <ng-container *ngFor="let type of listeType;">
+                            <ng-container *ngIf='type.id.toString()==element.typeid'>
+                                {{type.typename}}
+                            </ng-container>
+                        </ng-container>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="button">

@@ -2,10 +2,11 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ListeEntry } from 'src/app/datatypes';
+import { ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { ListeTypeComponentDialogTypeListComponent } from './listeType.component';
 
 @Component({
   selector: 'app-liste',
@@ -23,9 +24,10 @@ export class ListeComponent implements OnInit {
   public displayedColumns: string[] = [];
   public sFilter: string = "";
   public bShowAllTableColumns: boolean = true;
-
+  public listeType: ListeType[];
 
   ngOnInit() {
+    this.loadTypes();
     this.load();
     this.showAllTableColumns();
   }
@@ -38,12 +40,31 @@ export class ListeComponent implements OnInit {
       this.displayedColumns = ['type', 'data', 'button'];
     }
   }
+
+  public openDialogTypeVW() {
+    const dialogRef = this.dialog.open(ListeTypeComponentDialogTypeListComponent, {
+      width: '550px',
+      height: '550px',
+    });
+
+    // Typen nach den Edit neu laden
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadTypes();
+    });
+  }
+
+  public loadTypes(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
+        this.listeType = resdata;
+        warten.close();
+    });
+  }
+
   public load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
-      
-
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
@@ -59,8 +80,11 @@ export class ListeComponent implements OnInit {
   }
 
   public newItem(): void {
-    let td: ListeEntry = {};
-    this.openDialog(td);
+    let n: ListeEntry = {};
+    n.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
+    n.data = "";
+    n.typeid = 1;
+    this.openDialog(n);
   }
 
   private save(item: ListeEntry): void {
@@ -112,11 +136,26 @@ export class ListeComponent implements OnInit {
   selector: 'app-liste-dialog',
   templateUrl: './liste.dialog.html',
 })
-export class ListeComponentDialogComponent {
-  constructor(public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) { }
+export class ListeComponentDialogComponent implements OnInit {
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) { }
+
+  public listeType: ListeType[];
+
+  ngOnInit(): void {
+    this.loadTypes();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  public loadTypes(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
+        this.listeType = resdata;
+        warten.close();
+    });
+  }
+
 }
 

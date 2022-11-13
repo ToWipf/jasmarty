@@ -2,19 +2,22 @@
     <!-- TODO: LESS DATEI -->
     <h1 mat-dialog-title>Id: {{data.id}}</h1>
     <div mat-dialog-content>
+        <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select [(value)]="data.typeid">
+                <ng-container *ngFor="let type of listeType">
+                    <mat-option value='{{type.id}}'>{{type.typename}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+        <br>
+
         <mat-form-field>
             <mat-label>Inhalt</mat-label>
             <textarea [(ngModel)]="data.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
         </mat-form-field>
         <br>
-        TODO: datum und Type
-        <!-- <mat-checkbox class="example-margin" [(ngModel)]="data.active">
-            Aktiv
-        </mat-checkbox> -->
-        <mat-form-field>
-            <mat-label>Wert</mat-label>
-            <input matInput [(ngModel)]="data.typeid">
-        </mat-form-field>
+
         <mat-form-field>
             <mat-label>Datum</mat-label>
             <input matInput type="date" [(ngModel)]="data.date">

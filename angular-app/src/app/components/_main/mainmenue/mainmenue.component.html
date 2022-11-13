@@ -4,13 +4,9 @@
         <ng-scrollbar class="sidebar">
             <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
             <ul *ngIf="bWipfActive" class="menueli">
-                <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
-                    <span class="buttonInhalt"> Todo List </span>
-                </li>
                 <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
                     <mat-icon svgIcon="check_all" aria-hidden="false" title="Neue Liste"></mat-icon>
-                    <span class="buttonInhalt"> Neue Liste </span>
+                    <span class="buttonInhalt"> Liste </span>
                 </li>
                 <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
                     <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
@@ -40,8 +36,12 @@
                     <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
                     <span class="buttonInhalt"> Dateien </span>
                 </li>
+                <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
+                    <span class="buttonInhalt"> Alte Todo </span>
+                </li>
             </ul>
-
+            
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
             <ul *ngIf="bJasmartyActive" class="menueli">
                 <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
