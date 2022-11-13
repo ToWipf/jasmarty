@@ -58,7 +58,7 @@ export class ListeComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['id', 'type', 'data', 'date', 'button'];
+      this.displayedColumns = ['id', 'typeid', 'type', 'data', 'date', 'button'];
     } else {
       this.displayedColumns = ['type', 'data', 'button'];
     }
@@ -124,7 +124,7 @@ export class ListeComponent implements OnInit {
     let n: ListeEntry = {};
     n.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     n.data = "";
-    n.typeid = 1;
+    n.typeid = "1";
     this.openDialog(n);
   }
 

@@ -72,12 +72,19 @@
                     <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}"> {{element.date}} </td>
                 </ng-container>
 
+                <ng-container matColumnDef="typeid">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TypeId </th>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}"> {{element.typeid}} </td>
+                </ng-container>
+
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                     <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
                         <ng-container *ngFor="let type of listeTypeForFilter;">
                             <ng-container *ngIf='type.id.toString()==element.typeid'>
-                                {{type.typename}}
+                                <b>
+                                    {{type.typename}}
+                                </b>
                             </ng-container>
                         </ng-container>
                     </td>

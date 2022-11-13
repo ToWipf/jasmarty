@@ -64,7 +64,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -197,7 +196,6 @@ import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeList
         NgbModule,
         NgScrollbarModule,
         NgxPhotoEditorModule,
-        PerfectScrollbarModule,
         PortalModule,
         ReactiveFormsModule,
         ScrollingModule,

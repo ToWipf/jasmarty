@@ -34,7 +34,7 @@ public class Liste {
 		if (jo.has("id")) {
 			this.nId = jo.getInt("id");
 		}
-		this.sData = jo.getString("data");
+		this.sData = jo.getString("data").trim();
 		this.nTypeId = jo.getInt("typeid");
 		this.sDate = jo.getString("date");
 		return this;
