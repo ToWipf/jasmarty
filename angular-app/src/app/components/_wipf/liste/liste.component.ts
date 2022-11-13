@@ -24,7 +24,9 @@ export class ListeComponent implements OnInit {
   public displayedColumns: string[] = [];
   public sFilter: string = "";
   public bShowAllTableColumns: boolean = true;
-  public listeType: ListeType[];
+  public listeTypeForFilter: ListeType[];
+  public selectedTypeFilter: ListeType;
+  public fullListe: ListeEntry[];
 
   ngOnInit() {
     this.loadTypes();
@@ -56,7 +58,7 @@ export class ListeComponent implements OnInit {
   public loadTypes(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
-        this.listeType = resdata;
+        this.listeTypeForFilter = resdata;
         warten.close();
     });
   }
@@ -65,7 +67,8 @@ export class ListeComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
-      this.dataSource = new MatTableDataSource(resdata);
+      this.fullListe = resdata;
+      this.dataSource = new MatTableDataSource(this.fullListe);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
@@ -78,6 +81,23 @@ export class ListeComponent implements OnInit {
       this.dataSource.filter = this.sFilter.trim();
     });
   }
+
+  public applyFilterByType() {
+    let eventlistToShow: ListeEntry[] = [];
+    if (this.selectedTypeFilter != undefined) {
+
+        this.fullListe.forEach((event: ListeEntry) => {
+            if (event.typeid == this.selectedTypeFilter.id) {
+                eventlistToShow.push(event);
+            }
+        });
+        this.dataSource = new MatTableDataSource(eventlistToShow);
+    } else {
+        // Wie Normal -> alles anzeigen
+        this.dataSource = new MatTableDataSource(this.fullListe);
+    }
+
+}
 
   public newItem(): void {
     let n: ListeEntry = {};

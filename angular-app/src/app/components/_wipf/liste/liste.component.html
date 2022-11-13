@@ -25,6 +25,16 @@
                 </div>
 
                 <div class="box">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Event Typ Filtern</mat-label>
+                        <mat-select [(value)]="selectedTypeFilter" (selectionChange)="applyFilterByType()">
+                            <mat-option [value]="undefined">Kein Filter</mat-option>
+                            <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent">{{itemEvent.typename}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="box">
                     <mat-form-field>
                         <mat-label>Filtern</mat-label>
                         <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
@@ -65,7 +75,7 @@
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
                     <td mat-cell *matCellDef="let element">
-                        <ng-container *ngFor="let type of listeType;">
+                        <ng-container *ngFor="let type of listeTypeForFilter;">
                             <ng-container *ngIf='type.id.toString()==element.typeid'>
                                 {{type.typename}}
                             </ng-container>
