@@ -20,7 +20,7 @@ public class Liste {
 		JSONObject jo = new JSONObject();
 		jo.put("id", nId);
 		jo.put("data", sData);
-		jo.put("typeid", nTypeId);
+		jo.put("typeid", nTypeId.toString());
 		jo.put("date", sDate);
 		return jo;
 	}
