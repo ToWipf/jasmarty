@@ -34,6 +34,27 @@ export class ListeComponent implements OnInit {
     this.showAllTableColumns();
   }
 
+  public idToColor(id: string): string {
+    if (id === '1')
+      return "#fc5f53";
+    if (id === '2')
+      return "#fcc653";
+    if (id === '3')
+      return "#99fc53";
+    if (id === '4')
+      return "#53fca2";
+    if (id === '5')
+      return "#53ddfc";
+    if (id === '6')
+      return "#5e53fc";
+    if (id === '7')
+      return "#be53fc";
+    if (id === '8')
+      return "#fc53be";
+    else
+      return "green";
+  }
+
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
@@ -58,8 +79,8 @@ export class ListeComponent implements OnInit {
   public loadTypes(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
-        this.listeTypeForFilter = resdata;
-        warten.close();
+      this.listeTypeForFilter = resdata;
+      warten.close();
     });
   }
 
@@ -86,18 +107,18 @@ export class ListeComponent implements OnInit {
     let eventlistToShow: ListeEntry[] = [];
     if (this.selectedTypeFilter != undefined) {
 
-        this.fullListe.forEach((event: ListeEntry) => {
-            if (event.typeid == this.selectedTypeFilter.id) {
-                eventlistToShow.push(event);
-            }
-        });
-        this.dataSource = new MatTableDataSource(eventlistToShow);
+      this.fullListe.forEach((event: ListeEntry) => {
+        if (event.typeid == this.selectedTypeFilter.id) {
+          eventlistToShow.push(event);
+        }
+      });
+      this.dataSource = new MatTableDataSource(eventlistToShow);
     } else {
-        // Wie Normal -> alles anzeigen
-        this.dataSource = new MatTableDataSource(this.fullListe);
+      // Wie Normal -> alles anzeigen
+      this.dataSource = new MatTableDataSource(this.fullListe);
     }
 
-}
+  }
 
   public newItem(): void {
     let n: ListeEntry = {};
@@ -172,8 +193,8 @@ export class ListeComponentDialogComponent implements OnInit {
   public loadTypes(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
-        this.listeType = resdata;
-        warten.close();
+      this.listeType = resdata;
+      warten.close();
     });
   }
 
