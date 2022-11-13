@@ -9,7 +9,6 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.liste.Liste;
 import org.wipf.jasmarty.logic.base.SqlLite;
@@ -27,8 +26,7 @@ public class ListeDB {
 	@Inject
 	SqlLite sqlLite;
 
-	private static final Logger LOGGER = Logger.getLogger("Neue TodoListe");
-	private static String TABLENAME = "listeType";
+	private static String TABLENAME = "liste";
 
 	/**
 	 * @throws SQLException
@@ -36,7 +34,7 @@ public class ListeDB {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS " + TABLENAME
-				+ " (id INTEGER primary key autoincrement UNIQUE, typename TEXT, typeid INTEGER, date INTEGER);";
+				+ " (id INTEGER primary key autoincrement UNIQUE, data TEXT, typeid INTEGER, date TEXT);";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -57,20 +55,20 @@ public class ListeDB {
 	public void save(Liste o) throws SQLException {
 		if (o.getId() != null) {
 			// update
-			String sUpdate = "INSERT OR REPLACE INTO " + TABLENAME + " (id, data, typeid, data) VALUES (?,?,?,?)";
+			String sUpdate = "INSERT OR REPLACE INTO " + TABLENAME + " (id, data, typeid, date) VALUES (?,?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setInt(1, o.getId());
 			statement.setString(2, o.getData());
 			statement.setInt(3, o.getTypeId());
-			statement.setInt(4, o.getDate());
+			statement.setString(4, o.getDate());
 			statement.executeUpdate();
 		} else {
 			// insert
-			String sUpdate = "INSERT INTO " + TABLENAME + " (data, typeid, data) VALUES (?,?,?)";
+			String sUpdate = "INSERT INTO " + TABLENAME + " (data, typeid, date) VALUES (?,?,?)";
 			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
 			statement.setString(1, o.getData());
 			statement.setInt(2, o.getTypeId());
-			statement.setInt(3, o.getDate());
+			statement.setString(3, o.getDate());
 			statement.executeUpdate();
 		}
 	}
@@ -102,7 +100,7 @@ public class ListeDB {
 			o.setId(rs.getInt("id"));
 			o.setData(rs.getString("data"));
 			o.setTypeId(rs.getInt("typeid"));
-			o.setDate(rs.getInt("date"));
+			o.setDate(rs.getString("date"));
 			lr.add(o);
 		}
 		return lr;

@@ -33,7 +33,7 @@ public class ListeRest {
 	@Path("save")
 	public Response save(String jnRoot) throws SQLException {
 		listeDB.save(jnRoot);
-		return Response.ok().build();
+		return Response.ok("{}").build();
 	}
 
 	@DELETE

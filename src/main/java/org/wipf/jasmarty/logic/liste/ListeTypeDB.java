@@ -9,7 +9,6 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.wipf.jasmarty.datatypes.liste.ListeType;
 import org.wipf.jasmarty.logic.base.SqlLite;
@@ -27,8 +26,7 @@ public class ListeTypeDB {
 	@Inject
 	SqlLite sqlLite;
 
-	private static final Logger LOGGER = Logger.getLogger("Neue TodoListe");
-	private static String TABLENAME = "liste";
+	private static String TABLENAME = "listeType";
 
 	/**
 	 * @throws SQLException
@@ -36,7 +34,7 @@ public class ListeTypeDB {
 	 */
 	public void initDB() throws SQLException {
 		String sUpdate = "CREATE TABLE IF NOT EXISTS " + TABLENAME
-				+ " (id INTEGER primary key autoincrement UNIQUE, data TEXT);";
+				+ " (id INTEGER primary key autoincrement UNIQUE, typename TEXT);";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 

@@ -11,7 +11,7 @@ public class Liste {
 	private Integer nId;
 	private String sData;
 	private Integer nTypeId;
-	private Integer nDate;
+	private String sDate;
 
 	/**
 	 * @return
@@ -21,7 +21,7 @@ public class Liste {
 		jo.put("id", nId);
 		jo.put("data", sData);
 		jo.put("typeid", nTypeId);
-		jo.put("date", nDate);
+		jo.put("date", sDate);
 		return jo;
 	}
 
@@ -36,7 +36,7 @@ public class Liste {
 		}
 		this.sData = jo.getString("data");
 		this.nTypeId = jo.getInt("typeid");
-		this.nDate = jo.getInt("date");
+		this.sDate = jo.getString("date");
 		return this;
 	}
 
@@ -85,15 +85,15 @@ public class Liste {
 	/**
 	 * @return
 	 */
-	public Integer getDate() {
-		return nDate;
+	public String getDate() {
+		return sDate;
 	}
 
 	/**
 	 * @param date
 	 */
-	public void setDate(Integer date) {
-		this.nDate = date;
+	public void setDate(String date) {
+		this.sDate = date;
 	}
 
 }

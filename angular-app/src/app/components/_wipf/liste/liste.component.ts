@@ -33,7 +33,7 @@ export class ListeComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['id', 'type', 'date', 'date', 'button'];
+      this.displayedColumns = ['id', 'type', 'data', 'date', 'button'];
     } else {
       this.displayedColumns = ['type', 'data', 'button'];
     }
@@ -73,7 +73,7 @@ export class ListeComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.eventtext;
+    item.infotext = "Wirklich löschen? " + item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

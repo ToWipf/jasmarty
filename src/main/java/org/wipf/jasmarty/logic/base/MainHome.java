@@ -79,9 +79,9 @@ public class MainHome {
 				wipfConfig.checkAppWorkId();
 				dynpages.initDB();
 				daylogHome.initDB();
-				listeDB.initDB();
-				listeTypeDB.initDB();
 			}
+			listeDB.initDB();
+			listeTypeDB.initDB();
 
 			if (wipfConfig.isAppActive("jasmarty")) {
 				jasmartyHome.jasmartyStart();
