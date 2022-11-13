@@ -2,7 +2,7 @@
     <h3>Daylog {{dateForLoad?.date}}</h3>
 
     <div class="list">
-        <perfect-scrollbar class="pscrollConfigline">
+        <ng-scrollbar class="pscrollConfigline" track="horizontal">
             <ng-container *ngIf="bShowWarning">
                 Es ist ein Fehler aufgetreten!
                 <input type="checkbox" [(ngModel)]="bShowWarning" />
@@ -62,7 +62,7 @@
                     </mat-form-field>
                 </div>
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
 
         <ng-scrollbar class="pscrollTabellen" track="horizontal">
             <div class="gridRow_ohne_rand">

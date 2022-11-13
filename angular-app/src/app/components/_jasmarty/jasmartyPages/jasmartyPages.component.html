@@ -1,72 +1,67 @@
 <h3>Seite {{selectedPage}}: '{{Japage.name}}'</h3>
 <hr>
 
-<div class="gridRow">
-    <div class="gridCol pages">
-        <div>
-            <button type="button" class="btn btn-wipf-default" (click)="last()">Seite zurück</button>
-            <button type="button" class="btn btn-wipf-default" (click)="openDialogGoToPage()">gehe zu Seite</button>
-            <button type="button" class="btn btn-wipf-default" (click)="next()">nächste Seite</button>
-        </div>
 
-        <perfect-scrollbar class="pscroll">
+
+<div>
+    <button type="button" class="btn btn-wipf-default" (click)="last()">Seite zurück</button>
+    <button type="button" class="btn btn-wipf-default" (click)="openDialogGoToPage()">gehe zu Seite</button>
+    <button type="button" class="btn btn-wipf-default" (click)="next()">nächste Seite</button>
+    <button type="button" class="btn btn-wipf-default" (click)="openariablenHilfeDialog()">Variablen anzeigen</button>
+</div>
+
+<ng-scrollbar class="pscroll" track="all">
+    <div>
+        <ng-container *ngIf="Japage">
+
             <div>
-                <ng-container *ngIf="Japage">
-
-                    <div>
-                        <h5>Name</h5>
-                        <input type="string" class="form-control inbutton" [(ngModel)]="Japage.name">
-                    </div>
-
-                    <h5>Zeilen</h5>
-                    <div *ngFor="let line of Japage.lines; let i = index; trackBy:trackByIndex;">
-                        <div class="lineconfig">
-
-                            <mat-form-field class="lineInputData">
-                                <mat-label>Zeile {{i}}</mat-label>
-                                <input matInput type="string" class="form-control inputText" [(ngModel)]="Japage.lines[i].data" placeholder="Zeile {{i}}">
-                            </mat-form-field>
-
-                            <mat-form-field class="lineInputOption">
-                                <mat-label>Option</mat-label>
-                                <mat-select [(ngModel)]="Japage.lines[i].option" name="option">
-                                    <mat-option *ngFor="let option of optionnumbers" [value]="option">
-                                        <ng-container *ngIf="option == 48">
-                                            Linksbündig
-                                        </ng-container>
-                                        <ng-container *ngIf="option == 49">
-                                            Mittig
-                                        </ng-container>
-                                        <ng-container *ngIf="option == 50">
-                                            Rechtsbündig
-                                        </ng-container>
-                                        <ng-container *ngIf="option == 51">
-                                            Weierlauf auf nächste Zeile
-                                        </ng-container>
-                                        <ng-container *ngIf="option == 52">
-                                            hat Weierlauf
-                                        </ng-container>
-                                        <ng-container *ngIf="option == 53">
-                                            Zeile Scrollen
-                                        </ng-container>
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </ng-container>
+                <h5>Name</h5>
+                <input type="string" class="form-control inbutton" [(ngModel)]="Japage.name">
             </div>
 
-            <!-- <button type="button" class="btn btn-wipf-default" (click)="save()">Speichern</button> -->
-            <!-- <button type="button" class="btn btn-wipf-default" (click)="selectPage()">Zeigen</button> -->
-        </perfect-scrollbar>
+            <h5>Zeilen</h5>
+            <div *ngFor="let line of Japage.lines; let i = index; trackBy:trackByIndex;">
+                <div class="lineconfig">
 
-        <button type="button" class="btn btn-danger inbutton" (click)="deletePage()">Löschen</button>
+                    <mat-form-field class="lineInputData">
+                        <mat-label>Zeile {{i}}</mat-label>
+                        <input matInput type="string" class="form-control inputText" [(ngModel)]="Japage.lines[i].data" placeholder="Zeile {{i}}">
+                    </mat-form-field>
 
-        <button type="button" class="btn btn-wipf-default" (click)="saveAndSelectPage()">Speichern und Zeigen</button>
+                    <mat-form-field class="lineInputOption">
+                        <mat-label>Option</mat-label>
+                        <mat-select [(ngModel)]="Japage.lines[i].option" name="option">
+                            <mat-option *ngFor="let option of optionnumbers" [value]="option">
+                                <ng-container *ngIf="option == 48">
+                                    Linksbündig
+                                </ng-container>
+                                <ng-container *ngIf="option == 49">
+                                    Mittig
+                                </ng-container>
+                                <ng-container *ngIf="option == 50">
+                                    Rechtsbündig
+                                </ng-container>
+                                <ng-container *ngIf="option == 51">
+                                    Weierlauf auf nächste Zeile
+                                </ng-container>
+                                <ng-container *ngIf="option == 52">
+                                    hat Weierlauf
+                                </ng-container>
+                                <ng-container *ngIf="option == 53">
+                                    Zeile Scrollen
+                                </ng-container>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
     </div>
 
-    <div class="gridCol">
-        <button type="button" class="btn btn-wipf-default" (click)="openariablenHilfeDialog()">Variablen anzeigen</button>
-    </div>
-</div>
+    <!-- <button type="button" class="btn btn-wipf-default" (click)="save()">Speichern</button> -->
+    <!-- <button type="button" class="btn btn-wipf-default" (click)="selectPage()">Zeigen</button> -->
+</ng-scrollbar>
+
+<button type="button" class="btn btn-danger inbutton" (click)="deletePage()">Löschen</button>
+
+<button type="button" class="btn btn-wipf-default" (click)="saveAndSelectPage()">Speichern und Zeigen</button>

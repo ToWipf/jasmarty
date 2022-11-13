@@ -1,7 +1,7 @@
 <div>
-    <h3>ToDo Liste</h3>
+    <h3>Liste</h3>
     <div class="todolist">
-        <perfect-scrollbar class="pscrollConfigline">
+        <ng-scrollbar class="pscrollConfigline" track="horizontal">
             <ng-container *ngIf="bShowWarning">
                 Es ist ein Fehler aufgetreten!
                 <input type="checkbox" [(ngModel)]="bShowWarning">
@@ -49,7 +49,7 @@
                 </div>
 
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
 
         <ng-scrollbar class="pscroll">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">

@@ -9,40 +9,37 @@
                 Jasmarty Aktivieren
             </mat-checkbox>
             <hr>
-            <perfect-scrollbar style="max-width: 500px; max-height: 400px;">
-                <div class="form-group">
-                    <ng-container *ngIf="jaconfig">
+            <div class="form-group">
+                <ng-container *ngIf="jaconfig">
 
-                        <mat-form-field appearance="fill">
-                            <mat-label>Typ</mat-label>
-                            <mat-select [(value)]="jaconfig.type">
-                                <mat-option>None</mat-option>
-                                <mat-option value="LCD_2004">2004</mat-option>
-                                <mat-option value="LCD_12864">12864</mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Typ</mat-label>
+                        <mat-select [(value)]="jaconfig.type">
+                            <mat-option>None</mat-option>
+                            <mat-option value="LCD_2004">2004</mat-option>
+                            <mat-option value="LCD_12864">12864</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-                        <span class="title">Port</span>
-                        <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
+                    <span class="title">Port</span>
+                    <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
 
-                        <span class="title">Baud Rate</span> (9600, 57600)
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
+                    <span class="title">Baud Rate</span> (9600, 57600)
+                    <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
 
-                        <span class="title">Refesh Rate</span>
-                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
+                    <span class="title">Refesh Rate</span>
+                    <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
 
-                        <ng-container *ngIf="jaconfig.type==='LCD_2004'">
-                            <span class="title">Breite</span>
-                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
-                            
-                            <span class="title">Höhe</span>
-                            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
-                        </ng-container>
+                    <ng-container *ngIf="jaconfig.type==='LCD_2004'">
+                        <span class="title">Breite</span>
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.width" placeholder="Bitte eintragen">
 
-
+                        <span class="title">Höhe</span>
+                        <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.height" placeholder="Bitte eintragen">
                     </ng-container>
-                </div>
-            </perfect-scrollbar>
+
+                </ng-container>
+            </div>
             <button type="button" class="btn btn-wipf-default" (click)="save()">Speichern und Neu laden</button>
         </div>
         <div class="gridCol">
@@ -56,13 +53,11 @@
         <div class="gridCol">
             <h4>Hauptfunktionen</h4>
             <hr>
-            <perfect-scrollbar style="max-width: 500px; max-height: 500px;">
-                <button type="button" class="btn btn-wipf-default" (click)="refreshOn()">Refesh LCD An</button>
-                <button type="button" class="btn btn-wipf-default" (click)="refreshOff()">Refesh LCD Aus</button>
-                <hr>
-                <button type="button" class="btn btn-wipf-default" (click)="start()">Starte Verbindung</button>
-                <button type="button" class="btn btn-wipf-default" (click)="stop()">Stoppe Verbindung</button>
-            </perfect-scrollbar>
+            <button type="button" class="btn btn-wipf-default" (click)="refreshOn()">Refesh LCD An</button>
+            <button type="button" class="btn btn-wipf-default" (click)="refreshOff()">Refesh LCD Aus</button>
+            <hr>
+            <button type="button" class="btn btn-wipf-default" (click)="start()">Starte Verbindung</button>
+            <button type="button" class="btn btn-wipf-default" (click)="stop()">Stoppe Verbindung</button>
         </div>
     </div>
 </div>
