@@ -30,7 +30,7 @@
                         <mat-select [(value)]="selectedTypeFilter" (selectionChange)="applyFilterByType()">
                             <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
                             <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': idToColor(itemEvent.id)}">
-                                {{itemEvent.typename}} {{itemEvent.id}}
+                                {{itemEvent.typename}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -54,7 +54,7 @@
         </ng-scrollbar>
 
         <ng-scrollbar class="pscroll">
-            <table mat-table [dataSource]="dataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>

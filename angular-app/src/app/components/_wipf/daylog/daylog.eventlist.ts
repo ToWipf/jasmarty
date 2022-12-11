@@ -105,12 +105,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public applyFilter() {
         this.serviceWipf.delay(200).then(() => {
             this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
+            this.eventlistDataSource.sort = this.sortEvent; // TODO: für Filtern nötig?
         });
     }
 
     public applyFilterByType() {
-        let eventlistToShow: DaylogEvent[] = [];
         if (this.filterEventType != undefined) {
+            let eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {
                 if (event.typ == this.filterEventType.id.toString()) {
@@ -118,9 +119,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
                 }
             });
             this.eventlistDataSource = new MatTableDataSource(eventlistToShow);
+            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
         } else {
             // Wie Normal -> alles anzeigen
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
+            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
         }
 
     }

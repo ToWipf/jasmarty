@@ -105,18 +105,22 @@ export class ListeComponent implements OnInit {
   }
 
   public applyFilterByType() {
-    let eventlistToShow: ListeEntry[] = [];
     if (this.selectedTypeFilter != undefined) {
+      let listToShow: ListeEntry[] = [];
 
       this.fullListe.forEach((event: ListeEntry) => {
         if (event.typeid == this.selectedTypeFilter.id) {
-          eventlistToShow.push(event);
+          listToShow.push(event);
         }
       });
-      this.dataSource = new MatTableDataSource(eventlistToShow);
+      this.dataSource = new MatTableDataSource(listToShow);
+      this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
     } else {
       // Wie Normal -> alles anzeigen
       this.dataSource = new MatTableDataSource(this.fullListe);
+      this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
     }
 
   }
