@@ -147,7 +147,7 @@ export interface KeyValEntry {
 export interface ListeEntry {
   id?: number;
   data?: string;
-  typeid?: number|string;
+  typeid?: number;
   date?: string;
 }
 

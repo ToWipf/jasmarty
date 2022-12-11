@@ -34,22 +34,22 @@ export class ListeComponent implements OnInit {
     this.showAllTableColumns();
   }
 
-  public idToColor(id: string): string {
-    if (id === '1')
+  public idToColor(id: number): string {
+    if (id === 1)
       return "#fc5f53";
-    if (id === '2')
+    if (id === 2)
       return "#fcc653";
-    if (id === '3')
+    if (id === 3)
       return "#99fc53";
-    if (id === '4')
+    if (id === 4)
       return "#53fca2";
-    if (id === '5')
+    if (id === 5)
       return "#53ddfc";
-    if (id === '6')
+    if (id === 6)
       return "#5e53fc";
-    if (id === '7')
+    if (id === 7)
       return "#be53fc";
-    if (id === '8')
+    if (id === 8)
       return "#fc53be";
     else
       return "green";
@@ -94,6 +94,7 @@ export class ListeComponent implements OnInit {
       this.dataSource.filter = this.sFilter.trim();
       this.applyFilter();
       warten.close();
+      this.applyFilterByType();
     });
   }
 
@@ -124,7 +125,7 @@ export class ListeComponent implements OnInit {
     let n: ListeEntry = {};
     n.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     n.data = "";
-    n.typeid = "1";
+    n.typeid = 1;
     this.openDialog(n);
   }
 

@@ -62,7 +62,8 @@ export class FileVwComponent implements OnInit {
   }
 
   public downloadItem(name: string): void {
-    window.open('file/download/' + name);
+    // TODO: Auth
+    window.open('../file/download/' + name);
   }
 
   // public uploadFile(files: FileList) {

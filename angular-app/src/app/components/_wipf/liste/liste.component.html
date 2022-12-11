@@ -29,7 +29,9 @@
                         <mat-label>Event Typ Filtern</mat-label>
                         <mat-select [(value)]="selectedTypeFilter" (selectionChange)="applyFilterByType()">
                             <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
-                            <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent">{{itemEvent.typename}}</mat-option>
+                            <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': idToColor(itemEvent.id)}">
+                                {{itemEvent.typename}} {{itemEvent.id}}
+                            </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
