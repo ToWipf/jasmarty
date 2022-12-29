@@ -80,6 +80,7 @@ export class ListeComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeTypeForFilter = resdata;
+      this.listeTypeForFilter.push({ id: -1, typename: "crypt" });
       warten.close();
     });
   }
@@ -176,6 +177,11 @@ export class ListeComponent implements OnInit {
     });
   }
 
+  public decryptItem(item: ListeEntry, key: String){
+    console.log(item);
+    console.log(key);
+  }
+
 }
 
 @Component({
@@ -199,6 +205,7 @@ export class ListeComponentDialogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeType = resdata;
+      this.listeType.push({ id: -1, typename: "crypt" });
       warten.close();
     });
   }

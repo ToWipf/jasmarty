@@ -119,7 +119,7 @@
                                     <!-- <button class="btn btn-wipf-default" (click)="newEvent(element)">
                                     Event erstellen
                                 </button> -->
-                                    <button class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
+                                    <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
                                         <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                                     </button>
                                 </td>

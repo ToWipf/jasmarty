@@ -11,6 +11,7 @@ export class DebugSeiteComponent implements OnInit {
 
   public sSQL_IN: string;
   public sSQL_OUT: string;
+  public uhr: string;
 
   public testData = [
     { name: "ABC", value: 2 },
@@ -21,6 +22,7 @@ export class DebugSeiteComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.uhr = new Date(Date.now()).toISOString();
   }
 
   public doSQL(): void {

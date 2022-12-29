@@ -163,6 +163,7 @@ public class TeleMenue {
 				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
 						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
+			case "return":
 			case "response":
 				return t.getMessage();
 			case "izi":

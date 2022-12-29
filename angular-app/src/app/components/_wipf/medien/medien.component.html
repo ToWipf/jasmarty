@@ -94,7 +94,7 @@
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                         </button>
-                        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+                        <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                         </button>
                     </td>
