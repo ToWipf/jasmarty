@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from '../dialog/main.dialog';
+import { ElementSetServerDialog } from '../dialog/setServer.dialog';
 import { ServiceWipf } from './serviceWipf';
 
 @Injectable({
@@ -26,10 +27,6 @@ export class ServiceRest {
     localStorage.setItem('auth', this.serviceWipf.crypt(sAuth, "TODO:KEY"));
   }
 
-  public clearLogin(): void {
-    localStorage.removeItem('auth');
-  }
-
   private setLogin(base64Auth: string) {
     this.httpOptions = {
       headers: new HttpHeaders({
@@ -38,13 +35,23 @@ export class ServiceRest {
     };
   }
 
-  public sethostExpect(): void {
+  public getHostExpectFromUrl(): string {
     let sHref = window.location.href;
     let sTmp = sHref.substring(0, sHref.lastIndexOf('/'));
-    const sHostExp = sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
-    // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
-    if (sHostExp.length > 10) {
-      this.sHost = sHostExp;
+    return sTmp.substring(0, sTmp.lastIndexOf('/') + 1);
+  }
+
+  public setHostExpect(): void {
+    // den letzen Apihost laden
+    let apihost = localStorage.getItem("apihost");
+    if (!apihost) {
+      let sHostExp = this.getHostExpectFromUrl();
+      // Wenn keine sinvolle "Domain" vorhanden ist, nichts setzen
+      if (sHostExp.length > 10) {
+        this.sHost = sHostExp;
+      }
+    } else {
+      this.sHost = apihost;
     }
 
     // den letzen auth laden, wenn vorhanden
@@ -55,12 +62,20 @@ export class ServiceRest {
     }
   }
 
+  public doLogout(): void {
+    this.setLoginData("", "");
+    this.setLoginOk("false");
+    localStorage.removeItem('auth');
+    localStorage.removeItem('apihost');
+  }
+
   public gethost(): string {
     return this.sHost;
   }
 
   public sethost(host: string): void {
     this.sHost = host;
+    localStorage.setItem("apihost", host);
   }
 
   public getLoginOk(): string {
@@ -69,6 +84,25 @@ export class ServiceRest {
 
   public setLoginOk(b: string): void {
     this.bLoginOk = b;
+  }
+
+  public openSetServerDialog(): Promise<boolean> {
+    return new Promise(resolve => {
+      const dialogRef = this.dialog.open(ElementSetServerDialog, {
+        width: '250px',
+        height: '300px',
+        data: this.gethost(),
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.sethost(result);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -52,7 +52,9 @@ public class RndTask {
 							// Nur Tagsüber seinden
 							sendAndReceive.sendRndEventToAdmin();
 						}
-						wipf.sleep((wipf.getRandomInt(15) + 2) * 950 * 60 * 10 * 3);
+						// Alt
+						// wipf.sleep((wipf.getRandomInt(15) + 2) * 950 * 60 * 10 * 3);
+						wipf.sleep((wipf.getRandomInt(8) + 4) * 950 * 60 * 10 * 3);
 					}
 				}
 			});

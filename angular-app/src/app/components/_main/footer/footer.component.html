@@ -1,16 +1,16 @@
 <footer>
     <div class="wipf-footer text-center">
-        <ng-container *ngIf="bCantLoad">
-            Server nicht erreichbar - {{sAppVersion}} -
-            <span class="alertBox" (click)="openSetServer()">Server einstellen</span>
-            <span class="alertBox" (click)="getVersion()" *ngIf="bCantLoad">Neu laden</span>
+        <ng-container *ngIf="!(serviceVersion.getBackendVersion())">
+            Server nicht erreichbar - {{serviceVersion.getFrontendVersion()}} -
+            <span class="alertBox" (click)="rest.openSetServerDialog()">Server einstellen</span>
+            <span class="alertBox" (click)="serviceVersion.reloadApp()">Neu laden</span>
         </ng-container>
 
-        <ng-container *ngIf="!bCantLoad">
-            <span *ngIf="bOldVersionWarn" class="alertBox">
-                Versionen passen nicht, Seite bitte neu Laden. Java: {{sJavaVersion}} Angular: {{sAppVersion}}
+        <ng-container *ngIf="!(!serviceVersion.getBackendVersion())">
+            <span *ngIf="this.serviceVersion.checkVersions()" class="alertBox" (click)="serviceVersion.reloadApp()">
+                Versionen passen nicht, Seite bitte neu Laden. Backend: {{serviceVersion.getBackendVersion()}} Frontend: {{serviceVersion.getFrontendVersion()}}
             </span>
-            <span *ngIf="!bOldVersionWarn">Wipf | Version: {{sJavaVersion}}</span>
+            <span *ngIf="!this.serviceVersion.checkVersions()">Wipf | Version: {{serviceVersion.getBackendVersion()}}</span>
         </ng-container>
     </div>
 </footer>

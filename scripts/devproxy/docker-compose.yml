@@ -4,5 +4,6 @@ services:
     image: haproxy
     ports:
       - 0.0.0.0:80:80
+      - 0.0.0.0:7777:80
     volumes:
       - ./:/usr/local/etc/haproxy/

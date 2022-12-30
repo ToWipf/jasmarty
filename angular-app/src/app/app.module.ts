@@ -17,7 +17,6 @@ import { DynpagesComponent, DynpagesComponentDialogComponent } from './component
 import { DynpageShowComponent } from './components/_wipf/dynpageShow/dynpageShow.component';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
-import { FooterComponent, FooterComponentSetServerDialog } from './components/_main/footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty12864Pages/jasmarty12864Pages.component';
@@ -65,7 +64,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -81,6 +79,14 @@ import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats
 import { LoginComponent } from './components/login/login.component';
 import { EisenbahnMitlesenComponent } from './components/_eisenbahn/mitlesen/eisenbahn-mitlesen.component';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ElementSetServerDialog } from './dialog/setServer.dialog';
+import { FooterComponent } from './components/_main/footer/footer.component';
+import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie.dialog';
+import { AppRoutingModule } from './app-routing.module';
+import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
+import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
+import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
 
 @NgModule({
     declarations: [
@@ -106,7 +112,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         MedienComponent,
         MedienComponentDialog,
         FooterComponent,
-        FooterComponentSetServerDialog,
+        ElementSetServerDialog,
         Jasmarty12864PagesComponent,
         Jasmarty12864PanelComponent,
         JasmartyActionsComponent,
@@ -131,8 +137,16 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         WipfUserVwComponent,
         WipfUserVWComponentDialogComponent,
         LoginComponent,
+        CookieDialogComponent,
+        CookieAddDialogComponent,
+        MainmenueComponent,
+        ListeComponent,
+        ListeComponentDialogComponent,
+        ListeTypeComponentDialogTypeListComponent,
+        ListeTypeComponentDialogTypeComponent,
     ],
     imports: [
+        NgxChartsModule,
         A11yModule,
         BrowserAnimationsModule,
         BrowserModule,
@@ -182,11 +196,11 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
         NgbModule,
         NgScrollbarModule,
         NgxPhotoEditorModule,
-        PerfectScrollbarModule,
         PortalModule,
         ReactiveFormsModule,
         ScrollingModule,
         SidebarModule.forRoot(),
+        AppRoutingModule,
     ],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
     bootstrap: [AppComponent]

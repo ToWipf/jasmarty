@@ -1,49 +1,66 @@
 <div>
     <div class="gridRow">
         <div class="gridCol">
-            <h3>Lokaler Chat</h3>
+            <ng-scrollbar class="pscroll">
 
-            <div class="gridRow">
-                <div class="gridCol">
-                    <div mat-dialog-content>
-                        <mat-form-field>
-                            <mat-label>Lokale Chat Nachricht</mat-label>
-                            <textarea (keyup.enter)="sendLocal()" [(ngModel)]="tMsg.message" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-                        </mat-form-field>
+                <h3>Lokaler Chat</h3>
+
+                <div class="gridRow">
+                    <div class="gridCol">
+                        <div mat-dialog-content>
+                            <mat-form-field>
+                                <mat-label>Lokale Chat Nachricht</mat-label>
+                                <textarea (keyup.enter)="sendLocal()" [(ngModel)]="tMsg.message" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+                            </mat-form-field>
+                        </div>
+
+                        <button class="btn btn-wipf-default" (click)="sendLocal()">Lokaler Chat Senden</button>
+                        <pre>{{textOut}}</pre>
                     </div>
                 </div>
-                <div class="gridCol">
-                    <button class="btn btn-wipf-default" (click)="sendLocal()">Lokaler Chat Senden</button>
-                    <pre>{{textOut}}</pre>
-                </div>
-            </div>
-            <hr>
+                <hr>
 
-            <h4>Telegram Nachricht senden:</h4>
-            <div class="gridRow">
-                <div class="gridCol">
-                    <mat-form-field>
-                        <mat-label>Nachrichten Text</mat-label>
-                        <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-                    </mat-form-field>
-                </div>
-                <div class="gridCol">
-                    <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
-                </div>
-            </div>
+                <h3>Telegram Nachricht senden:</h3>
+                <div class="gridRow">
+                    <div class="gridCol">
+                        <div mat-dialog-content>
+                            <mat-form-field>
+                                <mat-label>Nachrichten Text</mat-label>
+                                <textarea [(ngModel)]="sTextOnlineTelegram" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+                            </mat-form-field>
+                        </div>
 
+                        <button type="button" class="btn btn-wipf-default" (click)="sendMsgToGroup()">Nachricht an Admin senden</button>
+                    </div>
+                </div>
+            </ng-scrollbar>
         </div>
 
         <div class="gridCol">
             <h3>User Cache</h3>
 
             <div class="configline">
+                <div class="iconbox">
+                    Neu Laden:
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+                        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+
+                    <br>
+                    Zeige Alles:
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
+                        <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
+                        <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+                    </button>
+                </div>
                 <div class="box">
                     Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
                 </div>
             </div>
 
-            <ng-scrollbar class="pscroll">
+            <ng-scrollbar class="pscroll" track="all">
                 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
                     <ng-container matColumnDef="chatid">

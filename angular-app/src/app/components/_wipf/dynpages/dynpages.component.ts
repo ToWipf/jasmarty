@@ -20,7 +20,7 @@ export class DynpagesComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['id', 'html', 'script', 'style', 'rechte', 'live', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
@@ -84,9 +84,10 @@ export class DynpagesComponent implements OnInit {
     const edititem: DynpageEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(DynpagesComponentDialogComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: DynpageEntry) => {

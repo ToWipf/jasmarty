@@ -8,6 +8,8 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.daylog.DaylogDay;
 import org.wipf.jasmarty.datatypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -77,7 +79,7 @@ public class DaylogHome {
 			sb.append("\n\n");
 		}
 
-		if (tiGestern.nAnzahlEvents <= 4) {
+		if (tiGestern.nAnzahlEvents < 4) {
 			sb.append(tiGestern.sInfo);
 		}
 
@@ -105,7 +107,7 @@ public class DaylogHome {
 	 */
 	public String getAllUniqueEventTextByTyp(Telegram t) {
 		try {
-			List<DaylogEvent> events = daylogEventDB.getByTypId(t.getMessageIntPart(1));
+			List<DaylogEvent> events = daylogEventDB.getAllByTypId(t.getMessageIntPart(1).toString());
 
 			List<String> elist = new LinkedList<String>();
 			for (DaylogEvent ev : events) {
@@ -166,6 +168,25 @@ public class DaylogHome {
 		}
 		ti.sInfo = sb.toString();
 		return ti;
+	}
+
+	/**
+	 * mit Datumsauflösung
+	 * 
+	 * @param nDateId
+	 * @return
+	 * @throws SQLException
+	 */
+	public JSONArray getAllByTypIdAsJson(String sIds) throws SQLException {
+		List<DaylogEvent> l = daylogEventDB.getAllByTypId(sIds);
+		JSONArray ja = new JSONArray();
+		for (DaylogEvent d : l) {
+			JSONObject jo = d.toJson();
+			// Das Datum auslösen und mitgeben
+			jo.put("date", daylogDayDB.getById(d.getDateId()).getDate());
+			ja.put(jo);
+		}
+		return ja;
 	}
 
 }

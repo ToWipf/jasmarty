@@ -20,7 +20,7 @@ export class RndEventComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['id', 'eventtext', 'active', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
@@ -83,9 +83,10 @@ export class RndEventComponent implements OnInit {
     const edititem: RndEvent = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(RndEventComponentDialogComponent, {
-      width: '350px',
-      height: '390px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: RndEvent) => {

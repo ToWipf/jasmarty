@@ -36,7 +36,7 @@ export class ServiceWipf {
   }
 
   /**
-   * Nummer zu String mit führender Null
+   * Nummer zu string mit führender Null
    * 
    * @param num 
    * @param size 
@@ -73,5 +73,25 @@ export class ServiceWipf {
       return bf.trimZeros(bf.decrypt(str));
     }
   }
+
+  /**
+   * prüfen auf type Nummer
+   * 
+   * @param n 
+   * @returns 
+   */
+  public isNumber(n:any): boolean {
+    return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
+  }
+  
+  /**
+   * 
+   * @param str 
+   * @returns 
+   */
+  public startsWithNumber(str: string): boolean {
+    return /^\d/.test(str);
+  }
+
 
 }

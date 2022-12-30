@@ -66,7 +66,7 @@
     <hr>
     <h3>Inhalt</h3>
 
-    <perfect-scrollbar class="pscroll">
+    <ng-scrollbar class="pscroll" track="all">
         <div *ngFor="let dy of lcdDescription.dynamic; let i = index" class="dyConfig">
 
             <mat-form-field appearance="fill">
@@ -129,7 +129,7 @@
 
             <button (click)="delDynLine(i)">Zeile Löschen</button>
         </div>
-    </perfect-scrollbar>
+    </ng-scrollbar>
 
 
 

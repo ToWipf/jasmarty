@@ -20,12 +20,12 @@ export class DayLogComponent implements OnInit {
   public daylistDataSource;
   public userid = 0;
   public daylistDisplayedColumns: string[] = [];
-  public sFilterDay: String = "";
-  public sFilterTextEvent: String = "";
+  public sFilterDay: string = "";
+  public sFilterTextEvent: string = "";
   public bShowWarning: boolean = false;
   public daylogTypes: DaylogType[] = [];
   public dateForLoad: DaylogDay = {};
-  public bShowAllTable: boolean = true;
+  public bShowAllTableColumns: boolean = true;
   public bShowDayTable: boolean = true;
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: any;
@@ -36,7 +36,7 @@ export class DayLogComponent implements OnInit {
     this.dateForLoad = { date: "" };
     this.loadDays();
     this.loadDaylogTypes();
-    this.showAllTable();
+    this.showAllTableColumns();
     this.loadTypeListForEventFilter();
     this.bShowDayTable = true;
   }
@@ -55,9 +55,9 @@ export class DayLogComponent implements OnInit {
     this.dateForLoad = ddl;
   }
 
-  public showAllTable(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'userid', 'button'];
     } else {
       this.daylistDisplayedColumns = ['day', 'date', 'tagestext', 'button'];
@@ -151,9 +151,10 @@ export class DayLogComponent implements OnInit {
     const edititem: DaylogDay = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(DaylogComponentDialogDayComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
@@ -164,7 +165,7 @@ export class DayLogComponent implements OnInit {
   }
 
   public loadAllEventsViaVar(): void {
-    let d: DaylogDay = { date: "LOADALL" };
+    let d: DaylogDay = { date: "Alle-Events" };
     this.bShowDayTable = false;
     this.dateForLoad = d;
   }
@@ -198,6 +199,10 @@ export class DaylogComponentDialogDayComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  public setText(sIn: string): void {
+    this.data.tagestext = sIn;
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +219,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'button'];
-  public sFilter: String = "";
+  public sFilter: string = "";
   public bShowWarning: boolean = false;
   public daylogTypeDataSource;
   public typelist: DaylogType[] = [];
@@ -238,9 +243,10 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(DaylogComponentDialogTypeComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogEvent) => {

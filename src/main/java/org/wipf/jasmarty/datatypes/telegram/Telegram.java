@@ -85,7 +85,7 @@ public class Telegram {
 		}
 
 		if (jo.has("message")) {
-			this.setMessage(jo.getString("message"));
+			this.setMessage(jo.getString("message").trim());
 		}
 
 		if (jo.has("from")) {
@@ -97,7 +97,7 @@ public class Telegram {
 		}
 
 		if (jo.has("antwort")) {
-			this.setAntwort(jo.getString("antwort"));
+			this.setAntwort(jo.getString("antwort").trim());
 		}
 
 		if (jo.has("options")) {

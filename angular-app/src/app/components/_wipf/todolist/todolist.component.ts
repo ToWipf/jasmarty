@@ -26,17 +26,17 @@ export class TodolistComponent implements OnInit {
   public bLater: boolean = false;
   public bZitat: boolean = false;
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
-  public bShowAllTable: boolean = true;
+  public sFilter: string = "";
+  public bShowAllTableColumns: boolean = true;
 
   ngOnInit() {
     this.load();
-    this.showAllTable();
+    this.showAllTableColumns();
   }
 
-  public showAllTable(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['id', 'data', 'date', 'editby', 'button'];
     } else {
       this.displayedColumns = ['id', 'data', 'button'];
@@ -120,9 +120,10 @@ export class TodolistComponent implements OnInit {
     const edititem: TodoEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(TodolistComponentDialogComponent, {
-      width: '350px',
-      height: '420px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: TodoEntry) => {

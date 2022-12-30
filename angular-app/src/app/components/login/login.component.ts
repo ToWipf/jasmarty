@@ -20,7 +20,6 @@ export class LoginComponent {
         this.sUsername = "";
         this.sPasswort = "";
         this.rest.setLoginOk("true");
-        //window.location.reload(); TODO: neuladen des Menüs
       } else {
         this.logoff();
       }
@@ -28,9 +27,7 @@ export class LoginComponent {
   }
 
   public logoff(): void {
-    this.rest.setLoginData("", "");
-    this.rest.setLoginOk("false");
-    this.rest.clearLogin();
+    this.rest.doLogout();
   }
 
 }

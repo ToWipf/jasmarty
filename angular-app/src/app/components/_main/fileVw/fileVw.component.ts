@@ -28,7 +28,7 @@ export class FileVwComponent implements OnInit {
   public load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
-    this.rest.get('file/getAll').then((resdata: String[]) => {
+    this.rest.get('file/getAll').then((resdata: string[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
@@ -43,7 +43,7 @@ export class FileVwComponent implements OnInit {
     });
   }
 
-  public deleteItem(name: String): void {
+  public deleteItem(name: string): void {
     let item: any = {};
     item.infotext = "Wirklich löschen? \n" + name;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
@@ -61,8 +61,9 @@ export class FileVwComponent implements OnInit {
     });
   }
 
-  public downloadItem(name: String): void {
-    window.open('file/download/' + name);
+  public downloadItem(name: string): void {
+    // TODO: Auth
+    window.open('../file/download/' + name);
   }
 
   // public uploadFile(files: FileList) {

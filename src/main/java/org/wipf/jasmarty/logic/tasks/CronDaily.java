@@ -1,6 +1,11 @@
 package org.wipf.jasmarty.logic.tasks;
 
+import static java.time.DayOfWeek.SUNDAY;
+
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -42,7 +47,14 @@ public class CronDaily {
 		LOGGER.info("Starte DailyTask");
 		try {
 			if (wipfConfig.isAppActive("telegram")) {
-				tSendAndReceive.sendDaylyInfo();
+
+				// Nur Sonntags
+				Instant instant = Instant.now();
+				ZonedDateTime zdt = instant.atZone(ZoneId.of("Europe/Berlin"));
+				if (zdt.getDayOfWeek() == SUNDAY) {
+					tSendAndReceive.sendDaylyInfo();
+				}
+
 				punkteVW.pluspunkt();
 				punkteVW.appendNochSpiel(5);
 				appGrafana.deletePictureCache();

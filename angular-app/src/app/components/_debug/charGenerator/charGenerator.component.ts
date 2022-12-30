@@ -20,7 +20,6 @@ export class CharGeneratorComponent implements OnInit {
   }
 
   public setBlock(x: number, y: number): void {
-    console.log(x, y);
     this.screen[x][y] = !this.screen[x][y];
     this.get();
   }

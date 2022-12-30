@@ -1,8 +1,8 @@
 <div>
-    <h3>Daylog</h3>
+    <h3>Daylog {{dateForLoad?.date}}</h3>
 
     <div class="list">
-        <perfect-scrollbar class="pscrollConfigline">
+        <ng-scrollbar class="pscrollConfigline" track="horizontal">
             <ng-container *ngIf="bShowWarning">
                 Es ist ein Fehler aufgetreten!
                 <input type="checkbox" [(ngModel)]="bShowWarning" />
@@ -17,10 +17,10 @@
 
                     <br>
                     Zeige Alles:
-                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
                         <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
-                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTable" (click)="showAllTable()">
+                    <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
                         <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
                 </div>
@@ -56,13 +56,13 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Event Typ Filtern</mat-label>
                         <mat-select [(value)]="selectedEventTypeFilter">
-                            <mat-option [value]="undefined">Kein Filter</mat-option>
+                            <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
                             <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent">{{itemEvent.type}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
             </div>
-        </perfect-scrollbar>
+        </ng-scrollbar>
 
         <ng-scrollbar class="pscrollTabellen" track="horizontal">
             <div class="gridRow_ohne_rand">
@@ -119,7 +119,7 @@
                                     <!-- <button class="btn btn-wipf-default" (click)="newEvent(element)">
                                     Event erstellen
                                 </button> -->
-                                    <button class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
+                                    <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
                                         <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                                     </button>
                                 </td>
@@ -132,7 +132,7 @@
                 </div>
                 <div class="gridCol">
                     <ng-scrollbar class="pscroll">
-                        <app-daylog-eventlist [(filterEventType)]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTable]="bShowAllTable" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
+                        <app-daylog-eventlist [filterEventType]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTableColumns" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
                     </ng-scrollbar>
                 </div>
             </div>

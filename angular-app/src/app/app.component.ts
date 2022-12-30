@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MatDrawer } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Jaconfig } from './datatypes';
-import { ServiceRest } from './service/serviceRest';
 
 const ICON_BOX = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 5.75 3 A 1.0001 1.0001 0 0 0 4.8867188 3.4960938 L 3.1367188 6.4960938 A 1.0001 1.0001 0 0 0 3 7 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 7 A 1.0001 1.0001 0 0 0 20.863281 6.4960938 L 19.113281 3.4960938 A 1.0001 1.0001 0 0 0 18.25 3 L 5.75 3 z M 6.3242188 5 L 17.675781 5 L 18.841797 7 L 5.1582031 7 L 6.3242188 5 z M 5 9 L 19 9 L 19 19 L 5 19 L 5 9 z M 9 11 L 9 13 L 15 13 L 15 11 L 9 11 z"/></svg>`;
 const ICON_CANCEL = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.430123 16.430123 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 7.5698774 7.5698774 4 12 4 z M 8.7070312 7.2929688 L 7.2929688 8.7070312 L 10.585938 12 L 7.2929688 15.292969 L 8.7070312 16.707031 L 12 13.414062 L 15.292969 16.707031 L 16.707031 15.292969 L 13.414062 12 L 16.707031 8.7070312 L 15.292969 7.2929688 L 12 10.585938 L 8.7070312 7.2929688 z"/></svg>`;
@@ -28,14 +25,15 @@ const ICON_TRASH = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24"
 const ICON_UNAVAILABLE = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 13.85307 19.369262 15.55056 18.318359 16.904297 L 7.0957031 5.6816406 C 8.4494397 4.6307377 10.14693 4 12 4 z M 5.6816406 7.0957031 L 16.904297 18.318359 C 15.55056 19.369262 13.85307 20 12 20 C 7.5698774 20 4 16.430123 4 12 C 4 10.14693 4.6307377 8.4494397 5.6816406 7.0957031 z"/></svg>`;
 const ICON_USER = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12 2 C 8 2 2 5 2 20 L 6.7285156 20 C 8.1385798 21.240809 9.9815281 22 12 22 C 14.018472 22 15.86142 21.240809 17.271484 20 L 22 20 C 22 5 16 2 12 2 z M 12 4 C 13.669 4 16.871734 4.75025 18.677734 10.03125 C 17.967734 9.39025 17.029 9 16 9 L 8 9 C 6.971 9 6.0322656 9.39025 5.3222656 10.03125 C 7.1282656 4.75025 10.331 4 12 4 z M 8 11 L 16 11 C 17.105 11 18 11.895 18 13 L 18 14 C 18 17.325562 15.325562 20 12 20 C 8.674438 20 6 17.325562 6 14 L 6 13 C 6 11.895 6.895 11 8 11 z"/></svg>`;
 const ICON_DOWNLOAD = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M 3.7766042,21.11227 C 3.1643115,20.873611 3.0445709,20.26103 3.0445709,17.367257 V 14.699596 H 4.3101959 5.57582 v 2.082816 2.082818 h 6.468751 6.46875 v -2.082818 -2.082816 h 1.265626 1.265624 v 2.667661 c 0,2.949382 -0.115617,3.508608 -0.77579,3.752383 C 19.79595,21.294236 4.2255949,21.287278 3.7766042,21.11234 Z M 10.018002,12.175231 C 8.9669901,10.937066 8.1070711,9.8615112 8.1070711,9.7851115 c 0,-0.082557 0.4553297,-0.1389095 1.1224079,-0.1389095 h 1.122408 l 0.03777,-3.1754427 0.03776,-3.1754425 1.605901,-0.038831 c 1.190167,-0.028785 1.635573,0.00659 1.720505,0.1365781 0.06303,0.096477 0.115568,1.5121715 0.116751,3.1459877 l 0.0022,2.9705756 h 1.054687 c 0.707456,0 1.054688,0.052253 1.054688,0.158718 0,0.3605738 -3.57093,4.7580978 -3.863726,4.7580978 -0.104177,0 -1.049331,-1.013046 -2.100342,-2.251209 z"/></svg>`
+const ICON_UHR = `<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 9.5298616,23.725779 C 4.2533167,22.579415 0.5384587,18.244059 0.08781223,12.706611 -0.06987462,10.768987 0.35592594,8.7827757 1.3983137,6.5935776 3.3347976,2.5266351 8.2546178,-0.30679239 12.745496,0.05850647 18.257271,0.50684635 22.499827,4.1261982 23.755376,9.4511203 25.251161,15.794897 21.005949,22.364465 14.531073,23.725966 12.622985,24.127191 11.377289,24.12714 9.5298616,23.725779 Z M 15.50266,20.95418 c 2.451574,-0.939924 4.689553,-3.232346 5.58318,-5.719008 C 22.285637,11.896538 21.387464,7.9240721 18.842933,5.3151677 13.132952,-0.53926303 3.1670022,3.1481111 2.5461157,11.344948 c -0.3485953,4.602093 2.7548167,8.875324 7.2655551,10.004278 1.3538022,0.338827 4.3125302,0.13345 5.6909892,-0.395046 z m -0.521168,-6.023356 c -1.857971,-0.806321 -3.504799,-1.633097 -3.65963,-1.837292 -0.356881,-0.470651 -0.399404,-8.6498314 -0.04838,-9.305531 0.267036,-0.4988078 1.168603,-0.5795003 1.535598,-0.1374402 0.153918,0.1854064 0.270726,1.8218735 0.309088,4.3301483 l 0.06163,4.0321069 3.132832,1.361689 c 3.246209,1.410966 3.810123,1.833693 3.37432,2.529497 -0.434689,0.694025 -1.254553,0.524463 -4.705496,-0.973178 z"/></svg>`
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
-export class AppComponent implements OnInit {
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private rest: ServiceRest) {
+export class AppComponent {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
 
     iconRegistry.addSvgIconLiteral('box', sanitizer.bypassSecurityTrustHtml(ICON_BOX));
     iconRegistry.addSvgIconLiteral('cancel', sanitizer.bypassSecurityTrustHtml(ICON_CANCEL));
@@ -60,87 +58,6 @@ export class AppComponent implements OnInit {
     iconRegistry.addSvgIconLiteral('unavailable', sanitizer.bypassSecurityTrustHtml(ICON_UNAVAILABLE));
     iconRegistry.addSvgIconLiteral('user', sanitizer.bypassSecurityTrustHtml(ICON_USER));
     iconRegistry.addSvgIconLiteral('download', sanitizer.bypassSecurityTrustHtml(ICON_DOWNLOAD));
-  }
-
-  @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
-
-  public bTelegramActive: boolean = false;
-  public bJasmartyActive: boolean = false;
-  public bDevActive: boolean = false;
-  public bWipfActive: boolean = false;
-  public bEisenbahnMitlesenActive: boolean = false;
-  public jasmartyType: string;
-  public selectedSite: string = 'login';
-
-  ngOnInit(): void {
-    this.rest.sethostExpect();
-    this.getActiveModules();
-  }
-
-  public selectSite(s: string) {
-    this.drawer.toggle();
-    this.selectedSite = s;
-  }
-
-  public getActiveModules(): void {
-    this.bDevActive = false;
-
-    this.rest.getNoWartenDialog('basesettings/get/wipf').then((resdata: any) => {
-      // Weiteres nur laden, wenn das erste funktioniert
-      this.bWipfActive = resdata.active;
-
-      this.rest.getNoWartenDialog('basesettings/get/telegram').then((resdata: any) => {
-        this.bTelegramActive = resdata.active;
-      });
-
-      this.rest.getNoWartenDialog('basesettings/get/eisenbahn_mitlesen').then((resdata: any) => {
-        this.bEisenbahnMitlesenActive = resdata.active;
-      });
-
-      this.rest.getNoWartenDialog('basesettings/get/jasmarty').then((resdata: any) => {
-        this.bJasmartyActive = resdata.active;
-
-        if (this.bJasmartyActive) {
-          // Wenn Jasmarty true ist, den Typ holen
-          this.rest.getNoWartenDialog('lcd/config/get').then((resdata) => {
-            var jaconfig: Jaconfig = resdata;
-            this.jasmartyType = jaconfig.type;
-          });
-        }
-      });
-      this.rest.getNoWartenDialog('basesettings/get/debug').then((resdata: any) => {
-        this.bDevActive = resdata.active;
-        if (this.bDevActive) {
-          // Beim einschalten auch 12864 zeigen
-          this.showAll12864();
-        }
-      });
-    });
-  }
-
-  public showDevModulesBySecretKey(): void {
-    this.bDevActive = true
-    this.showAll12864();
-  }
-
-  public showDevModules(): void {
-    this.bDevActive = !this.bDevActive;
-  }
-
-  public showAll2004(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_2004";
-  }
-
-  public showAll12864(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_12864";
-  }
-
-  private showAll(): void {
-    this.bJasmartyActive = true;
-    this.bTelegramActive = true;
-    this.bWipfActive = true;
-    this.bEisenbahnMitlesenActive = true;
+    iconRegistry.addSvgIconLiteral('uhr', sanitizer.bypassSecurityTrustHtml(ICON_UHR));
   }
 }

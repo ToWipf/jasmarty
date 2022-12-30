@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatTableDataSource } from '@angular/material/table';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
+import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
   selector: 'app-settings',
@@ -13,14 +14,15 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./settings.component.less'],
 })
 export class SettingsComponent implements OnInit {
-  constructor( public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceVersion: ServiceVersion) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
   public displayedColumns: string[] = ['key', 'val', 'button'];
   public bShowWarning: boolean = false;
-  public sFilter: String = "";
+  public sFilter: string = "";
+  public bSicherheitNochmalKlicken: boolean = false;
 
   ngOnInit() {
     this.load();
@@ -79,9 +81,10 @@ export class SettingsComponent implements OnInit {
     const edititem: KeyValEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(SettingsComponentDialogComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: KeyValEntry) => {
@@ -90,11 +93,14 @@ export class SettingsComponent implements OnInit {
       }
     });
   }
-  
+
   public stopApp(): void {
-    this.rest.post('wipf/stop','').then((resdata: any) => {
-      console.log(resdata);
-    });
+    if (this.bSicherheitNochmalKlicken) {
+      this.rest.post('wipf/stop', '').then((resdata: any) => {
+      });
+    } else {
+      this.bSicherheitNochmalKlicken = true;
+    }
   }
 
 }

@@ -19,15 +19,17 @@ export class TelegramChatComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['chatid', 'msg', 'usercache', 'counter', 'button'];
+  public displayedColumns: string[] = [];
   public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
   public textOut: string = '-';
   public sFilter: string = "";
   public sTextOnlineTelegram: string;
   public sStatus: string;
+  public bShowAllTableColumns: boolean = true;
 
   ngOnInit(): void {
     this.load();
+    this.showAllTableColumns();
   }
 
   public load(): void {
@@ -41,6 +43,15 @@ export class TelegramChatComponent implements OnInit {
       this.applyFilter();
       warten.close();
     });
+  }
+
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
+      this.displayedColumns = ['chatid', 'msg', 'usercache', 'counter', 'button'];
+    } else {
+      this.displayedColumns = ['chatid', 'msg', 'counter'];
+    }
   }
 
   public applyFilter() {
@@ -77,7 +88,7 @@ export class TelegramChatComponent implements OnInit {
 
   public sendMsgToGroup(): void {
     if (this.sTextOnlineTelegram) {
-      //TODO: escape input String
+      //TODO: escape input string
       this.rest.post('telegram/sendMsgToAdmin/' + this.sTextOnlineTelegram, null).then((resdata) => {
         this.sStatus = resdata.toString();
         this.sTextOnlineTelegram = null;

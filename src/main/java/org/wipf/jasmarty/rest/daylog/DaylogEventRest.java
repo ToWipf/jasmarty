@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
+import org.wipf.jasmarty.logic.daylog.DaylogHome;
 
 /**
  * @author Wipf
@@ -28,11 +29,19 @@ public class DaylogEventRest {
 
 	@Inject
 	DaylogEventDB daylogEventDB;
+	@Inject
+	DaylogHome daylogHome;
 
 	@GET
 	@Path("get/{dateid}")
 	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
 		return Response.ok(daylogEventDB.getAsJson(nDateid).toString()).build();
+	}
+
+	@GET
+	@Path("getAllById/{ids}")
+	public Response getAllById(@PathParam("ids") String nIds) throws SQLException {
+		return Response.ok(daylogHome.getAllByTypIdAsJson(nIds).toString()).build();
 	}
 
 	@GET
@@ -43,7 +52,8 @@ public class DaylogEventRest {
 
 	@GET
 	@Path("getTextBySearchAndType/{search}/{type}")
-	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType) throws SQLException {
+	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType)
+			throws SQLException {
 		return Response.ok(daylogEventDB.getTextBySearchAndType(sSearch, sType)).build();
 	}
 
@@ -61,9 +71,9 @@ public class DaylogEventRest {
 	}
 
 	@GET
-	@Path("getStats")
-	public Response getStats() throws SQLException {
-		return Response.ok(daylogEventDB.getStats().toString()).build();
+	@Path("getStats/{types}")
+	public Response getStats(@PathParam("types") String sTypes) throws SQLException {
+		return Response.ok(daylogEventDB.getStats(sTypes).toString()).build();
 	}
 
 }

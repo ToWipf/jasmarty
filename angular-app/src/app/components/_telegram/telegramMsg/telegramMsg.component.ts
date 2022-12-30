@@ -19,17 +19,17 @@ export class TelegramMsgComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
-  public sFilter: String = "";
-  public bShowAllTable: Boolean = true;
+  public sFilter: string = "";
+  public bShowAllTableColumns: Boolean = true;
 
   ngOnInit() {
-    this.showAllTable();
+    this.showAllTableColumns();
     this.loadAllItems();
   }
 
-  public showAllTable(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
     } else {
       this.displayedColumns = ['message', 'antwort', 'edit'];
@@ -89,9 +89,10 @@ export class TelegramMsgComponent implements OnInit {
     edititem.from = "web";
 
     const dialogRef = this.dialog.open(TelegramMsgComponentDialogComponent, {
-      width: '350px',
-      height: '350px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: Telegram) => {

@@ -144,3 +144,14 @@ export interface KeyValEntry {
   val?: string;
 }
 
+export interface ListeEntry {
+  id?: number;
+  data?: string;
+  typeid?: number;
+  date?: string;
+}
+
+export interface ListeType {
+  id?: number;
+  typename?: string;
+}

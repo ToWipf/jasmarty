@@ -6,7 +6,6 @@ import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { empty } from 'rxjs';
 
 @Component({
     selector: 'app-daylog-eventlist',
@@ -16,16 +15,15 @@ import { empty } from 'rxjs';
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-    @Input("filterTextEvent") public sFilterTextEvent: String;
-    @Input("showAllTable") public bShowAllTable: Boolean;
+    @Input("filterTextEvent") public sFilterTextEvent: string;
+    @Input("showAllTableColumns") public bShowAllTableColumns: Boolean;
     @Input("dateForLoad") public dateForLoad: DaylogDay;
-    @Input("daylogTypes") public daylogTypes: DaylogType;
+    @Input("daylogTypes") public daylogTypes: DaylogType[];
     @Input("filterEventType") public filterEventType: DaylogType;
 
     @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
     public bShowWarning: boolean = false;
     public eventlistDataSource;
-    // public eventlistDataSource: MatTableDataSource<Component>;
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
 
@@ -36,8 +34,8 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             this.applyFilter();
         }
 
-        if (changes?.bShowAllTable) {
-            this.showAllTable();
+        if (changes?.bShowAllTableColumns) {
+            this.showAllTableColumns();
         }
 
         if (changes?.sFilterTextEvent) {
@@ -56,7 +54,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.eventlistDataSource = new MatTableDataSource(this.eventlist);
         this.eventlistDataSource.sort = this.sortEvent;
         this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
-        this.showAllTable;
+        this.showAllTableColumns;
     }
 
     private saveEvent(item: DaylogEvent): void {
@@ -74,7 +72,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         if (this.dateForLoad.date === "") {
             this.eventlistDataSource = new MatTableDataSource();;
         }
-        else if (this.dateForLoad.date === "LOADALL") {
+        else if (this.dateForLoad.date === "Alle-Events") {
             this.loadAllEvents();
             this.applyFilter();
         } else {
@@ -91,8 +89,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         const edititem: DaylogEvent = this.serviceWipf.deepCopy(item);
 
         const dialogRef = this.dialog.open(DaylogComponentDialogEventComponent, {
-            //width: '350px',
-            //height: '350px',
             data: edititem,
             autoFocus: true,
             minWidth: '300px',
@@ -109,12 +105,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public applyFilter() {
         this.serviceWipf.delay(200).then(() => {
             this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
+            this.eventlistDataSource.sort = this.sortEvent; // TODO: für Filtern nötig?
         });
     }
 
     public applyFilterByType() {
-        let eventlistToShow: DaylogEvent[] = [];
         if (this.filterEventType != undefined) {
+            let eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {
                 if (event.typ == this.filterEventType.id.toString()) {
@@ -122,16 +119,20 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
                 }
             });
             this.eventlistDataSource = new MatTableDataSource(eventlistToShow);
+            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
         } else {
             // Wie Normal -> alles anzeigen
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
+            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
         }
 
     }
 
-    public showAllTable(): void {
-        this.bShowAllTable = !this.bShowAllTable;
-        if (this.bShowAllTable) {
+    public showAllTableColumns(): void {
+        this.bShowAllTableColumns = !this.bShowAllTableColumns;
+        if (this.bShowAllTableColumns) {
             this.eventlistDisplayedColumns = ['typ', 'data', 'button'];
         } else {
             this.eventlistDisplayedColumns = ['id', 'dateid', 'typ', 'data', 'button'];
@@ -219,7 +220,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
 
     public daylogTypes: DaylogType[] = [];
-    public sListVorschlag: String[] = [];
+    public sListVorschlag: string[] = [];
     private bSucheAktiv: boolean = false;
 
     ngOnInit(): void {
@@ -249,8 +250,8 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadTextVorschlag(): void {
-        if (this.data.text.length > 0) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: String[]) => {
+        if (this.data.text.length > 1) {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {
@@ -258,12 +259,13 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         }
     }
 
-    onNoClick(): void {
-        this.dialogRef.close();
-    }
-
     public vorschlagToData(sItem: string): void {
         this.data.text = sItem;
         this.loadTextVorschlag();
     }
+
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
+
 }

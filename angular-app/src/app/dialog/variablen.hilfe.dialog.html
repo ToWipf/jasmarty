@@ -1,55 +1,51 @@
-<div style="display: flex">
-    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
-        <h4>Funktionen</h4>
-        <perfect-scrollbar class="pscroll">
-            <h5>Zeit</h5>
+<div class="dialogbox">
+    <h4>Funktionen</h4>
+    <ng-scrollbar class="pscroll" style="height: 400px;">
+        <h5>Zeit</h5>
 
-            <ul>
-                <li><code>$time(Parameter mit Trennzeichen)</code></li>
-                <li><code>$time(HH:mm:ss)</code></li>
-                <li><code>$time(dd MMMM yyyy)</code></li>
-                <li><code>$time(dd.MM.yy)</code></li>
-                <li><code>$time(EEEEE)</code></li>
-                <li><a target="blank"
-                        href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
-                </li>
-            </ul>
+        <ul>
+            <li><code>$time(Parameter mit Trennzeichen)</code></li>
+            <li><code>$time(HH:mm:ss)</code></li>
+            <li><code>$time(dd MMMM yyyy)</code></li>
+            <li><code>$time(dd.MM.yy)</code></li>
+            <li><code>$time(EEEEE)</code></li>
+            <li><a target="blank" href="https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html">Weitere</a>
+            </li>
+        </ul>
 
-            <h5>Balken</h5>
-            <ul>
-                <li><code>$bar(Variable,Maximaler Wert,Länge)</code></li>
-                <li><code>$bar($time(ss),60,20))</code></li>
-            </ul>
+        <h5>Balken</h5>
+        <ul>
+            <li><code>$bar(Variable,Maximaler Wert,Länge)</code></li>
+            <li><code>$bar($time(ss),60,20))</code></li>
+        </ul>
 
-            <h5>Rechnen</h5>
-            <ul>
-                <li><code>$math(Rechnung)</code></li>
-                <li><code>$math([[4 - 2^3 + 1] * -sqrt[3*3+4*4]] / 2)</code></li>
-                Als Klammer kann <code>[]</code> verwendet werden
-            </ul>
+        <h5>Rechnen</h5>
+        <ul>
+            <li><code>$math(Rechnung)</code></li>
+            <li><code>$math([[4 - 2^3 + 1] * -sqrt[3*3+4*4]] / 2)</code></li>
+            Als Klammer kann <code>[]</code> verwendet werden
+        </ul>
 
-            <h5>Grundlegendes</h5>
-            <ul>
-                <li><code>$rnd(MaxZahl)</code></li>
-                <li><code>$rnd(42)</code></li>
-                <li><code>$pos(4)</code></li>
-                <li><code>$ver()</code></li>
-                <li><code>$char(ascii)</code></li>
-                <li><code>$char(255)</code></li>
-            </ul>
+        <h5>Grundlegendes</h5>
+        <ul>
+            <li><code>$rnd(MaxZahl)</code></li>
+            <li><code>$rnd(42)</code></li>
+            <li><code>$pos(4)</code></li>
+            <li><code>$ver()</code></li>
+            <li><code>$char(ascii)</code></li>
+            <li><code>$char(255)</code></li>
+        </ul>
 
-            <h5>Winamp</h5>
-            <ul>
-                <li><code>$winamp(filename)</code></li>
-                <li><code>$winamp(title)</code></li>
-                <li><code>$winamp(titleraw)</code></li>
-                <li><code>$winamp(time)</code></li>
-                <li><code>$winamp(timeFull)</code></li>
-                <li><code>$winamp(timeRem)</code></li>
-                <li><code>$winamp(status)</code></li>
-            </ul>
+        <h5>Winamp</h5>
+        <ul>
+            <li><code>$winamp(filename)</code></li>
+            <li><code>$winamp(title)</code></li>
+            <li><code>$winamp(titleraw)</code></li>
+            <li><code>$winamp(time)</code></li>
+            <li><code>$winamp(timeFull)</code></li>
+            <li><code>$winamp(timeRem)</code></li>
+            <li><code>$winamp(status)</code></li>
+        </ul>
 
-        </perfect-scrollbar>
-
-    </div>
+    </ng-scrollbar>
 </div>

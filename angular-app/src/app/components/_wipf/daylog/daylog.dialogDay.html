@@ -1,27 +1,30 @@
-<div style="display: flex">
-    <div style="padding: 0 15px;flex: 1 0 250px;width: 25%;">
-        <!-- TODO: LESS DATEI -->
-        <h1 mat-dialog-title>Id: {{data.id}}</h1>
-        <div mat-dialog-content>
-            <mat-form-field>
-                <mat-label>Datum</mat-label>
-                <input matInput type="date" [(ngModel)]="data.date">
-            </mat-form-field>
-            <br>
-            <mat-form-field>
-                <mat-label>Tagestext</mat-label>
-                <input matInput [(ngModel)]="data.tagestext">
-            </mat-form-field>
-            <br>
+<div class="dialogbox">
+    <!-- TODO: LESS DATEI -->
+    <h1 mat-dialog-title>Id: {{data.id}}</h1>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Datum</mat-label>
+            <input matInput type="date" [(ngModel)]="data.date">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Tagestext</mat-label>
+            <input matInput [(ngModel)]="data.tagestext">
+        </mat-form-field>
+        <br>
 
-            <!-- <mat-label>Status</mat-label> -->
-            <!-- <input matInput [(ngModel)]="data.active"> -->
+        <!-- <mat-label>Status</mat-label> -->
+        <!-- <input matInput [(ngModel)]="data.active"> -->
+    </div>
 
-        </div>
+    <div mat-dialog-actions>
+        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+    </div>
 
-        <div mat-dialog-actions>
-            <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-            <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" cdkFocusInitial>Speichern</button>
-        </div>
+    <div *ngIf="data?.tagestext?.length === 0">
+        <!-- TODO: ausbauen, laden von DB -->
+        <button class="btn btn-wipf-mini" (click)="setText('A HO')">H</button>
+        <button class="btn btn-wipf-mini" (click)="setText('A NM')">A</button>
     </div>
 </div>

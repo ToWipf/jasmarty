@@ -18,21 +18,22 @@ export class MedienComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public bShowAllTable: boolean = true;
-  public displayedColumns: string[] = ['id', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
+  public bShowAllTableColumns: boolean = true;
+  public displayedColumns: string[] = [];
   public sFilter: string = "";
+  public listTypFilter: string[] = ["Serie", "Film", "Buch", "Brettspiel", "Band"];
 
   ngOnInit() {
     this.load();
-    this.showAllTable();
+    this.showAllTableColumns();
   }
 
-  public showAllTable(): void {
-    this.bShowAllTable = !this.bShowAllTable;
-    if (this.bShowAllTable) {
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
       this.displayedColumns = ['id', 'typ', 'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'date', 'editby', 'button'];
     } else {
-      this.displayedColumns = [ 'typ' ,'titel', 'art', 'gesehen', 'bewertung', 'infotext', 'button'];
+      this.displayedColumns = ['typ', 'titel', 'art', 'gesehen', 'infotext', 'button'];
     }
   }
 
@@ -55,6 +56,7 @@ export class MedienComponent implements OnInit {
     td.titel = "";
     td.date = Math.round(Date.now() / 1000);
     td.editby = 'web';
+    td.typ = "";
     this.openDialog(td);
   }
 
@@ -83,7 +85,11 @@ export class MedienComponent implements OnInit {
 
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
-      this.dataSource.filter = this.sFilter.trim();
+      if (this.sFilter) {
+        this.dataSource.filter = this.sFilter.trim();
+      } else {
+        this.dataSource.filter = "";
+      }
     });
   }
 
@@ -91,9 +97,10 @@ export class MedienComponent implements OnInit {
     const edititem: MedienEntry = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(MedienComponentDialog, {
-      width: '350px',
-      height: '550px',
       data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '250px',
     });
 
     dialogRef.afterClosed().subscribe((result: MedienEntry) => {
