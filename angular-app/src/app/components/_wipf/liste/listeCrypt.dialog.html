@@ -1,0 +1,27 @@
+<div class="dialogbox">
+    <!-- TODO: LESS DATEI -->
+    <h1 mat-dialog-title>Id: {{data.id}}</h1>
+
+    <div class="crData">
+        {{data.data}}
+    </div>
+ 
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Schlüssel</mat-label>
+            <input matInput [(ngModel)]="sKey" (keyup)="changeKey()">
+        </mat-form-field>
+    </div>
+    <br>
+
+    <mat-form-field>
+        <mat-label>Daten</mat-label>
+        <textarea [(ngModel)]="sDecrypt" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20" (keyup)="changeDaten()"></textarea>
+    </mat-form-field>
+    <br>
+
+    <div mat-dialog-actions>
+        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+    </div>
+</div>

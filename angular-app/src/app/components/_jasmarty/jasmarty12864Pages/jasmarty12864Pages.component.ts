@@ -36,7 +36,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.base64 = event.base64;
     // Vorbereiten des Speichers
     this.lcdDescription.static = new Array(64).fill(false).map(() => new Array(128).fill(false));
-    await this.serviceWipf.delay(1000).then((x) => {
+    await this.serviceWipf.delay(1000).then(() => {
       this.convertImgToArray();
     });
   }
@@ -94,7 +94,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   public async sendSelectedPage(): Promise<void> {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.saveLcdDescription();
-    this.serviceWipf.delay(100).then((x) => {
+    this.serviceWipf.delay(100).then(() => {
       this.selectLcdDescription();
       warten.close();
     });
@@ -103,7 +103,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   public async pageNext(): Promise<void> {
     this.lcdDescription.id++;
     this.loadLcdDescription();
-    this.serviceWipf.delay(100).then((x) => {
+    this.serviceWipf.delay(100).then(() => {
       this.selectLcdDescription();
     });
   }
@@ -112,7 +112,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
     if (this.lcdDescription.id > 0) {
       this.lcdDescription.id--;
       this.loadLcdDescription();
-      this.serviceWipf.delay(100).then((x) => {
+      this.serviceWipf.delay(100).then(() => {
         this.selectLcdDescription();
       });
     }

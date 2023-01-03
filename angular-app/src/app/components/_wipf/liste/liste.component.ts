@@ -6,6 +6,7 @@ import { ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { ListeCryptComponentDialogComponent } from './listeCrypt.component';
 import { ListeTypeComponentDialogTypeListComponent } from './listeType.component';
 
 @Component({
@@ -177,9 +178,21 @@ export class ListeComponent implements OnInit {
     });
   }
 
-  public decryptItem(item: ListeEntry, key: String){
-    console.log(item);
-    console.log(key);
+  public openCryptDialog(item: ListeEntry): void {
+    const edititem: ListeEntry = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(ListeCryptComponentDialogComponent, {
+      data: edititem,
+      autoFocus: true,
+      minWidth: '300px',
+      minHeight: '290px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: ListeEntry) => {
+      if (result) {
+        this.save(result);
+      }
+    });
   }
 
 }

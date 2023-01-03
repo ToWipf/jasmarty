@@ -87,6 +87,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
 import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
 import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
+import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
 
 @NgModule({
     declarations: [
@@ -144,6 +145,7 @@ import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeList
         ListeComponentDialogComponent,
         ListeTypeComponentDialogTypeListComponent,
         ListeTypeComponentDialogTypeComponent,
+        ListeCryptComponentDialogComponent,
     ],
     imports: [
         NgxChartsModule,

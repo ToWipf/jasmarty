@@ -106,14 +106,15 @@
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                         </button>
+                        
+                        <!-- Bei "crpyt" -->
+                        <button *ngIf="element.typeid === -1" class="btn btn-wipf-default btn-for-icon" (click)="openCryptDialog(element)">
+                            <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
+                        </button>
+                            
                         <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                         </button>
-
-                        <!-- Bei "crpyt" -->
-                        <div *ngIf="bShowAllTableColumns && element.typeid === -1">
-                            <input matInput (ngModelChange)="decryptItem(element, $event)" [(ngModel)]="element.key">
-                        </div>
 
                     </td>
                 </ng-container>
