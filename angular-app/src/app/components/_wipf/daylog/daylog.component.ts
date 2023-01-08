@@ -196,7 +196,7 @@ export class DayLogComponent implements OnInit {
 export class DaylogComponentDialogDayComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 
@@ -302,7 +302,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     });
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }
@@ -318,7 +318,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 export class DaylogComponentDialogTypeComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogType) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

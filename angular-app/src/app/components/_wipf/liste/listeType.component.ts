@@ -96,7 +96,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
         });
     }
 
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 }
@@ -109,7 +109,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
 export class ListeTypeComponentDialogTypeComponent {
     constructor(public dialogRef: MatDialogRef<ListeTypeComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeType) { }
 
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 }

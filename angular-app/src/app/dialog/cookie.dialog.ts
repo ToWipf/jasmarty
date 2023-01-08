@@ -23,7 +23,7 @@ export class CookieDialogComponent implements OnInit {
     this.pageurl = window.location.href;
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 
@@ -87,7 +87,7 @@ export class CookieDialogComponent implements OnInit {
 export class CookieAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<CookieAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

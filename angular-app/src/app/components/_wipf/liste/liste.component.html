@@ -53,7 +53,10 @@
             </div>
         </ng-scrollbar>
 
-        <div *ngIf="!dataSource">Um Inhalte zu laden, muss ein Filter gewählt werden</div>
+        <div *ngIf="!dataSource">
+            <hr>
+            <b>Um Inhalte zu laden, muss ein Filter gewählt werden</b>
+        </div>
 
         <ng-scrollbar class="pscroll" *ngIf="dataSource">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
@@ -108,12 +111,12 @@
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                         </button>
-                        
+
                         <!-- Bei "crpyt" -->
                         <button *ngIf="element.typeid === -1" class="btn btn-wipf-default btn-for-icon" (click)="openCryptDialog(element)">
                             <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
                         </button>
-                            
+
                         <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                         </button>

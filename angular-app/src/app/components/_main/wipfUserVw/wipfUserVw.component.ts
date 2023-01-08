@@ -89,7 +89,7 @@ export class WipfUserVwComponent implements OnInit {
 export class WipfUserVWComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<WipfUserVWComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: WipfUser) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

@@ -205,11 +205,11 @@ export class ListeComponentDialogComponent implements OnInit {
 
   public listeType: ListeType[];
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadTypes();
   }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 

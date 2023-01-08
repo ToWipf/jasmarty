@@ -112,7 +112,7 @@ export class SettingsComponent implements OnInit {
 export class SettingsComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<SettingsComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

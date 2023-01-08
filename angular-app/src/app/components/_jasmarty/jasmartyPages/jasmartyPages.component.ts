@@ -144,7 +144,7 @@ export class JasmartyPagesComponent implements OnInit {
 export class JasmartyPagesComponentGoToDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyPagesComponentGoToDialog>, @Inject(MAT_DIALOG_DATA) public data: number) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

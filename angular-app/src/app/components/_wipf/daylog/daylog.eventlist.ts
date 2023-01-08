@@ -264,7 +264,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         this.loadTextVorschlag();
     }
 
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 

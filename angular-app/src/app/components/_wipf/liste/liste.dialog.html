@@ -11,7 +11,7 @@
             <mat-label>Type</mat-label>
             <mat-select [(value)]="data.typeid">
                 <ng-container *ngFor="let type of listeType">
-                    <mat-option value='{{type.id}}'>{{type.typename}}</mat-option>
+                    <mat-option value={{type.id}}>{{type.typename}}</mat-option>
                 </ng-container>
             </mat-select>
         </mat-form-field>

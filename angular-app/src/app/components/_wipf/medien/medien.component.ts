@@ -120,7 +120,7 @@ export class MedienComponent implements OnInit {
 export class MedienComponentDialog {
   constructor(public dialogRef: MatDialogRef<MedienComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: MedienEntry) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

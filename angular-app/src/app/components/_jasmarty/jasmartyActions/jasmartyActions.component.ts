@@ -122,7 +122,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 export class JasmartyActionsComponentDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

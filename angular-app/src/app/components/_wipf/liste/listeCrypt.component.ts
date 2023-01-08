@@ -19,20 +19,20 @@ export class ListeCryptComponentDialogComponent implements OnInit {
 
     @ViewChild(MatSort, { static: true }) sortType: MatSort;
 
-    ngOnInit() {
+    public ngOnInit() {
     }
 
-    onNoClick(): void {
+    public onNoClick(): void {
         this.dialogRef.close();
     }
 
-    changeKey(): void {
+    public changeKey(): void {
         this.serviceWipf.delay(300).then(() => {
             this.sDecrypt = this.serviceWipf.decrypt(this.data.data, this.sKey);
         });
     }
 
-    changeDaten(): void {
+    public changeDaten(): void {
         this.serviceWipf.delay(300).then(() => {
             this.data.data = this.serviceWipf.crypt(this.sDecrypt, this.sKey);
         });

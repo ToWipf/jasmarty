@@ -105,7 +105,7 @@ export class DynpagesComponent implements OnInit {
 export class DynpagesComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<DynpagesComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: DynpageEntry) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

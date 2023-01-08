@@ -113,7 +113,7 @@ export class TelegramMsgComponent implements OnInit {
 export class TelegramMsgComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<TelegramMsgComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Telegram) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

@@ -9,7 +9,7 @@ import { ServiceRest } from '../service/serviceRest';
 export class ElementSetServerDialog {
   constructor(public dialogRef: MatDialogRef<ElementSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string, private rest: ServiceRest) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 

@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogJaNeinComponent {
   constructor(public dialogRef: MatDialogRef<DialogJaNeinComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }
@@ -18,7 +18,7 @@ export class DialogJaNeinComponent {
 export class DialogWartenComponent {
   constructor(public dialogRef: MatDialogRef<DialogWartenComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }
@@ -29,7 +29,7 @@ export class DialogWartenComponent {
 export class DialogVariablenHilfeComponent {
   constructor(public dialogRef: MatDialogRef<DialogVariablenHilfeComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

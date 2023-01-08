@@ -143,7 +143,7 @@ export class TodolistComponent implements OnInit {
 export class TodolistComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<TodolistComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TodoEntry) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }

@@ -104,7 +104,7 @@ export class RndEventComponent implements OnInit {
 export class RndEventComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<RndEventComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: RndEvent) { }
 
-  onNoClick(): void {
+  public onNoClick(): void {
     this.dialogRef.close();
   }
 }
