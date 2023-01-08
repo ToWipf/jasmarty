@@ -79,7 +79,7 @@ public class DaylogTypeDB {
 
 	/**
 	 * @param sDate
-	 * @param nUserId
+	 * @param nId
 	 * @return
 	 * @throws SQLException
 	 */
@@ -103,12 +103,12 @@ public class DaylogTypeDB {
 	}
 
 	/**
-	 * @param nDateId
+	 * @param nId
 	 * @return
 	 * @throws SQLException
 	 */
-	public JSONArray getAsJson(Integer nDateId) throws SQLException {
-		List<DaylogType> l = get(nDateId);
+	public JSONArray getAsJson(Integer nId) throws SQLException {
+		List<DaylogType> l = get(nId);
 		JSONArray ja = new JSONArray();
 		for (DaylogType d : l) {
 			ja.put(d.toJson());

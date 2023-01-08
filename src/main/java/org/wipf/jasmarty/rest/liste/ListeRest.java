@@ -45,8 +45,14 @@ public class ListeRest {
 
 	@GET
 	@Path("getAll")
-	public Response getall() throws SQLException {
+	public Response getAll() throws SQLException {
 		return Response.ok(listeDB.getAllAsJson().toString()).build();
+	}
+
+	@GET
+	@Path("getAllByType/{typeid}")
+	public Response getAllByType(@PathParam("typeid") Integer nTypeId) throws SQLException {
+		return Response.ok(listeDB.getAllByTypeAsJson(nTypeId).toString()).build();
 	}
 
 }

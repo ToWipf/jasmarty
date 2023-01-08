@@ -29,10 +29,11 @@ public class DaylogTypeRest {
 	@Inject
 	DaylogTypeDB daylogTypeDB;
 
+	// Wird nicht gebraucht
 	@GET
-	@Path("get/{dateid}")
-	public Response get(@PathParam("dateid") Integer nDateid) throws SQLException {
-		return Response.ok(daylogTypeDB.getAsJson(nDateid).toString()).build();
+	@Path("get/{id}")
+	public Response get(@PathParam("id") Integer nId) throws SQLException {
+		return Response.ok(daylogTypeDB.getAsJson(nId).toString()).build();
 	}
 
 	@GET

@@ -107,11 +107,48 @@ public class ListeDB {
 	}
 
 	/**
+	 * @param nTypeId
+	 * @return
+	 * @throws SQLException
+	 */
+	private List<Liste> getAllByType(Integer nTypeId) throws SQLException {
+		List<Liste> lr = new LinkedList<>();
+		String sQuery = "select * from " + TABLENAME + " WHERE typeid = ?;";
+
+		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
+		statement.setInt(1, nTypeId);
+
+		ResultSet rs = statement.executeQuery();
+		while (rs.next()) {
+			Liste o = new Liste();
+			o.setId(rs.getInt("id"));
+			o.setData(rs.getString("data"));
+			o.setTypeId(rs.getInt("typeid"));
+			o.setDate(rs.getString("date"));
+			lr.add(o);
+		}
+		return lr;
+	}
+
+	/**
 	 * @return
 	 * @throws SQLException
 	 */
 	public JSONArray getAllAsJson() throws SQLException {
 		List<Liste> l = getAll();
+		JSONArray ja = new JSONArray();
+		for (Liste d : l) {
+			ja.put(d.toJson());
+		}
+		return ja;
+	}
+
+	/**
+	 * @param sType
+	 * @return
+	 */
+	public JSONArray getAllByTypeAsJson(Integer nTypeId) throws SQLException {
+		List<Liste> l = getAllByType(nTypeId);
 		JSONArray ja = new JSONArray();
 		for (Liste d : l) {
 			ja.put(d.toJson());

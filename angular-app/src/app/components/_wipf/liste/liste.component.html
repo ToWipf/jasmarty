@@ -10,7 +10,7 @@
             <div class="configline">
                 <div class="iconbox">
                     Neu Laden:
-                    <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="applyFilterByType()">
                         <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
                     </button>
 
@@ -27,8 +27,8 @@
                 <div class="box">
                     <mat-form-field appearance="fill">
                         <mat-label>Event Typ Filtern</mat-label>
-                        <mat-select [(value)]="selectedTypeFilter" (selectionChange)="applyFilterByType()">
-                            <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
+                        <mat-select [(value)]="selectedTypeFilter" (closed)="applyFilterByType()">
+                            <mat-option [value]="{id:-99}"><b>Kein Filter</b></mat-option>
                             <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': idToColor(itemEvent.id)}">
                                 {{itemEvent.typename}}
                             </mat-option>
@@ -39,7 +39,7 @@
                 <div class="box">
                     <mat-form-field>
                         <mat-label>Filtern</mat-label>
-                        <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                        <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
                     </mat-form-field>
                 </div>
 
@@ -53,7 +53,9 @@
             </div>
         </ng-scrollbar>
 
-        <ng-scrollbar class="pscroll">
+        <div *ngIf="!dataSource">Um Inhalte zu laden, muss ein Filter gewählt werden</div>
+
+        <ng-scrollbar class="pscroll" *ngIf="dataSource">
             <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">

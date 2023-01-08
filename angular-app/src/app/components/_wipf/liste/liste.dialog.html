@@ -2,6 +2,11 @@
     <!-- TODO: LESS DATEI -->
     <h1 mat-dialog-title>Id: {{data.id}}</h1>
     <div mat-dialog-content>
+
+        <ng-container *ngFor="let type of listeType">
+            <div *ngIf="data.typeid == type.id">TODO: Auswahl {{type.typename}}</div>
+        </ng-container>
+
         <mat-form-field appearance="fill">
             <mat-label>Type</mat-label>
             <mat-select [(value)]="data.typeid">

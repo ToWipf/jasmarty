@@ -27,11 +27,10 @@ export class ListeComponent implements OnInit {
   public bShowAllTableColumns: boolean = true;
   public listeTypeForFilter: ListeType[];
   public selectedTypeFilter: ListeType;
-  public fullListe: ListeEntry[];
 
   ngOnInit() {
     this.loadTypes();
-    this.load();
+    //this.load();
     this.showAllTableColumns();
   }
 
@@ -86,58 +85,58 @@ export class ListeComponent implements OnInit {
     });
   }
 
-  public load(): void {
+  public loadAll(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
-      this.fullListe = resdata;
-      this.dataSource = new MatTableDataSource(this.fullListe);
+      this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
-      this.applyFilter();
+      this.applyTextFilter();
       warten.close();
-      this.applyFilterByType();
     });
   }
 
-  public applyFilter() {
+  public applyTextFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.dataSource.filter = this.sFilter.trim();
     });
   }
 
+  private loadByType(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+
+    this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
+      this.dataSource = new MatTableDataSource(resdata);
+      this.dataSource.sort = this.sort;
+      this.dataSource.filter = this.sFilter.trim();
+      this.applyTextFilter();
+      warten.close();
+    });
+  }
+
+  /**
+   * Darüber wird die Liste überhaupt geladen
+   */
   public applyFilterByType() {
-    if (this.selectedTypeFilter != undefined) {
-      let listToShow: ListeEntry[] = [];
-
-      this.fullListe.forEach((event: ListeEntry) => {
-        if (event.typeid == this.selectedTypeFilter.id) {
-          listToShow.push(event);
-        }
-      });
-      this.dataSource = new MatTableDataSource(listToShow);
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.sFilter.trim();
+    if (this.selectedTypeFilter.id == -99) {
+      this.loadAll();
     } else {
-      // Wie Normal -> alles anzeigen
-      this.dataSource = new MatTableDataSource(this.fullListe);
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.sFilter.trim();
+      this.loadByType();
     }
-
   }
 
   public newItem(): void {
     let n: ListeEntry = {};
     n.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     n.data = "";
-    n.typeid = 1;
+    n.typeid = this.selectedTypeFilter.id;
     this.openDialog(n);
   }
 
   private save(item: ListeEntry): void {
     this.rest.post('liste/save', item).then((resdata: any) => {
-      this.load();
+      this.applyFilterByType();
       if (!resdata) {
         this.bShowWarning = true;
       }
@@ -155,7 +154,7 @@ export class ListeComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.rest.delete('liste/delete/' + item.id).then((resdata: any) => {
-          this.load();
+          this.applyFilterByType();
         });
       }
     });
