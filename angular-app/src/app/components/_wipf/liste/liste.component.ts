@@ -90,9 +90,19 @@ export class ListeComponent implements OnInit {
 
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
       this.dataSource = new MatTableDataSource(resdata);
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.sFilter.trim();
       this.applyTextFilter();
+      this.dataSource.sort = this.sort;
+      warten.close();
+    });
+  }
+
+  private loadByType(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    
+    this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
+      this.dataSource = new MatTableDataSource(resdata);
+      this.applyTextFilter();
+      this.dataSource.sort = this.sort;
       warten.close();
     });
   }
@@ -100,18 +110,6 @@ export class ListeComponent implements OnInit {
   public applyTextFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.dataSource.filter = this.sFilter.trim();
-    });
-  }
-
-  private loadByType(): void {
-    const warten = this.dialog.open(DialogWartenComponent, {});
-
-    this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
-      this.dataSource = new MatTableDataSource(resdata);
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.sFilter.trim();
-      this.applyTextFilter();
-      warten.close();
     });
   }
 
