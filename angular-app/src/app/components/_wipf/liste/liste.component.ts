@@ -20,7 +20,7 @@ export class ListeComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  public dataSource;
+  public dataSourceList;
   public bShowWarning: boolean = false;
   public displayedColumns: string[] = [];
   public sFilter: string = "";
@@ -89,9 +89,9 @@ export class ListeComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
-      this.dataSource = new MatTableDataSource(resdata);
+      this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
-      this.dataSource.sort = this.sort;
+      this.dataSourceList.sort = this.sort;
       warten.close();
     });
   }
@@ -100,16 +100,16 @@ export class ListeComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     
     this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
-      this.dataSource = new MatTableDataSource(resdata);
+      this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
-      this.dataSource.sort = this.sort;
+      this.dataSourceList.sort = this.sort;
       warten.close();
     });
   }
 
   public applyTextFilter() {
     this.serviceWipf.delay(200).then(() => {
-      this.dataSource.filter = this.sFilter.trim();
+      this.dataSourceList.filter = this.sFilter.trim();
     });
   }
 

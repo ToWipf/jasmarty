@@ -53,7 +53,7 @@
             </div>
         </ng-scrollbar>
 
-        <div *ngIf="!dataSource">
+        <div *ngIf="!dataSourceList">
             <hr>
             <b>Um Inhalte zu laden, muss ein Filter gewählt werden</b>
             <br>
@@ -63,8 +63,8 @@
             </button>
         </div>
 
-        <ng-scrollbar class="pscroll" *ngIf="dataSource">
-            <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
+        <ng-scrollbar class="pscroll" [ngClass]="{'hide' : !dataSourceList}">
+            <table mat-table [dataSource]="dataSourceList" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
@@ -109,7 +109,7 @@
                             <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
                                 <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
                             </button>
-                            ∑: {{dataSource?._data?._value?.length}}
+                            ∑: {{dataSourceList?._data?._value?.length}}
                         </div>
                     </th>
                     <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
