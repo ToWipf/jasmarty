@@ -119,10 +119,12 @@ export class ListeComponent implements OnInit {
    * Darüber wird die Liste überhaupt geladen
    */
   public applyFilterByType() {
-    if (this.selectedTypeFilter.id == -99) {
-      this.loadAll();
-    } else {
-      this.loadByType();
+    if (this.selectedTypeFilter) {
+      if (this.selectedTypeFilter.id == -99) {
+        this.loadAll();
+      } else {
+        this.loadByType();
+      }
     }
   }
 
@@ -130,7 +132,11 @@ export class ListeComponent implements OnInit {
     let n: ListeEntry = {};
     n.date = new Date(Date.now()).toISOString().split('T')[0]; // heuteigen Tag als vorauswahl
     n.data = "";
-    n.typeid = this.selectedTypeFilter.id;
+    if (this.selectedTypeFilter?.id) {
+      n.typeid = this.selectedTypeFilter.id;
+    } else {
+      n.typeid = 1;
+    }
     this.openDialog(n);
   }
 
