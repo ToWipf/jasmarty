@@ -56,6 +56,11 @@
         <div *ngIf="!dataSource">
             <hr>
             <b>Um Inhalte zu laden, muss ein Filter gewählt werden</b>
+            <br>
+            Neuer Eintrag:
+            <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+            </button>
         </div>
 
         <ng-scrollbar class="pscroll" *ngIf="dataSource">
