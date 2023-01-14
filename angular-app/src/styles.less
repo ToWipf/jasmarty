@@ -2,27 +2,12 @@
 
 // Dialoge
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+// Weiteres
+@import "app/style/table_style.less";
+@import "app/style/button_style.less";
 
 body {
   font-size: 12px !important;
-}
-
-.btn {
-  font-size: 12px !important;
-}
-
-.btn-tr {
-  border: none;
-}
-
-.mat-header-cell {
-  font-size: 12px !important;
-  font-weight: 500;
-}
-
-.mat-cell,
-.mat-footer-cell {
-  font-size: 13px !important;
 }
 
 h1 {
@@ -58,107 +43,13 @@ h6 {
   font-weight: 512 !important; // Etwas fettere schrift
 }
 
-.btn-green {
-  color: #fff;
-  background-color: #35dc35 !important;
-  border-color: #43dc35 !important;
-}
-
-.btn-green:hover {
-  color: #fff;
-  background-color: #4ebb2d !important;
-  border-color: #3ab02a !important;
-}
-
-.btn-for-icon {
-  width: 24px;
-  height: 24px;
-  padding: 0px !important;
-  margin-left: 1px;
-
-  .mat-icon {
-    width: 16px;
-  }
-}
-
-.btn-wipf-default {
-  border: solid 1px black !important;
-  background-color: rgb(216, 216, 216) !important;
-
-  &:hover {
-    background-color: rgb(95, 95, 95) !important;
-  }
-}
-
-.btn-wipf-dialog {
-  border: solid 1px black !important;
-  background-color: rgb(219, 219, 219) !important;
-  margin-left: 3px !important;
-  margin-right: 3px !important;
-
-  &:hover {
-    background-color: rgb(110, 110, 110) !important;
-  }
-}
-
-.btn-wipf-mini {
-  margin-right: 2px;
-  margin-top: 10px;
-  font-size: 8px !important;
-  border: solid 1px rgb(56, 56, 56) !important;
-  background-color: rgb(233, 233, 233) !important;
-
-  &:hover {
-    background-color: rgb(238, 255, 0) !important;
-  }
+.hide {
+  display: none;
 }
 
 .dialogbox {
   // padding: 0 15px;
   max-width: 275px;
-}
-
-.tableVW {
-  min-width: 64px;
-}
-
-td {
-  white-space: pre-line;
-  word-break: break-word;
-  padding-right: 2px !important;
-}
-
-th.mat-header-cell:first-of-type,
-td.mat-cell:first-of-type {
-  padding-left: 10px !important;
-}
-
-th.mat-header-cell:last-of-type,
-td.mat-cell:last-of-type,
-td.mat-footer-cell:last-of-type {
-  padding-right: 0px !important;
-}
-
-.mdc-data-table__header-cell {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-  font-size: 11px;
-}
-
-.mdc-data-table__cell {
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-  font-size: 12px;
-}
-
-.mdc-data-table__cell, .mdc-data-table__header-cell {
-  padding: 0 5px 0 5px !important;
-}
-
-.mdc-text-field--filled:not(.mdc-text-field--disabled) {
-  background-color: #0000000a;
-}
-
-.mdc-list-item__primary-text {
-  font-size: 12px !important;
 }
 
 .mat-mdc-option {
@@ -172,12 +63,6 @@ td.mat-footer-cell:last-of-type {
 .mat-mdc-form-field-infix {
   font-size: 13px;
 }
-
-.hide {
-  display: none;
-}
-
-//// Tabellen Configline
 
 .configline {
   text-align: end;
@@ -199,4 +84,8 @@ td.mat-footer-cell:last-of-type {
   .btn {
     margin-bottom: 1px;
   }
+}
+
+.dialogTitle {
+  background-color: lightgray;
 }
