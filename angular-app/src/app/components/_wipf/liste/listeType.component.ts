@@ -43,7 +43,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
             data: edititem,
             autoFocus: true,
             minWidth: '300px',
-            minHeight: '250px',
+            minHeight: '150px',
         });
 
         dialogRef.afterClosed().subscribe((result: ListeType) => {
@@ -78,7 +78,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
         item.infotext2 = item.typename;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
             width: '250px',
-            height: '250px',
+            minHeight: '150px',
             data: item,
         });
 

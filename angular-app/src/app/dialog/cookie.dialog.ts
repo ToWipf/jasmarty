@@ -51,7 +51,7 @@ export class CookieDialogComponent implements OnInit {
       data: edititem,
       autoFocus: true,
       minWidth: '300px',
-      minHeight: '250px',
+      minHeight: '150px',
     });
 
     dialogRef.afterClosed().subscribe((result: KeyValEntry) => {

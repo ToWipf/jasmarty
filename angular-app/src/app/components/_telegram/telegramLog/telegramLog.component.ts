@@ -70,7 +70,7 @@ export class TelegramLogComponent implements OnInit {
     e.infotext = 'Soll das Log aufgeräumt werden? Dabei werden viele Einträge gelöscht!'
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: e,
     });
 
@@ -89,7 +89,7 @@ export class TelegramLogComponent implements OnInit {
 
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         width: '250px',
-        height: '250px',
+        minHeight: '150px',
         data: e,
       });
 
@@ -106,7 +106,7 @@ export class TelegramLogComponent implements OnInit {
     e.infotext = "Wirklich löschen der id " + e.mid + "?";
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: e,
     });
 
@@ -123,7 +123,7 @@ export class TelegramLogComponent implements OnInit {
       e.infotext = "Logs neu laden?";
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         width: '250px',
-        height: '250px',
+        minHeight: '150px',
         data: e,
       });
 

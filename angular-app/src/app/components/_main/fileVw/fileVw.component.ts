@@ -49,7 +49,7 @@ export class FileVwComponent implements OnInit {
     item.infotext2 = name;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: item,
     });
 

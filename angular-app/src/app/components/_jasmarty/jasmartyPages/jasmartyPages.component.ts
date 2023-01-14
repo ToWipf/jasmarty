@@ -121,7 +121,7 @@ export class JasmartyPagesComponent implements OnInit {
 
     const dialogRef = this.dialog.open(JasmartyPagesComponentGoToDialog, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: goToLine,
     });
 

@@ -32,20 +32,16 @@
             </ng-container>
         </ng-container>
     </ng-container>
-    <br>
+    <div class="vorschlagContainer" *ngIf="sListVorschlag.length != 0">
+        Vorschläge({{sListVorschlag.length}}):
+
+        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
+            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
+        </div>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
     <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
 </mat-dialog-actions>
-
-<br>
-
-<ng-container *ngIf="sListVorschlag.length != 0">
-    Vorschläge({{sListVorschlag.length}}):
-
-    <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
-        <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
-    </div>
-</ng-container>

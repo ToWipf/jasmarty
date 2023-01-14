@@ -106,7 +106,7 @@ export class DayLogComponent implements OnInit {
     item.infotext2 = item.date;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: item,
     });
 
@@ -155,7 +155,7 @@ export class DayLogComponent implements OnInit {
       data: edititem,
       autoFocus: true,
       minWidth: '300px',
-      minHeight: '250px',
+      minHeight: '150px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogDay) => {
@@ -247,7 +247,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
       data: edititem,
       autoFocus: true,
       minWidth: '300px',
-      minHeight: '250px',
+      minHeight: '150px',
     });
 
     dialogRef.afterClosed().subscribe((result: DaylogEvent) => {
@@ -284,7 +284,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
     item.infotext = "Wirklich löschen?"; + item.type;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: item,
     });
 

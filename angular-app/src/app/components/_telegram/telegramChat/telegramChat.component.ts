@@ -65,7 +65,7 @@ export class TelegramChatComponent implements OnInit {
     item.infotext2 = item.chatid;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
-      height: '250px',
+      minHeight: '150px',
       data: item,
     });
 

@@ -48,7 +48,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
         resdata.infotext = "Verbindung Ok, Starten?";
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
           minWidth: '200px',
-          height: '250px',
+          minHeight: '150px',
           data: resdata,
         });
 
