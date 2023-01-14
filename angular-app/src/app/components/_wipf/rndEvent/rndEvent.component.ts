@@ -54,7 +54,8 @@ export class RndEventComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.eventtext;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.eventtext;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

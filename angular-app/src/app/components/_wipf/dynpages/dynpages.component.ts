@@ -55,7 +55,8 @@ export class DynpagesComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.id;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.id;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

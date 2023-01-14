@@ -59,7 +59,7 @@
             <br>
             Neuer Eintrag:
             <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
             </button>
         </div>
 
@@ -107,7 +107,7 @@
                     <th th mat-header-cell *matHeaderCellDef>
                         <div class="tableVW">
                             <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                                <mat-icon svgIcon="box" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                                <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
                             </button>
                             ∑: {{dataSourceList?._data?._value?.length}}
                         </div>
@@ -122,7 +122,7 @@
                             <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
                         </button>
 
-                        <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+                        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                             <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                         </button>
 

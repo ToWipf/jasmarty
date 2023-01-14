@@ -45,7 +45,8 @@ export class FileVwComponent implements OnInit {
 
   public deleteItem(name: string): void {
     let item: any = {};
-    item.infotext = "Wirklich löschen? \n" + name;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = name;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

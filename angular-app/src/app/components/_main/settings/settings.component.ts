@@ -52,7 +52,8 @@ export class SettingsComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.key;
+    item.infotext = "Wirklich löschen?"; 
+    item.infotext2 = item.key;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

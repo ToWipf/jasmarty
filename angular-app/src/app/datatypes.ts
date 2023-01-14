@@ -155,3 +155,8 @@ export interface ListeType {
   id?: number;
   typename?: string;
 }
+
+export interface DialogInfoContent {
+  infotext?: string;
+  infotext2?: string;
+}

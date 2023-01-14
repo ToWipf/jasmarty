@@ -74,7 +74,8 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
     }
 
     public deleteType(item: any): void {
-        item.infotext = "Wirklich löschen? " + item.typename;
+        item.infotext = "Wirklich löschen?";
+        item.infotext2 = item.typename;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
             width: '250px',
             height: '250px',

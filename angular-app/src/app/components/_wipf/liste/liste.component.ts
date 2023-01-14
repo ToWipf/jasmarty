@@ -37,20 +37,22 @@ export class ListeComponent implements OnInit {
   public idToColor(id: number): string {
     if (id === 1)
       return "#fc5f53";
-    if (id === 2)
+    else if (id === 2)
       return "#fcc653";
-    if (id === 3)
+    else if (id === 3)
       return "#99fc53";
-    if (id === 4)
+    else if (id === 4)
       return "#53fca2";
-    if (id === 5)
+    else if (id === 5)
       return "#53ddfc";
-    if (id === 6)
+    else if (id === 6)
       return "#5e53fc";
-    if (id === 7)
+    else if (id === 7)
       return "#be53fc";
-    if (id === 8)
+    else if (id === 8)
       return "#fc53be";
+    else if (id === 9)
+      return "gray";
     else
       return "green";
   }
@@ -98,7 +100,6 @@ export class ListeComponent implements OnInit {
 
   private loadByType(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    
     this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
       this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
@@ -148,7 +149,8 @@ export class ListeComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

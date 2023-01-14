@@ -60,8 +60,9 @@ export class MedienComponent implements OnInit {
     this.openDialog(td);
   }
 
-  public deleteItem(item: MedienEntry): void {
-    item.infotext = "Wirklich löschen? " + item.titel;
+  public deleteItem(item: any): void {
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.titel;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

@@ -91,7 +91,7 @@ export class TodolistComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.data;
+    item.infotext = "Wirklich löschen?"; + item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

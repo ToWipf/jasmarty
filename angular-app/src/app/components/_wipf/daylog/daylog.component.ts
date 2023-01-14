@@ -102,7 +102,8 @@ export class DayLogComponent implements OnInit {
   }
 
   public deleteDay(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.date;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.date;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
@@ -280,7 +281,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   }
 
   public deleteType(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.type;
+    item.infotext = "Wirklich löschen?"; + item.type;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',

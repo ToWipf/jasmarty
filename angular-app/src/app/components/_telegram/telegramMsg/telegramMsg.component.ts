@@ -46,7 +46,8 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   public deleteItem(item: any): void {
-    item.infotext = "Wirklich löschen? " + item.message;
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.message;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       width: '250px',
       height: '250px',
