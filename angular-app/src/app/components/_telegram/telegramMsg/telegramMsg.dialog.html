@@ -1,22 +1,17 @@
-<div class="dialogbox">
-    <!-- // TODO: LESS DATEI -->
-    <h1 mat-dialog-title>Nachricht bearbeiten</h1>
-    <div mat-dialog-content>
-        <mat-form-field>
-            <mat-label>Frage</mat-label>
-            <input matInput [(ngModel)]="data.message">
-        </mat-form-field>
-    </div>
+<h1 mat-dialog-title>Nachricht bearbeiten</h1>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Frage</mat-label>
+        <input matInput [(ngModel)]="data.message">
+    </mat-form-field>
 
-    <div mat-dialog-content>
-        <mat-form-field>
-            <mat-label>Antwort</mat-label>
-            <input matInput [(ngModel)]="data.antwort">
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>Antwort</mat-label>
+        <input matInput [(ngModel)]="data.antwort">
+    </mat-form-field>
+</mat-dialog-content>
 
-    <div mat-dialog-actions>
-        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-    </div>
-</div>
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+</mat-dialog-actions>

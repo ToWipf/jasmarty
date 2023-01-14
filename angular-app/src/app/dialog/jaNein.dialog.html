@@ -1,12 +1,8 @@
-<div class="dialogbox">
-    <h1 mat-dialog-title>{{data.infotext}}</h1>
-
-    <div mat-dialog-content>
-        {{data.infotext2}}
-    </div>
-
-    <div mat-dialog-actions>
-        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Nein</button>
-        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Ja</button>
-    </div>
-</div>
+<h1 mat-dialog-title>{{data.infotext}}</h1>
+<mat-dialog-content>
+    {{data?.infotext2}}
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Nein</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Ja</button>
+</mat-dialog-actions>

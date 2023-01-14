@@ -1,18 +1,15 @@
-<h3 class="dialogTitle">
-    Typenverwaltung
-    <hr>
-</h3>
+<h1 mat-dialog-title>Typenverwaltung</h1>
 
-<ng-container *ngIf="bShowWarning">
-    Es ist ein Fehler aufgetreten!
-    <input type="checkbox" [(ngModel)]="bShowWarning" />
-</ng-container>
+<mat-dialog-content>
+    <ng-container *ngIf="bShowWarning">
+        Es ist ein Fehler aufgetreten!
+        <input type="checkbox" [(ngModel)]="bShowWarning" />
+    </ng-container>
 
-<div class="box">
-    Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter" />
-</div>
+    <div class="box">
+        Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter" />
+    </div>
 
-<ng-scrollbar class="pscroll">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -46,4 +43,5 @@
         <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
     </table>
-</ng-scrollbar>
+
+</mat-dialog-content>

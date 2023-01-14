@@ -1,46 +1,42 @@
-<div class="dialogbox">
-    <!-- // TODO: LESS DATEI -->
-    <h1 mat-dialog-title>Id: {{data.id}}</h1>
-    <div mat-dialog-content>
-        <mat-form-field appearance="fill">
-            <mat-label>Typ</mat-label>
-            <mat-select [(value)]="data.typ">
-                <mat-option value="Serie">Serie</mat-option>
-                <mat-option value="Film">Film</mat-option>
-                <mat-option value="Buch">Buch</mat-option>
-                <mat-option value="Brettspiel">Brettspiel</mat-option>
-                <mat-option value="Band">Band</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Titel</mat-label>
-            <input matInput [(ngModel)]="data.titel">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Art</mat-label>
-            <input matInput [(ngModel)]="data.art">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Infotext</mat-label>
-            <input matInput [(ngModel)]="data.infotext">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Bewertung</mat-label>
-            <input matInput [(ngModel)]="data.bewertung">
-        </mat-form-field>
-        <br>
-        <mat-form-field>
-            <mat-label>Gesehen</mat-label>
-            <input matInput [(ngModel)]="data.gesehenDate">
-        </mat-form-field>
-    </div>
-
-    <div mat-dialog-actions>
-        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-    </div>
-</div>
+<h1 mat-dialog-title>Id: {{data.id}}</h1>
+<mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>Typ</mat-label>
+        <mat-select [(value)]="data.typ">
+            <mat-option value="Serie">Serie</mat-option>
+            <mat-option value="Film">Film</mat-option>
+            <mat-option value="Buch">Buch</mat-option>
+            <mat-option value="Brettspiel">Brettspiel</mat-option>
+            <mat-option value="Band">Band</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Titel</mat-label>
+        <input matInput [(ngModel)]="data.titel">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Art</mat-label>
+        <input matInput [(ngModel)]="data.art">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Infotext</mat-label>
+        <input matInput [(ngModel)]="data.infotext">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Bewertung</mat-label>
+        <input matInput [(ngModel)]="data.bewertung">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Gesehen</mat-label>
+        <input matInput [(ngModel)]="data.gesehenDate">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+</mat-dialog-actions>

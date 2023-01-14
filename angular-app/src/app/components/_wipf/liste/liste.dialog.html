@@ -1,36 +1,33 @@
-<div class="dialogbox">
-    <!-- TODO: LESS DATEI -->
-    <h1 mat-dialog-title>Id: {{data.id}}</h1>
-    <div mat-dialog-content>
+<h1 mat-dialog-title>Id: {{data.id}}</h1>
+<mat-dialog-content>
 
-        <ng-container *ngFor="let type of listeType">
-            <div *ngIf="data.typeid == type.id">TODO: Auswahl {{type.typename}}</div>
-        </ng-container>
+    <ng-container *ngFor="let type of listeType">
+        <div *ngIf="data.typeid == type.id">TODO: Auswahl {{type.typename}}</div>
+    </ng-container>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Type</mat-label>
-            <mat-select [(value)]="data.typeid">
-                <ng-container *ngFor="let type of listeType">
-                    <mat-option value={{type.id}}>{{type.typename}}</mat-option>
-                </ng-container>
-            </mat-select>
-        </mat-form-field>
-        <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Type</mat-label>
+        <mat-select [(value)]="data.typeid">
+            <ng-container *ngFor="let type of listeType">
+                <mat-option value={{type.id}}>{{type.typename}}</mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    <br>
 
-        <mat-form-field>
-            <mat-label>Inhalt</mat-label>
-            <textarea [(ngModel)]="data.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-        </mat-form-field>
-        <br>
+    <mat-form-field>
+        <mat-label>Inhalt</mat-label>
+        <textarea [(ngModel)]="data.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+    </mat-form-field>
+    <br>
 
-        <mat-form-field>
-            <mat-label>Datum</mat-label>
-            <input matInput type="date" [(ngModel)]="data.date">
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>Datum</mat-label>
+        <input matInput type="date" [(ngModel)]="data.date">
+    </mat-form-field>
+</mat-dialog-content>
 
-    <div mat-dialog-actions>
-        <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-        <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-    </div>
-</div>
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+</mat-dialog-actions>
