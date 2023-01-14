@@ -12,7 +12,9 @@
             <div [innerHTML]="sSQL_OUT"></div>
         </div>
     </div>
-
+    <br>
+    <button (click)="warten()">Warten</button>
+    <br>
     UHR: {{uhr}}
     <br>
 
@@ -47,38 +49,19 @@
     <br>
 
     ngx-charts-bar-vertical
-     <ngx-charts-bar-vertical
-    [view]="[1000,400]"
-    [results]="testData"
-    [xAxisLabel]="'Testing'"
-    [legendTitle]="'Titel'"
-    [yAxisLabel]="'xxx'"
-    [legend]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxis]="true"
-    [yAxis]="true"
-    [gradient]="true">
-    </ngx-charts-bar-vertical> 
+    <ngx-charts-bar-vertical [view]="[1000,400]" [results]="testData" [xAxisLabel]="'Testing'" [legendTitle]="'Titel'" [yAxisLabel]="'xxx'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+    </ngx-charts-bar-vertical>
 
-    ngx-charts-pie-chart 
-    <ngx-charts-pie-chart 
-    [results]="testData"
-    [legend]="true"
-    [legendTitle]="'Test Report'" 
-    [view]="[1000,300]"
-    [labels]="true" >
+    ngx-charts-pie-chart
+    <ngx-charts-pie-chart [results]="testData" [legend]="true" [legendTitle]="'Test Report'" [view]="[1000,300]" [labels]="true">
     </ngx-charts-pie-chart>
 
     ngx-charts-advanced-pie-chart
-    <ngx-charts-advanced-pie-chart 
-    [results]="testData"
-    [gradient]="true" >
+    <ngx-charts-advanced-pie-chart [results]="testData" [gradient]="true">
     </ngx-charts-advanced-pie-chart>
 
-    ngx-charts-pie-grid 
-    <ngx-charts-pie-grid 
-    [results]="testData" >
+    ngx-charts-pie-grid
+    <ngx-charts-pie-grid [results]="testData">
     </ngx-charts-pie-grid>
 
 </div>

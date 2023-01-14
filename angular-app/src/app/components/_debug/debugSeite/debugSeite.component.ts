@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-debugSeite',
@@ -7,7 +9,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./debugSeite.component.less'],
 })
 export class DebugSeiteComponent implements OnInit {
-  constructor(private rest: ServiceRest) { }
+  constructor(private rest: ServiceRest, public dialog: MatDialog) { }
 
   public sSQL_IN: string;
   public sSQL_OUT: string;
@@ -29,6 +31,10 @@ export class DebugSeiteComponent implements OnInit {
     this.rest.post('sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
       this.sSQL_OUT = resdata.res;
     });
+  }
+
+  public warten(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
   }
 
 }

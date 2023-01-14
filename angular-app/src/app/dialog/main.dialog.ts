@@ -17,7 +17,7 @@ export class DialogJaNeinComponent {
   templateUrl: './warten.dialog.html',
 })
 export class DialogWartenComponent {
-  constructor(public dialogRef: MatDialogRef<DialogWartenComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogInfoContent) { }
+  constructor(public dialogRef: MatDialogRef<DialogWartenComponent>, @Inject(MAT_DIALOG_DATA) public data: null) { }
 
   public onNoClick(): void {
     this.dialogRef.close();
@@ -28,7 +28,7 @@ export class DialogWartenComponent {
   templateUrl: './variablen.hilfe.dialog.html',
 })
 export class DialogVariablenHilfeComponent {
-  constructor(public dialogRef: MatDialogRef<DialogVariablenHilfeComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(public dialogRef: MatDialogRef<DialogVariablenHilfeComponent>, @Inject(MAT_DIALOG_DATA) public data: null) { }
 
   public onNoClick(): void {
     this.dialogRef.close();

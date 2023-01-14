@@ -41,7 +41,7 @@
                     <span class="buttonInhalt"> Alte Todo </span>
                 </li>
             </ul>
-            
+
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
             <ul *ngIf="bJasmartyActive" class="menueli">
                 <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
@@ -131,11 +131,11 @@
                     </li> -->
                 <li *ngIf="bDevActive" (click)="showAll2004()">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Zeige Alles 2004 </span>
+                    <span class="buttonInhalt"> Zeige 2004 </span>
                 </li>
                 <li *ngIf="bDevActive" (click)="showAll12864()">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Zeige Alles 12864 </span>
+                    <span class="buttonInhalt"> Zeige 12864 </span>
                 </li>
                 <li *ngIf="bDevActive" (click)="showDevModules()">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
