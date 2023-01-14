@@ -50,7 +50,7 @@ export class CookieDialogComponent implements OnInit {
     const dialogRef = this.dialog.open(CookieAddDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 

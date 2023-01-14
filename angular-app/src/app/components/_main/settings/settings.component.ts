@@ -55,7 +55,7 @@ export class SettingsComponent implements OnInit {
     item.infotext = "Wirklich löschen?"; 
     item.infotext2 = item.key;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });
@@ -84,7 +84,7 @@ export class SettingsComponent implements OnInit {
     const dialogRef = this.dialog.open(SettingsComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 

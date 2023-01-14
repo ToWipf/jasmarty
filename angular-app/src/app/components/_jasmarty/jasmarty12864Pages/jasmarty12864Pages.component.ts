@@ -142,7 +142,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public openariablenHilfeDialog(): void {
-    this.dialog.open(DialogVariablenHilfeComponent, { width: '300px', height: '300px' });
+    this.dialog.open(DialogVariablenHilfeComponent, { minWidth: '200px', height: '300px' });
   }
 
 }

@@ -42,7 +42,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
         const dialogRef = this.dialog.open(ListeTypeComponentDialogTypeComponent, {
             data: edititem,
             autoFocus: true,
-            minWidth: '300px',
+            minWidth: '200px',
             minHeight: '150px',
         });
 
@@ -77,7 +77,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
         item.infotext = "Wirklich löschen?";
         item.infotext2 = item.typename;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-            width: '250px',
+            minWidth: '200px',
             minHeight: '150px',
             data: item,
         });

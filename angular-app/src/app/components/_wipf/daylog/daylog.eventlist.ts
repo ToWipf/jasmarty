@@ -91,7 +91,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         const dialogRef = this.dialog.open(DaylogComponentDialogEventComponent, {
             data: edititem,
             autoFocus: true,
-            minWidth: '300px',
+            minWidth: '200px',
             minHeight: '150px',
         });
 
@@ -191,7 +191,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         item.infotext = "Wirklich löschen?";
         item.infotext2 = item.id;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-            width: '250px',
+            minWidth: '200px',
             minHeight: '150px',
             data: item,
             autoFocus: true

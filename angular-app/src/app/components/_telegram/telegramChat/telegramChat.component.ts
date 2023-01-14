@@ -64,7 +64,7 @@ export class TelegramChatComponent implements OnInit {
     item.infotext = "Wirklich löschen?";
     item.infotext2 = item.chatid;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });

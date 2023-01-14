@@ -152,7 +152,7 @@ export class ListeComponent implements OnInit {
     item.infotext = "Wirklich löschen?";
     item.infotext2 = item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });
@@ -172,7 +172,7 @@ export class ListeComponent implements OnInit {
     const dialogRef = this.dialog.open(ListeComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 
@@ -189,7 +189,7 @@ export class ListeComponent implements OnInit {
     const dialogRef = this.dialog.open(ListeCryptComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '290px',
     });
 

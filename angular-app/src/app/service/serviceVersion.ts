@@ -54,7 +54,7 @@ export class ServiceVersion {
     public openCookieDialog(): void {
         this.dialog.open(CookieDialogComponent, {
             autoFocus: true,
-            minWidth: '300px',
+            minWidth: '200px',
             minHeight: '150px',
         });
     }

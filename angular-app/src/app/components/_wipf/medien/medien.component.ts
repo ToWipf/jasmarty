@@ -64,7 +64,7 @@ export class MedienComponent implements OnInit {
     item.infotext = "Wirklich löschen?";
     item.infotext2 = item.titel;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });
@@ -100,7 +100,7 @@ export class MedienComponent implements OnInit {
     const dialogRef = this.dialog.open(MedienComponentDialog, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 

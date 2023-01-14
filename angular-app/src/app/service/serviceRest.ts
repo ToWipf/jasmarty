@@ -89,7 +89,7 @@ export class ServiceRest {
   public openSetServerDialog(): Promise<boolean> {
     return new Promise(resolve => {
       const dialogRef = this.dialog.open(ElementSetServerDialog, {
-        width: '250px',
+        minWidth: '200px',
         height: '300px',
         data: this.gethost(),
       });

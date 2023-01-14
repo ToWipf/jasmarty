@@ -57,7 +57,7 @@ export class RndEventComponent implements OnInit {
     item.infotext = "Wirklich löschen?";
     item.infotext2 = item.eventtext;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });
@@ -86,7 +86,7 @@ export class RndEventComponent implements OnInit {
     const dialogRef = this.dialog.open(RndEventComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 

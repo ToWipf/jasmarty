@@ -93,7 +93,7 @@ export class TodolistComponent implements OnInit {
   public deleteItem(item: any): void {
     item.infotext = "Wirklich löschen?"; + item.data;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-      width: '250px',
+      minWidth: '200px',
       minHeight: '150px',
       data: item,
     });
@@ -122,7 +122,7 @@ export class TodolistComponent implements OnInit {
     const dialogRef = this.dialog.open(TodolistComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
-      minWidth: '300px',
+      minWidth: '200px',
       minHeight: '150px',
     });
 
