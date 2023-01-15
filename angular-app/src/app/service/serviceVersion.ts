@@ -70,7 +70,6 @@ export class ServiceVersion {
      * 
      */
     public redirectToApiFrontend(): void {
-        //window.location.replace(this.rest.gethost());
         window.location.href = this.rest.gethost();
     }
 }

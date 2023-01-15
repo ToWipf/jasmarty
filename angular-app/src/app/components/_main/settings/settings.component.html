@@ -33,7 +33,6 @@
             </ng-container>
 
             <ng-container matColumnDef="button">
-                <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th>  -->
                 <th th mat-header-cell *matHeaderCellDef>
                     <div class="tableVW">
                         <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
@@ -59,7 +58,7 @@
 
     <div class="configline sysbuttons">
         <div class="box">
-            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.openCookieDialog()">Cookies</button>
+            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.openCookieDialog()">Cookies Verwalten</button>
         </div>
         <div class="box">
             <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.reloadApp()">Client neu laden</button>
@@ -70,7 +69,7 @@
     </div>
     <div class="configline sysbuttons">
         <div class="box">
-            <button type="button" class="btn btn-danger" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
+            <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
         </div>
         <div class="box">
             <button type="button" class="btn btn-danger" (click)="stopApp()"><span *ngIf="bSicherheitNochmalKlicken">SICHER? </span>System Beenden!</button>

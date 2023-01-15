@@ -6,6 +6,7 @@ import { ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { ListeServiceColor } from './liste.service.color';
 import { ListeCryptComponentDialogComponent } from './listeCrypt.component';
 import { ListeTypeComponentDialogTypeListComponent } from './listeType.component';
 
@@ -16,7 +17,7 @@ import { ListeTypeComponentDialogTypeListComponent } from './listeType.component
 })
 export class ListeComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -32,29 +33,6 @@ export class ListeComponent implements OnInit {
     this.loadTypes();
     //this.load();
     this.showAllTableColumns();
-  }
-
-  public idToColor(id: number): string {
-    if (id === 1)
-      return "#fc5f53";
-    else if (id === 2)
-      return "#fcc653";
-    else if (id === 3)
-      return "#99fc53";
-    else if (id === 4)
-      return "#53fca2";
-    else if (id === 5)
-      return "#53ddfc";
-    else if (id === 6)
-      return "#5e53fc";
-    else if (id === 7)
-      return "#be53fc";
-    else if (id === 8)
-      return "#fc53be";
-    else if (id === 9)
-      return "gray";
-    else
-      return "green";
   }
 
   public showAllTableColumns(): void {
@@ -207,7 +185,7 @@ export class ListeComponent implements OnInit {
   templateUrl: './liste.dialog.html',
 })
 export class ListeComponentDialogComponent implements OnInit {
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) { }
+  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) { }
 
   public listeType: ListeType[];
 

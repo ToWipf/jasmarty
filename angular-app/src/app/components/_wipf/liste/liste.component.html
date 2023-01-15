@@ -29,7 +29,7 @@
                         <mat-label>Event Typ Filtern</mat-label>
                         <mat-select [(value)]="selectedTypeFilter" (closed)="applyFilterByType()">
                             <mat-option [value]="{id:-99}"><b>Kein Filter</b></mat-option>
-                            <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': idToColor(itemEvent.id)}">
+                            <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': lsColor.idToColor(itemEvent.id)}">
                                 {{itemEvent.typename}}
                             </mat-option>
                         </mat-select>
@@ -68,30 +68,30 @@
 
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">
                         {{element.id}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="data">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">
                         {{element.data}}
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}"> {{element.date}} </td>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}"> {{element.date}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="typeid">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> TypeId </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}"> {{element.typeid}} </td>
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}"> {{element.typeid}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="type">
                     <th mat-header-cell *matHeaderCellDef> Type </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">
                         <ng-container *ngFor="let type of listeTypeForFilter;">
                             <ng-container *ngIf='type.id.toString()==element.typeid'>
                                 <b>
@@ -112,7 +112,7 @@
                             ∑: {{dataSourceList?._data?._value?.length}}
                         </div>
                     </th>
-                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': idToColor(element.typeid)}">
+                    <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">
                         <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
                             <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                         </button>

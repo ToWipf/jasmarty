@@ -1,16 +1,11 @@
 <h1 mat-dialog-title>Id: {{data.id}}</h1>
 <mat-dialog-content>
-
-    <ng-container *ngFor="let type of listeType">
-        <div *ngIf="data.typeid == type.id">TODO: Auswahl {{type.typename}}</div>
-    </ng-container>
-
     <mat-form-field appearance="fill">
         <mat-label>Type</mat-label>
         <mat-select [(value)]="data.typeid">
-            <ng-container *ngFor="let type of listeType">
-                <mat-option value={{type.id}}>{{type.typename}}</mat-option>
-            </ng-container>
+            <mat-option *ngFor="let type of listeType" [(value)]="type.id" [ngStyle]="{ 'background': lsColor.idToColor(type.id)}">
+                {{type.typename}}
+            </mat-option>
         </mat-select>
     </mat-form-field>
     <br>
