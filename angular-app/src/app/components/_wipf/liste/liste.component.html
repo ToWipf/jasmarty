@@ -26,7 +26,9 @@
 
                 <div class="box">
                     <mat-form-field appearance="fill">
-                        <mat-label>Event Typ Filtern</mat-label>
+                        <mat-label>Event Typ Filtern
+                            <mat-icon svgIcon="search" aria-hidden="false" title="Farbe" [ngStyle]="{ 'color': lsColor.idToColor(selectedTypeFilter?.id)}"></mat-icon>
+                        </mat-label>
                         <mat-select [(value)]="selectedTypeFilter" (closed)="applyFilterByType()">
                             <mat-option [value]="{id:-99}"><b>Kein Filter</b></mat-option>
                             <mat-option *ngFor="let itemEvent of listeTypeForFilter" [value]="itemEvent" [ngStyle]="{ 'background': lsColor.idToColor(itemEvent.id)}">

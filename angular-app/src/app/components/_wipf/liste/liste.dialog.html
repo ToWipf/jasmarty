@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Id: {{data.id}}</h1>
+<h1 mat-dialog-title [ngStyle]="{ 'background': lsColor.idToColor(data.typeid)}">Id: {{data.id}}</h1>
 <mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Type</mat-label>

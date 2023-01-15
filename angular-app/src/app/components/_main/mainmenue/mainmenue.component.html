@@ -1,6 +1,6 @@
 <mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
 
-    <mat-drawer #drawer [mode]="mode.value">
+    <mat-drawer #drawer [mode]="mode.value" class="background1">
         <ng-scrollbar class="sidebar">
             <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
             <ul *ngIf="bWipfActive" class="menueli">
@@ -164,7 +164,7 @@
                 <mat-select #hasBackdrop value="true"></mat-select>
             </mat-form-field>
         </div>
-        <div class="fullsite">
+        <div class="fullsite background1">
             <button class="mainMenueIcon" (click)="drawer.toggle()">
                 <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
             </button>
