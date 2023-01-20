@@ -17,7 +17,10 @@
                 <button class="btn btn-wipf-default" (click)="load()">Neu laden</button>
             </div> -->
             <div class="box">
-                Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                <mat-form-field>
+                    <mat-label>Filtern</mat-label>
+                    <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+                </mat-form-field>
             </div>
         </div>
 

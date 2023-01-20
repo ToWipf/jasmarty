@@ -3,9 +3,10 @@
     <h3>Files</h3>
 
     <div class="configline">
-        <div class="box">
-            Filter: <input (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-        </div>
+        <mat-form-field>
+            <mat-label>Filtern</mat-label>
+            <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+        </mat-form-field>
     </div>
 
     <ng-scrollbar class="pscroll">
