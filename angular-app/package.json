@@ -25,7 +25,7 @@
     "@popperjs/core": "2.11.6",
     "@swimlane/ngx-charts": "20.1.0",
     "@types/popper.js": "1.11.0",
-    "bootstrap": "5.2.2",
+    "bootstrap": "5.2.3",
     "javascript-blowfish": "1.0.4",
     "ng-sidebar": "9.4.3",
     "ngx-photo-editor": "0.3.6",
