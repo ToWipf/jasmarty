@@ -1,23 +1,20 @@
-<div>
-    <h3>Crypt</h3>
+<h3>Crypt</h3>
 
-    <button class="btn btn-wipf-default" (click)="crypt()">Crypt</button>
-    <button class="btn btn-wipf-default" (click)="decrypt()">Decrypt</button>
-    
-    <br>
-    <mat-form-field>
-        <mat-label>Key</mat-label>
-        <input matInput [(ngModel)]="crItem.key">
-    </mat-form-field>
+<button class="btn btn-wipf-default" (click)="crypt()">Crypt</button>
+<button class="btn btn-wipf-default" (click)="decrypt()">Decrypt</button>
 
-    <br>
-    <mat-form-field>
-        <mat-label>Eingabe:</mat-label>
-        <textarea [(ngModel)]="crItem.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-    </mat-form-field>
-    
-    <br>
-    Ausgabe:
-    {{textOut}}
+<br>
+<mat-form-field>
+    <mat-label>Key</mat-label>
+    <input matInput [(ngModel)]="crItem.key">
+</mat-form-field>
 
-</div>
+<br>
+<mat-form-field>
+    <mat-label>Eingabe:</mat-label>
+    <textarea [(ngModel)]="crItem.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+</mat-form-field>
+
+<br>
+Ausgabe:
+{{textOut}}

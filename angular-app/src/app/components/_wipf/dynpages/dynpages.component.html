@@ -1,85 +1,82 @@
-<div>
-    <h3>Dynpages</h3>
-    <div class="list">
+<h3>Dynpages</h3>
 
-        <ng-container *ngIf="bShowWarning">
-            Es ist ein Fehler aufgetreten!
-            <input type="checkbox" [(ngModel)]="bShowWarning">
-        </ng-container>
 
-        <div class="configline">
-            <!-- TODO -->
-            <!-- <div class="box">
+<ng-container *ngIf="bShowWarning">
+    Es ist ein Fehler aufgetreten!
+    <input type="checkbox" [(ngModel)]="bShowWarning">
+</ng-container>
+
+<div class="configline">
+    <!-- TODO -->
+    <!-- <div class="box">
                 Live:
                 <input type="checkbox" (ngModelChange)="load()" [(ngModel)]="bLive">
             </div> -->
-            <!-- <div class="box">
+    <!-- <div class="box">
                 <button class="btn btn-wipf-default" (click)="load()">Neu laden</button>
             </div> -->
-            <div class="box">
-                <mat-form-field>
-                    <mat-label>Filtern</mat-label>
-                    <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-                </mat-form-field>
-            </div>
-        </div>
-
-        <ng-scrollbar class="pscroll">
-            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-                    <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
-                        {{element.id}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="html">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Html </th>
-                    <td mat-cell *matCellDef="let element"> {{element.html}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="script">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Script </th>
-                    <td mat-cell *matCellDef="let element"> {{element.script}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="style">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Style </th>
-                    <td mat-cell *matCellDef="let element"> {{element.style}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="rechte">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Rechte </th>
-                    <td mat-cell *matCellDef="let element"> {{element.rechte}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="live">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Live </th>
-                    <td mat-cell *matCellDef="let element"> {{element.live}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="button">
-                    <th th mat-header-cell *matHeaderCellDef>
-                        <div class="tableVW">
-                            <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                                <mat-icon svgIcon="plus" aria-hidden="false" title="Neu"></mat-icon>
-                            </button>
-                            ∑: {{dataSource?._data?._value?.length}}
-                        </div>
-                    </th>
-                    <td mat-cell *matCellDef="let element">
-                        <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
-                            <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                        </button>
-                        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
-                            <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </ng-scrollbar>
+    <div class="box">
+        <mat-form-field>
+            <mat-label>Filtern</mat-label>
+            <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+        </mat-form-field>
     </div>
 </div>
+
+<ng-scrollbar class="pscroll">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element" [ngClass]="{ 'lightblue': element.active === 'ZITAT' , 'green': element.active === 'DONE' , 'yellow': element.active === 'NEW', 'red': element.active === 'TODO'  }">
+                {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="html">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Html </th>
+            <td mat-cell *matCellDef="let element"> {{element.html}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="script">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Script </th>
+            <td mat-cell *matCellDef="let element"> {{element.script}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="style">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Style </th>
+            <td mat-cell *matCellDef="let element"> {{element.style}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="rechte">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Rechte </th>
+            <td mat-cell *matCellDef="let element"> {{element.rechte}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="live">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Live </th>
+            <td mat-cell *matCellDef="let element"> {{element.live}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="button">
+            <th th mat-header-cell *matHeaderCellDef>
+                <div class="tableVW">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                        <mat-icon svgIcon="plus" aria-hidden="false" title="Neu"></mat-icon>
+                    </button>
+                    ∑: {{dataSource?._data?._value?.length}}
+                </div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+                </button>
+                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</ng-scrollbar>
