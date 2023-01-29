@@ -24,4 +24,11 @@ public class WipfInfo {
 		});
 		return sb.toString();
 	}
+
+	/**
+	 * @return
+	 */
+	public Long getTime() {
+		return System.currentTimeMillis();
+	}
 }

@@ -64,22 +64,27 @@ public class WipfRest {
 	@GET
 	@Path("ver")
 	@PermitAll
-	public Response getver() {
+	public Response getVer() {
 		return Response.ok("{\"ver\":\"" + MainHome.VERSION + "\"}").build();
+	}
+
+	@GET
+	@Path("time")
+	public Response getTime() {
+		return Response.ok("{\"time\":\"" + wipfInfo.getTime() + "\"}").build();
+	}
+
+	@GET
+	@Path("tinfo")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response tinfo() {
+		return Response.ok(wipfInfo.getThreadInfo()).build();
 	}
 
 	@GET
 	@Path("ports")
 	public Response ports() {
 		return Response.ok(serialConfig.getPorts().toString()).build();
-	}
-
-	@GET
-	@Path("tinfo")
-	@Produces(MediaType.TEXT_PLAIN)
-	@PermitAll
-	public Response tinfo() {
-		return Response.ok(wipfInfo.getThreadInfo()).build();
 	}
 
 	@POST

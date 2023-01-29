@@ -14,6 +14,8 @@ export class DebugSeiteComponent implements OnInit {
   public sSQL_IN: string;
   public sSQL_OUT: string;
   public uhr: string;
+  public serverTime: number;
+  public clientTime: number;
 
   public testData = [
     { name: "ABC", value: 2 },
@@ -24,12 +26,24 @@ export class DebugSeiteComponent implements OnInit {
   ];
 
   ngOnInit() {
+    this.loadUhr();
+  }
+
+  public loadUhr(): void {
+    this.getTime();
+    this.clientTime = Date.now();
     this.uhr = new Date(Date.now()).toISOString();
   }
 
   public doSQL(): void {
     this.rest.post('sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
       this.sSQL_OUT = resdata.res;
+    });
+  }
+
+  public getTime(): void {
+    this.rest.get('wipf/time').then((resdata: any) => {
+      this.serverTime = resdata.time;
     });
   }
 
