@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { Telegram } from 'src/app/datatypes';
+import { DialogInfoContent, Telegram } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -66,12 +66,14 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public openCleanLogDialog(): void {
-    var e: any = {};
-    e.infotext = 'Soll das Log aufgeräumt werden? Dabei werden viele Einträge gelöscht!'
+    var dic: DialogInfoContent = {
+      infotext: 'Soll das Log aufgeräumt werden?',
+      infotext2: ' Dabei werden alle Admin Einträge gelöscht!'
+    };
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',
       minHeight: '150px',
-      data: e,
+      data: dic,
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -84,13 +86,15 @@ export class TelegramLogComponent implements OnInit {
 
   private cleanLog(): void {
     this.rest.delete('telegram/cleanLog').then((resdata: any) => {
-      var e: any = {};
-      e.infotext = 'Löschen ist fertig. Liste neu laden?'
+      var dic: DialogInfoContent = {
+        infotext: 'Löschen abgeschlossen',
+        infotext2: ' Liste neu laden?'
+      };
 
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         minWidth: '200px',
         minHeight: '150px',
-        data: e,
+        data: dic,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
@@ -104,6 +108,7 @@ export class TelegramLogComponent implements OnInit {
 
   public openDelItemDialog(e: any): void {
     e.infotext = "Wirklich löschen der id " + e.mid + "?";
+    e.infotext2 = e.message + ' | ' + e.antwort;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',
       minHeight: '150px',

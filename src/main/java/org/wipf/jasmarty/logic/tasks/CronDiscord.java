@@ -63,6 +63,8 @@ public class CronDiscord {
 				tSendAndReceive.sendMsgToAdmin("Discord weniger Online\n\n" + dNow.userToString());
 			} else if (dNow.countUser() == 0 && dNow.countUser() < dLast.countUser()) {
 				tSendAndReceive.sendMsgToAdmin("Discord Offline");
+			} else if (dNow.isValid() && !dLast.isValid()) {
+				tSendAndReceive.sendMsgToAdmin("Discord ok");
 			}
 
 			dLast = dNow;
