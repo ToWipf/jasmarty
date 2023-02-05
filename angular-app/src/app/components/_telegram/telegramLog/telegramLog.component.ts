@@ -88,7 +88,7 @@ export class TelegramLogComponent implements OnInit {
     this.rest.delete('telegram/cleanLog').then((resdata: any) => {
       var dic: DialogInfoContent = {
         infotext: 'Löschen abgeschlossen',
-        infotext2: ' Liste neu laden?'
+        infotext2: ' Liste jetzt laden?'
       };
 
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
