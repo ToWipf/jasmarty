@@ -187,8 +187,7 @@ public class DaylogEventDB {
 	 */
 	public JSONArray getStats(String sTypIds) throws SQLException {
 		JSONArray ar = new JSONArray();
-		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds
-				+ ") GROUP by text ORDER by anz DESC";
+		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds + ") GROUP by text ORDER by anz DESC";
 		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
 		// statement.setString(1, sTypIds);
 		ResultSet rs = statement.executeQuery();

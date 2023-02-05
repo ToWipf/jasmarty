@@ -19,8 +19,6 @@ public class TelegramHome {
 	@Inject
 	TAppTicTacToe appTicTacToe;
 	@Inject
-	TAppTodoList appTodoList;
-	@Inject
 	TAppMsg appTeleMsg;
 	@Inject
 	TAppMotd appMotd;
@@ -48,7 +46,6 @@ public class TelegramHome {
 	 */
 	private void init() throws SQLException {
 		tLog.initDB();
-		appTodoList.initDB();
 		appTicTacToe.initDB();
 		appTeleMsg.initDB();
 		appMotd.initDB();

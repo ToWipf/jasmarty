@@ -36,10 +36,6 @@
                     <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
                     <span class="buttonInhalt"> Dateien </span>
                 </li>
-                <li (click)="selectSite('todolist')" [ngClass]="{'isSelected' : selectedSite == 'todolist'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Todo Liste"></mat-icon>
-                    <span class="buttonInhalt"> Alte Todo </span>
-                </li>
             </ul>
 
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
@@ -187,9 +183,6 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='configtele'">
                     <app-telegram-config></app-telegram-config>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='todolist'">
-                    <app-todolist></app-todolist>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='medien'">
                     <app-medien></app-medien>

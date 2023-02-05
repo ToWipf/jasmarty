@@ -73,7 +73,6 @@ import { TelegramChatComponent } from './components/_telegram/telegramChat/teleg
 import { TelegramConfigComponent } from './components/_telegram/telegramConfig/telegramConfig.component';
 import { TelegramLogComponent } from './components/_telegram/telegramLog/telegramLog.component';
 import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './components/_telegram/telegramMsg/telegramMsg.component';
-import { TodolistComponent, TodolistComponentDialogComponent } from './components/_wipf/todolist/todolist.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats.component';
 import { LoginComponent } from './components/login/login.component';
@@ -133,8 +132,6 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
         TelegramLogComponent,
         TelegramMsgComponent,
         TelegramMsgComponentDialogComponent,
-        TodolistComponent,
-        TodolistComponentDialogComponent,
         WipfUserVwComponent,
         WipfUserVWComponentDialogComponent,
         LoginComponent,

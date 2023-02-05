@@ -411,6 +411,8 @@ public class Wipf {
 	}
 
 	/**
+	 * z.B: dd MMMM yyyy - HH:mm:ss
+	 * 
 	 * @return
 	 */
 	public String getTime(String sPara) {

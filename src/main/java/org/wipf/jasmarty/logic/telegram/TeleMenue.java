@@ -13,6 +13,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.daylog.TAppDaylog;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
+import org.wipf.jasmarty.logic.liste.ListeDB;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -29,8 +30,6 @@ public class TeleMenue {
 	TAppOthers appOthers;
 	@Inject
 	TAppTicTacToe appTicTacToe;
-	@Inject
-	TAppTodoList appTodoList;
 	@Inject
 	TAppRndEvents appRndEvent;
 	@Inject
@@ -61,6 +60,8 @@ public class TeleMenue {
 	FileVW fileVw;
 	@Inject
 	DiscordHome discord;
+	@Inject
+	ListeDB listedb;
 
 	/**
 	 * @param sJson
@@ -160,8 +161,7 @@ public class TeleMenue {
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
-						+ "\n\n" + tUsercache.getAllAsText();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg() + "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "return":
 			case "response":
@@ -173,9 +173,11 @@ public class TeleMenue {
 			// Listen
 			case "to":
 			case "todo":
-				return appTodoList.telegramMenueTodoList(t);
+				// return appTodoList.telegramMenueTodoList(t);
+				return listedb.addStringToList(t.getMessageFullWithoutFirstWord());
 			case "to-link": // Spezielle funktion
-				return appTodoList.telegramSaveLink(t).toString();
+				return listedb.addStringToList(t.getMessage());
+
 			case "filme":
 			case "f":
 			case "m":
@@ -380,8 +382,7 @@ public class TeleMenue {
 		case "pwd":
 		case "me":
 		case "i":
-			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
-					+ t.getMid();
+			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: " + t.getMid();
 		case "calc":
 		case "math":
 		case "m":

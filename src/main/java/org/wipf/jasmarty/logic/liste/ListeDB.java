@@ -33,8 +33,7 @@ public class ListeDB {
 	 * 
 	 */
 	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS " + TABLENAME
-				+ " (id INTEGER primary key autoincrement UNIQUE, data TEXT, typeid INTEGER, date TEXT);";
+		String sUpdate = "CREATE TABLE IF NOT EXISTS " + TABLENAME + " (id INTEGER primary key autoincrement UNIQUE, data TEXT, typeid INTEGER, date TEXT);";
 		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 	}
 
@@ -154,6 +153,24 @@ public class ListeDB {
 			ja.put(d.toJson());
 		}
 		return ja;
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public String addStringToList(String s) {
+		Liste l = new Liste();
+		l.setData(s);
+		l.setTypeId(1);
+		l.setDate(wipf.getTime("yyyy-MM-dd"));
+		try {
+			save(l);
+			return "ok";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			return "Fehler 119";
+		}
 	}
 
 }
