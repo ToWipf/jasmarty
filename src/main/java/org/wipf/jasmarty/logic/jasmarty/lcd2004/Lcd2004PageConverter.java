@@ -8,7 +8,6 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd2004Page;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 
 /**
  * @author wipf
@@ -23,8 +22,6 @@ public class Lcd2004PageConverter {
 	Lcd2004 lcd2004;
 	@Inject
 	Wipf wipf;
-	@Inject
-	Winamp winamp;
 
 	public static char BLOCK_0_3 = '_';
 	public static char BLOCK_1_3 = 0x02;
@@ -185,8 +182,7 @@ public class Lcd2004PageConverter {
 	 */
 	private char[] lineRechts(String sLine) {
 		// Den rest mit Leerzeichen fuellen -> Lösche alte zeichen
-		return shortArrayToLengh(
-				(sLine.toString() + wipf.repeat(' ', lcd2004.getWidth() - sLine.length())).toCharArray());
+		return shortArrayToLengh((sLine.toString() + wipf.repeat(' ', lcd2004.getWidth() - sLine.length())).toCharArray());
 	}
 
 	/**
@@ -275,8 +271,6 @@ public class Lcd2004PageConverter {
 			return sBefore + wipf.doMathByString(sParameter) + sAfter;
 		case "rnd":
 			return sBefore + wipf.getRandomInt(sParameter) + sAfter;
-		case "winamp":
-			return sBefore + winamp.getInfos(sParameter) + sAfter;
 		case "ver":
 			return sBefore + MainHome.VERSION + sAfter;
 		case "char":

@@ -23,7 +23,6 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfDebug;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
-import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
@@ -43,8 +42,6 @@ public class DebugRest {
 
 	@Inject
 	LcdConnect lcdConnect;
-	@Inject
-	Winamp winamp;
 	@Inject
 	JasmartyHome jHome;
 	@Inject
@@ -171,21 +168,6 @@ public class DebugRest {
 	public Response cls() {
 		lcd2004.clearScreen();
 		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("winamp/control/{s}/{s2}")
-	public Response control(@PathParam("s") String s, @PathParam("s") String s2) throws Exception {
-		winamp.control(s, s2);
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("winamp/info/{s}")
-	public Response info(@PathParam("s") String s) throws Exception {
-		return Response.ok("{\"info\":\"" + winamp.getInfos(s) + "\"}").build();
 	}
 
 	@POST

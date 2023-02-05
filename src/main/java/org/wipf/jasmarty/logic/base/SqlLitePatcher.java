@@ -16,7 +16,7 @@ public class SqlLitePatcher {
 	SqlLite sqlLite;
 
 	public static final Integer DB_PATCH_VERSION = 4;
-	private static final Logger LOGGER = Logger.getLogger("Patcher");
+	private static final Logger LOGGER = Logger.getLogger("_Patcher__");
 
 	/**
 	 * @throws SQLException

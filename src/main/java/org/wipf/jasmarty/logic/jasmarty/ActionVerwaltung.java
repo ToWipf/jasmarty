@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
-import org.wipf.jasmarty.logic.jasmarty.extensions.Winamp;
 import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
 
 /**
@@ -29,8 +28,6 @@ public class ActionVerwaltung {
 	Lcd2004PageVerwaltung pageVerwaltung;
 	@Inject
 	Tastatur tastatur;
-	@Inject
-	Winamp winamp;
 	@Inject
 	SqlLite sqlLite;
 
@@ -268,13 +265,6 @@ public class ActionVerwaltung {
 				return;
 			case "write":
 				tastatur.write(sParameter2, sParameter3);
-				return;
-			case "winamp":
-				try {
-					winamp.control(sParameter2, sParameter3);
-				} catch (Exception e) {
-					// Winamp fehler ignorieren
-				}
 				return;
 			case "volume":
 				switch (sParameter2) {
