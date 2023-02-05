@@ -52,6 +52,20 @@ public class WipfConfig {
 	}
 
 	/**
+	 * null if fail
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public Boolean isAppActiveSave(String s) {
+		try {
+			return isAppActive(s);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	/**
 	 * @return
 	 * @throws SQLException
 	 */
@@ -157,6 +171,20 @@ public class WipfConfig {
 			return (sVal);
 		}
 		return null;
+	}
+
+	/**
+	 * null if fail
+	 * 
+	 * @param s
+	 * @return
+	 */
+	public String getConfParamStringSave(String s) {
+		try {
+			return getConfParamString(s);
+		} catch (SQLException e) {
+			return null;
+		}
 	}
 
 	/**

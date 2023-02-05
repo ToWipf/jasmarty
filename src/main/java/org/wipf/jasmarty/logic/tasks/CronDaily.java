@@ -2,7 +2,6 @@ package org.wipf.jasmarty.logic.tasks;
 
 import static java.time.DayOfWeek.SUNDAY;
 
-import java.sql.SQLException;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -45,30 +44,26 @@ public class CronDaily {
 	@Scheduled(cron = "0 0 0 1/1 * ? *")
 	public void dailyTask() {
 		LOGGER.info("Starte DailyTask");
-		try {
-			if (wipfConfig.isAppActive("telegram")) {
 
-				// Nur Sonntags
-				Instant instant = Instant.now();
-				ZonedDateTime zdt = instant.atZone(ZoneId.of("Europe/Berlin"));
-				if (zdt.getDayOfWeek() == SUNDAY) {
-					tSendAndReceive.sendDaylyInfo();
-				}
+		if (wipfConfig.isAppActiveSave("telegram")) {
 
-				punkteVW.pluspunkt();
-				punkteVW.appendNochSpiel(5);
-				appGrafana.deletePictureCache();
-				// TODO vorerst nicht mehr senden
-				// verwaltung.sendDaylyMotd();
-
-				String sDayLogInfo = daylogHome.getDailyInfo();
-				if (!sDayLogInfo.isBlank()) {
-					tSendAndReceive.sendMsgToAdmin(sDayLogInfo);
-				}
+			// Nur Sonntags
+			Instant instant = Instant.now();
+			ZonedDateTime zdt = instant.atZone(ZoneId.of("Europe/Berlin"));
+			if (zdt.getDayOfWeek() == SUNDAY) {
+				tSendAndReceive.sendDaylyInfo();
 			}
-		} catch (SQLException e) {
-			LOGGER.error("Fail DailyTask");
-			e.printStackTrace();
+
+			punkteVW.pluspunkt();
+			punkteVW.appendNochSpiel(5);
+			appGrafana.deletePictureCache();
+			// TODO vorerst nicht mehr senden
+			// verwaltung.sendDaylyMotd();
+
+			String sDayLogInfo = daylogHome.getDailyInfo();
+			if (!sDayLogInfo.isBlank()) {
+				tSendAndReceive.sendMsgToAdmin(sDayLogInfo);
+			}
 		}
 	}
 

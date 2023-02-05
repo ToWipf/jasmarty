@@ -35,12 +35,7 @@ public class WipfConfigRest {
 	@PermitAll
 	@Path("get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {
-		try {
-			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return Response.serverError().build();
-		}
+		return Response.ok("{\"active\":" + wipfConfig.isAppActiveSave(sAppname) + "}").build();
 	}
 
 	@POST

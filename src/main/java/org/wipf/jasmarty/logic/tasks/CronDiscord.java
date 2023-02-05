@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.tasks;
 
-import java.sql.SQLException;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -30,19 +28,19 @@ public class CronDiscord {
 
 	private static final Logger LOGGER = Logger.getLogger("DiscordTask");
 	private Discord dLast = new Discord();
-	private String sDiscordId;
+	private String sDiscordId = null;
 
 	@PostConstruct
 	public void Init() {
-		try {
-			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
-		} catch (SQLException e) {
-			// LOGGER.info("Init Discord Fail");
-		}
-		if (this.sDiscordId == null) {
-			// LOGGER.info("Init Discord Fail, id ist null");
-		} else {
-			LOGGER.info("Init Discord Task: " + sDiscordId);
+		if (wipfConfig.isAppActiveSave("telegram")) {
+
+			this.sDiscordId = wipfConfig.getConfParamStringSave("discord_id");
+
+			if (this.sDiscordId == null) {
+				// LOGGER.info("Init Discord Fail, id ist null");
+			} else {
+				LOGGER.info("Init Discord Task: " + sDiscordId);
+			}
 		}
 	}
 
