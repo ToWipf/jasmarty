@@ -52,8 +52,15 @@
     </ng-container>
 
     <tr *matNoDataRow>
-        <td class="mat-cell">
-                Keie Daten für den Tag oder kein Tag gewählt
+        <td class="nodatarow">
+            <ng-container *ngIf="dateForLoad.date === ''">
+                Kein Tag gewählt
+            </ng-container>
+            <ng-container *ngIf="dateForLoad.date != ''">
+                <ng-container *ngIf="eventlist.length == 0">
+                    Keie Daten für den Tag {{dateForLoad.date}}
+                </ng-container>
+            </ng-container>
         </td>
     </tr>
 
