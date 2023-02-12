@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ServiceRest } from './serviceRest';
 import { ServiceWipf } from './serviceWipf';
 import packageJson from '../../../package.json';

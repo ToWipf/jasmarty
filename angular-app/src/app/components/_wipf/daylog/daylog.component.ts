@@ -178,8 +178,7 @@ export class DayLogComponent implements OnInit {
       if (resdata.id != null) {
         this.bShowWarning = false;
         // Nach speichern, den Tag laden
-        //this.loadEventsByDay(resdata);
-        this.dateForLoad = resdata;
+        this.loadEventsByDaySetVar(resdata);
       }
     });
   }

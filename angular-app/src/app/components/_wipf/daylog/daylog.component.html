@@ -113,12 +113,6 @@
                             <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
                                 <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
                             </button>
-                            <!-- <button class="btn btn-wipf-default" (click)="loadEventsByDay(element)">
-                                    <mat-icon svgIcon="extern_link" aria-hidden="false" title="Tag anzeigen"></mat-icon>
-                                </button> -->
-                            <!-- <button class="btn btn-wipf-default" (click)="newEvent(element)">
-                                    Event erstellen
-                                </button> -->
                             <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
                                 <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                             </button>
@@ -126,7 +120,7 @@
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="daylistDisplayedColumns"></tr>
-                    <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="dateForLoad == (row)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
+                    <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="this.dateForLoad.id == (row.id)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
                 </table>
             </ng-scrollbar>
         </div>

@@ -51,6 +51,12 @@
         </td>
     </ng-container>
 
+    <tr *matNoDataRow>
+        <td class="mat-cell">
+                Keie Daten für den Tag oder kein Tag gewählt
+        </td>
+    </tr>
+
     <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
     <!-- <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
     <!-- <tr mat-row (click)="editEvent(row)" *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
