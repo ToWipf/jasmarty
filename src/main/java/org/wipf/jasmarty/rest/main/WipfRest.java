@@ -8,14 +8,17 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.WipfConfig;
@@ -107,5 +110,21 @@ public class WipfRest {
 	@Path("garbage")
 	public void gc() {
 		System.gc();
+	}
+
+	@GET
+	@Path("/me")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String me(@Context SecurityContext securityContext) {
+		return securityContext.getUserPrincipal().getName();
+	}
+
+	@GET
+	@Path("/cotest")
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String cotest(@CookieParam("fw") String c1) {
+		return c1;
 	}
 }
