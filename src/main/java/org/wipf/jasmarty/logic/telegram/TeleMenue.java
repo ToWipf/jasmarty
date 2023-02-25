@@ -134,7 +134,8 @@ public class TeleMenue {
 					"dl dh di |daylog\n" +
 					"backup\n" +
 					"discord\n" +
-					"discordlist"
+					"discordlist\n" +
+					"clearlog"
 					;
 				// @formatter:on
 

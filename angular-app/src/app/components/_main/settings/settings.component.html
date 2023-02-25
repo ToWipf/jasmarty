@@ -8,7 +8,7 @@
 </ng-container>
 
 <div class="configline">
-    <div class="box">
+    <div class="iconbox">
         Neu Laden:
         <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
             <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
@@ -59,22 +59,20 @@
     </table>
 </ng-scrollbar>
 
-<div class="configline sysbuttons">
+<div class="configline sysbuttonLine">
     <div class="box">
-        <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.openCookieDialog()">Cookies Verwalten</button>
+        <button type="button" class="btn btn-wipf-default sysbutton" (click)="serviceVersion.openCookieDialog()">Cookies Verwalten</button>
     </div>
     <div class="box">
-        <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.reloadApp()">Client neu laden</button>
+        <button type="button" class="btn btn-wipf-default sysbutton" (click)="serviceVersion.reloadApp()">Client neu laden</button>
     </div>
     <div class="box">
-        <button type="button" class="btn btn-wipf-default" (click)="rest.openSetServerDialog()">Api setzen</button>
-    </div>
-</div>
-<div class="configline sysbuttons">
-    <div class="box">
-        <button type="button" class="btn btn-wipf-default" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
+        <button type="button" class="btn btn-wipf-default sysbutton" (click)="rest.openSetServerDialog()">Api setzen</button>
     </div>
     <div class="box">
-        <button type="button" class="btn btn-danger" (click)="stopApp()"><span *ngIf="bSicherheitNochmalKlicken">SICHER? </span>System Beenden!</button>
+        <button type="button" class="btn btn-wipf-default sysbutton" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
+    </div>
+    <div class="box">
+        <button type="button" class="btn btn-danger sysbutton" (click)="stopApp()"><span *ngIf="bSicherheitNochmalKlicken">SICHER? </span>System Beenden!</button>
     </div>
 </div>
