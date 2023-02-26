@@ -13,7 +13,8 @@ import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 /**
- * A Exam.
+ * @author wipf
+ *
  */
 @Entity
 @Table(name = "base_authKey")

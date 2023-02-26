@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.base;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -9,6 +8,7 @@ import javax.transaction.Transactional;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.databasetypes.base.WipfUser;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -23,13 +23,16 @@ public class WipfUserVW {
 	private static final Logger LOGGER = Logger.getLogger("WipfUserVW");
 
 	/**
-	 * @param user
-	 * @param bAuthDb
-	 * @throws SQLException
+	 * @param sJson
 	 */
 	@Transactional
-	public void addOrUpdateUser(WipfUser user) {
-		user.persist();
+	public void addOrUpdateUser(String sJson) {
+		try {
+			new WipfUser().saveByJson(sJson);
+		} catch (WipfException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -40,21 +43,29 @@ public class WipfUserVW {
 		WipfUser.findByUsername(sUsername).firstResultOptional().ifPresent(wu -> {
 			wu.delete();
 		});
-
-	}
-
-	@Transactional
-	public void initDB() {
-
-		crateHealthCheckUser();
-		crateDefaultUser();
-
 	}
 
 	/**
 	 * @return
 	 */
-	private void crateDefaultUser() {
+	public JSONArray getAllUsersAsJson() {
+		JSONArray a = new JSONArray();
+		List<WipfUser> wul = WipfUser.findAll().list();
+		wul.forEach(wu -> {
+			JSONObject o = new JSONObject();
+			o.put("username", wu.username);
+			o.put("password", wu.password);
+			o.put("role", wu.role);
+			a.put(o);
+		});
+		return a;
+	}
+
+	/**
+	 * @return
+	 */
+	@Transactional
+	public void crateDefaultUser() {
 		WipfUser wu = new WipfUser();
 		wu.username = "admin";
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
@@ -67,7 +78,8 @@ public class WipfUserVW {
 	/**
 	 * @return
 	 */
-	private void crateHealthCheckUser() {
+	@Transactional
+	public void crateHealthCheckUser() {
 		WipfUser wu = new WipfUser();
 		wu.username = "check";
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
@@ -75,24 +87,6 @@ public class WipfUserVW {
 		// wu.setPassword("check");
 		wu.role = "check";
 		wu.persist();
-	}
-
-	public JSONArray getAllUsersAsJson() {
-
-		JSONArray a = new JSONArray();
-
-		List<WipfUser> wul = WipfUser.findAll().list();
-
-		wul.forEach(wu -> {
-
-			JSONObject o = new JSONObject();
-			o.put("username", wu.username);
-			o.put("password", wu.password);
-			o.put("role", wu.role);
-			a.put(o);
-		});
-
-		return a;
 	}
 
 }

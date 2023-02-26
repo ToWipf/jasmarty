@@ -73,7 +73,8 @@ public class MainHome {
 
 			sqlLitePatcher.doPatch();
 
-			wipfUserVW.initDB();
+			wipfUserVW.crateDefaultUser();
+			wipfUserVW.crateHealthCheckUser();
 
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();
