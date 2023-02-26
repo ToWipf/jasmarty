@@ -2,26 +2,21 @@ package org.wipf.jasmarty.databasetypes.base;
 
 import java.io.Serializable;
 
-import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * A Exam.
  */
 @Entity
-@Table(name = "authKey")
-@Cacheable
-@RegisterForReflection
+@Table(name = "base_authKey")
 public class AuthKey extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +25,6 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
 
-	@NotNull
 	@Column(name = "key", nullable = false)
 	public String key;
 

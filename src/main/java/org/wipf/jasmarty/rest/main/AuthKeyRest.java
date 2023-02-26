@@ -48,11 +48,19 @@ public class AuthKeyRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doit() {
 
-		AuthKey a = new AuthKey();
-		a.key = "42";
-		a.persist();
+		AuthKey b = new AuthKey();
+		b.key = "Aasd2";
 
-		return Response.ok(a.toString()).build();
+		for (int i = 0; i < 100; i++) {
+
+			AuthKey a = new AuthKey();
+			a.key = "42";
+			a.persist();
+		}
+
+		b.persist();
+
+		return Response.ok(b.toString()).build();
 	}
 
 }

@@ -1,105 +1,49 @@
-package org.wipf.jasmarty.datatypes;
+package org.wipf.jasmarty.databasetypes.base;
 
-import org.json.JSONObject;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.wipf.jasmarty.WipfException;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 
 /**
  * @author wipf
  *
  */
-public class WipfUser {
-	private String sUsername;
-	private String sPassword;
-	private String sRole;
-	private Integer nTelegramId;
+@Entity
+@Table(name = "base_users")
+public class WipfUser extends PanacheEntityBase implements Serializable {
 
-	/**
-	 * @return
-	 */
-	public JSONObject toJson() {
-		JSONObject jo = new JSONObject();
-		jo.put("username", this.sUsername);
-		jo.put("password", this.sPassword);
-		jo.put("role", this.sRole);
-		jo.put("telegramid", this.nTelegramId);
-		return jo;
-	}
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @param sJson
-	 * @return
-	 * @throws WipfException
-	 */
-	public WipfUser setByJson(String sJson) throws WipfException {
-		JSONObject jo = new JSONObject(sJson);
-		String sUsername = jo.getString("username").trim();
-		if (sUsername.contains(" ")) {
+	@Column(name = "username", nullable = false, unique = true)
+	public String username;
+	@Column(name = "password", nullable = false)
+	public String password;
+	@Column(name = "role", nullable = false)
+	public String role;
+
+	public static void add(String username, String password, String role) throws WipfException {
+		if (username.contains(" ")) {
 			throw new WipfException("Keine Leerzeichen im Benutzernamen erlaubt");
 		}
-		setUsername(sUsername);
-		// Mit bcrypt Verschluesselung (slow 32bit)
-		setPassword(BcryptUtil.bcryptHash(jo.getString("password")));
-		// setPassword(jo.getString("password"));
-		setRole(jo.getString("role"));
-		setTelegramId(jo.getInt("telegramid"));
-		return this;
+
+		WipfUser wu = new WipfUser();
+		wu.username = username.trim();
+		wu.password = BcryptUtil.bcryptHash(password);
+		wu.role = role;
+		wu.persist();
+
 	}
 
-	/**
-	 * @return
-	 */
-	public Integer getTelegramId() {
-		return nTelegramId;
+	public static PanacheQuery<WipfUser> findByUsername(String sUsername) {
+		return find("select * from base_users where username =?1", sUsername);
 	}
 
-	/**
-	 * @param nTelegramId
-	 */
-	public void setTelegramId(Integer nTelegramId) {
-		this.nTelegramId = nTelegramId;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getRole() {
-		return sRole;
-	}
-
-	/**
-	 * @param sRole
-	 */
-	public void setRole(String sRole) {
-		this.sRole = sRole;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getPassword() {
-		return sPassword;
-	}
-
-	/**
-	 * @param sPassword
-	 */
-	public void setPassword(String sPassword) {
-		this.sPassword = sPassword;
-	}
-
-	/**
-	 * @return
-	 */
-	public String getUsername() {
-		return sUsername;
-	}
-
-	/**
-	 * @param sUsername
-	 */
-	public void setUsername(String sUsername) {
-		this.sUsername = sUsername;
-	}
 }
