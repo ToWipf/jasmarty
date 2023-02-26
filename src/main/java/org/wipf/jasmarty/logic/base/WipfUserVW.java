@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
@@ -21,9 +20,6 @@ import io.quarkus.elytron.security.common.BcryptUtil;
 @ApplicationScoped
 public class WipfUserVW {
 
-	@Inject
-	SqlLite sqlLite;
-
 	private static final Logger LOGGER = Logger.getLogger("WipfUserVW");
 
 	/**
@@ -39,6 +35,7 @@ public class WipfUserVW {
 	/**
 	 * @param sUsername
 	 */
+	@Transactional
 	public void deleteUser(String sUsername) {
 		WipfUser.findByUsername(sUsername).firstResultOptional().ifPresent(wu -> {
 			wu.delete();
@@ -46,9 +43,12 @@ public class WipfUserVW {
 
 	}
 
+	@Transactional
 	public void initDB() {
-		crateDefaultUser();
+
 		crateHealthCheckUser();
+		crateDefaultUser();
+
 	}
 
 	/**
