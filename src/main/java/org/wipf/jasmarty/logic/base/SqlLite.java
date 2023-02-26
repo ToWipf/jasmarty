@@ -7,7 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import io.agroal.api.AgroalDataSource;
-import io.quarkus.agroal.DataSource;
 
 /**
  * @author wipf
@@ -20,7 +19,7 @@ public class SqlLite {
 	AgroalDataSource sqliteDbAuth;
 
 	@Inject
-	@DataSource("jasmarty")
+//	@DataSource("jasmarty")
 	AgroalDataSource sqliteDbJasmarty;
 
 	private static Connection cjasmarty = null;

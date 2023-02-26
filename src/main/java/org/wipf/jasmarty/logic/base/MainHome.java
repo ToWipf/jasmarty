@@ -71,10 +71,14 @@ public class MainHome {
 			createFileFolder();
 			wipfConfig.initDB();
 
-			sqlLitePatcher.doPatch();
-
 			wipfUserVW.crateDefaultUser();
 			wipfUserVW.crateHealthCheckUser();
+
+			if (true) {
+				return;
+			}
+
+			sqlLitePatcher.doPatch();
 
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();

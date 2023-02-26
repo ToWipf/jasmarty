@@ -52,7 +52,6 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 		WipfUser wu = WipfUser.findByUsername(sUsern).firstResult();
 
 		if (wu == null) {
-			System.out.println("NEU");
 			// Neu
 			username = sUsern;
 			password = (BcryptUtil.bcryptHash(jo.getString("password")));
@@ -61,7 +60,6 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 
 		} else {
 			// Update
-			System.out.println("UPDATE");
 			wu.password = (BcryptUtil.bcryptHash(jo.getString("password")));
 			wu.role = (jo.getString("role"));
 			wu.persist();

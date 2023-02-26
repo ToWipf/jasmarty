@@ -5,7 +5,6 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
-import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.WipfException;
@@ -19,8 +18,6 @@ import io.quarkus.elytron.security.common.BcryptUtil;
  */
 @ApplicationScoped
 public class WipfUserVW {
-
-	private static final Logger LOGGER = Logger.getLogger("WipfUserVW");
 
 	/**
 	 * @param sJson
