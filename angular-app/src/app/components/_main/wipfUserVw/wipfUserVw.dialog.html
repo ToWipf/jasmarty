@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Username: {{data.username}}</h1>
+<h1 mat-dialog-title>ID: {{data.id}}</h1>
 <mat-dialog-content>
     <mat-form-field>
         <mat-label>Username</mat-label>
@@ -8,14 +8,7 @@
         <mat-label>Passwort</mat-label>
         <input matInput [(ngModel)]="data.password">
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Telegram Id</mat-label>
-        <input type="number" matInput [(ngModel)]="data.telegramid">
-    </mat-form-field>
     <br>
-
-    <!-- <mat-label>Status</mat-label> -->
-    <!-- <input matInput [(ngModel)]="data.active"> -->
 
     <mat-form-field appearance="fill">
         <mat-label>Role</mat-label>

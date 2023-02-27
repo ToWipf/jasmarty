@@ -18,10 +18,17 @@ export class WipfUserVwComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['username', 'role', 'telegramid', 'button'];
+  public displayedColumns: string[] = ['id', 'username', 'role', 'button'];
+  public sFilter: string = "";
 
   ngOnInit() {
     this.load();
+  }
+
+  public applyFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSource.filter = this.sFilter.trim();
+    });
   }
 
   public load(): void {

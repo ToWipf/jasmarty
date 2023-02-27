@@ -1,6 +1,28 @@
 <h3>Benutzerliste</h3>
+<hr>
+
+<div class="configline">
+    <div class="iconbox">
+        Neu Laden:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
+            <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+        </button>
+    </div>
+    <div class="box">
+        <mat-form-field>
+            <mat-label>Filtern</mat-label>
+            <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+        </mat-form-field>
+    </div>
+</div>
+
 <ng-scrollbar class="pscroll">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
 
         <ng-container matColumnDef="username">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
@@ -12,10 +34,6 @@
             <td mat-cell *matCellDef="let element"> {{element.role}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="telegramid">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> telegramid </th>
-            <td mat-cell *matCellDef="let element"> {{element.telegramid}} </td>
-        </ng-container>
 
         <ng-container matColumnDef="button">
             <th mat-header-cell *matHeaderCellDef>

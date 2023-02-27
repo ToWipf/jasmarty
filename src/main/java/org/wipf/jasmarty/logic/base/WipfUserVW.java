@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.databasetypes.base.WipfUser;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -24,12 +23,7 @@ public class WipfUserVW {
 	 */
 	@Transactional
 	public void addOrUpdateUser(String sJson) {
-		try {
-			new WipfUser().saveByJson(sJson);
-		} catch (WipfException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		new WipfUser().setByJson(sJson).saveOrUpdate();
 	}
 
 	/**
@@ -50,6 +44,7 @@ public class WipfUserVW {
 		List<WipfUser> wul = WipfUser.findAll().list();
 		wul.forEach(wu -> {
 			JSONObject o = new JSONObject();
+			o.put("id", wu.id);
 			o.put("username", wu.username);
 			o.put("password", wu.password);
 			o.put("role", wu.role);
@@ -64,12 +59,13 @@ public class WipfUserVW {
 	@Transactional
 	public void crateDefaultUser() {
 		WipfUser wu = new WipfUser();
+		wu.id = 1;
 		wu.username = "admin";
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
 		wu.password = BcryptUtil.bcryptHash("jadmin");
 		// wu.setPassword("jadmin");
 		wu.role = "admin";
-		wu.persist();
+		wu.saveOrUpdate();
 	}
 
 	/**
@@ -78,12 +74,13 @@ public class WipfUserVW {
 	@Transactional
 	public void crateHealthCheckUser() {
 		WipfUser wu = new WipfUser();
+		wu.id = 2;
 		wu.username = "check";
 		// Mit bcrypt Verschluesselung (slow bei 32Bit)
 		wu.password = BcryptUtil.bcryptHash("check");
 		// wu.setPassword("check");
 		wu.role = "check";
-		wu.persist();
+		wu.saveOrUpdate();
 	}
 
 }

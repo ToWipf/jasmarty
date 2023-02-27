@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.json.JSONObject;
-import org.wipf.jasmarty.WipfException;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -27,6 +28,9 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	public Integer id;
 	@Column(name = "username", nullable = false, unique = true)
 	public String username;
 	@Column(name = "password", nullable = false)
@@ -41,28 +45,41 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 
 	/**
 	 * @param sJson
-	 * @return
-	 * @throws WipfException
 	 */
-	public void saveByJson(String sJson) throws WipfException {
+	public WipfUser setByJson(String sJson) {
 		JSONObject jo = new JSONObject(sJson);
-		String sUsern = jo.getString("username").trim();
-		checkUsername(sUsern);
+		if (jo.has("id")) {
+			this.id = jo.getInt("id");
+		}
+		this.username = jo.getString("username").trim();
+		this.password = (BcryptUtil.bcryptHash(jo.getString("password")));
+		this.role = (jo.getString("role"));
+		return this;
+	}
 
-		WipfUser wu = WipfUser.findByUsername(sUsern).firstResult();
+	/**
+	 * @param wu
+	 */
+	public void saveOrUpdate() {
 
-		if (wu == null) {
-			// Neu
-			username = sUsern;
-			password = (BcryptUtil.bcryptHash(jo.getString("password")));
-			role = (jo.getString("role"));
-			this.persist();
-
-		} else {
+		if (this.id != null) {
 			// Update
-			wu.password = (BcryptUtil.bcryptHash(jo.getString("password")));
-			wu.role = (jo.getString("role"));
-			wu.persist();
+			WipfUser existingData = WipfUser.findById(this.id);
+			if (existingData != null) {
+				System.out.println("UPDATE");
+				existingData.username = this.username;
+				existingData.password = this.password;
+				existingData.role = this.role;
+				existingData.persist();
+			} else {
+				// Neu
+				System.out.println("NEUER mit fix id");
+				this.persist();
+			}
+		} else {
+			// Neu
+			System.out.println("NEU");
+			this.persist();
 		}
 	}
 
@@ -72,17 +89,6 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 	 */
 	public static PanacheQuery<WipfUser> findByUsername(String sUsername) {
 		return find("select e from WipfUser e where username =?1", sUsername);
-	}
-
-	/**
-	 * @param sUsername
-	 * @return
-	 * @throws WipfException
-	 */
-	private static void checkUsername(String sUsername) throws WipfException {
-		if (sUsername.contains(" ")) {
-			throw new WipfException("Keine Leerzeichen im Benutzernamen erlaubt");
-		}
 	}
 
 }
