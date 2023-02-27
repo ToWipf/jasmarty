@@ -47,7 +47,6 @@ public class MainHome {
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.5.01";
-	public static final String DB_PATH = "jasmarty.db";
 
 	/**
 	 * Stop App
@@ -70,17 +69,9 @@ public class MainHome {
 
 			wipfUserVW.crateDefaultUsers();
 
-			if (true) {
-				return;
-			}
-
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();
-				dynpages.initDB();
-				daylogHome.initDB();
 			}
-			listeDB.initDB();
-			listeTypeDB.initDB();
 
 			if (wipfConfig.isAppActive("jasmarty")) {
 				jasmartyHome.jasmartyStart();

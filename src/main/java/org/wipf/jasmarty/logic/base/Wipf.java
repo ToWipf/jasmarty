@@ -525,4 +525,11 @@ public class Wipf {
 		return sb.toString();
 	}
 
+	/**
+	 * @return
+	 */
+	public Long getTime() {
+		return System.currentTimeMillis();
+	}
+
 }

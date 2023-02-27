@@ -13,8 +13,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.logic.base.FileVW;
-import org.wipf.jasmarty.logic.base.WipfInfo;
-import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
 /**
  * @author wipf
@@ -27,10 +25,6 @@ import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 @ApplicationScoped
 public class FileRest {
 
-	@Inject
-	SerialConfig serialConfig;
-	@Inject
-	WipfInfo wipfInfo;
 	@Inject
 	FileVW fileVw;
 
