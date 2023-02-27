@@ -40,7 +40,7 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 
 	@Override
 	public String toString() {
-		return "username=" + username + ", password=" + password + ", role=" + role;
+		return "id=" + id + ", username=" + username + ", password=" + password + ", role=" + role;
 	}
 
 	/**
@@ -63,22 +63,19 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 	public void saveOrUpdate() {
 
 		if (this.id != null) {
-			// Update
 			WipfUser existingData = WipfUser.findById(this.id);
 			if (existingData != null) {
-				System.out.println("UPDATE");
+				// Update
 				existingData.username = this.username;
 				existingData.password = this.password;
 				existingData.role = this.role;
 				existingData.persist();
 			} else {
-				// Neu
-				System.out.println("NEUER mit fix id");
-				this.persist();
+				// Neu mit unbekannter id
+				System.err.println("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu
-			System.out.println("NEU");
 			this.persist();
 		}
 	}

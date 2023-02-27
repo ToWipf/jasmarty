@@ -70,8 +70,7 @@ public class MainHome {
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			createFileFolder();
 
-			wipfUserVW.crateDefaultUser();
-			wipfUserVW.crateHealthCheckUser();
+			wipfUserVW.crateDefaultUsers();
 
 			if (true) {
 				return;
