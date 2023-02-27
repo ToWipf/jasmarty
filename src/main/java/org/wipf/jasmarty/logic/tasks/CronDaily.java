@@ -10,7 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
@@ -30,7 +30,7 @@ public class CronDaily {
 	@Inject
 	PunkteVW punkteVW;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	DaylogHome daylogHome;
 	@Inject
@@ -45,7 +45,7 @@ public class CronDaily {
 	public void dailyTask() {
 		LOGGER.info("Starte DailyTask");
 
-		if (wipfConfig.isAppActiveSave("telegram")) {
+		if (wipfConfig.isAppActive("telegram")) {
 
 			// Nur Sonntags
 			Instant instant = Instant.now();

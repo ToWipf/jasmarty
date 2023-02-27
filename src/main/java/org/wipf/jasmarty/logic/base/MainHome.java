@@ -29,7 +29,7 @@ import io.quarkus.runtime.StartupEvent;
 public class MainHome {
 
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	WipfUserVW wipfUserVW;
 	@Inject
@@ -40,8 +40,6 @@ public class MainHome {
 	DaylogHome daylogHome;;
 	@Inject
 	Dynpages dynpages;
-	@Inject
-	SqlLitePatcher sqlLitePatcher;
 	@Inject
 	ListeDB listeDB;
 	@Inject
@@ -75,9 +73,6 @@ public class MainHome {
 			if (true) {
 				return;
 			}
-			wipfConfig.initDB();
-
-			sqlLitePatcher.doPatch();
 
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();

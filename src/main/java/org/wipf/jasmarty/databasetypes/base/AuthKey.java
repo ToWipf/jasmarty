@@ -42,7 +42,7 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 
 	@Override
 	public String toString() {
-		return "id=" + id + " key='" + key;
+		return "id=" + id + " key=" + key;
 	}
 
 	public AuthKey update() {

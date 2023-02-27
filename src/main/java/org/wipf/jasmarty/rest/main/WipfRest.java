@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.wipf.jasmarty.logic.base.MainHome;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.base.WipfInfo;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
@@ -46,7 +46,7 @@ public class WipfRest {
 	@Inject
 	DiscordHome discord;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	@POST
 	@Path("setDiscordId/{id}")

@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 
 /**
@@ -24,7 +24,7 @@ public class RndTask {
 	@Inject
 	TSendAndReceive sendAndReceive;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	Wipf wipf;
 

@@ -15,7 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
  * @author wipf
@@ -29,13 +29,13 @@ import org.wipf.jasmarty.logic.base.WipfConfig;
 public class WipfConfigRest {
 
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	@GET
 	@PermitAll
 	@Path("get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {
-		return Response.ok("{\"active\":" + wipfConfig.isAppActiveSave(sAppname) + "}").build();
+		return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
 	}
 
 	@POST
@@ -58,8 +58,9 @@ public class WipfConfigRest {
 
 	@POST
 	@Path("save")
-	public Response saveTodo(String jnRoot) {
-		return Response.ok("{\"save\":\"" + wipfConfig.saveItem(jnRoot) + "\"}").build();
+	public Response saveItem(String jnRoot) {
+		wipfConfig.saveItem(jnRoot);
+		return Response.ok().build();
 	}
 
 	@DELETE

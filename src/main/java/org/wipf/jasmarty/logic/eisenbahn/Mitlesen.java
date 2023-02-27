@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.eisenbahn;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -12,7 +11,7 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.eisenbahn.ArduinoConfig;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
  * @author Wipf
@@ -24,7 +23,7 @@ public class Mitlesen {
 	@Inject
 	MitlesenConnect connect;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	private static final String PORT = "arduino_Port";
 	private static final String BAUDRATE = "arduino_BaudRate";
@@ -134,28 +133,24 @@ public class Mitlesen {
 	 * 
 	 */
 	public void setConfig() {
-		try {
-			ArduinoConfig ac = new ArduinoConfig();
-			ac.setPort(wipfConfig.getConfParamString(PORT));
-			ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
-			ac.setLineLength(wipfConfig.getConfParamInteger(LINELENGTH));
-			if (ac.isValid()) {
-				LOGGER.info("Config ok");
-				connect.setConfig(ac);
-				// mitlesenConnect.startSerialPort();
-				// mitlesen.doStartMitlesen();
-			} else {
-				LOGGER.error("Problem mit der Config");
-				wipfConfig.setConfParam(PORT, "COM3");
-				wipfConfig.setConfParam(BAUDRATE, 57600);
-				wipfConfig.setConfParam(LINELENGTH, 50);
-			}
 
-			ac.setPort(wipfConfig.getConfParamString(PORT));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ArduinoConfig ac = new ArduinoConfig();
+		ac.setPort(wipfConfig.getConfParamString(PORT));
+		ac.setBaudRate(wipfConfig.getConfParamInteger(BAUDRATE));
+		ac.setLineLength(wipfConfig.getConfParamInteger(LINELENGTH));
+		if (ac.isValid()) {
+			LOGGER.info("Config ok");
+			connect.setConfig(ac);
+			// mitlesenConnect.startSerialPort();
+			// mitlesen.doStartMitlesen();
+		} else {
+			LOGGER.error("Problem mit der Config");
+			wipfConfig.setConfParam(PORT, "COM3");
+			wipfConfig.setConfParam(BAUDRATE, 57600);
+			wipfConfig.setConfParam(LINELENGTH, 50);
 		}
+
+		ac.setPort(wipfConfig.getConfParamString(PORT));
 	}
 
 }

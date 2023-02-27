@@ -36,7 +36,7 @@ public class WipfUserVwRest {
 	@GET
 	@Path("getAll")
 	public Response getAll() {
-		return Response.ok(wipfUserVW.getAllUsersAsJson().toString()).build();
+		return Response.ok(wipfUserVW.getAllAsJson().toString()).build();
 	}
 
 	@POST

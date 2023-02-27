@@ -30,19 +30,9 @@ public class WipfUserVW {
 	}
 
 	/**
-	 * @param sUsername
-	 */
-	@Transactional
-	public void deleteUser(String sUsername) {
-		WipfUser.findByUsername(sUsername).firstResultOptional().ifPresent(wu -> {
-			wu.delete();
-		});
-	}
-
-	/**
 	 * @return
 	 */
-	public JSONArray getAllUsersAsJson() {
+	public JSONArray getAllAsJson() {
 		JSONArray a = new JSONArray();
 		List<WipfUser> wul = WipfUser.findAll().list();
 		wul.forEach(wu -> {
@@ -77,6 +67,16 @@ public class WipfUserVW {
 			wuCheck.saveOrUpdate();
 			LOGGER.info("Erstelle check User: " + wuCheck.toString());
 		}
+	}
+
+	/**
+	 * @param sUsername
+	 */
+	@Transactional
+	public void deleteUser(String sUsername) {
+		WipfUser.findByUsername(sUsername).firstResultOptional().ifPresent(o -> {
+			o.delete();
+		});
 	}
 
 }
