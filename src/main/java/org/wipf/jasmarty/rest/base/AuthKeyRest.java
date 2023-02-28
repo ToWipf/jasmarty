@@ -1,6 +1,5 @@
-package org.wipf.jasmarty.rest.main;
+package org.wipf.jasmarty.rest.base;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
@@ -24,32 +23,16 @@ import org.wipf.jasmarty.databasetypes.base.AuthKey;
 @ApplicationScoped
 public class AuthKeyRest {
 
-//
-//	@POST
-//	@Path("setDiscordId/{id}")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	public Response discordSetId(@PathParam("id") String sId) throws IOException, SQLException {
-//		wipfConfig.setConfParam("discord_id", sId);
-//		return Response.ok(wipfConfig.getConfParamString("discord_id")).build();
-//	}
-
-//	@GET
-//	@Path("up")
-//	@Produces(MediaType.TEXT_PLAIN)
-//	@RolesAllowed({ "admin", "check", "user" })
-//	public Response up() {
-//		return Response.ok(1).build();
-//	}
+	// TODO
 
 	@GET
 	@Path("do")
-	@PermitAll
 	@Transactional
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doit() {
 
 		AuthKey b = new AuthKey();
-		b.key = "Aasd2";
+		b.key = "test";
 
 		for (int i = 0; i < 100; i++) {
 

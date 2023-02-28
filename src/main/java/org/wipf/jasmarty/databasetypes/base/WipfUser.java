@@ -41,7 +41,7 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 	}
 
 	/**
-	 * @param wu
+	 * 
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {

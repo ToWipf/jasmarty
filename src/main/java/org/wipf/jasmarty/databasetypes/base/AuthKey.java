@@ -25,54 +25,31 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
-
 	@Column(name = "key", nullable = false)
 	public String key;
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (!(o instanceof AuthKey)) {
-			return false;
-		}
-		return id != null && id.equals(((AuthKey) o).id);
-	}
 
 	@Override
 	public String toString() {
 		return "id=" + id + " key=" + key;
 	}
 
-	public AuthKey update() {
-		return update(this);
-	}
-
-	public AuthKey persistOrUpdate() {
-		return persistOrUpdate(this);
-	}
-
-	public static AuthKey update(AuthKey ak) {
-		if (ak == null) {
-			throw new IllegalArgumentException("can't be null");
-		}
-		AuthKey entity = AuthKey.<AuthKey>findById(ak.id);
-		if (entity != null) {
-			entity.key = ak.key;
-		}
-		return entity;
-	}
-
-	public static AuthKey persistOrUpdate(AuthKey ak) {
-		if (ak == null) {
-			throw new IllegalArgumentException("can't be null");
-		}
-		if (ak.id == null) {
-			persist(ak);
-			return ak;
+	/**
+	 * 
+	 */
+	public void saveOrUpdate() {
+		if (this.id != null) {
+			AuthKey existingData = AuthKey.findById(this.id);
+			if (existingData != null) {
+				// Update
+				existingData.key = this.key;
+				existingData.persist();
+			} else {
+				// Neu mit unbekannter id
+				System.err.println("ID nicht in DB! " + this.toString());
+			}
 		} else {
-			return update(ak);
+			// Neu
+			this.persist();
 		}
 	}
 

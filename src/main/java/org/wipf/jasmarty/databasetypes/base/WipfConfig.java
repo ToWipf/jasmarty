@@ -35,17 +35,17 @@ public class WipfConfig extends PanacheEntityBase implements Serializable {
 
 	/**
 	 * @param sKey
-	 * @param sVal
+	 * @param sValue
 	 * @return
 	 */
-	public WipfConfig setBy(String sKey, String sVal) {
+	public WipfConfig setBy(String sKey, String sValue) {
 		this.key = sKey;
-		this.value = sVal;
+		this.value = sValue;
 		return this;
 	}
 
 	/**
-	 * @param wu
+	 * 
 	 */
 	public void saveOrUpdate() {
 		if (this.key != null) {
