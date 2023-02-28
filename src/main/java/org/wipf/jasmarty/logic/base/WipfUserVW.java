@@ -6,8 +6,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.wipf.jasmarty.databasetypes.base.WipfUser;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
@@ -25,25 +23,17 @@ public class WipfUserVW {
 	 * @param sJson
 	 */
 	@Transactional
-	public void addOrUpdateUser(String sJson) {
-		new WipfUser().setByJson(sJson).saveOrUpdate();
+	public void addOrUpdateUser(WipfUser wu) {
+		// Password hashen
+		wu.password = (BcryptUtil.bcryptHash(wu.password));
+		wu.saveOrUpdate();
 	}
 
 	/**
 	 * @return
 	 */
-	public JSONArray getAllAsJson() {
-		JSONArray a = new JSONArray();
-		List<WipfUser> wul = WipfUser.findAll().list();
-		wul.forEach(wu -> {
-			JSONObject o = new JSONObject();
-			o.put("id", wu.id);
-			o.put("username", wu.username);
-			o.put("password", wu.password);
-			o.put("role", wu.role);
-			a.put(o);
-		});
-		return a;
+	public List<WipfUser> getAll() {
+		return WipfUser.findAll().list();
 	}
 
 	/**

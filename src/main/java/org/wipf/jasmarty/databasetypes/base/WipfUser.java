@@ -9,9 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.json.JSONObject;
-
-import io.quarkus.elytron.security.common.BcryptUtil;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -41,20 +38,6 @@ public class WipfUser extends PanacheEntityBase implements Serializable {
 	@Override
 	public String toString() {
 		return "id=" + id + ", username=" + username + ", password=" + password + ", role=" + role;
-	}
-
-	/**
-	 * @param sJson
-	 */
-	public WipfUser setByJson(String sJson) {
-		JSONObject jo = new JSONObject(sJson);
-		if (jo.has("id")) {
-			this.id = jo.getInt("id");
-		}
-		this.username = jo.getString("username").trim();
-		this.password = (BcryptUtil.bcryptHash(jo.getString("password")));
-		this.role = (jo.getString("role"));
-		return this;
 	}
 
 	/**
