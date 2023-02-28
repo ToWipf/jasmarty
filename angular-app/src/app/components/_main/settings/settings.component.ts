@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['key', 'val', 'button'];
+  public displayedColumns: string[] = ['key', 'value', 'button'];
   public bShowWarning: boolean = false;
   public sFilter: string = "";
   public bSicherheitNochmalKlicken: boolean = false;

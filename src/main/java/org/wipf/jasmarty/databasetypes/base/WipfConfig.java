@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.json.JSONObject;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -33,18 +31,6 @@ public class WipfConfig extends PanacheEntityBase implements Serializable {
 	@Override
 	public String toString() {
 		return "key=" + key + " value=" + value;
-	}
-
-	/**
-	 * @param sJson
-	 */
-	public WipfConfig setByJson(String sJson) {
-		JSONObject jo = new JSONObject(sJson);
-		if (jo.has("key")) {
-			this.key = jo.getString("key");
-		}
-		this.value = jo.getString("val");
-		return this;
 	}
 
 	/**

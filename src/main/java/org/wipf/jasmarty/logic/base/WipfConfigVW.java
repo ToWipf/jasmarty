@@ -8,8 +8,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.wipf.jasmarty.databasetypes.base.WipfConfig;
 
 /**
@@ -38,29 +36,10 @@ public class WipfConfigVW {
 	}
 
 	/**
-	 * @param conf
-	 * @return
-	 * @throws SQLException
-	 */
-	@Transactional
-	public void setAppStatus(String sAppname, boolean bStatus) throws SQLException {
-		new WipfConfig().setBy(APP_PREFIX + sAppname, bStatus ? "1" : "0").saveOrUpdate();
-		LOGGER.info("Config gespeichert: " + sAppname + " ist jetzt " + bStatus);
-	}
-
-	/**
 	 * @return
 	 */
-	public JSONArray getAllAsJson() {
-		JSONArray a = new JSONArray();
-		List<WipfConfig> wcl = WipfConfig.findAll().list();
-		wcl.forEach(wc -> {
-			JSONObject o = new JSONObject();
-			o.put("key", wc.key);
-			o.put("val", wc.value);
-			a.put(o);
-		});
-		return a;
+	public List<WipfConfig> getAll() {
+		return WipfConfig.findAll().list();
 	}
 
 	/**
@@ -118,8 +97,8 @@ public class WipfConfigVW {
 	 * @return
 	 */
 	@Transactional
-	public void saveItem(String jnRoot) {
-		new WipfConfig().setByJson(jnRoot).saveOrUpdate();
+	public void saveItem(WipfConfig wu) {
+		wu.saveOrUpdate();
 	}
 
 	/**

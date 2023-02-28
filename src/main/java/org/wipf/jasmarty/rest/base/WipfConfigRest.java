@@ -1,6 +1,4 @@
-package org.wipf.jasmarty.rest.main;
-
-import java.sql.SQLException;
+package org.wipf.jasmarty.rest.base;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -15,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.databasetypes.base.WipfConfig;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
@@ -38,28 +37,16 @@ public class WipfConfigRest {
 		return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
 	}
 
-	@POST
-	@Path("set/{appname}/{status}")
-	public Response setConfig(@PathParam("appname") String sAppname, @PathParam("status") boolean bStatus) {
-		try {
-			wipfConfig.setAppStatus(sAppname, bStatus);
-			return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return Response.serverError().build();
-		}
-	}
-
 	@GET
 	@Path("getAll")
 	public Response getConfig() {
-		return Response.ok(wipfConfig.getAllAsJson().toString()).build();
+		return Response.ok(wipfConfig.getAll()).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response saveItem(String jnRoot) {
-		wipfConfig.saveItem(jnRoot);
+	public Response saveItem(WipfConfig wu) {
+		wipfConfig.saveItem(wu);
 		return Response.ok().build();
 	}
 

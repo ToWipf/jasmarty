@@ -141,7 +141,7 @@ export interface RndEvent {
 
 export interface KeyValEntry {
   key?: string;
-  val?: string;
+  value?: string;
 }
 
 export interface ListeEntry {

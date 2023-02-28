@@ -17,7 +17,6 @@ export class JasmartyConfigComponent implements OnInit {
   ngOnInit() {
     this.load();
     this.getPorts();
-    this.getJasmartyActive();
   }
 
   public load(): void {
@@ -68,14 +67,4 @@ export class JasmartyConfigComponent implements OnInit {
     });
   }
 
-  public getJasmartyActive(): void {
-    this.rest.get('basesettings/get/jasmarty').then((resdata: any) => {
-      this.bJasmartyActive = resdata.active;
-    });
-  }
-
-  public setJasmartyActive(bStatus: boolean): void {
-    this.rest.post('basesettings/set/jasmarty/' + bStatus, '').then((resdata: any) => {
-    });
-  }
 }
