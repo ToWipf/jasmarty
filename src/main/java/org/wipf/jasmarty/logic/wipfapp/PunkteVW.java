@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.wipfapp.PunkteGewinn;
 import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 @ApplicationScoped
 public class PunkteVW {
@@ -18,7 +18,7 @@ public class PunkteVW {
 	@Inject
 	Wipf wipf;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("PunkteVW");
 	private static final String PUNKTE = "punkte";

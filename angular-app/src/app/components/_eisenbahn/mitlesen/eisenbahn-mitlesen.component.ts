@@ -73,7 +73,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
 
       let tmpAnz = 0;
       this.itemarry.forEach((i) => {
-        tmpAnz = tmpAnz + parseInt(i.val);
+        tmpAnz = tmpAnz + parseInt(i.value);
       });
       this.nAnzahlEvents = tmpAnz;
 

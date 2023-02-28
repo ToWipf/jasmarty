@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.discord;
 
-import java.sql.SQLException;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -11,7 +9,7 @@ import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Discord;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.Wipf.httpRequestType;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
  * @author wipf
@@ -23,7 +21,7 @@ public class DiscordHome {
 	@Inject
 	Wipf wipf;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("Discord");
 
@@ -38,8 +36,7 @@ public class DiscordHome {
 		}
 		try {
 			d.setDisId(sId);
-			String sRes = wipf.httpRequest(httpRequestType.GET,
-					"https://discord.com/api/guilds/" + sId + "/widget.json");
+			String sRes = wipf.httpRequest(httpRequestType.GET, "https://discord.com/api/guilds/" + sId + "/widget.json");
 
 			JSONObject jo = new JSONObject(sRes);
 			JSONArray ja = (JSONArray) jo.get("members");
@@ -63,11 +60,7 @@ public class DiscordHome {
 	 * @return
 	 */
 	public Discord getByDefaultId() {
-		try {
-			return getById(wipfConfig.getConfParamString("discord_id"));
-		} catch (SQLException e) {
-			return null;
-		}
+		return getById(wipfConfig.getConfParamString("discord_id"));
 	}
 
 	/**

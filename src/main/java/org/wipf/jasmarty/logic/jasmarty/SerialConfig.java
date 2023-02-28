@@ -10,7 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -20,7 +20,7 @@ public class SerialConfig {
 	private static final Logger LOGGER = Logger.getLogger("lcd_SerialConfig");
 
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	/**
 	 * @return

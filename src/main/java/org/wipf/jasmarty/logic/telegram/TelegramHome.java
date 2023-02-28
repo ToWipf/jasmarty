@@ -6,7 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.tasks.RndTask;
 
 /**
@@ -37,7 +37,7 @@ public class TelegramHome {
 	@Inject
 	RndTask rndTask;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 

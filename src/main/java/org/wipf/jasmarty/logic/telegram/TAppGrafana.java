@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 @ApplicationScoped
 public class TAppGrafana {
@@ -16,7 +16,7 @@ public class TAppGrafana {
 	@Inject
 	Wipf wipf;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	TSendAndReceive sendAndReceive;
 	@Inject

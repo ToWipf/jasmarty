@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest.main;
+package org.wipf.jasmarty.rest.base;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.databasetypes.base.WipfUser;
 import org.wipf.jasmarty.logic.base.WipfUserVW;
 
 /**
@@ -36,13 +37,13 @@ public class WipfUserVwRest {
 	@GET
 	@Path("getAll")
 	public Response getAll() {
-		return Response.ok(wipfUserVW.getAllUsersAsJson(false).toString()).build();
+		return Response.ok(wipfUserVW.getAll()).build();
 	}
 
 	@POST
 	@Path("createOrUpdate")
-	public Response createOrUpdate(String sJson) throws WipfException {
-		wipfUserVW.addOrUpdateUser(sJson);
+	public Response createOrUpdate(WipfUser wu) throws WipfException {
+		wipfUserVW.addOrUpdateUser(wu);
 		return Response.ok().build();
 	}
 

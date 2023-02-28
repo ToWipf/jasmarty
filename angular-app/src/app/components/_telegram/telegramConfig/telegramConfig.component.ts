@@ -13,7 +13,6 @@ export class TelegramConfigComponent implements OnInit {
   public bTelegramActive: boolean;
 
   ngOnInit() {
-    this.getTelegramActive();
     this.getBotKey();
   }
 
@@ -39,14 +38,4 @@ export class TelegramConfigComponent implements OnInit {
     });
   }
 
-  public getTelegramActive(): void {
-    this.rest.get('basesettings/get/telegram').then((resdata: any) => {
-      this.bTelegramActive = resdata.active;
-    });
-  }
-
-  public setTelegramActive(bStatus: boolean): void {
-    this.rest.post('basesettings/set/telegram/' + bStatus, '').then((resdata: any) => {
-    });
-  }
 }

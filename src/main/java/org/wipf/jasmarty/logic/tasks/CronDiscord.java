@@ -6,7 +6,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.Discord;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 
@@ -22,7 +22,7 @@ public class CronDiscord {
 	@Inject
 	DiscordHome discord;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	TSendAndReceive tSendAndReceive;
 
@@ -32,9 +32,9 @@ public class CronDiscord {
 
 	@PostConstruct
 	public void Init() {
-		if (wipfConfig.isAppActiveSave("telegram")) {
+		if (wipfConfig.isAppActive("telegram")) {
 
-			this.sDiscordId = wipfConfig.getConfParamStringSave("discord_id");
+			this.sDiscordId = wipfConfig.getConfParamString("discord_id");
 
 			if (this.sDiscordId == null) {
 				// LOGGER.info("Init Discord Fail, id ist null");

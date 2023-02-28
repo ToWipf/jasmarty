@@ -21,8 +21,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
 import org.wipf.jasmarty.logic.base.MainHome;
-import org.wipf.jasmarty.logic.base.WipfConfig;
-import org.wipf.jasmarty.logic.base.WipfInfo;
+import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 
@@ -42,11 +42,11 @@ public class WipfRest {
 	@Inject
 	SerialConfig serialConfig;
 	@Inject
-	WipfInfo wipfInfo;
-	@Inject
 	DiscordHome discord;
 	@Inject
-	WipfConfig wipfConfig;
+	Wipf wipf;
+	@Inject
+	WipfConfigVW wipfConfig;
 
 	@POST
 	@Path("setDiscordId/{id}")
@@ -74,14 +74,7 @@ public class WipfRest {
 	@GET
 	@Path("time")
 	public Response getTime() {
-		return Response.ok("{\"time\":\"" + wipfInfo.getTime() + "\"}").build();
-	}
-
-	@GET
-	@Path("tinfo")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response tinfo() {
-		return Response.ok(wipfInfo.getThreadInfo()).build();
+		return Response.ok("{\"time\":\"" + wipf.getTime() + "\"}").build();
 	}
 
 	@GET

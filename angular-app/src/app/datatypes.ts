@@ -74,10 +74,10 @@ export interface Telegram {
 }
 
 export interface WipfUser {
+  id?: number;
   username?: string;
   password?: string;
   role?: string;
-  telegramid?: number;
 }
 
 export interface Lcd12864PageDescription {
@@ -141,7 +141,7 @@ export interface RndEvent {
 
 export interface KeyValEntry {
   key?: string;
-  val?: string;
+  value?: string;
 }
 
 export interface ListeEntry {

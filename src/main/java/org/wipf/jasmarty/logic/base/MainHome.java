@@ -29,7 +29,7 @@ import io.quarkus.runtime.StartupEvent;
 public class MainHome {
 
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	WipfUserVW wipfUserVW;
 	@Inject
@@ -41,15 +41,12 @@ public class MainHome {
 	@Inject
 	Dynpages dynpages;
 	@Inject
-	SqlLitePatcher sqlLitePatcher;
-	@Inject
 	ListeDB listeDB;
 	@Inject
 	ListeTypeDB listeTypeDB;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "1.4.02";
-	public static final String DB_PATH = "jasmarty.db";
+	public static final String VERSION = "1.5.01";
 
 	/**
 	 * Stop App
@@ -69,19 +66,12 @@ public class MainHome {
 			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 			createFileFolder();
-			wipfConfig.initDB();
 
-			sqlLitePatcher.doPatch();
-
-			wipfUserVW.initDB();
+			wipfUserVW.crateDefaultUsers();
 
 			if (wipfConfig.isAppActive("wipf")) {
 				wipfConfig.checkAppWorkId();
-				dynpages.initDB();
-				daylogHome.initDB();
 			}
-			listeDB.initDB();
-			listeTypeDB.initDB();
 
 			if (wipfConfig.isAppActive("jasmarty")) {
 				jasmartyHome.jasmartyStart();

@@ -19,7 +19,7 @@ import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
  * @author wipf
@@ -43,7 +43,7 @@ public class TSendAndReceive {
 	@Inject
 	TUserAndGroups userAndGroups;
 	@Inject
-	WipfConfig wipfConfig;
+	WipfConfigVW wipfConfig;
 	@Inject
 	FileVW fileVw;
 	@Inject
