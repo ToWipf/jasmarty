@@ -18,7 +18,6 @@ export class DayLogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sortDay: MatSort;
 
   public daylistDataSource;
-  public userid = 0;
   public daylistDisplayedColumns: string[] = [];
   public sFilterDay: string = "";
   public sFilterTextEvent: string = "";
@@ -89,7 +88,7 @@ export class DayLogComponent implements OnInit {
       this.sFilterDay = "-";
     }
 
-    this.rest.get('daylog/day/getAllByDateQuery/' + this.sFilterDay + "/" + this.userid).then((resdata: DaylogDay[]) => {
+    this.rest.get('daylog/day/getAllByDateQuery/' + this.sFilterDay).then((resdata: DaylogDay[]) => {
       resdata.forEach((d: DaylogDay) => {
         d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
       });
@@ -173,7 +172,7 @@ export class DayLogComponent implements OnInit {
 
   private saveDay(item: DaylogDay): void {
     this.bShowWarning = true;
-    this.rest.post('daylog/day/getDateAndCrateIfDateNotExistsByJSON', item).then((resdata: DaylogDay) => {
+    this.rest.post('daylog/day/save', item).then((resdata: DaylogDay) => {
       this.loadDays();
       if (resdata.id != null) {
         this.bShowWarning = false;

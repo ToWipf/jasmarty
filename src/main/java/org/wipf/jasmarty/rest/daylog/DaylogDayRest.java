@@ -14,7 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
 
 /**
@@ -31,34 +31,28 @@ public class DaylogDayRest {
 	DaylogDayDB daylogDayDB;
 
 	@GET
-	@Path("get/{date}/{userid}")
-	public Response get(@PathParam("date") String sDate, @PathParam("userid") Integer nUserid) throws SQLException {
-		return Response.ok(daylogDayDB.get(sDate, nUserid)).build();
+	@Path("get/{date}")
+	public Response get(@PathParam("date") String sDate) {
+		return Response.ok(daylogDayDB.get(sDate)).build();
 	}
 
 	@GET
-	@Path("getAllByDateQuery/{dateQuery}/{userid}")
-	public Response getByDateQuery(@PathParam("dateQuery") String sDateQuery, @PathParam("userid") Integer nUserid)
-			throws SQLException {
-		return Response.ok(daylogDayDB.getAllByDateQuery(sDateQuery, nUserid)).build();
+	@Path("getAllByDateQuery/{dateQuery}")
+	public Response getByDateQuery(@PathParam("dateQuery") String sDateQuery) {
+		return Response.ok(daylogDayDB.getAllByDateQuery(sDateQuery)).build();
 	}
 
 	@GET
 	@Path("getAll/{userid}")
-	public Response getall(@PathParam("userid") Integer nUserid) throws SQLException {
-		return Response.ok(daylogDayDB.getAllAsJson(nUserid).toString()).build();
+	public Response getall(@PathParam("userid") Integer nUserid) {
+		return Response.ok(daylogDayDB.getAll()).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) throws SQLException {
-		return Response.ok("{\"save\":\"" + daylogDayDB.save(jnRoot) + "\"}").build();
-	}
-
-	@POST
-	@Path("getDateAndCrateIfDateNotExistsByJSON")
-	public Response getDateAndCrateIfDateNotExistsByJSON(String jnRoot) throws SQLException, WipfException {
-		return Response.ok(daylogDayDB.getDateAndCrateIfDateNotExistsByJSON(jnRoot)).build();
+	public Response save(DaylogDay d) {
+		daylogDayDB.save(d);
+		return Response.ok().build();
 	}
 
 	@DELETE

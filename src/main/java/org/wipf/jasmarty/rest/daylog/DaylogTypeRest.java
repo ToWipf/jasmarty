@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
 import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
 
 /**
@@ -33,19 +34,20 @@ public class DaylogTypeRest {
 	@GET
 	@Path("get/{id}")
 	public Response get(@PathParam("id") Integer nId) throws SQLException {
-		return Response.ok(daylogTypeDB.getAsJson(nId).toString()).build();
+		return Response.ok(daylogTypeDB.get(nId).toString()).build();
 	}
 
 	@GET
 	@Path("getAll")
 	public Response getall() throws SQLException {
-		return Response.ok(daylogTypeDB.getAllAsJson().toString()).build();
+		return Response.ok(daylogTypeDB.getAll()).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) throws SQLException {
-		return Response.ok("{\"save\":\"" + daylogTypeDB.save(jnRoot) + "\"}").build();
+	public Response save(DaylogType d) throws SQLException {
+		daylogTypeDB.save(d);
+		return Response.ok().build();
 	}
 
 	@DELETE

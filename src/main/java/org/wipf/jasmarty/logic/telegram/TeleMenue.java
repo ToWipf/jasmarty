@@ -250,9 +250,9 @@ public class TeleMenue {
 				return appOthers.langerText(t.getMessageIntPart(1));
 
 			// Daylog
-			case "dl":
-			case "daylog":
-				return appDaylog.telegramMenue(t);
+//			case "dl":
+//			case "daylog":
+//				return appDaylog.telegramMenue(t);
 			case "di":
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);

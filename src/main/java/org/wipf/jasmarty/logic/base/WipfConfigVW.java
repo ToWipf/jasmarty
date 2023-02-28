@@ -105,6 +105,7 @@ public class WipfConfigVW {
 	 * @param sKey
 	 */
 	@Transactional
+	// TODO auf id umstellen
 	public void deleteItem(String sKey) {
 		WipfConfig.findByKey(sKey).firstResultOptional().ifPresent(o -> {
 			o.delete();
