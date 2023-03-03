@@ -153,18 +153,18 @@ public class TAppDaylog {
 				// Heute
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				String sDateNow = df.format(new Date());
-				return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext);
+				return getDateAndCrateIfDateStringNotExists(sDateNow, sDateTagestext);
 
 			} else if (sDateInfoString.startsWith("g") || sDateInfoString.startsWith("G")) {
 				// Gestern
 				LocalDate dateGestern = LocalDate.now().minusDays(1);
-				return daylogDayDB.getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext);
+				return getDateAndCrateIfDateStringNotExists(dateGestern.toString(), sDateTagestext);
 			} else {
 				// Exakt
 				String sDateString = sDateInfoString.substring(0, 10); // Länge des Datums ist immer fest
 				if (sDateString.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")) {
 					// Ein Datum
-					return daylogDayDB.getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext);
+					return getDateAndCrateIfDateStringNotExists(sDateString, sDateTagestext);
 
 				}
 			}
@@ -224,6 +224,27 @@ public class TAppDaylog {
 		}
 
 		return "Speicheren von " + sDatum + " mit der TypId: " + nTyp + " und den Text: " + sEventtext;
+	}
+
+	/**
+	 * @param sDateNow
+	 * @param sDateTagestext
+	 * @return
+	 */
+	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sDateTagestext) {
+		DaylogDay d = daylogDayDB.get(sDate);
+		if (d == null) {
+			d = new DaylogDay();
+			d.date = sDate;
+			d.tagestext = sDateTagestext;
+		} else {
+			// schon existent
+			if (!d.tagestext.isBlank()) {
+				d.tagestext = sDateTagestext;
+			}
+		}
+		d.saveOrUpdate();
+		return d;
 	}
 
 }

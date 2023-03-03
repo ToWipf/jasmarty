@@ -23,27 +23,6 @@ public class DaylogDayService {
 	}
 
 	/**
-	 * @param sDateNow
-	 * @param sDateTagestext
-	 * @return
-	 */
-	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sDateTagestext) {
-		DaylogDay d = get(sDate);
-		if (d == null) {
-			d = new DaylogDay();
-			d.date = sDate;
-			d.tagestext = sDateTagestext;
-		} else {
-			// schon existent
-			if (!d.tagestext.isBlank()) {
-				d.tagestext = sDateTagestext;
-			}
-		}
-		d.saveOrUpdate();
-		return d;
-	}
-
-	/**
 	 * @param sDate
 	 * @return
 	 */

@@ -72,7 +72,6 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<DaylogDay> findByLikeDate(String date) {
-		System.out.println(date);
 		return find("select e from DaylogDay e where date LIKE ?1", "%" + date + "%");
 	}
 
