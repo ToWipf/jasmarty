@@ -13,7 +13,7 @@ import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
  *
  */
 @ApplicationScoped
-public class DaylogEventDB {
+public class DaylogEventService {
 
 	/**
 	 * @param o @
@@ -61,6 +61,7 @@ public class DaylogEventDB {
 	 * @return @
 	 */
 //	public JSONArray getStats(String sTypIds) {
+//
 //		JSONArray ar = new JSONArray();
 //		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds + ") GROUP by text ORDER by anz DESC";
 //		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
@@ -87,7 +88,6 @@ public class DaylogEventDB {
 	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) {
 		LinkedHashSet<String> o = new LinkedHashSet<>();
 
-		System.out.println("XX");
 		for (DaylogEvent d : DaylogEvent.findByINTypeANDText(sType, sSearch).list()) {
 			o.add(d.text);
 			System.out.println(d.toString());

@@ -19,11 +19,11 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
 public class DaylogHome {
 
 	@Inject
-	DaylogDayDB daylogDayDB;
+	DaylogDayService daylogDayDB;
 	@Inject
-	DaylogEventDB daylogEventDB;
+	DaylogEventService daylogEventDB;
 	@Inject
-	DaylogTypeDB daylogTypeDB;
+	DaylogTypeService daylogTypeDB;
 
 	/**
 	 * Hilfsklasse für etliche Ausgaben

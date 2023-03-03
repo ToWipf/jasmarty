@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
-import org.wipf.jasmarty.logic.daylog.DaylogEventDB;
+import org.wipf.jasmarty.logic.daylog.DaylogEventService;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 
 /**
@@ -29,7 +29,7 @@ import org.wipf.jasmarty.logic.daylog.DaylogHome;
 public class DaylogEventRest {
 
 	@Inject
-	DaylogEventDB daylogEventDB;
+	DaylogEventService daylogEventDB;
 	@Inject
 	DaylogHome daylogHome;
 

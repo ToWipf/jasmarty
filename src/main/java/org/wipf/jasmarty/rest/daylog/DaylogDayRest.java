@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
-import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
+import org.wipf.jasmarty.logic.daylog.DaylogDayService;
 
 /**
  * @author Wipf
@@ -28,7 +28,7 @@ import org.wipf.jasmarty.logic.daylog.DaylogDayDB;
 public class DaylogDayRest {
 
 	@Inject
-	DaylogDayDB daylogDayDB;
+	DaylogDayService daylogDayDB;
 
 	@GET
 	@Path("get/{date}")

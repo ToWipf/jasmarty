@@ -42,7 +42,7 @@ public class TUsercache {
 	 * @param o
 	 * @throws SQLException
 	 */
-	public void save(Usercache o) throws SQLException {
+	public void save(Usercache o) {
 		// Usercache uLast = getLastMessage(o.getChatId());
 		// if (uLast != null) {
 		//
@@ -55,13 +55,19 @@ public class TUsercache {
 		// o.setCounter(1);
 		// }
 		// insert
-		String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setLong(1, o.getChatId());
-		statement.setString(2, o.getMsg());
-		statement.setString(3, o.getUsercache());
-		statement.setInt(4, o.getCounter());
-		statement.executeUpdate();
+		try {
+			String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
+			PreparedStatement statement;
+			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
+			statement.setLong(1, o.getChatId());
+			statement.setString(2, o.getMsg());
+			statement.setString(3, o.getUsercache());
+			statement.setInt(4, o.getCounter());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

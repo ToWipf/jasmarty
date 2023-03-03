@@ -12,7 +12,7 @@ import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
  *
  */
 @ApplicationScoped
-public class DaylogTypeDB {
+public class DaylogTypeService {
 
 	/**
 	 * @param nId
@@ -29,11 +29,17 @@ public class DaylogTypeDB {
 		return DaylogType.findAll().list();
 	}
 
+	/**
+	 * @param o
+	 */
 	@Transactional
 	public void save(DaylogType o) {
 		o.saveOrUpdate();
 	}
 
+	/**
+	 * @param nId
+	 */
 	@Transactional
 	public void del(Integer nId) {
 		DaylogType.findById(nId).delete();

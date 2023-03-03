@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
-import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
+import org.wipf.jasmarty.logic.daylog.DaylogTypeService;
 
 /**
  * @author Wipf
@@ -28,7 +28,7 @@ import org.wipf.jasmarty.logic.daylog.DaylogTypeDB;
 public class DaylogTypeRest {
 
 	@Inject
-	DaylogTypeDB daylogTypeDB;
+	DaylogTypeService daylogTypeDB;
 
 	// Wird nicht gebraucht
 	@GET

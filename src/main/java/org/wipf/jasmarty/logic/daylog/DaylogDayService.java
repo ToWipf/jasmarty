@@ -12,7 +12,7 @@ import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
  *
  */
 @ApplicationScoped
-public class DaylogDayDB {
+public class DaylogDayService {
 
 	/**
 	 * @param o
@@ -20,6 +20,27 @@ public class DaylogDayDB {
 	@Transactional
 	public void save(DaylogDay o) {
 		o.saveOrUpdate();
+	}
+
+	/**
+	 * @param sDateNow
+	 * @param sDateTagestext
+	 * @return
+	 */
+	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sDateTagestext) {
+		DaylogDay d = get(sDate);
+		if (d == null) {
+			d = new DaylogDay();
+			d.date = sDate;
+			d.tagestext = sDateTagestext;
+		} else {
+			// schon existent
+			if (!d.tagestext.isBlank()) {
+				d.tagestext = sDateTagestext;
+			}
+		}
+		d.saveOrUpdate();
+		return d;
 	}
 
 	/**
