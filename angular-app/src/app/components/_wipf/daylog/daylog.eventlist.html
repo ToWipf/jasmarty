@@ -28,6 +28,12 @@
     <ng-container matColumnDef="data">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
         <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.text === 'Y^'">
+                Nein
+            </div>
+            <div *ngIf="element.text === 'N^'">
+                Ja
+            </div>
             {{ element.text }}
         </td>
     </ng-container>

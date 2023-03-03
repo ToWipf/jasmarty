@@ -10,7 +10,6 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.liste.ListeDB;
 import org.wipf.jasmarty.logic.liste.ListeTypeDB;
@@ -36,8 +35,6 @@ public class MainHome {
 	JasmartyHome jasmartyHome;
 	@Inject
 	TelegramHome telegramHome;
-	@Inject
-	DaylogHome daylogHome;;
 	@Inject
 	Dynpages dynpages;
 	@Inject

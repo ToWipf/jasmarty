@@ -43,8 +43,6 @@ public class DaylogDayDB {
 	 * @return
 	 */
 	public List<DaylogDay> getAllByDateQuery(String sDateQuery) {
-		System.out.println(sDateQuery);
-		System.out.println(DaylogDay.findByLikeDate(sDateQuery).list().size());
 		return DaylogDay.findByLikeDate(sDateQuery).list();
 	}
 

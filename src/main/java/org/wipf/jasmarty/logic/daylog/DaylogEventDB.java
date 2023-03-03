@@ -87,8 +87,10 @@ public class DaylogEventDB {
 	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) {
 		LinkedHashSet<String> o = new LinkedHashSet<>();
 
+		System.out.println("XX");
 		for (DaylogEvent d : DaylogEvent.findByINTypeANDText(sType, sSearch).list()) {
 			o.add(d.text);
+			System.out.println(d.toString());
 		}
 
 		return o;

@@ -61,7 +61,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.bShowWarning = true;
         this.rest.post('daylog/event/save', item).then((resdata: any) => {
             this.doLoadEventList();
-            if (resdata.save == "true") {
+            if (resdata) {
                 this.bShowWarning = false;
             }
         });
@@ -100,6 +100,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
                 this.saveEvent(result);
             }
         });
+        console.log(item);
     }
 
     public applyFilter() {
@@ -227,7 +228,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     ngOnInit(): void {
         this.loadDaylogTypes();
         // Beim bearbeiten die Vorschläge bereits vorladen
-        if (this.data.text.length > 1) {
+        if (this.data.text.length > 2 ) {
             this.getTextVorschlag();
         }
     }
@@ -267,6 +268,14 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     public onNoClick(): void {
         this.dialogRef.close();
+    }
+
+    public convertBool(b: boolean): string {
+        if (b){
+            return "Y^";
+        } else {
+            return "N^";
+        }
     }
 
 }

@@ -91,7 +91,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<DaylogEvent> findByINTypeANDText(String sType, String sText) {
-		return find("select e from DaylogEvent e where typ =?1 AND text IN ?2", sType, "(" + sText + ")");
+		return find("select e from DaylogEvent e where typ =?1 AND text LIKE ?2", sType, "%" + sText + "%");
 	}
 
 }
