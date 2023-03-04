@@ -73,7 +73,7 @@ export class TelegramMsgComponent implements OnInit {
   private loadAllItems(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
-    this.rest.get('telegram/msgall').then((resdata: Telegram[]) => {
+    this.rest.get('telegram/getall').then((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();

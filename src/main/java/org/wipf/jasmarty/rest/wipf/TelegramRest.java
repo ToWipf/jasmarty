@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.rest.wipf;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -16,11 +14,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
 import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.logic.telegram.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
-import org.wipf.jasmarty.logic.telegram.TeleLog;
+import org.wipf.jasmarty.logic.telegram.TeleLogService;
 import org.wipf.jasmarty.logic.telegram.TeleMenue;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 
@@ -39,7 +38,7 @@ public class TelegramRest {
 	@Inject
 	TelegramHome tHome;
 	@Inject
-	TeleLog tlog;
+	TeleLogService tlog;
 	@Inject
 	TeleMenue tMenue;
 	@Inject
@@ -93,7 +92,6 @@ public class TelegramRest {
 	@Path("sendMsgTo/{gid}/{msg}")
 	public Response sendMsgTo(@PathParam("gid") Long nGid, @PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgTo(nGid, sMsg);
-		// TODO:
 		return Response.ok("{}").build();
 	}
 
@@ -102,26 +100,26 @@ public class TelegramRest {
 	@Path("sendMsgToAdmin/{msg}")
 	public Response sendMsgToId(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToAdmin(sMsg);
-		// TODO:
 		return Response.ok("{}").build();
 	}
 
-	@GET
-	@Path("log")
-	public Response log() {
-		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();
-	}
+//	@GET
+//	@Path("log")
+//	public Response log() {
+//		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();
+//	}
 
 	@GET
 	@Path("logext")
 	public Response logs() {
-		return Response.ok(tlog.getTelegramLogAsJsonEXTERN().toString()).build();
+		return Response.ok(tlog.getAll()).build();
 	}
 
 	@DELETE
 	@Path("delLog/{id}")
 	public Response delLog(@PathParam("id") Long nId) {
-		return Response.ok("{\"del\":\"" + tlog.delItem(nId) + "\"}").build();
+		tlog.delItem(nId);
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
@@ -138,35 +136,37 @@ public class TelegramRest {
 	}
 
 	@GET
-	@Path("msgall")
+	@Path("getall")
 	public Response msg() {
-		return Response.ok(tAppMsg.getMsgAsJson().toString()).build();
+		return Response.ok(tAppMsg.getAll()).build();
 	}
 
 	@POST
 	@Path("saveMsg")
-	public Response saveMsg(String sJson) {
-		return Response.ok("{\"save\":\"" + tAppMsg.saveMsg(sJson) + "\"}").build();
+	public Response saveMsg(TeleMsg t) {
+		tAppMsg.save(t);
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delMsg/{id}")
 	public Response delMsg(@PathParam("id") Integer nId) {
-		return Response.ok("{\"del\":\"" + tAppMsg.delItem(nId) + "\"}").build();
+		tAppMsg.del(nId);
+		return Response.ok("{}").build();
 	}
 
 	// Usercache
 
 	@POST
 	@Path("usercache/save")
-	public Response saveTodo(Usercache u) throws SQLException {
+	public Response saveTodo(Usercache u) {
 		tUsercache.save(u);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("usercache/delete/{id}")
-	public Response delete(@PathParam("id") Long nId) throws SQLException {
+	public Response delete(@PathParam("id") Long nId) {
 		tUsercache.del(nId);
 		return Response.ok().build();
 	}

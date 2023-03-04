@@ -32,7 +32,7 @@ public class TSendAndReceive {
 	@Inject
 	Wipf wipf;
 	@Inject
-	TeleLog tLog;
+	TeleLogService tLog;
 	@Inject
 	TAppMsg appMsg;
 	@Inject
@@ -394,8 +394,9 @@ public class TSendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + tLog.countMsg()
-				+ "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: " + tUsercache.getAnzahl());
+		t.setAntwort(
+				wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + tLog.countMsg().toString()
+						+ "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: " + tUsercache.getAnzahl());
 		t.setChatID(userAndGroups.getAdminId());
 
 		sendTelegram(t);

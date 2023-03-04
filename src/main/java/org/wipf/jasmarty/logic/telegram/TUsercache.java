@@ -6,6 +6,7 @@ import java.util.List;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.wipf.jasmarty.databasetypes.telegram.TeleLog;
 import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
@@ -134,7 +135,7 @@ public class TUsercache {
 			sb.append(uc.toString());
 
 			// Chatid zu Name
-			sb.append("\n" + telelog.infoZuId(uc.chatid.toString()));
+			// TODOsb.append("\n" + telelog.infoZuId(uc.chatid.toString()));
 			n++;
 		}
 

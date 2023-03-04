@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.rest.wipf;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,21 +30,21 @@ public class RndEventRest {
 
 	@POST
 	@Path("save")
-	public Response save(RndEvent r) throws SQLException {
+	public Response save(RndEvent r) {
 		rndEvent.save(r);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		rndEvent.del(nId);
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getall() throws SQLException {
+	public Response getall() {
 		return Response.ok(rndEvent.getAll()).build();
 	}
 

@@ -35,7 +35,7 @@ public class TeleMenue {
 	@Inject
 	RndEventsService appRndEvent;
 	@Inject
-	TeleLog telelog;
+	TeleLogService telelog;
 	@Inject
 	TUserAndGroups userAndGroups;
 	@Inject
@@ -140,12 +140,12 @@ public class TeleMenue {
 				// @formatter:on
 
 			// Anbindung an msg datenbank
-			case "addamsgtodb":
-				return appMsg.saveItemByTelegram(t);
-			case "getallmsg":
-				return appMsg.getAllMsg();
-			case "delmsg":
-				return appMsg.delItemByTelegram(t);
+//			case "addamsgtodb":
+//				return appMsg.saveItemByTelegram(t);
+//			case "getallmsg":
+//				return appMsg.getAllMsg();
+//			case "delmsg":
+//				return appMsg.delItemByTelegram(t);
 
 			// Cache und Log Stats
 			case "s":
@@ -158,9 +158,9 @@ public class TeleMenue {
 			case "return":
 			case "response":
 				return t.getMessage();
-			case "izi":
-			case "infozuid":
-				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
+//			case "izi":
+//			case "infozuid":
+//				return telelog.infoZuId(t.getMessageFullWithoutFirstWord());
 
 			// Listen
 			case "to":
@@ -362,9 +362,9 @@ public class TeleMenue {
 		case "joke":
 			return appOthers.getWitz();
 		case "countmsg":
-			return appMsg.countMsg();
-		case "countsend":
-			return telelog.countMsg();
+			return appMsg.countMsg().toString();
+//		case "countsend":
+//			return telelog.countMsg();
 		case "punkte":
 		case "p":
 			return punkteVW.getPunkte().toString();

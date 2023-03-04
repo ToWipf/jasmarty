@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
+import org.wipf.jasmarty.databasetypes.telegram.TeleLog;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.liste.MedienService;
 import org.wipf.jasmarty.logic.liste.RndEventsService;
@@ -43,19 +44,10 @@ public class TelegramHome {
 
 	/**
 	 * @throws SQLException
-	 */
-	private void init() throws SQLException {
-		tLog.initDB();
-		appTeleMsg.initDB();
-	}
-
-	/**
-	 * @throws SQLException
 	 * 
 	 */
 	public void telegramStart() throws Exception {
 		LOGGER.info("starten");
-		init();
 
 		if (tVerwaltung.loadConfig()) {
 			tReadLoop.start();
