@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.logic.telegram.TAppMsg;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
@@ -158,8 +159,9 @@ public class TelegramRest {
 
 	@POST
 	@Path("usercache/save")
-	public Response saveTodo(String jnRoot) throws SQLException {
-		return Response.ok("{\"save\":\"" + tUsercache.save(jnRoot) + "\"}").build();
+	public Response saveTodo(Usercache u) throws SQLException {
+		tUsercache.save(u);
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
@@ -171,8 +173,8 @@ public class TelegramRest {
 
 	@GET
 	@Path("usercache/getAll")
-	public Response getall() throws SQLException {
-		return Response.ok(tUsercache.getAllAsJson().toString()).build();
+	public Response getall() {
+		return Response.ok(tUsercache.getAll()).build();
 	}
 
 }

@@ -12,7 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TAppMedien;
+import org.wipf.jasmarty.databasetypes.liste.Medien;
+import org.wipf.jasmarty.logic.liste.MedienService;
 
 /**
  * @author wipf
@@ -25,25 +26,26 @@ import org.wipf.jasmarty.logic.telegram.TAppMedien;
 public class MedienRest {
 
 	@Inject
-	TAppMedien appMedien;
+	MedienService appMedien;
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) {
-		return Response.ok("{\"save\":\"" + appMedien.saveItem(jnRoot) + "\"}").build();
+	public Response save(Medien m) {
+		appMedien.saveItem(m);
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		appMedien.deleteItem(nId);
+		appMedien.del(nId);
 		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
 	public Response getall() {
-		return Response.ok(appMedien.getAllAsJson().toString()).build();
+		return Response.ok(appMedien.getAll()).build();
 	}
 
 }

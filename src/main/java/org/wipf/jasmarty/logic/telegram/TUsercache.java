@@ -1,18 +1,13 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.json.JSONArray;
+import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
-import org.wipf.jasmarty.datatypes.telegram.Usercache;
-import org.wipf.jasmarty.logic.base.SqlLite;
 
 /**
  * @author Wipf
@@ -22,19 +17,9 @@ import org.wipf.jasmarty.logic.base.SqlLite;
 public class TUsercache {
 
 	@Inject
-	SqlLite sqlLite;
-	@Inject
 	TeleLog telelog;
 	@Inject
 	TSendAndReceive sendAndReceive;
-
-	/**
-	 * @throws SQLException
-	 */
-	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS teleUsercache (chatid INTEGER NOT NULL UNIQUE, msg TEXT, usercache TEXT, counter INTEGER, PRIMARY KEY(chatid));";
-		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
-	}
 
 	/**
 	 * Usercache überschreiben
@@ -43,31 +28,7 @@ public class TUsercache {
 	 * @throws SQLException
 	 */
 	public void save(Usercache o) {
-		// Usercache uLast = getLastMessage(o.getChatId());
-		// if (uLast != null) {
-		//
-		// // Beim speichern den Counter hochzählen
-		// if (uLast.getCounter() != null) {
-		// o.setCounter(uLast.getCounter() + 1);
-		// }
-		// } else {
-		// // neuer User
-		// o.setCounter(1);
-		// }
-		// insert
-		try {
-			String sUpdate = "INSERT OR REPLACE INTO teleUsercache (chatid, msg, usercache, counter) VALUES (?,?,?,?)";
-			PreparedStatement statement;
-			statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-			statement.setLong(1, o.getChatId());
-			statement.setString(2, o.getMsg());
-			statement.setString(3, o.getUsercache());
-			statement.setInt(4, o.getCounter());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		o.saveOrUpdate();
 	}
 
 	/**
@@ -76,37 +37,21 @@ public class TUsercache {
 	 * @param o
 	 * @throws SQLException
 	 */
-	public void saveOhneUsercache(Usercache o) throws SQLException {
+	public void saveOhneUsercache(Usercache o) {
 		// Usercache vom letzten mal uebertragen
-		Usercache last = getLastMessage(o.getChatId());
+		Usercache last = getLastMessage(o.chatid);
 		if (last != null) {
 			// Daten nur übertagen
-			o.setUsercache(last.getUsercache());
-			o.setCounter(last.getCounter());
+			o.usercache = (last.usercache);
+			o.counter = (last.counter);
 		} else {
 			// Neuer User
-			o.setCounter(1);
+			o.counter = (1);
 			// Bei einen neuen Nutzer -> Info an Admin
 			sendAndReceive.sendMsgToAdmin("Neuer Telegram Nutzer\n" + o.toString());
 		}
 
 		save(o);
-	}
-
-	/**
-	 * Usercache überschreiben
-	 * 
-	 * @param jnRoot
-	 * @return
-	 * @throws SQLException
-	 */
-	public Boolean save(String jnRoot) throws SQLException {
-		try {
-			save(new Usercache().setByJson(jnRoot));
-			return true;
-		} catch (Exception e) {
-			return false;
-		}
 	}
 
 	/**
@@ -116,13 +61,9 @@ public class TUsercache {
 	 */
 	public void saveByTelegramOhneUsercache(Telegram t) {
 		Usercache lmsg = new Usercache();
-		lmsg.setChatId(t.getChatID());
-		lmsg.setMsg(t.getMessage());
-		try {
-			saveOhneUsercache(lmsg);
-		} catch (SQLException e) {
-			System.out.println("Fehler1 beim speichern von LastMessage: " + e);
-		}
+		lmsg.chatid = (t.getChatID());
+		lmsg.msg = (t.getMessage());
+		saveOhneUsercache(lmsg);
 	}
 
 	/**
@@ -131,14 +72,13 @@ public class TUsercache {
 	 */
 	public Usercache getLastMessage(Long nChatId) {
 		try {
-			List<Usercache> lmsg = get(nChatId);
-			Usercache u = lmsg.get(0);
+			Usercache u = get(nChatId);
 			// Bei jeden Laden den Counter hochzählen um beim speichern aktuell zu sein
-			if (u.getCounter() != null) {
-				u.setCounter(u.getCounter() + 1);
+			if (u.counter != null) {
+				u.counter = (u.counter + 1);
 			} else {
 				// neuer User
-				u.setCounter(1);
+				u.counter = (1);
 			}
 
 			return u;
@@ -152,128 +92,52 @@ public class TUsercache {
 	 * @param sDate
 	 * @param nUserId
 	 * @return
-	 * @throws SQLException
 	 */
-	public List<Usercache> get(Long nChatid) throws SQLException {
-		List<Usercache> o = new LinkedList<>();
-
-		String sQuery = "SELECT * FROM teleUsercache WHERE chatid = ?;";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		statement.setLong(1, nChatid);
-		ResultSet rs = statement.executeQuery();
-
-		while (rs.next()) {
-			Usercache d = new Usercache();
-			d.setChatId(rs.getLong("chatid"));
-			d.setMsg(rs.getString("msg"));
-			d.setUsercache(rs.getString("usercache"));
-			d.setCounter(rs.getInt("counter"));
-			o.add(d);
-		}
-		return o;
-	}
-
-	/**
-	 * @param nDateId
-	 * @return
-	 * @throws SQLException
-	 */
-	public JSONArray getAsJson(Long nChatid) throws SQLException {
-		List<Usercache> l = get(nChatid);
-		JSONArray ja = new JSONArray();
-		for (Usercache d : l) {
-			ja.put(d.toJson());
-		}
-		return ja;
+	public Usercache get(Long nChatid) {
+		return Usercache.findById(nChatid);
 	}
 
 	/**
 	 * @param sDate
-	 * @throws SQLException
 	 */
-	public void del(Long nId) throws SQLException {
-		String sUpdate = "DELETE FROM teleUsercache WHERE chatid = ?";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setLong(1, nId);
-		statement.executeUpdate();
+	public void del(Long nId) {
+		Usercache.findById(nId).delete();
 	}
 
 	/**
 	 * @param nUserId
 	 * @return
-	 * @throws SQLException
 	 */
-	public List<Usercache> getAll() throws SQLException {
-		List<Usercache> o = new LinkedList<>();
-
-		String sQuery = "SELECT * FROM teleUsercache";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-		ResultSet rs = statement.executeQuery();
-
-		while (rs.next()) {
-			Usercache d = new Usercache();
-			d.setChatId(rs.getLong("chatid"));
-			d.setMsg(rs.getString("msg"));
-			d.setUsercache(rs.getString("usercache"));
-			d.setCounter(rs.getInt("counter"));
-			o.add(d);
-		}
-		return o;
-	}
-
-	/**
-	 * @return
-	 * @throws SQLException
-	 */
-	public JSONArray getAllAsJson() throws SQLException {
-		List<Usercache> l = getAll();
-		JSONArray ja = new JSONArray();
-		for (Usercache d : l) {
-			ja.put(d.toJson());
-		}
-		return ja;
+	public List<Usercache> getAll() {
+		return Usercache.findAll().list();
 	}
 
 	/**
 	 * @return
 	 */
 	public Integer getAnzahl() {
-		try {
-			String sQuery = "SELECT count(*) AS c from teleUsercache";
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-			ResultSet rs;
-			rs = statement.executeQuery();
+		return (int) Usercache.findAll().count();
 
-			while (rs.next()) {
-				return rs.getInt("c");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	/**
 	 * @return
-	 * @throws SQLException
 	 */
 	public String getAllAsText() {
 		StringBuilder sb = new StringBuilder();
 		Integer n = 0;
-		try {
-			for (Usercache uc : getAll()) {
-				if (sb.length() > 1) {
-					sb.append("\n\n");
-				}
-				sb.append(uc.toString());
 
-				// Chatid zu Name
-				sb.append("\n" + telelog.infoZuId(uc.getChatId().toString()));
-				n++;
+		for (Usercache uc : getAll()) {
+			if (sb.length() > 1) {
+				sb.append("\n\n");
 			}
-		} catch (SQLException e) {
-			sb.append("Fehler 117 " + e);
+			sb.append(uc.toString());
+
+			// Chatid zu Name
+			sb.append("\n" + telelog.infoZuId(uc.chatid.toString()));
+			n++;
 		}
+
 		return "Anzahl der Benutzer: " + n + "\n\n" + sb.toString();
 	}
 

@@ -12,8 +12,8 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
+import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
-import org.wipf.jasmarty.datatypes.telegram.Usercache;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 
@@ -58,16 +58,17 @@ public class TAppDaylog {
 			return "Fail 683";
 		} else if (t.getMessageFullWithoutFirstWord().toLowerCase().equals("start")) {
 			// Wenn start eingebene wurde, den Cache leeren
-			userCache.setUsercache("");
+			userCache.usercache = ("");
 			tUsercache.save(userCache);
-			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n" + "Optional kann ein Tagestext angegeben werden";
-		} else if (userCache.getUsercache().equals("")) {
+			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n"
+					+ "Optional kann ein Tagestext angegeben werden";
+		} else if (userCache.usercache.equals("")) {
 			// Schritt 1
 			// Datum wählen
 			DaylogDay ddate = waehleDatum(t.getMessageFullWithoutFirstWord());
 			if (ddate != null) {
 				// DateId im Cache speichern
-				userCache.setUsercache("dateid:" + ddate.id);
+				userCache.usercache = "dateid:" + ddate.id;
 				tUsercache.save(userCache); // Datum Id speichern
 
 				// Kategorien Übersicht ausgeben
@@ -75,27 +76,27 @@ public class TAppDaylog {
 			} else {
 				return "Fehler mit den Datum -> Anleitung: dl Start";
 			}
-		} else if (userCache.getUsercache().startsWith("dateid:")) {
+		} else if (userCache.usercache.startsWith("dateid:")) {
 			// Schritt 2
 			// Kategorie wählen
 			Integer nKategorieId = t.getMessageIntPart(1);
 			String sKatName = pruefeKategorie(nKategorieId);
 			if (sKatName != null) {
 				// katid vorne anfügen und Datum weiterhin speichern
-				userCache.setUsercache("katid:" + nKategorieId + userCache.getUsercache());
+				userCache.usercache = "katid:" + nKategorieId + userCache.usercache;
 				tUsercache.save(userCache);
 
 				return "Kategorie: " + sKatName + "\n" + "Bitte Text eingeben";
 			} else {
 				return "Fehler mit der Kategorie";
 			}
-		} else if (userCache.getUsercache().startsWith("katid:")) {
+		} else if (userCache.usercache.startsWith("katid:")) {
 			// Schitt 3
 			// den Text holen und das event speichern
 			String sEventtext = t.getMessageFullWithoutFirstWord();
 			String sSaveResult = schreibeEvent(sEventtext, userCache);
 			if (sSaveResult != null) {
-				userCache.setUsercache("");
+				userCache.usercache = "";
 				tUsercache.save(userCache);
 				return sSaveResult;
 			}
@@ -201,7 +202,7 @@ public class TAppDaylog {
 	 */
 	private String schreibeEvent(String sEventtext, Usercache lastMsgCache) {
 		DaylogEvent dayEvent = new DaylogEvent();
-		String sCache = lastMsgCache.getUsercache();
+		String sCache = lastMsgCache.usercache;
 		// Der Cache schaut so aus: katid:42dateid:99
 		Integer nTyp = Integer.valueOf(sCache.substring(sCache.indexOf(":") + 1, sCache.indexOf("dateid")));
 		// Auch als int validieren, wird aber als String gespeichert

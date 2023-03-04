@@ -14,6 +14,7 @@ import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.daylog.TAppDaylog;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.liste.ListeService;
+import org.wipf.jasmarty.logic.liste.MedienService;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -41,7 +42,7 @@ public class TeleMenue {
 	@Inject
 	TAppMotd appMotd;
 	@Inject
-	TAppMedien appMedien;
+	MedienService appMedien;
 	@Inject
 	PunkteVW punkteVW;
 	@Inject

@@ -48,7 +48,9 @@ public class WipfConfigVW {
 	 * @throws SQLException
 	 */
 	public String getConfParamString(String sConfParam) {
+		System.out.println(sConfParam);
 		WipfConfig wc = WipfConfig.findByKey(sConfParam).firstResult();
+		wc.toString();
 		if (wc != null) {
 			return wc.value;
 		}
