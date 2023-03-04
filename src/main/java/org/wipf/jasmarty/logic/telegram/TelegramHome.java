@@ -6,7 +6,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.databasetypes.telegram.TeleLog;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.liste.MedienService;
 import org.wipf.jasmarty.logic.liste.RndEventsService;
@@ -31,8 +30,6 @@ public class TelegramHome {
 	TSendAndReceive tVerwaltung;
 	@Inject
 	TReadLoop tReadLoop;
-	@Inject
-	TeleLog tLog;
 	@Inject
 	TUsercache tUsercache;
 	@Inject

@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
-import org.wipf.jasmarty.databasetypes.telegram.TeleLog;
 import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
@@ -18,8 +18,6 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
 public class TUsercache {
 
 	@Inject
-	TeleLog telelog;
-	@Inject
 	TSendAndReceive sendAndReceive;
 
 	/**
@@ -28,6 +26,7 @@ public class TUsercache {
 	 * @param o
 	 * @throws SQLException
 	 */
+	@Transactional
 	public void save(Usercache o) {
 		o.saveOrUpdate();
 	}
@@ -38,6 +37,7 @@ public class TUsercache {
 	 * @param o
 	 * @throws SQLException
 	 */
+	@Transactional
 	public void saveOhneUsercache(Usercache o) {
 		// Usercache vom letzten mal uebertragen
 		Usercache last = getLastMessage(o.chatid);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -42,6 +43,7 @@ public class TAppMsg {
 	 * @param id
 	 * @return
 	 */
+	@Transactional
 	public void del(Integer nId) {
 		TeleMsg.findById(nId).delete();
 	}
@@ -58,6 +60,7 @@ public class TAppMsg {
 	 * @param t
 	 * @return
 	 */
+	@Transactional
 	public void save(TeleMsg t) {
 		t.saveOrUpdate();
 	}
