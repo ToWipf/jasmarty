@@ -20,6 +20,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
+import org.wipf.jasmarty.logic.liste.RndEventsService;
 
 /**
  * @author wipf
@@ -35,9 +36,7 @@ public class TSendAndReceive {
 	@Inject
 	TAppMsg appMsg;
 	@Inject
-	TAppMotd appMotd;
-	@Inject
-	TAppRndEvents appRndEvent;
+	RndEventsService appRndEvent;
 	@Inject
 	TeleMenue menue;
 	@Inject
@@ -395,9 +394,8 @@ public class TSendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + appMotd.countMotd()
-				+ "\n" + tLog.countMsg() + "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: "
-				+ tUsercache.getAnzahl());
+		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + tLog.countMsg()
+				+ "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: " + tUsercache.getAnzahl());
 		t.setChatID(userAndGroups.getAdminId());
 
 		sendTelegram(t);
@@ -425,17 +423,6 @@ public class TSendAndReceive {
 	public void sendMsgTo(Long nGroupId, String sMsg) {
 		Telegram t = new Telegram();
 		t.setAntwort(sMsg);
-		t.setChatID(nGroupId);
-
-		sendTelegram(t);
-	}
-
-	/**
-	 * 
-	 */
-	public void sendDaylyMotd(Long nGroupId) {
-		Telegram t = new Telegram();
-		t.setAntwort(appMotd.getRndMotd());
 		t.setChatID(nGroupId);
 
 		sendTelegram(t);

@@ -14,7 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.telegram.TAppRndEvents;
+import org.wipf.jasmarty.databasetypes.liste.RndEvent;
+import org.wipf.jasmarty.logic.liste.RndEventsService;
 
 /**
  * @author wipf
@@ -27,12 +28,13 @@ import org.wipf.jasmarty.logic.telegram.TAppRndEvents;
 public class RndEventRest {
 
 	@Inject
-	TAppRndEvents rndEvent;
+	RndEventsService rndEvent;
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) throws SQLException {
-		return Response.ok("{\"save\":\"" + rndEvent.save(jnRoot) + "\"}").build();
+	public Response save(RndEvent r) throws SQLException {
+		rndEvent.save(r);
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
@@ -45,7 +47,7 @@ public class RndEventRest {
 	@GET
 	@Path("getAll")
 	public Response getall() throws SQLException {
-		return Response.ok(rndEvent.getAllAsJson().toString()).build();
+		return Response.ok(rndEvent.getAll()).build();
 	}
 
 }

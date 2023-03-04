@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.liste.MedienService;
+import org.wipf.jasmarty.logic.liste.RndEventsService;
 import org.wipf.jasmarty.logic.tasks.RndTask;
 
 /**
@@ -22,9 +23,7 @@ public class TelegramHome {
 	@Inject
 	TAppMsg appTeleMsg;
 	@Inject
-	TAppMotd appMotd;
-	@Inject
-	TAppRndEvents appRndEvent;
+	RndEventsService appRndEvent;
 	@Inject
 	MedienService appMedien;
 	@Inject
@@ -48,8 +47,6 @@ public class TelegramHome {
 	private void init() throws SQLException {
 		tLog.initDB();
 		appTeleMsg.initDB();
-		appMotd.initDB();
-		appRndEvent.initDB();
 	}
 
 	/**

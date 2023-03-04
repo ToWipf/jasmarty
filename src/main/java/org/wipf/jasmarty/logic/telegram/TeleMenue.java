@@ -15,6 +15,7 @@ import org.wipf.jasmarty.logic.daylog.TAppDaylog;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.liste.ListeService;
 import org.wipf.jasmarty.logic.liste.MedienService;
+import org.wipf.jasmarty.logic.liste.RndEventsService;
 import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
@@ -32,15 +33,13 @@ public class TeleMenue {
 	@Inject
 	TAppTicTacToe appTicTacToe;
 	@Inject
-	TAppRndEvents appRndEvent;
+	RndEventsService appRndEvent;
 	@Inject
 	TeleLog telelog;
 	@Inject
 	TUserAndGroups userAndGroups;
 	@Inject
 	TAppMsg appMsg;
-	@Inject
-	TAppMotd appMotd;
 	@Inject
 	MedienService appMedien;
 	@Inject
@@ -148,22 +147,13 @@ public class TeleMenue {
 			case "delmsg":
 				return appMsg.delItemByTelegram(t);
 
-			// Anbindung an motd datenbank
-			case "addamotd":
-				return appMotd.addMotd(t);
-			case "getallmotd":
-				return appMotd.getAllMotd();
-			case "delmotd":
-				return appMotd.delMotd(t);
-			case "getmotd":
-				return appMotd.getRndMotd();
-
 			// Cache und Log Stats
 			case "s":
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg() + "\n\n" + tUsercache.getAllAsText();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
+						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "return":
 			case "response":
@@ -384,7 +374,8 @@ public class TeleMenue {
 		case "pwd":
 		case "me":
 		case "i":
-			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: " + t.getMid();
+			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
+					+ t.getMid();
 		case "calc":
 		case "math":
 		case "m":
