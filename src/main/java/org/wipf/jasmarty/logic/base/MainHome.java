@@ -14,7 +14,6 @@ import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.liste.ListeService;
 import org.wipf.jasmarty.logic.liste.ListeTypeService;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
-import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
@@ -35,8 +34,6 @@ public class MainHome {
 	JasmartyHome jasmartyHome;
 	@Inject
 	TelegramHome telegramHome;
-	@Inject
-	Dynpages dynpages;
 	@Inject
 	ListeService listeDB;
 	@Inject

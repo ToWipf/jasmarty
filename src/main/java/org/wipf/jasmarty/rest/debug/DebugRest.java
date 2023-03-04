@@ -20,7 +20,6 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfDebug;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
@@ -54,8 +53,6 @@ public class DebugRest {
 	TAppGrafana tAppGrafana;
 	@Inject
 	Wipf wipf;
-	@Inject
-	WipfDebug debug;
 	@Inject
 	CronDaily cronDaily;
 
@@ -218,17 +215,6 @@ public class DebugRest {
 	public Response dailyTask() {
 		cronDaily.dailyTask();
 		return Response.ok().build();
-	}
-
-	/**
-	 * @return
-	 * @throws Exception
-	 */
-
-	@GET
-	@Path("lasttest")
-	public Response lasttest() throws Exception {
-		return Response.ok(debug.lasttestAsJson().toString()).build();
 	}
 
 }
