@@ -47,14 +47,14 @@ public class DaylogTypeRest {
 	@Path("save")
 	public Response save(DaylogType d) throws SQLException {
 		daylogTypeDB.save(d);
-		return Response.ok().build();
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) throws SQLException {
 		daylogTypeDB.del(nId);
-		return Response.ok().build();
+		return Response.ok("{}").build();
 	}
 
 }

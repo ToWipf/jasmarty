@@ -14,7 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.liste.ListeDB;
+import org.wipf.jasmarty.databasetypes.liste.Liste;
+import org.wipf.jasmarty.logic.liste.ListeService;
 
 /**
  * @author wipf
@@ -27,18 +28,18 @@ import org.wipf.jasmarty.logic.liste.ListeDB;
 public class ListeRest {
 
 	@Inject
-	ListeDB listeDB;
+	ListeService listeDB;
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) throws SQLException {
-		listeDB.save(jnRoot);
+	public Response save(Liste l) {
+		listeDB.save(l);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		listeDB.del(nId);
 		return Response.ok().build();
 	}
@@ -46,13 +47,13 @@ public class ListeRest {
 	@GET
 	@Path("getAll")
 	public Response getAll() throws SQLException {
-		return Response.ok(listeDB.getAllAsJson().toString()).build();
+		return Response.ok(listeDB.getAll()).build();
 	}
 
 	@GET
 	@Path("getAllByType/{typeid}")
-	public Response getAllByType(@PathParam("typeid") Integer nTypeId) throws SQLException {
-		return Response.ok(listeDB.getAllByTypeAsJson(nTypeId).toString()).build();
+	public Response getAllByType(@PathParam("typeid") Integer nTypeId) {
+		return Response.ok(listeDB.getAllByType(nTypeId)).build();
 	}
 
 }

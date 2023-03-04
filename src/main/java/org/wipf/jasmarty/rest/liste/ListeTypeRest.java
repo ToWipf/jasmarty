@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.rest.liste;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,7 +12,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.liste.ListeTypeDB;
+import org.wipf.jasmarty.databasetypes.liste.ListeType;
+import org.wipf.jasmarty.logic.liste.ListeTypeService;
 
 /**
  * @author wipf
@@ -27,26 +26,26 @@ import org.wipf.jasmarty.logic.liste.ListeTypeDB;
 public class ListeTypeRest {
 
 	@Inject
-	ListeTypeDB listeTypeDB;
+	ListeTypeService listeTypeDB;
 
 	@POST
 	@Path("save")
-	public Response save(String jnRoot) throws SQLException {
-		listeTypeDB.save(jnRoot);
+	public Response save(ListeType l) {
+		listeTypeDB.save(l);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		listeTypeDB.del(nId);
-		return Response.ok().build();
+		return Response.ok("{}").build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getall() throws SQLException {
-		return Response.ok(listeTypeDB.getAllAsJson().toString()).build();
+	public Response getall() {
+		return Response.ok(listeTypeDB.getAll()).build();
 	}
 
 }

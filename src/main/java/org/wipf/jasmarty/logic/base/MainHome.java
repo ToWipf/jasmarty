@@ -11,8 +11,8 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
-import org.wipf.jasmarty.logic.liste.ListeDB;
-import org.wipf.jasmarty.logic.liste.ListeTypeDB;
+import org.wipf.jasmarty.logic.liste.ListeService;
+import org.wipf.jasmarty.logic.liste.ListeTypeService;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import org.wipf.jasmarty.logic.wipfapp.Dynpages;
 
@@ -38,9 +38,9 @@ public class MainHome {
 	@Inject
 	Dynpages dynpages;
 	@Inject
-	ListeDB listeDB;
+	ListeService listeDB;
 	@Inject
-	ListeTypeDB listeTypeDB;
+	ListeTypeService listeTypeDB;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
 	public static final String VERSION = "1.5.01";
