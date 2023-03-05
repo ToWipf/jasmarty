@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.telegram.TeleLog;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -22,10 +23,15 @@ public class TeleLogService {
 	/**
 	 * @param t
 	 */
+	@Transactional
 	public void saveToLog(TeleLog t) {
 		t.saveOrUpdate();
 	}
 
+	/**
+	 * @param t
+	 */
+	@Transactional
 	public void saveToLog(Telegram t) {
 		// TODO wird probleme machen da nicht unic
 //		if (t.msgid == 0 && t.type == null) {
@@ -47,6 +53,7 @@ public class TeleLogService {
 	 * @param nId
 	 * @return
 	 */
+	@Transactional
 	public void delItem(Long nId) {
 		TeleLog.findById(nId).delete();
 	}

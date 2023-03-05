@@ -152,6 +152,7 @@ public class TSendAndReceive {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
+			e.printStackTrace();
 			return 'f';
 		}
 	}
@@ -306,7 +307,7 @@ public class TSendAndReceive {
 			t.setAntwort(sPart);
 			sendToTelegram(t);
 			// Um das Maximale Sendelimit nicht zu erreichen, 4 sek. warten
-			wipf.sleep(4000);
+			wipf.sleep(2000);
 		}
 
 	}

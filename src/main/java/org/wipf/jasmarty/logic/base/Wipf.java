@@ -55,10 +55,15 @@ public class Wipf {
 	}
 
 	/**
+	 * Nur Positive Zahlen
+	 * 
 	 * @param nMax
 	 * @return
 	 */
 	public int getRandomInt(int nMax) {
+		if (nMax < 1) {
+			return 1;
+		}
 		Random wuerfel = new Random();
 		return wuerfel.nextInt(nMax);
 	}
@@ -118,7 +123,8 @@ public class Wipf {
 	 * @return
 	 * @throws IOException
 	 */
-	public String httpRequest(httpRequestType method, String sUrl) throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException {
+	public String httpRequest(httpRequestType method, String sUrl)
+			throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException {
 		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();

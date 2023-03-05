@@ -33,9 +33,11 @@ public class TAppMsg {
 	 * @param t
 	 * @return
 	 */
+	@Transactional
 	public Telegram getMsg(Telegram t) {
-		List<TeleMsg> lm = TeleMsg.findByRequest(t.getMessage()).list();
-		t.setAntwort(lm.get(wipf.getRandomInt(lm.size())).response);
+		List<TeleMsg> lm = TeleMsg.findByFrage(t.getMessage()).list();
+		if (lm.size() > 0)
+			t.setAntwort(lm.get(wipf.getRandomInt(lm.size())).antwort);
 		return t;
 	}
 

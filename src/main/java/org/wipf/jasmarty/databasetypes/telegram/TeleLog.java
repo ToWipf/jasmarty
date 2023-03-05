@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,9 +25,12 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "msgid", nullable = false, unique = true)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false, unique = true)
+	public Integer id;
+	@Column(name = "msgid", nullable = false)
 	public Long msgid;
-	@Column(name = "msg", nullable = false)
+	@Column(name = "msg", nullable = true)
 	public String msg;
 	@Column(name = "antw", nullable = true)
 	public String antw;
@@ -47,10 +52,11 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	 * 
 	 */
 	public void saveOrUpdate() {
-		if (this.msgid != null) {
-			TeleLog existingData = TeleLog.findById(this.msgid);
+		if (this.id != null) {
+			TeleLog existingData = TeleLog.findById(this.id);
 			if (existingData != null) {
 				// Update
+				existingData.msgid = this.msgid;
 				existingData.msg = this.msg;
 				existingData.antw = this.antw;
 				existingData.chatid = this.chatid;
@@ -63,6 +69,9 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 				System.err.println("ID nicht in DB! " + this.toString());
 			}
 		} else {
+			if (this.msgid == null) {
+				this.msgid = -1l;
+			}
 			// Neu
 			this.persist();
 		}

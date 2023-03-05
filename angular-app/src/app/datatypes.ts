@@ -133,6 +133,12 @@ export interface TelegramUserCache {
   counter?: number;
 }
 
+export interface TeleMsg {
+  id?: number;
+  frage?: number;
+  antwort?: string;
+}
+
 export interface RndEvent {
   id?: number;
   eventtext?: string;

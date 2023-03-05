@@ -28,18 +28,14 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	public Long id;
-	@Column(name = "request", nullable = false)
-	public String request;
-	@Column(name = "response", nullable = true)
-	public String response;
-	@Column(name = "editby", nullable = true)
-	public String editby;
-	@Column(name = "date", nullable = true)
-	public Integer date;
+	@Column(name = "frage", nullable = false)
+	public String frage;
+	@Column(name = "antwort", nullable = true)
+	public String antwort;
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", request=" + request + ", response=" + response + ", date=" + date;
+		return "id=" + id + ", frage=" + frage + ", antwort=" + antwort;
 	}
 
 	/**
@@ -50,10 +46,8 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 			TeleMsg existingData = TeleMsg.findById(this.id);
 			if (existingData != null) {
 				// Update
-				existingData.request = this.request;
-				existingData.response = this.response;
-				existingData.editby = this.editby;
-				existingData.date = this.date;
+				existingData.frage = this.frage;
+				existingData.frage = this.frage;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
@@ -69,8 +63,8 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 	 * @param date
 	 * @return
 	 */
-	public static PanacheQuery<TeleMsg> findByRequest(String sRequest) {
-		return find("select e from Liste e where request =?1", sRequest);
+	public static PanacheQuery<TeleMsg> findByFrage(String frage) {
+		return find("select e from TeleMsg e where frage =?1", frage);
 	}
 
 }

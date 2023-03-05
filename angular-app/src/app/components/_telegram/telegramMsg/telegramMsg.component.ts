@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { Telegram } from 'src/app/datatypes';
+import { TeleMsg } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ export class TelegramMsgComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
+  public displayedColumns: string[] = ['mid', 'frage', 'antwort'];
   public sFilter: string = "";
   public bShowAllTableColumns: Boolean = true;
 
@@ -30,18 +30,18 @@ export class TelegramMsgComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['mid', 'message', 'antwort', 'from', 'date', 'edit'];
+      this.displayedColumns = ['mid', 'frage', 'antwort'];
     } else {
-      this.displayedColumns = ['message', 'antwort', 'edit'];
+      this.displayedColumns = ['frage', 'antwort'];
     }
   }
 
-  public editItem(t: Telegram): void {
+  public editItem(t: TeleMsg): void {
     this.openDialog(t);
   }
 
   public newItem(): void {
-    let t: Telegram = {};
+    let t: TeleMsg = {};
     this.openDialog(t);
   }
 
@@ -64,7 +64,7 @@ export class TelegramMsgComponent implements OnInit {
 
   }
 
-  private saveItem(t: Telegram): void {
+  private saveItem(t: TeleMsg): void {
     this.rest.post('telegram/saveMsg', t).then((resdata: any) => {
       this.loadAllItems();
     });
@@ -73,7 +73,7 @@ export class TelegramMsgComponent implements OnInit {
   private loadAllItems(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
-    this.rest.get('telegram/getall').then((resdata: Telegram[]) => {
+    this.rest.get('telegram/getall').then((resdata: TeleMsg[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();
@@ -85,9 +85,8 @@ export class TelegramMsgComponent implements OnInit {
       this.dataSource.filter = this.sFilter.trim();
     });
   }
-  private openDialog(item: Telegram): void {
-    const edititem: Telegram = this.serviceWipf.deepCopy(item);
-    edititem.from = "web";
+  private openDialog(item: TeleMsg): void {
+    const edititem: TeleMsg = this.serviceWipf.deepCopy(item);
 
     const dialogRef = this.dialog.open(TelegramMsgComponentDialogComponent, {
       data: edititem,
@@ -96,10 +95,8 @@ export class TelegramMsgComponent implements OnInit {
       minHeight: '150px',
     });
 
-    dialogRef.afterClosed().subscribe((result: Telegram) => {
+    dialogRef.afterClosed().subscribe((result: TeleMsg) => {
       if (result) {
-        result.editby = 'web';
-        result.date = Math.round(Date.now() / 1000);
         this.saveItem(result);
       }
     });
@@ -112,7 +109,7 @@ export class TelegramMsgComponent implements OnInit {
   templateUrl: './telegramMsg.dialog.html',
 })
 export class TelegramMsgComponentDialogComponent {
-  constructor(public dialogRef: MatDialogRef<TelegramMsgComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Telegram) { }
+  constructor(public dialogRef: MatDialogRef<TelegramMsgComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TeleMsg) { }
 
   public onNoClick(): void {
     this.dialogRef.close();
