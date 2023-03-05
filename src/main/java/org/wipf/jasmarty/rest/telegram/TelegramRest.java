@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest.wipf;
+package org.wipf.jasmarty.rest.telegram;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -14,11 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.WipfException;
-import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
-import org.wipf.jasmarty.databasetypes.telegram.Usercache;
-import org.wipf.jasmarty.logic.telegram.TAppMsgService;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
-import org.wipf.jasmarty.logic.telegram.TUsercache;
 import org.wipf.jasmarty.logic.telegram.TeleLogService;
 import org.wipf.jasmarty.logic.telegram.TeleMenue;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
@@ -41,10 +37,6 @@ public class TelegramRest {
 	TeleLogService tlog;
 	@Inject
 	TeleMenue tMenue;
-	@Inject
-	TAppMsgService tAppMsg;
-	@Inject
-	TUsercache tUsercache;
 
 	@GET
 	@Path("on")
@@ -103,12 +95,6 @@ public class TelegramRest {
 		return Response.ok("{}").build();
 	}
 
-//	@GET
-//	@Path("log")
-//	public Response log() {
-//		return Response.ok(tlog.getTelegramLogAsJson().toString()).build();
-//	}
-
 	@GET
 	@Path("logext")
 	public Response logs() {
@@ -133,48 +119,6 @@ public class TelegramRest {
 	@Path("chat")
 	public Response chat(String sJson) {
 		return Response.ok("{\"msg\":\"" + tMenue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
-	}
-
-	@GET
-	@Path("getall")
-	public Response msg() {
-		return Response.ok(tAppMsg.getAll()).build();
-	}
-
-	@POST
-	@Path("saveMsg")
-	public Response saveMsg(TeleMsg t) {
-		tAppMsg.save(t);
-		return Response.ok("{}").build();
-	}
-
-	@DELETE
-	@Path("delMsg/{id}")
-	public Response delMsg(@PathParam("id") Integer nId) {
-		tAppMsg.del(nId);
-		return Response.ok("{}").build();
-	}
-
-	// Usercache
-
-	@POST
-	@Path("usercache/save")
-	public Response saveTodo(Usercache u) {
-		tUsercache.save(u);
-		return Response.ok("{}").build();
-	}
-
-	@DELETE
-	@Path("usercache/delete/{id}")
-	public Response delete(@PathParam("id") Long nId) {
-		tUsercache.del(nId);
-		return Response.ok().build();
-	}
-
-	@GET
-	@Path("usercache/getAll")
-	public Response getall() {
-		return Response.ok(tUsercache.getAll()).build();
 	}
 
 }

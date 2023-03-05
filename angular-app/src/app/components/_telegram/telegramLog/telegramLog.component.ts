@@ -46,18 +46,7 @@ export class TelegramLogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
 
-    this.rest.get('telegram/log').then((resdata: Telegram[]) => {
-      this.dataSource = new MatTableDataSource(resdata);
-      this.dataSource.sort = this.sort;
-      this.dataSource.filter = this.sFilter.trim();
-      warten.close();
-    });
-  }
-
-  public loadExt(): void {
-    const warten = this.dialog.open(DialogWartenComponent, {});
-    this.dataSource = null;
-    this.rest.get('telegram/logext').then((resdata: Telegram[]) => {
+    this.rest.get('telelog/getall').then((resdata: Telegram[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
@@ -85,7 +74,7 @@ export class TelegramLogComponent implements OnInit {
   }
 
   private cleanLog(): void {
-    this.rest.delete('telegram/cleanLog').then((resdata: any) => {
+    this.rest.delete('telelog/cleanLog').then((resdata: any) => {
       var dic: DialogInfoContent = {
         infotext: 'Löschen abgeschlossen',
         infotext2: ' Liste jetzt laden?'
@@ -123,7 +112,7 @@ export class TelegramLogComponent implements OnInit {
   }
 
   private delItem(e: any): void {
-    this.rest.delete('telegram/delLog/' + e.mid).then((resdata: any) => {
+    this.rest.delete('telelog/delete/' + e.mid).then((resdata: any) => {
 
       e.infotext = "Logs neu laden?";
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
