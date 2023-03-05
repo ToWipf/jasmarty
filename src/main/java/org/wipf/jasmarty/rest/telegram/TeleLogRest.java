@@ -34,7 +34,7 @@ public class TeleLogRest {
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delLog(@PathParam("id") Long nId) {
+	public Response delLog(@PathParam("id") Integer nId) {
 		tlog.delItem(nId);
 		return Response.ok("{}").build();
 	}

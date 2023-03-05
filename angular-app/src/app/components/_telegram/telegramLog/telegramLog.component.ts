@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { DialogInfoContent, Telegram } from 'src/app/datatypes';
+import { DialogInfoContent } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,9 +30,9 @@ export class TelegramLogComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['mid', 'chatid', 'type', 'from', 'frage', 'antwort', 'date', 'edit'];
+      this.displayedColumns = ['id', 'mid', 'chatid', 'from', 'frage', 'antwort', 'date', 'edit'];
     } else {
-      this.displayedColumns = ['type', 'chatid', 'frage', 'antwort', 'date', 'edit'];
+      this.displayedColumns = ['chatid', 'frage', 'antwort', 'date', 'edit'];
     }
   }
 
@@ -46,7 +46,7 @@ export class TelegramLogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.dataSource = null;
 
-    this.rest.get('telelog/getall').then((resdata: Telegram[]) => {
+    this.rest.get('telelog/getall').then((resdata: any[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       this.dataSource.filter = this.sFilter.trim();
@@ -96,8 +96,8 @@ export class TelegramLogComponent implements OnInit {
   }
 
   public openDelItemDialog(e: any): void {
-    e.infotext = "Wirklich löschen der id " + e.mid + "?";
-    e.infotext2 = e.message + ' | ' + e.antwort;
+    e.infotext = "Wirklich löschen der id " + e.id + "?";
+    e.infotext2 = e.frage + ' | ' + e.antwort;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',
       minHeight: '150px',
@@ -112,7 +112,7 @@ export class TelegramLogComponent implements OnInit {
   }
 
   private delItem(e: any): void {
-    this.rest.delete('telelog/delete/' + e.mid).then((resdata: any) => {
+    this.rest.delete('telelog/delete/' + e.id).then((resdata: any) => {
 
       e.infotext = "Logs neu laden?";
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
@@ -123,7 +123,7 @@ export class TelegramLogComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe((result) => {
         if (result) {
-          this.dataSource = null;
+          this.loadAll();
         }
       });
 

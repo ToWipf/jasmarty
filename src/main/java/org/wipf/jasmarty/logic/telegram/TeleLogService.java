@@ -26,11 +26,11 @@ public class TeleLogService {
 	@Transactional
 	public void saveTelegramToLog(Telegram t) {
 		TeleLog tl = new TeleLog();
-		tl.msgid = (long) t.getMid();
+		tl.msgid = t.getMid();
 		tl.frage = t.getMessage();
 		tl.chatid = t.getChatID().toString();
 		tl.antwort = t.getAntwort();
-		tl.msgdate = t.getDate();
+		tl.date = t.getDate();
 		tl.msgfrom = t.getFrom();
 		tl.persist();
 	}
@@ -40,7 +40,7 @@ public class TeleLogService {
 	 * @return
 	 */
 	@Transactional
-	public void delItem(Long nId) {
+	public void delItem(Integer nId) {
 		TeleLog.findById(nId).delete();
 	}
 

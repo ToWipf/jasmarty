@@ -28,9 +28,14 @@
 <ng-scrollbar class="pscroll" track="all">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="mid">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> mId </th>
-            <td mat-cell *matCellDef="let element"> {{element.mid}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> MsgId </th>
+            <td mat-cell *matCellDef="let element"> {{element.msgid}} </td>
         </ng-container>
 
         <ng-container matColumnDef="chatid">
@@ -40,7 +45,7 @@
 
         <ng-container matColumnDef="from">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Von </th>
-            <td mat-cell *matCellDef="let element"> {{element.from}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.msgfrom}} </td>
         </ng-container>
 
         <ng-container matColumnDef="frage">
@@ -55,11 +60,6 @@
         <ng-container matColumnDef="antwort">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Antwort </th>
             <td mat-cell *matCellDef="let element"> {{element.antwort}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
         </ng-container>
 
         <ng-container matColumnDef="date">

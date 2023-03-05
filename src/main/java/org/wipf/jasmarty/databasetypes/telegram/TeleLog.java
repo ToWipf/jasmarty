@@ -29,7 +29,7 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
 	@Column(name = "msgid", nullable = false)
-	public Long msgid;
+	public Integer msgid;
 	@Column(name = "frage", nullable = true)
 	public String frage;
 	@Column(name = "antwort", nullable = true)
@@ -38,8 +38,8 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	public String chatid;
 	@Column(name = "msgfrom", nullable = true)
 	public String msgfrom;
-	@Column(name = "msgdate", nullable = true)
-	public Integer msgdate;
+	@Column(name = "date", nullable = true)
+	public Integer date;
 
 	@Override
 	public String toString() {

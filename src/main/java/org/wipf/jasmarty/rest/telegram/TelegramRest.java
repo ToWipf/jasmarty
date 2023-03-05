@@ -4,7 +4,6 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,7 +14,6 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
-import org.wipf.jasmarty.logic.telegram.TeleLogService;
 import org.wipf.jasmarty.logic.telegram.TeleMenue;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 
@@ -33,8 +31,6 @@ public class TelegramRest {
 	TSendAndReceive tVerwaltung;
 	@Inject
 	TelegramHome tHome;
-	@Inject
-	TeleLogService tlog;
 	@Inject
 	TeleMenue tMenue;
 
@@ -93,26 +89,6 @@ public class TelegramRest {
 	public Response sendMsgToId(@PathParam("msg") String sMsg) {
 		tVerwaltung.sendMsgToAdmin(sMsg);
 		return Response.ok("{}").build();
-	}
-
-	@GET
-	@Path("logext")
-	public Response logs() {
-		return Response.ok(tlog.getAll()).build();
-	}
-
-	@DELETE
-	@Path("delLog/{id}")
-	public Response delLog(@PathParam("id") Long nId) {
-		tlog.delItem(nId);
-		return Response.ok("{}").build();
-	}
-
-	@DELETE
-	@Path("cleanLog")
-	public Response cleanLog() {
-		tlog.cleanLog();
-		return Response.ok().build();
 	}
 
 	@POST
