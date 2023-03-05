@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.tasks;
 
-import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -34,7 +33,7 @@ public class RndTask {
 	 * @throws Exception
 	 * 
 	 */
-	public boolean startRndTask() throws SQLException {
+	public boolean startRndTask() {
 		if (wipfConfig.isAppActive("rndEventTask") && !this.bRun) {
 
 			LOGGER.info("start");

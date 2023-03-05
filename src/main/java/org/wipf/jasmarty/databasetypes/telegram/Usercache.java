@@ -51,7 +51,8 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				System.out.println("Neuer Telegram User: " + this.toString());
+				this.persist();
 			}
 		} else {
 			// Neu

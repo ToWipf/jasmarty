@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.WipfException;
 import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
 import org.wipf.jasmarty.databasetypes.telegram.Usercache;
-import org.wipf.jasmarty.logic.telegram.TAppMsg;
+import org.wipf.jasmarty.logic.telegram.TAppMsgService;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 import org.wipf.jasmarty.logic.telegram.TeleLogService;
@@ -42,7 +42,7 @@ public class TelegramRest {
 	@Inject
 	TeleMenue tMenue;
 	@Inject
-	TAppMsg tAppMsg;
+	TAppMsgService tAppMsg;
 	@Inject
 	TUsercache tUsercache;
 

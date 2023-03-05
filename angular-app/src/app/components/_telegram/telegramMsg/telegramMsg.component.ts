@@ -18,7 +18,7 @@ export class TelegramMsgComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['mid', 'frage', 'antwort'];
+  public displayedColumns: string[];
   public sFilter: string = "";
   public bShowAllTableColumns: Boolean = true;
 
@@ -30,9 +30,9 @@ export class TelegramMsgComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['mid', 'frage', 'antwort'];
+      this.displayedColumns = ['mid', 'frage', 'antwort', 'button'];
     } else {
-      this.displayedColumns = ['frage', 'antwort'];
+      this.displayedColumns = ['frage', 'antwort', 'button'];
     }
   }
 

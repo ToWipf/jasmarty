@@ -35,7 +35,7 @@ public class TSendAndReceive {
 	@Inject
 	TeleLogService tLog;
 	@Inject
-	TAppMsg appMsg;
+	TAppMsgService appMsg;
 	@Inject
 	RndEventsService appRndEvent;
 	@Inject

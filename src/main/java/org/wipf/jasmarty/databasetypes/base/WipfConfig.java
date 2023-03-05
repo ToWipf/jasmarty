@@ -56,7 +56,7 @@ public class WipfConfig extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("Neue Config: " + this.toString());
+				System.out.println("Neue Config: " + this.toString());
 				this.persist();
 			}
 		} else {

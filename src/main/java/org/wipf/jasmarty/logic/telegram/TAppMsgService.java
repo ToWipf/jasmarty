@@ -15,7 +15,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  *
  */
 @ApplicationScoped
-public class TAppMsg {
+public class TAppMsgService {
 
 	@Inject
 	Wipf wipf;

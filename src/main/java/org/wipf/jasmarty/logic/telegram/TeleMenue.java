@@ -39,7 +39,7 @@ public class TeleMenue {
 	@Inject
 	TUserAndGroups userAndGroups;
 	@Inject
-	TAppMsg appMsg;
+	TAppMsgService appMsg;
 	@Inject
 	MedienService appMedien;
 	@Inject
