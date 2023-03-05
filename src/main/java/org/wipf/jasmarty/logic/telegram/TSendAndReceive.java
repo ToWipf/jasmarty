@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -50,25 +51,16 @@ public class TSendAndReceive {
 
 	private static final Logger LOGGER = Logger.getLogger("Telegram SendAndReceive");
 
-	private Integer nOffsetID;
+	// Auf 0 setzen -> definierter zustand zum Start
+	private Integer nOffsetID = 0;
 	private String sBotKey;
 
 	/**
-	 * @throws SQLException
 	 * 
 	 */
-	public boolean loadConfig() throws Exception {
-		// Auf 0 setzen -> definierter zustand zum Start
-		this.nOffsetID = 0;
-		// Load bot config
+	@PostConstruct
+	public void loadConfig() {
 		this.sBotKey = wipfConfig.getConfParamString("telegrambot");
-
-		if (getBotKey() == null || getBotKey().equals("null") || getBotKey().equals("")) {
-			LOGGER.warn("telegrambot nicht in db gefunden."
-					+ " Setzen mit 'curl -X POST localhost:8080/telegram/setbot/bot2343242:ABCDEF348590247354352343345'");
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -79,8 +71,18 @@ public class TSendAndReceive {
 	public Boolean setbot(String sBot) throws Exception {
 		this.sBotKey = sBot;
 		wipfConfig.setConfParam("telegrambot", sBot);
-		LOGGER.info("Bot Key: " + getBotKey());
+		LOGGER.info("Bot Key: " + getBotKeyFromCache());
 		return true;
+	}
+
+	/**
+	 * @return
+	 * @throws WipfException
+	 */
+	public String getBotKeyFromCache() throws WipfException {
+		if (wipf.isValid(sBotKey) && !this.sBotKey.equals("null") && !this.sBotKey.equals("undefined"))
+			return this.sBotKey;
+		throw new WipfException("Kein Botkey gesetzt!");
 	}
 
 	/**
@@ -90,7 +92,7 @@ public class TSendAndReceive {
 	public char readUpdateFromTelegram() {
 		try {
 			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST,
-					"https://api.telegram.org/" + getBotKey() + "/getUpdates?offset=" + this.nOffsetID));
+					"https://api.telegram.org/" + getBotKeyFromCache() + "/getUpdates?offset=" + this.nOffsetID));
 
 			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("Telegram nicht 'ok'");
@@ -164,7 +166,7 @@ public class TSendAndReceive {
 		String sFileId = jd.get("file_id").toString();
 		String sFileName = "voice_" + joMsg.get("message_id").toString() + ".oga";
 
-		String sFileInfoPath = "https://api.telegram.org/" + getBotKey() + "/getFile?file_id=" + sFileId;
+		String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id=" + sFileId;
 		return teleFileDownload(sFileInfoPath, sFileName);
 	}
 
@@ -178,7 +180,7 @@ public class TSendAndReceive {
 		String sFileId = jd.get("file_id").toString();
 		String sFileName = "audio_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
 
-		String sFileInfoPath = "https://api.telegram.org/" + getBotKey() + "/getFile?file_id=" + sFileId;
+		String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id=" + sFileId;
 		return teleFileDownload(sFileInfoPath, sFileName);
 	}
 
@@ -195,7 +197,7 @@ public class TSendAndReceive {
 			String sFileId = jd.get("file_id").toString();
 			String sFileName = "doc_" + joMsg.get("message_id").toString() + "_" + jd.get("file_name").toString();
 
-			String sFileInfoPath = "https://api.telegram.org/" + getBotKey() + "/getFile?file_id=" + sFileId;
+			String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id=" + sFileId;
 			return teleFileDownload(sFileInfoPath, sFileName);
 		} else {
 			return "Nich erlaubt";
@@ -224,7 +226,7 @@ public class TSendAndReceive {
 			return "Fehler bei Photo F1";
 		}
 
-		String sFileInfoPath = "https://api.telegram.org/" + getBotKey() + "/getFile?file_id="
+		String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id="
 				+ oBiggestSize.get("file_id").toString();
 		String sFilename = "pic_" + joMsg.get("message_id").toString() + ".jpg";
 
@@ -242,7 +244,7 @@ public class TSendAndReceive {
 			JSONObject joDownload = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.GET, sFileInfoPath));
 			JSONObject picNam1 = new JSONObject(joDownload.get("result").toString());
 			String sPicPath = picNam1.get("file_path").toString();
-			String sPicUrl = "https://api.telegram.org/file/" + getBotKey() + "/" + sPicPath;
+			String sPicUrl = "https://api.telegram.org/file/" + getBotKeyFromCache() + "/" + sPicPath;
 
 			if (fileVw.saveFileToDisk(sPicUrl, sFilename)) {
 				return "speichern als " + sFilename;
@@ -323,8 +325,9 @@ public class TSendAndReceive {
 		}
 
 		try {
-			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + getBotKey()
-					+ "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
+			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST,
+					"https://api.telegram.org/" + getBotKeyFromCache() + "/sendMessage?chat_id=" + t.getChatID()
+							+ "&text=" + wipf.encodeUrlString(sAntwort));
 			JSONObject jo = new JSONObject(sResJson);
 
 			if (!jo.getBoolean("ok")) {
@@ -440,16 +443,6 @@ public class TSendAndReceive {
 	}
 
 	/**
-	 * @return
-	 * @throws WipfException
-	 */
-	public String getBotKey() throws WipfException {
-		if (this.sBotKey != null && !this.sBotKey.equals("null") && !this.sBotKey.equals("undefined"))
-			return this.sBotKey;
-		throw new WipfException("Kein Botkey gesetzt!");
-	}
-
-	/**
 	 * @param nChatId
 	 * @param f
 	 * @return
@@ -457,7 +450,7 @@ public class TSendAndReceive {
 	 */
 	private String sendFileToTelegram(Long nChatId, File f) throws Exception {
 		MultipartUtility multipart = new MultipartUtility(
-				"https://api.telegram.org/" + getBotKey() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
+				"https://api.telegram.org/" + getBotKeyFromCache() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
 		multipart.addFilePart("document", f);
 		String response = multipart.finish();

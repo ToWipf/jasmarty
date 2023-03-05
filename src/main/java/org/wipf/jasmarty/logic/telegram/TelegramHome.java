@@ -46,18 +46,14 @@ public class TelegramHome {
 	public void telegramStart() throws Exception {
 		LOGGER.info("starten");
 
-		if (tVerwaltung.loadConfig()) {
-			tReadLoop.start();
+		tReadLoop.start();
 
-			if (wipfConfig.isAppActive("rndEventTask") && appRndEvent.count() > 1) {
-				LOGGER.info("RndEvent Task starten");
-				rndTask.startRndTask();
-			}
-
-			LOGGER.info("Gestartet");
-		} else {
-			LOGGER.warn("nicht gestartet");
+		if (wipfConfig.isAppActive("rndEventTask") && appRndEvent.count() > 1) {
+			LOGGER.info("RndEvent Task starten");
+			rndTask.startRndTask();
 		}
+
+		LOGGER.info("Gestartet");
 	}
 
 	/**
