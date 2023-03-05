@@ -71,6 +71,7 @@ export interface Telegram {
   message?: string;
   antwort?: string;
   options?: string;
+  frage?: string;
 }
 
 export interface WipfUser {

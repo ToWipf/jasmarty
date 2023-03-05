@@ -24,29 +24,15 @@ public class TeleLogService {
 	 * @param t
 	 */
 	@Transactional
-	public void saveToLog(TeleLog t) {
-		t.saveOrUpdate();
-	}
-
-	/**
-	 * @param t
-	 */
-	@Transactional
-	public void saveToLog(Telegram t) {
-		// TODO wird probleme machen da nicht unic
-//		if (t.msgid == 0 && t.type == null) {
-//			t.msgid = -1l;
-//			t.type = "system";
-//		}
-
+	public void saveTelegramToLog(Telegram t) {
 		TeleLog tl = new TeleLog();
-		tl.msg = t.getMessage();
+		tl.msgid = (long) t.getMid();
+		tl.frage = t.getMessage();
 		tl.chatid = t.getChatID().toString();
-		tl.antw = t.getAntwort();
+		tl.antwort = t.getAntwort();
 		tl.msgdate = t.getDate();
 		tl.msgfrom = t.getFrom();
-		tl.type = t.getType();
-		tl.saveOrUpdate();
+		tl.persist();
 	}
 
 	/**

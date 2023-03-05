@@ -18,7 +18,7 @@ export class TelegramLogComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public dataSource;
-  public displayedColumns: string[] = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
+  public displayedColumns: string[];
   public sFilter: string = "";
   public bShowAllTableColumns: Boolean = true;
 
@@ -30,9 +30,9 @@ export class TelegramLogComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['mid', 'chatid', 'type', 'from', 'message', 'antwort', 'date', 'edit'];
+      this.displayedColumns = ['mid', 'chatid', 'type', 'from', 'frage', 'antwort', 'date', 'edit'];
     } else {
-      this.displayedColumns = ['type', 'chatid', 'message', 'antwort', 'date', 'edit'];
+      this.displayedColumns = ['type', 'chatid', 'frage', 'antwort', 'date', 'edit'];
     }
   }
 

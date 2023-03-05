@@ -19,7 +19,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @Entity
 @RegisterForReflection
-@Table(name = "telegramlog")
+@Table(name = "telegram_log")
 public class TeleLog extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,51 +30,20 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	public Integer id;
 	@Column(name = "msgid", nullable = false)
 	public Long msgid;
-	@Column(name = "msg", nullable = true)
-	public String msg;
-	@Column(name = "antw", nullable = true)
-	public String antw;
+	@Column(name = "frage", nullable = true)
+	public String frage;
+	@Column(name = "antwort", nullable = true)
+	public String antwort;
 	@Column(name = "chatid", nullable = true)
 	public String chatid;
 	@Column(name = "msgfrom", nullable = true)
 	public String msgfrom;
 	@Column(name = "msgdate", nullable = true)
 	public Integer msgdate;
-	@Column(name = "type", nullable = true)
-	public String type;
 
 	@Override
 	public String toString() {
-		return "msgid=" + msgid + ", msg=" + msg + ", antw=" + antw + ", msgfrom=" + msgfrom;
-	}
-
-	/**
-	 * 
-	 */
-	public void saveOrUpdate() {
-		if (this.id != null) {
-			TeleLog existingData = TeleLog.findById(this.id);
-			if (existingData != null) {
-				// Update
-				existingData.msgid = this.msgid;
-				existingData.msg = this.msg;
-				existingData.antw = this.antw;
-				existingData.chatid = this.chatid;
-				existingData.msgfrom = this.msgfrom;
-				existingData.msgdate = this.msgdate;
-				existingData.type = this.type;
-				existingData.persist();
-			} else {
-				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
-			}
-		} else {
-			if (this.msgid == null) {
-				this.msgid = -1l;
-			}
-			// Neu
-			this.persist();
-		}
+		return "msgid=" + msgid + ", frage=" + frage + ", msgfrom=" + msgfrom + ", antwort=" + antwort;
 	}
 
 	/**

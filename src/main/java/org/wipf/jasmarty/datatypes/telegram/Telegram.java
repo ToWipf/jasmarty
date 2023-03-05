@@ -280,7 +280,7 @@ public class Telegram {
 	}
 
 	/**
-	 * @return Message id
+	 * @return Message id TODO auf LONG
 	 */
 	public Integer getMid() {
 		return nMid;

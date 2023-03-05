@@ -319,7 +319,7 @@ public class TSendAndReceive {
 	 */
 	@Metered
 	public void sendToTelegram(Telegram t) {
-		tLog.saveToLog(t);
+		tLog.saveTelegramToLog(t);
 		String sAntwort = t.getAntwort();
 		if (sAntwort == null || sAntwort.equals("")) {
 			sAntwort = "Leere Antwort";
@@ -340,24 +340,6 @@ public class TSendAndReceive {
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * @param sChatID
-	 * @param sFilePath
-	 * @return
-	 * @throws IOException
-	 */
-	// TODO löschen
-	// public String sendPictureToTelegram(Long nChatId, String sFilePath) throws
-	// IOException {
-	// MultipartUtility multipart = new MultipartUtility(
-	// "https://api.telegram.org/" + getBotKey() + "/sendPhoto?chat_id=" + nChatId,
-	// "UTF-8");
-	// // multipart.addFormField("param_name_1", "param_value");
-	// multipart.addFilePart("photo", new File("files/" + sFilePath));
-	// String response = multipart.finish();
-	// return (response);
-	// }
 
 	/**
 	 * @param t
