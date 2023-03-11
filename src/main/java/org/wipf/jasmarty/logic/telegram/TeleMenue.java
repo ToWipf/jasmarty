@@ -148,7 +148,6 @@ public class TeleMenue {
 //				return appMsg.delItemByTelegram(t);
 
 			// Cache und Log Stats
-			case "s":
 			case "stats":
 			case "telestats":
 			case "cache":
@@ -306,6 +305,10 @@ public class TeleMenue {
 			case "sys":
 			case "system":
 				return appOthers.getSystem();
+
+			case "s":
+			case "solar":
+				return grafana.telegramMenueSolar(t);
 
 			default:
 				break;

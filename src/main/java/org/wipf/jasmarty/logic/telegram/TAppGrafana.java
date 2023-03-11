@@ -72,7 +72,6 @@ public class TAppGrafana {
 			sPanelId = "23";
 			break;
 		default:
-			sPanelId = "0";
 			return "Panel id nicht gefunden";
 		}
 
@@ -126,13 +125,61 @@ public class TAppGrafana {
 			sPanelId = "60";
 			break;
 		default:
-			sPanelId = "0";
 			return "Panel id nicht gefunden";
 		}
 
 		if (validateInput(sTeil1_Was, sTeil2_Zeit)) {
 			try {
 				return sendGrafanaPictureToTelegram(t.getChatID(), "FYv3KbWgk/netzwerk", sPanelId, sTeil2_Zeit);
+			} catch (Exception e) {
+				return "Fehler 113 " + e;
+			}
+		} else {
+			return "Fehlerhafte Eingabe\nHilfe mit 'dev'";
+		}
+
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public String telegramMenueSolar(Telegram t) {
+		String sPanelId = "";
+		String sTeil1_Was = t.getMessageStringPartLow(1);
+		String sTeil2_Zeit = t.getMessageStringPartLow(2);
+		if (sTeil1_Was == null || sTeil2_Zeit == null) {
+			// @formatter:off
+				return 
+					"Syntax:\n" + 
+					"solar <Panel> <Zeit>\n" +
+					"Panels:\n" +
+					"- watt (w)\n" +
+					"- online (o)\n" +
+					"\n" +
+					"Zeit (die letzten xx) Beispiele:\n" +
+					"- 15m (Minuten)\n" +
+					"- 6h (Stunden)\n" +
+					"- 1d (Tage)\n";
+			// @formatter:on
+		}
+
+		switch (sTeil1_Was) {
+		case "w":
+		case "watt":
+			sPanelId = "2";
+			break;
+		case "o":
+		case "online":
+			sPanelId = "4";
+			break;
+		default:
+			return "Panel id nicht gefunden";
+		}
+
+		if (validateInput(sTeil1_Was, sTeil2_Zeit)) {
+			try {
+				return sendGrafanaPictureToTelegram(t.getChatID(), "8wFrHwb4k/ubersicht-solar", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
 				return "Fehler 113 " + e;
 			}
