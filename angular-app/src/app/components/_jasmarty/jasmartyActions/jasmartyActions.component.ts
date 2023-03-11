@@ -33,8 +33,7 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   public newItem(): void {
-    const nextid = this.Buttonactions.length + 1; // TODO: !!!
-    const empty: Buttonaction = { id: nextid, active: false, button: this.lastPressed, action: 'nichts' };
+    const empty: Buttonaction = { active: false, button: this.lastPressed, action: 'nichts' };
     this.editItem(empty);
   }
 
@@ -70,12 +69,9 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
   }
 
   private save(item: Buttonaction): void {
-    this.rest.post('actions/set', JSON.stringify(item)).then((resdata: any) => {
-      if (resdata.save) {
+    this.rest.post('actions/save', item).then((resdata: any) => {
+      if (resdata) {
         this.load();
-      } else {
-        //TODO: Meldung Fehler
-        console.log('fehler');
       }
     });
   }

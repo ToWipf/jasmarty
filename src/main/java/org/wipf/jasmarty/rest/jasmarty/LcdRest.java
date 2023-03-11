@@ -1,11 +1,10 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,7 +23,7 @@ import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 @Path("lcd")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class LcdRest {
 
@@ -39,25 +38,15 @@ public class LcdRest {
 	@PermitAll
 	@Path("config/get")
 	public Response getConfig() {
-		try {
-			return Response.ok(serialConfig.getConfig().toJson()).build();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return Response.ok(serialConfig.getConfig().toJson()).build();
+
 	}
 
 	@POST
 	@Path("config/set")
 	public Response setConfig(String jnRoot) {
-		try {
-			serialConfig.setConfig(jnRoot);
-			return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-
+		serialConfig.setConfig(jnRoot);
+		return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
 	}
 
 	@GET

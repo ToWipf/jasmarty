@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.rest.debug;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -127,19 +125,6 @@ public class DebugRest {
 	@Path("lcd/writeAscii/{int}")
 	public Response writeAscii(@PathParam("int") Integer n) {
 		lcdConnect.write(n);
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("jasmarty/restart")
-	public Response startAgain() {
-		try {
-			jHome.jasmartyRestart();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return Response.ok().build();
 	}
 

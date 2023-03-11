@@ -27,6 +27,7 @@ public class ListeType extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
+	@Column(name = "typename", nullable = false, unique = true)
 	public String typename;
 
 	@Override

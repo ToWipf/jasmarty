@@ -1,18 +1,14 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.wipf.jasmarty.datatypes.jasmarty.ButtonAction;
-import org.wipf.jasmarty.logic.base.SqlLite;
-import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
+import org.wipf.jasmarty.databasetypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
 
 /**
@@ -25,162 +21,50 @@ public class ActionVerwaltung {
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
-	Tastatur tastatur;
-	@Inject
-	SqlLite sqlLite;
-	@Inject
 	Lcd12864PageVerwaltung pageVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
 	private Integer currentPressed;
 
 	/**
-	 * @throws SQLException
-	 */
-	public void initDB() throws SQLException {
-		String sUpdate = "CREATE TABLE IF NOT EXISTS actions (id INTEGER UNIQUE, button INTEGER , active INTEGER , action TEXT);";
-		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
-	}
-
-	/**
 	 * @param ba
 	 * @throws SQLException
 	 */
-	public void saveToDB(ButtonAction ba) throws SQLException {
-		String sUpdate = "INSERT OR REPLACE INTO actions (id, button, active, action) VALUES (?,?,?,?)";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, ba.getId());
-		statement.setInt(2, ba.getButton());
-		statement.setBoolean(3, ba.isActive());
-		statement.setString(4, ba.getAction());
-		statement.executeUpdate();
+	@Transactional
+	public void save(ButtonAction ba) {
+		ba.saveOrUpdate();
 	}
 
 	/**
 	 * @param nId
 	 * @throws SQLException
 	 */
-	public void delete(Integer nId) throws SQLException {
-		String sUpdate = "DELETE FROM actions WHERE id LIKE ?;";
-		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate);
-		statement.setInt(1, nId);
-		statement.executeUpdate();
+	@Transactional
+	public void delete(Integer nId) {
+		ButtonAction.findById(nId).delete();
 	}
 
 	/**
 	 * @param nId
 	 * @return
 	 */
-	public ButtonAction getActionFromDbByID(int nId) {
-		ButtonAction ba = new ButtonAction();
-		try {
-
-			String sQuery = ("SELECT * FROM actions WHERE id = '" + nId + "';");
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-			statement.setInt(1, nId);
-			ResultSet rs = statement.executeQuery();
-
-			while (rs.next()) {
-				// Es gibt nur einen oder keinen Eintrag
-				ba.setId(rs.getInt("id"));
-				ba.setButton(rs.getInt("button"));
-				ba.setActive(rs.getBoolean("active"));
-				ba.setAction(rs.getString("action"));
-				return ba;
-			}
-
-		} catch (SQLException e) {
-			LOGGER.warn("BA not found: " + nId);
-		}
-		return ba;
+	public ButtonAction getActionFromDbById(int nId) {
+		return ButtonAction.findById(nId);
 	}
 
 	/**
 	 * @return
 	 */
-	public JSONArray getAllFromDBAsJson() {
-		JSONArray ja = new JSONArray();
-		try {
-			String sQuery = ("select * from actions;");
-			ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
-
-			while (rs.next()) {
-				JSONObject entry = new JSONObject();
-				entry.put("id", rs.getInt("id"));
-				entry.put("button", rs.getInt("button"));
-				entry.put("active", rs.getBoolean("active"));
-				entry.put("action", rs.getString("action"));
-				ja.put(entry);
-			}
-		} catch (Exception e) {
-			LOGGER.warn("getAllFromDBAsJson: " + e);
-		}
-		return ja;
+	public List<ButtonAction> getAll() {
+		return ButtonAction.findAll().list();
 	}
 
 	/**
 	 * @param nId
 	 * @return
 	 */
-	public ButtonAction getActionFromDbByButton(int nButton) {
-		ButtonAction ba = new ButtonAction();
-		try {
-
-			String sQuery = ("SELECT * FROM actions WHERE button = ? AND active = 'true';");
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-			statement.setInt(1, nButton);
-
-			ResultSet rs = statement.executeQuery();
-
-			while (rs.next()) {
-				// Es gibt nur einen oder keinen Eintrag
-				ba.setId(rs.getInt("id"));
-				ba.setButton(rs.getInt("button"));
-				ba.setActive(rs.getBoolean("active"));
-				ba.setAction(rs.getString("action"));
-				return ba;
-			}
-
-		} catch (Exception e) {
-			LOGGER.warn("BA not found in DB by Button: " + nButton);
-		}
-		return ba;
-	}
-
-	/**
-	 * @param nId
-	 * @return
-	 */
-	public ButtonAction getActionFromDbById(int nId) { // TODO zusammenfassen mit json
-		ButtonAction ba = new ButtonAction();
-		try {
-
-			String sQuery = "SELECT * FROM actions WHERE id = ?;";
-			PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-			statement.setInt(1, nId);
-
-			ResultSet rs = statement.executeQuery();
-
-			while (rs.next()) {
-				// Es gibt nur einen oder keinen Eintrag
-				ba.setId(rs.getInt("id"));
-				ba.setButton(rs.getInt("button"));
-				ba.setActive(rs.getBoolean("active"));
-				ba.setAction(rs.getString("action"));
-				return ba;
-			}
-		} catch (Exception e) {
-			LOGGER.warn("BA not found in DB by Id: " + nId);
-		}
-		return ba;
-	}
-
-	/**
-	 * @param jnRoot
-	 * @throws SQLException
-	 */
-	public void setAction(String jnRoot) throws SQLException {
-		saveToDB(new ButtonAction().setByJson(jnRoot));
+	public ButtonAction getActionByButton(int nButton) {
+		return ButtonAction.findByButton(nButton).firstResult();
 	}
 
 	/**
@@ -194,10 +78,10 @@ public class ActionVerwaltung {
 	 * @param nButton
 	 * @throws Exception
 	 */
-	public void doActionByButtonNr(Integer nButton) throws Exception {
+	public void doActionByButtonNr(Integer nButton) {
 		this.currentPressed = nButton;
 		if (nButton != null) {
-			ButtonAction ba = getActionFromDbByButton(nButton);
+			ButtonAction ba = getActionByButton(nButton);
 			doActionByButton(ba);
 		}
 	}
@@ -206,7 +90,7 @@ public class ActionVerwaltung {
 	 * @param nButtonId
 	 * @throws Exception
 	 */
-	public void doActionById(Integer nButtonId) throws Exception {
+	public void doActionById(Integer nButtonId) {
 		if (nButtonId != null) {
 			ButtonAction ba = getActionFromDbById(nButtonId);
 			doActionByButton(ba);
@@ -217,23 +101,23 @@ public class ActionVerwaltung {
 	 * @param ba
 	 * @throws Exception
 	 */
-	private void doActionByButton(ButtonAction ba) throws Exception {
-		if (ba.getAction() != null) {
+	private void doActionByButton(ButtonAction ba) {
+		if (ba.action != null) {
 
-			Integer nTrennlineFirst = ba.getAction().indexOf('|');
-			Integer nTrennlineLast = ba.getAction().lastIndexOf('|');
+			Integer nTrennlineFirst = ba.action.indexOf('|');
+			Integer nTrennlineLast = ba.action.lastIndexOf('|');
 
-			String sParameter1 = ba.getAction().substring(0, nTrennlineFirst);
+			String sParameter1 = ba.action.substring(0, nTrennlineFirst);
 			String sParameter2 = null;
 			String sParameter3 = null;
 
 			if (nTrennlineFirst != nTrennlineLast) {
 				// es gibt einen 3. Parameter
-				sParameter2 = ba.getAction().substring(nTrennlineFirst + 1, nTrennlineLast);
-				sParameter3 = ba.getAction().substring(nTrennlineLast + 1);
+				sParameter2 = ba.action.substring(nTrennlineFirst + 1, nTrennlineLast);
+				sParameter3 = ba.action.substring(nTrennlineLast + 1);
 			} else {
 				// Es gibt nur 2 Parameter
-				sParameter2 = ba.getAction().substring(nTrennlineFirst + 1);
+				sParameter2 = ba.action.substring(nTrennlineFirst + 1);
 			}
 
 			switch (sParameter1) {
@@ -262,9 +146,6 @@ public class ActionVerwaltung {
 					pageVerwaltung.select(Integer.valueOf(sParameter3));
 					return;
 				}
-				return;
-			case "write":
-				tastatur.write(sParameter2, sParameter3);
 				return;
 			case "volume":
 				switch (sParameter2) {

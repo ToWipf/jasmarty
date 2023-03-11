@@ -80,20 +80,6 @@ public class LcdConnect {
 	}
 
 	/**
-	 * @return
-	 */
-	public int getHeight() {
-		return lconf.getHeight();
-	}
-
-	/**
-	 * @return
-	 */
-	public int getWidth() {
-		return lconf.getWidth();
-	}
-
-	/**
 	 * @param lconfig
 	 */
 	public void setConfig(LcdConfig lconfig) {

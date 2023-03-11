@@ -1,10 +1,9 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.databasetypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
 
 /**
@@ -23,7 +23,7 @@ import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
 @Path("actions")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON) TODO POST geht nicht
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class ActionRest {
 
@@ -39,48 +39,33 @@ public class ActionRest {
 	@GET
 	@Path("get/{id}")
 	public Response getAction(@PathParam("id") Integer nId) {
-		return Response.ok(actionVerwaltung.getActionFromDbByButton(nId).toJson().toString()).build();
+		return Response.ok(actionVerwaltung.getActionByButton(nId)).build();
 	}
 
 	@GET
 	@Path("getall")
 	public Response getAll() {
-		return Response.ok(actionVerwaltung.getAllFromDBAsJson().toString()).build();
+		return Response.ok(actionVerwaltung.getAll()).build();
 	}
 
 	@GET
 	@Path("doaction/{id}")
 	public Response doaction(@PathParam("id") Integer nId) {
-		try {
-			actionVerwaltung.doActionById(nId);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		actionVerwaltung.doActionById(nId);
 		return Response.ok().build();
 	}
 
 	@POST
-	@Path("set")
-	public Response setAction(String jnRoot) {
-		try {
-			actionVerwaltung.setAction(jnRoot);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@Path("save")
+	public Response setAction(ButtonAction o) {
+		actionVerwaltung.save(o);
 		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
 	public Response delete(@PathParam("id") Integer nId) {
-		try {
-			actionVerwaltung.delete(nId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		actionVerwaltung.delete(nId);
 		return Response.ok().build();
 	}
 

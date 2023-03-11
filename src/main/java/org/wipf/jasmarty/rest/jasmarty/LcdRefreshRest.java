@@ -28,8 +28,6 @@ public class LcdRefreshRest {
 	@Inject
 	JasmartyHome jasmartyHome;
 
-	// TODO mv nach lcdRest
-
 	@GET
 	@Path("on")
 	public Response on() throws SQLException {
@@ -42,13 +40,6 @@ public class LcdRefreshRest {
 	@Path("off")
 	public Response off() {
 		jasmartyHome.jasmartyStop();
-		return Response.ok().build();
-	}
-
-	@GET
-	@Path("refreshCache")
-	public Response refreshCache() {
-		jasmartyHome.doRefreshManuell();
 		return Response.ok().build();
 	}
 

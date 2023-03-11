@@ -1,10 +1,7 @@
 export interface Jaconfig {
   port?: string;
-  width?: number;
-  height?: number;
   refreshrate?: number;
   baudrate?: number;
-  type?: string;
 }
 
 export interface Japage {

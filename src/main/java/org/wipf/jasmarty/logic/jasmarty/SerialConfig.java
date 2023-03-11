@@ -13,6 +13,10 @@ import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+/**
+ * @author wipf
+ *
+ */
 @ApplicationScoped
 public class SerialConfig {
 
@@ -25,33 +29,27 @@ public class SerialConfig {
 	 * @return
 	 * @throws SQLException
 	 */
-	public LcdConfig getConfig() throws SQLException {
-		try {
-			LcdConfig conf = new LcdConfig();
+	public LcdConfig getConfig() {
 
-			conf.setPort(wipfConfig.getConfParamString("lcd_port"));
-			conf.setRefreshRate(wipfConfig.getConfParamInteger("lcd_refreshrate"));
-			conf.setWidth(wipfConfig.getConfParamInteger("lcd_widht"));
-			conf.setHeight(wipfConfig.getConfParamInteger("lcd_height"));
-			conf.setBaudRate(wipfConfig.getConfParamInteger("lcd_baudrate"));
+		LcdConfig conf = new LcdConfig();
 
-			return conf;
-		} catch (Exception e) {
-			LOGGER.warn("Config nicht gefunden > default Config erstellen");
-			return defaultConfig();
-		}
+		conf.setPort(wipfConfig.getConfParamString("lcd_port"));
+		conf.setRefreshRate(wipfConfig.getConfParamInteger("lcd_refreshrate"));
+		conf.setBaudRate(wipfConfig.getConfParamInteger("lcd_baudrate"));
+
+		return conf;
+
+		// return defaultConfig();
 	}
 
 	/**
 	 * @return
 	 * @throws SQLException
 	 */
-	private LcdConfig defaultConfig() throws SQLException {
+	private LcdConfig defaultConfig() {
 		LcdConfig lcDef = new LcdConfig();
 		lcDef.setPort("");
-		lcDef.setHeight(4);
-		lcDef.setWidth(20);
-		lcDef.setBaudRate(9600);
+		lcDef.setBaudRate(57600);
 		lcDef.setRefreshRate(200);
 
 		setConfig(lcDef);
@@ -62,11 +60,9 @@ public class SerialConfig {
 	 * @param conf
 	 * @throws SQLException
 	 */
-	public void setConfig(LcdConfig conf) throws SQLException {
+	public void setConfig(LcdConfig conf) {
 		wipfConfig.setConfParam("lcd_port", conf.getPort());
 		wipfConfig.setConfParam("lcd_refreshrate", conf.getRefreshRate());
-		wipfConfig.setConfParam("lcd_widht", conf.getWidth());
-		wipfConfig.setConfParam("lcd_height", conf.getHeight());
 		wipfConfig.setConfParam("lcd_baudrate", conf.getBaudRate());
 
 		LOGGER.info("Config speichern");
@@ -76,7 +72,7 @@ public class SerialConfig {
 	 * @param jnRoot
 	 * @throws SQLException
 	 */
-	public void setConfig(String jnRoot) throws SQLException {
+	public void setConfig(String jnRoot) {
 		setConfig(new LcdConfig().setByJson(jnRoot));
 	}
 
