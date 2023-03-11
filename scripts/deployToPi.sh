@@ -5,7 +5,7 @@ VERSION=$(date '+%Y-%m-%d')
 
 echo Name= $IMAGE_ID:${VERSION}
 
-./buildFull.sh
+./buildAll.sh
 if [ $? -eq 0 ]; then
 	echo "build OK"
 else
