@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.rest.daylog;
 
-import java.sql.SQLException;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -33,26 +33,26 @@ public class DaylogTypeRest {
 	// Wird nicht gebraucht
 	@GET
 	@Path("get/{id}")
-	public Response get(@PathParam("id") Integer nId) throws SQLException {
+	public Response get(@PathParam("id") Integer nId) {
 		return Response.ok(daylogTypeDB.get(nId).toString()).build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getall() throws SQLException {
+	public Response getall() {
 		return Response.ok(daylogTypeDB.getAll()).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response save(DaylogType d) throws SQLException {
+	public Response save(DaylogType d) {
 		daylogTypeDB.save(d);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		daylogTypeDB.del(nId);
 		return Response.ok("{}").build();
 	}

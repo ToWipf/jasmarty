@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.main;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -51,7 +51,7 @@ public class WipfRest {
 	@POST
 	@Path("setDiscordId/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response discordSetId(@PathParam("id") String sId) throws IOException, SQLException {
+	public Response discordSetId(@PathParam("id") String sId) throws IOException {
 		wipfConfig.setConfParam("discord_id", sId);
 		return Response.ok(wipfConfig.getConfParamString("discord_id")).build();
 	}

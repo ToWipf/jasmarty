@@ -22,10 +22,10 @@ public class TAppTicTacToe {
 //	private static final Logger LOGGER = Logger.getLogger("Telegram TicTacToe");
 //
 //	/**
-//	 * @throws SQLException
+//	 * 
 //	 * 
 //	 */
-//	public void initDB() throws SQLException {
+//	public void initDB() {
 //		String sUpdate = "CREATE TABLE IF NOT EXISTS tictactoe (chatid INTEGER UNIQUE, feld TEXT, msgdate INTEGER, type TEXT);";
 //		sqlLite.getDbApp().prepareStatement(sUpdate).executeUpdate();
 //	}

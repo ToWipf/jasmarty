@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.databasetypes.jasmarty;
+package org.wipf.jasmarty.databasetypes.lcd;
 
 import java.io.Serializable;
 
@@ -18,7 +18,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @Entity
 @RegisterForReflection
-@Table(name = "actions")
+@Table(name = "lcd_actions")
 public class ButtonAction extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;

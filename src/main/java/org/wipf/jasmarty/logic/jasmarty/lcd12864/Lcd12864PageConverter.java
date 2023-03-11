@@ -5,12 +5,12 @@ import javax.inject.Inject;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font.Lcd12864fontType;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page.lineAlignment;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
-import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageDescription;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 
@@ -22,12 +22,12 @@ public class Lcd12864PageConverter {
 	@Inject
 	Wipf wipf;
 
-	private Lcd12864PageDescription lpdCurrentCache;
+	private LcdPageDescription lpdCurrentCache;
 
 	/**
 	 * @param pd
 	 */
-	public void setPageDescription(Lcd12864PageDescription pd) {
+	public void setPageDescription(LcdPageDescription pd) {
 		this.lpdCurrentCache = pd;
 	}
 
@@ -42,7 +42,7 @@ public class Lcd12864PageConverter {
 	 * @return
 	 */
 	public int getCurrentTimeoutime() {
-		return lpdCurrentCache.getTimeouttime();
+		return lpdCurrentCache.timeoutTime;
 	}
 
 	/**
@@ -59,10 +59,10 @@ public class Lcd12864PageConverter {
 	 * 
 	 * @param page
 	 */
-	private Lcd12864Page buildPage(Lcd12864PageDescription lpd) {
+	private Lcd12864Page buildPage(LcdPageDescription lpd) {
 		Lcd12864Page lp = new Lcd12864Page();
-		JSONArray jDynamic = lpd.getDynamic();
-		JSONArray jStatic = lpd.getStatic();
+		JSONArray jDynamic = lpd.getDynamicData();
+		JSONArray jStatic = lpd.getStaticData();
 
 		// Hintergrund setzen
 		lp.setScreen(jStatic);
@@ -79,22 +79,28 @@ public class Lcd12864PageConverter {
 				case "TEXT":
 					switch (jo.get("font").toString()) {
 					case "FONT_57_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_68_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_57_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_68_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_57_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					case "FONT_68_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
+								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -127,7 +133,8 @@ public class Lcd12864PageConverter {
 						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
+						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()),
+								pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -179,7 +186,7 @@ public class Lcd12864PageConverter {
 	 * 
 	 */
 	public void loadDefaultPage() {
-		Lcd12864PageDescription lpdDefault = new Lcd12864PageDescription();
+		LcdPageDescription lpdDefault = new LcdPageDescription();
 		JSONArray ja = new JSONArray();
 		JSONObject jo = new JSONObject();
 		jo.put("type", "TEXT");
@@ -189,11 +196,11 @@ public class Lcd12864PageConverter {
 		jo.put("y", 32);
 		ja.put(jo);
 
-		lpdDefault.setId(0);
-		lpdDefault.setName("Startseite");
-		lpdDefault.setTimeouttime(1000);
-		lpdDefault.setStatic("[]");
-		lpdDefault.setDynamic(ja);
+		lpdDefault.id = 0; // TODO
+		lpdDefault.name = "Startseite";
+		lpdDefault.timeoutTime = 1000;
+		lpdDefault.setStaticData(new JSONArray());
+		lpdDefault.setDynamicData(ja);
 
 		this.setPageDescription(lpdDefault);
 	}

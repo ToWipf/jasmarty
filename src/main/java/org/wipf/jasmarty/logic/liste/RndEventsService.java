@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.liste;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -26,7 +26,7 @@ public class RndEventsService {
 	/**
 	 * @param t
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public String menueRndEvent(Telegram t) {
 		try {
@@ -77,7 +77,7 @@ public class RndEventsService {
 	/**
 	 * @return
 	 */
-	public String getRndEventRnd() throws SQLException {
+	public String getRndEventRnd() {
 //		String sQuery = "select eventtext from rndEvent WHERE active = 1 ORDER BY RANDOM() LIMIT 1;";
 //
 //		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();

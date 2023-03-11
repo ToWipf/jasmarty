@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
-import java.sql.SQLException;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -31,17 +31,14 @@ public class Lcd12864 {
 	@Inject
 	Wipf wipf;
 	@Inject
-	Lcd12864PageVerwaltung lcd12864PageVerwaltung;
-	@Inject
 	Lcd12864PageConverter lcd12864PageConverter;
 
 	/**
 	 * @return
-	 * @throws SQLException
+	 * 
 	 * 
 	 */
-	public Boolean startLCD() throws SQLException {
-		lcd12864PageVerwaltung.init();
+	public Boolean startLCD() {
 		lcd12864PageConverter.loadDefaultPage();
 		LOGGER.info("Starte 12864 LCD");
 		return lcdConnect.startPort();

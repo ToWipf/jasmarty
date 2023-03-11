@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.databasetypes.jasmarty.ButtonAction;
+import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
 import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
 
 /**

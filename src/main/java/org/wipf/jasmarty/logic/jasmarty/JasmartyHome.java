@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-import java.sql.SQLException;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,10 +27,10 @@ public class JasmartyHome {
 	private static final Logger LOGGER = Logger.getLogger("JasmartyHome");
 
 	/**
-	 * @throws SQLException
+	 * 
 	 * 
 	 */
-	public void jasmartyStart() throws SQLException {
+	public void jasmartyStart() {
 		LOGGER.info("Starten");
 		lcdConnect.setConfig(serialConfig.getConfig());
 

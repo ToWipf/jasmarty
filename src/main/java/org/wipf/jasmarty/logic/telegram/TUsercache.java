@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -24,7 +24,7 @@ public class TUsercache {
 	 * Usercache überschreiben
 	 * 
 	 * @param o
-	 * @throws SQLException
+	 * 
 	 */
 	@Transactional
 	public void save(Usercache o) {
@@ -35,7 +35,7 @@ public class TUsercache {
 	 * Speichern ohne den Usercache zu ändern
 	 * 
 	 * @param o
-	 * @throws SQLException
+	 * 
 	 */
 	@Transactional
 	public void saveOhneUsercache(Usercache o) {

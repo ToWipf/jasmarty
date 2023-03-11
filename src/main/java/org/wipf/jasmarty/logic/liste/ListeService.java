@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.liste;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -41,7 +41,7 @@ public class ListeService {
 	 * @param t
 	 * @return
 	 */
-	public List<Liste> getAll() throws SQLException {
+	public List<Liste> getAll() {
 		return Liste.findAll().list();
 	}
 

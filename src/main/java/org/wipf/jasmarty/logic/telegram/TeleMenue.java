@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.sql.SQLException;
+
 import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -82,7 +82,7 @@ public class TeleMenue {
 	/**
 	 * @param t
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	private String doMenue(Telegram t) {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getBeginnStringFromMessage());

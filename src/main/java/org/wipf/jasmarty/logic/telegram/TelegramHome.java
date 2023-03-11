@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.sql.SQLException;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -29,7 +29,7 @@ public class TelegramHome {
 	private static final Logger LOGGER = Logger.getLogger("TelegramHome");
 
 	/**
-	 * @throws SQLException
+	 * 
 	 * 
 	 */
 	public void telegramStart() {

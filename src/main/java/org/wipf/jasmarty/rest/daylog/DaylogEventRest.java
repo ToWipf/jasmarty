@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.rest.daylog;
 
-import java.sql.SQLException;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -53,28 +53,27 @@ public class DaylogEventRest {
 
 	@GET
 	@Path("getTextBySearchAndType/{search}/{type}")
-	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType)
-			throws SQLException {
+	public Response getByDateQuery(@PathParam("search") String sSearch, @PathParam("type") String sType) {
 		return Response.ok(daylogEventDB.getTextBySearchAndType(sSearch, sType)).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response save(DaylogEvent d) throws SQLException {
+	public Response save(DaylogEvent d) {
 		daylogEventDB.save(d);
 		return Response.ok("{}").build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		daylogEventDB.del(nId);
 		return Response.ok("{}").build();
 	}
 
 //	@GET
 //	@Path("getStats/{types}")
-//	public Response getStats(@PathParam("types") String sTypes) throws SQLException {
+//	public Response getStats(@PathParam("types") String sTypes) {
 //		return Response.ok(daylogEventDB.getStats(sTypes).toString()).build();
 //	}
 

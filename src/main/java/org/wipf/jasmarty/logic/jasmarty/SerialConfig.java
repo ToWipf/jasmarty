@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-import java.sql.SQLException;
+
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -27,7 +27,7 @@ public class SerialConfig {
 
 	/**
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public LcdConfig getConfig() {
 
@@ -44,7 +44,7 @@ public class SerialConfig {
 
 	/**
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	private LcdConfig defaultConfig() {
 		LcdConfig lcDef = new LcdConfig();
@@ -58,7 +58,7 @@ public class SerialConfig {
 
 	/**
 	 * @param conf
-	 * @throws SQLException
+	 * 
 	 */
 	public void setConfig(LcdConfig conf) {
 		wipfConfig.setConfParam("lcd_port", conf.getPort());
@@ -70,7 +70,7 @@ public class SerialConfig {
 
 	/**
 	 * @param jnRoot
-	 * @throws SQLException
+	 * 
 	 */
 	public void setConfig(String jnRoot) {
 		setConfig(new LcdConfig().setByJson(jnRoot));

@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
-import java.sql.SQLException;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -30,7 +30,7 @@ public class LcdRefreshRest {
 
 	@GET
 	@Path("on")
-	public Response on() throws SQLException {
+	public Response on() {
 		// TODO
 		jasmartyHome.jasmartyStart();
 		return Response.ok().build();

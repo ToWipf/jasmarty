@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.databasetypes.jasmarty.ButtonAction;
+import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
 
 /**
@@ -28,7 +28,7 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param ba
-	 * @throws SQLException
+	 * 
 	 */
 	@Transactional
 	public void save(ButtonAction ba) {
@@ -37,7 +37,7 @@ public class ActionVerwaltung {
 
 	/**
 	 * @param nId
-	 * @throws SQLException
+	 * 
 	 */
 	@Transactional
 	public void delete(Integer nId) {

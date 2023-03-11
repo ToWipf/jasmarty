@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.liste;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -75,7 +75,7 @@ public class MedienService {
 
 	/**
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public List<Medien> getAll() {
 		return Medien.findAll().list();

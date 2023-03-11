@@ -1,10 +1,9 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
-import java.sql.SQLException;
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
@@ -24,9 +24,8 @@ import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
  */
 @Path("lcd12864")
 @RolesAllowed("admin")
-//@RolesAllowed("admin") TODO!
 @Produces(MediaType.APPLICATION_JSON)
-// @Consumes(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
 public class Lcd12864Rest {
 
@@ -58,30 +57,20 @@ public class Lcd12864Rest {
 	@GET
 	@Path("getPage/{id}")
 	public Response getPage(@PathParam("id") int nId) {
-		return Response.ok(lcd12864PageVerwaltung.load(nId).toJson().toString()).build();
+		return Response.ok(lcd12864PageVerwaltung.load(nId)).build();
 	}
 
 	@POST
 	@Path("savePage")
-	public Response savePage(String jnRoot) {
-		try {
-			lcd12864PageVerwaltung.save(jnRoot);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public Response savePage(LcdPageDescription o) {
+		lcd12864PageVerwaltung.save(o);
 		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("deletePage/{id}")
 	public Response delete(@PathParam("id") int nId) {
-		try {
-			lcd12864PageVerwaltung.del(nId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		lcd12864PageVerwaltung.del(nId);
 		return Response.ok().build();
 	}
 

@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.rest.liste;
 
-import java.sql.SQLException;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -46,7 +46,7 @@ public class ListeRest {
 
 	@GET
 	@Path("getAll")
-	public Response getAll() throws SQLException {
+	public Response getAll() {
 		return Response.ok(listeDB.getAll()).build();
 	}
 

@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.rest.daylog;
 
-import java.sql.SQLException;
+
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -57,7 +57,7 @@ public class DaylogDayRest {
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) throws SQLException {
+	public Response delete(@PathParam("id") Integer nId) {
 		daylogDayDB.del(nId);
 		return Response.ok("{}").build();
 	}

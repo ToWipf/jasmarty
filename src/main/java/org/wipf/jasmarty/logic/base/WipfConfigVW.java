@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.base;
 
-import java.sql.SQLException;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -45,7 +45,7 @@ public class WipfConfigVW {
 	/**
 	 * @param sConfParam
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public String getConfParamString(String sConfParam) {
 		WipfConfig wc = WipfConfig.findByKey(sConfParam).firstResult();
@@ -58,7 +58,7 @@ public class WipfConfigVW {
 	/**
 	 * @param sConfParam
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public Integer getConfParamInteger(String sConfParam) {
 		try {
@@ -113,10 +113,10 @@ public class WipfConfigVW {
 	}
 
 	/**
-	 * @throws SQLException
+	 * 
 	 * 
 	 */
-	public String checkAppWorkId() throws SQLException {
+	public String checkAppWorkId() {
 		String sId = getConfParamString("appworkid");
 		if (sId == null) {
 			setConfParam("appworkid", UUID.randomUUID().toString());

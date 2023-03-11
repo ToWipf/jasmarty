@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class TSendAndReceive {
 	/**
 	 * @param sBot
 	 * @return
-	 * @throws SQLException
+	 * 
 	 */
 	public Boolean setbot(String sBot) throws Exception {
 		this.sBotKey = sBot;
@@ -389,19 +389,13 @@ public class TSendAndReceive {
 	}
 
 	/**
-	 * @throws SQLException
+	 * 
 	 */
 	public void sendRndEventToAdmin() {
-		try {
-			Telegram t = new Telegram();
-			t.setAntwort("Vorschlag für jetzt:" + "\n" + appRndEvent.getRndEventRnd());
-			t.setChatID(userAndGroups.getAdminId());
-			sendTelegram(t);
-		} catch (SQLException e) {
-			System.err.println("Fehler 116:" + e);
-			e.printStackTrace();
-		}
-
+		Telegram t = new Telegram();
+		t.setAntwort("Vorschlag für jetzt:" + "\n" + appRndEvent.getRndEventRnd());
+		t.setChatID(userAndGroups.getAdminId());
+		sendTelegram(t);
 	}
 
 	/**
