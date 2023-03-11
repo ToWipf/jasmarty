@@ -157,11 +157,11 @@ public class TeleMenue {
 				return appMotd.getRndMotd();
 
 			// Cache und Log Stats
-			case "s":
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg() + "\n\n" + tUsercache.getAllAsText();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
+						+ "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "return":
 			case "response":
@@ -315,6 +315,10 @@ public class TeleMenue {
 			case "system":
 				return appOthers.getSystem();
 
+			case "s":
+			case "solar":
+				return grafana.telegramMenueSolar(t);
+
 			default:
 				break;
 			}
@@ -382,7 +386,8 @@ public class TeleMenue {
 		case "pwd":
 		case "me":
 		case "i":
-			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: " + t.getMid();
+			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
+					+ t.getMid();
 		case "calc":
 		case "math":
 		case "m":
