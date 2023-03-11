@@ -22,9 +22,9 @@ export class Jasmarty12864PagesComponent implements OnInit {
   public lcdDescription: Lcd12864PageDescription = {};
 
   public ngOnInit(): void {
-    this.lcdDescription.dynamic = [];
+    this.lcdDescription.dynamicData = [];
     this.lcdDescription.id = 1;
-    this.lcdDescription.timeouttime = 1;
+    this.lcdDescription.timeoutTime = 1;
     this.loadLcdDescription();
   }
 
@@ -35,7 +35,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   public async imageCropped(event: CroppedEvent): Promise<void> {
     this.base64 = event.base64;
     // Vorbereiten des Speichers
-    this.lcdDescription.static = new Array(64).fill(false).map(() => new Array(128).fill(false));
+    this.lcdDescription.staticData = new Array(64).fill(false).map(() => new Array(128).fill(false));
     await this.serviceWipf.delay(1000).then(() => {
       this.convertImgToArray();
     });
@@ -60,15 +60,15 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
           if (avg > this.nKontrast) {
 
-            this.lcdDescription.static[y][x] = false;
+            this.lcdDescription.staticData[y][x] = false;
           } else {
-            this.lcdDescription.static[y][x] = true;
+            this.lcdDescription.staticData[y][x] = true;
           }
 
         }
       }
     } else {
-      this.lcdDescription.static = [];
+      this.lcdDescription.staticData = [];
     }
   }
 
@@ -79,11 +79,11 @@ export class Jasmarty12864PagesComponent implements OnInit {
     dp.type = "";
     dp.x = "0";
     dp.y = "0";
-    this.lcdDescription.dynamic.push(dp);
+    this.lcdDescription.dynamicData.push(dp);
   }
 
   public delDynLine(id: number): void {
-    this.lcdDescription.dynamic.splice(id, 1);
+    this.lcdDescription.dynamicData.splice(id, 1);
   }
 
   public selectLcdDescription(): void {
@@ -119,24 +119,46 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public clearPic(): void {
-    this.lcdDescription.static = [];
+    this.lcdDescription.staticData = [];
   }
 
   private saveLcdDescription(): void {
-    this.rest.post('lcd12864/savePage', this.lcdDescription).then((res) => {
+    var tosave = {};
+    if (this.lcdDescription.id) {
+      tosave = {
+        id: this.lcdDescription.id,
+        name: this.lcdDescription.name,
+        dynamicData: this.lcdDescription.dynamicData.toString(),
+        staticData: this.lcdDescription.staticData.toString(),
+        timeoutTime: this.lcdDescription.timeoutTime
+      }
+    } else {
+      tosave = {
+        name: this.lcdDescription.name,
+        dynamicData: this.lcdDescription.dynamicData.toString(),
+        staticData: this.lcdDescription.staticData.toString(),
+        timeoutTime: this.lcdDescription.timeoutTime
+      }
+    }
+
+    this.rest.post('lcd12864/save', tosave).then((res) => {
     });
   }
 
   private loadLcdDescription(): void {
     this.base64 = null;
-    this.rest.get('lcd12864/getPage/' + this.lcdDescription.id).then((res) => {
+    this.rest.get('lcd12864/get/' + this.lcdDescription.id).then((res: Lcd12864PageDescription) => {
       this.lcdDescription = res;
 
-      if (!this.lcdDescription.dynamic) {
-        this.lcdDescription.dynamic = [];
+      if (this.lcdDescription == null) {
+        this.lcdDescription = {};
       }
-      if (!this.lcdDescription.static) {
-        this.lcdDescription.static = [];
+
+      if (!this.lcdDescription.dynamicData) {
+        this.lcdDescription.dynamicData = [];
+      }
+      if (!this.lcdDescription.staticData) {
+        this.lcdDescription.staticData = [];
       }
     });
   }

@@ -81,9 +81,9 @@ export interface WipfUser {
 export interface Lcd12864PageDescription {
   id?: number;
   name?: string;
-  timeouttime?: number;
-  static?: boolean[][];
-  dynamic?: Lcd12864PageDescriptionDynamic[];
+  timeoutTime?: number;
+  staticData?: boolean[][];
+  dynamicData?: Lcd12864PageDescriptionDynamic[];
 }
 
 export interface Lcd12864PageDescriptionDynamic {

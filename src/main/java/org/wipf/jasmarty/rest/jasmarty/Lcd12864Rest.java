@@ -55,13 +55,13 @@ public class Lcd12864Rest {
 //	}
 
 	@GET
-	@Path("getPage/{id}")
+	@Path("get/{id}")
 	public Response getPage(@PathParam("id") int nId) {
 		return Response.ok(lcd12864PageVerwaltung.load(nId)).build();
 	}
 
 	@POST
-	@Path("savePage")
+	@Path("save")
 	public Response savePage(LcdPageDescription o) {
 		lcd12864PageVerwaltung.save(o);
 		return Response.ok().build();

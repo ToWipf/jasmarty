@@ -56,6 +56,9 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 	 * @return
 	 */
 	public JSONArray getStaticData() {
+		if (staticData == null || staticData.equals("")) {
+			return new JSONArray();
+		}
 		return new JSONArray(staticData);
 	}
 
@@ -63,6 +66,9 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 	 * @return
 	 */
 	public JSONArray getDynamicData() {
+		if (dynamicData == null || dynamicData.equals("")) {
+			return new JSONArray();
+		}
 		return new JSONArray(dynamicData);
 	}
 

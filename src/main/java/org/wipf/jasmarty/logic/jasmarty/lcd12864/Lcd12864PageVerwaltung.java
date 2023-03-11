@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.jasmarty.lcd12864;
 
-
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -29,6 +27,8 @@ public class Lcd12864PageVerwaltung {
 	 */
 	@Transactional
 	public void save(LcdPageDescription page) {
+		page.dynamicData = page.dynamicData.toString();
+		page.staticData = page.staticData.toString();
 		// TODO statement.setString(4, page.getStatic().toString().replaceAll("true",
 		// "1").replaceAll("false", "0")); // Speicherplatz
 		page.saveOrUpdate();
@@ -39,10 +39,13 @@ public class Lcd12864PageVerwaltung {
 	 * 
 	 */
 	public LcdPageDescription load(Integer nId) {
-		return LcdPageDescription.findById(nId);
+		LcdPageDescription o = LcdPageDescription.findById(nId);
+		o.dynamicData = o.getDynamicData().toString();
+		o.staticData = o.getStaticData().toString();
+		return o;
 	}
 
-	/**
+	/*
 	 * @param nId
 	 * 
 	 */
