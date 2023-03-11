@@ -9,7 +9,6 @@ import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
-import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 
 import com.fazecast.jSerialComm.SerialPort;
 
@@ -92,13 +91,6 @@ public class LcdConnect {
 	 */
 	public int getWidth() {
 		return lconf.getWidth();
-	}
-
-	/**
-	 * @return
-	 */
-	public lcdType getType() {
-		return lconf.getType();
 	}
 
 	/**

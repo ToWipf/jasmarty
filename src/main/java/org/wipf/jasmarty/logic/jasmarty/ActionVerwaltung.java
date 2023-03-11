@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.jasmarty.ButtonAction;
 import org.wipf.jasmarty.logic.base.SqlLite;
 import org.wipf.jasmarty.logic.jasmarty.extensions.Tastatur;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004PageVerwaltung;
+import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
 
 /**
  * @author wipf
@@ -25,11 +25,11 @@ public class ActionVerwaltung {
 	@Inject
 	LcdConnect lcdConnect;
 	@Inject
-	Lcd2004PageVerwaltung pageVerwaltung;
-	@Inject
 	Tastatur tastatur;
 	@Inject
 	SqlLite sqlLite;
+	@Inject
+	Lcd12864PageVerwaltung pageVerwaltung;
 
 	private static final Logger LOGGER = Logger.getLogger("ActionVerwaltung");
 	private Integer currentPressed;
@@ -259,7 +259,7 @@ public class ActionVerwaltung {
 					pageVerwaltung.lastPage();
 					return;
 				case "select":
-					pageVerwaltung.selectPage(sParameter3);
+					pageVerwaltung.select(Integer.valueOf(sParameter3));
 					return;
 				}
 				return;

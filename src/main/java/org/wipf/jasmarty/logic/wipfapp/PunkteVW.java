@@ -19,7 +19,6 @@ public class PunkteVW {
 
 	private static final Logger LOGGER = Logger.getLogger("PunkteVW");
 	private static final String PUNKTE = "punkte";
-	private static final String NOCH_SPIELE = "nochSpiele";
 
 	/**
 	 * @return
@@ -42,29 +41,6 @@ public class PunkteVW {
 			wipfConfig.setConfParam(PUNKTE, n);
 		} catch (Exception e) {
 			LOGGER.warn("setPunkte " + e);
-		}
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer getNochSpielen() {
-		Integer n = wipfConfig.getConfParamInteger(NOCH_SPIELE);
-		if (n != null) {
-			return n;
-		}
-
-		return -999;
-	}
-
-	/**
-	 * @param n
-	 */
-	public void setNochSpiele(int n) {
-		try {
-			wipfConfig.setConfParam(NOCH_SPIELE, n);
-		} catch (Exception e) {
-			LOGGER.warn("setNochSpiele " + e);
 		}
 	}
 
@@ -95,16 +71,6 @@ public class PunkteVW {
 	 */
 	public void appendPunkt(int n) {
 		setPunkte(getPunkte() + n);
-	}
-
-	/**
-	 * Bis Max. 50
-	 */
-	public void appendNochSpiel(int n) {
-		Integer nNochSp = getNochSpielen();
-		if (nNochSp <= 50) {
-			setNochSpiele(nNochSp + n);
-		}
 	}
 
 }

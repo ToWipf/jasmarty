@@ -109,4 +109,14 @@ public class Lcd12864PageVerwaltung {
 		converter.setPageDescription(load(nId));
 	}
 
+	public void nextPage() {
+		// TODO Auto-generated method stub
+		System.err.println("nextPage");
+	}
+
+	public void lastPage() {
+		// TODO Auto-generated method stub
+		System.err.println("lastPage");
+	}
+
 }

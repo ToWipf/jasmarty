@@ -21,7 +21,6 @@ export class MainmenueComponent implements OnInit {
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
   public bEisenbahnMitlesenActive: boolean = false;
-  public jasmartyType: string;
   public selectedSite: string = 'login';
 
   ngOnInit(): void {
@@ -52,45 +51,26 @@ export class MainmenueComponent implements OnInit {
 
       this.rest.getNoWartenDialog('basesettings/get/jasmarty').then((resdata: any) => {
         this.bJasmartyActive = resdata.active;
-
-        if (this.bJasmartyActive) {
-          // Wenn Jasmarty true ist, den Typ holen
-          this.rest.getNoWartenDialog('lcd/config/get').then((resdata) => {
-            var jaconfig: Jaconfig = resdata;
-            this.jasmartyType = jaconfig.type;
-          });
-        }
       });
       this.rest.getNoWartenDialog('basesettings/get/debug').then((resdata: any) => {
         this.bDevActive = resdata.active;
         if (this.bDevActive) {
-          // Beim einschalten auch 12864 zeigen
-          this.showAll12864();
+          this.showAll();
         }
       });
     });
   }
 
   public showDevModulesBySecretKey(): void {
-    this.bDevActive = true
-    this.showAll12864();
+    this.bDevActive = true;
+    this.showAll();
   }
 
   public showDevModules(): void {
     this.bDevActive = !this.bDevActive;
   }
 
-  public showAll2004(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_2004";
-  }
-
-  public showAll12864(): void {
-    this.showAll();
-    this.jasmartyType = "LCD_12864";
-  }
-
-  private showAll(): void {
+  public showAll(): void {
     this.bJasmartyActive = true;
     this.bTelegramActive = true;
     this.bWipfActive = true;

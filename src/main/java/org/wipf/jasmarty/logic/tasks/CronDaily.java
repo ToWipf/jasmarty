@@ -55,7 +55,6 @@ public class CronDaily {
 			}
 
 			punkteVW.pluspunkt();
-			punkteVW.appendNochSpiel(5);
 			appGrafana.deletePictureCache();
 			// TODO vorerst nicht mehr senden
 			// verwaltung.sendDaylyMotd();

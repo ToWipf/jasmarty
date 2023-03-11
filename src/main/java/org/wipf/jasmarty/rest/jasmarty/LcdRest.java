@@ -16,7 +16,6 @@ import javax.ws.rs.core.Response;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 
 /**
  * @author wipf
@@ -31,8 +30,6 @@ public class LcdRest {
 
 	@Inject
 	LcdConnect lcdConnect;
-	@Inject
-	Lcd2004 lcd2004;
 	@Inject
 	Lcd12864Cache lcd12864Cache;
 	@Inject
@@ -73,22 +70,6 @@ public class LcdRest {
 	@Path("close")
 	public Response close() {
 		return Response.ok("{\"close\":\"" + lcdConnect.closeSerialLcdPort() + "\"}").build();
-	}
-
-	// ############################
-	// ########### 2004 ###########
-	// ############################
-
-	@GET
-	@Path("ist")
-	public Response chIst() {
-		return Response.ok(lcd2004.getCache().toIstJson().toString()).build();
-	}
-
-	@GET
-	@Path("soll")
-	public Response chSoll() {
-		return Response.ok(lcd2004.getCache().toSollJson().toString()).build();
 	}
 
 }

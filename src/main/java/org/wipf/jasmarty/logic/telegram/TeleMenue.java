@@ -16,7 +16,6 @@ import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.liste.ListeService;
 import org.wipf.jasmarty.logic.liste.MedienService;
 import org.wipf.jasmarty.logic.liste.RndEventsService;
-import org.wipf.jasmarty.logic.wipfapp.Infotext;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -44,8 +43,6 @@ public class TeleMenue {
 	MedienService appMedien;
 	@Inject
 	PunkteVW punkteVW;
-	@Inject
-	Infotext infotext;
 	@Inject
 	TSendAndReceive sendAndReceive;
 	@Inject
@@ -211,17 +208,6 @@ public class TeleMenue {
 			case "punkteChange":
 				punkteVW.appendPunkt(t.getMessageIntPart(1));
 				return punkteVW.getPunkte().toString();
-			case "ns":
-			case "nochspiele":
-				return punkteVW.getNochSpielen().toString();
-			case "sns":
-			case "setnochspiele":
-				punkteVW.setNochSpiele(t.getMessageIntPart(1));
-				return punkteVW.getNochSpielen().toString();
-
-			case "itext":
-				infotext.setText(t.getMessageFullWithoutFirstWord());
-				return infotext.getText();
 
 			// System
 			case "kill":

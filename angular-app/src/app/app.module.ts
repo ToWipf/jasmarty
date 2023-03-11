@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { CharGeneratorComponent } from './components/_debug/charGenerator/charGenerator.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { CryptComponent } from './components/_debug/crypt/crypt.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/_wipf/daylog/daylog.component';
@@ -23,9 +22,6 @@ import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty1286
 import { Jasmarty12864PanelComponent } from './components/_jasmarty/jasmarty12864Panel/jasmarty12864Panel.component';
 import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/_jasmarty/jasmartyActions/jasmartyActions.component';
 import { JasmartyConfigComponent } from './components/_jasmarty/jasmartyConfig/jasmartyConfig.component';
-import { JasmartyFullViewComponent } from './components/_jasmarty/jasmartyFullView/jasmartyFullView.component';
-import { JasmartyMainComponent } from './components/_jasmarty/jasmartyMain/jasmartyMain.component';
-import { JasmartyPagesComponent, JasmartyPagesComponentGoToDialog } from './components/_jasmarty/jasmartyPages/jasmartyPages.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -91,7 +87,6 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
 @NgModule({
     declarations: [
         AppComponent,
-        CharGeneratorComponent,
         CryptComponent,
         DayLogComponent,
         DaylogComponentDialogDayComponent,
@@ -119,10 +114,6 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
         JasmartyActionsComponentDialog,
         JasmartyActionsComponentDialog,
         JasmartyConfigComponent,
-        JasmartyFullViewComponent,
-        JasmartyMainComponent,
-        JasmartyPagesComponent,
-        JasmartyPagesComponentGoToDialog,
         RndEventComponent,
         RndEventComponentDialogComponent,
         SettingsComponent,

@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 @ApplicationScoped
 public class AppInfos {
@@ -12,9 +13,11 @@ public class AppInfos {
 	@Inject
 	PunkteVW punkteVW;
 	@Inject
-	Infotext infotext;
-	@Inject
 	Wipf wipf;
+	@Inject
+	WipfConfigVW wipfConfig;
+
+	private static final String APPINFOTEXT = "appinfotext";
 
 	/**
 	 * @return
@@ -30,6 +33,20 @@ public class AppInfos {
 	 */
 	@Metered
 	public String genInfotext() {
-		return infotext.getText();
+		return getText();
+	}
+
+	/**
+	 * @return
+	 */
+	public String getText() {
+		return wipfConfig.getConfParamString(APPINFOTEXT);
+	}
+
+	/**
+	 * @param n
+	 */
+	public void setText(String s) {
+		wipfConfig.setConfParam(APPINFOTEXT, s);
 	}
 }

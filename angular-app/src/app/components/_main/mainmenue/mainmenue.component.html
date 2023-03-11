@@ -40,29 +40,13 @@
 
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
             <ul *ngIf="bJasmartyActive" class="menueli">
-                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('lcdmain')" [ngClass]="{'isSelected' : selectedSite == 'lcdmain'}">
+                <li *ngIf="bDevActive" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
                     <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt"> 2004 Startseite </span>
+                    <span class="buttonInhalt">  Panel </span>
                 </li>
-                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('liveFull')" [ngClass]="{'isSelected' : selectedSite == 'liveFull'}">
-                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt"> 2004 Live </span>
-                </li>
-                <li *ngIf="jasmartyType==='LCD_2004'" (click)="selectSite('pages')" [ngClass]="{'isSelected' : selectedSite == 'pages'}">
+                <li (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
                     <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
-                    <span class="buttonInhalt"> 2004 Seiten </span>
-                </li>
-                <li *ngIf="bDevActive && jasmartyType==='LCD_12864'" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
-                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt"> 12864 Panel </span>
-                </li>
-                <li *ngIf="jasmartyType==='LCD_12864'" (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
-                    <span class="buttonInhalt"> 12864 Seiten </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="selectSite('charGenerator')" [ngClass]="{'isSelected' : selectedSite == 'charGenerator'}">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Char Generator </span>
+                    <span class="buttonInhalt"> Seiten </span>
                 </li>
                 <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
                     <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
@@ -125,13 +109,9 @@
                         <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
                         Zeige Dev
                     </li> -->
-                <li *ngIf="bDevActive" (click)="showAll2004()">
+                <li *ngIf="bDevActive" (click)="showAll()">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Zeige 2004 </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="showAll12864()">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Zeige 12864 </span>
+                    <span class="buttonInhalt"> Zeige Alles </span>
                 </li>
                 <li *ngIf="bDevActive" (click)="showDevModules()">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
@@ -166,20 +146,11 @@
             </button>
 
             <div class="maincontainer">
-                <ng-container *ngIf="selectedSite==='pages'">
-                    <app-jasmartyPages></app-jasmartyPages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='liveFull'">
-                    <app-jasmartyFullView></app-jasmartyFullView>
-                </ng-container>
                 <ng-container *ngIf="selectedSite==='actions'">
                     <app-jasmartyActions></app-jasmartyActions>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='config'">
                     <app-jasmartyConfig></app-jasmartyConfig>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='lcdmain'">
-                    <app-jasmartyMain></app-jasmartyMain>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='configtele'">
                     <app-telegram-config></app-telegram-config>
@@ -207,9 +178,6 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='12864pages'">
                     <app-jasmarty12864pages></app-jasmarty12864pages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='charGenerator'">
-                    <app-charGenerator></app-charGenerator>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='debug'">
                     <app-debugSeite></app-debugSeite>

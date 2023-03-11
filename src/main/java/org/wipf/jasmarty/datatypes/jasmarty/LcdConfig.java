@@ -9,14 +9,9 @@ import org.wipf.jasmarty.datatypes.eisenbahn.ArduinoConfig;
  */
 public class LcdConfig extends ArduinoConfig {
 
-	public enum lcdType {
-		LCD_2004, LCD_12864
-	};
-
 	private Integer nHeight = 0;
 	private Integer nWidth = 0;
 	private int nRefreshRate;
-	private lcdType type;
 
 	/**
 	 * @return
@@ -28,7 +23,6 @@ public class LcdConfig extends ArduinoConfig {
 		jo.put("height", nHeight);
 		jo.put("baudrate", this.nBaudRate);
 		jo.put("refreshrate", nRefreshRate);
-		jo.put("type", type.name());
 		return jo.toString();
 	}
 
@@ -44,7 +38,6 @@ public class LcdConfig extends ArduinoConfig {
 		setHeight(jo.getInt("height"));
 		setBaudRate(jo.getInt("baudrate"));
 		setRefreshRate(jo.getInt("refreshrate"));
-		setType(jo.getString("type"));
 		return this;
 	}
 
@@ -88,34 +81,6 @@ public class LcdConfig extends ArduinoConfig {
 	 */
 	public void setRefreshRate(int nRefreshRate) {
 		this.nRefreshRate = nRefreshRate;
-	}
-
-	/**
-	 * @return
-	 */
-	public lcdType getType() {
-		return type;
-	}
-
-	/**
-	 * @param type
-	 */
-	public void setType(lcdType type) {
-		this.type = type;
-	}
-
-	public void setType(String sType) {
-		switch (sType) {
-		case "LCD_2004":
-			this.type = lcdType.LCD_2004;
-			break;
-		case "LCD_12864":
-			this.type = lcdType.LCD_12864;
-			break;
-		default:
-			this.type = null;
-			break;
-		}
 	}
 
 }

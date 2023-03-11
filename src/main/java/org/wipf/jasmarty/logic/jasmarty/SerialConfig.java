@@ -9,7 +9,6 @@ import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
-import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig.lcdType;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -35,7 +34,6 @@ public class SerialConfig {
 			conf.setWidth(wipfConfig.getConfParamInteger("lcd_widht"));
 			conf.setHeight(wipfConfig.getConfParamInteger("lcd_height"));
 			conf.setBaudRate(wipfConfig.getConfParamInteger("lcd_baudrate"));
-			conf.setType(wipfConfig.getConfParamString("lcd_type"));
 
 			return conf;
 		} catch (Exception e) {
@@ -55,7 +53,6 @@ public class SerialConfig {
 		lcDef.setWidth(20);
 		lcDef.setBaudRate(9600);
 		lcDef.setRefreshRate(200);
-		lcDef.setType(lcdType.LCD_2004);
 
 		setConfig(lcDef);
 		return lcDef;
@@ -71,7 +68,6 @@ public class SerialConfig {
 		wipfConfig.setConfParam("lcd_widht", conf.getWidth());
 		wipfConfig.setConfParam("lcd_height", conf.getHeight());
 		wipfConfig.setConfParam("lcd_baudrate", conf.getBaudRate());
-		wipfConfig.setConfParam("lcd_type", conf.getType().name());
 
 		LOGGER.info("Config speichern");
 	}

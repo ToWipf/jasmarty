@@ -22,7 +22,6 @@ import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
 import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
-import org.wipf.jasmarty.logic.jasmarty.lcd2004.Lcd2004;
 import org.wipf.jasmarty.logic.tasks.CronDaily;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 
@@ -41,8 +40,6 @@ public class DebugRest {
 	LcdConnect lcdConnect;
 	@Inject
 	JasmartyHome jHome;
-	@Inject
-	Lcd2004 lcd2004;
 	@Inject
 	Lcd12864 lcd12864;
 	@Inject
@@ -127,41 +124,9 @@ public class DebugRest {
 
 	@POST
 	@GET
-	@Path("lcd/write/{x}/{y}/{str}")
-	public Response cWriteLine(@PathParam("x") Integer x, @PathParam("y") Integer y, @PathParam("str") String s) {
-		lcd2004.writeLineToCache(x, y, s.toCharArray());
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("lcd/refresh")
-	public Response refreshDisplay() {
-		lcd2004.refreshDisplay();
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
 	@Path("lcd/writeAscii/{int}")
 	public Response writeAscii(@PathParam("int") Integer n) {
 		lcdConnect.write(n);
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("lcd/pos/{x}/{y}")
-	public Response pos(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		lcd2004.setCursor(x, y);
-		return Response.ok().build();
-	}
-
-	@POST
-	@GET
-	@Path("lcd/cls")
-	public Response cls() {
-		lcd2004.clearScreen();
 		return Response.ok().build();
 	}
 
