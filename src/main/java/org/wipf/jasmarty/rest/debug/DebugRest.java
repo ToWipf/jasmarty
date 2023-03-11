@@ -2,7 +2,6 @@ package org.wipf.jasmarty.rest.debug;
 
 import java.sql.SQLException;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -18,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
-import org.wipf.jasmarty.datatypes.wipfapp.PunktePlay;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
 import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
@@ -187,26 +185,6 @@ public class DebugRest {
 	@Path("test")
 	public Response test() {
 		return Response.ok("{\"test\": \"ok\"}").build();
-	}
-
-	@GET
-	@PermitAll
-	@Path("vergleiche/{a}")
-	public Response vergleicheRND(@PathParam("a") String a) {
-		PunktePlay pa = new PunktePlay(a);
-		PunktePlay pb = new PunktePlay(String.valueOf(wipf.getRandomInt(Integer.MAX_VALUE)));
-
-		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
-	}
-
-	@GET
-	@PermitAll
-	@Path("vergleiche/{a}/{b}")
-	public Response vergleiche(@PathParam("a") String a, @PathParam("b") String b) {
-		PunktePlay pa = new PunktePlay(a);
-		PunktePlay pb = new PunktePlay(b);
-
-		return Response.ok("{\"test\": \"" + pa.vergleiche(pb) + "\"}").build();
 	}
 
 	@POST
