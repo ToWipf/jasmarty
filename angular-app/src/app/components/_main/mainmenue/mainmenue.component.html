@@ -40,10 +40,6 @@
 
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
             <ul *ngIf="bJasmartyActive" class="menueli">
-                <li *ngIf="bDevActive" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
-                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt">  Panel </span>
-                </li>
                 <li (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
                     <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
                     <span class="buttonInhalt"> Seiten </span>
@@ -55,6 +51,10 @@
                 <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
                     <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                     <span class="buttonInhalt"> Einstellungen </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                    <span class="buttonInhalt">  Panel </span>
                 </li>
             </ul>
 

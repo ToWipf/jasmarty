@@ -40,8 +40,12 @@ public class Lcd12864PageVerwaltung {
 	 */
 	public LcdPageDescription load(Integer nId) {
 		LcdPageDescription o = LcdPageDescription.findById(nId);
-		o.dynamicData = o.getDynamicData().toString();
-		o.staticData = o.getStaticData().toString();
+		if (o != null) {
+			// TODO nötig?
+			o.dynamicData = o.getDynamicData().toString();
+			o.staticData = o.getStaticData().toString();
+		}
+		// TODO
 		return o;
 	}
 
