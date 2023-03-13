@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.jasmarty;
 
-
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -34,26 +32,21 @@ public class SerialConfig {
 		LcdConfig conf = new LcdConfig();
 
 		conf.setPort(wipfConfig.getConfParamString("lcd_port"));
-		conf.setRefreshRate(wipfConfig.getConfParamInteger("lcd_refreshrate"));
-		conf.setBaudRate(wipfConfig.getConfParamInteger("lcd_baudrate"));
+		Integer nRR = wipfConfig.getConfParamInteger("lcd_refreshrate");
+		Integer nBR = wipfConfig.getConfParamInteger("lcd_baudrate");
+
+		// Default Werte
+		if (nRR == null) {
+			nRR = 200;
+		}
+		if (nBR == null) {
+			nBR = 57600;
+		}
+
+		conf.setRefreshRate(nRR);
+		conf.setBaudRate(nBR);
 
 		return conf;
-
-		// return defaultConfig();
-	}
-
-	/**
-	 * @return
-	 * 
-	 */
-	private LcdConfig defaultConfig() {
-		LcdConfig lcDef = new LcdConfig();
-		lcDef.setPort("");
-		lcDef.setBaudRate(57600);
-		lcDef.setRefreshRate(200);
-
-		setConfig(lcDef);
-		return lcDef;
 	}
 
 	/**
