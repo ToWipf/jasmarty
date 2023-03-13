@@ -26,7 +26,9 @@ export class ListeServiceColor {
       return "#fc53be";
     else if (id === 9)
       return "gray";
-    else
+    else if (id === -1)
       return "green";
+    else
+      return "#d9d9d9";
   }
 }

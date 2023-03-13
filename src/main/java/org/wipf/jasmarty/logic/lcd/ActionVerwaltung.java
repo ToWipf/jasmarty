@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.lcd;
 
 
 import java.util.List;
@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
 
 /**
  * @author wipf

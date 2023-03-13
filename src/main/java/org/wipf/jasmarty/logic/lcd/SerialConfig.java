@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.lcd;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

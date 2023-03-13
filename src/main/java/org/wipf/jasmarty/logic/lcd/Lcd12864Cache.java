@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty.lcd12864;
+package org.wipf.jasmarty.logic.lcd;
 
 import javax.enterprise.context.ApplicationScoped;
 

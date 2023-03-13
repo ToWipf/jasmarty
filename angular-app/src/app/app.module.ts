@@ -12,8 +12,6 @@ import { DaylogComponentEventlist, DaylogComponentDialogEventComponent } from '.
 import { DebugSeiteComponent } from './components/_debug/debugSeite/debugSeite.component';
 import { DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { DynpagesComponent, DynpagesComponentDialogComponent } from './components/_wipf/dynpages/dynpages.component';
-import { DynpageShowComponent } from './components/_wipf/dynpageShow/dynpageShow.component';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -99,9 +97,6 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
         DialogJaNeinComponent,
         DialogVariablenHilfeComponent,
         DialogWartenComponent,
-        DynpagesComponent,
-        DynpagesComponentDialogComponent,
-        DynpageShowComponent,
         EisenbahnMitlesenComponent,
         FileVwComponent,
         MedienComponent,
@@ -137,7 +132,7 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
     ],
     imports: [
         NgxChartsModule,
-        A11yModule,
+        A11yModule, //TODO:?
         BrowserAnimationsModule,
         BrowserModule,
         CdkStepperModule,

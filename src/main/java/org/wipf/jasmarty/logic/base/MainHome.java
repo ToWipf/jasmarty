@@ -10,7 +10,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
+import org.wipf.jasmarty.logic.lcd.JasmartyHome;
 import org.wipf.jasmarty.logic.liste.ListeService;
 import org.wipf.jasmarty.logic.liste.ListeTypeService;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
@@ -54,32 +54,26 @@ public class MainHome {
 	 * @param ev
 	 */
 	void onStart(@Observes StartupEvent ev) {
-		try {
-			LOGGER.info("Starte " + VERSION);
-			LOGGER.debug("Debug Log aktiv");
-			TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
-			// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
-			createFileFolder();
+		LOGGER.info("Starte " + VERSION);
+		LOGGER.debug("Debug Log aktiv");
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
+		// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
+		createFileFolder();
 
-			wipfUserVW.crateDefaultUsers();
+		wipfUserVW.crateDefaultUsers();
 
-			if (wipfConfig.isAppActive("wipf")) {
-				wipfConfig.checkAppWorkId();
-			}
+		if (wipfConfig.isAppActive("wipf")) {
+			wipfConfig.checkAppWorkId();
+		}
 
-			if (wipfConfig.isAppActive("jasmarty")) {
-				jasmartyHome.jasmartyStart();
-			}
-			if (wipfConfig.isAppActive("telegram")) {
-				telegramHome.telegramStart();
-			}
-			if (wipfConfig.isAppActive("eisenbahn_mitlesen")) {
-				System.out.println("eisenbahn_mitlesen aktiv");
-			}
-
-		} catch (Exception e) {
-			LOGGER.error("Fehler 101: " + e);
-			e.printStackTrace();
+		if (wipfConfig.isAppActive("jasmarty")) {
+			jasmartyHome.jasmartyStart();
+		}
+		if (wipfConfig.isAppActive("telegram")) {
+			telegramHome.telegramStart();
+		}
+		if (wipfConfig.isAppActive("eisenbahn_mitlesen")) {
+			System.out.println("eisenbahn_mitlesen aktiv");
 		}
 
 		LOGGER.info("Gestartet");

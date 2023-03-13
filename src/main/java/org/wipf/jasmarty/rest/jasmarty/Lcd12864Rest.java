@@ -15,8 +15,8 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864PageVerwaltung;
+import org.wipf.jasmarty.logic.lcd.Lcd12864Cache;
+import org.wipf.jasmarty.logic.lcd.Lcd12864PageVerwaltung;
 
 /**
  * @author wipf

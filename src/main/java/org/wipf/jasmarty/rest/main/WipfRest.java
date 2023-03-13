@@ -24,7 +24,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
-import org.wipf.jasmarty.logic.jasmarty.SerialConfig;
+import org.wipf.jasmarty.logic.lcd.SerialConfig;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
 

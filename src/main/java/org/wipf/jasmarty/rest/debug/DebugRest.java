@@ -16,10 +16,10 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.jasmarty.JasmartyHome;
-import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864;
-import org.wipf.jasmarty.logic.jasmarty.lcd12864.Lcd12864Cache;
+import org.wipf.jasmarty.logic.lcd.JasmartyHome;
+import org.wipf.jasmarty.logic.lcd.Lcd12864;
+import org.wipf.jasmarty.logic.lcd.Lcd12864Cache;
+import org.wipf.jasmarty.logic.lcd.LcdConnect;
 import org.wipf.jasmarty.logic.tasks.CronDaily;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 

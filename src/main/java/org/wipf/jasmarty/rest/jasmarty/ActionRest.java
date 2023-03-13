@@ -14,7 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
-import org.wipf.jasmarty.logic.jasmarty.ActionVerwaltung;
+import org.wipf.jasmarty.logic.lcd.ActionVerwaltung;
 
 /**
  * @author wipf

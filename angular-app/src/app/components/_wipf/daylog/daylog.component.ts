@@ -258,7 +258,7 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   private saveType(item: DaylogType): void {
     this.bShowWarning = true;
     this.rest.post('daylog/type/save', item).then((resdata: any) => {
-      if (resdata.save == "true") {
+      if (resdata) {
         this.bShowWarning = false;
         this.loadType();
       }

@@ -27,7 +27,7 @@ export class JasmartyConfigComponent implements OnInit {
 
   public save(): void {
     this.rest.post('lcd/config/set', JSON.stringify(this.jaconfig)).then((resdata: any) => {
-      if (resdata.save) {
+      if (resdata) {
         this.startLcdAgain();
       } else {
         //TODO: Meldung Fehler

@@ -1,6 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty.lcd12864;
-
-
+package org.wipf.jasmarty.logic.lcd;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,7 +11,6 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Page.lineAlignment;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.jasmarty.LcdConnect;
 
 /**
  * @author Wipf

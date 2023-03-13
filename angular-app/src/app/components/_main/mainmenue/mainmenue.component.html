@@ -86,18 +86,6 @@
                 </li>
             </ul>
 
-            <div *ngIf="bDevActive" class="titlemenue">DynPage</div>
-            <ul *ngIf="bDevActive" class="menueli">
-                <li (click)="selectSite('dynpages')" [ngClass]="{'isSelected' : selectedSite == 'dynpages'}">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Verwaltung"></mat-icon>
-                    <span class="buttonInhalt"> Dynpages VW </span>
-                </li>
-                <li (click)="selectSite('dynpageShow')" [ngClass]="{'isSelected' : selectedSite == 'dynpageShow'}">
-                    <mat-icon svgIcon="document" aria-hidden="false" title="Zeigen"></mat-icon>
-                    <span class="buttonInhalt"> Zeige Dynpage </span>
-                </li>
-            </ul>
-
             <div class="titlemenue">Anzeig<span (click)="showDevModulesBySecretKey()">e</span>
             </div>
             <ul class="menueli">
@@ -184,12 +172,6 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='daylog'">
                     <app-daylog></app-daylog>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='dynpages'">
-                    <app-dynpages></app-dynpages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='dynpageShow'">
-                    <app-dynpageShow></app-dynpageShow>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='filevw'">
                     <app-file-vw></app-file-vw>

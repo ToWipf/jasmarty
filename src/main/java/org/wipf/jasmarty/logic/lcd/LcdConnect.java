@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.jasmarty;
+package org.wipf.jasmarty.logic.lcd;
 
 import java.io.BufferedReader;
 import java.io.IOException;

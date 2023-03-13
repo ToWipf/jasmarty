@@ -35,12 +35,6 @@ export class DebugSeiteComponent implements OnInit {
     this.uhr = new Date(Date.now()).toISOString();
   }
 
-  public doSQL(): void {
-    this.rest.post('sql/query/' + this.sSQL_IN, '').then((resdata: any) => {
-      this.sSQL_OUT = resdata.res;
-    });
-  }
-
   public getTime(): void {
     this.rest.get('wipf/time').then((resdata: any) => {
       this.serverTime = resdata.time;
