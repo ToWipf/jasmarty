@@ -115,7 +115,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             let eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {
-                if (event.typ == this.filterEventType.id.toString()) {
+                if (event.typid == this.filterEventType.id.toString()) {
                     eventlistToShow.push(event);
                 }
             });
@@ -180,7 +180,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         let e: DaylogEvent = {};
         e.dateid = dayitem.id;
         e.text = "";
-        e.typ = "";
+        e.typid = "";
         this.openDialogEvent(e);
     }
 
@@ -253,7 +253,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     private loadTextVorschlag(): void {
         if (this.data.text.length > 1) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typ).then((resdata: string[]) => {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim() + '/' + this.data.typid).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {

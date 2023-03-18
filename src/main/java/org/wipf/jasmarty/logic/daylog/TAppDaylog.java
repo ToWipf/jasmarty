@@ -60,8 +60,7 @@ public class TAppDaylog {
 			// Wenn start eingebene wurde, den Cache leeren
 			userCache.usercache = ("");
 			tUsercache.save(userCache);
-			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n"
-					+ "Optional kann ein Tagestext angegeben werden";
+			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n" + "Optional kann ein Tagestext angegeben werden";
 		} else if (userCache.usercache.equals("")) {
 			// Schritt 1
 			// Datum wählen
@@ -209,7 +208,7 @@ public class TAppDaylog {
 		Integer nDateId = Integer.valueOf(sCache.substring(sCache.lastIndexOf(":") + 1, sCache.length()));
 
 		dayEvent.dateid = nDateId;
-		dayEvent.typ = nTyp.toString();
+		dayEvent.typid = nTyp.toString();
 		dayEvent.text = sEventtext;
 
 		daylogEventDB.save(dayEvent);

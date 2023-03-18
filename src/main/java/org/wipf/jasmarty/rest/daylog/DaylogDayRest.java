@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.rest.daylog;
 
-
-
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;

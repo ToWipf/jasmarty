@@ -37,7 +37,7 @@ public class DaylogEventService {
 	 * @return @
 	 */
 	public List<DaylogEvent> getAllByTypId(String sTypIds) {
-		return DaylogEvent.findByLikeType(sTypIds).list();
+		return DaylogEvent.findByTypeId(sTypIds).list();
 	}
 
 	/**
@@ -60,13 +60,9 @@ public class DaylogEventService {
 	 * @param sTypIds = "1,2,3,9";
 	 * @return @
 	 */
-//	public JSONArray getStats(String sTypIds) {
-//
-//		JSONArray ar = new JSONArray();
-//		String sQuery = "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds + ") GROUP by text ORDER by anz DESC";
-//		PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sQuery);
-//		// statement.setString(1, sTypIds);
-//		ResultSet rs = statement.executeQuery();
+	public List<DaylogEvent> getStats(String sTypIds) {
+		return DaylogEvent.findByTypeIds(sTypIds).list();
+
 //
 //		while (rs.next()) {
 //			JSONObject oo = new JSONObject();
@@ -78,7 +74,7 @@ public class DaylogEventService {
 //			ar.put(oo);
 //		}
 //		return ar;
-//	}
+	}
 
 	/**
 	 * @param sSearch

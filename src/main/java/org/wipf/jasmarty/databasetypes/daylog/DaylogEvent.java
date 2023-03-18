@@ -31,13 +31,13 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	@Column(name = "dateid", nullable = false)
 	public Integer dateid;
 	@Column(name = "typ", nullable = false)
-	public String typ;
+	public String typid;
 	@Column(name = "text", nullable = true)
 	public String text;
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", dateid=" + dateid + ", typ=" + typ + ", text=" + text;
+		return "id=" + id + ", dateid=" + dateid + ", typ=" + typid + ", text=" + text;
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 			if (existingData != null) {
 				// Update
 				existingData.dateid = this.dateid;
-				existingData.typ = this.typ;
+				existingData.typid = this.typid;
 				existingData.text = this.text;
 				existingData.persist();
 			} else {
@@ -66,7 +66,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @param sType
 	 * @return
 	 */
-	public static PanacheQuery<DaylogEvent> findByType(String sType) {
+	public static PanacheQuery<DaylogEvent> findByTypeId(String sType) {
 		return find("select e from DaylogEvent e where typ =?1", sType);
 	}
 
@@ -82,16 +82,15 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @param sType
 	 * @return
 	 */
-	public static PanacheQuery<DaylogEvent> findByLikeType(String sType) {
-		return find("select e from DaylogEvent e where typ LIKE ?1", sType);
-	}
-
-	/**
-	 * @param sType
-	 * @return
-	 */
 	public static PanacheQuery<DaylogEvent> findByINTypeANDText(String sType, String sText) {
 		return find("select e from DaylogEvent e where typ =?1 AND text LIKE ?2", sType, "%" + sText + "%");
+	}
+
+	// "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds +
+	// ")GROUP by text ORDER by anz DESC";
+
+	public static PanacheQuery<DaylogEvent> findByTypeIds(String sTypes) {
+		return find("select e from DaylogEvent e where typ IN ?1 GROUP by text ORDER by anz DESC", sTypes);
 	}
 
 }

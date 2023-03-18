@@ -138,7 +138,7 @@ public class DaylogHome {
 
 			for (DaylogEvent dEvent : dEvents) {
 				// Typ Text:
-				sb.append(daylogTypeDB.get(Integer.valueOf(dEvent.typ)).get(0).type);
+				sb.append(daylogTypeDB.get(Integer.valueOf(dEvent.typid)).get(0).type);
 				sb.append(": \n");
 				sb.append(dEvent.text);
 				sb.append("\n\n");

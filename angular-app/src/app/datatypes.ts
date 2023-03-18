@@ -105,7 +105,7 @@ export interface DaylogDay {
 export interface DaylogEvent {
   id?: number;
   dateid?: number;
-  typ?: string;
+  typid?: string;
   text?: string;
 }
 
