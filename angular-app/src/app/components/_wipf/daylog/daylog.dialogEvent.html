@@ -1,8 +1,8 @@
-<h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typ}}</h1>
+<h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typid}}</h1>
 <mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Typ</mat-label>
-        <mat-select [(value)]="data.typ">
+        <mat-select [(value)]="data.typid">
             <!-- <mat-option value='-1'>None</mat-option> -->
             <ng-container *ngFor="let type of daylogTypes">
                 <mat-option value='{{type.id}}'>{{type.type}}</mat-option>
@@ -11,7 +11,7 @@
     </mat-form-field>
     <br>
     <ng-container *ngFor="let type of daylogTypes">
-        <ng-container *ngIf="data.typ.toString()==type.id.toString()">
+        <ng-container *ngIf="data.typid.toString()==type.id.toString()">
             <ng-container *ngIf="type.art==='TEXT'">
                 <mat-form-field>
                     <mat-label>Text</mat-label>

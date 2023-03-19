@@ -28,11 +28,8 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
-	@Column(name = "dateid", nullable = false)
 	public Integer dateid;
-	@Column(name = "typ", nullable = false)
 	public String typid;
-	@Column(name = "text", nullable = true)
 	public String text;
 
 	@Override
@@ -84,13 +81,6 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 */
 	public static PanacheQuery<DaylogEvent> findByINTypeANDText(String sType, String sText) {
 		return find("select e from DaylogEvent e where typ =?1 AND text LIKE ?2", sType, "%" + sText + "%");
-	}
-
-	// "SELECT COUNT(*) anz, * from daylogTextEvent where typ IN (" + sTypIds +
-	// ")GROUP by text ORDER by anz DESC";
-
-	public static PanacheQuery<DaylogEvent> findByTypeIds(String sTypes) {
-		return find("select e from DaylogEvent e where typ IN ?1 GROUP by text ORDER by anz DESC", sTypes);
 	}
 
 }

@@ -61,7 +61,11 @@ public class DaylogEventService {
 	 * @return @
 	 */
 	public List<DaylogEvent> getStats(String sTypIds) {
-		return DaylogEvent.findByTypeIds(sTypIds).list();
+		return null;
+		// List<DaylogEvent> a = getAll();
+
+		// a.forEach(null);
+		// DaylogEventStat.
 
 //
 //		while (rs.next()) {
