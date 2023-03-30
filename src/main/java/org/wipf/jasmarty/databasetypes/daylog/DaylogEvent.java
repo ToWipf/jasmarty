@@ -19,7 +19,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @Entity
 @RegisterForReflection
-@Table(name = "DaylogTextEvent")
+@Table(name = "daylogEvent")
 public class DaylogEvent extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
