@@ -48,7 +48,7 @@ public class WipfConfigRest {
 	@Path("save")
 	public Response saveItem(WipfConfig wu) {
 		wipfConfig.saveItem(wu);
-		return Response.ok().build();
+		return Response.ok("{}").build();
 	}
 
 	@DELETE
