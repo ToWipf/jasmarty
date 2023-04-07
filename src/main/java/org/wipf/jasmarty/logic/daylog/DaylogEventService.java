@@ -1,14 +1,14 @@
 package org.wipf.jasmarty.logic.daylog;
 
+import java.util.Arrays;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
-import org.wipf.jasmarty.databasetypes.daylog.DaylogEventStat;
+import org.wipf.jasmarty.datatypes.DaylogStats;
 
 /**
  * @author Wipf
@@ -62,14 +62,10 @@ public class DaylogEventService {
 	 * @param sTypIds = "1,2,3,9";
 	 * @return @
 	 */
-	public List<DaylogEventStat> getStats(String sTypIds) {
+	public List<DaylogStats> getStats(String sTypIds) {
 
-		java.util.List<String> l = new LinkedList<String>();
-		l.add("1");
-		l.add("2");
+		List<DaylogStats> x = DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStats.class).list();
 
-		List<DaylogEventStat> x = DaylogEventStat.getStatsByTypids(l).list();
-		// System.out.println(x.get(0).anz);
 		return x;
 		// List<DaylogEvent> a = getAll();
 

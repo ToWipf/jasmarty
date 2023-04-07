@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.databasetypes.daylog;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,6 +82,24 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 */
 	public static PanacheQuery<DaylogEvent> findByTypeANDText(String sType, String sText) {
 		return find("select e from DaylogEvent e where typid =?1 AND text LIKE ?2", sType, "%" + sText + "%");
+	}
+
+	/**
+	 * STATS
+	 * 
+	 * @param typids
+	 * @return
+	 */
+	public static PanacheQuery<PanacheEntityBase> getStatsByTypidsOLD(List<String> typids) {
+		return find("select COUNT(*), e.id, e.dateid, e.typid, e.text from DaylogEvent e where typid IN (?1) GROUP by text", typids);
+	}
+
+	/**
+	 * @param typids
+	 * @return
+	 */
+	public static PanacheQuery<PanacheEntityBase> getStatsByTypids(List<String> typids) {
+		return find("select COUNT(*), e.id, e.dateid, e.typid, e.text from DaylogEvent e where typid IN (?1) GROUP by text", typids);
 	}
 
 }
