@@ -102,4 +102,12 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 		return find("select COUNT(*), e.id, e.dateid, e.typid, e.text from DaylogEvent e where typid IN (?1) GROUP by text", typids);
 	}
 
+	/**
+	 * @param typids
+	 * @return
+	 */
+	public static PanacheQuery<DaylogEvent> findByTypeIds(List<String> typids) {
+		return find("select e from DaylogEvent e where typid IN (?1)", typids);
+	}
+
 }

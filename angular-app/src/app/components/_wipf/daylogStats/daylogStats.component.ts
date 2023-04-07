@@ -112,15 +112,17 @@ export class DaylogStatsComponent implements OnInit {
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
-      var fileredDate = this.diagramRawData.filter((i) => {
-        if (i.text) {
-          return i.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase());
-        } else {
-          // diser Fall sollte nicht passieren -> Im Fehlerfall ausfiltern
-          return false;
-        }
-      });
-      this.genDiagramme(fileredDate);
+      if (this.diagramRawData) {
+        var fileredDate = this.diagramRawData.filter((i) => {
+          if (i.text) {
+            return i.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase());
+          } else {
+            // diser Fall sollte nicht passieren -> Im Fehlerfall ausfiltern
+            return false;
+          }
+        });
+        this.genDiagramme(fileredDate);
+      }
     });
   }
 

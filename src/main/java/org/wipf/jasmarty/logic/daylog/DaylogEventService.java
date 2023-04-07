@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
-import org.wipf.jasmarty.datatypes.DaylogStats;
+import org.wipf.jasmarty.datatypes.DaylogStatsTable;
 
 /**
  * @author Wipf
@@ -38,8 +38,16 @@ public class DaylogEventService {
 	 * @param nTypId
 	 * @return
 	 */
-	public List<DaylogEvent> getAllByTypId(String sTypIds) {
-		return DaylogEvent.findByTypeId(sTypIds).list();
+	public List<DaylogEvent> getAllByTypId(String sTypId) {
+		return DaylogEvent.findByTypeId(sTypId).list();
+	}
+
+	/**
+	 * @param sTypIds
+	 * @return
+	 */
+	public List<DaylogEvent> getAllByTypIds(String sTypIds) {
+		return DaylogEvent.findByTypeIds(Arrays.asList(sTypIds.split(","))).list();
 	}
 
 	/**
@@ -62,8 +70,8 @@ public class DaylogEventService {
 	 * @param sTypIds = "1,2,3,9";
 	 * @return
 	 */
-	public List<DaylogStats> getStats(String sTypIds) {
-		return DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStats.class).list();
+	public List<DaylogStatsTable> getStats(String sTypIds) {
+		return DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStatsTable.class).list();
 	}
 
 	/**

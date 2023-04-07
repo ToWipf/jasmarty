@@ -4,7 +4,7 @@ package org.wipf.jasmarty.datatypes;
  * @author wipf
  *
  */
-public class DaylogStats {
+public class DaylogStatsTable {
 
 	public Long anz;
 	public Integer first_id;
@@ -19,7 +19,7 @@ public class DaylogStats {
 	 * @param typid
 	 * @param text
 	 */
-	public DaylogStats(Long anz, Integer id, Integer dateid, String typid, String text) {
+	public DaylogStatsTable(Long anz, Integer id, Integer dateid, String typid, String text) {
 		this.anz = anz;
 		this.first_id = id;
 		this.first_dateid = dateid;

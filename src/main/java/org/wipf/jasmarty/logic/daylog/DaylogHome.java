@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
+import org.wipf.jasmarty.datatypes.DaylogStatsDiagram;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
 /**
@@ -159,17 +160,16 @@ public class DaylogHome {
 	 * @param nDateId
 	 * @return
 	 */
-	public List<DaylogEvent> getAllByTypIdAsJson(String sIds) {
-		List<DaylogEvent> l = daylogEventDB.getAllByTypId(sIds);
-//		JSONArray ja = new JSONArray();
-//		for (DaylogEvent d : l) {
-//			JSONObject jo = d;
-//			// Das Datum auslösen und mitgeben
-//			jo.put("date", daylogDayDB.getById(d.getDateId()).getDate());
-//			ja.put(jo);
-//		}
-//		return ja;
-		return l;
+	public List<DaylogStatsDiagram> getAllByTypIdAsJson(String sIds) {
+		List<DaylogStatsDiagram> ldsd = new LinkedList<>();
+		daylogEventDB.getAllByTypIds(sIds).forEach(d -> {
+			DaylogStatsDiagram dsd = new DaylogStatsDiagram();
+			dsd.set(d);
+			dsd.date = daylogDayDB.getById(d.dateid).date;
+			ldsd.add(dsd);
+		});
+
+		return ldsd;
 	}
 
 }

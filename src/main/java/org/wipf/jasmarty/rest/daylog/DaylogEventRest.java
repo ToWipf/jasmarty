@@ -38,12 +38,6 @@ public class DaylogEventRest {
 	}
 
 	@GET
-	@Path("getAllById/{ids}")
-	public Response getAllById(@PathParam("ids") String nIds) {
-		return Response.ok(daylogHome.getAllByTypIdAsJson(nIds)).build();
-	}
-
-	@GET
 	@Path("getAll")
 	public Response getall() {
 		return Response.ok(daylogEventDB.getAll()).build();
@@ -69,6 +63,26 @@ public class DaylogEventRest {
 		return Response.ok("{}").build();
 	}
 
+	//////////////// STATS
+
+	/**
+	 * Was wann
+	 * 
+	 * @param nIds
+	 * @return
+	 */
+	@GET
+	@Path("getAllById/{ids}")
+	public Response getAllById(@PathParam("ids") String nIds) {
+		return Response.ok(daylogHome.getAllByTypIdAsJson(nIds)).build();
+	}
+
+	/**
+	 * Wie oft was
+	 * 
+	 * @param sTypes
+	 * @return
+	 */
 	@GET
 	@Path("getStats/{types}")
 	public Response getStats(@PathParam("types") String sTypes) {
