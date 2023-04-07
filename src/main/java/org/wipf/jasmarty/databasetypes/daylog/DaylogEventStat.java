@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.databasetypes.daylog;
 
+import java.util.List;
+
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
@@ -9,9 +11,9 @@ public class DaylogEventStat extends DaylogEvent {
 	private static final long serialVersionUID = 1L;
 
 	public Integer anz;
-	public Integer first_id;
-	public Integer first_dateid;
-	public Integer frist_typ;
+//	public Integer first_id;
+//	public Integer first_dateid;
+//	public Integer frist_typ;
 
 //	public DaylogEventStat(Integer anz, Integer first_id, Integer first_dateid, Integer frist_typ, String text) {
 //		this.anz = anz;
@@ -39,8 +41,12 @@ public class DaylogEventStat extends DaylogEvent {
 //		String text;
 //	}
 
-	public static PanacheQuery<DaylogEventStat> getStatsByTypids(String typids) {
-		return find("select COUNT(*) as anz, e from DaylogEvent e where typid IN ?1 GROUP by text", typids);
+	public static PanacheQuery<DaylogEventStat> getStatsByTypids(List<String> typids) {
+
+		return find("select COUNT(*), e.id, e.dateid, e.typid, e.text from DaylogEvent e where typid IN (?1) GROUP by text", typids);
+
+		// return find("select COUNT(*) as anz, e from DaylogEvent e where typid IN ?1
+		// GROUP by text", typids);
 
 		// return find("select COUNT(*), e from DaylogEvent e where typid IN ?1 GROUP by
 		// text", typids);

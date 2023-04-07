@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.logic.daylog;
 
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -63,7 +64,12 @@ public class DaylogEventService {
 	 */
 	public List<DaylogEventStat> getStats(String sTypIds) {
 
-		List<DaylogEventStat> x = DaylogEventStat.getStatsByTypids(sTypIds).list();
+		java.util.List<String> l = new LinkedList<String>();
+		l.add("1");
+		l.add("2");
+
+		List<DaylogEventStat> x = DaylogEventStat.getStatsByTypids(l).list();
+		// System.out.println(x.get(0).anz);
 		return x;
 		// List<DaylogEvent> a = getAll();
 
@@ -91,7 +97,7 @@ public class DaylogEventService {
 	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) {
 		LinkedHashSet<String> o = new LinkedHashSet<>();
 
-		for (DaylogEvent d : DaylogEvent.findByINTypeANDText(sType, sSearch).list()) {
+		for (DaylogEvent d : DaylogEvent.findByTypeANDText(sType, sSearch).list()) {
 			o.add(d.text);
 			System.out.println(d.toString());
 		}
