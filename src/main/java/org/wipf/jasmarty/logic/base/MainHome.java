@@ -11,8 +11,8 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.lcd.JasmartyHome;
-import org.wipf.jasmarty.logic.liste.ListeService;
-import org.wipf.jasmarty.logic.liste.ListeTypeService;
+import org.wipf.jasmarty.logic.listen.ListeService;
+import org.wipf.jasmarty.logic.listen.ListeTypeService;
 import org.wipf.jasmarty.logic.telegram.TelegramHome;
 
 import io.quarkus.runtime.Quarkus;

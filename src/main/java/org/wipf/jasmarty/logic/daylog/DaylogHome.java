@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
-import org.wipf.jasmarty.datatypes.DaylogStatsDiagram;
+import org.wipf.jasmarty.datatypes.daylog.DaylogStatsDiagram;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
 /**

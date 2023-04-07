@@ -1,5 +1,4 @@
-package org.wipf.jasmarty.logic.liste;
-
+package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 
@@ -45,9 +44,6 @@ public class MedienService {
 		case "l":
 		case "list":
 			return getAllAsList();
-		case "c":
-		case "count":
-			return countItems().toString();
 		default:
 			return saveItem(t).toString();
 		}
@@ -114,14 +110,6 @@ public class MedienService {
 	@Transactional
 	public void del(Integer nId) {
 		Medien.findById(nId).delete();
-	}
-
-	/**
-	 * @return
-	 */
-	private Integer countItems() {
-		// TODO unschön
-		return getAll().size();
 	}
 
 }

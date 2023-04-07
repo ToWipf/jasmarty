@@ -37,12 +37,7 @@ public class TelegramRest {
 	@GET
 	@Path("on")
 	public Response on() {
-		try {
-			tHome.telegramStart();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		tHome.telegramStart();
 		return Response.ok().build();
 	}
 
@@ -55,24 +50,14 @@ public class TelegramRest {
 
 	@POST
 	@Path("setbot/{bot}")
-	public Response setbot(@PathParam("bot") String sBot) {
-		try {
-			return Response.ok("{\"status\":\"" + tVerwaltung.setbot(sBot) + "\"}").build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+	public Response setbot(@PathParam("bot") String sBot) throws WipfException {
+		return Response.ok("{\"status\":\"" + tVerwaltung.setbot(sBot) + "\"}").build();
 	}
 
 	@GET
 	@Path("getbot")
-	public Response getbot() {
-		try {
-			return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKeyFromCache() + "\"}").build();
-		} catch (WipfException e) {
-			System.out.println("getbot:" + e);
-			return null;
-		}
+	public Response getbot() throws WipfException {
+		return Response.ok("{\"botkey\":\"" + tVerwaltung.getBotKeyFromCache() + "\"}").build();
 	}
 
 	@POST

@@ -46,7 +46,7 @@ public class LcdRest {
 	@Path("config/set")
 	public Response setConfig(String jnRoot) {
 		serialConfig.setConfig(jnRoot);
-		return Response.ok("{\"save\":\"" + "todo" + "\"}").build();
+		return Response.ok("{}").build();
 	}
 
 	@GET

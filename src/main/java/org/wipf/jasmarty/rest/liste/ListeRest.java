@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.liste.Liste;
-import org.wipf.jasmarty.logic.liste.ListeService;
+import org.wipf.jasmarty.logic.listen.ListeService;
 
 /**
  * @author wipf

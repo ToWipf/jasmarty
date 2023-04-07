@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.liste;
+package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 

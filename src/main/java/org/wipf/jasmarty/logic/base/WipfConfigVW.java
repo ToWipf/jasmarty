@@ -67,7 +67,6 @@ public class WipfConfigVW {
 				return Integer.valueOf(wc.value);
 			}
 			return null;
-			// TODO
 		} catch (Exception e) {
 			LOGGER.warn("getConfParamInteger bei: " + sConfParam + " fehler");
 		}

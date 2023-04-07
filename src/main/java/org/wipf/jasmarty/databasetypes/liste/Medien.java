@@ -25,23 +25,14 @@ public class Medien extends PanacheEntityBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
-	@Column(name = "titel", nullable = true)
 	public String titel;
-	@Column(name = "art", nullable = true)
 	public String art;
-	@Column(name = "typ", nullable = true)
 	public String typ;
-	@Column(name = "gesehendate", nullable = true)
 	public Integer gesehendate;
-	@Column(name = "infotext", nullable = true)
 	public String infotext;
-	@Column(name = "bewertung", nullable = true)
 	public Integer bewertung;
-	@Column(name = "editby", nullable = true)
 	public String editby;
-	@Column(name = "date", nullable = true)
 	public Integer date;
 
 	/**
@@ -49,7 +40,6 @@ public class Medien extends PanacheEntityBase implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		// TODO
 		return "id=" + id + ", titel=" + titel;
 	}
 

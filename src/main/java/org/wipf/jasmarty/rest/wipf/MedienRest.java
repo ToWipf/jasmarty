@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.liste.Medien;
-import org.wipf.jasmarty.logic.liste.MedienService;
+import org.wipf.jasmarty.logic.listen.MedienService;
 
 /**
  * @author wipf

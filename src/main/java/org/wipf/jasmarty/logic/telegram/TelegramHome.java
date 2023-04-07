@@ -7,7 +7,7 @@ import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
-import org.wipf.jasmarty.logic.liste.RndEventsService;
+import org.wipf.jasmarty.logic.listen.RndEventsService;
 import org.wipf.jasmarty.logic.tasks.RndTask;
 
 /**

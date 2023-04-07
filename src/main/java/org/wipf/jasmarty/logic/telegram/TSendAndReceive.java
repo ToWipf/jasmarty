@@ -2,7 +2,6 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,7 +20,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
-import org.wipf.jasmarty.logic.liste.RndEventsService;
+import org.wipf.jasmarty.logic.listen.RndEventsService;
 
 /**
  * @author wipf
@@ -68,7 +67,7 @@ public class TSendAndReceive {
 	 * @return
 	 * 
 	 */
-	public Boolean setbot(String sBot) throws Exception {
+	public Boolean setbot(String sBot) throws WipfException {
 		this.sBotKey = sBot;
 		wipfConfig.setConfParam("telegrambot", sBot);
 		LOGGER.info("Bot Key: " + getBotKeyFromCache());
@@ -91,8 +90,7 @@ public class TSendAndReceive {
 	@Metered
 	public char readUpdateFromTelegram() {
 		try {
-			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST,
-					"https://api.telegram.org/" + getBotKeyFromCache() + "/getUpdates?offset=" + this.nOffsetID));
+			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + getBotKeyFromCache() + "/getUpdates?offset=" + this.nOffsetID));
 
 			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("Telegram nicht 'ok'");
@@ -227,8 +225,7 @@ public class TSendAndReceive {
 			return "Fehler bei Photo F1";
 		}
 
-		String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id="
-				+ oBiggestSize.get("file_id").toString();
+		String sFileInfoPath = "https://api.telegram.org/" + getBotKeyFromCache() + "/getFile?file_id=" + oBiggestSize.get("file_id").toString();
 		String sFilename = "pic_" + joMsg.get("message_id").toString() + ".jpg";
 
 		return teleFileDownload(sFileInfoPath, sFilename);
@@ -326,9 +323,7 @@ public class TSendAndReceive {
 		}
 
 		try {
-			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST,
-					"https://api.telegram.org/" + getBotKeyFromCache() + "/sendMessage?chat_id=" + t.getChatID()
-							+ "&text=" + wipf.encodeUrlString(sAntwort));
+			String sResJson = wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + getBotKeyFromCache() + "/sendMessage?chat_id=" + t.getChatID() + "&text=" + wipf.encodeUrlString(sAntwort));
 			JSONObject jo = new JSONObject(sResJson);
 
 			if (!jo.getBoolean("ok")) {
@@ -380,9 +375,7 @@ public class TSendAndReceive {
 	 */
 	public void sendDaylyInfo() {
 		Telegram t = new Telegram();
-		t.setAntwort(
-				wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + tLog.countMsg().toString()
-						+ "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: " + tUsercache.getAnzahl());
+		t.setAntwort(wipf.getTime("dd.MM.yyyy HH:mm:ss;SSS") + "\n" + appMsg.countMsg() + "\n" + tLog.countMsg().toString() + "\n\nVersion:" + MainHome.VERSION + "\n\n" + "User: " + tUsercache.getAnzahl());
 		t.setChatID(userAndGroups.getAdminId());
 
 		sendTelegram(t);
@@ -426,8 +419,7 @@ public class TSendAndReceive {
 	 * @throws Exception
 	 */
 	private String sendFileToTelegram(Long nChatId, File f) throws Exception {
-		MultipartUtility multipart = new MultipartUtility(
-				"https://api.telegram.org/" + getBotKeyFromCache() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
+		MultipartUtility multipart = new MultipartUtility("https://api.telegram.org/" + getBotKeyFromCache() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
 		// multipart.addFormField("param_name_1", "param_value");
 		multipart.addFilePart("document", f);
 		String response = multipart.finish();

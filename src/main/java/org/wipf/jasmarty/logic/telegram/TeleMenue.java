@@ -13,9 +13,9 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.daylog.TAppDaylog;
 import org.wipf.jasmarty.logic.discord.DiscordHome;
-import org.wipf.jasmarty.logic.liste.ListeService;
-import org.wipf.jasmarty.logic.liste.MedienService;
-import org.wipf.jasmarty.logic.liste.RndEventsService;
+import org.wipf.jasmarty.logic.listen.ListeService;
+import org.wipf.jasmarty.logic.listen.MedienService;
+import org.wipf.jasmarty.logic.listen.RndEventsService;
 import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
@@ -161,7 +161,6 @@ public class TeleMenue {
 			// Listen
 			case "to":
 			case "todo":
-				// return appTodoList.telegramMenueTodoList(t);
 				return listedb.addStringToList(t.getMessageFullWithoutFirstWord());
 			case "to-link": // Spezielle funktion
 				return listedb.addStringToList(t.getMessage());

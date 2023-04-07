@@ -28,16 +28,6 @@ export interface JapageForList {
   name?: string;
 }
 
-export interface TodoEntry {
-  id?: number;
-  data?: string;
-  active?: string;
-  editby?: string;
-  date?: number;
-  remind?: string;
-  chatid?: number;
-}
-
 export interface MedienEntry {
   id?: number;
   titel?: string;

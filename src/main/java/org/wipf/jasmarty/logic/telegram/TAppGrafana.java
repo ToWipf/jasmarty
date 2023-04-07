@@ -223,7 +223,6 @@ public class TAppGrafana {
 
 		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);
 
-		// TODO grafana Bilder löschen
 		return sFilename;
 	}
 

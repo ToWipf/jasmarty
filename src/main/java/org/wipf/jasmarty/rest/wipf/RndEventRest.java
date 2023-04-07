@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.databasetypes.liste.RndEvent;
-import org.wipf.jasmarty.logic.liste.RndEventsService;
+import org.wipf.jasmarty.logic.listen.RndEventsService;
 
 /**
  * @author wipf

@@ -8,7 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
-import org.wipf.jasmarty.datatypes.DaylogStatsTable;
+import org.wipf.jasmarty.datatypes.daylog.DaylogStatsTable;
 
 /**
  * @author Wipf

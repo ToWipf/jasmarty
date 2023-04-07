@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.datatypes;
+package org.wipf.jasmarty.datatypes.daylog;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
 
