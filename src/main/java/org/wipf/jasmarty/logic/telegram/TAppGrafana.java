@@ -79,6 +79,7 @@ public class TAppGrafana {
 			try {
 				return sendGrafanaPictureToTelegram(t.getChatID(), "ydVqZGkgk/heizung", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
+				e.printStackTrace();
 				return "Fehler 112 " + e;
 			}
 		} else {
@@ -181,7 +182,7 @@ public class TAppGrafana {
 			try {
 				return sendGrafanaPictureToTelegram(t.getChatID(), "8wFrHwb4k/ubersicht-solar", sPanelId, sTeil2_Zeit);
 			} catch (Exception e) {
-				return "Fehler 113 " + e;
+				return "Fehler 115 " + e;
 			}
 		} else {
 			return "Fehlerhafte Eingabe\nHilfe mit 'dev'";
@@ -211,15 +212,12 @@ public class TAppGrafana {
 	 * @return
 	 * @throws IOException
 	 */
-	private String sendGrafanaPictureToTelegram(Long nChatId, String sDashboard, String sPanel, String sTime)
-			throws Exception {
+	private String sendGrafanaPictureToTelegram(Long nChatId, String sDashboard, String sPanel, String sTime) {
 
 //		http://192.168.2.11:3000/render/d-solo/ydVqZGkgk/heizung?orgId=1&panelId=3&from=now-7d&to=now
 		String sGrafanaHost = wipfConfig.getConfParamString("grafana_host");
-
 		String sFilename = "grafana_" + (nChatId + sDashboard + sPanel + sTime + ".png").replace('/', '-');
-		fileVw.saveFileToDisk(sGrafanaHost + "/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel
-				+ "&from=now-" + sTime + "&to=now", sFilename);
+		fileVw.saveFileToDisk(sGrafanaHost + "/render/d-solo/" + sDashboard + "?orgId=1&panelId=" + sPanel + "&from=now-" + sTime + "&to=now", sFilename);
 
 		sendAndReceive.sendDocumentToTelegram(nChatId, sFilename);
 

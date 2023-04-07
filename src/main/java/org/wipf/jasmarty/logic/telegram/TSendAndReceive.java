@@ -354,7 +354,7 @@ public class TSendAndReceive {
 	 * @return
 	 * @throws IOException
 	 */
-	public String sendDocumentToTelegram(Long nChatId, String sFilePath) throws Exception {
+	public String sendDocumentToTelegram(Long nChatId, String sFilePath) {
 		return sendFileToTelegram(nChatId, fileVw.getFile(sFilePath));
 	}
 
@@ -418,14 +418,20 @@ public class TSendAndReceive {
 	 * @return
 	 * @throws Exception
 	 */
-	private String sendFileToTelegram(Long nChatId, File f) throws Exception {
-		MultipartUtility multipart = new MultipartUtility("https://api.telegram.org/" + getBotKeyFromCache() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
-		// multipart.addFormField("param_name_1", "param_value");
-		multipart.addFilePart("document", f);
-		String response = multipart.finish();
+	private String sendFileToTelegram(Long nChatId, File f) {
 		LOGGER.info("upload File to " + nChatId + " / " + f.getPath());
-		JSONObject jo = new JSONObject(response);
-		return (jo.get("ok").toString());
+		try {
+			MultipartUtility multipart;
+			multipart = new MultipartUtility("https://api.telegram.org/" + getBotKeyFromCache() + "/sendDocument?chat_id=" + nChatId, "UTF-8");
+			// multipart.addFormField("param_name_1", "param_value");
+			multipart.addFilePart("document", f);
+			String response = multipart.finish();
+			JSONObject jo = new JSONObject(response);
+			return (jo.get("ok").toString());
+		} catch (IOException | WipfException e) {
+			e.printStackTrace();
+			return "Fehler 116 " + e;
+		}
 	}
 
 }

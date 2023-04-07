@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.base;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -47,6 +46,7 @@ public class WipfConfigVW {
 	 * @return
 	 * 
 	 */
+	@Transactional // TODO Warum ist das nötig? (Grafana)
 	public String getConfParamString(String sConfParam) {
 		WipfConfig wc = WipfConfig.findByKey(sConfParam).firstResult();
 		if (wc != null) {
@@ -60,6 +60,7 @@ public class WipfConfigVW {
 	 * @return
 	 * 
 	 */
+	@Transactional // TODO Warum ist das nötig? (punke)
 	public Integer getConfParamInteger(String sConfParam) {
 		try {
 			WipfConfig wc = WipfConfig.findByKey(sConfParam).firstResult();
