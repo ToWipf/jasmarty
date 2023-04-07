@@ -40,7 +40,7 @@ export class DaylogStatsComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typ'];
+      this.displayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typid'];
     } else {
       this.displayedColumns = ['anz', 'text'];
     }
@@ -154,6 +154,6 @@ export interface StatsEntry {
   anz?: number;
   first_id?: number;
   first_dateid?: number;
-  frist_typ?: number;
+  frist_typid?: number;
   text?: string;
 }

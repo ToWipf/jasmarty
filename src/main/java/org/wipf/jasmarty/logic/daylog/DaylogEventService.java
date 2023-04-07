@@ -28,7 +28,7 @@ public class DaylogEventService {
 	/**
 	 * @param sDate
 	 * @param nUserId
-	 * @return @
+	 * @return
 	 */
 	public List<DaylogEvent> getByDateId(Integer nId) {
 		return DaylogEvent.findByDateId(nId).list();
@@ -36,7 +36,7 @@ public class DaylogEventService {
 
 	/**
 	 * @param nTypId
-	 * @return @
+	 * @return
 	 */
 	public List<DaylogEvent> getAllByTypId(String sTypIds) {
 		return DaylogEvent.findByTypeId(sTypIds).list();
@@ -52,7 +52,7 @@ public class DaylogEventService {
 
 	/**
 	 * @param nUserId
-	 * @return @
+	 * @return
 	 */
 	public List<DaylogEvent> getAll() {
 		return DaylogEvent.findAll().list();
@@ -60,35 +60,16 @@ public class DaylogEventService {
 
 	/**
 	 * @param sTypIds = "1,2,3,9";
-	 * @return @
+	 * @return
 	 */
 	public List<DaylogStats> getStats(String sTypIds) {
-
-		List<DaylogStats> x = DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStats.class).list();
-
-		return x;
-		// List<DaylogEvent> a = getAll();
-
-		// a.forEach(null);
-		// DaylogEventStat.
-
-//
-//		while (rs.next()) {
-//			JSONObject oo = new JSONObject();
-//			oo.put("anz", rs.getInt("anz"));
-//			oo.put("first_id", rs.getInt("id"));
-//			oo.put("first_dateid", rs.getInt("dateid"));
-//			oo.put("frist_typ", rs.getInt("typ"));
-//			oo.put("text", rs.getString("text"));
-//			ar.put(oo);
-//		}
-//		return ar;
+		return DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStats.class).list();
 	}
 
 	/**
 	 * @param sSearch
 	 * @param sType
-	 * @return @
+	 * @return
 	 */
 	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) {
 		LinkedHashSet<String> o = new LinkedHashSet<>();

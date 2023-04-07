@@ -7,9 +7,9 @@ package org.wipf.jasmarty.datatypes;
 public class DaylogStats {
 
 	public Long anz;
-	public Integer id;
-	public Integer dateid;
-	public String typid;
+	public Integer first_id;
+	public Integer first_dateid;
+	public String frist_typid;
 	public String text;
 
 	/**
@@ -21,9 +21,9 @@ public class DaylogStats {
 	 */
 	public DaylogStats(Long anz, Integer id, Integer dateid, String typid, String text) {
 		this.anz = anz;
-		this.id = id;
-		this.dateid = dateid;
-		this.typid = typid;
+		this.first_id = id;
+		this.first_dateid = dateid;
+		this.frist_typid = typid;
 		this.text = text;
 	}
 

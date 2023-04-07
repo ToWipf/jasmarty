@@ -47,7 +47,7 @@ public class TAppDaylog {
 
 	/**
 	 * @param t
-	 * @return @
+	 * @return
 	 */
 	public String doDayLog(Telegram t) {
 		Usercache userCache = tUsercache.getLastMessage(t.getChatID());
@@ -197,7 +197,7 @@ public class TAppDaylog {
 	/**
 	 * @param sEventtext
 	 * @param lastMsgCache
-	 * @return @
+	 * @return
 	 */
 	private String schreibeEvent(String sEventtext, Usercache lastMsgCache) {
 		DaylogEvent dayEvent = new DaylogEvent();

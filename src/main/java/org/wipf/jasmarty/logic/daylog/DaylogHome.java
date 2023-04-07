@@ -157,7 +157,7 @@ public class DaylogHome {
 	 * mit Datumsauflösung
 	 * 
 	 * @param nDateId
-	 * @return @
+	 * @return
 	 */
 	public List<DaylogEvent> getAllByTypIdAsJson(String sIds) {
 		List<DaylogEvent> l = daylogEventDB.getAllByTypId(sIds);
