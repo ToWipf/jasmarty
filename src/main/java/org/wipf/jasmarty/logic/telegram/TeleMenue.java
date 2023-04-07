@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-
 import java.util.Date;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -64,9 +63,12 @@ public class TeleMenue {
 	 * @param sJson
 	 * @return
 	 */
-	public String menueMsg(String sJson) {
+	public String menueMsgApi(String sJson) {
 		Telegram t = new Telegram().setByJsonTelegram(sJson);
-		return menueMsg(t);
+		String antwort = menueMsg(t);
+		if (antwort != null)
+			return antwort.replaceAll("\n", "\\\\n");
+		return "LEERE ANTWORT";
 	}
 
 	/**
@@ -86,6 +88,11 @@ public class TeleMenue {
 	 */
 	private String doMenue(Telegram t) {
 		String sInMsg = wipf.escapeStringSatzzeichen(t.getBeginnStringFromMessage());
+
+		// Beginnt mit . ignorieren
+		if (sInMsg.startsWith(".")) {
+			return null;
+		}
 
 		// Admin Befehle
 		if (userAndGroups.isAdminUser(t)) {
@@ -148,8 +155,7 @@ public class TeleMenue {
 			case "stats":
 			case "telestats":
 			case "cache":
-				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg()
-						+ "\n\n" + tUsercache.getAllAsText();
+				return wipf.getTime("dd.MM.yyyy HH:mm:ss") + "\n" + appMsg.countMsg() + "\n" + telelog.countMsg() + "\n\n" + tUsercache.getAllAsText();
 			case "res":
 			case "return":
 			case "response":
@@ -362,8 +368,7 @@ public class TeleMenue {
 		case "pwd":
 		case "me":
 		case "i":
-			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: "
-					+ t.getMid();
+			return "From: " + t.getFrom() + "\n\nChat: " + t.getChatID() + " " + t.getType() + "\n\nM_id: " + t.getMid();
 		case "calc":
 		case "math":
 		case "m":

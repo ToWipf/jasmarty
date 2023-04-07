@@ -70,6 +70,7 @@ public class DaylogEventService {
 	 * @param sTypIds = "1,2,3,9";
 	 * @return
 	 */
+	@Transactional
 	public List<DaylogStatsTable> getStats(String sTypIds) {
 		return DaylogEvent.getStatsByTypids(Arrays.asList(sTypIds.split(","))).project(DaylogStatsTable.class).list();
 	}

@@ -122,7 +122,11 @@ public class TSendAndReceive {
 					if (joMsg.has("text")) {
 						// Normale Textnachricht
 						t.setMessage(wipf.escapeStringSaveCode(joMsg.getString("text")));
-						t.setAntwort(menue.menueMsg(t));
+						String antwort = menue.menueMsg(t);
+						if (antwort == null) {
+							break;
+						}
+						t.setAntwort(antwort);
 					} else if (joMsg.has("photo")) {
 						t.setAntwort(saveBestPhoto(joMsg));
 					} else if (joMsg.has("document")) {

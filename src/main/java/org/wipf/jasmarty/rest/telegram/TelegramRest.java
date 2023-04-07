@@ -79,7 +79,7 @@ public class TelegramRest {
 	@POST
 	@Path("chat")
 	public Response chat(String sJson) {
-		return Response.ok("{\"msg\":\"" + tMenue.menueMsg(sJson).replaceAll("\n", "\\\\n") + "\"}").build();
+		return Response.ok("{\"msg\":\"" + tMenue.menueMsgApi(sJson) + "\"}").build();
 	}
 
 }
