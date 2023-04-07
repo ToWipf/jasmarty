@@ -84,7 +84,6 @@ public class DaylogEventService {
 
 		for (DaylogEvent d : DaylogEvent.findByTypeANDText(sType, sSearch).list()) {
 			o.add(d.text);
-			System.out.println(d.toString());
 		}
 
 		return o;

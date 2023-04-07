@@ -2,7 +2,6 @@ package org.wipf.jasmarty.databasetypes.telegram;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,19 +16,15 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 
 @Entity
 @RegisterForReflection
-@Table(name = "teleUsercache")
+@Table(name = "telegram_usercache")
 public class Usercache extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "chatid", nullable = false, unique = true)
 	public Long chatid;
-	@Column(name = "msg", nullable = false)
 	public String msg;
-	@Column(name = "usercache", nullable = true)
 	public String usercache;
-	@Column(name = "counter", nullable = true)
 	public Integer counter;
 
 	@Override

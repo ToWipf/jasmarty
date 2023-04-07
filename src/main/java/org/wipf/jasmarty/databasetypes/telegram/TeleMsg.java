@@ -19,7 +19,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
  */
 @Entity
 @RegisterForReflection
-@Table(name = "telemsg")
+@Table(name = "telegram_msg")
 public class TeleMsg extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,7 +30,6 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 	public Long id;
 	@Column(name = "frage", nullable = false)
 	public String frage;
-	@Column(name = "antwort", nullable = true)
 	public String antwort;
 
 	@Override
