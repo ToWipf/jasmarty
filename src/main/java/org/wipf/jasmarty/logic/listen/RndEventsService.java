@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.liste.RndEvent;
@@ -42,29 +43,11 @@ public class RndEventsService {
 			case "stop":
 			case "off":
 				return "Aktiv: " + rndTask.stopRndTask();
-//			case "a":
-//			case "add":
-//				return save(t);
-//			case "del":
-//				return del(t.getMessageIntPart(1));
-//			case "list":
-//				return getAllRndEvent();
-			case "c":
-			case "count":
-				return count().toString();
 			case "g":
 			case "e":
 			case "get":
-				return getRndEventRnd();
 			default:
-				return
-			//@formatter:off
-					"rndEvent Add: rndEvent hinzufügen\n" +
-//					"rndEvent Del: id löschen\n" + 
-//					"rndEvent List: alles auflisten\n" +
-					"rndEvent Get: ZufallsrndEvent\n" +
-					"rndEvent Count: Anzahl der Einträge\n";
-			//@formatter:on
+				return getRndEventRnd();
 			}
 		} catch (Exception e) {
 			LOGGER.error("menueRndEvent");
@@ -77,37 +60,23 @@ public class RndEventsService {
 	 * @return
 	 */
 	public String getRndEventRnd() {
-//		String sQuery = "select eventtext from rndEvent WHERE active = 1 ORDER BY RANDOM() LIMIT 1;";
-//
-//		ResultSet rs = sqlLite.getDbApp().prepareStatement(sQuery).executeQuery();
-//		while (rs.next()) {
-//			// Es gibt nur einen Eintrag
-//			return (rs.getString("eventtext"));
-//		}
-//		return null;
-		return "TODO";
-
+		return RndEvent.findRND().firstResult().eventtext;
 	}
 
 	/**
 	 * @param jnRoot
 	 * @return
 	 */
+	@Transactional
 	public void save(RndEvent r) {
 		r.saveOrUpdate();
-	}
-
-	/**
-	 * @return
-	 */
-	public Integer count() {
-		return getAll().size();
 	}
 
 	/**
 	 * @param t
 	 * @return
 	 */
+	@Transactional
 	public void del(Integer nId) {
 		RndEvent.findById(nId).delete();
 	}

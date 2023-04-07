@@ -2,7 +2,6 @@ package org.wipf.jasmarty.databasetypes.liste;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
@@ -25,11 +25,8 @@ public class RndEvent extends PanacheEntityBase implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
-	@Column(name = "eventtext", nullable = false)
 	public String eventtext;
-	@Column(name = "active", nullable = false)
 	public Boolean active;
 
 	@Override
@@ -56,6 +53,14 @@ public class RndEvent extends PanacheEntityBase implements Serializable {
 			// Neu
 			this.persist();
 		}
+	}
+
+	/**
+	 * @param
+	 * @return
+	 */
+	public static PanacheQuery<RndEvent> findRND() {
+		return find("select e from RndEvent e where active = 1 ORDER BY RANDOM()");
 	}
 
 }

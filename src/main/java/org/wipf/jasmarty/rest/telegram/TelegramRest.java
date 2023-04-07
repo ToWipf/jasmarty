@@ -70,8 +70,8 @@ public class TelegramRest {
 
 	@POST
 	@PermitAll
-	@Path("sendMsgToAdmin/{msg}")
-	public Response sendMsgToId(@PathParam("msg") String sMsg) {
+	@Path("sendMsgToAdmin")
+	public Response sendMsgToId(String sMsg) {
 		tVerwaltung.sendMsgToAdmin(sMsg);
 		return Response.ok("{}").build();
 	}

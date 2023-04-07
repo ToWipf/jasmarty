@@ -1,7 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -37,7 +35,7 @@ public class TelegramHome {
 
 		tReadLoop.start();
 
-		if (wipfConfig.isAppActive("rndEventTask") && appRndEvent.count() > 1) {
+		if (wipfConfig.isAppActive("rndEventTask")) {
 			LOGGER.info("RndEvent Task starten");
 			rndTask.startRndTask();
 		}

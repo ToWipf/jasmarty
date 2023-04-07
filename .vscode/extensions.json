@@ -6,7 +6,6 @@
       "esbenp.prettier-vscode",
       "mikael.angular-beastcode",
       "shinnn.stylelint",
-      "smcpeak.default-keys-windows",
-      "wayou.vscode-todo-highlight"
+      "smcpeak.default-keys-windows"
     ]
   }
