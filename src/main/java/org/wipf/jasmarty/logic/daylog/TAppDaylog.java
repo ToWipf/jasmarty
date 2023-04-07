@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -175,21 +174,14 @@ public class TAppDaylog {
 	}
 
 	/**
-	 * 
 	 * Kategorie id prüfen und Kat Name zurückgeben
-	 * 
 	 * 
 	 * @param t
 	 * @return
 	 */
 	private String pruefeKategorie(Integer nKatId) {
 		if (nKatId != null) {
-			List<DaylogType> dt = daylogTypeDB.get(nKatId);
-			if (dt.size() == 1) {
-				return dt.get(0).type;
-			} else {
-				return null;
-			}
+			return daylogTypeDB.get(nKatId).type;
 		}
 		return null;
 	}

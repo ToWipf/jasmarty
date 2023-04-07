@@ -18,7 +18,7 @@ public class DaylogTypeService {
 	 * @param nId
 	 * @return
 	 */
-	public List<DaylogType> get(Integer nId) {
+	public DaylogType get(Integer nId) {
 		return DaylogType.findById(nId);
 	}
 

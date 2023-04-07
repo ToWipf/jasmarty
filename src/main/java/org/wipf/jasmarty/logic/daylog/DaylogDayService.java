@@ -26,8 +26,14 @@ public class DaylogDayService {
 	 * @param sDate
 	 * @return
 	 */
+	@Transactional
 	public DaylogDay get(String sDate) {
-		return DaylogDay.findByDate(sDate).singleResult();
+		List<DaylogDay> l = DaylogDay.findByDate(sDate).list();
+		if (l.size() == 1) {
+			return l.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	/**
