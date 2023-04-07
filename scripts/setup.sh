@@ -1,5 +1,6 @@
 #!/bin/bash
 echo "Setup start"
+rm -rf ../target
 cd ../angular-app
 npm install
 echo "Setup end"

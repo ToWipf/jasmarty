@@ -72,7 +72,7 @@ public class DaylogEventRest {
 	@GET
 	@Path("getStats/{types}")
 	public Response getStats(@PathParam("types") String sTypes) {
-		return Response.ok(daylogEventDB.getStats(sTypes).toString()).build();
+		return Response.ok(daylogEventDB.getStats(sTypes)).build();
 	}
 
 }

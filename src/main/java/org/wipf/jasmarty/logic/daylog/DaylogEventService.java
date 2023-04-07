@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
+import org.wipf.jasmarty.databasetypes.daylog.DaylogEventStat;
 
 /**
  * @author Wipf
@@ -60,8 +61,10 @@ public class DaylogEventService {
 	 * @param sTypIds = "1,2,3,9";
 	 * @return @
 	 */
-	public List<DaylogEvent> getStats(String sTypIds) {
-		return null;
+	public List<DaylogEventStat> getStats(String sTypIds) {
+
+		List<DaylogEventStat> x = DaylogEventStat.getStatsByTypids(sTypIds).list();
+		return x;
 		// List<DaylogEvent> a = getAll();
 
 		// a.forEach(null);

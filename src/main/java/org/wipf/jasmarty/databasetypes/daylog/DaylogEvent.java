@@ -34,7 +34,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", dateid=" + dateid + ", typ=" + typid + ", text=" + text;
+		return "id=" + id + ", dateid=" + dateid + ", typid=" + typid + ", text=" + text;
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<DaylogEvent> findByTypeId(String sType) {
-		return find("select e from DaylogEvent e where typ =?1", sType);
+		return find("select e from DaylogEvent e where typid =?1", sType);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<DaylogEvent> findByINTypeANDText(String sType, String sText) {
-		return find("select e from DaylogEvent e where typ =?1 AND text LIKE ?2", sType, "%" + sText + "%");
+		return find("select e from DaylogEvent e where typid =?1 AND text LIKE ?2", sType, "%" + sText + "%");
 	}
 
 }
