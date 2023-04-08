@@ -28,17 +28,12 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
-	@Column(name = "msgid", nullable = false)
 	public Integer msgid;
-	@Column(name = "frage", nullable = true)
 	public String frage;
 	@Column(name = "antwort", nullable = true, length = 9999)
 	public String antwort;
-	@Column(name = "chatid", nullable = true)
 	public String chatid;
-	@Column(name = "msgfrom", nullable = true)
 	public String msgfrom;
-	@Column(name = "date", nullable = true)
 	public Integer date;
 
 	@Override

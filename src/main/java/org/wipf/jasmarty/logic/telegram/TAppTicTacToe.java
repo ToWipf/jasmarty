@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.telegram.Usercache;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
@@ -149,7 +150,8 @@ public class TAppTicTacToe {
 	 * @param ttt
 	 * @return
 	 */
-	private void saveTicTacToe(TicTacToe ttt) {
+	@Transactional
+	public void saveTicTacToe(TicTacToe ttt) {
 		Usercache uc = tUsercache.get(ttt.getChatID());
 		uc.chatid = ttt.getChatID();
 		uc.usercache = ttt.getFieldString();

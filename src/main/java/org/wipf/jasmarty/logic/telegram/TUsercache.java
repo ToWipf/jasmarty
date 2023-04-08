@@ -1,6 +1,5 @@
 package org.wipf.jasmarty.logic.telegram;
 
-
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -60,6 +59,7 @@ public class TUsercache {
 	 * 
 	 * @param t
 	 */
+	@Transactional
 	public void saveByTelegramOhneUsercache(Telegram t) {
 		Usercache lmsg = new Usercache();
 		lmsg.chatid = (t.getChatID());
@@ -94,6 +94,7 @@ public class TUsercache {
 	 * @param nUserId
 	 * @return
 	 */
+	@Transactional
 	public Usercache get(Long nChatid) {
 		return Usercache.findById(nChatid);
 	}
@@ -101,6 +102,7 @@ public class TUsercache {
 	/**
 	 * @param sDate
 	 */
+	@Transactional
 	public void del(Long nId) {
 		Usercache.findById(nId).delete();
 	}
