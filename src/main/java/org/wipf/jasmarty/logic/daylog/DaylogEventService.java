@@ -30,6 +30,7 @@ public class DaylogEventService {
 	 * @param nUserId
 	 * @return
 	 */
+	@Transactional
 	public List<DaylogEvent> getByDateId(Integer nId) {
 		return DaylogEvent.findByDateId(nId).list();
 	}

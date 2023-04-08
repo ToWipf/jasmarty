@@ -2,7 +2,6 @@ package org.wipf.jasmarty.databasetypes.base;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,7 +24,6 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
-	@Column(name = "key", nullable = false)
 	public String key;
 
 	@Override

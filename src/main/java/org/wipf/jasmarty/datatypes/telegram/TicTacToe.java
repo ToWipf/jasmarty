@@ -13,6 +13,7 @@ public class TicTacToe extends Telegram {
 	/**
 	 * @param t
 	 */
+	@Override
 	public void setByTelegram(Telegram t) {
 		setChatID(t.getChatID());
 		setMid(t.getMid());

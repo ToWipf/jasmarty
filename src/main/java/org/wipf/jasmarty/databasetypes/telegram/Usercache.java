@@ -23,7 +23,7 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 
 	@Id
 	public Long chatid;
-	public String msg;
+	public String msg; // LastMSG TODO rename
 	public String usercache;
 	public Integer counter;
 
