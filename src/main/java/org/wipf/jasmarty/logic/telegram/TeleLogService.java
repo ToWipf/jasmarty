@@ -77,7 +77,6 @@ public class TeleLogService {
 				break;
 			}
 		});
-
 	}
 
 }
