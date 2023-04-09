@@ -32,7 +32,7 @@ public class TeleLog extends PanacheEntityBase implements Serializable {
 	public String frage;
 	@Column(name = "antwort", nullable = true, length = 9999)
 	public String antwort;
-	public String chatid;
+	public Long chatid;
 	public String msgfrom;
 	public Integer date;
 

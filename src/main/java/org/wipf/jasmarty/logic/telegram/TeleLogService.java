@@ -28,7 +28,7 @@ public class TeleLogService {
 		TeleLog tl = new TeleLog();
 		tl.msgid = t.getMid();
 		tl.frage = t.getMessage();
-		tl.chatid = t.getChatID().toString();
+		tl.chatid = t.getChatID();
 		tl.antwort = t.getAntwort();
 		tl.date = t.getDate();
 		tl.msgfrom = t.getFrom();
@@ -61,27 +61,23 @@ public class TeleLogService {
 	/**
 	 * 
 	 */
+	@Transactional
 	public void cleanLog() {
+		getAll().forEach(tl -> {
+			switch (tl.chatid.toString()) {
+			case "798200105":
+			case "-385659721":
+			case "-387871959":
+			case "-387712260":
+			case "0":
+			case "-1":
+				tl.delete();
+				break;
+			default:
+				break;
+			}
+		});
 
-//		List<Long> lIds = new ArrayList<>();
-//		lIds.add(798200105l);
-//		lIds.add(-385659721l);
-//		lIds.add(-387871959l);
-//		lIds.add(-387712260l);
-//		lIds.add(0l);
-//		lIds.add(-1l);
-//
-//		lIds.forEach((nCid) -> {
-//
-//			String sUpdate = "DELETE FROM telegramlog WHERE chatid LIKE ?;";
-//			try (PreparedStatement statement = sqlLite.getDbApp().prepareStatement(sUpdate)) {
-//				statement.setLong(1, nCid);
-//				statement.executeUpdate();
-//			}
-//		});
-//
-//		// Systemmeldungen löschen
-//		delItem(-1l);
 	}
 
 }
