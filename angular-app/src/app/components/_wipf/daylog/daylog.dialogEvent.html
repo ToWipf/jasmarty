@@ -46,5 +46,6 @@
 
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" *ngIf="data.text" >Speichern</button>
+    <!-- <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" *ngIf="data.text.toString().length > 0" >Speichern</button> TODO:--> 
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
 </mat-dialog-actions>
