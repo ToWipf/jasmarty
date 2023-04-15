@@ -73,7 +73,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<DaylogEvent> findByDateId(Integer nDateId) {
-		return find("select e from DaylogEvent e where dateid =?1", nDateId);
+		return find("select e from DaylogEvent e where dateid =?1  ORDER BY typid", nDateId);
 	}
 
 	/**
