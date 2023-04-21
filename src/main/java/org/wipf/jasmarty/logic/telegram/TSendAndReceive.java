@@ -154,7 +154,6 @@ public class TSendAndReceive {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
-			e.printStackTrace();
 			return 'f';
 		}
 	}

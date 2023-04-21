@@ -128,7 +128,7 @@ export class ListeComponent implements OnInit {
 
   public deleteItem(item: any): void {
     item.infotext = "Wirklich löschen?";
-    item.infotext2 = item.data;
+    item.infotext2 = item.data + "\n\n" + item.date;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',
       minHeight: '150px',
