@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { KeyValEntry } from '../datatypes';
-import { ServiceWipf } from '../service/serviceWipf';
+import { KeyValEntry } from 'src/app/datatypes';
+import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
   selector: 'app-cookie',
@@ -62,7 +62,6 @@ export class CookieDialogComponent implements OnInit {
   }
 
   public setCookie(cname: String, value: String): void {
-    console.log(value);
     var xnow = new Date();
     var time = xnow.getTime();
     var expireTime = time + 1000 * 36000 * 9999;

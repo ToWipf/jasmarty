@@ -75,13 +75,13 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ElementSetServerDialog } from './dialog/setServer.dialog';
 import { FooterComponent } from './components/_main/footer/footer.component';
-import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookie.dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
 import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
 import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
 import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
 import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/_main/authKey/authKey.component';
+import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
 
 @NgModule({
     declarations: [
