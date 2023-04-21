@@ -44,7 +44,7 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 			AuthKey existingData = AuthKey.findById(this.id);
 			if (existingData != null) {
 				// Update
-				existingData.key = this.key;
+				existingData.id = this.id;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
