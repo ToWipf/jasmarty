@@ -40,7 +40,7 @@ public class MainHome {
 	ListeTypeService listeTypeDB;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "2.0.04";
+	public static final String VERSION = "2.0.05";
 
 	/**
 	 * Stop App
