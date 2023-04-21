@@ -42,13 +42,17 @@ export class ServicAuthKey {
         var time = xnow.getTime();
         var expireTime = time + 1000 * 36000 * 9999;
         xnow.setTime(expireTime);
-        document.cookie = ServicAuthKey.AUTH_KEY_NAME + '=' + this.generateId() + ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
+        var key = this.generateId();
+        document.cookie = ServicAuthKey.AUTH_KEY_NAME + '=' + key+ ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
+
+        // neuen Key senden
+        this.rest.post("authkey/newkey", key);
 
         this.loadAuthKey();
     }
 
     private generateId() {
-        return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        return Math.random().toString(36).substring(2, 15) + '-' + Date.now();
     }
 
 }

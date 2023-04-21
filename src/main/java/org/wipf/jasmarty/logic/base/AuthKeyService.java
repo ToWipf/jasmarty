@@ -69,4 +69,14 @@ public class AuthKeyService {
 		return false;
 	}
 
+	/**
+	 * @param sKey
+	 */
+	public void newKey(String sKey) {
+		AuthKey k = new AuthKey();
+		k.access = false;
+		k.key = sKey;
+		save(k);
+	}
+
 }

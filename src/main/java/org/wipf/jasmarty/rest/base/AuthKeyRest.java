@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.rest.base;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -47,6 +48,15 @@ public class AuthKeyRest {
 	@Path("delete/{username}")
 	public Response delete(@PathParam("username") Integer nId) {
 		authKeyService.del(nId);
+		return Response.ok().build();
+	}
+
+	@POST
+	@PermitAll
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("newkey")
+	public Response newKey(String sKey) {
+		authKeyService.newKey(sKey);
 		return Response.ok().build();
 	}
 
