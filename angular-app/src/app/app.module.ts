@@ -81,10 +81,13 @@ import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.compo
 import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
 import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
 import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
+import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/_main/authKey/authKey.component';
 
 @NgModule({
     declarations: [
         AppComponent,
+        AuthKeyComponent,
+        AuthKeyComponentDialogComponent,
         CryptComponent,
         DayLogComponent,
         DaylogComponentDialogDayComponent,
