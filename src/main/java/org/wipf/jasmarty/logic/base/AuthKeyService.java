@@ -31,7 +31,7 @@ public class AuthKeyService {
 	@Transactional
 	public void del(Integer nId) {
 		AuthKey.findById(nId).delete();
-		loadIntoCache();
+		loadKeysIntoCache();
 	}
 
 	/**
@@ -41,14 +41,14 @@ public class AuthKeyService {
 	@Transactional
 	public void save(AuthKey t) {
 		t.saveOrUpdate();
-		loadIntoCache();
+		loadKeysIntoCache();
 	}
 
 	/**
 	 * 
 	 */
-	public void loadIntoCache() {
-		keycache = new LinkedList<>();
+	public void loadKeysIntoCache() {
+		keycache = new LinkedList<String>();
 		getAll().forEach(o -> {
 			if (o.access) {
 				keycache.add(o.key);

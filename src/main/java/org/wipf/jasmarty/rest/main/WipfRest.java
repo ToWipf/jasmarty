@@ -2,7 +2,6 @@ package org.wipf.jasmarty.rest.main;
 
 import java.io.IOException;
 
-
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -20,6 +19,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+import org.wipf.jasmarty.logic.base.AuthKeyService;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
@@ -47,6 +47,8 @@ public class WipfRest {
 	Wipf wipf;
 	@Inject
 	WipfConfigVW wipfConfig;
+	@Inject
+	AuthKeyService authKeyService;
 
 	@POST
 	@Path("setDiscordId/{id}")
@@ -117,7 +119,7 @@ public class WipfRest {
 	@Path("/cotest")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String cotest(@CookieParam("fw") String c1) {
-		return c1;
+	public Boolean cotest(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		return (authKeyService.isKeyInCache(key));
 	}
 }
