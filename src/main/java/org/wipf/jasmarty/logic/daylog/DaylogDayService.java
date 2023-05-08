@@ -18,8 +18,9 @@ public class DaylogDayService {
 	 * @param o
 	 */
 	@Transactional
-	public void save(DaylogDay o) {
+	public DaylogDay save(DaylogDay o) {
 		o.saveOrUpdate();
+		return o;
 	}
 
 	/**

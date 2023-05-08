@@ -48,9 +48,8 @@ public class DaylogDayRest {
 
 	@POST
 	@Path("save")
-	public Response save(DaylogDay d) {
-		daylogDayDB.save(d);
-		return Response.ok("{}").build();
+	public DaylogDay save(DaylogDay d) {
+		return daylogDayDB.save(d);
 	}
 
 	@DELETE
