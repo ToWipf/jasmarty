@@ -334,8 +334,7 @@ public class TSendAndReceive {
 			}
 
 		} catch (Exception e) {
-			LOGGER.warn("Telegram senden " + e);
-			e.printStackTrace();
+			LOGGER.error("Telegram senden " + e + " - " + t.toJson().toString());
 		}
 	}
 

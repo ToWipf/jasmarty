@@ -111,7 +111,7 @@ public class FileVW {
 			fos.close();
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			LOGGER.error("Datei konnte nicht gespeichert werden! " + sUrl + " - " + sFileName + " - " + e);
 		}
 		return false;
 	}
@@ -125,8 +125,7 @@ public class FileVW {
 		String sFilename = "files/" + "txt_" + t.getMid() + ".txt";
 
 		try {
-			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(),
-					Charset.defaultCharset());
+			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(), Charset.defaultCharset());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
