@@ -38,9 +38,12 @@ public class MainHome {
 	ListeService listeDB;
 	@Inject
 	ListeTypeService listeTypeDB;
+	@Inject
+	AuthKeyService authKeyService;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "2.0.01";
+	public static final String VERSION = "2.0.08";
+	public static final String AUTH_KEY_NAME = "authKey";
 
 	/**
 	 * Stop App
@@ -59,6 +62,7 @@ public class MainHome {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Berlin"));
 		// LOGGER.info("Tmp Ordner: " + System.getProperty("java.io.tmpdir"));
 		createFileFolder();
+		authKeyService.loadKeysIntoCache();
 
 		wipfUserVW.crateDefaultUsers();
 

@@ -154,7 +154,6 @@ public class TSendAndReceive {
 			}
 		} catch (Exception e) {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
-			e.printStackTrace();
 			return 'f';
 		}
 	}
@@ -335,8 +334,7 @@ public class TSendAndReceive {
 			}
 
 		} catch (Exception e) {
-			LOGGER.warn("Telegram senden " + e);
-			e.printStackTrace();
+			LOGGER.error("Telegram senden " + e + " - " + t.toJson().toString());
 		}
 	}
 

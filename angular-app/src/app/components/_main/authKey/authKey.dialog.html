@@ -1,15 +1,20 @@
-<h1 mat-dialog-title>Cookie</h1>
+<h1 mat-dialog-title>ID: {{data.id}}</h1>
 <mat-dialog-content>
     <mat-form-field>
-        <mat-label>Name</mat-label>
+        <mat-label>Key</mat-label>
         <input matInput [(ngModel)]="data.key">
     </mat-form-field>
     <mat-form-field>
-        <mat-label>Wert</mat-label>
-        <input matInput [(ngModel)]="data.value">
+        <mat-label>Info</mat-label>
+        <input matInput [(ngModel)]="data.info">
     </mat-form-field>
-</mat-dialog-content>
+    <br>
 
+    <mat-checkbox class="example-margin" [(ngModel)]="data.access">
+        Aktiv
+    </mat-checkbox>
+
+</mat-dialog-content>
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
     <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>

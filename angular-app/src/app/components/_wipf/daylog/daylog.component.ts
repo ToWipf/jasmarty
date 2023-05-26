@@ -174,7 +174,7 @@ export class DayLogComponent implements OnInit {
     this.bShowWarning = true;
     this.rest.post('daylog/day/save', item).then((resdata: DaylogDay) => {
       this.loadDays();
-      if (resdata.id != null) {
+      if (resdata) {
         this.bShowWarning = false;
         // Nach speichern, den Tag laden
         this.loadEventsByDaySetVar(resdata);

@@ -2,6 +2,7 @@ package org.wipf.jasmarty.databasetypes.base;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,11 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer id;
+	@Column(nullable = false)
 	public String key;
+	public String info;
+	@Column(nullable = false)
+	public boolean access;
 
 	@Override
 	public String toString() {
@@ -39,7 +44,9 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 			AuthKey existingData = AuthKey.findById(this.id);
 			if (existingData != null) {
 				// Update
-				existingData.key = this.key;
+				existingData.id = this.id;
+				existingData.info = this.info;
+				existingData.access = this.access;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id

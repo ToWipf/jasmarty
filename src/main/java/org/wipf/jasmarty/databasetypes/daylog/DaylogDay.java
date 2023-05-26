@@ -28,7 +28,7 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
 	public Integer id;
-	@Column(name = "date", nullable = false)
+	@Column(name = "date", nullable = false, unique = true)
 	public String date;
 	@Column(name = "tagestext", nullable = false)
 	public String tagestext;

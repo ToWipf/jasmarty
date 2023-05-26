@@ -54,7 +54,7 @@
                 </li>
                 <li *ngIf="bDevActive" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
                     <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt">  Panel </span>
+                    <span class="buttonInhalt"> Panel </span>
                 </li>
             </ul>
 
@@ -160,6 +160,7 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='wipfuservw'">
                     <app-wipfuservw></app-wipfuservw>
+                    <app-authKey></app-authKey>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='12864panel'">
                     <app-jasmarty12864panel></app-jasmarty12864panel>

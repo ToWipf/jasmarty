@@ -11,12 +11,19 @@
         </button>
     </div>
 
-    <div class="box">
-        <button class="btn btn-wipf-default" (click)="loadAll()">Laden</button>
+    <div class="iconbox">
+        Laden:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="loadAll()">
+            <mat-icon svgIcon="restart" aria-hidden="false" title="Laden"></mat-icon>
+        </button>
+
+        <br>
+        Clean Log:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="openCleanLogDialog()">
+            <mat-icon svgIcon="trash" aria-hidden="false" title="Clean"></mat-icon>
+        </button>
     </div>
-    <div class="box">
-        <button class="btn btn-wipf-default" (click)="openCleanLogDialog()">Clean Log</button>
-    </div>
+
     <div class="box">
         <mat-form-field>
             <mat-label>Filtern</mat-label>

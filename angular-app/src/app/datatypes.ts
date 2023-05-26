@@ -154,3 +154,10 @@ export interface DialogInfoContent {
   infotext?: string;
   infotext2?: string;
 }
+
+export interface AuthKey {
+  id?: number;
+  key?: string;
+  info?: string;
+  access?: boolean;
+}

@@ -44,7 +44,6 @@ export class TelegramLogComponent implements OnInit {
 
   public loadAll(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.dataSource = null;
 
     this.rest.get('telelog/getall').then((resdata: any[]) => {
       this.dataSource = new MatTableDataSource(resdata);
@@ -113,8 +112,8 @@ export class TelegramLogComponent implements OnInit {
 
   private delItem(e: any): void {
     this.rest.delete('telelog/delete/' + e.id).then((resdata: any) => {
-
       e.infotext = "Logs neu laden?";
+      e.infotext2 = "";
       const dialogRef = this.dialog.open(DialogJaNeinComponent, {
         minWidth: '200px',
         minHeight: '150px',

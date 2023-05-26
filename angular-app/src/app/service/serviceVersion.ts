@@ -3,7 +3,7 @@ import { ServiceRest } from './serviceRest';
 import { ServiceWipf } from './serviceWipf';
 import packageJson from '../../../package.json';
 import { MatDialog } from '@angular/material/dialog';
-import { CookieDialogComponent } from '../dialog/cookie.dialog';
+import { CookieDialogComponent } from '../components/_main/cookieVW/cookie.dialog';
 
 @Injectable({
     providedIn: 'root',
