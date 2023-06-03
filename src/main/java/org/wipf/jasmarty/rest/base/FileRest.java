@@ -1,4 +1,6 @@
-package org.wipf.jasmarty.rest.main;
+package org.wipf.jasmarty.rest.base;
+
+import java.io.File;
 
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
@@ -6,6 +8,7 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -39,6 +42,14 @@ public class FileRest {
 	@Path("download/{name}")
 	public Response download(@PathParam("name") String sName) {
 		return Response.ok(fileVw.getFile(sName)).build();
+	}
+
+	@POST
+	@Path("upload/{filename}")
+	@Consumes(MediaType.WILDCARD)
+	public Response upload(@PathParam("filename") String sName, File f) {
+		fileVw.saveFile(sName, f);
+		return Response.ok().build();
 	}
 
 	@DELETE

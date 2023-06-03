@@ -140,4 +140,12 @@ public class FileVW {
 	private boolean isSaveFileName(String sFileName) {
 		return (!sFileName.contains("..") && !sFileName.contains("/") && !sFileName.contains("\\"));
 	}
+
+	/**
+	 * @param sName
+	 * @param f
+	 */
+	public void saveFile(String sName, File f) {
+		f.renameTo(new File("files/" + sName));
+	}
 }

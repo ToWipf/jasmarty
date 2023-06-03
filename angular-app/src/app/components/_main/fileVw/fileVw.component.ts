@@ -20,7 +20,6 @@ export class FileVwComponent implements OnInit {
   public dataSource;
   public displayedColumns: string[] = ['name', 'button'];
   public sFilter: string = "";
-  public fileToUpload: File | null = null;
 
   ngOnInit(): void {
     this.load();
@@ -64,8 +63,6 @@ export class FileVwComponent implements OnInit {
   }
 
   public async downloadItem(name: string): Promise<void> {
-
-    //window.open('../file/download/' + name);
     this.rest.downloadFile('../file/download/' + name).pipe(take(1)).subscribe((response) => {
       const downloadLink = document.createElement('a');
       downloadLink.href = URL.createObjectURL(new Blob([response.body], { type: response.body.type }));
@@ -73,12 +70,15 @@ export class FileVwComponent implements OnInit {
       downloadLink.download = name;
       downloadLink.click();
     });
-
-
   }
 
-  // public uploadFile(files: FileList) {
-  //   this.fileToUpload = files.item(0);
-  // }
+  public uploadFile(files: FileList) {
+    var fileToUpload: File | null = null;
+    fileToUpload = files.item(0);
+
+    this.rest.post('file/upload/' + fileToUpload.name, fileToUpload).then((resdata: any) => {
+      this.load();
+    });
+  }
 
 }

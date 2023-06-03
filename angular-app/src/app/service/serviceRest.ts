@@ -174,8 +174,15 @@ export class ServiceRest {
       });
   }
 
+  /**
+   * http file Download
+   * 
+   * @param path 
+   * @returns 
+   */
   public downloadFile(path: string): Observable<HttpResponse<Blob>> {
     return this.http.get<Blob>(this.gethost() + path, { headers: this.httpOptions, observe: 'response', responseType: 'blob' as 'json' });
   }
 
 }
+

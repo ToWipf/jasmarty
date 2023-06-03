@@ -18,16 +18,12 @@
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 <div class="tableVW">
-                    <!-- TODO: -->
 
-                    <!-- <div class="form-group">
-                        <label for="file">Datei Hochladen</label>
-                        <input type="file" id="file" (change)="uploadFile($event.target.files)">
-                        </div> -->
-
-                    <!-- <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                            <mat-icon svgIcon="box" aria-hidden="false" title="upload"></mat-icon>
-                        </button> -->
+                     
+                    <label for="file">Datei Hochladen</label>
+                    <mat-icon svgIcon="extern_link" aria-hidden="false" title="extern_link"></mat-icon>
+                    <input type="file" (change)="uploadFile($event.target.files)">
+                        
                     ∑: {{dataSource?._data?._value?.length}}
                 </div>
             </th>
