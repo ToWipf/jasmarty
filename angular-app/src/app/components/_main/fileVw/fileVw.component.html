@@ -5,6 +5,11 @@
         <mat-label>Filtern</mat-label>
         <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
     </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Datei Hochladen</mat-label>
+        <input class="uploadMenue" matInput type="file" (change)="uploadFile($event.target.files)">
+    </mat-form-field>
 </div>
 
 <ng-scrollbar class="pscroll">
@@ -18,12 +23,6 @@
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 <div class="tableVW">
-
-                     
-                    <label for="file">Datei Hochladen</label>
-                    <mat-icon svgIcon="extern_link" aria-hidden="false" title="extern_link"></mat-icon>
-                    <input type="file" (change)="uploadFile($event.target.files)">
-                        
                     ∑: {{dataSource?._data?._value?.length}}
                 </div>
             </th>
