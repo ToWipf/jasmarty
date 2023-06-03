@@ -81,11 +81,6 @@
             <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}"> {{element.date}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="typeid">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> TypeId </th>
-            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}"> {{element.typeid}} </td>
-        </ng-container>
-
         <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef> Type </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">

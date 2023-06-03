@@ -38,7 +38,7 @@ export class ListeComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['id', 'typeid', 'type', 'data', 'date', 'button'];
+      this.displayedColumns = ['id', 'type', 'data', 'date', 'button'];
     } else {
       this.displayedColumns = ['type', 'data', 'button'];
     }
@@ -98,8 +98,12 @@ export class ListeComponent implements OnInit {
   public applyFilterByType() {
     if (this.selectedTypeFilter) {
       if (this.selectedTypeFilter.id == -99) {
+        // Spaltenansichten mit type
+        this.displayedColumns = ['type', 'data', 'button'];
         this.loadAll();
       } else {
+        // Spaltenansichten ohne type
+        this.displayedColumns = ['data', 'date', 'button'];
         this.loadByType();
       }
     }

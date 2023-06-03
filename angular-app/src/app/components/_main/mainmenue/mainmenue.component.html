@@ -20,18 +20,6 @@
                     <mat-icon svgIcon="document" aria-hidden="false" title="Medien"></mat-icon>
                     <span class="buttonInhalt"> Medien </span>
                 </li>
-                <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
-                    <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
-                    <span class="buttonInhalt"> RndEvent </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="selectSite('crypt')" [ngClass]="{'isSelected' : selectedSite == 'crypt'}">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                    <span class="buttonInhalt"> Crypt </span>
-                </li>
-                <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
-                    <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
-                    <span class="buttonInhalt"> Wipf User </span>
-                </li>
                 <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
                     <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
                     <span class="buttonInhalt"> Dateien </span>
@@ -80,34 +68,30 @@
                     <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
                     <span class="buttonInhalt"> Test Chat </span>
                 </li>
+                <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
+                    <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
+                    <span class="buttonInhalt"> RndEvent </span>
+                </li>
                 <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
                     <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
                     <span class="buttonInhalt"> Einstellungen </span>
                 </li>
             </ul>
 
-            <div class="titlemenue">Anzeig<span (click)="showDevModulesBySecretKey()">e</span>
+            <div class="titlemenue">Syste<span (click)="showAll()">m</span>
             </div>
             <ul class="menueli">
                 <li (click)="getActiveModules()">
                     <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
-                    <span class="buttonInhalt"> Neu laden </span>
-                </li>
-                <!-- <li *ngIf="!bDevActive" (click)="showDevModules()">
-                        <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                        Zeige Dev
-                    </li> -->
-                <li *ngIf="bDevActive" (click)="showAll()">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt"> Zeige Alles </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="showDevModules()">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Dev"></mat-icon>
-                    <span class="buttonInhalt">Verstecke Dev </span>
+                    <span class="buttonInhalt"> Menü laden </span>
                 </li>
                 <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
                     <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                    <span class="buttonInhalt"> Debug </span>
+                    <span class="buttonInhalt"> Debug Seite</span>
+                </li>
+                <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
+                    <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
+                    <span class="buttonInhalt"> Wipf User </span>
                 </li>
                 <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
                     <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
@@ -145,9 +129,6 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='medien'">
                     <app-medien></app-medien>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='crypt'">
-                    <app-crypt></app-crypt>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='chat'">
                     <app-telegram-chat></app-telegram-chat>

@@ -60,17 +60,9 @@ export class MainmenueComponent implements OnInit {
       });
     });
   }
-
-  public showDevModulesBySecretKey(): void {
-    this.bDevActive = true;
-    this.showAll();
-  }
-
-  public showDevModules(): void {
-    this.bDevActive = !this.bDevActive;
-  }
-
+  
   public showAll(): void {
+    this.bDevActive = true;
     this.bJasmartyActive = true;
     this.bTelegramActive = true;
     this.bWipfActive = true;

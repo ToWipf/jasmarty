@@ -13,7 +13,6 @@ export class DebugSeiteComponent implements OnInit {
 
   public sSQL_IN: string;
   public sSQL_OUT: string;
-  public uhr: string;
   public serverTime: number;
   public clientTime: number;
 
@@ -32,7 +31,6 @@ export class DebugSeiteComponent implements OnInit {
   public loadUhr(): void {
     this.getTime();
     this.clientTime = Date.now();
-    this.uhr = new Date(Date.now()).toISOString();
   }
 
   public getTime(): void {
