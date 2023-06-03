@@ -30,7 +30,7 @@ export class TelegramMsgComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['mid', 'frage', 'antwort', 'button'];
+      this.displayedColumns = ['id', 'frage', 'antwort', 'button'];
     } else {
       this.displayedColumns = ['frage', 'antwort', 'button'];
     }

@@ -76,6 +76,10 @@ public class TeleLogService {
 			default:
 				break;
 			}
+
+			if (tl.msgid == -1) {
+				tl.delete();
+			}
 		});
 	}
 

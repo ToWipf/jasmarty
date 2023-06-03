@@ -23,8 +23,8 @@ export class TelegramLogComponent implements OnInit {
   public bShowAllTableColumns: Boolean = true;
 
   ngOnInit() {
-    // Kein init laden
     this.showAllTableColumns();
+    this.loadAll();
   }
 
   public showAllTableColumns(): void {
