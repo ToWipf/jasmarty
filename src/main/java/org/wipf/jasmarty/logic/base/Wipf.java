@@ -537,4 +537,14 @@ public class Wipf {
 		return System.currentTimeMillis();
 	}
 
+	/**
+	 * z.B. abc.svg
+	 * 
+	 * @param sFileName
+	 * @return
+	 */
+	public boolean isFilename(String sFileName) {
+		return sFileName.matches("^[äöüÄÖÜ()\\w,\\s-]+\\.[A-Za-z]{1,4}$");
+	}
+
 }

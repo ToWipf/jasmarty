@@ -146,7 +146,11 @@ public class FileVW {
 	 * @param f
 	 */
 	public void saveFile(String sFileName, File f) {
-		LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFileName);
-		f.renameTo(new File("files/" + sFileName));
+		if (wipf.isFilename(sFileName)) {
+			LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFileName);
+			f.renameTo(new File("files/" + sFileName));
+		} else {
+			LOGGER.warn("Kein Upload - Filename: " + sFileName);
+		}
 	}
 }
