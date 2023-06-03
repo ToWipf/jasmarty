@@ -77,7 +77,7 @@ public class TeleLogService {
 				break;
 			}
 
-			if (tl.msgid == -1) {
+			if (tl.msgid == -1 || tl.msgid == 0) {
 				tl.delete();
 			}
 		});

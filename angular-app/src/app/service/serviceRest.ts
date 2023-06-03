@@ -1,9 +1,10 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from '../dialog/main.dialog';
 import { ElementSetServerDialog } from '../dialog/setServer.dialog';
 import { ServiceWipf } from './serviceWipf';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class ServiceRest {
   constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
   private sHost: string = 'http://localhost:8080/';
-  private httpOptions: any;
+  private httpOptions: HttpHeaders = new HttpHeaders();
   private bLoginOk: string = "false";
 
   public setLoginData(user: string, passwort: string): void {
@@ -28,11 +29,8 @@ export class ServiceRest {
   }
 
   private setLogin(base64Auth: string) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        "Authorization": "Basic " + base64Auth
-      })
-    };
+    this.httpOptions = 
+      new HttpHeaders({ "Authorization": "Basic " + base64Auth});
   }
 
   public getHostExpectFromUrl(): string {
@@ -119,7 +117,7 @@ export class ServiceRest {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
-        this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
+        this.http.get(this.gethost() + path, { headers: this.httpOptions }).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
         });
@@ -135,7 +133,7 @@ export class ServiceRest {
   public getNoWartenDialog(path: string): Promise<any> {
     return new Promise(
       resolve => {
-        this.http.get(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
+        this.http.get(this.gethost() + path, { headers: this.httpOptions }).subscribe((resdata: any) => {
           resolve(resdata);
         });
       });
@@ -152,7 +150,7 @@ export class ServiceRest {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
-        this.http.post(this.gethost() + path, item, this.httpOptions).subscribe((resdata: any) => {
+        this.http.post(this.gethost() + path, item, { headers: this.httpOptions }).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
         });
@@ -169,11 +167,15 @@ export class ServiceRest {
     return new Promise(
       resolve => {
         const warten = this.dialog.open(DialogWartenComponent, {});
-        this.http.delete(this.gethost() + path, this.httpOptions).subscribe((resdata: any) => {
+        this.http.delete(this.gethost() + path, { headers: this.httpOptions }).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
         });
       });
+  }
+
+  public downloadFile(path: string): Observable<HttpResponse<Blob>> {
+    return this.http.get<Blob>(this.gethost() + path, { headers: this.httpOptions, observe: 'response', responseType: 'blob' as 'json' });
   }
 
 }

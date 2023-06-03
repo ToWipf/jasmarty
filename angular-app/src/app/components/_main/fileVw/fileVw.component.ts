@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-file-vw',
@@ -62,9 +63,18 @@ export class FileVwComponent implements OnInit {
     });
   }
 
-  public downloadItem(name: string): void {
-    // TODO: Auth
-    window.open('../file/download/' + name);
+  public async downloadItem(name: string): Promise<void> {
+
+    //window.open('../file/download/' + name);
+    this.rest.downloadFile('../file/download/' + name).pipe(take(1)).subscribe((response) => {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(new Blob([response.body], { type: response.body.type }));
+
+      downloadLink.download = name;
+      downloadLink.click();
+    });
+
+
   }
 
   // public uploadFile(files: FileList) {
