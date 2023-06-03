@@ -142,10 +142,11 @@ public class FileVW {
 	}
 
 	/**
-	 * @param sName
+	 * @param sFileName
 	 * @param f
 	 */
-	public void saveFile(String sName, File f) {
-		f.renameTo(new File("files/" + sName));
+	public void saveFile(String sFileName, File f) {
+		LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFileName);
+		f.renameTo(new File("files/" + sFileName));
 	}
 }

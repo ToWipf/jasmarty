@@ -56,21 +56,21 @@
 
             <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
             <ul *ngIf="bTelegramActive" class="menueli">
-                <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
-                    <span class="buttonInhalt"> Nachrichten </span>
-                </li>
-                <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
-                    <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
-                    <span class="buttonInhalt"> Logs </span>
-                </li>
                 <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
                     <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
                     <span class="buttonInhalt"> Test Chat </span>
                 </li>
+                <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
+                    <span class="buttonInhalt"> Nachrichten </span>
+                </li>
                 <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
                     <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
                     <span class="buttonInhalt"> RndEvent </span>
+                </li>
+                <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
+                    <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
+                    <span class="buttonInhalt"> Logs </span>
                 </li>
                 <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
                     <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
@@ -81,13 +81,9 @@
             <div class="titlemenue">Syste<span (click)="showAll()">m</span>
             </div>
             <ul class="menueli">
-                <li (click)="getActiveModules()">
-                    <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
-                    <span class="buttonInhalt"> Menü laden </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                    <span class="buttonInhalt"> Debug Seite</span>
+                <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
+                    <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
+                    <span class="buttonInhalt"> An/Abmelden </span>
                 </li>
                 <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
                     <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
@@ -97,9 +93,13 @@
                     <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
                     <span class="buttonInhalt"> Einstellungen </span>
                 </li>
-                <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
-                    <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
-                    <span class="buttonInhalt"> An/Abmelden </span>
+                <li (click)="getActiveModules()">
+                    <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
+                    <span class="buttonInhalt"> Menü laden </span>
+                </li>
+                <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
+                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+                    <span class="buttonInhalt"> Debug Seite</span>
                 </li>
             </ul>
         </ng-scrollbar>
