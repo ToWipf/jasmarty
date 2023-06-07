@@ -30,7 +30,7 @@
     "ng-sidebar": "9.4.3",
     "ngx-photo-editor": "0.4.4",
     "ngx-scrollbar": "10.0.1",
-    "rxjs": "7.8.0",
+    "rxjs": "7.8.1",
     "zone.js": "0.11.8"
   },
   "devDependencies": {
