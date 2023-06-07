@@ -39,22 +39,7 @@ public class Lcd12864PageVerwaltung {
 	 * 
 	 */
 	public LcdPageDescription load(Integer nId) {
-		LcdPageDescription o = LcdPageDescription.findById(nId);
-		if (o != null) {
-			// TODO nötig?
-			if (o.getDynamicData().isEmpty()) {
-				o.dynamicData = "[]";
-			} else {
-				o.dynamicData = o.getDynamicData().toString();
-			}
-
-			if (o.getStaticData().isEmpty()) {
-				o.staticData = "[]";
-			} else {
-				o.staticData = o.getStaticData().toString();
-			}
-		}
-		return o;
+		return LcdPageDescription.findById(nId);
 	}
 
 	/*

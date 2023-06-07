@@ -76,22 +76,13 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 	 * @param o
 	 */
 	public void setStaticData(JSONArray o) {
-		System.out.println(o.length());
-		if (o.isEmpty()) {
-			staticData = "[]";
-		} else {
-			staticData = o.toString();
-		}
+		staticData = o.toString();
 	}
 
 	/**
 	 * @param o
 	 */
 	public void setDynamicData(JSONArray o) {
-		if (o.isEmpty()) {
-			dynamicData = "[]";
-		} else {
-			dynamicData = o.toString();
-		}
+		dynamicData = o.toString();
 	}
 }

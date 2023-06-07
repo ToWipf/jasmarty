@@ -164,6 +164,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
         }
         this.lcdDescription = res;
       }
+      console.log(this.lcdDescription);
     });
   }
 
