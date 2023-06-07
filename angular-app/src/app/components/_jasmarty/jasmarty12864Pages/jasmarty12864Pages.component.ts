@@ -1,7 +1,7 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { CroppedEvent } from 'ngx-photo-editor';
+import { NgxCroppedEvent, NgxPhotoEditorService } from 'ngx-photo-editor';
 import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -12,12 +12,12 @@ import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/di
   styleUrls: ['./jasmarty12864Pages.component.less'],
 })
 export class Jasmarty12864PagesComponent implements OnInit {
-  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
+  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog, private ngxPhotoEditorService: NgxPhotoEditorService) {
 
   }
 
   public imageChangedEvent: any;
-  public base64: any;
+  imageoutput?: NgxCroppedEvent;
   public nKontrast: number = 256 / 2;
   public lcdDescription: Lcd12864PageDescription = {};
 
@@ -28,12 +28,17 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.loadLcdDescription();
   }
 
-  public fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
+  fileChangeHandler($event: any) {
+    this.ngxPhotoEditorService.open($event, {
+      aspectRatio: 4 / 3,
+      autoCropArea: 1
+    }).subscribe(data => {
+      this.imageoutput = data;
+    });
   }
 
-  public async imageCropped(event: CroppedEvent): Promise<void> {
-    this.base64 = event.base64;
+  public async imageCropped(event: NgxCroppedEvent): Promise<void> {
+    this.imageoutput.base64 = event.base64;
     // Vorbereiten des Speichers
     this.lcdDescription.staticData = new Array(64).fill(false).map(() => new Array(128).fill(false));
     await this.serviceWipf.delay(1000).then(() => {
@@ -42,9 +47,9 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public convertImgToArray(): void {
-    if (this.base64) {
+    if (this.imageoutput.base64) {
       const myimage = new Image();
-      myimage.src = this.base64;
+      myimage.src = this.imageoutput.base64;
 
       const cnx = document.createElement('canvas').getContext('2d');
 
@@ -146,20 +151,21 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   private loadLcdDescription(): void {
-    this.base64 = null;
-    this.rest.get('lcd12864/get/' + this.lcdDescription.id).then((res: Lcd12864PageDescription) => {
+    this.imageoutput = null;
+    this.rest.get('lcd12864/get/' + this.lcdDescription.id).then((res: any) => {
       this.lcdDescription = res;
 
       if (this.lcdDescription == null) {
         this.lcdDescription = {};
       }
 
-      if (!this.lcdDescription.dynamicData) {
+      if (res.lcdDescription.dynamicData?.empty) {
         this.lcdDescription.dynamicData = [];
       }
-      if (!this.lcdDescription.staticData) {
+      if (res.lcdDescription.staticData?.empty) {
         this.lcdDescription.staticData = [];
       }
+      console.log(this.lcdDescription);
     });
   }
 

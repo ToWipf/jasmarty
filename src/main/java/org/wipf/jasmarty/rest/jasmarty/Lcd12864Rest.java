@@ -56,8 +56,8 @@ public class Lcd12864Rest {
 
 	@GET
 	@Path("get/{id}")
-	public Response getPage(@PathParam("id") int nId) {
-		return Response.ok(lcd12864PageVerwaltung.load(nId)).build();
+	public LcdPageDescription getPage(@PathParam("id") int nId) {
+		return lcd12864PageVerwaltung.load(nId);
 	}
 
 	@POST

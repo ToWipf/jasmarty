@@ -134,6 +134,8 @@ import { CookieAddDialogComponent, CookieDialogComponent } from './components/_m
         ListeCryptComponentDialogComponent,
     ],
     imports: [
+        BrowserModule,
+        NgxPhotoEditorModule,
         NgxChartsModule,
         A11yModule, //TODO:?
         BrowserAnimationsModule,
