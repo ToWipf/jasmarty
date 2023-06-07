@@ -153,19 +153,17 @@ export class Jasmarty12864PagesComponent implements OnInit {
   private loadLcdDescription(): void {
     this.imageoutput = null;
     this.rest.get('lcd12864/get/' + this.lcdDescription.id).then((res: any) => {
-      this.lcdDescription = res;
-
-      if (this.lcdDescription == null) {
+      if (res == null) {
         this.lcdDescription = {};
+      } else {
+        if (res.dynamicData?.empty) {
+          res.dynamicData = [];
+        }
+        if (res.staticData?.empty) {
+          res.staticData = Array(64).fill(0).map(() => Array(128));
+        }
+        this.lcdDescription = res;
       }
-
-      if (res.lcdDescription.dynamicData?.empty) {
-        this.lcdDescription.dynamicData = [];
-      }
-      if (res.lcdDescription.staticData?.empty) {
-        this.lcdDescription.staticData = [];
-      }
-      console.log(this.lcdDescription);
     });
   }
 
