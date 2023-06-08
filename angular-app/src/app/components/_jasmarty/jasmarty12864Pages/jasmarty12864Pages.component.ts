@@ -128,25 +128,8 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   private saveLcdDescription(): void {
-    var tosave = {};
-    if (this.lcdDescription.id) {
-      tosave = {
-        id: this.lcdDescription.id,
-        name: this.lcdDescription.name,
-        dynamicData: this.lcdDescription.dynamicData.toString(),
-        staticData: this.lcdDescription.staticData.toString(),
-        timeoutTime: this.lcdDescription.timeoutTime
-      }
-    } else {
-      tosave = {
-        name: this.lcdDescription.name,
-        dynamicData: this.lcdDescription.dynamicData.toString(),
-        staticData: this.lcdDescription.staticData.toString(),
-        timeoutTime: this.lcdDescription.timeoutTime
-      }
-    }
-
-    this.rest.post('lcd12864/save', tosave).then((res) => {
+    this.rest.post('lcd12864/save', this.lcdDescription).then((resID) => {
+      this.lcdDescription.id = resID;
     });
   }
 
@@ -154,14 +137,27 @@ export class Jasmarty12864PagesComponent implements OnInit {
     this.imageoutput = null;
     this.rest.get('lcd12864/get/' + this.lcdDescription.id).then((res: any) => {
       if (res == null) {
+        // Neue leere Seite erstellen
         this.lcdDescription = {};
+        this.lcdDescription.timeoutTime = 1;
+        this.lcdDescription.name = "Neu";
+        this.lcdDescription.dynamicData = [];
+        this.lcdDescription.staticData = [];
       } else {
+        // Inhalte laden -> Json String convert
         if (res.dynamicData?.empty) {
           res.dynamicData = [];
+        } else if (res.dynamicData) {
+          //res.dynamicData = res.dynamicData.slice(1).slice(0, -1);
+          res.dynamicData = JSON.parse(res.dynamicData);
         }
         if (res.staticData?.empty) {
-          res.staticData = Array(64).fill(0).map(() => Array(128));
+          res.staticData = [];
+        } else if (res.staticData) {
+          res.staticData = JSON.parse(res.staticData);
+          //res.staticData = res.staticData.slice(1).slice(0, -1);
         }
+
         this.lcdDescription = res;
       }
       console.log(this.lcdDescription);

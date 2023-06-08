@@ -60,11 +60,16 @@ public class Lcd12864Rest {
 		return lcd12864PageVerwaltung.load(nId);
 	}
 
+	/**
+	 * Gibt die ID der Seite zurück
+	 * 
+	 * @param jnRoot
+	 * @return
+	 */
 	@POST
 	@Path("save")
-	public Response savePage(LcdPageDescription o) {
-		lcd12864PageVerwaltung.save(o);
-		return Response.ok().build();
+	public Integer savePage(String jnRoot) {
+		return lcd12864PageVerwaltung.save(jnRoot);
 	}
 
 	@DELETE

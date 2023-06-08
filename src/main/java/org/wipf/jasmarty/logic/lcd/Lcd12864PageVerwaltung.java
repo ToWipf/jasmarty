@@ -4,6 +4,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
 
 /**
@@ -25,13 +27,46 @@ public class Lcd12864PageVerwaltung {
 	 * @param page
 	 * 
 	 */
+//	@Transactional
+//	public void save(LcdPageDescription page) {
+//		page.dynamicData = page.dynamicData.toString();
+//		page.staticData = page.staticData.toString();
+//		// TODO statement.setString(4, page.getStatic().toString().replaceAll("true",
+//		// "1").replaceAll("false", "0")); // Speicherplatz
+//		page.saveOrUpdate();
+//	}
+
+	/**
+	 * Gibt die ID der Seite zurück
+	 * 
+	 * @param jnRoot
+	 */
 	@Transactional
-	public void save(LcdPageDescription page) {
-		page.dynamicData = page.dynamicData.toString();
-		page.staticData = page.staticData.toString();
-		// TODO statement.setString(4, page.getStatic().toString().replaceAll("true",
-		// "1").replaceAll("false", "0")); // Speicherplatz
+	public Integer save(String jnRoot) {
+		JSONObject jo = new JSONObject(jnRoot);
+		LcdPageDescription page = new LcdPageDescription();
+		if (jo.has("id")) {
+			page.id = jo.getInt("id");
+		}
+		page.name = jo.getString("name");
+		page.timeoutTime = jo.getInt("timeoutTime");
+
+		if (jo.has("staticData")) {
+			JSONArray sD = jo.getJSONArray("staticData");
+			if (!sD.isEmpty()) {
+				page.staticData = sD.toString();
+			}
+		}
+
+		if (jo.has("dynamicData")) {
+			JSONArray dD = jo.getJSONArray("dynamicData");
+			if (!dD.isEmpty()) {
+				page.dynamicData = dD.toString();
+			}
+		}
+
 		page.saveOrUpdate();
+		return page.id;
 	}
 
 	/**
