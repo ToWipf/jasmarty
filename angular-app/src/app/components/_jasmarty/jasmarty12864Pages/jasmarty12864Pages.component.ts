@@ -30,19 +30,15 @@ export class Jasmarty12864PagesComponent implements OnInit {
 
   fileChangeHandler($event: any) {
     this.ngxPhotoEditorService.open($event, {
-      aspectRatio: 4 / 3,
+      aspectRatio: 2 / 1,
+      resizeToHeight: 64,
       autoCropArea: 1
     }).subscribe(data => {
+      this.lcdDescription.staticData = new Array(64).fill(false).map(() => new Array(128).fill(false));
       this.imageoutput = data;
-    });
-  }
-
-  public async imageCropped(event: NgxCroppedEvent): Promise<void> {
-    this.imageoutput.base64 = event.base64;
-    // Vorbereiten des Speichers
-    this.lcdDescription.staticData = new Array(64).fill(false).map(() => new Array(128).fill(false));
-    await this.serviceWipf.delay(1000).then(() => {
-      this.convertImgToArray();
+      this.serviceWipf.delay(50).then(() => {
+        this.convertImgToArray();
+      });
     });
   }
 
@@ -148,14 +144,17 @@ export class Jasmarty12864PagesComponent implements OnInit {
         if (res.dynamicData?.empty) {
           res.dynamicData = [];
         } else if (res.dynamicData) {
-          //res.dynamicData = res.dynamicData.slice(1).slice(0, -1);
           res.dynamicData = JSON.parse(res.dynamicData);
+        } else {
+          res.dynamicData = [];
         }
+
         if (res.staticData?.empty) {
           res.staticData = [];
         } else if (res.staticData) {
           res.staticData = JSON.parse(res.staticData);
-          //res.staticData = res.staticData.slice(1).slice(0, -1);
+        } else {
+          res.staticData = [];
         }
 
         this.lcdDescription = res;
