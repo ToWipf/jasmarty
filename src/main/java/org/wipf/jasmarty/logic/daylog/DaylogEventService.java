@@ -1,6 +1,8 @@
 package org.wipf.jasmarty.logic.daylog;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -81,14 +83,19 @@ public class DaylogEventService {
 	 * @param sType
 	 * @return
 	 */
-	public LinkedHashSet<String> getTextBySearchAndType(String sSearch, String sType) {
+	public List<String> getTextBySearchAndType(String sSearch, String sType) {
 		LinkedHashSet<String> o = new LinkedHashSet<>();
 
+		// Um doppelte Eintrage zu filtern
 		for (DaylogEvent d : DaylogEvent.findByTypeANDText(sType, sSearch).list()) {
 			o.add(d.text);
 		}
 
-		return o;
+		// Sortieren nach länge
+		List<String> l = new ArrayList<String>(o);
+		l.sort(Comparator.comparingInt(String::length));
+
+		return l;
 	}
 
 }
