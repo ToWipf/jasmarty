@@ -30,18 +30,22 @@ public class MtttRest {
 	@Path("do")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMttt() {
-		// wipfConfig.setConfParam("discord_id", sId);
 		return Response.ok(mttt.getFullScreen()).build();
-		// return ;
+	}
+
+	@GET
+	@Path("testset")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response testset() {
+		mttt.doSetTest();
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("test")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMtttTest() {
-		// wipfConfig.setConfParam("discord_id", sId);
 		return Response.ok(mttt.getTestdata()).build();
-		// return ;
 	}
 
 }

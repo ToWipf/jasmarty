@@ -25,9 +25,9 @@ public class MtttCache {
 			for (int y = 0; y < MtttService.SIZE; y++) {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
-				this.cache[x][y].farbe_R = 1;
+				this.cache[x][y].farbe_R = 10;
 				this.cache[x][y].farbe_G = 10;
-				this.cache[x][y].farbe_B = 1;
+				this.cache[x][y].farbe_B = 0;
 			}
 		}
 	}

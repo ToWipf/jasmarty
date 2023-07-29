@@ -26,8 +26,11 @@ public class MtttService {
 	 * @param y
 	 */
 	public void doInput(int x, int y) {
+		System.out.println(x + " " + y);
 		mtttData v = this.mtttCache.getByXY(x, y);
-		v.farbe_B = 10;
+		v.farbe_R = 0;
+		v.farbe_G = 0;
+		v.farbe_B = 0;
 	}
 
 	/**
@@ -57,6 +60,13 @@ public class MtttService {
 		}
 		System.out.println("OUT");
 		return sb.toString();
+	}
+
+	/**
+	 * 
+	 */
+	public void doSetTest() {
+		doInput(wipf.getRandomInt(15), wipf.getRandomInt(15));
 	}
 
 }
