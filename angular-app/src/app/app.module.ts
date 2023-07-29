@@ -82,6 +82,7 @@ import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeList
 import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
 import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/_main/authKey/authKey.component';
 import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
+import { MtttComponent } from './components/mttt/mttt.component';
 
 @NgModule({
     declarations: [
@@ -127,6 +128,7 @@ import { CookieAddDialogComponent, CookieDialogComponent } from './components/_m
         CookieDialogComponent,
         CookieAddDialogComponent,
         MainmenueComponent,
+        MtttComponent,
         ListeComponent,
         ListeComponentDialogComponent,
         ListeTypeComponentDialogTypeListComponent,

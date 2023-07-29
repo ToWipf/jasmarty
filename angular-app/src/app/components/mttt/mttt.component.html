@@ -1,0 +1,7 @@
+<table>
+    <tr *ngFor="let xA of mtttData; let x = index">
+        <td *ngFor="let yA of xA; let y = index">
+            <button>{{x}} - {{y}}</button>
+        </td>
+    </tr>
+</table>

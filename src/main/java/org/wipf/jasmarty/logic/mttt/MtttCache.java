@@ -66,4 +66,11 @@ public class MtttCache {
 		return sb.toString();
 	}
 
+	/**
+	 * @return
+	 */
+	public mtttData[][] getCache() {
+		return cache;
+	}
+
 }

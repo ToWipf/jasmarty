@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.wipf.jasmarty.datatypes.mttt.mtttData;
+import org.wipf.jasmarty.logic.mttt.MtttCache;
 import org.wipf.jasmarty.logic.mttt.MtttService;
 
 /**
@@ -25,6 +27,8 @@ public class MtttRest {
 
 	@Inject
 	MtttService mttt;
+	@Inject
+	MtttCache cache;
 
 	@GET
 	@Path("do")
@@ -46,6 +50,20 @@ public class MtttRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMtttTest() {
 		return Response.ok(mttt.getTestdata()).build();
+	}
+
+	@GET
+	@Path("size")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Integer size() {
+		return MtttService.SIZE;
+	}
+
+	@GET
+	@Path("getCache")
+	@Produces(MediaType.APPLICATION_JSON)
+	public mtttData[][] getCache() {
+		return cache.getCache();
 	}
 
 }
