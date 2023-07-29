@@ -3,21 +3,43 @@ package org.wipf.jasmarty.logic.mttt;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.logic.base.Wipf;
 
 /**
- * @author devbuntu
+ * @author wipf
  *
  */
 @ApplicationScoped
 public class MtttService {
 
-	public static final Integer SIZE_X = 15;
-	public static final Integer SIZE_Y = 15;
+	public static final Integer SIZE = 15;
+
+	@Inject
+	MtttCache mtttCache;
 
 	@Inject
 	Wipf wipf;
 
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void doInput(int x, int y) {
+		mtttData v = this.mtttCache.getByXY(x, y);
+		v.farbe_B = 10;
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFullScreen() {
+		return this.mtttCache.toDataString();
+	}
+
+	/**
+	 * @return
+	 */
 	public String getTestdata() {
 		StringBuilder sb = new StringBuilder();
 
@@ -35,7 +57,6 @@ public class MtttService {
 		}
 		System.out.println("OUT");
 		return sb.toString();
-
 	}
 
 }
