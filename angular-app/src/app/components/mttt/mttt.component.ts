@@ -26,9 +26,9 @@ export class MtttComponent implements OnInit {
       // fix farben
       this.mtttData.forEach((da: MtttData[]) => {
         da.forEach((d: MtttData) => {
-
-          d.funktion = "L";
-
+          d.farbe_R = d.farbe_R * 2;
+          d.farbe_G = d.farbe_G * 2;
+          d.farbe_B = d.farbe_B * 2;
         });
       });
     });

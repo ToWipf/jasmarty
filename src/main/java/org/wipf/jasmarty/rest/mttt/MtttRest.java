@@ -13,6 +13,7 @@ import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.logic.mttt.MtttCache;
+import org.wipf.jasmarty.logic.mttt.MtttLogic;
 import org.wipf.jasmarty.logic.mttt.MtttService;
 
 /**
@@ -30,6 +31,8 @@ public class MtttRest {
 	MtttService mttt;
 	@Inject
 	MtttCache cache;
+	@Inject
+	MtttLogic logic;
 
 	@GET
 	@Path("do")
@@ -49,9 +52,11 @@ public class MtttRest {
 
 	@GET
 	@Path("test")
+	@PermitAll
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMtttTest() {
-		return Response.ok(mttt.getTestdata()).build();
+		logic.loadNewGame();
+		return Response.ok().build();
 	}
 
 	@GET

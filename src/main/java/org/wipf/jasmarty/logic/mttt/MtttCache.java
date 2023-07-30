@@ -25,9 +25,9 @@ public class MtttCache {
 			for (int y = 0; y < MtttService.SIZE; y++) {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
-				this.cache[x][y].farbe_R = 9;
-				this.cache[x][y].farbe_G = 20;
-				this.cache[x][y].farbe_B = 10;
+				this.cache[x][y].farbe_R = 1;
+				this.cache[x][y].farbe_G = 1;
+				this.cache[x][y].farbe_B = 1;
 			}
 		}
 	}
@@ -69,6 +69,13 @@ public class MtttCache {
 	/**
 	 * @return
 	 */
+	public mtttData[][] getCache() {
+		return cache;
+	}
+
+	/**
+	 * @return
+	 */
 	public mtttData[][] getCacheForApi() {
 
 //		for (mtttData[] x : this.cache) {
@@ -80,6 +87,38 @@ public class MtttCache {
 //		}
 
 		return cache;
+	}
+
+	public void drawLineH(int x0, int x1, int y, mtttData m) {
+		if (x1 > x0)
+			for (int x = x0; x <= x1; x++)
+				this.setPixel(x, y, m);
+		else
+			for (int x = x1; x <= x0; x++)
+				this.setPixel(x, y, m);
+	}
+
+	/**
+	 * @param x
+	 * @param y0
+	 * @param y1
+	 */
+	public void drawLineV(int x, int y0, int y1, mtttData m) {
+		if (y1 > y0)
+			for (int y = y0; y <= y1; y++)
+				this.setPixel(x, y, m);
+		else
+			for (int y = y1; y <= y0; y++)
+				this.setPixel(x, y, m);
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param pt
+	 */
+	public void setPixel(int x, int y, mtttData m) {
+		this.cache[x][y] = m;
 	}
 
 }
