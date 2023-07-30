@@ -84,32 +84,65 @@ public class MtttLogic {
 		this.cache.setPixel(14, 0, initSpieler);
 	}
 
-	private String convert3x3toFNR(Integer x, Integer y) {
-		int fXcord = 0;
-		if (x >= 1 && x <= 3) {
-			fXcord = 1;
-		}
-		if (x >= 4 && x <= 7) {
-			fXcord = 2;
-		}
-		if (x >= 9 && x <= 11) {
-			fXcord = 3;
+	/**
+	 * finde vom gesamtspiel ein unterspiel und davon die Koordinate als F Index
+	 * zurückgeben
+	 * 
+	 * @param x
+	 * @param y
+	 * @param letztesFeld
+	 * @return
+	 */
+	private String convert3x3toFNR(Integer x, Integer y, String letztesFeld) {
+		int nullpunktX = 0;
+		int nullpunktY = 0;
+		switch (letztesFeld) {
+		case "F1":
+			nullpunktX = 1;
+			nullpunktY = 1;
+			break;
+		case "F2":
+			nullpunktX = 1;
+			nullpunktY = 5;
+			break;
+		case "F3":
+			nullpunktX = 1;
+			nullpunktY = 9;
+			break;
+		case "F4":
+			nullpunktX = 5;
+			nullpunktY = 1;
+			break;
+		case "F5":
+			nullpunktX = 5;
+			nullpunktY = 5;
+			break;
+		case "F6":
+			nullpunktX = 5;
+			nullpunktY = 9;
+			break;
+		case "F7":
+			nullpunktX = 9;
+			nullpunktY = 1;
+			break;
+		case "F8":
+			nullpunktX = 9;
+			nullpunktY = 5;
+			break;
+		case "F9":
+			nullpunktX = 9;
+			nullpunktY = 9;
+			break;
+		default:
+			return "E";
 		}
 
-		int fYcord = 0;
-		if (y >= 1 && y <= 3) {
-			fXcord = 1;
-		}
-		if (y >= 4 && y <= 7) {
-			fXcord = 2;
-		}
-		if (y >= 9 && y <= 11) {
-			fXcord = 3;
-		}
+		int feldIdX = x - nullpunktX;
+		int feldIdY = y - nullpunktY;
 
-		int feldId = fXcord + fYcord * 3;
+		int nextFeldId = feldIdY + feldIdX * 3 + 1;
 
-		return "F" + feldId;
+		return "F" + nextFeldId;
 
 		// return "ALL";
 	}
@@ -124,7 +157,7 @@ public class MtttLogic {
 
 		// Nächstes Feld festlegen
 		// TOOD convert 3x3 Kord zu F NR
-		spieler.erlaubtesNaechstesFeld = convert3x3toFNR(x, y);
+		spieler.erlaubtesNaechstesFeld = convert3x3toFNR(x, y, spieler.letztesFeld);
 
 		if (spieler.werIstDran == mtttSpieler.werdran.SPIELER_X) {
 			spieler.werIstDran = mtttSpieler.werdran.SPIELER_Y;
