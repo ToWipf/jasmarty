@@ -51,9 +51,7 @@ public class MtttRest {
 	}
 
 	@GET
-	@Path("test")
-	@PermitAll
-	@Produces(MediaType.TEXT_PLAIN)
+	@Path("startMttt")
 	public Response doMtttTest() {
 		logic.loadNewGame();
 		return Response.ok().build();
@@ -63,7 +61,7 @@ public class MtttRest {
 	@Path("getCache")
 	@Produces(MediaType.APPLICATION_JSON)
 	public mtttData[][] getCache() {
-		return cache.getCacheForApi();
+		return cache.getCache();
 	}
 
 }

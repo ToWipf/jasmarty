@@ -12,7 +12,12 @@ import org.wipf.jasmarty.datatypes.mttt.mtttData;
 @ApplicationScoped
 public class MtttCache {
 
+	public enum modus_type {
+		MTTT, NONE
+	};
+
 	private mtttData[][] cache;
+	public modus_type modus;
 
 	/**
 	 * 
@@ -73,20 +78,16 @@ public class MtttCache {
 		return cache;
 	}
 
+	////////////////////////////////////////////////////////////////
+
 	/**
-	 * @return
+	 * @param x
+	 * @param y
+	 * @param pt
 	 */
-	public mtttData[][] getCacheForApi() {
+	public void setPixel(int x, int y, mtttData m) {
 
-//		for (mtttData[] x : this.cache) {
-//			for (mtttData y : x) {
-//				y.farbe_R = (int) (y.farbe_R);
-//				y.farbe_G = (int) (y.farbe_G);
-//				y.farbe_B = (int) (y.farbe_B);
-//			}
-//		}
-
-		return cache;
+		this.cache[x][y] = new mtttData(m);
 	}
 
 	public void drawLineH(int x0, int x1, int y, mtttData m) {
@@ -115,10 +116,18 @@ public class MtttCache {
 	/**
 	 * @param x
 	 * @param y
-	 * @param pt
+	 * @param w
+	 * @param h
 	 */
-	public void setPixel(int x, int y, mtttData m) {
-		this.cache[x][y] = m;
+	public void drawRectFill(int x, int y, int w, int h, mtttData m) {
+		if (x >= 128 || y >= 64)
+			return;
+		if (x + w >= 128)
+			w = 128 - x;
+		if (y + h >= 64)
+			h = 64 - y;
+		for (int i = y; i < y + h; i++)
+			drawLineH(x, x + w - 1, i, m);
 	}
 
 }

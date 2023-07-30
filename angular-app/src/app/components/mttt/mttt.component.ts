@@ -39,6 +39,12 @@ export class MtttComponent implements OnInit {
       this.getCache(); // TODO nur diff laden?
     });
   }
+
+  public startMttt() {
+    this.rest.get('mttt/startMttt').then((resdata: any) => {
+      this.getCache();
+    });
+  }
 }
 
 export interface MtttData {
