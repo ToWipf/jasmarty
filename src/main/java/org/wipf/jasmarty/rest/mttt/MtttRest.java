@@ -1,10 +1,12 @@
 package org.wipf.jasmarty.rest.mttt;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -20,8 +22,7 @@ import org.wipf.jasmarty.logic.mttt.MtttService;
 @Path("mttt")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
-//@RolesAllowed("admin")
-@PermitAll
+@RolesAllowed("admin")
 @ApplicationScoped
 public class MtttRest {
 
@@ -32,16 +33,17 @@ public class MtttRest {
 
 	@GET
 	@Path("do")
+	@PermitAll
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMttt() {
 		return Response.ok(mttt.getFullScreen()).build();
 	}
 
 	@GET
-	@Path("testset")
+	@Path("doClick/{x}/{y}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response testset() {
-		mttt.doSetTest();
+	public Response testset(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		mttt.doSet(x, y);
 		return Response.ok().build();
 	}
 
@@ -53,17 +55,10 @@ public class MtttRest {
 	}
 
 	@GET
-	@Path("size")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Integer size() {
-		return MtttService.SIZE;
-	}
-
-	@GET
 	@Path("getCache")
 	@Produces(MediaType.APPLICATION_JSON)
 	public mtttData[][] getCache() {
-		return cache.getCache();
+		return cache.getCacheForApi();
 	}
 
 }

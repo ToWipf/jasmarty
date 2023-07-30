@@ -17,26 +17,27 @@ export class MtttComponent implements OnInit {
   public mtttData: MtttData[][];
 
   ngOnInit(): void {
-    this.getSize();
     this.getCache();
-  }
-
-  public getSize(): void {
-    this.rest.get('mttt/size').then((resdata: Number) => {
-      this.size = resdata;
-    });
   }
 
   public getCache(): void {
     this.rest.get('mttt/getCache').then((resdata: MtttData[][]) => {
       this.mtttData = resdata;
-    });
-    // fix farben
-    // for (let x in this.mtttData){
-    //   for (let y in x){
+      // fix farben
+      this.mtttData.forEach((da: MtttData[]) => {
+        da.forEach((d: MtttData) => {
 
-    //   }
-    // }
+          d.funktion = "L";
+
+        });
+      });
+    });
+  }
+
+  public doClick(x: number, y: number) {
+    this.rest.get('mttt/doClick/' + x + "/" + y).then((resdata: any) => {
+      this.getCache(); // TODO nur diff laden?
+    });
   }
 }
 

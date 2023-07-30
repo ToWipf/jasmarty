@@ -6,9 +6,9 @@ package org.wipf.jasmarty.datatypes.mttt;
  */
 public class mtttData {
 
-	public char farbe_R = 0;
-	public char farbe_G = 0;
-	public char farbe_B = 0;
+	public int farbe_R = 0;
+	public int farbe_G = 0;
+	public int farbe_B = 0;
 	public String funktion = "";
 
 }

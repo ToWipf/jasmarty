@@ -25,9 +25,9 @@ public class MtttCache {
 			for (int y = 0; y < MtttService.SIZE; y++) {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
-				this.cache[x][y].farbe_R = 10;
-				this.cache[x][y].farbe_G = 10;
-				this.cache[x][y].farbe_B = 0;
+				this.cache[x][y].farbe_R = 9;
+				this.cache[x][y].farbe_G = 20;
+				this.cache[x][y].farbe_B = 10;
 			}
 		}
 	}
@@ -57,9 +57,9 @@ public class MtttCache {
 				mtttData val = getByXY(x, y);
 
 				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
-				sb.append(val.farbe_R);
-				sb.append(val.farbe_G);
-				sb.append(val.farbe_B);
+				sb.append((char) val.farbe_R);
+				sb.append((char) val.farbe_G);
+				sb.append((char) val.farbe_B);
 			}
 		}
 
@@ -69,7 +69,16 @@ public class MtttCache {
 	/**
 	 * @return
 	 */
-	public mtttData[][] getCache() {
+	public mtttData[][] getCacheForApi() {
+
+//		for (mtttData[] x : this.cache) {
+//			for (mtttData y : x) {
+//				y.farbe_R = (int) (y.farbe_R);
+//				y.farbe_G = (int) (y.farbe_G);
+//				y.farbe_B = (int) (y.farbe_B);
+//			}
+//		}
+
 		return cache;
 	}
 

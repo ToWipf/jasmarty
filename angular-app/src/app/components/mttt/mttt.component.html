@@ -1,7 +1,10 @@
 <table>
     <tr *ngFor="let xA of mtttData; let x = index">
-        <td *ngFor="let yA of xA; let y = index">
-            <button>{{x}} - {{y}}</button>
+        <td *ngFor="let yA of xA; let y = index" title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}">
+            <div class="led-box" (click)="doClick(x,y)">
+
+                {{mtttData[x][y].funktion}}
+            </div>
         </td>
     </tr>
 </table>

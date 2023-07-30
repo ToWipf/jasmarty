@@ -22,18 +22,6 @@ public class MtttService {
 	Wipf wipf;
 
 	/**
-	 * @param x
-	 * @param y
-	 */
-	public void doInput(int x, int y) {
-		System.out.println(x + " " + y);
-		mtttData v = this.mtttCache.getByXY(x, y);
-		v.farbe_R = 0;
-		v.farbe_G = 0;
-		v.farbe_B = 0;
-	}
-
-	/**
 	 * @return
 	 */
 	public String getFullScreen() {
@@ -65,8 +53,20 @@ public class MtttService {
 	/**
 	 * 
 	 */
-	public void doSetTest() {
-		doInput(wipf.getRandomInt(15), wipf.getRandomInt(15));
+	public void doSet(Integer x, Integer y) {
+		doInput(x, y);
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void doInput(int x, int y) {
+		System.out.println(x + " " + y);
+		mtttData v = this.mtttCache.getByXY(x, y);
+		v.farbe_R = wipf.getRandomInt(60);
+		v.farbe_G = wipf.getRandomInt(60);
+		v.farbe_B = wipf.getRandomInt(60);
 	}
 
 }
