@@ -193,7 +193,9 @@ public class MtttLogic {
 	}
 
 	/**
+	 * Markiern und endmarkieren
 	 * 
+	 * @param feld
 	 */
 	private void markiereFeld(String feld) {
 		int feldId = Integer.valueOf(feld.substring(1, 2));
@@ -203,7 +205,7 @@ public class MtttLogic {
 			for (mtttData y : x) {
 				if (y.funktion.startsWith("M")) {
 					y.setFarbe(farbe.SCHWARZ);
-					y.funktion = "F";
+					y.funktion = "F"; // Frei
 				}
 			}
 		}
@@ -213,7 +215,7 @@ public class MtttLogic {
 				mtttData m = this.cache.getByXY(x + nP.x, y + nP.y);
 				if (m.funktion.startsWith("F")) {
 					m.setFarbe(farbe.GELB);
-					m.funktion = "M";
+					m.funktion = "M"; // Markiert
 				}
 			}
 		}
