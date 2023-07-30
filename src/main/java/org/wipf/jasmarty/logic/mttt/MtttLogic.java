@@ -5,6 +5,7 @@ import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
+import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
 import org.wipf.jasmarty.datatypes.mttt.mtttSpieler;
 import org.wipf.jasmarty.logic.mttt.MtttCache.modus_type;
 
@@ -57,23 +58,16 @@ public class MtttLogic {
 
 		// Spielfelder
 		mtttData feld = new mtttData();
-		feld.funktion = "F1";
+		feld.funktion = "M"; // Alle Felder Markieren
+		feld.setFarbe(farbe.GELB);
 		this.cache.drawRectFill(1, 1, 3, 3, feld);
-		feld.funktion = "F2";
 		this.cache.drawRectFill(1, 5, 3, 3, feld);
-		feld.funktion = "F3";
 		this.cache.drawRectFill(1, 9, 3, 3, feld);
-		feld.funktion = "F4";
 		this.cache.drawRectFill(5, 1, 3, 3, feld);
-		feld.funktion = "F5";
 		this.cache.drawRectFill(5, 5, 3, 3, feld);
-		feld.funktion = "F6";
 		this.cache.drawRectFill(5, 9, 3, 3, feld);
-		feld.funktion = "F7";
 		this.cache.drawRectFill(9, 1, 3, 3, feld);
-		feld.funktion = "F8";
 		this.cache.drawRectFill(9, 5, 3, 3, feld);
-		feld.funktion = "F9";
 		this.cache.drawRectFill(9, 9, 3, 3, feld);
 
 		// Initialer Spieler
@@ -85,6 +79,92 @@ public class MtttLogic {
 	}
 
 	/**
+	 * Nullpunkt eines F Feldes von 1 bis 9 finden
+	 * 
+	 * @param feldID
+	 * @return
+	 */
+	private mtttPunkt getUnterfeldNullPunkt(int feldID) {
+		mtttPunkt mP = new mtttPunkt();
+		switch (feldID) {
+		case 1:
+			mP.x = 1;
+			mP.y = 1;
+			break;
+		case 2:
+			mP.x = 1;
+			mP.y = 5;
+			break;
+		case 3:
+			mP.x = 1;
+			mP.y = 9;
+			break;
+		case 4:
+			mP.x = 5;
+			mP.y = 1;
+			break;
+		case 5:
+			mP.x = 5;
+			mP.y = 5;
+			break;
+		case 6:
+			mP.x = 5;
+			mP.y = 9;
+			break;
+		case 7:
+			mP.x = 9;
+			mP.y = 1;
+			break;
+		case 8:
+			mP.x = 9;
+			mP.y = 5;
+			break;
+		case 9:
+			mP.x = 9;
+			mP.y = 9;
+			break;
+		default:
+			return null;
+		}
+		return mP;
+	}
+
+	/**
+	 * Rausfinden von welchen feld gekommen wird
+	 * 
+	 * @param x
+	 * @param y
+	 * @return
+	 */
+	private Integer getFeldIDVonBitKoord(Integer x, Integer y) {
+
+		int bigKordX = -1;
+		int bigKordY = -1;
+		if (x >= 1 && x <= 3) {
+			bigKordX = 0;
+		}
+		if (x >= 5 && x <= 7) {
+			bigKordX = 1;
+		}
+		if (x >= 9 && x <= 11) {
+			bigKordX = 2;
+		}
+
+		if (y >= 1 && y <= 3) {
+			bigKordY = 0;
+		}
+		if (y >= 5 && y <= 7) {
+			bigKordY = 1;
+		}
+		if (y >= 9 && y <= 11) {
+			bigKordY = 2;
+		}
+
+		return (bigKordY + bigKordX * 3 + 1);
+
+	}
+
+	/**
 	 * finde vom gesamtspiel ein unterspiel und davon die Koordinate als F Index
 	 * zurückgeben
 	 * 
@@ -93,58 +173,51 @@ public class MtttLogic {
 	 * @param letztesFeld
 	 * @return
 	 */
-	private String convert3x3toFNR(Integer x, Integer y, String letztesFeld) {
-		int nullpunktX = 0;
-		int nullpunktY = 0;
-		switch (letztesFeld) {
-		case "F1":
-			nullpunktX = 1;
-			nullpunktY = 1;
-			break;
-		case "F2":
-			nullpunktX = 1;
-			nullpunktY = 5;
-			break;
-		case "F3":
-			nullpunktX = 1;
-			nullpunktY = 9;
-			break;
-		case "F4":
-			nullpunktX = 5;
-			nullpunktY = 1;
-			break;
-		case "F5":
-			nullpunktX = 5;
-			nullpunktY = 5;
-			break;
-		case "F6":
-			nullpunktX = 5;
-			nullpunktY = 9;
-			break;
-		case "F7":
-			nullpunktX = 9;
-			nullpunktY = 1;
-			break;
-		case "F8":
-			nullpunktX = 9;
-			nullpunktY = 5;
-			break;
-		case "F9":
-			nullpunktX = 9;
-			nullpunktY = 9;
-			break;
-		default:
-			return "E";
-		}
+	private String getNextesFeldID(Integer x, Integer y) {
 
-		int feldIdX = x - nullpunktX;
-		int feldIdY = y - nullpunktY;
+		mtttPunkt nullpunkt = getUnterfeldNullPunkt(getFeldIDVonBitKoord(x, y));
+
+		int feldIdX = x - nullpunkt.x;
+		int feldIdY = y - nullpunkt.y;
 
 		int nextFeldId = feldIdY + feldIdX * 3 + 1;
 
-		return "F" + nextFeldId;
+		// Prüfen ob Spielfeld noch Setzbar ist, dazu einfach das erste Feld holen und
+		// "funktion" lesen
+		String feldstatus = this.cache.getByXY(nullpunkt.x, nullpunkt.y).funktion;
+		if (feldstatus.equals("U") || feldstatus.equals("GX") || feldstatus.equals("GY")) {
+			return "ALL";
+		}
 
-		// return "ALL";
+		return "F" + nextFeldId;
+	}
+
+	/**
+	 * 
+	 */
+	private void markiereFeld(String feld) {
+		int feldId = Integer.valueOf(feld.substring(1, 2));
+		mtttPunkt nP = getUnterfeldNullPunkt(feldId);
+		// Alte Markierungen löschen
+		for (mtttData[] x : this.cache.getCache()) {
+			for (mtttData y : x) {
+				if (y.funktion.startsWith("M")) {
+					y.setFarbe(farbe.SCHWARZ);
+					y.funktion = "F";
+				}
+			}
+		}
+
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
+				mtttData m = this.cache.getByXY(x + nP.x, y + nP.y);
+				if (m.funktion.startsWith("F")) {
+					m.setFarbe(farbe.GELB);
+					m.funktion = "M";
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -157,7 +230,9 @@ public class MtttLogic {
 
 		// Nächstes Feld festlegen
 		// TOOD convert 3x3 Kord zu F NR
-		spieler.erlaubtesNaechstesFeld = convert3x3toFNR(x, y, spieler.letztesFeld);
+		spieler.erlaubtesNaechstesFeld = getNextesFeldID(x, y);
+		// Mögliche Felder für Spieler markieren
+		markiereFeld(spieler.erlaubtesNaechstesFeld);
 
 		if (spieler.werIstDran == mtttSpieler.werdran.SPIELER_X) {
 			spieler.werIstDran = mtttSpieler.werdran.SPIELER_Y;
@@ -180,8 +255,9 @@ public class MtttLogic {
 	 */
 	public void doSet(Integer x, Integer y) {
 		mtttData m = cache.getByXY(x, y);
-
-		if (spieler.erlaubtesNaechstesFeld.equals("ALL") || spieler.erlaubtesNaechstesFeld.equals(m.funktion)) {
+		// if (spieler.erlaubtesNaechstesFeld.equals("ALL") ||
+		// spieler.erlaubtesNaechstesFeld.equals(m.funktion)) {
+		if (m.funktion.equals("M")) {
 			setzeFeldUndWechselSpieler(x, y);
 		}
 

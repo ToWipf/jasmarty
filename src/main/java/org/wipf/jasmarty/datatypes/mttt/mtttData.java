@@ -12,7 +12,7 @@ public class mtttData {
 	public String funktion = "";
 
 	public enum farbe {
-		ROT, GRUEN, BLAU, GRAU
+		ROT, GRUEN, BLAU, GRAU, GELB, SCHWARZ
 	};
 
 	public mtttData() {
@@ -53,6 +53,16 @@ public class mtttData {
 			farbe_R = 60;
 			farbe_G = 60;
 			farbe_B = 60;
+			break;
+		case GELB:
+			farbe_R = 30;
+			farbe_G = 30;
+			farbe_B = 60;
+			break;
+		case SCHWARZ:
+			farbe_R = 0;
+			farbe_G = 0;
+			farbe_B = 0;
 			break;
 
 		default:
