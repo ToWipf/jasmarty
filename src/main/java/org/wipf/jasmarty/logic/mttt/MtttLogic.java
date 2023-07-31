@@ -278,15 +278,16 @@ public class MtttLogic {
 	private Integer getNextesFeldID(Integer x, Integer y) {
 
 		mtttPunkt nullpunkt = getUnterfeldNullPunkt(getFeldIDVonBitKoord(x, y));
-
 		int feldIdX = x - nullpunkt.x;
 		int feldIdY = y - nullpunkt.y;
-
 		int nextFeldId = feldIdY + feldIdX * 3 + 1;
+
+		// Zielfeld prüfen
+		mtttPunkt npZiel = getUnterfeldNullPunkt(nextFeldId);
 
 		// Prüfen ob Spielfeld noch Setzbar ist, dazu einfach das erste Feld holen und
 		// "funktion" lesen
-		String feldstatus = this.cache.getByXY(nullpunkt.x, nullpunkt.y).funktion;
+		String feldstatus = this.cache.getByXY(npZiel.x, npZiel.y).funktion;
 		if (feldstatus.equals("U") || feldstatus.equals("GX") || feldstatus.equals("GY")) {
 			return 0; // 0 = ALLE
 		}
