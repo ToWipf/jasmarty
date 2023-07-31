@@ -168,7 +168,7 @@ public class MtttLogic {
 	 * true wenn entschieden
 	 * 
 	 * @param feldId
-	 * @return
+	 * @return TODO brauchs nicht
 	 */
 	private boolean pruefeUnterfeld(Integer feldId) {
 		mtttPunkt np = getUnterfeldNullPunkt(feldId);
@@ -184,7 +184,7 @@ public class MtttLogic {
 		tttFeld[2][1] = this.cache.getByXY(2 + np.x, 1 + np.y);
 		tttFeld[2][2] = this.cache.getByXY(2 + np.x, 2 + np.y);
 
-		switch (doUnterfeldAuswertung(tttFeld)) {
+		switch (doFeldAuswertung(tttFeld)) {
 		case "X":
 			mtttData mx = new mtttData();
 			mx.setFarbe(farbe.ROT);
@@ -231,7 +231,13 @@ public class MtttLogic {
 		return false;
 	}
 
-	private String doUnterfeldAuswertung(mtttData[][] tttFeld) {
+	/**
+	 * Feldauswertung einen [][], unterspiel oder gesamt
+	 * 
+	 * @param tttFeld
+	 * @return X, Y, U, ''
+	 */
+	private String doFeldAuswertung(mtttData[][] tttFeld) {
 
 		// Gewonnen?
 		for (int x = 0; x < 3; x++) {
@@ -254,7 +260,7 @@ public class MtttLogic {
 		int n = 0;
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
-				if (tttFeld[x][y].funktion.equals("X") || tttFeld[x][y].funktion.equals("Y")) {
+				if (!tttFeld[x][y].funktion.equals("F")) {
 					n++;
 					if (n == 9) {
 						return "U";
@@ -296,12 +302,9 @@ public class MtttLogic {
 	}
 
 	/**
-	 * Markiern und endmarkieren
-	 * 
-	 * @param feld
+	 * Alle Markierungen löschen
 	 */
-	private void markiereFeld(Integer feldId) {
-		// Alte Markierungen löschen
+	private void deMarkiereAlles() {
 		for (mtttData[] x : this.cache.getCache()) {
 			for (mtttData y : x) {
 				if (y.funktion.startsWith("M")) {
@@ -310,6 +313,14 @@ public class MtttLogic {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Markiern und endmarkieren
+	 * 
+	 * @param feld
+	 */
+	private void markiereFeld(Integer feldId) {
 
 		if (feldId == 0) {
 			// Freie auswahl - Alles Markieren
@@ -340,18 +351,51 @@ public class MtttLogic {
 	 * 
 	 * @return
 	 */
-	private boolean pruefeUnterfelderGewinne() {
-		int fertigeFelder = 0;
+	private void pruefeUnterfelderGewinne() {
+
 		for (int i = 0; i < 9; i++) {
-			if (pruefeUnterfeld(i + 1)) {
-				fertigeFelder++;
-			}
+			pruefeUnterfeld(i + 1);
 		}
-		return (fertigeFelder == 9);
+
 	}
 
-	private String pruefeGesamtsieg() {
-		return "TODO"; // TODO HIER
+	/**
+	 * prüfen und LED im Eck schalten
+	 */
+	private boolean pruefeGesamtsieg() {
+		mtttData[][] tttFull = new mtttData[3][3];
+
+		tttFull[0][0] = this.cache.getByXY(1, 1);
+		tttFull[0][1] = this.cache.getByXY(1, 5);
+		tttFull[0][2] = this.cache.getByXY(1, 9);
+		tttFull[1][0] = this.cache.getByXY(5, 1);
+		tttFull[1][1] = this.cache.getByXY(5, 5);
+		tttFull[1][2] = this.cache.getByXY(5, 9);
+		tttFull[2][0] = this.cache.getByXY(9, 1);
+		tttFull[2][1] = this.cache.getByXY(9, 5);
+		tttFull[2][2] = this.cache.getByXY(9, 9);
+
+		mtttData mStatusPixel = new mtttData();
+		switch (doFeldAuswertung(tttFull)) {
+		case "GX":
+			mStatusPixel.setFarbe(farbe.ROT);
+			mStatusPixel.funktion = "GGX";
+			break;
+		case "GY":
+			mStatusPixel.setFarbe(farbe.GRUEN);
+			mStatusPixel.funktion = "GGY";
+			break;
+		case "U":
+			mStatusPixel.setFarbe(farbe.BLAU);
+			mStatusPixel.funktion = "GGU";
+			break;
+		default:
+			mStatusPixel.setFarbe(farbe.SCHWARZ);
+			mStatusPixel.funktion = "W"; // Weiter
+			break;
+		}
+		this.cache.setByXY(14, 14, mStatusPixel);
+		return mStatusPixel.funktion.equals("W");
 	}
 
 	/**
@@ -361,6 +405,7 @@ public class MtttLogic {
 		mtttData werd = new mtttData();
 		mtttData feld = cache.getByXY(x, y);
 		spieler.letztesFeld = feld.funktion; // F Nummer speichern
+		deMarkiereAlles();
 
 		// Nächstes Feld festlegen
 		// TODO convert 3x3 Kord zu F NR
@@ -379,12 +424,14 @@ public class MtttLogic {
 
 		this.cache.setPixel(14, 0, werd);
 
-		if (pruefeUnterfelderGewinne()) {
-			pruefeGesamtsieg();
+		pruefeUnterfelderGewinne();
+		if (pruefeGesamtsieg()) {
+			// Mögliche Felder für Spieler markieren
+			markiereFeld(getNextesFeldID(x, y));
+		} else {
+			// Spiel Vorbei
 		}
 
-		// Mögliche Felder für Spieler markieren
-		markiereFeld(getNextesFeldID(x, y));
 	}
 
 	/**
