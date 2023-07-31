@@ -166,10 +166,10 @@ public class MtttLogic {
 
 	/**
 	 * 
-	 * true wenn entschieden
+	 * true wenn komplett entschieden
 	 * 
 	 * @param feldId
-	 * @return TODO brauchs nicht
+	 * @return true wenn gesammtsieg - nicht untersieg
 	 */
 	private boolean pruefeUnterfeld(Integer feldId) {
 		mtttPunkt np = getUnterfeldNullPunkt(feldId);
@@ -190,32 +190,36 @@ public class MtttLogic {
 			mtttData mx = new mtttData();
 			mx.setFarbe(farbe.ROT);
 			mx.funktion = "GX";
-			sezteUnterfeldAuswertungsFarbe(feldId, mx);
-			return true;
+			return sezteUnterfeldAuswertungsFarbe(feldId, mx);
 		case "Y":
 			mtttData my = new mtttData();
 			my.setFarbe(farbe.GRUEN);
 			my.funktion = "GY";
-			sezteUnterfeldAuswertungsFarbe(feldId, my);
-			return true;
+			return sezteUnterfeldAuswertungsFarbe(feldId, my);
 		case "U":
 			mtttData mu = new mtttData();
 			mu.setFarbe(farbe.BLAU);
 			mu.funktion = "U";
-			sezteUnterfeldAuswertungsFarbe(feldId, mu);
-			return true;
+			return sezteUnterfeldAuswertungsFarbe(feldId, mu);
 		default:
 			return false;
 		}
 	}
 
-	private void sezteUnterfeldAuswertungsFarbe(int feldId, mtttData m) {
+	/**
+	 * Eines der Unterfelder wurde entschieden
+	 * 
+	 * @param feldId
+	 * @param m
+	 */
+	private boolean sezteUnterfeldAuswertungsFarbe(int feldId, mtttData m) {
 		mtttPunkt np = getUnterfeldNullPunkt(feldId);
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
 				this.cache.setByXY(x + np.x, y + np.y, m);
 			}
 		}
+		return pruefeGesamtsieg();
 	}
 
 	/**
@@ -351,12 +355,13 @@ public class MtttLogic {
 	 * 
 	 * @return
 	 */
-	private void pruefeUnterfelderGewinne() {
-
+	private boolean pruefeGewinne() {
 		for (int i = 0; i < 9; i++) {
-			pruefeUnterfeld(i + 1);
+			if (pruefeUnterfeld(i + 1)) {
+				return true;
+			}
 		}
-
+		return false;
 	}
 
 	/**
@@ -376,6 +381,7 @@ public class MtttLogic {
 		tttFull[2][2] = this.cache.getByXY(9, 9);
 
 		mtttData mStatusPixel = new mtttData();
+		System.out.println(doFeldAuswertung(tttFull));
 		switch (doFeldAuswertung(tttFull)) {
 		case "GX":
 			mStatusPixel.setFarbe(farbe.ROT);
@@ -395,7 +401,7 @@ public class MtttLogic {
 			break;
 		}
 		this.cache.setByXY(14, 14, mStatusPixel);
-		return mStatusPixel.funktion.equals("W");
+		return !mStatusPixel.funktion.equals("W");
 	}
 
 	/**
@@ -423,11 +429,12 @@ public class MtttLogic {
 
 		this.cache.setPixel(14, 0, werd);
 
-		pruefeUnterfelderGewinne();
-		if (pruefeGesamtsieg()) {
+		if (!pruefeGewinne()) {
+			System.out.println("weiter");
 			// Mögliche Felder für Spieler markieren
 			markiereFeld(getNextesFeldID(x, y));
 		} else {
+			System.out.println("Spiel Vorbei");
 			// Spiel Vorbei
 		}
 
