@@ -6,7 +6,6 @@ import javax.inject.Inject;
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
 import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
-import org.wipf.jasmarty.datatypes.mttt.mtttSpieler;
 import org.wipf.jasmarty.logic.mttt.MtttCache.modus_type;
 
 @ApplicationScoped
@@ -15,10 +14,13 @@ public class MtttLogic {
 	@Inject
 	MtttCache cache;
 
-	public mtttSpieler spieler;
+	public enum werdran {
+		SPIELER_X, SPIELER_Y
+	};
+
+	public werdran werIstDran;
 
 	public void loadNewGame() {
-		spieler = new mtttSpieler();
 		cache.modus = modus_type.MTTT;
 
 		// Alle zurücksetzen
@@ -73,8 +75,7 @@ public class MtttLogic {
 		// Initialer Spieler
 		mtttData initSpieler = new mtttData();
 		initSpieler.setFarbe(farbe.ROT);
-		spieler.werIstDran = mtttSpieler.werdran.SPIELER_X;
-		spieler.erlaubtesNaechstesFeld = "ALL";
+		werIstDran = werdran.SPIELER_X;
 		this.cache.setPixel(14, 0, initSpieler);
 	}
 
@@ -278,7 +279,6 @@ public class MtttLogic {
 	 * 
 	 * @param x
 	 * @param y
-	 * @param letztesFeld
 	 * @return
 	 */
 	private Integer getNextesFeldID(Integer x, Integer y) {
@@ -404,19 +404,18 @@ public class MtttLogic {
 	public void setzeFeldUndWechselSpieler(Integer x, Integer y) {
 		mtttData werd = new mtttData();
 		mtttData feld = cache.getByXY(x, y);
-		spieler.letztesFeld = feld.funktion; // F Nummer speichern
 		deMarkiereAlles();
 
 		// Nächstes Feld festlegen
 		// TODO convert 3x3 Kord zu F NR
 
-		if (spieler.werIstDran == mtttSpieler.werdran.SPIELER_X) {
-			spieler.werIstDran = mtttSpieler.werdran.SPIELER_Y;
+		if (werIstDran == werdran.SPIELER_X) {
+			werIstDran = werdran.SPIELER_Y;
 			feld.setFarbe(farbe.ROT);
 			feld.funktion = "X";
 			werd.setFarbe(farbe.GRUEN);
 		} else {
-			spieler.werIstDran = mtttSpieler.werdran.SPIELER_X;
+			werIstDran = werdran.SPIELER_X;
 			feld.setFarbe(farbe.GRUEN);
 			feld.funktion = "Y";
 			werd.setFarbe(farbe.ROT);
