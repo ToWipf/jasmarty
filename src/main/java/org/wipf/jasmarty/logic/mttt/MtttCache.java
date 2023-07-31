@@ -50,6 +50,15 @@ public class MtttCache {
 	}
 
 	/**
+	 * @param x
+	 * @param y
+	 * @param m
+	 */
+	public void setByXY(int x, int y, mtttData m) {
+		this.cache[x][y] = m;
+	}
+
+	/**
 	 * @return
 	 */
 	public String toDataString() {

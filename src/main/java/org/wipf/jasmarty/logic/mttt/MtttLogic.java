@@ -161,7 +161,109 @@ public class MtttLogic {
 		}
 
 		return (bigKordY + bigKordX * 3 + 1);
+	}
 
+	/**
+	 * 
+	 * true wenn entschieden
+	 * 
+	 * @param feldId
+	 * @return
+	 */
+	private boolean pruefeUnterfeld(Integer feldId) {
+		mtttPunkt np = getUnterfeldNullPunkt(feldId);
+		mtttData[][] tttFeld = new mtttData[3][3];
+
+		tttFeld[0][0] = this.cache.getByXY(0 + np.x, 0 + np.y);
+		tttFeld[0][1] = this.cache.getByXY(0 + np.x, 1 + np.y);
+		tttFeld[0][2] = this.cache.getByXY(0 + np.x, 2 + np.y);
+		tttFeld[1][0] = this.cache.getByXY(1 + np.x, 0 + np.y);
+		tttFeld[1][1] = this.cache.getByXY(1 + np.x, 1 + np.y);
+		tttFeld[1][2] = this.cache.getByXY(1 + np.x, 2 + np.y);
+		tttFeld[2][0] = this.cache.getByXY(2 + np.x, 0 + np.y);
+		tttFeld[2][1] = this.cache.getByXY(2 + np.x, 1 + np.y);
+		tttFeld[2][2] = this.cache.getByXY(2 + np.x, 2 + np.y);
+
+		switch (doUnterfeldAuswertung(tttFeld)) {
+		case "X":
+			mtttData mx = new mtttData();
+			mx.setFarbe(farbe.ROT);
+			mx.funktion = "GX";
+			sezteUnterfeldAuswertungsFarbe(feldId, mx);
+			return true;
+		case "Y":
+			mtttData my = new mtttData();
+			my.setFarbe(farbe.GRUEN);
+			my.funktion = "GY";
+			sezteUnterfeldAuswertungsFarbe(feldId, my);
+			return true;
+		case "U":
+			mtttData mu = new mtttData();
+			mu.setFarbe(farbe.BLAU);
+			mu.funktion = "U";
+			sezteUnterfeldAuswertungsFarbe(feldId, mu);
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	private void sezteUnterfeldAuswertungsFarbe(int feldId, mtttData m) {
+		mtttPunkt np = getUnterfeldNullPunkt(feldId);
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
+				this.cache.setByXY(x + np.x, y + np.y, m);
+			}
+		}
+	}
+
+	/**
+	 * true wenn X und X oder Y und Y
+	 * 
+	 * @param A
+	 * @param B
+	 * @return
+	 */
+	private boolean vergleicheUnterspielFeld(mtttData A, mtttData B) {
+		if (!A.funktion.equals("F") && !A.funktion.equals("M")) {
+			return (A.funktion.equals(B.funktion));
+		}
+		return false;
+	}
+
+	private String doUnterfeldAuswertung(mtttData[][] tttFeld) {
+
+		// Gewonnen?
+		for (int x = 0; x < 3; x++) {
+			if (vergleicheUnterspielFeld(tttFeld[x][0], tttFeld[x][1]) && vergleicheUnterspielFeld(tttFeld[x][0], (tttFeld[x][2]))) {
+				return tttFeld[x][0].funktion;
+			}
+		}
+		for (int y = 0; y < 3; y++) {
+			if (vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[1][y]) && vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[2][y])) {
+				return tttFeld[0][y].funktion;
+			}
+		}
+		if (vergleicheUnterspielFeld(tttFeld[0][0], tttFeld[1][1]) && vergleicheUnterspielFeld(tttFeld[0][0], (tttFeld[2][2]))) {
+			return tttFeld[0][0].funktion;
+		}
+		if (vergleicheUnterspielFeld(tttFeld[0][2], tttFeld[1][1]) && vergleicheUnterspielFeld(tttFeld[0][2], (tttFeld[2][0]))) {
+			return tttFeld[0][2].funktion;
+		}
+		// Unentschieden testen (Zählen ob voll ist)
+		int n = 0;
+		for (int x = 0; x < 3; x++) {
+			for (int y = 0; y < 3; y++) {
+				if (tttFeld[x][y].funktion.equals("X") || tttFeld[x][y].funktion.equals("Y")) {
+					n++;
+					if (n == 9) {
+						return "U";
+					}
+				}
+			}
+		}
+		// Spiel läuft noch
+		return "";
 	}
 
 	/**
@@ -173,7 +275,7 @@ public class MtttLogic {
 	 * @param letztesFeld
 	 * @return
 	 */
-	private String getNextesFeldID(Integer x, Integer y) {
+	private Integer getNextesFeldID(Integer x, Integer y) {
 
 		mtttPunkt nullpunkt = getUnterfeldNullPunkt(getFeldIDVonBitKoord(x, y));
 
@@ -186,10 +288,10 @@ public class MtttLogic {
 		// "funktion" lesen
 		String feldstatus = this.cache.getByXY(nullpunkt.x, nullpunkt.y).funktion;
 		if (feldstatus.equals("U") || feldstatus.equals("GX") || feldstatus.equals("GY")) {
-			return "ALL";
+			return 0; // 0 = ALLE
 		}
 
-		return "F" + nextFeldId;
+		return nextFeldId;
 	}
 
 	/**
@@ -197,9 +299,7 @@ public class MtttLogic {
 	 * 
 	 * @param feld
 	 */
-	private void markiereFeld(String feld) {
-		int feldId = Integer.valueOf(feld.substring(1, 2));
-		mtttPunkt nP = getUnterfeldNullPunkt(feldId);
+	private void markiereFeld(Integer feldId) {
 		// Alte Markierungen löschen
 		for (mtttData[] x : this.cache.getCache()) {
 			for (mtttData y : x) {
@@ -210,6 +310,19 @@ public class MtttLogic {
 			}
 		}
 
+		if (feldId == 0) {
+			// Freie auswahl - Alles Markieren
+			for (int i = 0; i < 9; i++) {
+				markiereUnterfeldIDGelb(i + 1);
+			}
+		} else {
+			markiereUnterfeldIDGelb(feldId);
+		}
+
+	}
+
+	private void markiereUnterfeldIDGelb(int feldId) {
+		mtttPunkt nP = getUnterfeldNullPunkt(feldId);
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
 				mtttData m = this.cache.getByXY(x + nP.x, y + nP.y);
@@ -219,7 +332,25 @@ public class MtttLogic {
 				}
 			}
 		}
+	}
 
+	/**
+	 * True wenn alles ausgespielt ist
+	 * 
+	 * @return
+	 */
+	private boolean pruefeUnterfelderGewinne() {
+		int fertigeFelder = 0;
+		for (int i = 0; i < 9; i++) {
+			if (pruefeUnterfeld(i + 1)) {
+				fertigeFelder++;
+			}
+		}
+		return (fertigeFelder == 9);
+	}
+
+	private String pruefeGesamtsieg() {
+		return "TODO"; // TODO HIER
 	}
 
 	/**
@@ -231,10 +362,7 @@ public class MtttLogic {
 		spieler.letztesFeld = feld.funktion; // F Nummer speichern
 
 		// Nächstes Feld festlegen
-		// TOOD convert 3x3 Kord zu F NR
-		spieler.erlaubtesNaechstesFeld = getNextesFeldID(x, y);
-		// Mögliche Felder für Spieler markieren
-		markiereFeld(spieler.erlaubtesNaechstesFeld);
+		// TODO convert 3x3 Kord zu F NR
 
 		if (spieler.werIstDran == mtttSpieler.werdran.SPIELER_X) {
 			spieler.werIstDran = mtttSpieler.werdran.SPIELER_Y;
@@ -249,6 +377,13 @@ public class MtttLogic {
 		}
 
 		this.cache.setPixel(14, 0, werd);
+
+		if (pruefeUnterfelderGewinne()) {
+			pruefeGesamtsieg();
+		}
+
+		// Mögliche Felder für Spieler markieren
+		markiereFeld(getNextesFeldID(x, y));
 	}
 
 	/**
