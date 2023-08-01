@@ -92,13 +92,18 @@ public class MtttCache {
 	/**
 	 * @param x
 	 * @param y
-	 * @param pt
+	 * @param m
 	 */
 	public void setPixel(int x, int y, mtttData m) {
-
 		this.cache[x][y] = new mtttData(m);
 	}
 
+	/**
+	 * @param x0
+	 * @param x1
+	 * @param y
+	 * @param m
+	 */
 	public void drawLineH(int x0, int x1, int y, mtttData m) {
 		if (x1 > x0)
 			for (int x = x0; x <= x1; x++)
@@ -112,6 +117,7 @@ public class MtttCache {
 	 * @param x
 	 * @param y0
 	 * @param y1
+	 * @param m
 	 */
 	public void drawLineV(int x, int y0, int y1, mtttData m) {
 		if (y1 > y0)
@@ -127,6 +133,7 @@ public class MtttCache {
 	 * @param y
 	 * @param w
 	 * @param h
+	 * @param m
 	 */
 	public void drawRectFill(int x, int y, int w, int h, mtttData m) {
 		if (x >= 128 || y >= 64)

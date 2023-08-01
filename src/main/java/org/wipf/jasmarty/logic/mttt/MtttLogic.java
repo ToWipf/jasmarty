@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.mttt;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
 import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
@@ -18,8 +19,13 @@ public class MtttLogic {
 		SPIELER_X, SPIELER_Y
 	};
 
+	private static final Logger LOGGER = Logger.getLogger("MTTT");
+
 	public werdran werIstDran;
 
+	/**
+	 * 
+	 */
 	public void loadNewGame() {
 		cache.modus = modus_type.MTTT;
 
@@ -77,6 +83,25 @@ public class MtttLogic {
 		initSpieler.setFarbe(farbe.ROT);
 		werIstDran = werdran.SPIELER_X;
 		this.cache.setPixel(14, 0, initSpieler);
+	}
+
+	/**
+	 * @param x
+	 * @param y
+	 */
+	public void doSet(Integer x, Integer y) {
+		switch (cache.getByXY(x, y).funktion) {
+		case "M":
+			setzeFeldUndWechselSpieler(x, y);
+			break;
+		case "W":
+		case "GGX":
+		case "GGY":
+		case "GGU":
+			loadNewGame();
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -325,7 +350,6 @@ public class MtttLogic {
 	 * @param feld
 	 */
 	private void markiereFeld(Integer feldId) {
-
 		if (feldId == 0) {
 			// Freie auswahl - Alles Markieren
 			for (int i = 0; i < 9; i++) {
@@ -405,15 +429,13 @@ public class MtttLogic {
 	}
 
 	/**
-	 * 
+	 * die "Main"
 	 */
-	public void setzeFeldUndWechselSpieler(Integer x, Integer y) {
+	private void setzeFeldUndWechselSpieler(Integer x, Integer y) {
+		LOGGER.info(x + "-" + y);
 		mtttData werd = new mtttData();
 		mtttData feld = cache.getByXY(x, y);
 		deMarkiereAlles();
-
-		// Nächstes Feld festlegen
-		// TODO convert 3x3 Kord zu F NR
 
 		if (werIstDran == werdran.SPIELER_X) {
 			werIstDran = werdran.SPIELER_Y;
@@ -430,26 +452,10 @@ public class MtttLogic {
 		this.cache.setPixel(14, 0, werd);
 
 		if (!pruefeGewinne()) {
-			System.out.println("weiter");
 			// Mögliche Felder für Spieler markieren
 			markiereFeld(getNextesFeldID(x, y));
 		} else {
-			System.out.println("Spiel Vorbei");
-			// Spiel Vorbei
-		}
-
-	}
-
-	/**
-	 * @param x
-	 * @param y
-	 */
-	public void doSet(Integer x, Integer y) {
-		mtttData m = cache.getByXY(x, y);
-		// if (spieler.erlaubtesNaechstesFeld.equals("ALL") ||
-		// spieler.erlaubtesNaechstesFeld.equals(m.funktion)) {
-		if (m.funktion.equals("M")) {
-			setzeFeldUndWechselSpieler(x, y);
+			LOGGER.info("Spiel vorbei");
 		}
 
 	}
