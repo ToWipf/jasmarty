@@ -405,7 +405,6 @@ public class MtttLogic {
 		tttFull[2][2] = this.cache.getByXY(9, 9);
 
 		mtttData mStatusPixel = new mtttData();
-		System.out.println(doFeldAuswertung(tttFull));
 		switch (doFeldAuswertung(tttFull)) {
 		case "GX":
 			mStatusPixel.setFarbe(farbe.ROT);
@@ -425,7 +424,7 @@ public class MtttLogic {
 			break;
 		}
 		this.cache.setByXY(14, 14, mStatusPixel);
-		return !mStatusPixel.funktion.equals("W");
+		return !(mStatusPixel.funktion.equals("W") || mStatusPixel.funktion.equals("GGU"));
 	}
 
 	/**
