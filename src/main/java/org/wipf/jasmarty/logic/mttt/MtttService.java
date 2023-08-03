@@ -27,7 +27,30 @@ public class MtttService {
 	 * @return
 	 */
 	public String getFullScreen() {
-		return this.cache.toDataString();
+
+		StringBuilder sb = new StringBuilder();
+
+		boolean inverntLine = true;
+		for (int x = 0; x < MtttService.SIZE; x++) {
+			inverntLine = !inverntLine;
+			for (int y = 0; y < MtttService.SIZE; y++) {
+				int koordinatenIndex = (y + x * MtttService.SIZE);
+				if (inverntLine) {
+					koordinatenIndex = koordinatenIndex + MtttService.SIZE + 1 - y - y - 2;
+					System.out.println(koordinatenIndex);
+				}
+
+				mtttData val = cache.getByXY(x, y);
+
+				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
+				sb.append((char) val.farbe_R);
+				sb.append((char) val.farbe_G);
+				sb.append((char) val.farbe_B);
+			}
+		}
+
+		return sb.toString();
+
 	}
 
 	/**
@@ -37,7 +60,7 @@ public class MtttService {
 		if (cache.modus == modus_type.MTTT) {
 			logic.doSet(x, y);
 		} else {
-			doInput(x, y);
+			doRNDInput(x, y);
 		}
 	}
 
@@ -45,13 +68,27 @@ public class MtttService {
 	 * @param x
 	 * @param y
 	 */
-	public void doInput(int x, int y) {
-		System.out.println(x + " " + y);
+	public void doRNDInput(int x, int y) {
 		mtttData v = this.cache.getByXY(x, y);
 		v.farbe_R = wipf.getRandomInt(60);
 		v.farbe_G = wipf.getRandomInt(60);
 		v.farbe_B = wipf.getRandomInt(60);
 		v.funktion = "C";
+	}
+
+	/**
+	 * 
+	 */
+	public void stopApp() {
+		cache.modus = modus_type.NONE;
+	}
+
+	/**
+	 * 
+	 */
+	public void cls() {
+		cache.modus = modus_type.NONE;
+		cache.cls();
 	}
 
 }

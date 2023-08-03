@@ -64,4 +64,15 @@ public class MtttRest {
 		return cache.getCache();
 	}
 
+	@GET
+	@Path("stopApp")
+	public void stopApp() {
+		mttt.stopApp();
+	}
+
+	@GET
+	@Path("cls")
+	public void cls() {
+		mttt.cls();
+	}
 }

@@ -35,29 +35,29 @@ public class mtttData {
 	public void setFarbe(farbe f) {
 		switch (f) {
 		case ROT:
-			farbe_R = 100;
+			farbe_R = 30;
 			farbe_G = 0;
 			farbe_B = 0;
 			break;
 		case GRUEN:
 			farbe_R = 0;
-			farbe_G = 100;
+			farbe_G = 30;
 			farbe_B = 0;
 			break;
 		case BLAU:
 			farbe_R = 0;
 			farbe_G = 0;
-			farbe_B = 100;
+			farbe_B = 30;
 			break;
 		case GRAU:
-			farbe_R = 60;
-			farbe_G = 60;
-			farbe_B = 60;
+			farbe_R = 30;
+			farbe_G = 30;
+			farbe_B = 30;
 			break;
 		case GELB:
 			farbe_R = 30;
 			farbe_G = 30;
-			farbe_B = 60;
+			farbe_B = 0;
 			break;
 		case SCHWARZ:
 			farbe_R = 0;

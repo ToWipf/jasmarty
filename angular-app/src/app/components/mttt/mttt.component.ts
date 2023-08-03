@@ -45,6 +45,17 @@ export class MtttComponent implements OnInit {
       this.getCache();
     });
   }
+
+  public stopApp() {
+    this.rest.get('mttt/stopApp').then((resdata: any) => {
+    });
+  }
+  
+  public cls() {
+    this.rest.get('mttt/cls').then((resdata: any) => {
+      this.getCache();
+    });
+  }
 }
 
 export interface MtttData {

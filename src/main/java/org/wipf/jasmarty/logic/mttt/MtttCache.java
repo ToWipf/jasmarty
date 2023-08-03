@@ -25,14 +25,20 @@ public class MtttCache {
 	@PostConstruct
 	public void initCache() {
 		this.cache = new mtttData[MtttService.SIZE][MtttService.SIZE];
+		cls();
+	}
 
+	/**
+	 * Alle Pixel auf default
+	 */
+	public void cls() {
 		for (int x = 0; x < MtttService.SIZE; x++) {
 			for (int y = 0; y < MtttService.SIZE; y++) {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
 				this.cache[x][y].farbe_R = 1;
-				this.cache[x][y].farbe_G = 1;
-				this.cache[x][y].farbe_B = 1;
+				this.cache[x][y].farbe_G = 0;
+				this.cache[x][y].farbe_B = 0;
 			}
 		}
 	}
@@ -56,28 +62,6 @@ public class MtttCache {
 	 */
 	public void setByXY(int x, int y, mtttData m) {
 		this.cache[x][y] = m;
-	}
-
-	/**
-	 * @return
-	 */
-	public String toDataString() {
-		StringBuilder sb = new StringBuilder();
-
-		for (int x = 0; x < MtttService.SIZE; x++) {
-			for (int y = 0; y < MtttService.SIZE; y++) {
-				int koordinatenIndex = (y + x * MtttService.SIZE);
-
-				mtttData val = getByXY(x, y);
-
-				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
-				sb.append((char) val.farbe_R);
-				sb.append((char) val.farbe_G);
-				sb.append((char) val.farbe_B);
-			}
-		}
-
-		return sb.toString();
 	}
 
 	/**
