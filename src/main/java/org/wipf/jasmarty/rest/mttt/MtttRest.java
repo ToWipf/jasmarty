@@ -35,7 +35,7 @@ public class MtttRest {
 	MtttLogic logic;
 
 	@GET
-	@Path("do")
+	@Path("full")
 	@PermitAll
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response doMttt() {
@@ -43,11 +43,28 @@ public class MtttRest {
 	}
 
 	@GET
-	@Path("doClick/{x}/{y}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response testset(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+	@Path("doClick/{x}/{y}") // VON WEB
+	public Response doClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
 		mttt.doSet(x, y);
 		return Response.ok().build();
+	}
+
+	@GET
+	@Path("do/{x}/{y}") // VonArduino
+	@PermitAll
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response doArdClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		mttt.doSet(x, y);
+		return Response.ok(mttt.getFullScreen()).build(); // TODO nur die Änderungen senden
+	}
+
+	@GET
+	@Path("doId/{id}") // Von Arduino DEBUG
+	@PermitAll
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response doArdClick(@PathParam("id") Integer id) {
+		mttt.doSetById(id);
+		return Response.ok(mttt.getFullScreen()).build(); // TODO nur die Änderungen senden
 	}
 
 	@GET
@@ -71,6 +88,7 @@ public class MtttRest {
 	}
 
 	@GET
+	@PermitAll
 	@Path("cls")
 	public void cls() {
 		mttt.cls();

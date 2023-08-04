@@ -37,8 +37,8 @@ public class MtttCache {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
 				this.cache[x][y].farbe_R = 1;
-				this.cache[x][y].farbe_G = 0;
-				this.cache[x][y].farbe_B = 0;
+				this.cache[x][y].farbe_G = 1;
+				this.cache[x][y].farbe_B = 1;
 			}
 		}
 	}

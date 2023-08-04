@@ -27,6 +27,7 @@ public class MtttService {
 	 * @return
 	 */
 	public String getFullScreen() {
+		System.out.println("getFullScreen");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -36,8 +37,7 @@ public class MtttService {
 			for (int y = 0; y < MtttService.SIZE; y++) {
 				int koordinatenIndex = (y + x * MtttService.SIZE);
 				if (inverntLine) {
-					koordinatenIndex = koordinatenIndex + MtttService.SIZE + 1 - y - y - 2;
-					System.out.println(koordinatenIndex);
+					koordinatenIndex = koordinatenIndex + MtttService.SIZE - y - y - 1;
 				}
 
 				mtttData val = cache.getByXY(x, y);
@@ -57,11 +57,31 @@ public class MtttService {
 	 * 
 	 */
 	public void doSet(Integer x, Integer y) {
+		System.out.println("doset" + x + " " + y);
 		if (cache.modus == modus_type.MTTT) {
 			logic.doSet(x, y);
 		} else {
 			doRNDInput(x, y);
 		}
+	}
+
+	/**
+	 * @param id
+	 */
+	public void doSetById(Integer id) {
+		System.out.println("dosetid " + id);
+		int x = 0;
+		int y = 0;
+
+		x = id / 15;
+		y = id % 15;
+
+		// invert y bei jeder 2. reihe
+		if (x % 2 == 1) {
+			y = MtttService.SIZE - y - 1;
+		}
+
+		doSet(x, y);
 	}
 
 	/**
@@ -87,6 +107,7 @@ public class MtttService {
 	 * 
 	 */
 	public void cls() {
+		System.out.println("cls");
 		cache.modus = modus_type.NONE;
 		cache.cls();
 	}
