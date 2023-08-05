@@ -14,7 +14,7 @@ export class MtttComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   public size: Number;
-  public bLoopStop: boolean;
+  public bLoopStop: boolean = true;
   public mtttData: MtttData[][];
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class MtttComponent implements OnInit {
   }
 
   public getCache(): void {
-    this.rest.get('mttt/getCache').then((resdata: MtttData[][]) => {
+    this.rest.getNoWartenDialog('mttt/getCache').then((resdata: MtttData[][]) => {
       this.mtttData = resdata;
       // fix farben
       this.mtttData.forEach((da: MtttData[]) => {
@@ -60,7 +60,7 @@ export class MtttComponent implements OnInit {
 
   public startAutoload(): void {
     this.bLoopStop = false;
-    this.loopLoadButton;
+    this.loopLoadButton();
   }
 
   private loopLoadButton(): void {
