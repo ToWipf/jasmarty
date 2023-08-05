@@ -14,6 +14,7 @@ export class MtttComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   public size: Number;
+  public bLoopStop: boolean;
   public mtttData: MtttData[][];
 
   ngOnInit(): void {
@@ -55,6 +56,21 @@ export class MtttComponent implements OnInit {
     this.rest.get('mttt/cls').then((resdata: any) => {
       this.getCache();
     });
+  }
+
+  public startAutoload(): void {
+    this.bLoopStop = false;
+    this.loopLoadButton;
+  }
+
+  private loopLoadButton(): void {
+    if (!this.bLoopStop) {
+      // get current button
+      setTimeout(() => {
+        this.loopLoadButton();
+      }, 1000);
+      this.getCache();
+    }
   }
 }
 
