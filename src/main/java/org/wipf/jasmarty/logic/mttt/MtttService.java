@@ -69,19 +69,21 @@ public class MtttService {
 	 * @param id
 	 */
 	public void doSetById(Integer id) {
-		System.out.println("dosetid " + id);
-		int x = 0;
-		int y = 0;
+		if (id < SIZE * SIZE) {
 
-		x = id / 15;
-		y = id % 15;
+			int x = 0;
+			int y = 0;
 
-		// invert y bei jeder 2. reihe
-		if (x % 2 == 1) {
-			y = MtttService.SIZE - y - 1;
+			x = id / 15;
+			y = id % 15;
+
+			// invert y bei jeder 2. reihe
+			if (x % 2 == 1) {
+				y = MtttService.SIZE - y - 1;
+			}
+
+			doSet(x, y);
 		}
-
-		doSet(x, y);
 	}
 
 	/**
