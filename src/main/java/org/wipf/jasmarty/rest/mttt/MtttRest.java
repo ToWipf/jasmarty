@@ -43,13 +43,6 @@ public class MtttRest {
 	}
 
 	@GET
-	@Path("doClick/{x}/{y}") // VON WEB
-	public Response doClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		mttt.doSet(x, y);
-		return Response.ok().build();
-	}
-
-	@GET
 	@Path("do/{x}/{y}") // VonArduino
 	@PermitAll
 	@Produces(MediaType.TEXT_PLAIN)
@@ -65,6 +58,31 @@ public class MtttRest {
 	public Response doArdClick(@PathParam("id") Integer id) {
 		mttt.doSetById(id);
 		return Response.ok(mttt.getFullScreen()).build(); // TODO nur die Änderungen senden
+	}
+
+	@GET
+	@PermitAll
+	@Path("cls")
+	public Response cls() {
+		mttt.cls();
+		return doMttt();
+	}
+
+	@GET
+	@PermitAll
+	@Path("start")
+	public Response start() {
+		logic.loadNewGame();
+		return doMttt();
+	}
+
+	/////////////////
+
+	@GET
+	@Path("doClick/{x}/{y}") // VON WEB
+	public Response doClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		mttt.doSet(x, y);
+		return Response.ok().build();
 	}
 
 	@GET
@@ -87,10 +105,4 @@ public class MtttRest {
 		mttt.stopApp();
 	}
 
-	@GET
-	@PermitAll
-	@Path("cls")
-	public void cls() {
-		mttt.cls();
-	}
 }
