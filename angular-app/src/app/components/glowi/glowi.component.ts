@@ -40,17 +40,12 @@ export class GlowiComponent implements OnInit {
     });
   }
 
-  public startMttt() {
-    this.rest.get('glowi/startMttt').then((resdata: any) => {
+  public start() {
+    this.rest.get('glowi/start').then((resdata: any) => {
       this.getCache();
     });
   }
 
-  public stopApp() {
-    this.rest.get('glowi/stopApp').then((resdata: any) => {
-    });
-  }
-  
   public cls() {
     this.rest.get('glowi/cls').then((resdata: any) => {
       this.getCache();

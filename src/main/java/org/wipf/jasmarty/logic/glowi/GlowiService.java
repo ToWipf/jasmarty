@@ -4,9 +4,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.mttt.mtttData;
+import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
 
 /**
  * @author wipf
@@ -19,12 +18,20 @@ public class GlowiService {
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
 
+	public enum modus_type {
+		MTTT, NONE
+	};
+
+	public modus_type modus;
+
 	@Inject
 	GlowiCache cache;
 	@Inject
 	Wipf wipf;
 	@Inject
-	MtttLogic logic;
+	GA_Mttt mttt;
+	@Inject
+	GA_RND rnd;
 
 	/**
 	 * @return
@@ -43,7 +50,7 @@ public class GlowiService {
 					koordinatenIndex = koordinatenIndex + GlowiService.SIZE - y - y - 1;
 				}
 
-				mtttData val = cache.getByXY(x, y);
+				GlowiData val = cache.getByXY(x, y);
 
 				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
 				sb.append((char) val.farbe_R);
@@ -60,10 +67,10 @@ public class GlowiService {
 	 * 
 	 */
 	public void doSet(Integer x, Integer y) {
-		if (cache.modus == modus_type.MTTT) {
-			logic.doSet(x, y);
+		if (modus == modus_type.MTTT) {
+			mttt.doSet(x, y);
 		} else {
-			doRNDInput(x, y);
+			rnd.doRNDInput(x, y);
 		}
 	}
 
@@ -89,31 +96,21 @@ public class GlowiService {
 	}
 
 	/**
-	 * @param x
-	 * @param y
-	 */
-	public void doRNDInput(int x, int y) {
-		mtttData v = this.cache.getByXY(x, y);
-		v.farbe_R = wipf.getRandomInt(60);
-		v.farbe_G = wipf.getRandomInt(60);
-		v.farbe_B = wipf.getRandomInt(60);
-		v.funktion = "C";
-	}
-
-	/**
-	 * 
-	 */
-	public void stopApp() {
-		cache.modus = modus_type.NONE;
-	}
-
-	/**
 	 * 
 	 */
 	public void cls() {
 		System.out.println("cls");
-		cache.modus = modus_type.NONE;
+		modus = modus_type.NONE;
 		cache.cls();
+	}
+
+	/**
+	 * @return
+	 */
+	public String startApp() {
+		mttt.loadNewGame();
+		modus = modus_type.MTTT;
+		return getFullScreen();
 	}
 
 }

@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.glowi;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
-import org.wipf.jasmarty.datatypes.mttt.mtttData;
+import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 
 /**
  * @author wipf
@@ -12,19 +12,14 @@ import org.wipf.jasmarty.datatypes.mttt.mtttData;
 @ApplicationScoped
 public class GlowiCache {
 
-	public enum modus_type {
-		MTTT, NONE
-	};
-
-	private mtttData[][] cache;
-	public modus_type modus;
+	private GlowiData[][] cache;
 
 	/**
 	 * 
 	 */
 	@PostConstruct
 	public void initCache() {
-		this.cache = new mtttData[GlowiService.SIZE][GlowiService.SIZE];
+		this.cache = new GlowiData[GlowiService.SIZE][GlowiService.SIZE];
 		cls();
 	}
 
@@ -34,7 +29,7 @@ public class GlowiCache {
 	public void cls() {
 		for (int x = 0; x < GlowiService.SIZE; x++) {
 			for (int y = 0; y < GlowiService.SIZE; y++) {
-				this.cache[x][y] = new mtttData();
+				this.cache[x][y] = new GlowiData();
 				this.cache[x][y].funktion = "N";
 				this.cache[x][y].farbe_R = 1;
 				this.cache[x][y].farbe_G = 1;
@@ -48,7 +43,7 @@ public class GlowiCache {
 	 * @param y
 	 * @return
 	 */
-	public mtttData getByXY(int x, int y) {
+	public GlowiData getByXY(int x, int y) {
 		if (x < GlowiService.SIZE && y < GlowiService.SIZE) {
 			return cache[x][y];
 		}
@@ -60,27 +55,20 @@ public class GlowiCache {
 	 * @param y
 	 * @param m
 	 */
-	public void setByXY(int x, int y, mtttData m) {
-		this.cache[x][y] = m;
+	public void setByXY(int x, int y, GlowiData m) {
+		this.cache[x][y] = new GlowiData(m);
 	}
 
 	/**
 	 * @return
 	 */
-	public mtttData[][] getCache() {
+	public GlowiData[][] getCache() {
 		return cache;
 	}
 
 	////////////////////////////////////////////////////////////////
-
-	/**
-	 * @param x
-	 * @param y
-	 * @param m
-	 */
-	public void setPixel(int x, int y, mtttData m) {
-		this.cache[x][y] = new mtttData(m);
-	}
+	/////////////////////////// DRAW ///////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	/**
 	 * @param x0
@@ -88,13 +76,13 @@ public class GlowiCache {
 	 * @param y
 	 * @param m
 	 */
-	public void drawLineH(int x0, int x1, int y, mtttData m) {
+	public void drawLineH(int x0, int x1, int y, GlowiData m) {
 		if (x1 > x0)
 			for (int x = x0; x <= x1; x++)
-				this.setPixel(x, y, m);
+				this.setByXY(x, y, m);
 		else
 			for (int x = x1; x <= x0; x++)
-				this.setPixel(x, y, m);
+				this.setByXY(x, y, m);
 	}
 
 	/**
@@ -103,13 +91,13 @@ public class GlowiCache {
 	 * @param y1
 	 * @param m
 	 */
-	public void drawLineV(int x, int y0, int y1, mtttData m) {
+	public void drawLineV(int x, int y0, int y1, GlowiData m) {
 		if (y1 > y0)
 			for (int y = y0; y <= y1; y++)
-				this.setPixel(x, y, m);
+				this.setByXY(x, y, m);
 		else
 			for (int y = y1; y <= y0; y++)
-				this.setPixel(x, y, m);
+				this.setByXY(x, y, m);
 	}
 
 	/**
@@ -119,7 +107,7 @@ public class GlowiCache {
 	 * @param h
 	 * @param m
 	 */
-	public void drawRectFill(int x, int y, int w, int h, mtttData m) {
+	public void drawRectFill(int x, int y, int w, int h, GlowiData m) {
 		if (x >= 128 || y >= 64)
 			return;
 		if (x + w >= 128)

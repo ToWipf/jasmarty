@@ -9,12 +9,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
-import org.wipf.jasmarty.datatypes.mttt.mtttData;
+import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.glowi.GlowiCache;
 import org.wipf.jasmarty.logic.glowi.GlowiService;
-import org.wipf.jasmarty.logic.glowi.MtttLogic;
 
 /**
  * @author Wipf
@@ -28,81 +26,65 @@ import org.wipf.jasmarty.logic.glowi.MtttLogic;
 public class GlowiRest {
 
 	@Inject
-	GlowiService mttt;
+	GlowiService glowi;
 	@Inject
 	GlowiCache cache;
-	@Inject
-	MtttLogic logic;
 
 	@GET
+	@PermitAll
 	@Path("full")
-	@PermitAll
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response doMttt() {
-		return Response.ok(mttt.getFullScreen()).build();
+	public String getfull() {
+		return glowi.getESPScreen();
 	}
 
 	@GET
-	@Path("do/{x}/{y}") // VonArduino
 	@PermitAll
+	@Path("do/{x}/{y}") // Von Arduino LASER
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response doArdClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		mttt.doSet(x, y);
-		return Response.ok(mttt.getFullScreen()).build(); // TODO nur die Änderungen senden
+	public String doArdClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		glowi.doSet(x, y);
+		return glowi.getESPScreen(); // TODO nur die Änderungen senden
 	}
 
 	@GET
-	@Path("doId/{id}") // Von Arduino DEBUG
 	@PermitAll
+	@Path("doId/{id}") // Von Arduino POTI
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response doArdClick(@PathParam("id") Integer id) {
-		mttt.doSetById(id);
-		return Response.ok(mttt.getFullScreen()).build(); // TODO nur die Änderungen senden
+	public String doArdClick(@PathParam("id") Integer id) {
+		glowi.doSetById(id);
+		return glowi.getESPScreen(); // TODO nur die Änderungen senden
 	}
 
 	@GET
 	@PermitAll
 	@Path("cls")
-	public Response cls() {
-		mttt.cls();
-		return doMttt();
+	@Produces(MediaType.TEXT_PLAIN)
+	public String cls() {
+		glowi.cls();
+		return getfull();
 	}
 
 	@GET
 	@PermitAll
 	@Path("start")
-	public Response start() {
-		logic.loadNewGame();
-		return doMttt();
+	public String start() {
+		return glowi.startApp();
 	}
 
 	/////////////////
 
 	@GET
 	@Path("doClick/{x}/{y}") // VON WEB
-	public Response doClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		mttt.doSet(x, y);
-		return Response.ok().build();
+	public void doClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
+		glowi.doSet(x, y);
 	}
 
 	@GET
-	@Path("startMttt")
-	public Response doMtttTest() {
-		logic.loadNewGame();
-		return Response.ok().build();
-	}
-
-	@GET
-	@Path("getCache")
+	@Path("getCache") // Für WEB
 	@Produces(MediaType.APPLICATION_JSON)
-	public mtttData[][] getCache() {
+	public GlowiData[][] getCache() {
 		return cache.getCache();
-	}
-
-	@GET
-	@Path("stopApp")
-	public void stopApp() {
-		mttt.stopApp();
 	}
 
 }

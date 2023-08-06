@@ -1,10 +1,10 @@
-package org.wipf.jasmarty.datatypes.mttt;
+package org.wipf.jasmarty.datatypes.glowi;
 
 /**
  * @author wipf
  *
  */
-public class mtttData {
+public class GlowiData {
 
 	public int farbe_R;
 	public int farbe_G;
@@ -15,14 +15,14 @@ public class mtttData {
 		ROT, GRUEN, BLAU, GRAU, GELB, SCHWARZ
 	};
 
-	public mtttData() {
+	public GlowiData() {
 		this.farbe_R = 0;
 		this.farbe_G = 0;
 		this.farbe_B = 0;
 		this.funktion = "";
 	}
 
-	public mtttData(mtttData copy) {
+	public GlowiData(GlowiData copy) {
 		this.farbe_R = copy.farbe_R;
 		this.farbe_G = copy.farbe_G;
 		this.farbe_B = copy.farbe_B;

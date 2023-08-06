@@ -4,13 +4,20 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
-import org.wipf.jasmarty.datatypes.mttt.mtttData;
-import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
-import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
-import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
+import org.wipf.jasmarty.datatypes.glowi.GlowiData;
+import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 
 @ApplicationScoped
-public class MtttLogic {
+public class GA_Mttt {
+
+	/**
+	 * @author devbuntu
+	 *
+	 */
+	public class mtttPunkt {
+		public int x;
+		public int y;
+	}
 
 	@Inject
 	GlowiCache cache;
@@ -27,11 +34,11 @@ public class MtttLogic {
 	 * 
 	 */
 	public void loadNewGame() {
-		cache.modus = modus_type.MTTT;
+		LOGGER.info("Neues Spiel");
 
 		// Alle zurücksetzen
-		for (mtttData[] x : this.cache.getCache()) {
-			for (mtttData y : x) {
+		for (GlowiData[] x : this.cache.getCache()) {
+			for (GlowiData y : x) {
 				y.farbe_R = 0;
 				y.farbe_G = 0;
 				y.farbe_B = 0;
@@ -40,7 +47,7 @@ public class MtttLogic {
 		}
 
 		// Gitter erstellen
-		mtttData randteil = new mtttData();
+		GlowiData randteil = new GlowiData();
 		randteil.setFarbe(farbe.GRAU);
 		randteil.funktion = "B";
 		this.cache.drawLineH(0, 11, 0, randteil);
@@ -54,7 +61,7 @@ public class MtttLogic {
 		this.cache.drawLineV(12, 0, 12, randteil);
 
 		// Pixel auserhalb setzen // TODO hier wird die SIZE nicht beachtet
-		mtttData auserhalb = new mtttData();
+		GlowiData auserhalb = new GlowiData();
 		auserhalb.farbe_R = 0;
 		auserhalb.farbe_G = 0;
 		auserhalb.farbe_B = 0;
@@ -65,7 +72,7 @@ public class MtttLogic {
 		this.cache.drawLineV(14, 0, 14, auserhalb);
 
 		// Spielfelder
-		mtttData feld = new mtttData();
+		GlowiData feld = new GlowiData();
 		feld.funktion = "M"; // Alle Felder Markieren
 		feld.setFarbe(farbe.GELB);
 		this.cache.drawRectFill(1, 1, 3, 3, feld);
@@ -79,11 +86,10 @@ public class MtttLogic {
 		this.cache.drawRectFill(9, 9, 3, 3, feld);
 
 		// Initialer Spieler
-		mtttData initSpieler = new mtttData();
+		GlowiData initSpieler = new GlowiData();
 		initSpieler.setFarbe(farbe.ROT);
 		werIstDran = werdran.SPIELER_X;
-		this.cache.setPixel(14, 0, initSpieler);
-		LOGGER.info("Neues Spiel");
+		this.cache.setByXY(14, 0, initSpieler);
 	}
 
 	/**
@@ -91,7 +97,6 @@ public class MtttLogic {
 	 * @param y
 	 */
 	public void doSet(Integer x, Integer y) {
-		LOGGER.info("Neues Spiel");
 		switch (cache.getByXY(x, y).funktion) {
 		case "M":
 			setzeFeldUndWechselSpieler(x, y);
@@ -200,7 +205,7 @@ public class MtttLogic {
 	 */
 	private boolean pruefeUnterfeld(Integer feldId) {
 		mtttPunkt np = getUnterfeldNullPunkt(feldId);
-		mtttData[][] tttFeld = new mtttData[3][3];
+		GlowiData[][] tttFeld = new GlowiData[3][3];
 
 		tttFeld[0][0] = this.cache.getByXY(0 + np.x, 0 + np.y);
 		tttFeld[0][1] = this.cache.getByXY(0 + np.x, 1 + np.y);
@@ -214,17 +219,17 @@ public class MtttLogic {
 
 		switch (doFeldAuswertung(tttFeld)) {
 		case "X":
-			mtttData mx = new mtttData();
+			GlowiData mx = new GlowiData();
 			mx.setFarbe(farbe.ROT);
 			mx.funktion = "GX";
 			return sezteUnterfeldAuswertungsFarbe(feldId, mx);
 		case "Y":
-			mtttData my = new mtttData();
+			GlowiData my = new GlowiData();
 			my.setFarbe(farbe.GRUEN);
 			my.funktion = "GY";
 			return sezteUnterfeldAuswertungsFarbe(feldId, my);
 		case "U":
-			mtttData mu = new mtttData();
+			GlowiData mu = new GlowiData();
 			mu.setFarbe(farbe.BLAU);
 			mu.funktion = "U";
 			return sezteUnterfeldAuswertungsFarbe(feldId, mu);
@@ -239,7 +244,7 @@ public class MtttLogic {
 	 * @param feldId
 	 * @param m
 	 */
-	private boolean sezteUnterfeldAuswertungsFarbe(int feldId, mtttData m) {
+	private boolean sezteUnterfeldAuswertungsFarbe(int feldId, GlowiData m) {
 		mtttPunkt np = getUnterfeldNullPunkt(feldId);
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
@@ -256,7 +261,7 @@ public class MtttLogic {
 	 * @param B
 	 * @return
 	 */
-	private boolean vergleicheUnterspielFeld(mtttData A, mtttData B) {
+	private boolean vergleicheUnterspielFeld(GlowiData A, GlowiData B) {
 		if (!A.funktion.equals("F") && !A.funktion.equals("M")) {
 			return (A.funktion.equals(B.funktion));
 		}
@@ -269,7 +274,7 @@ public class MtttLogic {
 	 * @param tttFeld
 	 * @return X, Y, U, ''
 	 */
-	private String doFeldAuswertung(mtttData[][] tttFeld) {
+	private String doFeldAuswertung(GlowiData[][] tttFeld) {
 
 		// Gewonnen?
 		for (int x = 0; x < 3; x++) {
@@ -336,8 +341,8 @@ public class MtttLogic {
 	 * Alle Markierungen löschen
 	 */
 	private void deMarkiereAlles() {
-		for (mtttData[] x : this.cache.getCache()) {
-			for (mtttData y : x) {
+		for (GlowiData[] x : this.cache.getCache()) {
+			for (GlowiData y : x) {
 				if (y.funktion.startsWith("M")) {
 					y.setFarbe(farbe.SCHWARZ);
 					y.funktion = "F"; // Frei
@@ -367,7 +372,7 @@ public class MtttLogic {
 		mtttPunkt nP = getUnterfeldNullPunkt(feldId);
 		for (int x = 0; x < 3; x++) {
 			for (int y = 0; y < 3; y++) {
-				mtttData m = this.cache.getByXY(x + nP.x, y + nP.y);
+				GlowiData m = this.cache.getByXY(x + nP.x, y + nP.y);
 				if (m.funktion.startsWith("F")) {
 					m.setFarbe(farbe.GELB);
 					m.funktion = "M"; // Markiert
@@ -394,7 +399,7 @@ public class MtttLogic {
 	 * prüfen und LED im Eck schalten
 	 */
 	private boolean pruefeGesamtsieg() {
-		mtttData[][] tttFull = new mtttData[3][3];
+		GlowiData[][] tttFull = new GlowiData[3][3];
 
 		tttFull[0][0] = this.cache.getByXY(1, 1);
 		tttFull[0][1] = this.cache.getByXY(1, 5);
@@ -406,7 +411,7 @@ public class MtttLogic {
 		tttFull[2][1] = this.cache.getByXY(9, 5);
 		tttFull[2][2] = this.cache.getByXY(9, 9);
 
-		mtttData mStatusPixel = new mtttData();
+		GlowiData mStatusPixel = new GlowiData();
 		switch (doFeldAuswertung(tttFull)) {
 		case "GX":
 			mStatusPixel.setFarbe(farbe.ROT);
@@ -434,8 +439,8 @@ public class MtttLogic {
 	 */
 	private void setzeFeldUndWechselSpieler(Integer x, Integer y) {
 		LOGGER.info("Setzen: " + x + " / " + y);
-		mtttData werd = new mtttData();
-		mtttData feld = cache.getByXY(x, y);
+		GlowiData werd = new GlowiData();
+		GlowiData feld = cache.getByXY(x, y);
 		deMarkiereAlles();
 
 		if (werIstDran == werdran.SPIELER_X) {
@@ -450,7 +455,7 @@ public class MtttLogic {
 			werd.setFarbe(farbe.ROT);
 		}
 
-		this.cache.setPixel(14, 0, werd);
+		this.cache.setByXY(14, 0, werd);
 
 		if (!pruefeGewinne()) {
 			// Mögliche Felder für Spieler markieren

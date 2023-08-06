@@ -15,8 +15,7 @@
     </tr>
 </table>
 
-<button class="btn btn-wipf-default" (click)="startMttt()">Starte Mttt</button>
-<button class="btn btn-wipf-default" (click)="stopApp()">Stop App</button>
+<button class="btn btn-wipf-default" (click)="start()">Start</button>
 <button class="btn btn-wipf-default" *ngIf="bLoopStop" (click)="startAutoload()">Starte Autoladen</button>
 <button class="btn btn-wipf-default" *ngIf="!bLoopStop" (click)="bLoopStop=true">Stoppe Autoladen</button>
 <button class="btn btn-wipf-default" (click)="cls()">CLS</button>
