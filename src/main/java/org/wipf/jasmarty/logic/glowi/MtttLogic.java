@@ -6,8 +6,8 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
-import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
 import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
+import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
 
 @ApplicationScoped
 public class MtttLogic {
@@ -83,6 +83,7 @@ public class MtttLogic {
 		initSpieler.setFarbe(farbe.ROT);
 		werIstDran = werdran.SPIELER_X;
 		this.cache.setPixel(14, 0, initSpieler);
+		LOGGER.info("Neues Spiel");
 	}
 
 	/**
@@ -90,6 +91,7 @@ public class MtttLogic {
 	 * @param y
 	 */
 	public void doSet(Integer x, Integer y) {
+		LOGGER.info("Neues Spiel");
 		switch (cache.getByXY(x, y).funktion) {
 		case "M":
 			setzeFeldUndWechselSpieler(x, y);
@@ -431,7 +433,7 @@ public class MtttLogic {
 	 * die "Main"
 	 */
 	private void setzeFeldUndWechselSpieler(Integer x, Integer y) {
-		LOGGER.info(x + "-" + y);
+		LOGGER.info("Setzen: " + x + " / " + y);
 		mtttData werd = new mtttData();
 		mtttData feld = cache.getByXY(x, y);
 		deMarkiereAlles();

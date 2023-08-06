@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.glowi;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
@@ -16,6 +17,8 @@ public class GlowiService {
 
 	public static final Integer SIZE = 15;
 
+	private static final Logger LOGGER = Logger.getLogger("Glowi");
+
 	@Inject
 	GlowiCache cache;
 	@Inject
@@ -27,7 +30,7 @@ public class GlowiService {
 	 * @return
 	 */
 	public String getFullScreen() {
-		System.out.println("getFullScreen");
+		LOGGER.info("getFullScreen");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -57,7 +60,6 @@ public class GlowiService {
 	 * 
 	 */
 	public void doSet(Integer x, Integer y) {
-		System.out.println("doset" + x + " " + y);
 		if (cache.modus == modus_type.MTTT) {
 			logic.doSet(x, y);
 		} else {
