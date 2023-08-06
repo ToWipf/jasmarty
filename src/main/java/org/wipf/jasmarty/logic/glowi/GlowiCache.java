@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.mttt;
+package org.wipf.jasmarty.logic.glowi;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -10,7 +10,7 @@ import org.wipf.jasmarty.datatypes.mttt.mtttData;
  *
  */
 @ApplicationScoped
-public class MtttCache {
+public class GlowiCache {
 
 	public enum modus_type {
 		MTTT, NONE
@@ -24,7 +24,7 @@ public class MtttCache {
 	 */
 	@PostConstruct
 	public void initCache() {
-		this.cache = new mtttData[MtttService.SIZE][MtttService.SIZE];
+		this.cache = new mtttData[GlowiService.SIZE][GlowiService.SIZE];
 		cls();
 	}
 
@@ -32,8 +32,8 @@ public class MtttCache {
 	 * Alle Pixel auf default
 	 */
 	public void cls() {
-		for (int x = 0; x < MtttService.SIZE; x++) {
-			for (int y = 0; y < MtttService.SIZE; y++) {
+		for (int x = 0; x < GlowiService.SIZE; x++) {
+			for (int y = 0; y < GlowiService.SIZE; y++) {
 				this.cache[x][y] = new mtttData();
 				this.cache[x][y].funktion = "N";
 				this.cache[x][y].farbe_R = 1;
@@ -49,7 +49,7 @@ public class MtttCache {
 	 * @return
 	 */
 	public mtttData getByXY(int x, int y) {
-		if (x < MtttService.SIZE && y < MtttService.SIZE) {
+		if (x < GlowiService.SIZE && y < GlowiService.SIZE) {
 			return cache[x][y];
 		}
 		return null;

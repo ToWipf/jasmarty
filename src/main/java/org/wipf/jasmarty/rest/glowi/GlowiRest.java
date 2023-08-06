@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest.mttt;
+package org.wipf.jasmarty.rest.glowi;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
@@ -12,25 +12,25 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
-import org.wipf.jasmarty.logic.mttt.MtttCache;
-import org.wipf.jasmarty.logic.mttt.MtttLogic;
-import org.wipf.jasmarty.logic.mttt.MtttService;
+import org.wipf.jasmarty.logic.glowi.GlowiCache;
+import org.wipf.jasmarty.logic.glowi.GlowiService;
+import org.wipf.jasmarty.logic.glowi.MtttLogic;
 
 /**
  * @author Wipf
  *
  */
-@Path("mttt")
+@Path("glowi")
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
 @ApplicationScoped
-public class MtttRest {
+public class GlowiRest {
 
 	@Inject
-	MtttService mttt;
+	GlowiService mttt;
 	@Inject
-	MtttCache cache;
+	GlowiCache cache;
 	@Inject
 	MtttLogic logic;
 

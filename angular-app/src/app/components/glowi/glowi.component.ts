@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DaylogType } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-mttt',
-  templateUrl: './mttt.component.html',
-  styleUrls: ['./mttt.component.less']
+  selector: 'app-glowi',
+  templateUrl: './glowi.component.html',
+  styleUrls: ['./glowi.component.less']
 })
-export class MtttComponent implements OnInit {
+export class GlowiComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
@@ -22,7 +21,7 @@ export class MtttComponent implements OnInit {
   }
 
   public getCache(): void {
-    this.rest.getNoWartenDialog('mttt/getCache').then((resdata: MtttData[][]) => {
+    this.rest.getNoWartenDialog('glowi/getCache').then((resdata: MtttData[][]) => {
       this.mtttData = resdata;
       // fix farben
       this.mtttData.forEach((da: MtttData[]) => {
@@ -36,24 +35,24 @@ export class MtttComponent implements OnInit {
   }
 
   public doClick(x: number, y: number) {
-    this.rest.get('mttt/doClick/' + x + "/" + y).then((resdata: any) => {
+    this.rest.get('glowi/doClick/' + x + "/" + y).then((resdata: any) => {
       this.getCache(); // TODO nur diff laden?
     });
   }
 
   public startMttt() {
-    this.rest.get('mttt/startMttt').then((resdata: any) => {
+    this.rest.get('glowi/startMttt').then((resdata: any) => {
       this.getCache();
     });
   }
 
   public stopApp() {
-    this.rest.get('mttt/stopApp').then((resdata: any) => {
+    this.rest.get('glowi/stopApp').then((resdata: any) => {
     });
   }
   
   public cls() {
-    this.rest.get('mttt/cls').then((resdata: any) => {
+    this.rest.get('glowi/cls').then((resdata: any) => {
       this.getCache();
     });
   }

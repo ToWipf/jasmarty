@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.logic.mttt;
+package org.wipf.jasmarty.logic.glowi;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -6,14 +6,14 @@ import javax.inject.Inject;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.datatypes.mttt.mtttData.farbe;
+import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
 import org.wipf.jasmarty.datatypes.mttt.mtttPunkt;
-import org.wipf.jasmarty.logic.mttt.MtttCache.modus_type;
 
 @ApplicationScoped
 public class MtttLogic {
 
 	@Inject
-	MtttCache cache;
+	GlowiCache cache;
 
 	public enum werdran {
 		SPIELER_X, SPIELER_Y

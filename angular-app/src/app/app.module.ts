@@ -82,7 +82,7 @@ import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeList
 import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
 import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/_main/authKey/authKey.component';
 import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
-import { MtttComponent } from './components/mttt/mttt.component';
+import { GlowiComponent } from './components/glowi/glowi.component';
 
 @NgModule({
     declarations: [
@@ -105,8 +105,9 @@ import { MtttComponent } from './components/mttt/mttt.component';
         FileVwComponent,
         MedienComponent,
         MedienComponentDialog,
-        FooterComponent,
         ElementSetServerDialog,
+        FooterComponent,
+        GlowiComponent,
         Jasmarty12864PagesComponent,
         Jasmarty12864PanelComponent,
         JasmartyActionsComponent,
@@ -128,7 +129,6 @@ import { MtttComponent } from './components/mttt/mttt.component';
         CookieDialogComponent,
         CookieAddDialogComponent,
         MainmenueComponent,
-        MtttComponent,
         ListeComponent,
         ListeComponentDialogComponent,
         ListeTypeComponentDialogTypeListComponent,

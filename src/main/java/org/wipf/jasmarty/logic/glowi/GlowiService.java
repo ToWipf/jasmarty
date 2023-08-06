@@ -1,23 +1,23 @@
-package org.wipf.jasmarty.logic.mttt;
+package org.wipf.jasmarty.logic.glowi;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.mttt.mtttData;
 import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.mttt.MtttCache.modus_type;
+import org.wipf.jasmarty.logic.glowi.GlowiCache.modus_type;
 
 /**
  * @author wipf
  *
  */
 @ApplicationScoped
-public class MtttService {
+public class GlowiService {
 
 	public static final Integer SIZE = 15;
 
 	@Inject
-	MtttCache cache;
+	GlowiCache cache;
 	@Inject
 	Wipf wipf;
 	@Inject
@@ -32,12 +32,12 @@ public class MtttService {
 		StringBuilder sb = new StringBuilder();
 
 		boolean inverntLine = true;
-		for (int x = 0; x < MtttService.SIZE; x++) {
+		for (int x = 0; x < GlowiService.SIZE; x++) {
 			inverntLine = !inverntLine;
-			for (int y = 0; y < MtttService.SIZE; y++) {
-				int koordinatenIndex = (y + x * MtttService.SIZE);
+			for (int y = 0; y < GlowiService.SIZE; y++) {
+				int koordinatenIndex = (y + x * GlowiService.SIZE);
 				if (inverntLine) {
-					koordinatenIndex = koordinatenIndex + MtttService.SIZE - y - y - 1;
+					koordinatenIndex = koordinatenIndex + GlowiService.SIZE - y - y - 1;
 				}
 
 				mtttData val = cache.getByXY(x, y);
@@ -79,7 +79,7 @@ public class MtttService {
 
 			// invert y bei jeder 2. reihe
 			if (x % 2 == 1) {
-				y = MtttService.SIZE - y - 1;
+				y = GlowiService.SIZE - y - 1;
 			}
 
 			doSet(x, y);

@@ -1,6 +1,5 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
-//#include <ESP8266mDNS.h>
 #include <ESP8266HTTPClient.h>
 #include <FastLED.h>
 
@@ -8,11 +7,11 @@
 #include <Adafruit_SSD1306.h>
 
 #define STASSID           "UUID"
-#define STAPSK            "KEY"
-#define APISERVER1        "http://192.168.2.55:8080/"
-#define APISERVER2        "http://liveserver:34907/"
-#define SERVERHEADER_KEY  "x-myKey"
-#define SERVERHEADER_VAL  "myVal"
+#define STAPSK            "PW"
+#define APISERVER1        "http://192.168.2.55:8080/glowi/"
+#define APISERVER2        "http://liverserver:34907/glowi/"
+#define SERVERHEADER_KEY  "x-key"
+#define SERVERHEADER_VAL  "val"
 #define LED_ONBOARD       D4
 #define LED_EINS          D8
 #define BUTTON_CLS_PIN    D3
@@ -176,8 +175,8 @@ void loop(void) {
     display.setCursor(0, 40);
     display.println(F("Click DO"));
     display.display();
-    //doGetDataFromServerDO("mttt/do/" + (String)in_X + "/" + (String)in_Y );
-    doGetDataFromServerDO("mttt/doId/" + (String)idPoti );
+    //doGetDataFromServerDO("do/" + (String)in_X + "/" + (String)in_Y );
+    doGetDataFromServerDO("doId/" + (String)idPoti );
     hasClicked = true;
   }
 
@@ -185,7 +184,7 @@ void loop(void) {
     display.setCursor(0, 40);
     display.println(F("Click CLS"));
     display.display();
-    doGetDataFromServerDO("mttt/cls");
+    doGetDataFromServerDO("cls");
     hasClicked = true;
   }
 
@@ -193,7 +192,7 @@ void loop(void) {
     display.setCursor(0, 40);
     display.println(F("Click Start"));
     display.display();
-    doGetDataFromServerDO("mttt/start");
+    doGetDataFromServerDO("start");
     hasClicked = true;
   }
 

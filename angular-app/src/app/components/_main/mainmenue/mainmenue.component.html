@@ -27,9 +27,9 @@
             </ul>
 
             <ul class="menueli">
-                <li (click)="selectSite('mttt')" [ngClass]="{'isSelected' : selectedSite == 'mttt'}">
-                    <mat-icon svgIcon="picture" aria-hidden="false" title="MTTT"></mat-icon>
-                    <span class="buttonInhalt"> MTTT </span>
+                <li (click)="selectSite('mttt')" [ngClass]="{'isSelected' : selectedSite == 'glowi'}">
+                    <mat-icon svgIcon="picture" aria-hidden="false" title="Glowi"></mat-icon>
+                    <span class="buttonInhalt"> Glowi </span>
                 </li>
             </ul>
 
@@ -183,8 +183,8 @@
                 <ng-container *ngIf="selectedSite==='liste'">
                     <app-liste></app-liste>
                 </ng-container>
-                <ng-container *ngIf="selectedSite==='mttt'">
-                    <app-mttt></app-mttt>
+                <ng-container *ngIf="selectedSite==='glowi'">
+                    <app-glowi></app-glowi>
                 </ng-container>
             </div>
         </div>
