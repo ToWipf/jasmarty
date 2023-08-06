@@ -38,7 +38,7 @@ public class GlowiService {
 	/**
 	 * @return
 	 */
-	public String getESPScreen() {
+	public String getESPFULLScreen() {
 		LOGGER.info("getFullESPScreen");
 
 		StringBuilder sb = new StringBuilder();
@@ -67,7 +67,7 @@ public class GlowiService {
 	/**
 	 * @return
 	 */
-	public String getESP_DIF_Screen() {
+	public String getESPScreen() {
 		LOGGER.info("getChangesESPScreen");
 
 		StringBuilder sb = new StringBuilder();

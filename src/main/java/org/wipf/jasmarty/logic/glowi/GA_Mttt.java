@@ -341,11 +341,13 @@ public class GA_Mttt {
 	 * Alle Markierungen löschen
 	 */
 	private void deMarkiereAlles() {
-		for (GlowiData[] x : this.cache.getCache()) {
-			for (GlowiData y : x) {
-				if (y.funktion.startsWith("M")) {
-					y.setFarbe(farbe.SCHWARZ);
-					y.funktion = "F"; // Frei
+		for (int x = 0; x < GlowiService.SIZE; x++) {
+			for (int y = 0; y < GlowiService.SIZE; y++) {
+				if (this.cache.getByXY(x, y).funktion.startsWith("M")) {
+					GlowiData m = new GlowiData();
+					m.setFarbe(farbe.SCHWARZ);
+					m.funktion = "F"; // Frei
+					this.cache.setByXY(x, y, m);
 				}
 			}
 		}
@@ -377,8 +379,10 @@ public class GA_Mttt {
 			for (int y = 0; y < 3; y++) {
 				GlowiData m = this.cache.getByXY(x + nP.x, y + nP.y);
 				if (m.funktion.startsWith("F")) {
-					m.setFarbe(farbe.GELB);
-					m.funktion = "M"; // Markiert
+					GlowiData n = new GlowiData();
+					n.setFarbe(farbe.GELB);
+					n.funktion = "M"; // Markiert
+					this.cache.setByXY(x + nP.x, y + nP.y, n);
 				}
 			}
 		}
@@ -442,23 +446,24 @@ public class GA_Mttt {
 	 */
 	private void setzeFeldUndWechselSpieler(Integer x, Integer y) {
 		LOGGER.info("Setzen: " + x + " / " + y);
-		GlowiData werdranLED = cache.getByXY(14, 0);
-		GlowiData setfeld = cache.getByXY(x, y);
+		GlowiData werdranLED = new GlowiData(); // cache.getByXY(14, 0);
+		GlowiData setFeld = new GlowiData();
 		deMarkiereAlles();
 
 		if (werIstDran == werdran.SPIELER_X) {
 			werIstDran = werdran.SPIELER_Y;
-			setfeld.setFarbe(farbe.ROT);
-			setfeld.funktion = "X";
+			setFeld.setFarbe(farbe.ROT);
+			setFeld.funktion = "X";
 			werdranLED.setFarbe(farbe.GRUEN);
 		} else {
 			werIstDran = werdran.SPIELER_X;
-			setfeld.setFarbe(farbe.GRUEN);
-			setfeld.funktion = "Y";
+			setFeld.setFarbe(farbe.GRUEN);
+			setFeld.funktion = "Y";
 			werdranLED.setFarbe(farbe.ROT);
 		}
 
-		// this.cache.setByXY(14, 0, werdranLED);
+		this.cache.setByXY(x, y, setFeld);
+		this.cache.setByXY(14, 0, werdranLED);
 
 		if (!pruefeGewinne()) {
 			// Mögliche Felder für Spieler markieren

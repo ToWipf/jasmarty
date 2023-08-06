@@ -60,9 +60,9 @@ public class GlowiData {
 			farbe_B = 0;
 			break;
 		case SCHWARZ:
-			farbe_R = 0;
-			farbe_G = 0;
-			farbe_B = 0;
+			farbe_R = 4;
+			farbe_G = 4;
+			farbe_B = 3;
 			break;
 
 		default:

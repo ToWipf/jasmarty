@@ -63,7 +63,15 @@ public class GlowiCache {
 	 */
 	public void setByXY(int x, int y, GlowiData m) {
 		this.cache[x][y] = new GlowiData(m);
-		listOfChanges.put(y + x * GlowiService.SIZE, m);
+		listOfChanges.put(kodrToID(x, y), m);
+	}
+
+	private Integer kodrToID(int x, int y) {
+		if (x % 2 == 0) {
+			return y + x * GlowiService.SIZE;
+		} else {
+			return y + x * GlowiService.SIZE + GlowiService.SIZE - y - y - 1;
+		}
 	}
 
 	/**
