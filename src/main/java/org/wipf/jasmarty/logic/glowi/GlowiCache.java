@@ -1,5 +1,8 @@
 package org.wipf.jasmarty.logic.glowi;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 
@@ -13,6 +16,7 @@ import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 public class GlowiCache {
 
 	private GlowiData[][] cache;
+	private Map<Integer, GlowiData> listOfChanges;
 
 	/**
 	 * 
@@ -20,6 +24,7 @@ public class GlowiCache {
 	@PostConstruct
 	public void initCache() {
 		this.cache = new GlowiData[GlowiService.SIZE][GlowiService.SIZE];
+		this.listOfChanges = new HashMap<>();
 		cls();
 	}
 
@@ -29,11 +34,12 @@ public class GlowiCache {
 	public void cls() {
 		for (int x = 0; x < GlowiService.SIZE; x++) {
 			for (int y = 0; y < GlowiService.SIZE; y++) {
-				this.cache[x][y] = new GlowiData();
-				this.cache[x][y].funktion = "N";
-				this.cache[x][y].farbe_R = 1;
-				this.cache[x][y].farbe_G = 1;
-				this.cache[x][y].farbe_B = 1;
+				GlowiData m = new GlowiData();
+				m.funktion = "N";
+				m.farbe_R = 1;
+				m.farbe_G = 1;
+				m.farbe_B = 1;
+				setByXY(x, y, m);
 			}
 		}
 	}
@@ -57,6 +63,17 @@ public class GlowiCache {
 	 */
 	public void setByXY(int x, int y, GlowiData m) {
 		this.cache[x][y] = new GlowiData(m);
+		listOfChanges.put(y + x * GlowiService.SIZE, m);
+	}
+
+	/**
+	 * @return
+	 */
+	public Map<Integer, GlowiData> getChanges() {
+		Map<Integer, GlowiData> tmp = new HashMap<>();
+		tmp.putAll(listOfChanges);
+		listOfChanges.clear();
+		return tmp;
 	}
 
 	/**

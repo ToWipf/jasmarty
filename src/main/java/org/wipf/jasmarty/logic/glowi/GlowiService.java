@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.logic.glowi;
 
+import java.util.Map.Entry;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
@@ -36,8 +38,8 @@ public class GlowiService {
 	/**
 	 * @return
 	 */
-	public String getFullScreen() {
-		LOGGER.info("getFullScreen");
+	public String getESPScreen() {
+		LOGGER.info("getFullESPScreen");
 
 		StringBuilder sb = new StringBuilder();
 
@@ -60,7 +62,42 @@ public class GlowiService {
 		}
 
 		return sb.toString();
+	}
 
+	/**
+	 * @return
+	 */
+	public String getESP_DIF_Screen() {
+		LOGGER.info("getChangesESPScreen");
+
+		StringBuilder sb = new StringBuilder();
+
+//		boolean inverntLine = true;
+//		for (int x = 0; x < GlowiService.SIZE; x++) {
+//			inverntLine = !inverntLine;
+//			for (int y = 0; y < GlowiService.SIZE; y++) {
+//				int koordinatenIndex = (y + x * GlowiService.SIZE);
+//				if (inverntLine) {
+//					koordinatenIndex = koordinatenIndex + GlowiService.SIZE - y - y - 1;
+//				}
+//
+//				GlowiData val = cache.getByXY(x, y);
+//
+//				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
+//				sb.append((char) val.farbe_R);
+//				sb.append((char) val.farbe_G);
+//				sb.append((char) val.farbe_B);
+//			}
+//		}
+
+		for (Entry<Integer, GlowiData> ch : cache.getChanges().entrySet()) {
+			sb.append(String.format("%03d", ch.getKey())); // Kein unsigned byte oder char in Java :(
+			sb.append((char) ch.getValue().farbe_R);
+			sb.append((char) ch.getValue().farbe_G);
+			sb.append((char) ch.getValue().farbe_B);
+		}
+
+		return sb.toString();
 	}
 
 	/**
@@ -110,7 +147,7 @@ public class GlowiService {
 	public String startApp() {
 		mttt.loadNewGame();
 		modus = modus_type.MTTT;
-		return getFullScreen();
+		return getESPScreen();
 	}
 
 }

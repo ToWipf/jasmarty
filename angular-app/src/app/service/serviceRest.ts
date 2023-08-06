@@ -124,6 +124,17 @@ export class ServiceRest {
       });
   }
 
+  public getPlain(path: string): Promise<any> {
+    return new Promise(
+      resolve => {
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.http.get(this.gethost() + path, { headers: this.httpOptions, responseType: 'text' }).subscribe((resdata: any) => {
+          warten.close();
+          resolve(resdata);
+        });
+      });
+  }
+
   /**
    * http get ohne Warten Dialog
    * 

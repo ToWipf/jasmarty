@@ -368,6 +368,9 @@ public class GA_Mttt {
 
 	}
 
+	/**
+	 * @param feldId
+	 */
 	private void markiereUnterfeldIDGelb(int feldId) {
 		mtttPunkt nP = getUnterfeldNullPunkt(feldId);
 		for (int x = 0; x < 3; x++) {
@@ -439,23 +442,23 @@ public class GA_Mttt {
 	 */
 	private void setzeFeldUndWechselSpieler(Integer x, Integer y) {
 		LOGGER.info("Setzen: " + x + " / " + y);
-		GlowiData werd = new GlowiData();
-		GlowiData feld = cache.getByXY(x, y);
+		GlowiData werdranLED = cache.getByXY(14, 0);
+		GlowiData setfeld = cache.getByXY(x, y);
 		deMarkiereAlles();
 
 		if (werIstDran == werdran.SPIELER_X) {
 			werIstDran = werdran.SPIELER_Y;
-			feld.setFarbe(farbe.ROT);
-			feld.funktion = "X";
-			werd.setFarbe(farbe.GRUEN);
+			setfeld.setFarbe(farbe.ROT);
+			setfeld.funktion = "X";
+			werdranLED.setFarbe(farbe.GRUEN);
 		} else {
 			werIstDran = werdran.SPIELER_X;
-			feld.setFarbe(farbe.GRUEN);
-			feld.funktion = "Y";
-			werd.setFarbe(farbe.ROT);
+			setfeld.setFarbe(farbe.GRUEN);
+			setfeld.funktion = "Y";
+			werdranLED.setFarbe(farbe.ROT);
 		}
 
-		this.cache.setByXY(14, 0, werd);
+		// this.cache.setByXY(14, 0, werdranLED);
 
 		if (!pruefeGewinne()) {
 			// Mögliche Felder für Spieler markieren

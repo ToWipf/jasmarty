@@ -35,19 +35,19 @@ export class GlowiComponent implements OnInit {
   }
 
   public doClick(x: number, y: number) {
-    this.rest.get('glowi/doClick/' + x + "/" + y).then((resdata: any) => {
+    this.rest.getPlain('glowi/doClick/' + x + "/" + y).then((resdata: any) => {
       this.getCache(); // TODO nur diff laden?
     });
   }
 
   public start() {
-    this.rest.get('glowi/start').then((resdata: any) => {
+    this.rest.getPlain('glowi/start').then((resdata: any) => {
       this.getCache();
     });
   }
 
   public cls() {
-    this.rest.get('glowi/cls').then((resdata: any) => {
+    this.rest.getPlain('glowi/cls').then((resdata: any) => {
       this.getCache();
     });
   }
