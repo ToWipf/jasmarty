@@ -19,11 +19,12 @@ public class GA_RND {
 	 * @param y
 	 */
 	public void doRNDInput(int x, int y) {
-		GlowiData v = this.cache.getByXY(x, y);
-		v.farbe_R = wipf.getRandomInt(60);
-		v.farbe_G = wipf.getRandomInt(60);
-		v.farbe_B = wipf.getRandomInt(60);
-		v.funktion = "C";
+		GlowiData m = new GlowiData();
+		m.farbe_R = wipf.getRandomInt(60);
+		m.farbe_G = wipf.getRandomInt(60);
+		m.farbe_B = wipf.getRandomInt(60);
+		m.funktion = "C";
+		this.cache.setByXY(x, y, m);
 	}
 
 }

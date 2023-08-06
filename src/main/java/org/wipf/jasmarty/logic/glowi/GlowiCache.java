@@ -66,6 +66,11 @@ public class GlowiCache {
 		listOfChanges.put(kodrToID(x, y), m);
 	}
 
+	/**
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	private Integer kodrToID(int x, int y) {
 		if (x % 2 == 0) {
 			return y + x * GlowiService.SIZE;

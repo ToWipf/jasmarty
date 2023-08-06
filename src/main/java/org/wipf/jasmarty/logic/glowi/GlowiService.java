@@ -38,7 +38,7 @@ public class GlowiService {
 	/**
 	 * @return
 	 */
-	public String getESPFULLScreen() {
+	public String getFullScreen() {
 		LOGGER.info("getFullESPScreen");
 
 		StringBuilder sb = new StringBuilder();
@@ -67,28 +67,10 @@ public class GlowiService {
 	/**
 	 * @return
 	 */
-	public String getESPScreen() {
+	public String getDivScreen() {
 		LOGGER.info("getChangesESPScreen");
 
 		StringBuilder sb = new StringBuilder();
-
-//		boolean inverntLine = true;
-//		for (int x = 0; x < GlowiService.SIZE; x++) {
-//			inverntLine = !inverntLine;
-//			for (int y = 0; y < GlowiService.SIZE; y++) {
-//				int koordinatenIndex = (y + x * GlowiService.SIZE);
-//				if (inverntLine) {
-//					koordinatenIndex = koordinatenIndex + GlowiService.SIZE - y - y - 1;
-//				}
-//
-//				GlowiData val = cache.getByXY(x, y);
-//
-//				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
-//				sb.append((char) val.farbe_R);
-//				sb.append((char) val.farbe_G);
-//				sb.append((char) val.farbe_B);
-//			}
-//		}
 
 		for (Entry<Integer, GlowiData> ch : cache.getChanges().entrySet()) {
 			sb.append(String.format("%03d", ch.getKey())); // Kein unsigned byte oder char in Java :(
@@ -147,7 +129,7 @@ public class GlowiService {
 	public String startApp() {
 		mttt.loadNewGame();
 		modus = modus_type.MTTT;
-		return getESPScreen();
+		return getDivScreen();
 	}
 
 }

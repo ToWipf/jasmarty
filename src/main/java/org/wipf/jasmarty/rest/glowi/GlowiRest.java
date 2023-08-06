@@ -35,7 +35,7 @@ public class GlowiRest {
 	@Path("full")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getfull() {
-		return glowi.getESPScreen();
+		return glowi.getFullScreen();
 	}
 
 	@GET
@@ -44,7 +44,7 @@ public class GlowiRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String doArdClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
 		glowi.doSet(x, y);
-		return glowi.getESPScreen(); // TODO nur die Änderungen senden
+		return glowi.getDivScreen(); // TODO nur die Änderungen senden
 	}
 
 	@GET
@@ -53,7 +53,7 @@ public class GlowiRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String doArdClick(@PathParam("id") Integer id) {
 		glowi.doSetById(id);
-		return glowi.getESPScreen(); // TODO nur die Änderungen senden
+		return glowi.getDivScreen(); // TODO nur die Änderungen senden
 	}
 
 	@GET
