@@ -12,18 +12,20 @@
 #define APISERVER2        "http://liverserver:34907/glowi/"
 #define SERVERHEADER_KEY  "x-key"
 #define SERVERHEADER_VAL  "val"
-#define LED_ONBOARD       D4
-#define LED_EINS          D8
-#define BUTTON_CLS_PIN    D3
-#define BUTTON_DO_PIN     D7
-#define BUTTON_START_PIN  D6
-#define LED_PIN           D5
-#define POTI_PIN          A0
 #define NUM_LEDS          225 // 15x15 = 225
-
-#define SCREEN_WIDTH 128 // OLED display width, in pixels
-#define SCREEN_HEIGHT 64 // OLED display height, in pixels
-#define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+#define SCREEN_WIDTH      128 // OLED display width, in pixels
+#define SCREEN_HEIGHT     64 // OLED display height, in pixels
+#define OLED_RESET        -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+// Frei                   D0
+// SDL                    D1
+// SDA                    D2
+#define BUTTON_CLS_PIN    D3
+#define LED_ONBOARD       D4
+#define LED_PIN           D5
+#define BUTTON_START_PIN  D6
+#define BUTTON_DO_PIN     D7
+#define LED_EINS          D8
+#define POTI_PIN          A0
 
 CRGB leds[NUM_LEDS];
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
@@ -142,7 +144,7 @@ void setup() {
     display.display();
   }
 
-  if (!digitalRead(BUTTON_CLS_PIN)) {
+  if (!digitalRead(BUTTON_DO_PIN)) {
     apiserver = APISERVER1;
   } else {
     apiserver = APISERVER2;
@@ -151,12 +153,13 @@ void setup() {
   display.clearDisplay();
   display.setCursor(0, 0);
   display.println(apiserver);
-  doGetDataFromServerDO("mttt/full");
+  doGetDataFromServerDO("full");
   display.setCursor(0, 20);
   display.println("Led:");
   display.display();
 
   digitalWrite(LED_EINS, 0);
+  digitalWrite(LED_ONBOARD, 0);
 }
 
 /*
