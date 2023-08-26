@@ -76,7 +76,9 @@ public class TeleLogService {
 			default:
 				break;
 			}
+		});
 
+		getAll().forEach(tl -> {
 			if (tl.msgid == -1 || tl.msgid == 0) {
 				tl.delete();
 			}
