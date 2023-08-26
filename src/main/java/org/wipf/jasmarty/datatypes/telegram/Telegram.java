@@ -119,7 +119,7 @@ public class Telegram {
 	public String getBeginnStringFromMessage() {
 		// Links speziell behandeln
 		String sIn = getMessageStringPartLow(0);
-		if (sIn.startsWith("http")) {
+		if (sIn.contains("https://")) {
 			return "to-link";
 		}
 
