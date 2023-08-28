@@ -86,10 +86,15 @@ public class GlowiService {
 	 * 
 	 */
 	public void doSet(Integer x, Integer y) {
-		if (modus == modus_type.MTTT) {
-			mttt.doSet(x, y);
+		if (x < SIZE && y < SIZE) {
+
+			if (modus == modus_type.MTTT) {
+				mttt.doSet(x, y);
+			} else {
+				rnd.doRNDInput(x, y);
+			}
 		} else {
-			rnd.doRNDInput(x, y);
+			LOGGER.warn("doSet zu groß: " + x + "/" + y);
 		}
 	}
 
@@ -111,6 +116,8 @@ public class GlowiService {
 			}
 
 			doSet(x, y);
+		} else {
+			LOGGER.warn("doSetById zu groß: " + id);
 		}
 	}
 

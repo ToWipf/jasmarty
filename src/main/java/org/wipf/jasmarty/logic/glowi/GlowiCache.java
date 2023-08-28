@@ -36,9 +36,9 @@ public class GlowiCache {
 			for (int y = 0; y < GlowiService.SIZE; y++) {
 				GlowiData m = new GlowiData();
 				m.funktion = "N";
-				m.farbe_R = 1;
-				m.farbe_G = 1;
-				m.farbe_B = 1;
+				m.farbe_R = 0;
+				m.farbe_G = 0;
+				m.farbe_B = 0;
 				setByXY(x, y, m);
 			}
 		}
