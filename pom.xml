@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>io.quarkiverse.jdbc</groupId>
 			<artifactId>quarkus-jdbc-sqlite</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
