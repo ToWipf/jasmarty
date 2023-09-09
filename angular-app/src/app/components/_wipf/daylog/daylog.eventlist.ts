@@ -219,7 +219,9 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     styleUrls: ['./daylog.component.less'],
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
-    constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) { }
+    constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {
+        dialogRef.disableClose = true;
+    }
 
     public daylogTypes: DaylogType[] = [];
     public sListVorschlag: string[] = [];
@@ -228,7 +230,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     ngOnInit(): void {
         this.loadDaylogTypes();
         // Beim bearbeiten die Vorschläge bereits vorladen
-        if (this.data.text.length > 2 ) {
+        if (this.data.text.length > 2) {
             this.getTextVorschlag();
         }
     }
@@ -253,7 +255,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     private loadTextVorschlag(): void {
         if (this.data.text.length > 1) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim().replace('/',"%2F") + '/' + this.data.typid).then((resdata: string[]) => {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim().replace('/', "%2F") + '/' + this.data.typid).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {
@@ -271,7 +273,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     public convertBool(b: boolean): string {
-        if (b){
+        if (b) {
             return "Y^";
         } else {
             return "N^";

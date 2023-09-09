@@ -189,7 +189,9 @@ export class ListeComponent implements OnInit {
   templateUrl: './liste.dialog.html',
 })
 export class ListeComponentDialogComponent implements OnInit {
-  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) { }
+  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
+    dialogRef.disableClose = true;
+  }
 
   public listeType: ListeType[];
 

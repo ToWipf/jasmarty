@@ -193,7 +193,9 @@ export class DayLogComponent implements OnInit {
   templateUrl: './daylog.dialogDay.html',
 })
 export class DaylogComponentDialogDayComponent {
-  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) { }
+  constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) {
+    dialogRef.disableClose = true;
+  }
 
   public onNoClick(): void {
     this.dialogRef.close();
