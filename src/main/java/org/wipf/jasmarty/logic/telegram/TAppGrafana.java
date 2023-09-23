@@ -91,7 +91,7 @@ public class TAppGrafana {
 	 * 
 	 */
 	public void deletePictureCache() {
-		for (String sFName : fileVw.getAllFiles()) {
+		for (String sFName : fileVw.listAllFiles()) {
 			if (sFName.startsWith("grafana_")) {
 				fileVw.delFile(sFName);
 			}

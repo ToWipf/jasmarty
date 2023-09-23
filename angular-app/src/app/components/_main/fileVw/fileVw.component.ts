@@ -72,6 +72,16 @@ export class FileVwComponent implements OnInit {
     });
   }
 
+  public async downloadItemAsPic(name: string): Promise<void> {
+    this.rest.downloadFile('../file/downloadScale/1110/' + name).pipe(take(1)).subscribe((response) => {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(new Blob([response.body], { type: response.body.type }));
+
+      downloadLink.download = name;
+      downloadLink.click();
+    });
+  }
+
   public uploadFile(files: FileList) {
     var fileToUpload: File | null = null;
     fileToUpload = files.item(0);

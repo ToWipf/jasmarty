@@ -34,7 +34,7 @@ public class FileRest {
 	@GET
 	@Path("getAll")
 	public Response getAll() {
-		return Response.ok(fileVw.getAllFiles()).build();
+		return Response.ok(fileVw.listAllFiles()).build();
 	}
 
 	@GET
@@ -42,6 +42,13 @@ public class FileRest {
 	@Path("download/{name}")
 	public Response download(@PathParam("name") String sName) {
 		return Response.ok(fileVw.getFile(sName)).build();
+	}
+
+	@GET
+	@Produces(MediaType.MULTIPART_FORM_DATA)
+	@Path("downloadScale/{size}/{name}")
+	public File downloadScale(@PathParam("size") Integer size, @PathParam("name") String sName) {
+		return fileVw.getImageBySize(size, sName);
 	}
 
 	@POST

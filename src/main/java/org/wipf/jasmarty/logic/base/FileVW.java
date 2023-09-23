@@ -1,7 +1,10 @@
 package org.wipf.jasmarty.logic.base;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -11,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
 import org.apache.commons.io.FileUtils;
@@ -32,7 +36,7 @@ public class FileVW {
 	/**
 	 * @return
 	 */
-	public List<String> getAllFiles() {
+	public List<String> listAllFiles() {
 		// File f = new File(Paths.get("").toAbsolutePath().toString() );
 		List<String> sl = new LinkedList<>();
 		File f = new File("files/");
@@ -51,7 +55,7 @@ public class FileVW {
 	public String getFilesForTelegram() {
 		StringBuilder sb = new StringBuilder();
 
-		for (String sF : getAllFiles()) {
+		for (String sF : listAllFiles()) {
 			if (!sF.startsWith("grafana_")) {
 				if (sb.length() > 0) {
 					sb.append("\n");
@@ -72,6 +76,49 @@ public class FileVW {
 		if (isSaveFileName(sFileName)) {
 			LOGGER.info("Get File " + sFileName);
 			return new File("files/" + sFileName);
+		}
+		return null;
+	}
+
+	/**
+	 * @param originalImage
+	 * @param targetWidth
+	 * @param targetHeight
+	 * @return
+	 * @throws IOException
+	 */
+	BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) throws IOException {
+		BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = resizedImage.createGraphics();
+		graphics2D.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+		graphics2D.dispose();
+		return resizedImage;
+	}
+
+	/**
+	 * @param size
+	 * @param sName
+	 * @return
+	 */
+	public File getImageBySize(Integer size, String sName) {
+		File f = getFile(sName);
+
+		File fout = getFile(sName + size);
+
+		if (fout.exists()) {
+			return fout;
+		} else {
+			try {
+				BufferedImage in = ImageIO.read(f);
+				BufferedImage img = resizeImage(in, size, in.getHeight() / 100 * in.getWidth() / 100 * size / 10000);
+
+				fout.createNewFile();
+				ImageIO.write(img, "jpg", fout);
+				return fout;
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return null;
 	}
@@ -154,4 +201,5 @@ public class FileVW {
 			LOGGER.warn("Kein Upload - Filename: " + sFN);
 		}
 	}
+
 }
