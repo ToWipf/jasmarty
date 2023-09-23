@@ -110,7 +110,7 @@ public class FileVW {
 		} else {
 			try {
 				BufferedImage in = ImageIO.read(f);
-				BufferedImage img = resizeImage(in, size, in.getHeight() / 100 * in.getWidth() / 100 * size / 10000);
+				BufferedImage img = resizeImage(in, size, (int) (((double) size / (double) in.getWidth()) * in.getHeight()));
 
 				fout.createNewFile();
 				ImageIO.write(img, "jpg", fout);

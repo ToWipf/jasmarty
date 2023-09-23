@@ -1,3 +1,5 @@
+import { View360Options } from "@egjs/ngx-view360";
+
 export interface Jaconfig {
   port?: string;
   refreshrate?: number;
@@ -160,4 +162,9 @@ export interface AuthKey {
   key?: string;
   info?: string;
   access?: boolean;
+}
+
+export interface WipfImage360 {
+  name?: string;
+  pic?: Partial<View360Options>;
 }

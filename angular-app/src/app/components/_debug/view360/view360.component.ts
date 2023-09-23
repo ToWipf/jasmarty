@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { View360Options, EquirectProjection } from '@egjs/ngx-view360';
 import { take } from 'rxjs';
+import { WipfImage360 } from 'src/app/datatypes';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -15,8 +16,8 @@ export class View360Component implements OnInit {
 
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-  public list: string[] = [];
-  public pic360List: Partial<View360Options>[] = [];
+  public pic360List: WipfImage360[] = [];
+  public big360pic: Partial<View360Options> = {};
 
   ngOnInit(): void {
     this.getBilderliste();
@@ -28,13 +29,15 @@ export class View360Component implements OnInit {
     this.rest.get('file/getAll').then((resdata: string[]) => {
       resdata.forEach((str) => {
         if (!str.startsWith(".") && str.includes(".jpg")) {
-          this.list.push(str);
-
-          this.pic360List.push({ autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/600/" + str }) });
+          this.pic360List.push({ name: str, pic: { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/600/" + str }) } });
         }
       })
       warten.close();
     });
+  }
+
+  public selectPic(e: String): void {
+    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/8000/" + e }) };
   }
 
 }

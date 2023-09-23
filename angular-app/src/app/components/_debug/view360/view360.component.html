@@ -1,6 +1,13 @@
 
-<div *ngFor="let imgname of list">
-{{imgname}}
+<div *ngFor="let p3 of pic360List">
+    <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
+
+    {{p3.name}}
+    <button class="btn btn-wipf-default btn-for-icon" (click)="selectPic(p3.name)">
+        <mat-icon svgIcon="download" aria-hidden="false" title="Zeigen"></mat-icon>
+    </button>
 </div>
 
-<ngx-view360 *ngFor="let p3 of pic360List" class="v360" [options]="p3"></ngx-view360>
+
+
+<ngx-view360 *ngIf="big360pic.autoplay" class="v360Big" [options]="big360pic"></ngx-view360>
