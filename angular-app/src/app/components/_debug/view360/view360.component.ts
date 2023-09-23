@@ -18,6 +18,8 @@ export class View360Component implements OnInit {
 
   public pic360List: WipfImage360[] = [];
   public big360pic: Partial<View360Options> = {};
+  public scale: number = 8000;
+  public oneBigView: boolean = false;
 
   ngOnInit(): void {
     this.getBilderliste();
@@ -36,8 +38,15 @@ export class View360Component implements OnInit {
     });
   }
 
-  public selectPic(e: String): void {
-    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/8000/" + e }) };
+  public selectPicSize(e: String): void {
+    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/" + this.scale + "/" + e }) };
+    this.oneBigView = true;
   }
+
+  public selectPicOrg(e: String): void {
+    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/download/" + e }) };
+    this.oneBigView = true;
+  }
+
 
 }

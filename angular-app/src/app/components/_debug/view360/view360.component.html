@@ -1,13 +1,27 @@
+<div class="box">
+    <mat-form-field>
+        <mat-label>Scale</mat-label>
+        <input matInput type="number" [(ngModel)]="scale">
+    </mat-form-field>
+</div>
+<button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon" (click)="oneBigView=false">
+    <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
+</button>
 
-<div *ngFor="let p3 of pic360List">
-    <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
+<div *ngIf="!oneBigView" class="galerie">
+    <div *ngFor="let p3 of pic360List" class="galerie_item">
+        <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
 
-    {{p3.name}}
-    <button class="btn btn-wipf-default btn-for-icon" (click)="selectPic(p3.name)">
-        <mat-icon svgIcon="download" aria-hidden="false" title="Zeigen"></mat-icon>
-    </button>
+        {{p3.name}}
+        <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
+            <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
+        </button>
+        <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name)">
+            <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
+        </button>
+    </div>
 </div>
 
 
 
-<ngx-view360 *ngIf="big360pic.autoplay" class="v360Big" [options]="big360pic"></ngx-view360>
+<ngx-view360 *ngIf="oneBigView" class="v360Big" [options]="big360pic"></ngx-view360>
