@@ -1,16 +1,19 @@
 <h3>Debug Seite</h3>
 <hr>
 
+<ngx-view360 class="is-16by9" [options]="options"></ngx-view360>
+
+
 <div class="gridRow">
     <div class="gridCol">
         <ul>
             <li>
                 Servertime <b>{{serverTime}}</b>
-                {{serverTime | date: 'dd.MM.yyyy HH:mm:ss :SSS'}} 
+                {{serverTime | date: 'dd.MM.yyyy HH:mm:ss :SSS'}}
             </li>
             <li>
                 Clienttime <b>{{clientTime}}</b>
-                {{clientTime | date: 'dd.MM.yyyy HH:mm:ss :SSS'}} 
+                {{clientTime | date: 'dd.MM.yyyy HH:mm:ss :SSS'}}
             </li>
             <li>
                 DIV <b>{{serverTime-clientTime}}</b>
