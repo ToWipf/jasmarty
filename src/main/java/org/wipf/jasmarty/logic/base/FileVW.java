@@ -103,7 +103,7 @@ public class FileVW {
 	public File getImageBySize(Integer size, String sName) {
 		File f = getFile(sName);
 
-		File fout = getFile(sName + size);
+		File fout = getFile("." + sName + "_" + size);
 
 		if (fout.exists()) {
 			return fout;

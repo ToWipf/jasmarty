@@ -1,1 +1,6 @@
-<ngx-view360 class="v360" [options]="pic360"></ngx-view360>
+
+<div *ngFor="let imgname of list">
+{{imgname}}
+</div>
+
+<ngx-view360 *ngFor="let p3 of pic360List" class="v360" [options]="p3"></ngx-view360>
