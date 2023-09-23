@@ -83,6 +83,8 @@ import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/lis
 import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/_main/authKey/authKey.component';
 import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
 import { GlowiComponent } from './components/glowi/glowi.component';
+import { NgxView360Module } from "@egjs/ngx-view360";
+import { View360Component } from './components/_debug/view360/view360.component';
 
 @NgModule({
     declarations: [
@@ -134,6 +136,7 @@ import { GlowiComponent } from './components/glowi/glowi.component';
         ListeTypeComponentDialogTypeListComponent,
         ListeTypeComponentDialogTypeComponent,
         ListeCryptComponentDialogComponent,
+        View360Component,
     ],
     imports: [
         BrowserModule,
@@ -184,6 +187,7 @@ import { GlowiComponent } from './components/glowi/glowi.component';
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
+        NgxView360Module,
         MatTreeModule,
         NgbModule,
         NgScrollbarModule,

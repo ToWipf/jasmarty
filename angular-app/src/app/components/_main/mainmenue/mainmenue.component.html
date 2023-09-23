@@ -31,6 +31,10 @@
                     <mat-icon svgIcon="picture" aria-hidden="false" title="Glowi"></mat-icon>
                     <span class="buttonInhalt"> Glowi </span>
                 </li>
+                <li (click)="selectSite('view360')" [ngClass]="{'isSelected' : selectedSite == 'view360'}">
+                    <mat-icon svgIcon="picture" aria-hidden="false" title="view360"></mat-icon>
+                    <span class="buttonInhalt"> View360 </span>
+                </li>
             </ul>
 
             <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
@@ -185,6 +189,9 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='glowi'">
                     <app-glowi></app-glowi>
+                </ng-container>
+                <ng-container *ngIf="selectedSite==='view360'">
+                    <app-view360></app-view360>
                 </ng-container>
             </div>
         </div>
