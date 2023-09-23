@@ -7,3 +7,4 @@
 /src/main/resources/META-INF/resources/app/
 *.db
 *jasmarty.jar
+*.jpg

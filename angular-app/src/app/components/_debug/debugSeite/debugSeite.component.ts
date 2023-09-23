@@ -14,19 +14,18 @@ export class DebugSeiteComponent implements OnInit {
 
   options: Partial<View360Options> = {
     projection: new EquirectProjection({
-      src: "/f6db763e-a50b-4745-9ec6-6230b11cb510.jpg",
+      src: "/20230922_203755_800-8k.jpg",
     })
+    
   };
- // src: "/20230922_203755_800.jpg",
-  //src: "/egjs-view360/pano/equirect/veste.jpg",
+  // src: "/20230922_203755_800.jpg",
+  // src: "/egjs-view360/pano/equirect/veste.jpg",
 
-  https://github.com/naver/egjs-view360/issues/384
-
-  
   public sSQL_IN: string;
   public sSQL_OUT: string;
   public serverTime: number;
   public clientTime: number;
+  public maxTextureSize: string;
 
   public testData = [
     { name: "ABC", value: 2 },
@@ -39,12 +38,9 @@ export class DebugSeiteComponent implements OnInit {
   ngOnInit() {
     this.loadUhr();
 
-
-  const canvas = document.createElement("canvas");
-  const gl = canvas.getContext("webgl");
-  const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-
-  console.log(maxTextureSize);
+    // Get Max Pic Size
+    const gl = document.createElement("canvas").getContext("webgl");
+    this.maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
   }
 
   public loadUhr(): void {

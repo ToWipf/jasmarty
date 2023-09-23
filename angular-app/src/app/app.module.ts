@@ -84,6 +84,7 @@ import { AuthKeyComponent, AuthKeyComponentDialogComponent } from './components/
 import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
 import { GlowiComponent } from './components/glowi/glowi.component';
 import { NgxView360Module } from "@egjs/ngx-view360";
+import { View360Component } from './components/_debug/view360/view360.component';
 
 @NgModule({
     declarations: [
@@ -135,6 +136,7 @@ import { NgxView360Module } from "@egjs/ngx-view360";
         ListeTypeComponentDialogTypeListComponent,
         ListeTypeComponentDialogTypeComponent,
         ListeCryptComponentDialogComponent,
+        View360Component,
     ],
     imports: [
         BrowserModule,
