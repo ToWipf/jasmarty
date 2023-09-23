@@ -74,7 +74,7 @@ public class FileVW {
 	 */
 	public File getFile(String sFileName) {
 		if (isSaveFileName(sFileName)) {
-			LOGGER.info("Get File " + sFileName);
+			// LOGGER.info("Get File " + sFileName);
 			return new File("files/" + sFileName);
 		}
 		return null;
@@ -102,6 +102,10 @@ public class FileVW {
 	 */
 	public File getImageBySize(Integer size, String sName) {
 		File f = getFile(sName);
+
+		if (f == null) {
+			return null;
+		}
 
 		File fout = getFile("." + sName + "_" + size);
 

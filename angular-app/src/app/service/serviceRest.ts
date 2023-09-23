@@ -19,7 +19,7 @@ export class ServiceRest {
 
   public setLoginData(user: string, passwort: string): void {
     // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
-    const sAuth = btoa(user + ":" + passwort)
+    const sAuth = btoa(user + ":" + passwort);
 
     this.setLogin(sAuth);
 

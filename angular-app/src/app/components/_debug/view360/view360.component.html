@@ -1,5 +1,4 @@
 <div class="configline">
-
     <h1>360</h1>
 
     <mat-form-field>
@@ -12,17 +11,18 @@
     </button>
 </div>
 
-<div *ngIf="!oneBigView" class="galerie">
-    <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
-        <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
+<ng-scrollbar class="pscroll" >
+    <div *ngIf="!oneBigView" class="galerie">
+        <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
+            <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
 
-        <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
-            <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
-        </button>
-        <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name)">
-            <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
-        </button>
+            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
+                <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
+            </button>
+            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name)">
+                <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
+            </button>
+        </div>
     </div>
-</div>
-
-<ngx-view360 *ngIf="oneBigView" class="v360Big" [options]="big360pic"></ngx-view360>
+    <ngx-view360 *ngIf="oneBigView" class="v360Big" [options]="big360pic"></ngx-view360>
+</ng-scrollbar>
