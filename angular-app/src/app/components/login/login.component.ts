@@ -14,7 +14,7 @@ export class LoginComponent {
   public sPasswort: string;
 
   public login(): void {
-    this.rest.setLoginData(this.sUsername, this.sPasswort);
+    this.rest.setLoginData(this.sUsername.trim(), this.sPasswort);
     this.rest.get("wipf/up").then(res => {
       if (res == 1) {
         this.sUsername = "";

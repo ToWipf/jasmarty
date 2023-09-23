@@ -1,18 +1,21 @@
-<div class="box">
+<div class="configline">
+
+    <h1>360</h1>
+
     <mat-form-field>
-        <mat-label>Scale</mat-label>
+        <mat-label>Skalierung beim anschauen</mat-label>
         <input matInput type="number" [(ngModel)]="scale">
     </mat-form-field>
+
+    <button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon" (click)="oneBigView=false">
+        <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
+    </button>
 </div>
-<button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon" (click)="oneBigView=false">
-    <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
-</button>
 
 <div *ngIf="!oneBigView" class="galerie">
-    <div *ngFor="let p3 of pic360List" class="galerie_item">
+    <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
         <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
 
-        {{p3.name}}
         <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
             <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
         </button>
@@ -21,7 +24,5 @@
         </button>
     </div>
 </div>
-
-
 
 <ngx-view360 *ngIf="oneBigView" class="v360Big" [options]="big360pic"></ngx-view360>

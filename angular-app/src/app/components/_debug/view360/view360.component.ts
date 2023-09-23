@@ -18,11 +18,14 @@ export class View360Component implements OnInit {
 
   public pic360List: WipfImage360[] = [];
   public big360pic: Partial<View360Options> = {};
-  public scale: number = 8000;
+  public scale: number = 1024;
   public oneBigView: boolean = false;
 
   ngOnInit(): void {
     this.getBilderliste();
+    // Get Max Pic Size
+    const gl = document.createElement("canvas").getContext("webgl");
+    this.scale = gl.getParameter(gl.MAX_TEXTURE_SIZE);
   }
 
   public getBilderliste(): void {
@@ -31,7 +34,7 @@ export class View360Component implements OnInit {
     this.rest.get('file/getAll').then((resdata: string[]) => {
       resdata.forEach((str) => {
         if (!str.startsWith(".") && str.includes(".jpg")) {
-          this.pic360List.push({ name: str, pic: { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/600/" + str }) } });
+          this.pic360List.push({ name: str, pic: { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/1000/" + str }) } });
         }
       })
       warten.close();
@@ -47,6 +50,5 @@ export class View360Component implements OnInit {
     this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/download/" + e }) };
     this.oneBigView = true;
   }
-
 
 }

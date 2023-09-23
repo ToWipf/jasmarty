@@ -193,7 +193,7 @@ public class FileVW {
 	 * @param f
 	 */
 	public void saveFile(String sFileName, File f) {
-		String sFN = sFileName.replaceAll("\\.", "").replaceAll("/", "");
+		String sFN = sFileName.replaceAll("\\.\\.", "").replaceAll("/", "");
 		if (wipf.isFilename(sFN)) {
 			LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFN);
 			f.renameTo(new File("files/" + sFN));

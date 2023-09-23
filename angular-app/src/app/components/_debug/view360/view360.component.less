@@ -1,8 +1,8 @@
 //@import "@egjs/view360/css/view360.min.css";
 
 .v360 {
-  width: 200px;
-  height: 100px;
+  width: 100%;
+  height: calc(100% - 25px);
   background-color: black;
 }
 
@@ -14,8 +14,11 @@
 
 .galerie {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .galerie_item {
   border: 1px solid gray;
+  width: 25%;
+  height: 150px;
 }
