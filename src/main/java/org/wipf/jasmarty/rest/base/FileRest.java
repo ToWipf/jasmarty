@@ -33,6 +33,7 @@ public class FileRest {
 	FileVW fileVw;
 
 	@GET
+	@PermitAll
 	@Path("getAll")
 	public Response getAll() {
 		return Response.ok(fileVw.listAllFiles()).build();

@@ -175,6 +175,9 @@
                     <app-daylogStats></app-daylogStats>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='login'">
+
+                    <button class="btn btn-wipf-default" (click)="useQuickLink('view360')">View360</button>
+
                     <app-login></app-login>
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
@@ -191,8 +194,8 @@
                 </ng-container>
             </div>
         </div>
-        <app-footer class="myfooter"></app-footer>
-        <button class="mainMenueHButton" (click)="drawer.toggle()">
+        <app-footer *ngIf="!bHideMenue" class="myfooter"></app-footer>
+        <button *ngIf="!bHideMenue" class="mainMenueHButton" (click)="drawer.toggle()">
             <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
         </button>
 

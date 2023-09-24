@@ -30,6 +30,7 @@ export class View360Component implements OnInit {
 
   public getBilderliste(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
+    this.pic360List = [];
 
     this.rest.get('file/getAll').then((resdata: string[]) => {
       resdata.forEach((str) => {
@@ -61,5 +62,9 @@ export class View360Component implements OnInit {
   //   });
   //   return re;
   // }
+
+  public exit(): void {
+    window.location.reload();
+  }
 
 }

@@ -20,6 +20,7 @@ export class MainmenueComponent implements OnInit {
   public bJasmartyActive: boolean = false;
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
+  public bHideMenue: boolean = false;
   public bEisenbahnMitlesenActive: boolean = false;
   public selectedSite: string = 'login';
 
@@ -29,9 +30,14 @@ export class MainmenueComponent implements OnInit {
     this.getActiveModules();
   }
 
-  public selectSite(s: string) {
+  public selectSite(s: string): void {
     this.drawer.toggle();
     this.selectedSite = s;
+  }
+
+  public useQuickLink(s: string): void {
+    this.selectedSite = s;
+    this.bHideMenue = true;
   }
 
   public getActiveModules(): void {

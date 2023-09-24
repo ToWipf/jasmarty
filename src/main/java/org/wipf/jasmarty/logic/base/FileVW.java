@@ -43,7 +43,9 @@ public class FileVW {
 
 		for (String sL : f.list()) {
 			// Grafana Bilder nicht listen
-			sl.add(sL);
+			if (!sL.startsWith(".")) {
+				sl.add(sL);
+			}
 		}
 
 		return sl;

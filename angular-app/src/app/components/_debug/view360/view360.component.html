@@ -1,5 +1,17 @@
 <div class="configline" *ngIf="!oneBigView">
-    <h1>360</h1>
+    <h1> Galerie 360 </h1>
+    <div class="iconbox">
+        Neu Laden:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="getBilderliste()">
+            <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+        </button>
+        <br>
+
+        Beenden:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="exit()">
+            <mat-icon svgIcon="cancel" aria-hidden="false" title="Exit"></mat-icon>
+        </button>
+    </div>
 
     <mat-form-field>
         <mat-label>Skalierung beim anschauen</mat-label>
@@ -11,7 +23,7 @@
     <ngx-view360 class="v360Big" [options]="big360pic"></ngx-view360>
 </div>
 
-<ng-scrollbar class="pscroll"  [ngClass]="{'hide': oneBigView}">
+<ng-scrollbar class="pscroll" [ngClass]="{'hide': oneBigView}">
     <div *ngIf="!oneBigView" class="galerie">
         <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
             <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
