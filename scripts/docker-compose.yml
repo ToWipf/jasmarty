@@ -1,0 +1,12 @@
+version: '3'
+services:
+    jasmarty:
+        container_name: jasmarty
+        volumes:
+#            - './tmp/jasmarty.db:/jasmarty.db'
+            - './tmp/files:/files1'
+        ports:
+            - '0.0.0.0:7711:8080'
+        image: 'ghcr.io/towipf/jasmarty/jasmarty:2023-09-24'
+        restart: always
+

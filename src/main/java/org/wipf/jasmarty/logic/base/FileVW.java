@@ -10,6 +10,9 @@ import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -202,7 +205,14 @@ public class FileVW {
 		String sFN = sFileName.replaceAll("\\.\\.", "").replaceAll("/", "");
 		if (wipf.isFilename(sFN)) {
 			LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFN);
-			f.renameTo(new File("files/" + sFN));
+			// f.renameTo(new File("files/" + sFN));
+
+			try {
+				Files.move(Paths.get(f.getPath()), Paths.get("files/" + sFN), StandardCopyOption.REPLACE_EXISTING);
+
+			} catch (IOException e) {
+				LOGGER.warn("Upload Fail - Filename: " + sFN + " - " + e);
+			}
 		} else {
 			LOGGER.warn("Kein Upload - Filename: " + sFN);
 		}
