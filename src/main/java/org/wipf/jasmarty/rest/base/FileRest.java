@@ -2,6 +2,7 @@ package org.wipf.jasmarty.rest.base;
 
 import java.io.File;
 
+import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class FileRest {
 	}
 
 	@GET
+	@PermitAll
 	@Produces(MediaType.MULTIPART_FORM_DATA)
 	@Path("download/{name}")
 	public Response download(@PathParam("name") String sName) {
@@ -45,11 +47,21 @@ public class FileRest {
 	}
 
 	@GET
+	@PermitAll
 	@Produces(MediaType.MULTIPART_FORM_DATA)
 	@Path("downloadScale/{size}/{name}")
 	public File downloadScale(@PathParam("size") Integer size, @PathParam("name") String sName) {
 		return fileVw.getImageBySize(size, sName);
 	}
+
+//	@GET
+//	@Produces(MediaType.TEXT_PLAIN)
+//	@Path("downloadScaleB64/{size}/{name}")
+//	public String downloadScaleB64(@PathParam("size") Integer size, @PathParam("name") String sName) throws IOException {
+//
+//		String img = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(fileVw.getImageBySize(size, sName)));
+//		return "data:image/jpg;base64, " + img;
+//	}
 
 	@POST
 	@Path("upload/{filename}")

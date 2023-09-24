@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { View360Options, EquirectProjection } from '@egjs/ngx-view360';
-import { take } from 'rxjs';
+import { retry, take } from 'rxjs';
 import { WipfImage360 } from 'src/app/datatypes';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -35,6 +35,7 @@ export class View360Component implements OnInit {
       resdata.forEach((str) => {
         if (!str.startsWith(".") && str.includes(".jpg")) {
           this.pic360List.push({ name: str, pic: { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/1000/" + str }) } });
+          // this.pic360List.push({ name: str, pic: { autoplay: true, projection: new EquirectProjection({ src: this.downloadItemToBase64("../file/downloadScaleB64/1000/" + str) }) } });
         }
       })
       warten.close();
@@ -50,5 +51,15 @@ export class View360Component implements OnInit {
     this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/download/" + e }) };
     this.oneBigView = true;
   }
+
+  //this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==' }) };
+  // public downloadItemToBase64(name: string): string {
+  //   var re: string = "";
+  //   this.rest.get(name).then((response: string) => {
+  //     console.log(response);
+  //     re = (response);
+  //   });
+  //   return re;
+  // }
 
 }

@@ -124,10 +124,6 @@
             </mat-form-field>
         </div>
         <div class="fullsite background1">
-            <button class="mainMenueHButton" (click)="drawer.toggle()">
-                <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
-            </button>
-
             <div class="maincontainer">
                 <ng-container *ngIf="selectedSite==='actions'">
                     <app-jasmartyActions></app-jasmartyActions>
@@ -196,6 +192,10 @@
             </div>
         </div>
         <app-footer class="myfooter"></app-footer>
+        <button class="mainMenueHButton" (click)="drawer.toggle()">
+            <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
+        </button>
+
     </mat-drawer-content>
 
 </mat-drawer-container>

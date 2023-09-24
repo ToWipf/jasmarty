@@ -1,17 +1,17 @@
-<div class="configline">
+<div class="configline" *ngIf="!oneBigView">
     <h1>360</h1>
 
     <mat-form-field>
         <mat-label>Skalierung beim anschauen</mat-label>
         <input matInput type="number" [(ngModel)]="scale">
     </mat-form-field>
-
-    <button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon" (click)="oneBigView=false">
-        <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
-    </button>
 </div>
 
-<ng-scrollbar class="pscroll" >
+<div *ngIf="oneBigView">
+    <ngx-view360 class="v360Big" [options]="big360pic"></ngx-view360>
+</div>
+
+<ng-scrollbar class="pscroll"  [ngClass]="{'hide': oneBigView}">
     <div *ngIf="!oneBigView" class="galerie">
         <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
             <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
@@ -24,5 +24,9 @@
             </button>
         </div>
     </div>
-    <ngx-view360 *ngIf="oneBigView" class="v360Big" [options]="big360pic"></ngx-view360>
 </ng-scrollbar>
+
+
+<button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon v360back" (click)="oneBigView=false">
+    <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
+</button>
