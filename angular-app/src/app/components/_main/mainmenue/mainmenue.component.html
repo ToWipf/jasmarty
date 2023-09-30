@@ -176,9 +176,12 @@
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='login'">
 
-                    <button class="btn btn-wipf-default" (click)="useQuickLink('view360')">View360</button>
-
                     <app-login></app-login>
+                    <hr>
+                    <h1>QuickLinks</h1>
+                    <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
+                    <button class="btn btn-wipf-default loginseitebutton" (click)="drawer.toggle()">Menü</button>
+
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
                     <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
