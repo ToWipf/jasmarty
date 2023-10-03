@@ -180,7 +180,9 @@
                     <hr>
                     <h1>QuickLinks</h1>
                     <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
-                    <button class="btn btn-wipf-default loginseitebutton" (click)="drawer.toggle()">Menü</button>
+                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="drawer.toggle()">Menü</button>
+                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">DayLog Now</button>
+                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">Zur Liste hinzufügen</button>
 
                 </ng-container>
                 <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">

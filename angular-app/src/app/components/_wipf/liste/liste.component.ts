@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,6 +9,10 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { ListeServiceColor } from './liste.service.color';
 import { ListeCryptComponentDialogComponent } from './listeCrypt.component';
 import { ListeTypeComponentDialogTypeListComponent } from './listeType.component';
+
+@Injectable({
+  providedIn: 'root',
+})
 
 @Component({
   selector: 'app-liste',

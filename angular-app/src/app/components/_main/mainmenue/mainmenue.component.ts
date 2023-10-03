@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
-import { Jaconfig } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceVersion } from 'src/app/service/serviceVersion';
+// import { ListeComponent } from '../../_wipf/liste/liste.component';
+import { ListeComponent } from 'src/app/components/_wipf/liste/liste.component';
 
 @Component({
   selector: 'app-mainmenue',
@@ -11,7 +12,7 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
 })
 export class MainmenueComponent implements OnInit {
 
-  constructor(private rest: ServiceRest, private serviceVersion: ServiceVersion) { }
+  constructor(private rest: ServiceRest, private serviceVersion: ServiceVersion, public listevw: ListeComponent) { }
 
 
   @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
@@ -73,5 +74,9 @@ export class MainmenueComponent implements OnInit {
     this.bTelegramActive = true;
     this.bWipfActive = true;
     this.bEisenbahnMitlesenActive = true;
+  }
+
+  public addThingToList(): void {
+    this.listevw.newItem();
   }
 }
