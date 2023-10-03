@@ -63,12 +63,16 @@ public class LcdRefreshLoop {
 			@Override
 			public void run() {
 
+				LOGGER.info("Refreshloop: " + bLoopActive);
 				while (bLoopActive) {
 					try {
 						if (lcdConnect.isLcdOk()) {
 							actionVerwaltung.doActionByButtonNr(lcdConnect.readButton());
 							lcd12864PageConverter.refreshCurrentPageToCache();
 							lcd12864.refreshDisplay();
+						} else {
+							LOGGER.warn("LCD not ok - Stop");
+							bLoopActive = false;
 						}
 						Thread.sleep(lcdConnect.getRefreshRate() + lcd12864PageConverter.getCurrentTimeoutime());
 
