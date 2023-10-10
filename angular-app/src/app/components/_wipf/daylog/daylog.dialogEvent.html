@@ -39,7 +39,7 @@
         Vorschläge({{sListVorschlag.length}}):
 
         <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
-            <button class="vorschlagButton" (click)="vorschlagToData(sItem)"> {{sItem}}</button>
+            <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
         </div>
     </div>
 </mat-dialog-content>

@@ -75,11 +75,11 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         else if (this.dateForLoad.date === "Alle-Events") {
             this.loadAllEvents();
             this.applyFilter();
-            this.applyFilterByType();
+            this.applyFilterByType(); // TODO: geht nicht -> Edit mit Filter -> Filter weg
         } else {
             this.loadEventsByDay(this.dateForLoad);
             this.applyFilter();
-            this.applyFilterByType();
+            this.applyFilterByType(); // TODO: geht nicht -> Edit mit Filter -> Filter weg
         }
     }
 
