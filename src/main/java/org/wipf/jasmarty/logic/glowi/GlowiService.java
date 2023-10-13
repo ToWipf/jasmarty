@@ -39,8 +39,6 @@ public class GlowiService {
 	 * @return
 	 */
 	public String getFullScreen() {
-		LOGGER.info("getFullESPScreen");
-
 		StringBuilder sb = new StringBuilder();
 
 		boolean inverntLine = true;
@@ -68,8 +66,6 @@ public class GlowiService {
 	 * @return
 	 */
 	public String getDivScreen() {
-		LOGGER.info("getChangesESPScreen");
-
 		StringBuilder sb = new StringBuilder();
 
 		for (Entry<Integer, GlowiData> ch : cache.getChanges().entrySet()) {
@@ -125,7 +121,6 @@ public class GlowiService {
 	 * 
 	 */
 	public void cls() {
-		System.out.println("cls");
 		modus = modus_type.NONE;
 		cache.cls();
 	}
