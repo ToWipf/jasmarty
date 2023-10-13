@@ -33,6 +33,19 @@ public class GlowiCache {
 	 */
 	public void setFull(GlowiData[][] gd) {
 		this.cache = gd;
+		resetListOfChanges();
+	}
+
+	/**
+	 * 
+	 */
+	private void resetListOfChanges() {
+		listOfChanges.clear();
+		for (int x = 0; x < GlowiService.SIZE; x++) {
+			for (int y = 0; y < GlowiService.SIZE; y++) {
+				listOfChanges.put(kodrToID(x, y), this.cache[x][y]);
+			}
+		}
 	}
 
 	/**
