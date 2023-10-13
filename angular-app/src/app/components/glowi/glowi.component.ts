@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NgxCroppedEvent, NgxPhotoEditorService } from 'ngx-photo-editor';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
@@ -10,14 +11,69 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 })
 export class GlowiComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, private ngxPhotoEditorService: NgxPhotoEditorService) { }
 
   public size: Number;
   public bLoopStop: boolean = true;
   public mtttData: MtttData[][];
 
+  public imageChangedEvent: any;
+  public imageoutput?: NgxCroppedEvent;
+  public nKontrast: number = 256 / 2;
+
   ngOnInit(): void {
     this.getCache();
+  }
+
+  fileChangeHandler($event: any) {
+    this.ngxPhotoEditorService.open($event, {
+      aspectRatio: 1 / 1,
+      resizeToHeight: 15,
+      autoCropArea: 1
+    }).subscribe(data => {
+      this.imageoutput = data;
+      // this.serviceWipf.delay(1000).then(() => {
+      this.convertImgToArray();
+      // });
+    });
+  }
+
+  public convertImgToArray(): void {
+    if (this.imageoutput.base64) {
+      const myimage = new Image();
+      myimage.src = this.imageoutput.base64;
+
+      const cnx = document.createElement('canvas').getContext('2d');
+
+      cnx.drawImage(myimage, 0, 0);
+      const width = myimage.width;
+      const height = myimage.height;
+      if (width != 0) {
+        const imgPixels = cnx.getImageData(0, 0, width, height);
+        for (let y = 0; y < height; y++) {
+          for (let x = 0; x < width; x++) {
+            const i = (y * 4) * width + x * 4;
+            this.mtttData[y][x].farbe_R = this.calcColor(imgPixels.data[i] - this.nKontrast);
+            this.mtttData[y][x].farbe_G = this.calcColor(imgPixels.data[i + 1] - this.nKontrast);
+            this.mtttData[y][x].farbe_B = this.calcColor(imgPixels.data[i + 2] - this.nKontrast);
+          }
+        }
+      }
+    }
+  }
+
+  private calcColor(inN: number): number {
+    if (inN < 0) {
+      return 0;
+    } else if (inN > 255) {
+      return 255;
+    } else {
+      return inN;
+    }
+  }
+
+  public saveFull(): void {
+    this.rest.post('glowi/setFull', this.mtttData).then(() => this.getCache())
   }
 
   public getCache(): void {

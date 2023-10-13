@@ -29,6 +29,13 @@ public class GlowiCache {
 	}
 
 	/**
+	 * @param gd
+	 */
+	public void setFull(GlowiData[][] gd) {
+		this.cache = gd;
+	}
+
+	/**
 	 * Alle Pixel auf default
 	 */
 	public void cls() {

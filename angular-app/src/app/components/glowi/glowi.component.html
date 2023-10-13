@@ -1,13 +1,7 @@
 <h1>Glowi</h1>
 <table>
     <tr *ngFor="let xA of mtttData; let x = index">
-        <td 
-        *ngFor="let yA of xA; let y = index" 
-        title="{{x}}/{{y}}" 
-        [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}" 
-        class="led-box" 
-        (click)="doClick(x,y)"
-        >
+        <td *ngFor="let yA of xA; let y = index" title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}" class="led-box" (click)="doClick(x,y)">
             <div>
                 {{mtttData[x][y].funktion}}
             </div>
@@ -19,3 +13,10 @@
 <button class="btn btn-wipf-default" *ngIf="bLoopStop" (click)="startAutoload()">Starte Autoladen</button>
 <button class="btn btn-wipf-default" *ngIf="!bLoopStop" (click)="bLoopStop=true">Stoppe Autoladen</button>
 <button class="btn btn-wipf-default" (click)="cls()">CLS</button>
+
+
+<input type="file" (change)="fileChangeHandler($event)">
+<ng-container *ngIf="imageoutput?.base64">
+    <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider>
+</ng-container>
+<button class="btn btn-wipf-default" (click)="saveFull()">Bild Speichern</button>

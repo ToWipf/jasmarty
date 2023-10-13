@@ -5,6 +5,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -36,6 +37,14 @@ public class GlowiRest {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getfull() {
 		return glowi.getFullScreen();
+	}
+
+	@POST
+	@PermitAll
+	@Path("setFull")
+	@Produces(MediaType.TEXT_PLAIN)
+	public void setfull(GlowiData[][] gd) {
+		glowi.setFullScreen(gd);
 	}
 
 	@GET

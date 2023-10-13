@@ -139,4 +139,11 @@ public class GlowiService {
 		return getDivScreen();
 	}
 
+	/**
+	 * @param gd
+	 */
+	public void setFullScreen(GlowiData[][] gd) {
+		cache.setFull(gd);
+	}
+
 }

@@ -17,7 +17,7 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public imageChangedEvent: any;
-  imageoutput?: NgxCroppedEvent;
+  public imageoutput?: NgxCroppedEvent;
   public nKontrast: number = 256 / 2;
   public lcdDescription: Lcd12864PageDescription = {};
 
