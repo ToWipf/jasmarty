@@ -19,7 +19,7 @@ export class GlowiComponent implements OnInit {
 
   public imageChangedEvent: any;
   public imageoutput?: NgxCroppedEvent;
-  public nKontrast: number = 256 / 2;
+  public nKontrast: number = 70;
 
   ngOnInit(): void {
     this.getCache();
