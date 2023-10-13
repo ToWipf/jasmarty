@@ -32,9 +32,10 @@ export class GlowiComponent implements OnInit {
       autoCropArea: 1
     }).subscribe(data => {
       this.imageoutput = data;
-      // this.serviceWipf.delay(1000).then(() => {
       this.convertImgToArray();
-      // });
+      this.serviceWipf.delay(100).then(() => {
+        this.convertImgToArray();
+      });
     });
   }
 
@@ -56,6 +57,7 @@ export class GlowiComponent implements OnInit {
             this.mtttData[y][x].farbe_R = this.calcColor(imgPixels.data[i] - this.nKontrast);
             this.mtttData[y][x].farbe_G = this.calcColor(imgPixels.data[i + 1] - this.nKontrast);
             this.mtttData[y][x].farbe_B = this.calcColor(imgPixels.data[i + 2] - this.nKontrast);
+            this.mtttData[y][x].funktion = "Pic";
           }
         }
       }
@@ -82,9 +84,12 @@ export class GlowiComponent implements OnInit {
       // fix farben
       this.mtttData.forEach((da: MtttData[]) => {
         da.forEach((d: MtttData) => {
-          d.farbe_R = d.farbe_R * 2;
-          d.farbe_G = d.farbe_G * 2;
-          d.farbe_B = d.farbe_B * 2;
+          if (d.funktion != "Pic") {
+            // Farben verstärken
+            d.farbe_R = d.farbe_R * 2;
+            d.farbe_G = d.farbe_G * 2;
+            d.farbe_B = d.farbe_B * 2;
+          }
         });
       });
     });
