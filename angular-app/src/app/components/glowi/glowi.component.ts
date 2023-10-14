@@ -67,8 +67,8 @@ export class GlowiComponent implements OnInit {
   private calcColor(inN: number): number {
     if (inN < 0) {
       return 0;
-    } else if (inN > 127) {
-      return 127;
+    } else if (inN > 126) {
+      return 126;
     } else {
       return inN;
     }

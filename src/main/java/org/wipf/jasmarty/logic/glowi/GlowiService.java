@@ -55,9 +55,24 @@ public class GlowiService {
 				GlowiData val = cache.getByXY(x, y);
 
 				sb.append(String.format("%03d", koordinatenIndex)); // Kein unsigned byte oder char in Java :(
-				sb.append((char) val.farbe_R);
-				sb.append((char) val.farbe_G);
-				sb.append((char) val.farbe_B);
+				if (val.farbe_R < 127) {
+					sb.append((char) val.farbe_R);
+				} else {
+					LOGGER.warn("R zu hoch! " + val.farbe_R);
+					sb.append((char) 127);
+				}
+				if (val.farbe_G < 127) {
+					LOGGER.warn("B zu hoch! " + val.farbe_B);
+					sb.append((char) val.farbe_G);
+				} else {
+					sb.append((char) 127);
+				}
+				if (val.farbe_B < 127) {
+					LOGGER.warn("B zu hoch! " + val.farbe_B);
+					sb.append((char) val.farbe_B);
+				} else {
+					sb.append((char) 127);
+				}
 			}
 		}
 
