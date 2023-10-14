@@ -12,7 +12,7 @@ public class GlowiData {
 	public String funktion = "";
 
 	public enum farbe {
-		ROT, GRUEN, BLAU, GRAU, GELB, SCHWARZ
+		ROT, GRUEN, BLAU, GRAU, GELB, SCHWARZ, AUS
 	};
 
 	public GlowiData() {
@@ -63,6 +63,11 @@ public class GlowiData {
 			farbe_R = 4;
 			farbe_G = 4;
 			farbe_B = 3;
+			break;
+		case AUS:
+			farbe_R = 0;
+			farbe_G = 0;
+			farbe_B = 0;
 			break;
 
 		default:

@@ -33,13 +33,6 @@ public class GlowiCache {
 	 */
 	public void setFull(GlowiData[][] gd) {
 		this.cache = gd;
-		resetListOfChanges();
-	}
-
-	/**
-	 * 
-	 */
-	private void resetListOfChanges() {
 		listOfChanges.clear();
 		for (int x = 0; x < GlowiService.SIZE; x++) {
 			for (int y = 0; y < GlowiService.SIZE; y++) {
@@ -52,6 +45,7 @@ public class GlowiCache {
 	 * Alle Pixel auf default
 	 */
 	public void cls() {
+		listOfChanges.clear();
 		for (int x = 0; x < GlowiService.SIZE; x++) {
 			for (int y = 0; y < GlowiService.SIZE; y++) {
 				GlowiData m = new GlowiData();
@@ -121,33 +115,33 @@ public class GlowiCache {
 	////////////////////////////////////////////////////////////////
 
 	/**
-	 * @param x0
-	 * @param x1
-	 * @param y
+	 * @param y0
+	 * @param y1
+	 * @param x
 	 * @param m
 	 */
-	public void drawLineH(int x0, int x1, int y, GlowiData m) {
-		if (x1 > x0)
-			for (int x = x0; x <= x1; x++)
-				this.setByXY(x, y, m);
+	public void drawLineV(int y0, int y1, int x, GlowiData m) {
+		if (y1 > y0)
+			for (int xx = y0; xx <= y1; xx++)
+				this.setByXY(xx, x, m);
 		else
-			for (int x = x1; x <= x0; x++)
-				this.setByXY(x, y, m);
+			for (int xx = y1; xx <= y0; xx++)
+				this.setByXY(xx, x, m);
 	}
 
 	/**
-	 * @param x
-	 * @param y0
-	 * @param y1
+	 * @param y
+	 * @param x0
+	 * @param x1
 	 * @param m
 	 */
-	public void drawLineV(int x, int y0, int y1, GlowiData m) {
-		if (y1 > y0)
-			for (int y = y0; y <= y1; y++)
-				this.setByXY(x, y, m);
+	public void drawLineH(int y, int x0, int x1, GlowiData m) {
+		if (x1 > x0)
+			for (int yy = x0; yy <= x1; yy++)
+				this.setByXY(y, yy, m);
 		else
-			for (int y = y1; y <= y0; y++)
-				this.setByXY(x, y, m);
+			for (int yy = x1; yy <= x0; yy++)
+				this.setByXY(y, yy, m);
 	}
 
 	/**
@@ -165,7 +159,7 @@ public class GlowiCache {
 		if (y + h >= 64)
 			h = 64 - y;
 		for (int i = y; i < y + h; i++)
-			drawLineH(x, x + w - 1, i, m);
+			drawLineV(x, x + w - 1, i, m);
 	}
 
 }

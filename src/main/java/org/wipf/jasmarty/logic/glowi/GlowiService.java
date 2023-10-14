@@ -21,7 +21,7 @@ public class GlowiService {
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
 
 	public enum modus_type {
-		MTTT, NONE
+		MTTT, RND, FLIP
 	};
 
 	public modus_type modus;
@@ -34,6 +34,8 @@ public class GlowiService {
 	GA_Mttt mttt;
 	@Inject
 	GA_RND rnd;
+	@Inject
+	GA_Flip flip;
 
 	/**
 	 * @return
@@ -86,6 +88,8 @@ public class GlowiService {
 
 			if (modus == modus_type.MTTT) {
 				mttt.doSet(x, y);
+			} else if (modus == modus_type.FLIP) {
+				flip.doSet(x, y);
 			} else {
 				rnd.doRNDInput(x, y);
 			}
@@ -121,7 +125,7 @@ public class GlowiService {
 	 * 
 	 */
 	public void cls() {
-		modus = modus_type.NONE;
+		modus = modus_type.RND;
 		cache.cls();
 	}
 
@@ -129,8 +133,17 @@ public class GlowiService {
 	 * @return
 	 */
 	public String startApp() {
-		mttt.loadNewGame();
-		modus = modus_type.MTTT;
+		// Spiele durchschalten
+		if (modus == modus_type.RND) {
+			mttt.loadNewGame();
+			modus = modus_type.MTTT;
+		} else if (modus == modus_type.MTTT) {
+			flip.loadNewGame();
+			modus = modus_type.FLIP;
+		} else {
+			rnd.loadNewGame();
+			modus = modus_type.RND;
+		}
 		return getDivScreen();
 	}
 

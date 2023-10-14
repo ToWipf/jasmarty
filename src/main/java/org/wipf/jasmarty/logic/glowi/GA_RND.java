@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.glowi;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.base.Wipf;
 
@@ -13,6 +14,15 @@ public class GA_RND {
 	GlowiCache cache;
 	@Inject
 	Wipf wipf;
+
+	private static final Logger LOGGER = Logger.getLogger("GA_RND");
+
+	public void loadNewGame() {
+		LOGGER.info("Neues Spiel");
+
+		// Alles zurücksetzen
+		this.cache.cls();
+	}
 
 	/**
 	 * @param x

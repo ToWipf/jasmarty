@@ -7,26 +7,25 @@ import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 
+/**
+ * 
+ */
 @ApplicationScoped
 public class GA_Mttt {
 
-	/**
-	 * @author devbuntu
-	 *
-	 */
+	@Inject
+	GlowiCache cache;
+
 	public class mtttPunkt {
 		public int x;
 		public int y;
 	}
 
-	@Inject
-	GlowiCache cache;
+	private static final Logger LOGGER = Logger.getLogger("GA_MTTT");
 
 	public enum werdran {
 		SPIELER_X, SPIELER_Y
 	};
-
-	private static final Logger LOGGER = Logger.getLogger("MTTT");
 
 	public werdran werIstDran;
 
@@ -36,29 +35,22 @@ public class GA_Mttt {
 	public void loadNewGame() {
 		LOGGER.info("Neues Spiel");
 
-		// Alle zurücksetzen
-		for (GlowiData[] x : this.cache.getCache()) {
-			for (GlowiData y : x) {
-				y.farbe_R = 0;
-				y.farbe_G = 0;
-				y.farbe_B = 0;
-				y.funktion = "L";
-			}
-		}
+		// Alles zurücksetzen
+		this.cache.cls();
 
 		// Gitter erstellen
 		GlowiData randteil = new GlowiData();
 		randteil.setFarbe(farbe.GRAU);
 		randteil.funktion = "B";
-		this.cache.drawLineH(0, 11, 0, randteil);
-		this.cache.drawLineH(0, 11, 4, randteil);
-		this.cache.drawLineH(0, 11, 8, randteil);
-		this.cache.drawLineH(0, 11, 12, randteil);
+		this.cache.drawLineV(0, 11, 0, randteil);
+		this.cache.drawLineV(0, 11, 4, randteil);
+		this.cache.drawLineV(0, 11, 8, randteil);
+		this.cache.drawLineV(0, 11, 12, randteil);
 
-		this.cache.drawLineV(0, 0, 11, randteil);
-		this.cache.drawLineV(4, 0, 11, randteil);
-		this.cache.drawLineV(8, 0, 11, randteil);
-		this.cache.drawLineV(12, 0, 12, randteil);
+		this.cache.drawLineH(0, 0, 11, randteil);
+		this.cache.drawLineH(4, 0, 11, randteil);
+		this.cache.drawLineH(8, 0, 11, randteil);
+		this.cache.drawLineH(12, 0, 12, randteil);
 
 		// Pixel auserhalb setzen // TODO hier wird die SIZE nicht beachtet
 		GlowiData auserhalb = new GlowiData();
@@ -66,10 +58,10 @@ public class GA_Mttt {
 		auserhalb.farbe_G = 0;
 		auserhalb.farbe_B = 0;
 		auserhalb.funktion = "A";
-		this.cache.drawLineH(0, 14, 13, auserhalb);
-		this.cache.drawLineH(0, 14, 14, auserhalb);
-		this.cache.drawLineV(13, 0, 14, auserhalb);
-		this.cache.drawLineV(14, 0, 14, auserhalb);
+		this.cache.drawLineV(0, 14, 13, auserhalb);
+		this.cache.drawLineV(0, 14, 14, auserhalb);
+		this.cache.drawLineH(13, 0, 14, auserhalb);
+		this.cache.drawLineH(14, 0, 14, auserhalb);
 
 		// Spielfelder
 		GlowiData feld = new GlowiData();
