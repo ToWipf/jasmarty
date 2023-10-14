@@ -28,9 +28,9 @@ public class GA_Flip {
 		this.cache.cls();
 
 		// Zufallsfeld erstellen
-		GlowiData teil = new GlowiData();
-		teil.funktion = "B";
 		for (int px = 0; px < wipf.getRandomInt(50) + 10; px++) {
+			GlowiData teil = new GlowiData();
+			teil.funktion = "B";
 			teil.setFarbe(getRNDFarbe());
 			this.cache.setByXY(wipf.getRandomInt(15), wipf.getRandomInt(15), teil);
 		}
