@@ -62,15 +62,15 @@ public class GlowiService {
 					sb.append((char) 127);
 				}
 				if (val.farbe_G < 127) {
-					LOGGER.warn("B zu hoch! " + val.farbe_B);
 					sb.append((char) val.farbe_G);
 				} else {
+					LOGGER.warn("G zu hoch! " + val.farbe_G);
 					sb.append((char) 127);
 				}
 				if (val.farbe_B < 127) {
-					LOGGER.warn("B zu hoch! " + val.farbe_B);
 					sb.append((char) val.farbe_B);
 				} else {
+					LOGGER.warn("B zu hoch! " + val.farbe_B);
 					sb.append((char) 127);
 				}
 			}

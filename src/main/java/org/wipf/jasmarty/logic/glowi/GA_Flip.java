@@ -32,7 +32,7 @@ public class GA_Flip {
 			GlowiData teil = new GlowiData();
 			teil.funktion = "B";
 			teil.setFarbe(getRNDFarbe());
-			this.cache.setByXY(wipf.getRandomInt(15), wipf.getRandomInt(15), teil);
+			this.cache.setByXY(wipf.getRandomInt(GlowiService.SIZE), wipf.getRandomInt(GlowiService.SIZE), teil);
 		}
 	}
 
@@ -111,13 +111,13 @@ public class GA_Flip {
 		if (x != 0) {
 			this.cache.setByXY(x - 1, y, filpTeil(this.cache.getByXY(x - 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
-		if (x != 14) {
+		if (x != GlowiService.SIZE - 1) {
 			this.cache.setByXY(x + 1, y, filpTeil(this.cache.getByXY(x + 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		if (y != 0) {
 			this.cache.setByXY(x, y - 1, filpTeil(this.cache.getByXY(x, y - 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
-		if (y != 14) {
+		if (y != GlowiService.SIZE - 1) {
 			this.cache.setByXY(x, y + 1, filpTeil(this.cache.getByXY(x, y + 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		this.cache.setByXY(x, y, filpTeil(tile, tile.farbe_R, tile.farbe_G, tile.farbe_B));
