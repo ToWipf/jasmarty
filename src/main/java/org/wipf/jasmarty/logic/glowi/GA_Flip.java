@@ -59,7 +59,7 @@ public class GA_Flip {
 	 * @param t
 	 * @param clickFarbe
 	 */
-	private void filpTeil(GlowiData t, int farbeR, int farbeG, int farbeB) {
+	private GlowiData filpTeil(GlowiData t, int farbeR, int farbeG, int farbeB) {
 		if (t.funktion == "N") {
 			t.funktion = "B";
 			t.farbe_R = farbeR;
@@ -69,6 +69,7 @@ public class GA_Flip {
 			t.funktion = "N";
 			t.setFarbe(farbe.AUS);
 		}
+		return t;
 	}
 
 	private boolean checkSieg() {
@@ -108,18 +109,18 @@ public class GA_Flip {
 
 		// die vier Nachbarn drehen
 		if (x != 0) {
-			filpTeil(this.cache.getByXY(x - 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B);
+			this.cache.setByXY(x - 1, y, filpTeil(this.cache.getByXY(x - 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		if (x != 14) {
-			filpTeil(this.cache.getByXY(x + 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B);
+			this.cache.setByXY(x + 1, y, filpTeil(this.cache.getByXY(x + 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		if (y != 0) {
-			filpTeil(this.cache.getByXY(x, y - 1), tile.farbe_R, tile.farbe_G, tile.farbe_B);
+			this.cache.setByXY(x, y - 1, filpTeil(this.cache.getByXY(x, y - 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		if (y != 14) {
-			filpTeil(this.cache.getByXY(x, y + 1), tile.farbe_R, tile.farbe_G, tile.farbe_B);
+			this.cache.setByXY(x, y + 1, filpTeil(this.cache.getByXY(x, y + 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
-		filpTeil(tile, tile.farbe_R, tile.farbe_G, tile.farbe_B);
+		this.cache.setByXY(x, y, filpTeil(tile, tile.farbe_R, tile.farbe_G, tile.farbe_B));
 
 		if (checkSieg()) {
 			SiegAllesBunt();
