@@ -77,7 +77,7 @@
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jfreesvg</artifactId>
-			<version>3.3</version>
+			<version>3.4.3</version>
 		</dependency>
 	</dependencies>
 	<build>
