@@ -1,6 +1,7 @@
 {
     "files.exclude": {
-        "**/node_modules": true
+        "**/node_modules": true,
+        "**/.cache": true
     },
     "editor.minimap.maxColumn": 180,
     "editor.fontSize": 12,
