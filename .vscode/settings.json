@@ -3,11 +3,12 @@
         "**/node_modules": true,
         "**/.cache": true
     },
-    "editor.minimap.maxColumn": 180,
+    "editor.minimap.maxColumn": 300,
     "editor.fontSize": 12,
     "terminal.integrated.fontSize": 12,
     "prettier.printWidth": 300,
     "html.format.wrapLineLength": 300,
     "gitlens.codeLens.enabled": false,
-    "terminal.integrated.persistentSessionReviveProcess": "never"
+    "terminal.integrated.persistentSessionReviveProcess": "never",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

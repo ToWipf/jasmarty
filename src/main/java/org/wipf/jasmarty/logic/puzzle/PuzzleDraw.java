@@ -6,8 +6,8 @@ import java.io.IOException;
 
 import javax.enterprise.context.ApplicationScoped;
 
-import org.jfree.graphics2d.svg.SVGGraphics2D;
-import org.jfree.graphics2d.svg.SVGUtils;
+import org.jfree.svg.SVGGraphics2D;
+import org.jfree.svg.SVGUtils;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleFeld;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleTeil;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleTeil.verbindungsart;
@@ -46,6 +46,7 @@ public class PuzzleDraw {
 	 */
 	public File feldToSvg(PuzzleFeld fd) throws IOException {
 		SVGGraphics2D svg = new SVGGraphics2D(100, 100);
+		
 
 		int x = 0;
 		int scale = 10;
@@ -95,6 +96,7 @@ public class PuzzleDraw {
 		Graphics aa = g2.create();
 		aa.drawLine(10, 20, 30, 40);
 		aa.drawLine(21, 20, 80, 60);
+
 
 		SVGGraphics2D x = new SVGGraphics2D(0, 0);
 
