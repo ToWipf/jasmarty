@@ -29,6 +29,11 @@
             <td mat-cell *matCellDef="let element">{{ element.art }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Farbe</th>
+            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': element.color}">{{ element.color }}</td>
+        </ng-container>
+
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 <div class="tableVW">

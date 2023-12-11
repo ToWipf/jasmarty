@@ -13,6 +13,11 @@
             <mat-option value="BOOL">Boolean</mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field>
+        <mat-label>Farbe</mat-label>
+        <input matInput [(ngModel)]="data.color">
+        <input [(colorPicker)]="data.color" [style.background]="data.color"/>
+    </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

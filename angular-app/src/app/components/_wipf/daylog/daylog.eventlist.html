@@ -19,7 +19,14 @@
         <td mat-cell *matCellDef="let element">
             <ng-container *ngFor="let type of daylogTypes;">
                 <ng-container *ngIf='type.id.toString()==element.typid'>
-                    {{type.type}}
+                    <ng-container *ngIf='type?.color'>
+                        <div [ngStyle]="{ 'background': type.color}">
+                            {{type.type}}
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf='!(type?.color)'>
+                        {{type.type}}
+                    </ng-container>
                 </ng-container>
             </ng-container>
         </td>

@@ -6,6 +6,9 @@ npm install
 
 #TODO Fix 360 Viewer
 perl -pi -e 's/false, never>/false >/g' node_modules/@egjs/ngx-view360/lib/ngx-view360.component.d.ts
+perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/helpers.d.ts
+perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/color-picker.component.d.ts
+perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/color-picker.directive.d.ts
 
 echo "Setup end"
 

@@ -1,6 +1,6 @@
 {
   "name": "jasmarty-app",
-  "version": "2.0.44",
+  "version": "2.0.45",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 3000 --disable-host-check",
@@ -29,6 +29,7 @@
     "bootstrap": "5.2.3",
     "javascript-blowfish": "1.0.4",
     "ng-sidebar": "9.4.3",
+    "ngx-color-picker": "14.0.0",
     "ngx-photo-editor": "0.4.4",
     "ngx-scrollbar": "10.0.1",
     "rxjs": "7.8.1",

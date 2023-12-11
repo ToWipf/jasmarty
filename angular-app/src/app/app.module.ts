@@ -85,6 +85,7 @@ import { CookieAddDialogComponent, CookieDialogComponent } from './components/_m
 import { GlowiComponent } from './components/glowi/glowi.component';
 import { NgxView360Module } from "@egjs/ngx-view360";
 import { View360Component } from './components/_debug/view360/view360.component';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
     declarations: [
@@ -197,6 +198,7 @@ import { View360Component } from './components/_debug/view360/view360.component'
         ScrollingModule,
         SidebarModule.forRoot(),
         AppRoutingModule,
+        ColorPickerModule,
     ],
     providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
     bootstrap: [AppComponent]
