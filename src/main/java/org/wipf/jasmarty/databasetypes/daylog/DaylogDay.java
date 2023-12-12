@@ -47,7 +47,7 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 			if (existingData != null) {
 				// Update
 				existingData.date = this.date;
-				existingData.tagestext = this.tagestext;
+				existingData.tagestext = this.tagestext.trim();
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
@@ -55,6 +55,7 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 			}
 		} else {
 			// Neu
+			this.tagestext = this.tagestext.trim();
 			this.persist();
 		}
 	}

@@ -48,7 +48,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 				// Update
 				existingData.dateid = this.dateid;
 				existingData.typid = this.typid;
-				existingData.text = this.text;
+				existingData.text = this.text.trim();
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
@@ -56,6 +56,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 			}
 		} else {
 			// Neu
+			this.text = this.text.trim();
 			this.persist();
 		}
 	}

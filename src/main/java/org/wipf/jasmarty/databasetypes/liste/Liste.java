@@ -51,7 +51,7 @@ public class Liste extends PanacheEntityBase implements Serializable {
 			Liste existingData = Liste.findById(this.id);
 			if (existingData != null) {
 				// Update
-				existingData.data = this.data;
+				existingData.data = this.data.trim();
 				existingData.typeid = this.typeid;
 				existingData.date = this.date;
 				existingData.persist();
@@ -61,6 +61,7 @@ public class Liste extends PanacheEntityBase implements Serializable {
 			}
 		} else {
 			// Neu
+			this.data = this.data.trim();
 			this.persist();
 		}
 	}

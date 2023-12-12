@@ -2,10 +2,9 @@
 <mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Typ</mat-label>
-        <mat-select [(value)]="data.typid">
-            <!-- <mat-option value='-1'>None</mat-option> -->
+        <mat-select [(value)]="data.typid" (selectionChange)="getTextVorschlag()">
             <ng-container *ngFor="let type of daylogTypes">
-                <mat-option value='{{type.id}}'>{{type.type}}</mat-option>
+                <mat-option value='{{type.id}}' [ngStyle]="{ 'background': type.color}">{{type.type}}</mat-option>
             </ng-container>
         </mat-select>
     </mat-form-field>
@@ -32,12 +31,13 @@
                     [checked]="(data.text === 'Y^') ? true : false"
                     (change)="data.text = convertBool($event.target.checked)"
                 />
+
             </ng-container>
         </ng-container>
     </ng-container>
     <div class="vorschlagContainer" *ngIf="sListVorschlag.length != 0">
-        Vorschläge({{sListVorschlag.length}}):
-
+        Vorschläge ({{sListVorschlag.length}}):
+        <br>
         <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
             <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
         </div>
@@ -46,6 +46,5 @@
 
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-    <!-- <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" *ngIf="data.text.toString().length > 0" >Speichern</button> TODO:--> 
-    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!data.text">Speichern</button>
 </mat-dialog-actions>

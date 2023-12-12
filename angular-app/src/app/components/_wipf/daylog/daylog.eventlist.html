@@ -20,7 +20,7 @@
             <ng-container *ngFor="let type of daylogTypes;">
                 <ng-container *ngIf='type.id.toString()==element.typid'>
                     <ng-container *ngIf='type?.color'>
-                        <div [ngStyle]="{ 'background': type.color}">
+                        <div class="typestyle" [ngStyle]="{ 'background': type.color}">
                             {{type.type}}
                         </div>
                     </ng-container>
@@ -36,12 +36,19 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
         <td mat-cell *matCellDef="let element">
             <div *ngIf="element.text === 'Y^'">
-                Ja
+
             </div>
             <div *ngIf="element.text === 'N^'">
-                Nein
+                <mat-icon svgIcon="cancel" aria-hidden="false" title="Nein"></mat-icon>
             </div>
-            {{ element.text }}
+            <div *ngIf="element.text === ''">
+                <mat-icon svgIcon="unavailable" aria-hidden="false" title="Leer"></mat-icon>
+            </div>
+            <div *ngIf="element.text !== 'Y^'">
+                <div *ngIf="element.text !== 'N^'">
+                    {{ element.text }}
+                </div>
+            </div>
         </td>
     </ng-container>
 
