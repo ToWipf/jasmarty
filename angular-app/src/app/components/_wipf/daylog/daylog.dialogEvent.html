@@ -31,7 +31,6 @@
                     [checked]="(data.text === 'Y^') ? true : false"
                     (change)="data.text = convertBool($event.target.checked)"
                 />
-
             </ng-container>
         </ng-container>
     </ng-container>
@@ -46,5 +45,5 @@
 
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!data.text">Speichern</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!(data.text.toString().length > 0)" >Speichern</button>
 </mat-dialog-actions>

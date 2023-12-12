@@ -102,7 +102,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
                 this.saveEvent(result);
             }
         });
-        console.log(item);
     }
 
     public applyFilter() {
