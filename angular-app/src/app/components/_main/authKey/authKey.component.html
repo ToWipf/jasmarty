@@ -26,7 +26,12 @@
 
         <ng-container matColumnDef="key">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Key </th>
-            <td mat-cell *matCellDef="let element"> {{element.key}} </td>
+            <td mat-cell *matCellDef="let element">
+                {{element.key}}
+                <ng-container *ngIf="mykey === element.key">
+                    <mat-icon svgIcon="user" aria-hidden="false" title="user"></mat-icon>
+                </ng-container>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="info">

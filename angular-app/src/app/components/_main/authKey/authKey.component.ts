@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthKey } from 'src/app/datatypes';
 import { DialogWartenComponent, DialogJaNeinComponent } from 'src/app/dialog/main.dialog';
+import { ServicAuthKey } from 'src/app/service/serviceAuthKey';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
@@ -14,17 +15,19 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 })
 export class AuthKeyComponent implements OnInit {
   
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
-
-  ngOnInit(): void {
-    this.load();
-  }
-
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceAuthKey: ServicAuthKey) { }
+  
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  
   public dataSource;
   public displayedColumns: string[] = ['id', 'key', 'info', 'access', 'button'];
   public sFilter: string = "";
+  public mykey: string = "";
+
+  ngOnInit(): void {
+    this.load();
+    this.mykey = this.serviceAuthKey.getAuthKey();
+  }
 
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
