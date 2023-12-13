@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 

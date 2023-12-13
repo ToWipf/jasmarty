@@ -6,8 +6,8 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogStatsTable;

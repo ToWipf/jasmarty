@@ -16,13 +16,13 @@ import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
 import javax.imageio.ImageIO;
-import javax.inject.Inject;
-
 import org.apache.commons.io.FileUtils;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author Wipf

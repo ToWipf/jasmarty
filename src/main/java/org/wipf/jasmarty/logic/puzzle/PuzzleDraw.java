@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import org.jfree.svg.SVGGraphics2D;
 import org.jfree.svg.SVGUtils;

@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 

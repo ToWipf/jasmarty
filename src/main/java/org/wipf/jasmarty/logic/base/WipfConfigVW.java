@@ -3,8 +3,8 @@ package org.wipf.jasmarty.logic.base;
 import java.util.List;
 import java.util.UUID;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.base.WipfConfig;

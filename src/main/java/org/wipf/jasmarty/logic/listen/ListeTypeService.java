@@ -2,8 +2,8 @@ package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.liste.ListeType;
 

@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.logic.wipfapp;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.wipf.jasmarty.logic.base.Wipf;
