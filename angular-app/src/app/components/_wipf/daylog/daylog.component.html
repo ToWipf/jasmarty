@@ -56,7 +56,7 @@
                 <mat-label>Event Typ Filtern</mat-label>
                 <mat-select [(value)]="selectedEventTypeFilter">
                     <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
-                    <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent">{{itemEvent.type}}</mat-option>
+                    <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
