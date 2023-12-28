@@ -26,6 +26,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public eventlistDataSource;
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
+    public isLoadAllEvents: boolean = false;
 
     // Auf Änderungen achten und aktionen starten
     ngOnChanges(changes: SimpleChanges) {
@@ -45,7 +46,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         if (changes?.filterEventType) {
             this.applyFilterByType();
         } else {
-            // Filter immer leeren
+            // Filter leeren
             this.filterEventType = undefined;
         }
     }
@@ -113,6 +114,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     public applyFilterByType() {
         if (this.filterEventType != undefined) {
+            console.log(this.eventlist.length)
             let eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {
@@ -147,6 +149,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public loadAllEvents(): void {
         const warten = this.dialog.open(DialogWartenComponent, {});
         this.eventlist = [];
+        this.isLoadAllEvents = true;
 
         // keine userid möglich -> unsicher!
         this.rest.get('daylog/event/getAll').then((resdata: DaylogEvent[]) => {
@@ -156,11 +159,16 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             this.eventlistDataSource.sort = this.sortEvent;
             this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
             warten.close();
+            this.applyFilterByType();
         });
     }
 
+    /**
+    * Alle Events eines Tages Laden 
+    */
     private loadEventsByDay(d: DaylogDay): void {
         if (d.id != undefined) {
+            this.isLoadAllEvents = false;
             const warten = this.dialog.open(DialogWartenComponent, {});
             this.eventlist = [];
 
@@ -202,8 +210,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 this.rest.delete('daylog/event/delete/' + item.id).then((resdata: any) => {
-                    //this.loadDays(); TODO warum war das hier?
-                    this.loadEventsByDay(this.dateForLoad);
+                    if (this.isLoadAllEvents){
+                        // Komplette liste
+                        this.loadAllEvents();
+                    } else {
+                        // Einzelansicht
+                        this.loadEventsByDay(this.dateForLoad);
+                    }
                 });
             }
         });
