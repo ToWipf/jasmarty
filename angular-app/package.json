@@ -24,7 +24,7 @@
     "@egjs/ngx-view360": "4.0.0-beta.7",
     "@ng-bootstrap/ng-bootstrap": "13.1.1",
     "@popperjs/core": "2.11.6",
-    "@swimlane/ngx-charts": "20.1.0",
+    "@swimlane/ngx-charts": "20.4.1",
     "@types/popper.js": "1.11.0",
     "bootstrap": "5.2.3",
     "javascript-blowfish": "1.0.4",
