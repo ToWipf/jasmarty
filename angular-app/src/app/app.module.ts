@@ -44,7 +44,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -62,7 +61,6 @@ import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SettingsComponent, SettingsComponentDialogComponent } from './components/_main/settings/settings.component';
-import { SidebarModule } from 'ng-sidebar';
 import { TelegramChatComponent } from './components/_telegram/telegramChat/telegramChat.component';
 import { TelegramConfigComponent } from './components/_telegram/telegramConfig/telegramConfig.component';
 import { TelegramLogComponent } from './components/_telegram/telegramLog/telegramLog.component';
@@ -152,7 +150,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
         ClipboardModule,
         DragDropModule,
         FormsModule,
-        HttpClientModule,
+
         MatAutocompleteModule,
         MatBadgeModule,
         MatBottomSheetModule,
@@ -178,7 +176,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
         MatRadioModule,
         MatRippleModule,
         MatSelectModule,
-        MatSidenavModule,
         MatSliderModule,
         MatSlideToggleModule,
         MatSnackBarModule,
@@ -196,7 +193,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
         PortalModule,
         ReactiveFormsModule,
         ScrollingModule,
-        SidebarModule.forRoot(),
         AppRoutingModule,
         ColorPickerModule,
     ],
@@ -204,3 +200,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+//         HttpClientModule,
+// 
