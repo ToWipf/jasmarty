@@ -7,7 +7,7 @@
             <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
             <ul *ngIf="bWipfActive" class="menueli">
                 <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Neue Liste"></mat-icon>
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
                     <span class="buttonInhalt"> Liste </span>
                 </li>
                 <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
@@ -173,10 +173,20 @@
             <app-login></app-login>
             <hr>
             <h1>QuickLinks</h1>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">
+                <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
+                DayLog Now
+            </button>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
+                <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
+                Zur Liste hinzufügen
+            </button>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='liste'">
+                <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
+                Liste öffnen
+            </button>
+            <br>
             <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">DayLog Now</button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">Zur Liste hinzufügen</button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='liste'">Liste öffnen</button>
             <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
 
         </ng-container>

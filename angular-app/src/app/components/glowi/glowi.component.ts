@@ -33,7 +33,7 @@ export class GlowiComponent implements OnInit {
     }).subscribe(data => {
       this.imageoutput = data;
       this.convertImgToArray();
-      this.serviceWipf.delay(100).then(() => {
+      this.serviceWipf.delay(500).then(() => {
         this.convertImgToArray();
       });
     });
