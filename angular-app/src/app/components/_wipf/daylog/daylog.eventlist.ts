@@ -234,6 +234,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {
         dialogRef.disableClose = true;
+        dialogRef.updateSize("70%","70%");
     }
 
     public daylogTypes: DaylogType[] = [];
