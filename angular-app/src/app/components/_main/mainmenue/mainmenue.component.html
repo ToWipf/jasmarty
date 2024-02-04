@@ -1,10 +1,7 @@
 <div class="fullsize">
-    <!-- [hasBackdrop]="hasBackdrop.value" TODO: -->
-
     <div *ngIf="bShowMenue" class="fullsize blocker" (click)="bShowMenue=false">
     </div>
 
-    <!-- MENUE -->
     <div *ngIf="bShowMenue" class="sidebarmenue background2">
         <ng-scrollbar class="sidebar">
             <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
@@ -196,7 +193,7 @@
             <app-view360></app-view360>
         </ng-container>
     </div>
-    
+
     <app-footer *ngIf="!bHideMenueButtonAndFooter" class="myfooter"></app-footer>
     <button *ngIf="!bHideMenueButtonAndFooter" class="mainMenueHButton" (click)="bShowMenue=!bShowMenue">
         <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
