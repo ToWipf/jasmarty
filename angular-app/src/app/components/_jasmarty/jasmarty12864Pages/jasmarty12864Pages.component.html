@@ -44,7 +44,11 @@
             </mat-form-field> -->
             <!-- TODO: https://stackoverflow.com/questions/48254696/angular-slider-with-scroll -->
 
-            <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider>
+            <!-- <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider> -->
+            <mat-slider min="0" max="256" step="1" aria-label="units">
+                <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
+            </mat-slider>
+            Kontrast: {{nKontrast}}/256
 
         </ng-container>
 
