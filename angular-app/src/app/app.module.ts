@@ -15,7 +15,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty12864Pages/jasmarty12864Pages.component';
 import { Jasmarty12864PanelComponent } from './components/_jasmarty/jasmarty12864Panel/jasmarty12864Panel.component';
 import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/_jasmarty/jasmartyActions/jasmartyActions.component';
@@ -195,11 +195,12 @@ import { ColorPickerModule } from 'ngx-color-picker';
         ScrollingModule,
         AppRoutingModule,
         ColorPickerModule,
+        HttpClientModule,
     ],
-    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
+    providers: [
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+        HttpClient,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-//         HttpClientModule,
-// 

@@ -6,12 +6,12 @@ import { ElementSetServerDialog } from '../dialog/setServer.dialog';
 import { ServiceWipf } from './serviceWipf';
 import { Observable } from 'rxjs';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
+@Injectable({
+  providedIn: 'root',
+})
 
 export class ServiceRest {
-  constructor(@Inject(String) private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
+  constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
   // HttpClientModule
 
