@@ -1,28 +1,35 @@
 .sidebarcontainer {
   height: 100vh;
+  position: fixed;
+}
+
+.sidebarmenue {
+  position: absolute;
+  right: calc(100%-160px);
+  left: 0px;
+  bottom: 0px;
+  top: 0px;
+  z-index: 1;
 }
 
 .sidebar {
-  //  background: rgb(112, 112, 112); TODO:
   height: 100%;
   width: 160px;
 }
 
-.fullsite {
+.blocker {
+  background-color: rgba(0, 0, 0, 0.533);
+}
+
+.inhaltsseite {
+  // 5px rundrum
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-right: 5px;
+  height: calc(100% - 25px);
   background-color: rgb(192, 192, 192);
   height: 100%;
   width: 100%;
-}
-
-.maincontainer {
-  // 5px rundrum
-  padding-left: 5px;
-  //margin-left: 35px;
-  //margin-left: 5px;
-  padding-top: 5px;
-  padding-right: 5px;
-  //  border-left: 1px solid rgb(255, 145, 0);
-  height: calc(100% - 25px);
 }
 
 .titlemenue {
