@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "17.1.2",
-    "@angular/cli": "17.0.10",
+    "@angular/cli": "17.1.2",
     "@angular/compiler-cli": "17.0.9",
     "@types/node": "18.16.3",
     "tslint": "6.1.3",
