@@ -114,7 +114,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     public applyFilterByType() {
         if (this.filterEventType != undefined) {
-            console.log(this.eventlist.length)
             let eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {

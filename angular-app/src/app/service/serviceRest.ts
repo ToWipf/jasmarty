@@ -1,5 +1,5 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from '../dialog/main.dialog';
 import { ElementSetServerDialog } from '../dialog/setServer.dialog';
@@ -12,6 +12,8 @@ import { Observable } from 'rxjs';
 
 export class ServiceRest {
   constructor(private http: HttpClient, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
+
+  // HttpClientModule
 
   private sHost: string = 'http://localhost:8080/';
   private httpOptions: HttpHeaders = new HttpHeaders();

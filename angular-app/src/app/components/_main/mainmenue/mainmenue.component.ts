@@ -21,7 +21,8 @@ export class MainmenueComponent implements OnInit {
   public bJasmartyActive: boolean = false;
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
-  public bHideMenue: boolean = false;
+  public bHideMenueButtonAndFooter: boolean = false;
+  public bShowMenue: boolean = false;
   public bEisenbahnMitlesenActive: boolean = false;
   public selectedSite: string = 'login';
 
@@ -32,13 +33,13 @@ export class MainmenueComponent implements OnInit {
   }
 
   public selectSite(s: string): void {
-    this.drawer.toggle();
+    this.bShowMenue = false;
     this.selectedSite = s;
   }
 
   public useQuickLink(s: string): void {
     this.selectedSite = s;
-    this.bHideMenue = true;
+    this.bHideMenueButtonAndFooter = true;
   }
 
   public getActiveModules(): void {
@@ -67,7 +68,7 @@ export class MainmenueComponent implements OnInit {
       });
     });
   }
-  
+
   public showAll(): void {
     this.bDevActive = true;
     this.bJasmartyActive = true;
