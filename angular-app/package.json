@@ -26,7 +26,7 @@
     "@popperjs/core": "2.11.8",
     "@swimlane/ngx-charts": "20.5.0",
     "@types/popper.js": "1.11.0",
-    "bootstrap": "5.2.3",
+    "bootstrap": "5.3.2",
     "javascript-blowfish": "1.0.4",
     "ngx-color-picker": "16.0.0",
     "ngx-photo-editor": "0.4.4",
