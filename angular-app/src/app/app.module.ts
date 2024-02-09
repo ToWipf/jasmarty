@@ -84,6 +84,7 @@ import { GlowiComponent } from './components/glowi/glowi.component';
 import { NgxView360Module } from "@egjs/ngx-view360";
 import { View360Component } from './components/_debug/view360/view360.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
 
 @NgModule({
     declarations: [
@@ -97,6 +98,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
         DaylogComponentDialogTypeComponent,
         DaylogComponentDialogTypeListComponent,
         DaylogComponentEventlist,
+        DaylogKalenderComponent,
         DaylogStatsComponent,
         DebugSeiteComponent,
         DialogJaNeinComponent,
@@ -150,7 +152,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
         ClipboardModule,
         DragDropModule,
         FormsModule,
-
         MatAutocompleteModule,
         MatBadgeModule,
         MatBottomSheetModule,

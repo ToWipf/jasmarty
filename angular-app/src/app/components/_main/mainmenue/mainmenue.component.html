@@ -14,6 +14,10 @@
                     <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
                     <span class="buttonInhalt"> TagesLog </span>
                 </li>
+                <li (click)="selectSite('daylogKalender')" [ngClass]="{'isSelected' : selectedSite == 'daylogKalender'}">
+                    <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
+                    <span class="buttonInhalt"> daylogKalender </span>
+                </li>
                 <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
                     <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
                     <span class="buttonInhalt"> TagesLog Stats </span>
@@ -188,6 +192,7 @@
             <br>
             <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
             <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
+            <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylogKalender'">daylogKalender</button>
 
         </ng-container>
         <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
@@ -201,6 +206,9 @@
         </ng-container>
         <ng-container *ngIf="selectedSite==='view360'">
             <app-view360></app-view360>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='daylogKalender'">
+            <app-daylogKalender></app-daylogKalender>
         </ng-container>
     </div>
 
