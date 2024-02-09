@@ -40,7 +40,7 @@ export class DaylogKalenderComponent implements OnInit {
     this.sFilerMONasText = new Date(0, this.sFilterMON, 0).toLocaleDateString('de-de', { month: 'long' });
 
     if (sq.length != 0) {
-      this.rest.get('daylog/day/getAllByDateQuery/' + sq).then((resdata: DaylogDay[]) => {
+      this.rest.get('daylog/day/getAllByDateQuery/' + sq).then(async (resdata: DaylogDay[]) => {
         // resdata.forEach((d: DaylogDay) => {
         //   d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
         // });
@@ -54,29 +54,11 @@ export class DaylogKalenderComponent implements OnInit {
 
         for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
 
-          var inhaltDesTages = dayNr + ". ";
-          resdata.forEach(async (d: DaylogDay) => {
+          resdata.forEach((d: DaylogDay) => {
             if (new Date(d.date).getDate() === dayNr) {
-              inhaltDesTages += "\n" + d.tagestext;
-
-              // d.extrafeld_events = await this.loadEventsByDay(d);
-
-              // if (d.extrafeld_events) {
-                
-              //   d.extrafeld_events.forEach((de: DaylogEvent) => {
-              //     this.typelistForEventFilter.forEach((tl: DaylogType) => {
-              //       if (tl.id.toString() === de.typid.toString()) {
-              //         inhaltDesTages += tl.type;
-              //       }
-              //     })
-              //     inhaltDesTages += de.text + "\n";
-              //     console.log(inhaltDesTages);
-              //   });
-              // }
-
+              this.erstelleInhaltsbox(dayNr + erstWochentag - 1, dayNr, d);
             }
           })
-          this.kale[dayNr + erstWochentag - 1] = inhaltDesTages;
         }
 
         warten.close();
@@ -84,6 +66,31 @@ export class DaylogKalenderComponent implements OnInit {
     } else {
       console.error("EE");
     }
+  }
+
+  /**
+   * 
+   * @param zellenID 
+   * @param dayNr 
+   * @param dd 
+   */
+  public async erstelleInhaltsbox(zellenID: number, dayNr: number, dd: DaylogDay): Promise<void> {
+
+    var inhaltDesTages = dayNr + ". \n\n";
+    dd.extrafeld_events = await this.loadEventsByDay(dd);
+
+    if (dd.extrafeld_events) {
+
+      dd.extrafeld_events.forEach((de: DaylogEvent) => {
+        this.typelistForEventFilter.forEach((tl: DaylogType) => {
+          if (tl.id.toString() === de.typid.toString()) {
+            inhaltDesTages += tl.type + ": ";
+          }
+        });
+        inhaltDesTages += de.text + "\n";
+      });
+    }
+    this.kale[zellenID] = inhaltDesTages;
   }
 
   public changeMonat(vorRueck: boolean) {
