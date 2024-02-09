@@ -1,6 +1,19 @@
-<button>Zurück</button>
-<button>Weiter</button>
+<h3>Daylog Kalender</h3>
 
+<div class="configline">
+
+    <div class="box">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+        Jahr: {{sFilterYYYY}}
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+    </div>
+    <div class="box">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+        Monat: {{sFilterMON}}
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+    </div>
+
+</div>
 <table>
     <tr>
         <th>Montag</th>
@@ -11,59 +24,9 @@
         <th>Samstag</th>
         <th>Sonntag</th>
     </tr>
-    <tr>
-        <td>{{kale[0]}}</td>
-        <td>{{kale[1]}}</td>
-        <td>{{kale[2]}}</td>
-        <td>{{kale[3]}}</td>
-        <td>{{kale[4]}}</td>
-        <td>{{kale[5]}}</td>
-        <td>{{kale[6]}}</td>
+    <tr *ngFor="let item of [0,1,2,3,4]">
+        <td *ngFor="let item2 of [0,1,2,3,4,5,6]">
+            {{kale[item*7+item2]}}
+        </td>
     </tr>
-    <tr>
-        <td>{{kale[0 + 7]}}</td>
-        <td>{{kale[1 + 7]}}</td>
-        <td>{{kale[2 + 7]}}</td>
-        <td>{{kale[3 + 7]}}</td>
-        <td>{{kale[4 + 7]}}</td>
-        <td>{{kale[5 + 7]}}</td>
-        <td>{{kale[6 + 7]}}</td>
-    </tr>
-    <tr>
-        <td>{{kale[0 +7 +7]}}</td>
-        <td>{{kale[1 +7 +7]}}</td>
-        <td>{{kale[2 +7 +7]}}</td>
-        <td>{{kale[3 +7 +7]}}</td>
-        <td>{{kale[4 +7 +7]}}</td>
-        <td>{{kale[5 +7 +7]}}</td>
-        <td>{{kale[6 +7 +7]}}</td>
-    </tr>
-    <tr>
-        <td>{{kale[0 +7+7 +7]}}</td>
-        <td>{{kale[1 +7+7 +7]}}</td>
-        <td>{{kale[2 +7+7 +7]}}</td>
-        <td>{{kale[3 +7+7 +7]}}</td>
-        <td>{{kale[4 +7+7 +7]}}</td>
-        <td>{{kale[5 +7+7 +7]}}</td>
-        <td>{{kale[6 +7+7 +7]}}</td>
-    </tr>
-    <tr>
-        <td>{{kale[0 +7+7+7 +7]}}</td>
-        <td>{{kale[1 +7+7+7 +7]}}</td>
-        <td>{{kale[2 +7+7+7 +7]}}</td>
-        <td>{{kale[3 +7+7+7 +7]}}</td>
-        <td>{{kale[4 +7+7+7 +7]}}</td>
-        <td>{{kale[5 +7+7+7 +7]}}</td>
-        <td>{{kale[6 +7+7+7 +7]}}</td>
-    </tr>
-    <tr>
-        <td>{{kale[0 +7+7+7 +7+7]}}</td>
-        <td>{{kale[1 +7+7+7 +7+7]}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-
 </table>

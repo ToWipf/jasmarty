@@ -63,4 +63,27 @@ export class DaylogKalenderComponent implements OnInit {
     }
   }
 
+  public changeMonat(vorRueck: boolean) {
+    if (vorRueck) {
+      if (this.sFilterMON > 1) {
+        this.sFilterMON--;
+      }
+    } else {
+      if (this.sFilterMON < 12) {
+        this.sFilterMON++;
+      }
+    }
+    this.loadDays();
+  }
+
+  public changeYYYY(vorRueck: boolean) {
+    if (vorRueck) {
+      this.sFilterYYYY--;
+    }
+    else {
+      this.sFilterYYYY++;
+    }
+    this.loadDays();
+  }
+
 }
