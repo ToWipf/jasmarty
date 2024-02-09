@@ -12,6 +12,15 @@
         Monat: {{sFilterMON}}
         <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
     </div>
+    <div class="box">
+        <mat-form-field appearance="fill">
+            <mat-label>Event Typ Filtern</mat-label>
+            <mat-select [(value)]="selectedEventTypeFilter">
+                <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
+                <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>
 
 <hr>

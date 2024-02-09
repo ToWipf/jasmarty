@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { DaylogDay } from 'src/app/datatypes';
+import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -19,9 +18,12 @@ export class DaylogKalenderComponent implements OnInit {
   public sFilterMON: number = undefined;
   public sFilerMONasText: string = "";
   public kale: string[] = [];
+  public typelistForEventFilter: DaylogType[] = [];
+  public selectedEventTypeFilter: DaylogType = undefined;
 
   ngOnInit(): void {
     this.initFilter();
+    this.loadTypeListForEventFilter();
     this.loadDays();
   }
 
@@ -35,31 +37,46 @@ export class DaylogKalenderComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     let sq = this.sFilterYYYY + "-" + this.serviceWipf.pad((this.sFilterMON), 2);
-    this.sFilerMONasText = new Date(0,this.sFilterMON, 0).toLocaleDateString('de-de', { month: 'long' });
+    this.sFilerMONasText = new Date(0, this.sFilterMON, 0).toLocaleDateString('de-de', { month: 'long' });
 
     if (sq.length != 0) {
       this.rest.get('daylog/day/getAllByDateQuery/' + sq).then((resdata: DaylogDay[]) => {
-        resdata.forEach((d: DaylogDay) => {
-          d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
-        });
+        // resdata.forEach((d: DaylogDay) => {
+        //   d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
+        // });
         // den Wochentag des 1. eines Monats
-        var erstWochentag = new Date(this.sFilterYYYY, this.sFilterMON-1, 1).getDay();
+        var erstWochentag = new Date(this.sFilterYYYY, this.sFilterMON - 1, 1).getDay();
         // 0=Son 1=Mo wird zu 1=Mo 2=Di
         erstWochentag = (erstWochentag + 6) % 7;
 
         // Bug in Javascript? Das Monat ist um 1 höher wie bei "erstWochentag"?
-        var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON , 0).getDate();
+        var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON, 0).getDate();
 
         for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
 
-          var inhaltDesTages = "(" + (dayNr) + ") ";
-          resdata.forEach((d: DaylogDay) => {
+          var inhaltDesTages = dayNr + ". ";
+          resdata.forEach(async (d: DaylogDay) => {
             if (new Date(d.date).getDate() === dayNr) {
-              inhaltDesTages += d.tagestext;
+              inhaltDesTages += "\n" + d.tagestext;
+
+              // d.extrafeld_events = await this.loadEventsByDay(d);
+
+              // if (d.extrafeld_events) {
+                
+              //   d.extrafeld_events.forEach((de: DaylogEvent) => {
+              //     this.typelistForEventFilter.forEach((tl: DaylogType) => {
+              //       if (tl.id.toString() === de.typid.toString()) {
+              //         inhaltDesTages += tl.type;
+              //       }
+              //     })
+              //     inhaltDesTages += de.text + "\n";
+              //     console.log(inhaltDesTages);
+              //   });
+              // }
+
             }
           })
-
-          this.kale[dayNr + erstWochentag -1] = inhaltDesTages;
+          this.kale[dayNr + erstWochentag - 1] = inhaltDesTages;
         }
 
         warten.close();
@@ -90,6 +107,46 @@ export class DaylogKalenderComponent implements OnInit {
       this.sFilterYYYY++;
     }
     this.loadDays();
+  }
+
+  public loadTypeListForEventFilter(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.typelistForEventFilter = [];
+
+    this.rest.get('daylog/type/getAll').then((resdata: DaylogType[]) => {
+      this.typelistForEventFilter = resdata;
+      warten.close();
+    });
+  }
+
+  /**
+* Alle Events eines Tages Laden 
+*/
+  private loadEventsByDay(d: DaylogDay): any { //  DaylogEvent[] geht nicht
+    return new Promise(
+      resolve => {
+        if (d.id != undefined) {
+          const warten = this.dialog.open(DialogWartenComponent, {});
+          this.rest.get('daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
+
+            if (this.selectedEventTypeFilter != undefined) {
+              var output: DaylogEvent[] = [];
+              resdata.forEach((de: DaylogEvent) => {
+                if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
+                  output.push(de);
+                }
+              })
+              resolve(output);
+            } else {
+              resolve(resdata);
+            }
+            warten.close();
+          });
+        } else {
+          resolve(null);
+        }
+      }
+    )
   }
 
 }
