@@ -17,7 +17,8 @@ export class DaylogKalenderComponent implements OnInit {
 
   public sFilterYYYY: number = undefined;
   public sFilterMON: number = undefined;
-  public kale: string[] = new Array(37).fill("-");
+  public sFilerMONasText: string = "";
+  public kale: string[] = [];
 
   ngOnInit(): void {
     this.initFilter();
@@ -27,13 +28,14 @@ export class DaylogKalenderComponent implements OnInit {
   private initFilter(): void {
     this.sFilterYYYY = (new Date(Date.now()).getFullYear());
     this.sFilterMON = (new Date(Date.now()).getMonth() + 1);
-
   }
 
   public loadDays(): void {
+    this.kale = new Array(37).fill("-");
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     let sq = this.sFilterYYYY + "-" + this.serviceWipf.pad((this.sFilterMON), 2);
+    this.sFilerMONasText = new Date(0,this.sFilterMON, 0).toLocaleDateString('de-de', { month: 'long' });
 
     if (sq.length != 0) {
       this.rest.get('daylog/day/getAllByDateQuery/' + sq).then((resdata: DaylogDay[]) => {
@@ -41,10 +43,14 @@ export class DaylogKalenderComponent implements OnInit {
           d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
         });
         // den Wochentag des 1. eines Monats
-        var erstWochentag = new Date(this.sFilterYYYY, this.sFilterMON + 1, 1).getDay() + 1;
-        var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON + 1, 0).getDate();
+        var erstWochentag = new Date(this.sFilterYYYY, this.sFilterMON-1, 1).getDay();
+        // 0=Son 1=Mo wird zu 1=Mo 2=Di
+        erstWochentag = (erstWochentag + 6) % 7;
 
-        for (var dayNr = 1; dayNr < tageImMonat - 1; dayNr++) {
+        // Bug in Javascript? Das Monat ist um 1 höher wie bei "erstWochentag"?
+        var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON , 0).getDate();
+
+        for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
 
           var inhaltDesTages = "(" + (dayNr) + ") ";
           resdata.forEach((d: DaylogDay) => {
@@ -53,7 +59,7 @@ export class DaylogKalenderComponent implements OnInit {
             }
           })
 
-          this.kale[dayNr + erstWochentag] = inhaltDesTages;
+          this.kale[dayNr + erstWochentag -1] = inhaltDesTages;
         }
 
         warten.close();
