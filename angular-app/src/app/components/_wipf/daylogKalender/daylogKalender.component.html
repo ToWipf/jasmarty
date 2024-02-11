@@ -26,7 +26,7 @@
     <div class="box">
         <mat-form-field appearance="fill">
             <mat-label>Event Typ Filtern</mat-label>
-            <mat-select [(value)]="selectedEventTypeFilter">
+            <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()">
                 <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
                 <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
             </mat-select>
@@ -48,9 +48,18 @@
     </tr>
     <tr *ngFor="let item of [0,1,2,3,4,5]">
         <td *ngFor="let item2 of [0,1,2,3,4,5,6]">
-            {{kalenderShowArray[item*7+item2]?.dayNr}}
-            {{kalenderShowArray[item*7+item2]?.tagestext}}
-            {{kalenderShowArray[item*7+item2]?.eventKV}}
+            <ng-container *ngIf="kalenderShowArray[item*7+item2]?.dayNr">
+                <span class="dayHeader">
+                    <span class="dayNr"> {{kalenderShowArray[item*7+item2]?.dayNr}}</span>
+                    {{kalenderShowArray[item*7+item2]?.tagestext}}
+                </span>
+                <table>
+                    <tr *ngFor="let ev of kalenderShowArray[item*7+item2]?.eventKV">
+                        <td> {{ev.key}} </td>
+                        <td> {{ev.value}} </td>
+                    </tr>
+                </table>
+            </ng-container>
         </td>
     </tr>
 </table>

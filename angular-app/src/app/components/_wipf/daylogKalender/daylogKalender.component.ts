@@ -54,19 +54,20 @@ export class DaylogKalenderComponent implements OnInit {
         var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON, 0).getDate();
 
         for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
-
           resdata.forEach((d: DaylogDay) => {
             if (new Date(d.date).getDate() === dayNr) {
+              // Tag vorhanden
               this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, d);
+            } else {
+              // Tag gibt es nicht
+              this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
             }
           })
-          this.renderKalender();
         }
 
         warten.close();
+        this.renderKalender();
       });
-    } else {
-      console.error("EE");
     }
   }
 
@@ -77,26 +78,31 @@ export class DaylogKalenderComponent implements OnInit {
       var kdShowDay: KalShowZelle = {};
       kdShowDay.eventKV = [];
       kdShowDay.dayNr = zelle.dayNr;
-      kdShowDay.tagestext = zelle.daylogDayday.tagestext;
-      if (zelle.daylogEvent) {
 
-        zelle.daylogEvent.forEach((de: DaylogEvent) => {
-          this.typelistForEventFilter.forEach((tl: DaylogType) => {
+      if (zelle.daylogDayday) {
+        kdShowDay.tagestext = zelle.daylogDayday.tagestext;
+        if (zelle.daylogEvent) {
 
-            if (de.typid.toString() === tl.id.toString()) {
-              // Typ passt dazu
-              if (this.selectedEventTypeFilter != undefined) {
-                // Mit Filter
-                if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
+          zelle.daylogEvent.forEach((de: DaylogEvent) => {
+            this.typelistForEventFilter.forEach((tl: DaylogType) => {
+
+              if (de.typid.toString() === tl.id.toString()) {
+                // Typ passt dazu
+                if (this.selectedEventTypeFilter != undefined) {
+                  // Mit Filter
+                  if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
+                    kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+                  }
+                } else {
+                  // Ohne Filter
                   kdShowDay.eventKV.push({ value: de.text, key: tl.type });
                 }
-              } else {
-                // Ohne Filter
-                kdShowDay.eventKV.push({ value: de.text, key: tl.type });
               }
-            }
+            });
           });
-        });
+        }
+      } else {
+        kdShowDay.tagestext = "-";
       }
       this.kalenderShowArray[zelle.zellenID] = kdShowDay;
     });
@@ -152,7 +158,7 @@ export class DaylogKalenderComponent implements OnInit {
   private loadEventsByDay(d: DaylogDay): any { //  DaylogEvent[] geht nicht
     return new Promise(
       resolve => {
-        if (d.id != undefined) {
+        if (d && d.id != undefined) {
           const warten = this.dialog.open(DialogWartenComponent, {});
           this.rest.get('daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
             resolve(resdata);
