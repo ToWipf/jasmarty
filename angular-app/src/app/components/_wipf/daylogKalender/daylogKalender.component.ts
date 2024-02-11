@@ -20,7 +20,7 @@ export class DaylogKalenderComponent implements OnInit {
   public kalenderRawArray: KalDay[] = [];
   public kalenderShowArray: KalShowZelle[] = [];
   public typelistForEventFilter: DaylogType[] = [];
-  public selectedEventTypeFilter: DaylogType = undefined;
+  public selectedEventTypeFilter: DaylogType[] = [];
 
   ngOnInit(): void {
     this.initFilter();
@@ -53,9 +53,9 @@ export class DaylogKalenderComponent implements OnInit {
 
         // Bug in Javascript? Das Monat ist um 1 höher wie bei "erstWochentag"?
         var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON, 0).getDate();
-        
+
         // Test überhaupt ein Tag vorhanden ist
-        if (resdata.length != 0){        
+        if (resdata.length != 0) {
           for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
             resdata.forEach((d: DaylogDay) => {
               if (new Date(d.date).getDate() === dayNr) {
@@ -102,11 +102,13 @@ export class DaylogKalenderComponent implements OnInit {
 
               if (de.typid.toString() === tl.id.toString()) {
                 // Typ passt dazu
-                if (this.selectedEventTypeFilter != undefined) {
+                if (this.selectedEventTypeFilter.length > 0) {
                   // Mit Filter
-                  if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
-                    kdShowDay.eventKV.push({ value: de.text, key: tl.type });
-                  }
+                  this.selectedEventTypeFilter.forEach((fi: DaylogType) => {
+                    if (de.typid.toString() === fi.id.toString()) {
+                      kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+                    }
+                  })
                 } else {
                   // Ohne Filter
                   kdShowDay.eventKV.push({ value: de.text, key: tl.type });

@@ -26,8 +26,7 @@
     <div class="box">
         <mat-form-field appearance="fill">
             <mat-label>Event Typ Filtern</mat-label>
-            <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()">
-                <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
+            <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()" multiple>
                 <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
             </mat-select>
         </mat-form-field>
