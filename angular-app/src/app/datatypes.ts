@@ -92,7 +92,6 @@ export interface DaylogDay {
   date?: string;
   tagestext?: string;
   extrafeld_wochentag?: string; 
-  extrafeld_events?: DaylogEvent[]; 
 }
 
 export interface DaylogEvent {

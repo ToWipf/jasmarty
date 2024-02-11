@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
+import { DaylogDay, DaylogEvent, DaylogType, KeyValEntry } from 'src/app/datatypes';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -17,7 +17,8 @@ export class DaylogKalenderComponent implements OnInit {
   public sFilterYYYY: number = undefined;
   public sFilterMON: number = undefined;
   public sFilerMONasText: string = "";
-  public kale: string[] = [];
+  public kalenderRawArray: KalDay[] = [];
+  public kalenderShowArray: KalShowZelle[] = [];
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: DaylogType = undefined;
 
@@ -33,7 +34,7 @@ export class DaylogKalenderComponent implements OnInit {
   }
 
   public loadDays(): void {
-    this.kale = new Array(37).fill("-");
+    this.kalenderRawArray = new Array(37);
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     let sq = this.sFilterYYYY + "-" + this.serviceWipf.pad((this.sFilterMON), 2);
@@ -56,9 +57,10 @@ export class DaylogKalenderComponent implements OnInit {
 
           resdata.forEach((d: DaylogDay) => {
             if (new Date(d.date).getDate() === dayNr) {
-              this.erstelleInhaltsbox(dayNr + erstWochentag - 1, dayNr, d);
+              this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, d);
             }
           })
+          this.renderKalender();
         }
 
         warten.close();
@@ -68,29 +70,47 @@ export class DaylogKalenderComponent implements OnInit {
     }
   }
 
+  public renderKalender(): void {
+    this.kalenderShowArray = new Array(37).fill({ tagestext: "-" });
+
+    this.kalenderRawArray.forEach((zelle: KalDay) => {
+      var kdShowDay: KalShowZelle = {};
+      kdShowDay.eventKV = [];
+      kdShowDay.dayNr = zelle.dayNr;
+      kdShowDay.tagestext = zelle.daylogDayday.tagestext;
+      if (zelle.daylogEvent) {
+
+        zelle.daylogEvent.forEach((de: DaylogEvent) => {
+          this.typelistForEventFilter.forEach((tl: DaylogType) => {
+
+            if (de.typid.toString() === tl.id.toString()) {
+              // Typ passt dazu
+              if (this.selectedEventTypeFilter != undefined) {
+                // Mit Filter
+                if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
+                  kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+                }
+              } else {
+                // Ohne Filter
+                kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+              }
+            }
+          });
+        });
+      }
+      this.kalenderShowArray[zelle.zellenID] = kdShowDay;
+    });
+  }
+
   /**
    * 
    * @param zellenID 
    * @param dayNr 
    * @param dd 
    */
-  public async erstelleInhaltsbox(zellenID: number, dayNr: number, dd: DaylogDay): Promise<void> {
-
-    var inhaltDesTages = dayNr + ". \n\n";
-    dd.extrafeld_events = await this.loadEventsByDay(dd);
-
-    if (dd.extrafeld_events) {
-
-      dd.extrafeld_events.forEach((de: DaylogEvent) => {
-        this.typelistForEventFilter.forEach((tl: DaylogType) => {
-          if (tl.id.toString() === de.typid.toString()) {
-            inhaltDesTages += tl.type + ": ";
-          }
-        });
-        inhaltDesTages += de.text + "\n";
-      });
-    }
-    this.kale[zellenID] = inhaltDesTages;
+  public async addToInhaltsarray(zellenID: number, dayNr: number, dd: DaylogDay): Promise<void> {
+    var kd: KalDay = { dayNr: dayNr, daylogDayday: dd, daylogEvent: await this.loadEventsByDay(dd), zellenID: zellenID };
+    this.kalenderRawArray.push(kd);
   }
 
   public changeMonat(vorRueck: boolean) {
@@ -135,18 +155,7 @@ export class DaylogKalenderComponent implements OnInit {
         if (d.id != undefined) {
           const warten = this.dialog.open(DialogWartenComponent, {});
           this.rest.get('daylog/event/get/' + d.id).then((resdata: DaylogEvent[]) => {
-
-            if (this.selectedEventTypeFilter != undefined) {
-              var output: DaylogEvent[] = [];
-              resdata.forEach((de: DaylogEvent) => {
-                if (de.typid.toString() === this.selectedEventTypeFilter.id.toString()) {
-                  output.push(de);
-                }
-              })
-              resolve(output);
-            } else {
-              resolve(resdata);
-            }
+            resolve(resdata);
             warten.close();
           });
         } else {
@@ -156,4 +165,17 @@ export class DaylogKalenderComponent implements OnInit {
     )
   }
 
+}
+
+export interface KalDay {
+  dayNr?: number;
+  daylogDayday?: DaylogDay;
+  daylogEvent?: DaylogEvent[];
+  zellenID?: number;
+}
+
+export interface KalShowZelle {
+  dayNr?: number;
+  tagestext?: string;
+  eventKV?: KeyValEntry[];
 }
