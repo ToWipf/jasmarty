@@ -1,10 +1,10 @@
-<h3>Daylog Kalender - {{sFilerMONasText}} {{sFilterYYYY}}</h3>
+<!-- <h3>Daylog Kalender</h3> -->
 
 <div class="configline">
 
     <div class="iconbox">
         Neu Laden:
-        <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
             <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
         </button>
         <br>
@@ -35,7 +35,7 @@
 </div>
 
 <hr>
-
+<div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
 <table>
     <tr>
         <th>Montag</th>

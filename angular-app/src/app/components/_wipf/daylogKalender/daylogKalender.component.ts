@@ -35,6 +35,7 @@ export class DaylogKalenderComponent implements OnInit {
 
   public loadDays(): void {
     this.kalenderRawArray = new Array(37);
+    this.kalenderShowArray = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
 
     let sq = this.sFilterYYYY + "-" + this.serviceWipf.pad((this.sFilterMON), 2);
@@ -52,21 +53,34 @@ export class DaylogKalenderComponent implements OnInit {
 
         // Bug in Javascript? Das Monat ist um 1 höher wie bei "erstWochentag"?
         var tageImMonat = new Date(this.sFilterYYYY, this.sFilterMON, 0).getDate();
-
-        for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
-          resdata.forEach((d: DaylogDay) => {
-            if (new Date(d.date).getDate() === dayNr) {
-              // Tag vorhanden
-              this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, d);
-            } else {
-              // Tag gibt es nicht
-              this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
-            }
-          })
+        
+        // Test überhaupt ein Tag vorhanden ist
+        if (resdata.length != 0){        
+          for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
+            resdata.forEach((d: DaylogDay) => {
+              if (new Date(d.date).getDate() === dayNr) {
+                // Tag vorhanden
+                this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, d);
+              } else {
+                // Tag gibt es nicht
+                this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
+              }
+            })
+          }
+        } else {
+          // Wenn kein Tag vorhanden ist - leer füllen
+          for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
+            this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
+          }
         }
 
+
+
         warten.close();
-        this.renderKalender();
+        // Unschön - TODO:
+        setTimeout(() => {
+          this.renderKalender();
+        }, 1000);
       });
     }
   }
