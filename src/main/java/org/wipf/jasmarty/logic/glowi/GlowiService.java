@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
 @ApplicationScoped
 public class GlowiService {
 
-	public static final Integer SIZE = 15;
+	public static final Integer SIZE = 16;
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
 
@@ -122,8 +122,8 @@ public class GlowiService {
 			int x = 0;
 			int y = 0;
 
-			x = id / 15;
-			y = id % 15;
+			x = id / SIZE;
+			y = id % SIZE;
 
 			// invert y bei jeder 2. reihe
 			if (x % 2 == 1) {
