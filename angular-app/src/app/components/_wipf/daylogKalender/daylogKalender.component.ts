@@ -74,8 +74,6 @@ export class DaylogKalenderComponent implements OnInit {
           }
         }
 
-
-
         warten.close();
         // Unschön - TODO:
         setTimeout(() => {

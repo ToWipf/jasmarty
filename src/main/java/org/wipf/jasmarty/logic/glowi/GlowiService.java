@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
 @ApplicationScoped
 public class GlowiService {
 
-	public static final Integer SIZE = 16;
+	public static final Integer SIZE = 15;
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
 
