@@ -33,10 +33,16 @@ public class DaylogType extends PanacheEntityBase implements Serializable {
 	public String art;
 	@Column(name = "color", nullable = true)
 	public String color;
+	@Column(name = "prio", nullable = true)
+	public Integer prio;
 
 	@Override
 	public String toString() {
-		return "id=" + id + ", type=" + type + ", art=" + art + ", color=" + color;
+		return "id=" + id + ", type=" + type + ", art=" + art + ", color=" + color + ", prio=" + prio;
+	}
+
+	public Integer getPrio() {
+		return prio;
 	}
 
 	/**
@@ -50,6 +56,7 @@ public class DaylogType extends PanacheEntityBase implements Serializable {
 				existingData.type = this.type;
 				existingData.art = this.art;
 				existingData.color = this.color;
+				existingData.prio = this.prio;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id

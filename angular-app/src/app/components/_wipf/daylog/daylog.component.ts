@@ -219,7 +219,7 @@ export class DaylogComponentDialogDayComponent {
 export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'color', 'button'];
+  public eventlistDisplayedColumns: string[] = ['id', 'prio', 'type', 'art', 'color', 'button'];
   public sFilter: string = "";
   public bShowWarning: boolean = false;
   public daylogTypeDataSource;
