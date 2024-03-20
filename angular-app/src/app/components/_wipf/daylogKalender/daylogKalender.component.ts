@@ -95,8 +95,8 @@ export class DaylogKalenderComponent implements OnInit {
         kdShowDay.tagestext = zelle.daylogDayday.tagestext;
         if (zelle.daylogEvent) {
 
-          zelle.daylogEvent.forEach((de: DaylogEvent) => {
-            this.typelistForEventFilter.forEach((tl: DaylogType) => {
+          this.typelistForEventFilter.forEach((tl: DaylogType) => {
+            zelle.daylogEvent.forEach((de: DaylogEvent) => {
 
               if (de.typid.toString() === tl.id.toString()) {
                 // Typ passt dazu
@@ -122,12 +122,6 @@ export class DaylogKalenderComponent implements OnInit {
     });
   }
 
-  /**
-   * 
-   * @param zellenID 
-   * @param dayNr 
-   * @param dd 
-   */
   public async addToInhaltsarray(zellenID: number, dayNr: number, dd: DaylogDay): Promise<void> {
     var kd: KalDay = { dayNr: dayNr, daylogDayday: dd, daylogEvent: await this.loadEventsByDay(dd), zellenID: zellenID };
     this.kalenderRawArray.push(kd);
