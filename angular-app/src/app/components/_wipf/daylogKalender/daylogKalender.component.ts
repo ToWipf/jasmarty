@@ -104,12 +104,12 @@ export class DaylogKalenderComponent implements OnInit {
                   // Mit Filter
                   this.selectedEventTypeFilter.forEach((fi: DaylogType) => {
                     if (de.typid.toString() === fi.id.toString()) {
-                      kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+                      kdShowDay.eventKV.push({ value: de.text, key: tl.type, color: tl.color });
                     }
                   })
                 } else {
                   // Ohne Filter
-                  kdShowDay.eventKV.push({ value: de.text, key: tl.type });
+                  kdShowDay.eventKV.push({ value: de.text, key: tl.type, color: tl.color });
                 }
               }
             });
@@ -197,5 +197,11 @@ export interface KalDay {
 export interface KalShowZelle {
   dayNr?: number;
   tagestext?: string;
-  eventKV?: KeyValEntry[];
+  eventKV?: KalZelleData[];
+}
+
+export interface KalZelleData {
+  key?: string;
+  value?: string;
+  color?: string;
 }

@@ -179,7 +179,11 @@
             <h1>QuickLinks</h1>
             <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">
                 <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
-                DayLog Now
+                DayLog öffnen
+            </button>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylogKalender'">
+                <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
+                DayLog Kalender
             </button>
             <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
                 <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
@@ -192,7 +196,6 @@
             <br>
             <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
             <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
-            <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylogKalender'">daylogKalender</button>
 
         </ng-container>
         <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">

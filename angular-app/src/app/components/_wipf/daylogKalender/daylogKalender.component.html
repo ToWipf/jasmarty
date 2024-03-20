@@ -55,11 +55,7 @@
                 <table>
                     <tr *ngFor="let ev of kalenderShowArray[item*7+item2]?.eventKV">
                         <td>
-                            <ng-container *ngFor="let eventtype of typelistForEventFilter">
-                                <ng-container *ngIf="eventtype.type === ev.key">
-                                    <div class="zelleKey" [ngStyle]="{'background': eventtype.color}">{{ev.key}}</div>
-                                </ng-container>
-                            </ng-container>
+                            <div class="zelleKey" [ngStyle]="{'background': ev.color}">{{ev.key}}</div>
                         </td>
                         <td> {{ev.value}} </td>
                     </tr>
