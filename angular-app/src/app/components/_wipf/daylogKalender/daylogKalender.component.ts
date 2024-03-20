@@ -78,7 +78,7 @@ export class DaylogKalenderComponent implements OnInit {
         // Unschön - TODO:
         setTimeout(() => {
           this.renderKalender();
-        }, 1000);
+        }, 2000);
       });
     }
   }

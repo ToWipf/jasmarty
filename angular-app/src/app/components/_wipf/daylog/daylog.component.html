@@ -43,7 +43,7 @@
             </mat-form-field>
         </div>
 
-        <div class="iconbox" *ngIf="bShowDayTable">
+        <div class="iconbox monYYYYSchalter" *ngIf="bShowDayTable">
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
             Jahr: {{sFilterYYYY}}
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
@@ -74,7 +74,7 @@
 
 <ng-scrollbar class="pscrollTabellen" track="horizontal">
     <div class="gridRow_ohne_rand">
-        <div class="gridCol" [ngClass]="{'hide': !bShowDayTable }">
+        <div class="tabelleR" [ngClass]="{'hide': !bShowDayTable }">
             <ng-scrollbar class="pscroll">
                 <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
                     <ng-container matColumnDef="id">
@@ -134,7 +134,7 @@
                 </table>
             </ng-scrollbar>
         </div>
-        <div class="gridCol">
+        <div class="tabelleL">
             <ng-scrollbar class="pscroll">
                 <app-daylog-eventlist [filterEventType]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTableColumns" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
             </ng-scrollbar>
