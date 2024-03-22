@@ -29,7 +29,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Event Typ Filtern</mat-label>
                 <mat-select [(value)]="selectedTypes" multiple (selectionChange)="load()">
-                    <mat-option *ngFor="let itemEvent of typelistForSelect" [value]="itemEvent">{{itemEvent.type}}</mat-option>
+                    <mat-option *ngFor="let itemEvent of typelistForSelect" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
