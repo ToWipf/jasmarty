@@ -181,17 +181,9 @@
                 <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
                 DayLog öffnen
             </button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylogKalender'">
-                <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
-                DayLog Kalender
-            </button>
             <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
                 <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
                 Zur Liste hinzufügen
-            </button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='liste'">
-                <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
-                Liste öffnen
             </button>
             <br>
             <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
