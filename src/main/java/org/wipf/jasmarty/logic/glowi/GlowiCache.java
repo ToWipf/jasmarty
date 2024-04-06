@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 
@@ -18,12 +19,15 @@ public class GlowiCache {
 	private GlowiData[][] cache;
 	private Map<Integer, GlowiData> listOfChanges;
 
+	@Inject
+	GlowiService gservice;
+
 	/**
 	 * 
 	 */
 	@PostConstruct
 	public void initCache() {
-		this.cache = new GlowiData[GlowiService.SIZE][GlowiService.SIZE];
+		this.cache = new GlowiData[gservice.getSize()][gservice.getSize()];
 		this.listOfChanges = new HashMap<>();
 		cls();
 	}
@@ -34,8 +38,8 @@ public class GlowiCache {
 	public void setFull(GlowiData[][] gd) {
 		this.cache = gd;
 		listOfChanges.clear();
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				listOfChanges.put(kodrToID(x, y), this.cache[x][y]);
 			}
 		}
@@ -46,8 +50,8 @@ public class GlowiCache {
 	 */
 	public void cls() {
 		listOfChanges.clear();
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				GlowiData m = new GlowiData();
 				m.funktion = "N";
 				m.farbe_R = 0;
@@ -64,7 +68,7 @@ public class GlowiCache {
 	 * @return
 	 */
 	public GlowiData getByXY(int x, int y) {
-		if (x < GlowiService.SIZE && y < GlowiService.SIZE) {
+		if (x < gservice.getSize() && y < gservice.getSize()) {
 			return cache[x][y];
 		}
 		return null;
@@ -87,9 +91,9 @@ public class GlowiCache {
 	 */
 	private Integer kodrToID(int x, int y) {
 		if (x % 2 == 0) {
-			return y + x * GlowiService.SIZE;
+			return y + x * gservice.getSize();
 		} else {
-			return y + x * GlowiService.SIZE + GlowiService.SIZE - y - y - 1;
+			return y + x * gservice.getSize() + gservice.getSize() - y - y - 1;
 		}
 	}
 

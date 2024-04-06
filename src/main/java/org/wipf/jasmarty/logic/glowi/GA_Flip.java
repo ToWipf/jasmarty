@@ -18,6 +18,8 @@ public class GA_Flip {
 	GlowiCache cache;
 	@Inject
 	Wipf wipf;
+	@Inject
+	GlowiService gservice;
 
 	private static final Logger LOGGER = Logger.getLogger("GA_Flip");
 
@@ -32,7 +34,7 @@ public class GA_Flip {
 			GlowiData teil = new GlowiData();
 			teil.funktion = "B";
 			teil.setFarbe(getRNDFarbe());
-			this.cache.setByXY(wipf.getRandomInt(GlowiService.SIZE), wipf.getRandomInt(GlowiService.SIZE), teil);
+			this.cache.setByXY(wipf.getRandomInt(gservice.getSize()), wipf.getRandomInt(gservice.getSize()), teil);
 		}
 	}
 
@@ -75,8 +77,8 @@ public class GA_Flip {
 	private boolean checkSieg() {
 		// Referenz holen
 		GlowiData referenz = this.cache.getByXY(0, 0);
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				if (this.cache.getByXY(x, y).funktion != referenz.funktion) {
 					return false;
 				}
@@ -89,8 +91,8 @@ public class GA_Flip {
 	 * 
 	 */
 	private void SiegAllesBunt() {
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				this.cache.getByXY(x, y).setFarbe(getRNDFarbe());
 			}
 		}
@@ -111,13 +113,13 @@ public class GA_Flip {
 		if (x != 0) {
 			this.cache.setByXY(x - 1, y, filpTeil(this.cache.getByXY(x - 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
-		if (x != GlowiService.SIZE - 1) {
+		if (x != gservice.getSize() - 1) {
 			this.cache.setByXY(x + 1, y, filpTeil(this.cache.getByXY(x + 1, y), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		if (y != 0) {
 			this.cache.setByXY(x, y - 1, filpTeil(this.cache.getByXY(x, y - 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
-		if (y != GlowiService.SIZE - 1) {
+		if (y != gservice.getSize() - 1) {
 			this.cache.setByXY(x, y + 1, filpTeil(this.cache.getByXY(x, y + 1), tile.farbe_R, tile.farbe_G, tile.farbe_B));
 		}
 		this.cache.setByXY(x, y, filpTeil(tile, tile.farbe_R, tile.farbe_G, tile.farbe_B));

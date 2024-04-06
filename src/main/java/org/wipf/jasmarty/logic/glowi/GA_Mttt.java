@@ -15,6 +15,8 @@ public class GA_Mttt {
 
 	@Inject
 	GlowiCache cache;
+	@Inject
+	GlowiService gservice;
 
 	public class mtttPunkt {
 		public int x;
@@ -333,8 +335,8 @@ public class GA_Mttt {
 	 * Alle Markierungen löschen
 	 */
 	private void deMarkiereAlles() {
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				if (this.cache.getByXY(x, y).funktion.startsWith("M")) {
 					GlowiData m = new GlowiData();
 					m.setFarbe(farbe.SCHWARZ);

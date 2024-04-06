@@ -2,12 +2,14 @@ package org.wipf.jasmarty.logic.glowi;
 
 import java.util.Map.Entry;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 /**
  * @author wipf
@@ -16,15 +18,13 @@ import org.wipf.jasmarty.logic.base.Wipf;
 @ApplicationScoped
 public class GlowiService {
 
-	public static final Integer SIZE = 15;
-
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
+	public modus_type modus;
+	private Integer size;
 
 	public enum modus_type {
 		MTTT, RND, FLIP
 	};
-
-	public modus_type modus;
 
 	@Inject
 	GlowiCache cache;
@@ -36,6 +36,22 @@ public class GlowiService {
 	GA_RND rnd;
 	@Inject
 	GA_Flip flip;
+	@Inject
+	WipfConfigVW wipfConfig;
+
+	@PostConstruct
+	private void setInitialSize() {
+		this.size = wipfConfig.getConfParamInteger("glowi_size");
+		if (this.size == null) {
+			LOGGER.info("Keine Size, lege 16 fest");
+			wipfConfig.setConfParam("glowi_size", 16);
+			this.size = 16;
+		}
+	}
+
+	public Integer getSize() {
+		return this.size;
+	}
 
 	/**
 	 * @return
@@ -44,12 +60,12 @@ public class GlowiService {
 		StringBuilder sb = new StringBuilder();
 
 		boolean inverntLine = true;
-		for (int x = 0; x < GlowiService.SIZE; x++) {
+		for (int x = 0; x < getSize(); x++) {
 			inverntLine = !inverntLine;
-			for (int y = 0; y < GlowiService.SIZE; y++) {
-				int koordinatenIndex = (y + x * GlowiService.SIZE);
+			for (int y = 0; y < getSize(); y++) {
+				int koordinatenIndex = (y + x * getSize());
 				if (inverntLine) {
-					koordinatenIndex = koordinatenIndex + GlowiService.SIZE - y - y - 1;
+					koordinatenIndex = koordinatenIndex + getSize() - y - y - 1;
 				}
 
 				GlowiData val = cache.getByXY(x, y);
@@ -99,7 +115,7 @@ public class GlowiService {
 	 * 
 	 */
 	public void doSet(Integer x, Integer y) {
-		if (x < SIZE && y < SIZE) {
+		if (x < getSize() && y < getSize()) {
 
 			if (modus == modus_type.MTTT) {
 				mttt.doSet(x, y);
@@ -117,17 +133,17 @@ public class GlowiService {
 	 * @param id
 	 */
 	public void doSetById(Integer id) {
-		if (id < SIZE * SIZE) {
+		if (id < getSize() * getSize()) {
 
 			int x = 0;
 			int y = 0;
 
-			x = id / SIZE;
-			y = id % SIZE;
+			x = id / getSize();
+			y = id % getSize();
 
 			// invert y bei jeder 2. reihe
 			if (x % 2 == 1) {
-				y = GlowiService.SIZE - y - 1;
+				y = getSize() - y - 1;
 			}
 
 			doSet(x, y);
