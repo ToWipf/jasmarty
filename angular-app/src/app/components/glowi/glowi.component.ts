@@ -28,7 +28,7 @@ export class GlowiComponent implements OnInit {
   fileChangeHandler($event: any) {
     this.ngxPhotoEditorService.open($event, {
       aspectRatio: 1 / 1,
-      resizeToHeight: 15,
+      resizeToHeight: this.mtttData.length,
       autoCropArea: 1
     }).subscribe(data => {
       this.imageoutput = data;
