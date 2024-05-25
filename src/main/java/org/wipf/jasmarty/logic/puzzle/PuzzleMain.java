@@ -3,14 +3,14 @@ package org.wipf.jasmarty.logic.puzzle;
 import java.io.File;
 import java.io.IOException;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 /**
  * @author devbuntu
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class PuzzleMain {
 
 	@Inject

@@ -23,7 +23,7 @@ public class GlowiService {
 	private Integer size;
 
 	public enum modus_type {
-		MTTT, RND, FLIP
+		MTTT, RND, FLIP, FK
 	};
 
 	@Inject
@@ -36,6 +36,8 @@ public class GlowiService {
 	GA_RND rnd;
 	@Inject
 	GA_Flip flip;
+	@Inject
+	GA_FK fk;
 	@Inject
 	WipfConfigVW wipfConfig;
 
@@ -121,6 +123,8 @@ public class GlowiService {
 				mttt.doSet(x, y);
 			} else if (modus == modus_type.FLIP) {
 				flip.doSet(x, y);
+			} else if (modus == modus_type.FK) {
+				fk.doSet(x, y);
 			} else {
 				rnd.doRNDInput(x, y);
 			}
@@ -171,6 +175,9 @@ public class GlowiService {
 		} else if (modus == modus_type.MTTT) {
 			flip.loadNewGame();
 			modus = modus_type.FLIP;
+		} else if (modus == modus_type.FLIP) {
+			fk.loadNewGame();
+			modus = modus_type.FK;
 		} else {
 			rnd.loadNewGame();
 			modus = modus_type.RND;
