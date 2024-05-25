@@ -15,7 +15,6 @@ import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.listen.ListeService;
 import org.wipf.jasmarty.logic.listen.MedienService;
 import org.wipf.jasmarty.logic.listen.RndEventsService;
-import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 /**
  * @author wipf
@@ -40,8 +39,6 @@ public class TeleMenue {
 	TAppMsgService appMsg;
 	@Inject
 	MedienService appMedien;
-	@Inject
-	PunkteVW punkteVW;
 	@Inject
 	TSendAndReceive sendAndReceive;
 	@Inject
@@ -193,27 +190,6 @@ public class TeleMenue {
 			case "temperature":
 				return appOthers.getTemperature();
 
-			// Punkte - App
-			case "sp":
-			case "ps":
-			case "setpunkte":
-				punkteVW.setPunkte(t.getMessageIntPart(1));
-				return punkteVW.getPunkte().toString();
-			case "mp":
-			case "pm":
-			case "minuspunkte":
-				punkteVW.minuspunkt();
-				return punkteVW.getPunkte().toString();
-			case "pp":
-			case "pluspunkte":
-				punkteVW.pluspunkt();
-				return punkteVW.getPunkte().toString();
-			case "pa":
-			case "pc":
-			case "punkteChange":
-				punkteVW.appendPunkt(t.getMessageIntPart(1));
-				return punkteVW.getPunkte().toString();
-
 			// System
 			case "kill":
 				// Noch ein Update machen, ansonsen wird nach einen neustart sofort wieder
@@ -357,11 +333,6 @@ public class TeleMenue {
 			return appOthers.getWitz();
 		case "countmsg":
 			return appMsg.countMsg().toString();
-//		case "countsend":
-//			return telelog.countMsg();
-		case "punkte":
-		case "p":
-			return punkteVW.getPunkte().toString();
 		case "getmyid":
 		case "id":
 		case "whoami":
