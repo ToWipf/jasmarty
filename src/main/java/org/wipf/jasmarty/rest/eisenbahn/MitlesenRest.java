@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.eisenbahn;
 
 import javax.annotation.security.PermitAll;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -18,7 +18,7 @@ import org.wipf.jasmarty.logic.eisenbahn.Mitlesen;
 @Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 @PermitAll
-@ApplicationScoped
+@RequestScoped
 public class MitlesenRest {
 
 	@Inject

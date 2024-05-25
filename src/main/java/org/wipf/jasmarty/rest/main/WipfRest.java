@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
@@ -36,7 +36,7 @@ import io.quarkus.elytron.security.common.BcryptUtil;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
-@ApplicationScoped
+@RequestScoped
 public class WipfRest {
 
 	@Inject

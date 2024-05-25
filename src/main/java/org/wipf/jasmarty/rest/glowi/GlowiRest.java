@@ -2,7 +2,7 @@ package org.wipf.jasmarty.rest.glowi;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,7 +23,7 @@ import org.wipf.jasmarty.logic.glowi.GlowiService;
 //@Produces(MediaType.APPLICATION_JSON)
 //@Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
-@ApplicationScoped
+@RequestScoped
 public class GlowiRest {
 
 	@Inject

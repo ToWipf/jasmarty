@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.annotation.security.PermitAll;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -22,7 +22,7 @@ import org.wipf.jasmarty.logic.puzzle.PuzzleMain;
 @PermitAll
 //@Produces(MediaType.APPLICATION_SVG_XML)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class PuzzleRest {
 
 	@Inject

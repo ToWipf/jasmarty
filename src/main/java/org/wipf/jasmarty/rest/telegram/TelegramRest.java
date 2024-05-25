@@ -2,7 +2,7 @@ package org.wipf.jasmarty.rest.telegram;
 
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -24,7 +24,7 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
 @Path("telegram")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class TelegramRest {
 
 	@Inject

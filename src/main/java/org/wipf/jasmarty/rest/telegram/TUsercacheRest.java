@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.telegram;
 
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.telegram.TUsercache;
 @Path("teleusercache")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class TUsercacheRest {
 
 	@Inject

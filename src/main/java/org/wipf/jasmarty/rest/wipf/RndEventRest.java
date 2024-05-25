@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.wipf;
 
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.DELETE;
@@ -25,7 +25,7 @@ import org.wipf.jasmarty.logic.listen.RndEventsService;
 @Path("rndevent")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class RndEventRest {
 
 	@Inject

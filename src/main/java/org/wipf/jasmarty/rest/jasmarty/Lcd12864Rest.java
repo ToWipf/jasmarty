@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
 import javax.annotation.security.RolesAllowed;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -26,7 +26,7 @@ import org.wipf.jasmarty.logic.lcd.Lcd12864PageVerwaltung;
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864Rest {
 
 	@Inject
