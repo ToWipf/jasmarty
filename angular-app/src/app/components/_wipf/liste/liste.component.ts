@@ -186,6 +186,10 @@ export class ListeComponent implements OnInit {
     });
   }
 
+  public copyToClipboard(item: ListeEntry): void {
+    navigator.clipboard.writeText(item.data);
+  }
+
 }
 
 @Component({
