@@ -38,9 +38,6 @@ public class GA_FK {
 	 */
 	public void doSet(int xIn, int yIn) {
 		doChaos();
-		doChaos();
-		doChaos();
-
 	}
 
 	private void doChaos() {
