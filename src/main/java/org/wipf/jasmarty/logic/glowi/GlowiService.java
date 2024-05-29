@@ -109,7 +109,6 @@ public class GlowiService {
 			sb.append((char) ch.getValue().farbe_G);
 			sb.append((char) ch.getValue().farbe_B);
 		}
-		LOGGER.info(sb.toString());
 
 		return sb.toString();
 	}

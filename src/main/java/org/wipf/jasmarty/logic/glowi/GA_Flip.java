@@ -30,12 +30,28 @@ public class GA_Flip {
 		this.cache.cls();
 
 		// Zufallsfeld erstellen
-		for (int px = 0; px < wipf.getRandomInt(50) + 10; px++) {
-			GlowiData teil = new GlowiData();
-			teil.funktion = "B";
-			teil.setFarbe(getRNDFarbe());
-			this.cache.setByXY(wipf.getRandomInt(gservice.getSize()), wipf.getRandomInt(gservice.getSize()), teil);
+		if (wipf.getRandomBoolean()) {
+			LOGGER.info("Variante clear");
+			for (int px = 0; px < wipf.getRandomInt(50) + 10; px++) {
+				GlowiData teil = new GlowiData();
+				teil.funktion = "B";
+				teil.setFarbe(getRNDFarbe());
+				this.cache.setByXY(wipf.getRandomInt(gservice.getSize()), wipf.getRandomInt(gservice.getSize()), teil);
+			}
+		} else {
+			LOGGER.info("Variante full");
+			for (int x = 0; x < gservice.getSize(); x++) {
+				for (int y = 0; y < gservice.getSize(); y++) {
+					if (wipf.getRandomBoolean()) {
+						GlowiData teil = new GlowiData();
+						teil.funktion = "B";
+						teil.setFarbe(getRNDFarbe());
+						this.cache.setByXY(x, y, teil);
+					}
+				}
+			}
 		}
+
 	}
 
 	/**
@@ -128,10 +144,8 @@ public class GA_Flip {
 
 		if (checkSieg()) {
 			SiegAllesBunt();
-			SiegAllesBunt();
-			SiegAllesBunt();
+			;
 		}
-
 	}
 
 }

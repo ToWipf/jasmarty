@@ -30,45 +30,26 @@ public class GA_FK {
 
 		// Alles zurücksetzen
 		this.cache.cls();
-		doChaos();
+
+		GlowiData teil = new GlowiData();
+		teil.setFarbe(farbe.BLAU);
+		teil.funktion = "B";
+
+		this.cache.drawRectFill(0, 0, this.gservice.getSize(), 4, teil);
 	}
 
 	/**
 	 * @param x
 	 * @param y
 	 */
-	public void doSet(int xIn, int yIn) {
-		doChaos();
-	}
+	public void doSet(int x, int y) {
 
-	private void doChaos() {
-		for (int x = 0; x < gservice.getSize(); x++) {
-			for (int y = 0; y < gservice.getSize(); y++) {
-				GlowiData teil = new GlowiData();
-				teil.setFarbe(getRNDFarbe());
-				this.cache.setByXY(x, y, teil);
-			}
-		}
-	}
+		String quellTeilname = this.cache.getByXY(x, y).funktion;
+		GlowiData teil = new GlowiData();
+		teil.setFarbe(farbe.ROT);
+		teil.funktion = "S";
 
-	private farbe getRNDFarbe() {
-		switch (wipf.getRandomInt(7)) {
-		case 0:
-			return farbe.BLAU;
-		case 1:
-			return farbe.GELB;
-		case 2:
-			return farbe.GRUEN;
-		case 3:
-			return farbe.ROT;
-		case 4:
-			return farbe.SCHWARZ;
-		case 5:
-			return farbe.AUS;
-		default:
-			return farbe.GRAU;
-
-		}
+		this.cache.setByXY(x, y, teil);
 	}
 
 }

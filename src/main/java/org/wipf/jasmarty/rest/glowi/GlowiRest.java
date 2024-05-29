@@ -49,20 +49,11 @@ public class GlowiRest {
 
 	@GET
 	@PermitAll
-	@Path("do/{x}/{y}") // Von Arduino LASER
-	@Produces(MediaType.TEXT_PLAIN)
-	public String doArdClick(@PathParam("x") Integer x, @PathParam("y") Integer y) {
-		glowi.doSet(x, y);
-		return glowi.getDivScreen(); // TODO nur die Änderungen senden
-	}
-
-	@GET
-	@PermitAll
-	@Path("doId/{id}") // Von Arduino POTI
+	@Path("doId/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String doArdClick(@PathParam("id") Integer id) {
 		glowi.doSetById(id);
-		return glowi.getDivScreen(); // TODO nur die Änderungen senden
+		return glowi.getDivScreen();
 	}
 
 	@GET
