@@ -75,11 +75,14 @@ public class GlowiCache {
 	}
 
 	/**
+	 * Fuer jede Koordinate einen Cache. Doppelte werden ueberschreiben
+	 * 
 	 * @param x
 	 * @param y
 	 * @param m
 	 */
 	public void setByXY(int x, int y, GlowiData m) {
+
 		this.cache[x][y] = new GlowiData(m);
 		listOfChanges.put(kodrToID(x, y), m);
 	}

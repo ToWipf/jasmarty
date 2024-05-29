@@ -93,7 +93,9 @@ public class GA_Flip {
 	private void SiegAllesBunt() {
 		for (int x = 0; x < gservice.getSize(); x++) {
 			for (int y = 0; y < gservice.getSize(); y++) {
-				this.cache.getByXY(x, y).setFarbe(getRNDFarbe());
+				GlowiData teil = new GlowiData();
+				teil.setFarbe(getRNDFarbe());
+				this.cache.setByXY(x, y, teil);
 			}
 		}
 	}
