@@ -5,44 +5,24 @@
 td {
   white-space: pre-line;
   word-break: break-word;
-
 }
 
-.mat-header-cell {
-  font-size: 12px !important;
-  font-weight: 500;
-}
-
-.mat-cell,
-.mat-footer-cell {
-  font-size: 13px !important;
-}
-
-th.mat-header-cell:first-of-type,
-td.mat-cell:first-of-type {
-  padding-left: 10px !important;
-}
-
-th.mat-header-cell:last-of-type,
-td.mat-cell:last-of-type,
-td.mat-footer-cell:last-of-type {
-  padding-right: 0px !important;
-}
-
-td.mat-cell {
-  min-width: 40px;
-  padding-left: 1px;
-  padding-right: 1px;
-}
-
-th.mat-sort-header-sorted {
-  color: black;
-}
-
-.mat-row:hover .mat-cell {
+.mat-mdc-row:hover {
   border-top: 2px solid black;
   border-bottom: 2px solid black;
-  // background-color: #00000020 !important;
+  background-color: #00000020 !important;
+}
+
+.mat-mdc-header-row {
+  background-color: #00000020 !important;
+}
+
+.mat-mdc-table {
+  background-color: rgb(248, 255, 187) !important;
+}
+
+.mat-mdc-row {
+  background-color: #00000030 !important;
 }
 
 table {
@@ -55,29 +35,14 @@ table {
   min-width: 70px;
 }
 
-//AG15 Patch
-// .mdc-data-table__header-cell {
-//   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-//     "Lucida Sans", Arial, sans-serif;
-//   font-size: 11px;
-// }
-//
-// .mdc-data-table__cell {
-//   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-//     "Lucida Sans", Arial, sans-serif;
-//   font-size: 12px;
-// }
-//
-// .mdc-data-table__cell,
-// .mdc-data-table__header-cell {
-//   padding: 0 5px 0 5px !important;
-// }
-//
-// .mdc-text-field--filled:not(.mdc-text-field--disabled) {
-//   background-color: #0000000a;
-// }
-//
-// .mdc-list-item__primary-text {
-//   font-size: 12px !important;
-// }
-//
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+  padding: 0 1px 0 1px !important;
+}
+
+.mdc-list-item__primary-text,
+.mdc-data-table__header-cell,
+.mdc-data-table__cell,
+.mdc-data-table__content {
+  font-size: 12px !important;
+}

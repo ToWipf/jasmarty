@@ -3,17 +3,16 @@ package org.wipf.jasmarty.logic.base;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import org.wipf.jasmarty.databasetypes.base.AuthKey;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class AuthKeyService {
 
 	public List<String> keycache;

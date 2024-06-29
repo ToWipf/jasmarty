@@ -19,6 +19,8 @@ export class DayLogComponent implements OnInit {
 
   public daylistDataSource;
   public daylistDisplayedColumns: string[] = [];
+  public sFilterYYYY: number = undefined;
+  public sFilterMON: number = undefined;
   public sFilterDay: string = "";
   public sFilterTextEvent: string = "";
   public bShowWarning: boolean = false;
@@ -31,13 +33,25 @@ export class DayLogComponent implements OnInit {
   private filterActiveCache: boolean = false;
 
   ngOnInit() {
-    this.sFilterDay = new Date(Date.now()).getFullYear().toString() + "-" + this.serviceWipf.pad((new Date(Date.now()).getMonth() + 1), 2);
+    this.initFilter();
     this.dateForLoad = { date: "" };
     this.loadDays();
     this.loadDaylogTypes();
     this.showAllTableColumns();
     this.loadTypeListForEventFilter();
     this.bShowDayTable = true;
+  }
+
+  private initFilter(): void {
+    this.sFilterYYYY = (new Date(Date.now()).getFullYear());
+    this.sFilterMON = (new Date(Date.now()).getMonth() + 1);
+
+    this.reloadDayFilter();
+  }
+  
+  private reloadDayFilter(): void {
+    this.sFilterDay = this.sFilterYYYY + "-" + this.serviceWipf.pad(this.sFilterMON, 2);
+    this.dayFilter();
   }
 
   public loadTypeListForEventFilter(): void {
@@ -130,6 +144,29 @@ export class DayLogComponent implements OnInit {
     }
   }
 
+  public changeMonat(vorRueck: boolean) {
+    if (vorRueck) {
+      if (this.sFilterMON > 1) {
+        this.sFilterMON--;
+      }
+    } else {
+      if (this.sFilterMON < 12) {
+        this.sFilterMON++;
+      }
+    }
+    this.reloadDayFilter();
+  }
+
+  public changeYYYY(vorRueck: boolean) {
+    if (vorRueck) {
+      this.sFilterYYYY--;
+    }
+    else {
+      this.sFilterYYYY++;
+    }
+    this.reloadDayFilter();
+  }
+
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.daylistDataSource.filter = this.sFilterDay.trim();
@@ -219,7 +256,7 @@ export class DaylogComponentDialogDayComponent {
 export class DaylogComponentDialogTypeListComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  public eventlistDisplayedColumns: string[] = ['id', 'type', 'art', 'color', 'button'];
+  public eventlistDisplayedColumns: string[] = ['id', 'prio', 'type', 'art', 'color', 'button'];
   public sFilter: string = "";
   public bShowWarning: boolean = false;
   public daylogTypeDataSource;

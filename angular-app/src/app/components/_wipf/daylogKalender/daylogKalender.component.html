@@ -1,0 +1,69 @@
+<!-- <h3>Daylog Kalender</h3> -->
+
+<ng-scrollbar class="pscrollConfigline" track="horizontal">
+    <div class="configline">
+        <div class="iconbox">
+            Neu Laden:
+            <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
+                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+            </button>
+            <br>
+            Neu Zeigen:
+            <button class="btn btn-wipf-default btn-for-icon" (click)="renderKalender()">
+                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+            </button>
+        </div>
+
+        <div class="iconbox mySchalter">
+            <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+            Jahr: {{sFilterYYYY}}
+            <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+            <br>
+            <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+            Monat: {{sFilterMON}}
+            <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+        </div>
+        <div class="box">
+            <mat-form-field appearance="fill">
+                <mat-label>Event Typ Filtern</mat-label>
+                <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()" multiple>
+                    <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</ng-scrollbar>
+
+<ng-scrollbar track="all" class="pscroll" [ngClass]="{'hide' : !kalenderShowArray}">
+    <div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
+    <table>
+        <tr>
+            <th>Montag</th>
+            <th>Dienstag</th>
+            <th>Mittwoch</th>
+            <th>Donnerstag</th>
+            <th>Freitag</th>
+            <th>Samstag</th>
+            <th>Sonntag</th>
+        </tr>
+        <tr *ngFor="let item of [0,1,2,3,4,5]">
+            <td *ngFor="let item2 of [0,1,2,3,4,5,6]" class="oneDay">
+                <ng-container *ngIf="kalenderShowArray[item*7+item2]?.dayNr">
+                    <span class="dayHeader">
+                        <span class="dayNr"> {{kalenderShowArray[item*7+item2]?.dayNr}}</span>
+                        {{kalenderShowArray[item*7+item2]?.tagestext}}
+                    </span>
+                    <table>
+                        <tr *ngFor="let ev of kalenderShowArray[item*7+item2]?.eventKV">
+                            <td>
+                                <div class="zelleKey" [ngStyle]="{'background': ev.color}">{{ev.key}}</div>
+                            </td>
+                            <td> {{ev.value}} </td>
+                        </tr>
+                    </table>
+                </ng-container>
+            </td>
+        </tr>
+    </table>
+</ng-scrollbar>
+<hr>

@@ -36,7 +36,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
         <td mat-cell *matCellDef="let element">
             <div *ngIf="element.text === 'Y^'">
-
+                <mat-icon svgIcon="check_circle" aria-hidden="false" title="Ja"></mat-icon>
             </div>
             <div *ngIf="element.text === 'N^'">
                 <mat-icon svgIcon="cancel" aria-hidden="false" title="Nein"></mat-icon>

@@ -186,6 +186,10 @@ export class ListeComponent implements OnInit {
     });
   }
 
+  public copyToClipboard(item: ListeEntry): void {
+    navigator.clipboard.writeText(item.data);
+  }
+
 }
 
 @Component({
@@ -195,6 +199,7 @@ export class ListeComponent implements OnInit {
 export class ListeComponentDialogComponent implements OnInit {
   constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
     dialogRef.disableClose = true;
+    dialogRef.updateSize("70%","70%");
   }
 
   public listeType: ListeType[];

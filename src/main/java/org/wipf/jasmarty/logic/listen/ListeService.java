@@ -1,21 +1,19 @@
 package org.wipf.jasmarty.logic.listen;
 
-
 import java.util.List;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
-import jakarta.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.liste.Liste;
 import org.wipf.jasmarty.logic.base.Wipf;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class ListeService {
 
 	@Inject

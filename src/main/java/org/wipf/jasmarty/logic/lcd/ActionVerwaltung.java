@@ -1,21 +1,19 @@
 package org.wipf.jasmarty.logic.lcd;
 
-
 import java.util.List;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
-import jakarta.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class ActionVerwaltung {
 
 	@Inject

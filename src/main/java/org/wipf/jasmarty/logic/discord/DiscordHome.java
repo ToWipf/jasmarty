@@ -1,8 +1,5 @@
 package org.wipf.jasmarty.logic.discord;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,11 +8,14 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.Wipf.httpRequestType;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DiscordHome {
 
 	@Inject
@@ -36,7 +36,8 @@ public class DiscordHome {
 		}
 		try {
 			d.setDisId(sId);
-			String sRes = wipf.httpRequest(httpRequestType.GET, "https://discord.com/api/guilds/" + sId + "/widget.json");
+			String sRes = wipf.httpRequest(httpRequestType.GET,
+					"https://discord.com/api/guilds/" + sId + "/widget.json");
 
 			JSONObject jo = new JSONObject(sRes);
 			JSONArray ja = (JSONArray) jo.get("members");

@@ -1,8 +1,12 @@
 package org.wipf.jasmarty.rest.jasmarty;
 
-import jakarta.annotation.security.PermitAll;
+import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
+import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
+import org.wipf.jasmarty.logic.lcd.Lcd12864Cache;
+import org.wipf.jasmarty.logic.lcd.Lcd12864PageVerwaltung;
+
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -14,11 +18,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
-import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
-import org.wipf.jasmarty.logic.lcd.Lcd12864Cache;
-import org.wipf.jasmarty.logic.lcd.Lcd12864PageVerwaltung;
-
 /**
  * @author wipf
  *
@@ -27,7 +26,7 @@ import org.wipf.jasmarty.logic.lcd.Lcd12864PageVerwaltung;
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864Rest {
 
 	@Inject

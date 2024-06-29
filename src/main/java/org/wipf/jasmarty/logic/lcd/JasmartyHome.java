@@ -1,15 +1,15 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class JasmartyHome {
 
 	@Inject

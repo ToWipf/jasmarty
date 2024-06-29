@@ -1,8 +1,12 @@
 package org.wipf.jasmarty.rest.base;
 
+import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.databasetypes.base.WipfUser;
+import org.wipf.jasmarty.logic.base.WipfUserVW;
+
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -16,10 +20,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 
-import org.wipf.jasmarty.WipfException;
-import org.wipf.jasmarty.databasetypes.base.WipfUser;
-import org.wipf.jasmarty.logic.base.WipfUserVW;
-
 /**
  * @author wipf
  *
@@ -28,7 +28,7 @@ import org.wipf.jasmarty.logic.base.WipfUserVW;
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class WipfUserVwRest {
 
 	@Inject

@@ -1,8 +1,11 @@
 package org.wipf.jasmarty.rest.base;
 
+import org.wipf.jasmarty.databasetypes.base.AuthKey;
+import org.wipf.jasmarty.logic.base.AuthKeyService;
+
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -14,9 +17,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.databasetypes.base.AuthKey;
-import org.wipf.jasmarty.logic.base.AuthKeyService;
-
 /**
  * @author wipf
  *
@@ -25,7 +25,7 @@ import org.wipf.jasmarty.logic.base.AuthKeyService;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
-@ApplicationScoped
+@RequestScoped
 public class AuthKeyRest {
 
 	@Inject
@@ -36,15 +36,15 @@ public class AuthKeyRest {
 	// @PermitAll
 	// @Produces(MediaType.TEXT_PLAIN)
 	// public String get( RoutingContext routingContext) {
-	// 	// import io.vertx.ext.web.RoutingContext;
-	// 	// import io.vertx.core.http.Cookie;
-	// 	//Cookie cookie = io.vertx.ext.web.routingContext.getCookie("cookieName");
-    //     // if (cookie != null) {
-    //     //     return cookie.getValue();
-    //     // } else {
-    //     //     return "Cookie not found";
-    //     // }
-	// 	//return "";
+	// // import io.vertx.ext.web.RoutingContext;
+	// // import io.vertx.core.http.Cookie;
+	// //Cookie cookie = io.vertx.ext.web.routingContext.getCookie("cookieName");
+	// // if (cookie != null) {
+	// // return cookie.getValue();
+	// // } else {
+	// // return "Cookie not found";
+	// // }
+	// //return "";
 	// }
 
 	@GET

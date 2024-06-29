@@ -2,19 +2,18 @@ package org.wipf.jasmarty.logic.base;
 
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.base.WipfUser;
 
 import io.quarkus.elytron.security.common.BcryptUtil;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class WipfUserVW {
 
 	private static final Logger LOGGER = Logger.getLogger("WipfUserVW");

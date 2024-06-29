@@ -1,11 +1,14 @@
 package org.wipf.jasmarty.rest.telegram;
 
+import org.wipf.jasmarty.WipfException;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
+import org.wipf.jasmarty.logic.telegram.TeleMenue;
+import org.wipf.jasmarty.logic.telegram.TelegramHome;
+
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -14,11 +17,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.WipfException;
-import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
-import org.wipf.jasmarty.logic.telegram.TeleMenue;
-import org.wipf.jasmarty.logic.telegram.TelegramHome;
-
 /**
  * @author wipf
  *
@@ -26,7 +24,7 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
 @Path("telegram")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class TelegramRest {
 
 	@Inject

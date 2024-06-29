@@ -1,16 +1,22 @@
-<mat-drawer-container class="fullsize" [hasBackdrop]="hasBackdrop.value">
+<div class="fullsize">
+    <div *ngIf="bShowMenue" class="fullsize blocker" (click)="bShowMenue=false">
+    </div>
 
-    <mat-drawer #drawer [mode]="mode.value" class="background2">
+    <div *ngIf="bShowMenue" class="sidebarmenue background2">
         <ng-scrollbar class="sidebar">
             <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
             <ul *ngIf="bWipfActive" class="menueli">
                 <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Neue Liste"></mat-icon>
+                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
                     <span class="buttonInhalt"> Liste </span>
                 </li>
                 <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
                     <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
                     <span class="buttonInhalt"> TagesLog </span>
+                </li>
+                <li (click)="selectSite('daylogKalender')" [ngClass]="{'isSelected' : selectedSite == 'daylogKalender'}">
+                    <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
+                    <span class="buttonInhalt"> daylogKalender </span>
                 </li>
                 <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
                     <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
@@ -114,97 +120,96 @@
                 </li>
             </ul>
         </ng-scrollbar>
-    </mat-drawer>
+    </div>
 
-    <mat-drawer-content>
-        <div class="hide">
-            <mat-form-field>
-                <mat-select #mode value="push"></mat-select>
-                <mat-select #hasBackdrop value="true"></mat-select>
-            </mat-form-field>
-        </div>
-        <div class="fullsite background1">
-            <div class="maincontainer">
-                <ng-container *ngIf="selectedSite==='actions'">
-                    <app-jasmartyActions></app-jasmartyActions>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='config'">
-                    <app-jasmartyConfig></app-jasmartyConfig>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='configtele'">
-                    <app-telegram-config></app-telegram-config>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='medien'">
-                    <app-medien></app-medien>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='chat'">
-                    <app-telegram-chat></app-telegram-chat>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='tlog'">
-                    <app-telegram-log></app-telegram-log>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='tmsg'">
-                    <app-telegramMsg></app-telegramMsg>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='wipfuservw'">
-                    <app-wipfuservw></app-wipfuservw>
-                    <app-authKey></app-authKey>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='12864panel'">
-                    <app-jasmarty12864panel></app-jasmarty12864panel>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='12864pages'">
-                    <app-jasmarty12864pages></app-jasmarty12864pages>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='debug'">
-                    <app-debugSeite></app-debugSeite>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='daylog'">
-                    <app-daylog></app-daylog>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='filevw'">
-                    <app-file-vw></app-file-vw>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='settings'">
-                    <app-settings></app-settings>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='rndEvent'">
-                    <app-rndEvent></app-rndEvent>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='daylogStats'">
-                    <app-daylogStats></app-daylogStats>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='login'">
+    <div class="inhaltsseite background1">
+        <ng-container *ngIf="selectedSite==='actions'">
+            <app-jasmartyActions></app-jasmartyActions>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='config'">
+            <app-jasmartyConfig></app-jasmartyConfig>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='configtele'">
+            <app-telegram-config></app-telegram-config>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='medien'">
+            <app-medien></app-medien>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='chat'">
+            <app-telegram-chat></app-telegram-chat>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='tlog'">
+            <app-telegram-log></app-telegram-log>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='tmsg'">
+            <app-telegramMsg></app-telegramMsg>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='wipfuservw'">
+            <app-wipfuservw></app-wipfuservw>
+            <app-authKey></app-authKey>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='12864panel'">
+            <app-jasmarty12864panel></app-jasmarty12864panel>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='12864pages'">
+            <app-jasmarty12864pages></app-jasmarty12864pages>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='debug'">
+            <app-debugSeite></app-debugSeite>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='daylog'">
+            <app-daylog></app-daylog>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='filevw'">
+            <app-file-vw></app-file-vw>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='settings'">
+            <app-settings></app-settings>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='rndEvent'">
+            <app-rndEvent></app-rndEvent>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='daylogStats'">
+            <app-daylogStats></app-daylogStats>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='login'">
 
-                    <app-login></app-login>
-                    <hr>
-                    <h1>QuickLinks</h1>
-                    <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
-                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="drawer.toggle()">Menü</button>
-                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">DayLog Now</button>
-                    <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">Zur Liste hinzufügen</button>
-                    <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
+            <app-login></app-login>
+            <hr>
+            <h1>QuickLinks</h1>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">
+                <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
+                DayLog öffnen
+            </button>
+            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
+                <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
+                Zur Liste hinzufügen
+            </button>
+            <br>
+            <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
+            <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
 
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
-                    <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='liste'">
-                    <app-liste></app-liste>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='glowi'">
-                    <app-glowi></app-glowi>
-                </ng-container>
-                <ng-container *ngIf="selectedSite==='view360'">
-                    <app-view360></app-view360>
-                </ng-container>
-            </div>
-        </div>
-        <app-footer *ngIf="!bHideMenue" class="myfooter"></app-footer>
-        <button *ngIf="!bHideMenue" class="mainMenueHButton" (click)="drawer.toggle()">
-            <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
-        </button>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
+            <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='liste'">
+            <app-liste></app-liste>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='glowi'">
+            <app-glowi></app-glowi>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='view360'">
+            <app-view360></app-view360>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='daylogKalender'">
+            <app-daylogKalender></app-daylogKalender>
+        </ng-container>
+    </div>
 
-    </mat-drawer-content>
+    <app-footer *ngIf="!bHideMenueButtonAndFooter" class="myfooter"></app-footer>
+    <button *ngIf="!bHideMenueButtonAndFooter" class="mainMenueHButton" (click)="bShowMenue=!bShowMenue">
+        <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
+    </button>
 
-</mat-drawer-container>
+</div>

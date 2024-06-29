@@ -19,7 +19,6 @@ export class RndEventComponent implements OnInit {
 
   public dataSource;
   public displayedColumns: string[] = ['id', 'eventtext', 'active', 'button'];
-  public bShowWarning: boolean = false;
   public sFilter: string = "";
 
   ngOnInit() {
@@ -74,9 +73,6 @@ export class RndEventComponent implements OnInit {
   private save(item: RndEvent): void {
     this.rest.post('rndevent/save', item).then((resdata: any) => {
       this.load();
-      if (!resdata) {
-        this.bShowWarning = true;
-      }
     });
   }
 

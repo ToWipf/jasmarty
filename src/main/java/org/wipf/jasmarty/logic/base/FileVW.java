@@ -17,18 +17,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+
 import org.apache.commons.io.FileUtils;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class FileVW {
 
 	@Inject
@@ -119,7 +120,8 @@ public class FileVW {
 		} else {
 			try {
 				BufferedImage in = ImageIO.read(f);
-				BufferedImage img = resizeImage(in, size, (int) (((double) size / (double) in.getWidth()) * in.getHeight()));
+				BufferedImage img = resizeImage(in, size,
+						(int) (((double) size / (double) in.getWidth()) * in.getHeight()));
 
 				fout.createNewFile();
 				ImageIO.write(img, "jpg", fout);
@@ -181,7 +183,8 @@ public class FileVW {
 		String sFilename = "files/" + "txt_" + t.getMid() + ".txt";
 
 		try {
-			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(), Charset.defaultCharset());
+			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(),
+					Charset.defaultCharset());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

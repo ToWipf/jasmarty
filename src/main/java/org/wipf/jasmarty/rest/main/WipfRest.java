@@ -2,9 +2,17 @@ package org.wipf.jasmarty.rest.main;
 
 import java.io.IOException;
 
+import org.wipf.jasmarty.logic.base.AuthKeyService;
+import org.wipf.jasmarty.logic.base.MainHome;
+import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
+import org.wipf.jasmarty.logic.discord.DiscordHome;
+import org.wipf.jasmarty.logic.lcd.SerialConfig;
+
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.CookieParam;
@@ -19,15 +27,6 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 
-import org.wipf.jasmarty.logic.base.AuthKeyService;
-import org.wipf.jasmarty.logic.base.MainHome;
-import org.wipf.jasmarty.logic.base.Wipf;
-import org.wipf.jasmarty.logic.base.WipfConfigVW;
-import org.wipf.jasmarty.logic.discord.DiscordHome;
-import org.wipf.jasmarty.logic.lcd.SerialConfig;
-
-import io.quarkus.elytron.security.common.BcryptUtil;
-
 /**
  * @author wipf
  *
@@ -36,7 +35,7 @@ import io.quarkus.elytron.security.common.BcryptUtil;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
-@ApplicationScoped
+@RequestScoped
 public class WipfRest {
 
 	@Inject

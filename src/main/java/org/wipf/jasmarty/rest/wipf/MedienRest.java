@@ -1,10 +1,11 @@
 package org.wipf.jasmarty.rest.wipf;
 
-import jakarta.annotation.security.PermitAll;
+import org.wipf.jasmarty.databasetypes.liste.Medien;
+import org.wipf.jasmarty.logic.listen.MedienService;
+
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -14,9 +15,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.databasetypes.liste.Medien;
-import org.wipf.jasmarty.logic.listen.MedienService;
-
 /**
  * @author wipf
  *
@@ -24,7 +22,7 @@ import org.wipf.jasmarty.logic.listen.MedienService;
 @Path("medien")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class MedienRest {
 
 	@Inject

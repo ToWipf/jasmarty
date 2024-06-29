@@ -1,10 +1,11 @@
 package org.wipf.jasmarty.rest.telegram;
 
-import jakarta.annotation.security.PermitAll;
+import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
+import org.wipf.jasmarty.logic.telegram.TAppMsgService;
+
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -14,9 +15,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
-import org.wipf.jasmarty.logic.telegram.TAppMsgService;
-
 /**
  * @author wipf
  *
@@ -24,7 +22,7 @@ import org.wipf.jasmarty.logic.telegram.TAppMsgService;
 @Path("telemsg")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class TeleMsgRest {
 
 	@Inject

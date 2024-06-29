@@ -6,17 +6,17 @@ import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
-
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogStatsTable;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogEventService {
 
 	/**

@@ -3,21 +3,15 @@ package org.wipf.jasmarty.rest.puzzle;
 import java.io.File;
 import java.io.IOException;
 
+import org.wipf.jasmarty.logic.puzzle.PuzzleMain;
+
 import jakarta.annotation.security.PermitAll;
-import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
-
-import org.wipf.jasmarty.logic.puzzle.PuzzleMain;
 
 /**
  * @author wipf
@@ -28,7 +22,7 @@ import org.wipf.jasmarty.logic.puzzle.PuzzleMain;
 @PermitAll
 //@Produces(MediaType.APPLICATION_SVG_XML)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class PuzzleRest {
 
 	@Inject

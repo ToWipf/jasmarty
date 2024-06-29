@@ -1,13 +1,12 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
-import jakarta.transaction.Transactional;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 /**
  * Seiten Speichern und laden
@@ -18,7 +17,7 @@ import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864PageVerwaltung {
 
 	@Inject

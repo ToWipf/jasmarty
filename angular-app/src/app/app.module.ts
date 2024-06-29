@@ -15,7 +15,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty12864Pages/jasmarty12864Pages.component';
 import { Jasmarty12864PanelComponent } from './components/_jasmarty/jasmarty12864Panel/jasmarty12864Panel.component';
 import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/_jasmarty/jasmartyActions/jasmartyActions.component';
@@ -44,7 +44,6 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -62,7 +61,6 @@ import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SettingsComponent, SettingsComponentDialogComponent } from './components/_main/settings/settings.component';
-import { SidebarModule } from 'ng-sidebar';
 import { TelegramChatComponent } from './components/_telegram/telegramChat/telegramChat.component';
 import { TelegramConfigComponent } from './components/_telegram/telegramConfig/telegramConfig.component';
 import { TelegramLogComponent } from './components/_telegram/telegramLog/telegramLog.component';
@@ -86,6 +84,7 @@ import { GlowiComponent } from './components/glowi/glowi.component';
 import { NgxView360Module } from "@egjs/ngx-view360";
 import { View360Component } from './components/_debug/view360/view360.component';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
 
 @NgModule({
     declarations: [
@@ -99,6 +98,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
         DaylogComponentDialogTypeComponent,
         DaylogComponentDialogTypeListComponent,
         DaylogComponentEventlist,
+        DaylogKalenderComponent,
         DaylogStatsComponent,
         DebugSeiteComponent,
         DialogJaNeinComponent,
@@ -152,7 +152,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
         ClipboardModule,
         DragDropModule,
         FormsModule,
-        HttpClientModule,
         MatAutocompleteModule,
         MatBadgeModule,
         MatBottomSheetModule,
@@ -178,7 +177,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
         MatRadioModule,
         MatRippleModule,
         MatSelectModule,
-        MatSidenavModule,
         MatSliderModule,
         MatSlideToggleModule,
         MatSnackBarModule,
@@ -196,11 +194,14 @@ import { ColorPickerModule } from 'ngx-color-picker';
         PortalModule,
         ReactiveFormsModule,
         ScrollingModule,
-        SidebarModule.forRoot(),
         AppRoutingModule,
         ColorPickerModule,
+        HttpClientModule,
     ],
-    providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }],
+    providers: [
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+        HttpClient,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

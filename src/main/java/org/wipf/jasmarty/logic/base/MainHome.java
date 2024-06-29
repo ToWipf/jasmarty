@@ -5,10 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.TimeZone;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.lcd.JasmartyHome;
 import org.wipf.jasmarty.logic.listen.ListeService;
@@ -18,12 +14,15 @@ import org.wipf.jasmarty.logic.telegram.TelegramHome;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.ShutdownEvent;
 import io.quarkus.runtime.StartupEvent;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class MainHome {
 
 	@Inject
@@ -42,7 +41,7 @@ public class MainHome {
 	AuthKeyService authKeyService;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "2.0.47";
+	public static final String VERSION = "2.1.12";
 	public static final String AUTH_KEY_NAME = "authKey";
 
 	/**

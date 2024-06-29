@@ -1,8 +1,5 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.databasetypes.lcd.LcdPageDescription;
@@ -14,7 +11,10 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-@ApplicationScoped
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
+@RequestScoped
 public class Lcd12864PageConverter {
 
 	@Inject

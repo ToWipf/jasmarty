@@ -17,6 +17,11 @@
 
 <input type="file" (change)="fileChangeHandler($event)">
 <ng-container *ngIf="imageoutput?.base64">
-    <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider>
+
+    <mat-slider min="0" max="256" step="1" aria-label="units">
+        <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
+    </mat-slider>
+    Kontrast: {{nKontrast}}/256
+
 </ng-container>
 <button class="btn btn-wipf-default" (click)="saveFull()">Bild Speichern</button>

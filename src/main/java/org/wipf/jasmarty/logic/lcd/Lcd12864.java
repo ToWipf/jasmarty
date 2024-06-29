@@ -1,8 +1,5 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864Font.Lcd12864fontType;
@@ -12,11 +9,14 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
 import org.wipf.jasmarty.logic.base.Wipf;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864 {
 
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty 12864");

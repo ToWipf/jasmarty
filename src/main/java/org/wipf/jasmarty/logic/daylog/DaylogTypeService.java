@@ -1,17 +1,19 @@
 package org.wipf.jasmarty.logic.daylog;
 
+import java.util.Comparator;
 import java.util.List;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.transaction.Transactional;
+import java.util.stream.Collectors;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogTypeService {
 
 	/**
@@ -26,7 +28,19 @@ public class DaylogTypeService {
 	 * @return
 	 */
 	public List<DaylogType> getAll() {
-		return DaylogType.findAll().list();
+		List<DaylogType> values = DaylogType.<DaylogType>listAll();
+
+		// Wenn eine der Prios null ist -> Nicht sortieren
+		for (DaylogType dt : values) {
+			if (dt.prio == null) {
+				return values;
+			}
+		}
+
+		// Alle Prios haben einen Wert -> Sortieren
+		return DaylogType.<DaylogType>listAll().stream().sorted(Comparator.comparing(DaylogType::getPrio))
+				.collect(Collectors.toList());
+
 	}
 
 	/**

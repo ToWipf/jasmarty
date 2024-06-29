@@ -14,7 +14,6 @@ import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.daylog.DaylogHome;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 import org.wipf.jasmarty.logic.telegram.TSendAndReceive;
-import org.wipf.jasmarty.logic.wipfapp.PunkteVW;
 
 import io.quarkus.scheduler.Scheduled;
 
@@ -27,8 +26,6 @@ public class CronDaily {
 
 	@Inject
 	TSendAndReceive tSendAndReceive;
-	@Inject
-	PunkteVW punkteVW;
 	@Inject
 	WipfConfigVW wipfConfig;
 	@Inject
@@ -54,7 +51,6 @@ public class CronDaily {
 				tSendAndReceive.sendDaylyInfo();
 			}
 
-			punkteVW.pluspunkt();
 			appGrafana.deletePictureCache();
 			// TODO vorerst nicht mehr senden
 			// verwaltung.sendDaylyMotd();

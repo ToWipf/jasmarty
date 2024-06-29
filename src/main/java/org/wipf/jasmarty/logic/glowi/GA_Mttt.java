@@ -1,20 +1,22 @@
 package org.wipf.jasmarty.logic.glowi;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
 /**
  * 
  */
-@ApplicationScoped
+@RequestScoped
 public class GA_Mttt {
 
 	@Inject
 	GlowiCache cache;
+	@Inject
+	GlowiService gservice;
 
 	public class mtttPunkt {
 		public int x;
@@ -270,19 +272,23 @@ public class GA_Mttt {
 
 		// Gewonnen?
 		for (int x = 0; x < 3; x++) {
-			if (vergleicheUnterspielFeld(tttFeld[x][0], tttFeld[x][1]) && vergleicheUnterspielFeld(tttFeld[x][0], (tttFeld[x][2]))) {
+			if (vergleicheUnterspielFeld(tttFeld[x][0], tttFeld[x][1])
+					&& vergleicheUnterspielFeld(tttFeld[x][0], (tttFeld[x][2]))) {
 				return tttFeld[x][0].funktion;
 			}
 		}
 		for (int y = 0; y < 3; y++) {
-			if (vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[1][y]) && vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[2][y])) {
+			if (vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[1][y])
+					&& vergleicheUnterspielFeld(tttFeld[0][y], tttFeld[2][y])) {
 				return tttFeld[0][y].funktion;
 			}
 		}
-		if (vergleicheUnterspielFeld(tttFeld[0][0], tttFeld[1][1]) && vergleicheUnterspielFeld(tttFeld[0][0], (tttFeld[2][2]))) {
+		if (vergleicheUnterspielFeld(tttFeld[0][0], tttFeld[1][1])
+				&& vergleicheUnterspielFeld(tttFeld[0][0], (tttFeld[2][2]))) {
 			return tttFeld[0][0].funktion;
 		}
-		if (vergleicheUnterspielFeld(tttFeld[0][2], tttFeld[1][1]) && vergleicheUnterspielFeld(tttFeld[0][2], (tttFeld[2][0]))) {
+		if (vergleicheUnterspielFeld(tttFeld[0][2], tttFeld[1][1])
+				&& vergleicheUnterspielFeld(tttFeld[0][2], (tttFeld[2][0]))) {
 			return tttFeld[0][2].funktion;
 		}
 		// Unentschieden testen (Zählen ob voll ist)
@@ -333,8 +339,8 @@ public class GA_Mttt {
 	 * Alle Markierungen löschen
 	 */
 	private void deMarkiereAlles() {
-		for (int x = 0; x < GlowiService.SIZE; x++) {
-			for (int y = 0; y < GlowiService.SIZE; y++) {
+		for (int x = 0; x < gservice.getSize(); x++) {
+			for (int y = 0; y < gservice.getSize(); y++) {
 				if (this.cache.getByXY(x, y).funktion.startsWith("M")) {
 					GlowiData m = new GlowiData();
 					m.setFarbe(farbe.SCHWARZ);

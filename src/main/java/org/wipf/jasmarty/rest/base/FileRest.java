@@ -2,9 +2,11 @@ package org.wipf.jasmarty.rest.base;
 
 import java.io.File;
 
+import org.wipf.jasmarty.logic.base.FileVW;
+
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -16,8 +18,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import org.wipf.jasmarty.logic.base.FileVW;
-
 /**
  * @author wipf
  *
@@ -26,7 +26,7 @@ import org.wipf.jasmarty.logic.base.FileVW;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RolesAllowed("admin")
-@ApplicationScoped
+@RequestScoped
 public class FileRest {
 
 	@Inject

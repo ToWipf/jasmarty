@@ -16,10 +16,16 @@
   display: flex;
 }
 
-.gridCol {
-  padding: 0 3px;
+.tabelleR {
+  flex: 1 0 230px;
+  width: 25%;
+  border-right: solid 1px transparent;
+}
+
+.tabelleL {
   flex: 1 0 250px;
   width: 25%;
+  border-left: solid 1px transparent;
 }
 
 .mat-row:hover {
@@ -40,8 +46,8 @@
 }
 
 .day-row-is-clicked {
-  font-weight: bold;
-  background-color: rgb(179, 179, 179);
+  font-weight: bold !important;
+  background-color: rgba(123, 123, 123, 0) !important;
 }
 
 .mat-column-date {
@@ -73,8 +79,9 @@
 }
 
 .vorschlagContainer {
-  max-width: 300px;
+  //max-width: 300px;
   background-color: #f4f4f4;
+  font-size: 12px;
 }
 
 .lightgray {
@@ -89,4 +96,8 @@
 .typestyle {
   border-radius: 7px;
   padding: 3px;
+}
+
+.monYYYYSchalter {
+  width: 115px;
 }

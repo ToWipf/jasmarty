@@ -26,6 +26,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public eventlistDataSource;
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
+    public isLoadAllEvents: boolean = false;
 
     // Auf Änderungen achten und aktionen starten
     ngOnChanges(changes: SimpleChanges) {
@@ -45,7 +46,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         if (changes?.filterEventType) {
             this.applyFilterByType();
         } else {
-            // Filter immer leeren
+            // Filter leeren
             this.filterEventType = undefined;
         }
     }
@@ -147,6 +148,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public loadAllEvents(): void {
         const warten = this.dialog.open(DialogWartenComponent, {});
         this.eventlist = [];
+        this.isLoadAllEvents = true;
 
         // keine userid möglich -> unsicher!
         this.rest.get('daylog/event/getAll').then((resdata: DaylogEvent[]) => {
@@ -156,11 +158,16 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
             this.eventlistDataSource.sort = this.sortEvent;
             this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
             warten.close();
+            this.applyFilterByType();
         });
     }
 
+    /**
+    * Alle Events eines Tages Laden 
+    */
     private loadEventsByDay(d: DaylogDay): void {
         if (d.id != undefined) {
+            this.isLoadAllEvents = false;
             const warten = this.dialog.open(DialogWartenComponent, {});
             this.eventlist = [];
 
@@ -202,8 +209,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 this.rest.delete('daylog/event/delete/' + item.id).then((resdata: any) => {
-                    //this.loadDays(); TODO warum war das hier?
-                    this.loadEventsByDay(this.dateForLoad);
+                    if (this.isLoadAllEvents){
+                        // Komplette liste
+                        this.loadAllEvents();
+                    } else {
+                        // Einzelansicht
+                        this.loadEventsByDay(this.dateForLoad);
+                    }
                 });
             }
         });
@@ -222,6 +234,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {
         dialogRef.disableClose = true;
+        dialogRef.updateSize("70%","70%");
     }
 
     public daylogTypes: DaylogType[] = [];
@@ -255,8 +268,9 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadTextVorschlag(): void {
+        var suchetext = this.data.text.trim().replace('/', "%2F").replace("  ", " ");
         if (this.data.text.length > 1) {
-            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + this.data.text.trim().replace('/', "%2F") + '/' + this.data.typid).then((resdata: string[]) => {
+            this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + suchetext + '/' + this.data.typid).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {
