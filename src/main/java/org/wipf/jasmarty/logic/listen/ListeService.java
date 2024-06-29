@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -14,7 +14,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class ListeService {
 
 	@Inject

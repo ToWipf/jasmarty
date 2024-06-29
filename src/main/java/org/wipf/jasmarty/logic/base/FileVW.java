@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
@@ -28,7 +28,7 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class FileVW {
 
 	@Inject

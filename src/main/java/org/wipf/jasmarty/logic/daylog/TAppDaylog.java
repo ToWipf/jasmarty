@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
@@ -20,7 +20,7 @@ import org.wipf.jasmarty.logic.telegram.TUsercache;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class TAppDaylog {
 
 	@Inject

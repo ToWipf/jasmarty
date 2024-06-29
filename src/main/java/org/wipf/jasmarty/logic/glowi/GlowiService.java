@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.glowi;
 import java.util.Map.Entry;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -15,7 +15,7 @@ import org.wipf.jasmarty.logic.base.WipfConfigVW;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class GlowiService {
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");

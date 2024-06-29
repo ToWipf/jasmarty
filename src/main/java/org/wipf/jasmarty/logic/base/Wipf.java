@@ -23,7 +23,7 @@ import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
@@ -34,7 +34,7 @@ import org.wipf.jasmarty.datatypes.Base32;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Wipf {
 
 	private static final Logger LOGGER = Logger.getLogger("Wipf");

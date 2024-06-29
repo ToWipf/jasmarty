@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.glowi;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -12,7 +12,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  * 
  * Gehe mit meiner Farbe zum Pixel
  */
-@ApplicationScoped
+@RequestScoped
 public class GA_FK {
 
 	@Inject

@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -15,7 +15,7 @@ import com.fazecast.jSerialComm.SerialPort;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class SerialConfig {
 
 	private static final Logger LOGGER = Logger.getLogger("lcd_SerialConfig");

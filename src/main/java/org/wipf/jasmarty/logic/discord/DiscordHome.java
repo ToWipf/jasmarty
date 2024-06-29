@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.discord;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -15,7 +15,7 @@ import org.wipf.jasmarty.logic.base.WipfConfigVW;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DiscordHome {
 
 	@Inject

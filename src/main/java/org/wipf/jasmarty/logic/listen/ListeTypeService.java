@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.liste.ListeType;
@@ -11,7 +11,7 @@ import org.wipf.jasmarty.databasetypes.liste.ListeType;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class ListeTypeService {
 
 	/**

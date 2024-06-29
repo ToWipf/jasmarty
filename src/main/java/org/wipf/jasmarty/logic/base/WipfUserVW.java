@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.base;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
@@ -14,7 +14,7 @@ import io.quarkus.elytron.security.common.BcryptUtil;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class WipfUserVW {
 
 	private static final Logger LOGGER = Logger.getLogger("WipfUserVW");

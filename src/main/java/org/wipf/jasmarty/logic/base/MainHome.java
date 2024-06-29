@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.TimeZone;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
@@ -23,7 +23,7 @@ import io.quarkus.runtime.StartupEvent;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class MainHome {
 
 	@Inject

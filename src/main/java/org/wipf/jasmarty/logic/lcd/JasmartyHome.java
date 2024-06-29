@@ -1,8 +1,6 @@
 package org.wipf.jasmarty.logic.lcd;
 
-
-
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -11,7 +9,7 @@ import org.jboss.logging.Logger;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class JasmartyHome {
 
 	@Inject

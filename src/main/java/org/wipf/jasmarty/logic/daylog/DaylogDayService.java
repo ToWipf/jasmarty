@@ -2,7 +2,7 @@ package org.wipf.jasmarty.logic.daylog;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
@@ -11,7 +11,7 @@ import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogDayService {
 
 	/**

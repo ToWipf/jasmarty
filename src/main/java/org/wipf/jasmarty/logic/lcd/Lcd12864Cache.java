@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 
 import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
 
@@ -8,7 +8,7 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864Cache {
 
 	private boolean bChanged = true;

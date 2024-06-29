@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.lcd;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
@@ -14,7 +14,7 @@ import org.wipf.jasmarty.databasetypes.lcd.ButtonAction;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class ActionVerwaltung {
 
 	@Inject

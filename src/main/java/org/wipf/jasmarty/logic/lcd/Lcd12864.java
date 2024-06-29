@@ -1,6 +1,6 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.jboss.logging.Logger;
@@ -16,7 +16,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Lcd12864 {
 
 	private static final Logger LOGGER = Logger.getLogger("Jasmarty 12864");

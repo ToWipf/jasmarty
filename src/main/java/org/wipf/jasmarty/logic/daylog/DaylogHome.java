@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
@@ -16,7 +16,7 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogHome {
 
 	@Inject

@@ -3,7 +3,7 @@ package org.wipf.jasmarty.logic.base;
 import java.util.List;
 import java.util.UUID;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.transaction.Transactional;
 
 import org.jboss.logging.Logger;
@@ -13,7 +13,7 @@ import org.wipf.jasmarty.databasetypes.base.WipfConfig;
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class WipfConfigVW {
 
 	private static final Logger LOGGER = Logger.getLogger("WipfConfigVW");
