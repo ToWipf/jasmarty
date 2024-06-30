@@ -23,18 +23,19 @@ import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import javax.enterprise.context.ApplicationScoped;
 
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
 
+import jakarta.enterprise.context.RequestScoped;
+
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class Wipf {
 
 	private static final Logger LOGGER = Logger.getLogger("Wipf");
@@ -123,7 +124,8 @@ public class Wipf {
 	 * @return
 	 * @throws IOException
 	 */
-	public String httpRequest(httpRequestType method, String sUrl) throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException {
+	public String httpRequest(httpRequestType method, String sUrl)
+			throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException {
 		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();

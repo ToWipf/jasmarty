@@ -2,16 +2,16 @@ package org.wipf.jasmarty.logic.daylog;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
-
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogDayService {
 
 	/**

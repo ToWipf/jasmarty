@@ -2,9 +2,10 @@ package org.wipf.jasmarty.logic.listen;
 
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.transaction.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+
+import jakarta.transaction.Transactional;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.liste.RndEvent;

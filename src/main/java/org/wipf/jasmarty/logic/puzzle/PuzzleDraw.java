@@ -4,13 +4,13 @@ import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 
-import javax.enterprise.context.RequestScoped;
-
 import org.jfree.svg.SVGGraphics2D;
 import org.jfree.svg.SVGUtils;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleFeld;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleTeil;
 import org.wipf.jasmarty.datatypes.puzzle.PuzzleTeil.verbindungsart;
+
+import jakarta.enterprise.context.RequestScoped;
 
 /**
  * @author devbuntu
@@ -26,7 +26,8 @@ public class PuzzleDraw {
 	public File drawTest() throws IOException {
 		PuzzleFeld pf = new PuzzleFeld();
 
-		PuzzleTeil testteil = new PuzzleTeil(verbindungsart.BUCHSE, verbindungsart.BUCHSE, verbindungsart.STIFT, verbindungsart.STIFT);
+		PuzzleTeil testteil = new PuzzleTeil(verbindungsart.BUCHSE, verbindungsart.BUCHSE, verbindungsart.STIFT,
+				verbindungsart.STIFT);
 
 		pf.setSize(2, 2);
 		pf.addTeil(0, 0, testteil);

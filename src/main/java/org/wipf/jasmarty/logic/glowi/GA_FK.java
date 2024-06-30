@@ -1,19 +1,19 @@
 package org.wipf.jasmarty.logic.glowi;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 import org.wipf.jasmarty.logic.base.Wipf;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 /**
  * Spiel: FarbenKampf
  * 
  * Gehe mit meiner Farbe zum Pixel
  */
-@ApplicationScoped
+@RequestScoped
 public class GA_FK {
 
 	@Inject

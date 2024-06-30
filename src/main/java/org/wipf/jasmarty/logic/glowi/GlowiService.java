@@ -2,20 +2,20 @@ package org.wipf.jasmarty.logic.glowi;
 
 import java.util.Map.Entry;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class GlowiService {
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");

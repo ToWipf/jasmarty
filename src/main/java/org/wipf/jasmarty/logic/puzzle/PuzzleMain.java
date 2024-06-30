@@ -3,8 +3,8 @@ package org.wipf.jasmarty.logic.puzzle;
 import java.io.File;
 import java.io.IOException;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author devbuntu

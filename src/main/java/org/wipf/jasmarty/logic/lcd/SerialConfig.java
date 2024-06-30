@@ -1,8 +1,5 @@
 package org.wipf.jasmarty.logic.lcd;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,11 +8,14 @@ import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
 /**
  * @author wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class SerialConfig {
 
 	private static final Logger LOGGER = Logger.getLogger("lcd_SerialConfig");

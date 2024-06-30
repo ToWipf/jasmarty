@@ -1,13 +1,13 @@
 package org.wipf.jasmarty.logic.glowi;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-@ApplicationScoped
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.inject.Inject;
+
+@RequestScoped
 public class GA_RND {
 
 	@Inject

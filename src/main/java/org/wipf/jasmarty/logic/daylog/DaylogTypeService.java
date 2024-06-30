@@ -4,16 +4,16 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.transaction.Transactional;
-
 import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
+
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@ApplicationScoped
+@RequestScoped
 public class DaylogTypeService {
 
 	/**
@@ -29,17 +29,16 @@ public class DaylogTypeService {
 	 */
 	public List<DaylogType> getAll() {
 		List<DaylogType> values = DaylogType.<DaylogType>listAll();
-	
+
 		// Wenn eine der Prios null ist -> Nicht sortieren
-		for (DaylogType dt:values){
+		for (DaylogType dt : values) {
 			if (dt.prio == null) {
 				return values;
 			}
 		}
 
 		// Alle Prios haben einen Wert -> Sortieren
-		return DaylogType.<DaylogType>listAll().stream()
-				.sorted(Comparator.comparing(DaylogType::getPrio))
+		return DaylogType.<DaylogType>listAll().stream().sorted(Comparator.comparing(DaylogType::getPrio))
 				.collect(Collectors.toList());
 
 	}
