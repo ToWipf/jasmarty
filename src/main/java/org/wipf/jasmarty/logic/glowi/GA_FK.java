@@ -5,7 +5,7 @@ import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
@@ -13,7 +13,7 @@ import jakarta.inject.Inject;
  * 
  * Gehe mit meiner Farbe zum Pixel
  */
-@RequestScoped
+@ApplicationScoped
 public class GA_FK {
 
 	@Inject

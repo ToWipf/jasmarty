@@ -29,13 +29,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.wipf.jasmarty.datatypes.Base32;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * @author wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class Wipf {
 
 	private static final Logger LOGGER = Logger.getLogger("Wipf");

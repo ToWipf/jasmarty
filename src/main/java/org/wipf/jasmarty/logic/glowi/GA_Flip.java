@@ -5,13 +5,13 @@ import org.wipf.jasmarty.datatypes.glowi.GlowiData;
 import org.wipf.jasmarty.datatypes.glowi.GlowiData.farbe;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
  * 
  */
-@RequestScoped
+@ApplicationScoped
 public class GA_Flip {
 
 	@Inject

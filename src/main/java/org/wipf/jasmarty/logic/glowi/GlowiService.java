@@ -8,14 +8,14 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
  * @author wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class GlowiService {
 
 	private static final Logger LOGGER = Logger.getLogger("Glowi");
