@@ -75,7 +75,7 @@
 <ng-scrollbar class="pscrollTabellen" track="horizontal">
     <div class="gridRow_ohne_rand">
         <div class="tabelleR" [ngClass]="{'hide': !bShowDayTable }">
-            <ng-scrollbar class="pscroll" track="vertical" autoWidthDisabled="false">
+            <ng-scrollbar class="pscroll" track="vertical">
                 <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -135,7 +135,7 @@
             </ng-scrollbar>
         </div>
         <div class="tabelleL">
-            <ng-scrollbar class="pscroll" track="vertical" autoWidthDisabled="false">
+            <ng-scrollbar class="pscroll" track="vertical">
                 <app-daylog-eventlist [filterEventType]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTableColumns" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
             </ng-scrollbar>
         </div>

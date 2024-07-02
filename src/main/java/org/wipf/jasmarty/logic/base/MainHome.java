@@ -41,7 +41,7 @@ public class MainHome {
 	AuthKeyService authKeyService;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "2.2.6";
+	public static final String VERSION = "2.2.7";
 	public static final String AUTH_KEY_NAME = "authKey";
 
 	/**
