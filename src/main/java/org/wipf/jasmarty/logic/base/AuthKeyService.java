@@ -3,19 +3,22 @@ package org.wipf.jasmarty.logic.base;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.base.AuthKey;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class AuthKeyService {
 
 	public List<String> keycache;
+
+	private static final Logger LOGGER = Logger.getLogger("AuthKey");
 
 	/**
 	 * @return
@@ -54,6 +57,7 @@ public class AuthKeyService {
 				keycache.add(o.key);
 			}
 		});
+		LOGGER.info("loadKeysIntoCache");
 	}
 
 	/**
@@ -66,6 +70,7 @@ public class AuthKeyService {
 				return true;
 			}
 		}
+		LOGGER.info("Zugriffsverletzung: " + sKey);
 		return false;
 	}
 
