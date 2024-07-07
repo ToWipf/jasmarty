@@ -2,14 +2,13 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.util.List;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
-import jakarta.transaction.Transactional;
-
 import org.wipf.jasmarty.databasetypes.telegram.TeleMsg;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.Wipf;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
@@ -36,7 +35,7 @@ public class TAppMsgService {
 	 */
 	@Transactional
 	public Telegram getMsg(Telegram t) {
-		List<TeleMsg> lm = TeleMsg.findByFrage(t.getMessage()).list();
+		List<TeleMsg> lm = TeleMsg.findByFrage(t.getMessage().toLowerCase()).list();
 		if (lm.size() > 0)
 			t.setAntwort(lm.get(wipf.getRandomInt(lm.size())).antwort);
 		return t;
