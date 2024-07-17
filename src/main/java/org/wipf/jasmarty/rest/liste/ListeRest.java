@@ -49,6 +49,12 @@ public class ListeRest {
 	}
 
 	@GET
+	@Path("getLast/{anzahl}")
+	public Response getLast(@PathParam("anzahl") Integer nAnzahl) {
+		return Response.ok(listeDB.getLast(nAnzahl)).build();
+	}
+
+	@GET
 	@Path("getAllByType/{typeid}")
 	public Response getAllByType(@PathParam("typeid") Integer nTypeId) {
 		return Response.ok(listeDB.getAllByType(nTypeId)).build();

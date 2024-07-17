@@ -60,11 +60,9 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 
     private saveEvent(item: DaylogEvent): void {
         this.bShowWarning = true;
-        this.rest.post('daylog/event/save', item).then((resdata: any) => {
+        this.rest.post('daylog/event/save', item).then(() => {
             this.doLoadEventList();
-            if (resdata) {
-                this.bShowWarning = false;
-            }
+            this.bShowWarning = false;
         });
     }
 
@@ -209,7 +207,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 this.rest.delete('daylog/event/delete/' + item.id).then((resdata: any) => {
-                    if (this.isLoadAllEvents){
+                    if (this.isLoadAllEvents) {
                         // Komplette liste
                         this.loadAllEvents();
                     } else {
@@ -234,7 +232,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {
         dialogRef.disableClose = true;
-        dialogRef.updateSize("70%","70%");
+        dialogRef.updateSize("70%", "70%");
     }
 
     public daylogTypes: DaylogType[] = [];

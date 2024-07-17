@@ -53,6 +53,14 @@ public class ListeService {
 	}
 
 	/**
+	 * @param nAnzahl
+	 * @return
+	 */
+	public List<Liste> getLast(Integer nAnzahl) {
+		return Liste.findLast().list().subList(0, nAnzahl);
+	}
+
+	/**
 	 * @param t
 	 * @return
 	 */

@@ -35,7 +35,7 @@ export class ListeComponent implements OnInit {
 
   ngOnInit() {
     this.loadTypes();
-    //this.load();
+    this.loadLast();
     this.showAllTableColumns();
   }
 
@@ -71,8 +71,17 @@ export class ListeComponent implements OnInit {
 
   public loadAll(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-
     this.rest.get('liste/getAll').then((resdata: ListeEntry[]) => {
+      this.dataSourceList = new MatTableDataSource(resdata);
+      this.applyTextFilter();
+      this.dataSourceList.sort = this.sort;
+      warten.close();
+    });
+  }
+
+  public loadLast(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('liste/getLast/10').then((resdata: ListeEntry[]) => {
       this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
       this.dataSourceList.sort = this.sort;
