@@ -1,11 +1,14 @@
 package org.wipf.jasmarty.rest.daylog;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogType;
+import org.wipf.jasmarty.logic.base.AuthKeyService;
+import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.daylog.DaylogTypeService;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -27,32 +30,46 @@ public class DaylogTypeRest {
 
 	@Inject
 	DaylogTypeService daylogTypeDB;
+	@Inject
+	AuthKeyService aks;
 
 	// Wird nicht gebraucht
 	@GET
 	@Path("get/{id}")
-	public Response get(@PathParam("id") Integer nId) {
-		return Response.ok(daylogTypeDB.get(nId).toString()).build();
+	public Response get(@PathParam("id") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok(daylogTypeDB.get(nId).toString()).build();
+		}
+		return Response.status(471).build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getall() {
-		return Response.ok(daylogTypeDB.getAll()).build();
+	public Response getall(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok(daylogTypeDB.getAll()).build();
+		}
+		return Response.status(471).build();
 	}
 
 	@POST
 	@Path("save")
-	public Response save(DaylogType d) {
-		daylogTypeDB.save(d);
-		return Response.ok("{}").build();
+	public Response save(DaylogType d, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			daylogTypeDB.save(d);
+			return Response.ok().build();
+		}
+		return Response.status(471).build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId) {
-		daylogTypeDB.del(nId);
-		return Response.ok("{}").build();
+	public Response delete(@PathParam("id") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			daylogTypeDB.del(nId);
+			return Response.ok().build();
+		}
+		return Response.status(471).build();
 	}
 
 }
