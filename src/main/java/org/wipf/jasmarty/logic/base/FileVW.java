@@ -22,14 +22,14 @@ import org.apache.commons.io.FileUtils;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
  * @author Wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class FileVW {
 
 	@Inject
