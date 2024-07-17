@@ -6,14 +6,14 @@ import java.util.UUID;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.databasetypes.base.WipfConfig;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 /**
  * @author wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class WipfConfigVW {
 
 	private static final Logger LOGGER = Logger.getLogger("WipfConfigVW");
