@@ -111,7 +111,7 @@ export class ListeComponent implements OnInit {
   public applyFilterByType() {
     if (this.selectedTypeFilter) {
       if (this.selectedTypeFilter.id == -99) {
-        // Spaltenansichten mit type
+        // Spaltenansichten mit type und ohne Date
         this.displayedColumns = ['type', 'data', 'button'];
         this.loadAll();
       } else {
@@ -119,6 +119,9 @@ export class ListeComponent implements OnInit {
         this.displayedColumns = ['data', 'date', 'button'];
         this.loadByType();
       }
+    } else {
+      // Speichern in der "Last 10" übersicht
+      this.loadLast();
     }
   }
 
