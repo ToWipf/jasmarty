@@ -52,12 +52,13 @@ public class AuthKeyService {
 	 */
 	public void loadKeysIntoCache() {
 		keycache = new LinkedList<String>();
-		getAll().forEach(o -> {
+		List<AuthKey> keys = getAll();
+		keys.forEach(o -> {
 			if (o.access) {
 				keycache.add(o.key);
 			}
 		});
-		LOGGER.info("loadKeysIntoCache");
+		LOGGER.info("Lade " + keys.size() + " Keys");
 	}
 
 	/**
