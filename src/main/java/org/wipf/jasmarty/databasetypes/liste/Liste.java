@@ -80,7 +80,8 @@ public class Liste extends PanacheEntityBase implements Serializable {
 	 * @return
 	 */
 	public static PanacheQuery<Liste> findLast() {
-		return find("select e from Liste e  ORDER by date DESC");
+		// Filter crypt
+		return find("select e from Liste e where typeid !=?1 ORDER by date DESC", -1);
 	}
 
 }

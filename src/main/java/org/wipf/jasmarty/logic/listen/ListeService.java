@@ -57,7 +57,11 @@ public class ListeService {
 	 * @return
 	 */
 	public List<Liste> getLast(Integer nAnzahl) {
-		return Liste.findLast().list().subList(0, nAnzahl);
+		List<Liste> res = (Liste.findLast().list());
+		if (res.size() < nAnzahl) {
+			return res;
+		}
+		return res.subList(0, nAnzahl);
 	}
 
 	/**
