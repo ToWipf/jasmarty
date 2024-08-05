@@ -65,6 +65,7 @@ export class ListeComponent implements OnInit {
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeTypeForFilter = resdata;
       this.listeTypeForFilter.push({ id: -1, typename: "crypt" });
+      this.listeTypeForFilter.push({ id: -2, typename: "counter" });
       warten.close();
     });
   }
@@ -202,6 +203,17 @@ export class ListeComponent implements OnInit {
     navigator.clipboard.writeText(item.data);
   }
 
+  public convertDateToCount(item: ListeEntry): string {
+    console.log(item.date)
+    let dEntry = new Date(item.date);
+    let dNow = new Date();
+    dNow.setUTCHours(0,0,0);
+    console.log(dEntry);
+    console.log(dNow);
+    console.log(dNow.getTime() - dEntry.getTime() );
+    return (((dNow.getTime() - dEntry.getTime()) / (1000 * 60 * 60))/24).toFixed(0);
+  }
+
 }
 
 @Component({
@@ -211,7 +223,7 @@ export class ListeComponent implements OnInit {
 export class ListeComponentDialogComponent implements OnInit {
   constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
     dialogRef.disableClose = true;
-    dialogRef.updateSize("70%","70%");
+    dialogRef.updateSize("70%", "70%");
   }
 
   public listeType: ListeType[];
@@ -229,6 +241,7 @@ export class ListeComponentDialogComponent implements OnInit {
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeType = resdata;
       this.listeType.push({ id: -1, typename: "crypt" });
+      this.listeType.push({ id: -2, typename: "counter" });
       warten.close();
     });
   }

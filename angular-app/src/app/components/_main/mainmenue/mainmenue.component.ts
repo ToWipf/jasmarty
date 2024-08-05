@@ -22,7 +22,7 @@ export class MainmenueComponent implements OnInit {
   public bDevActive: boolean = false;
   public bWipfActive: boolean = false;
   public bHideMenueButtonAndFooter: boolean = false;
-  public bShowMenue: boolean = false;
+  public bShowMenue: boolean = true;
   public bEisenbahnMitlesenActive: boolean = false;
   public selectedSite: string = 'login';
 
