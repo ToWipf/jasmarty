@@ -2,9 +2,6 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.util.Date;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.FileVW;
 import org.wipf.jasmarty.logic.base.MainHome;
@@ -15,6 +12,9 @@ import org.wipf.jasmarty.logic.discord.DiscordHome;
 import org.wipf.jasmarty.logic.listen.ListeService;
 import org.wipf.jasmarty.logic.listen.MedienService;
 import org.wipf.jasmarty.logic.listen.RndEventsService;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
@@ -207,9 +207,9 @@ public class TeleMenue {
 				return appOthers.langerText(t.getMessageIntPart(1));
 
 			// Daylog
-//			case "dl":
-//			case "daylog":
-//				return appDaylog.telegramMenue(t);
+			case "dl":
+			case "daylog":
+				return appDaylog.telegramMenue(t);
 			case "di":
 			case "dayinfo":
 				return daylogHome.getTagesinfoByTelegram(t);

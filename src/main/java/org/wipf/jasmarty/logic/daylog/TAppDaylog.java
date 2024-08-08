@@ -13,14 +13,14 @@ import org.wipf.jasmarty.datatypes.telegram.Telegram;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.telegram.TUsercache;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /**
  * @author wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class TAppDaylog {
 
 	@Inject
@@ -59,8 +59,7 @@ public class TAppDaylog {
 			// Wenn start eingebene wurde, den Cache leeren
 			userCache.usercache = ("");
 			tUsercache.save(userCache);
-			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n"
-					+ "Optional kann ein Tagestext angegeben werden";
+			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n" + "Optional kann ein Tagestext angegeben werden";
 		} else if (userCache.usercache.equals("")) {
 			// Schritt 1
 			// Datum wählen
