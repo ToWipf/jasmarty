@@ -5,7 +5,7 @@ import java.util.List;
 import org.wipf.jasmarty.databasetypes.liste.Liste;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
@@ -13,7 +13,7 @@ import jakarta.transaction.Transactional;
  * @author Wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class ListeService {
 
 	@Inject

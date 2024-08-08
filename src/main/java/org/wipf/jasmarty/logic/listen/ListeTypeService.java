@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.liste.ListeType;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 /**
  * @author Wipf
  *
  */
-@RequestScoped
+@ApplicationScoped
 public class ListeTypeService {
 
 	/**
