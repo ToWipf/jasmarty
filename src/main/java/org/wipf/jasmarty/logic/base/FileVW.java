@@ -120,8 +120,7 @@ public class FileVW {
 		} else {
 			try {
 				BufferedImage in = ImageIO.read(f);
-				BufferedImage img = resizeImage(in, size,
-						(int) (((double) size / (double) in.getWidth()) * in.getHeight()));
+				BufferedImage img = resizeImage(in, size, (int) (((double) size / (double) in.getWidth()) * in.getHeight()));
 
 				fout.createNewFile();
 				ImageIO.write(img, "jpg", fout);
@@ -183,8 +182,7 @@ public class FileVW {
 		String sFilename = "files/" + "txt_" + t.getMid() + ".txt";
 
 		try {
-			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(),
-					Charset.defaultCharset());
+			FileUtils.writeStringToFile(new File(sFilename), t.getMessageFullWithoutFirstWord(), Charset.defaultCharset());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

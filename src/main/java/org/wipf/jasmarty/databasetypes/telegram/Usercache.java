@@ -3,23 +3,15 @@ package org.wipf.jasmarty.databasetypes.telegram;
 import java.io.Serializable;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.hibernate.orm.panache.PanacheQuery;
-import jakarta.persistence.Column;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import io.quarkus.runtime.annotations.RegisterForReflection;
 
 /**
  * @author Wipf
  *
  */
-
 @Entity
 @RegisterForReflection
 @Table(name = "telegram_usercache")
