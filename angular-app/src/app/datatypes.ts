@@ -91,7 +91,7 @@ export interface DaylogDay {
   userid?: number;
   date?: string;
   tagestext?: string;
-  extrafeld_wochentag?: string; 
+  extrafeld_wochentag?: string;
 }
 
 export interface DaylogEvent {
@@ -169,4 +169,30 @@ export interface AuthKey {
 export interface WipfImage360 {
   name?: string;
   pic?: Partial<View360Options>;
+}
+
+export interface CheckListeListe {
+  id?: number;
+  date?: string;
+  listename?: string;
+  types?: number[];
+}
+
+export interface CheckListeType {
+  id?: number;
+  type?: string;
+}
+
+export interface CheckListeItem {
+  id?: number;
+  item?: string;
+  type?: CheckListeType;
+  prio?: number;
+}
+
+export interface CheckListeVerkn {
+  id?: number;
+  checked?: boolean;
+  checkListeItem?: CheckListeItem;
+  checkListeListe?: CheckListeListe;
 }
