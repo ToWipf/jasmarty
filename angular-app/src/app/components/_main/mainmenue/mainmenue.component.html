@@ -30,6 +30,10 @@
                     <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
                     <span class="buttonInhalt"> Dateien </span>
                 </li>
+                <li (click)="selectSite('checkliste')" [ngClass]="{'isSelected' : selectedSite == 'checkliste'}">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="Checkliste"></mat-icon>
+                    <span class="buttonInhalt"> CheckListe </span>
+                </li>
             </ul>
 
             <ul class="menueli">
@@ -204,6 +208,9 @@
         </ng-container>
         <ng-container *ngIf="selectedSite==='daylogKalender'">
             <app-daylogKalender></app-daylogKalender>
+        </ng-container>
+        <ng-container *ngIf="selectedSite==='checkliste'">
+            <app-checkliste></app-checkliste>
         </ng-container>
     </div>
 

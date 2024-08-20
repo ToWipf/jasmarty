@@ -8,7 +8,7 @@
 
         <ng-container *ngIf="!(!serviceVersion.getBackendVersion())">
             <span *ngIf="this.serviceVersion.checkVersions()" class="alertBox" (click)="serviceVersion.reloadApp()">
-                Versionen passen nicht, Seite bitte neu Laden. Backend: {{serviceVersion.getBackendVersion()}} Frontend: {{serviceVersion.getFrontendVersion()}}
+                Versionen passen nicht! Backend: {{serviceVersion.getBackendVersion()}} Frontend: {{serviceVersion.getFrontendVersion()}}
             </span>
             <span *ngIf="!this.serviceVersion.checkVersions()">Wipf | Version: {{serviceVersion.getBackendVersion()}}</span>
         </ng-container>
