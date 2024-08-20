@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.databasetypes.liste;
+package org.wipf.jasmarty.databasetypes.checkliste;
 
 import java.io.Serializable;
 

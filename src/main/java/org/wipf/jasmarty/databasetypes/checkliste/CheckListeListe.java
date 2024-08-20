@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.databasetypes.liste;
+package org.wipf.jasmarty.databasetypes.checkliste;
 
 import java.io.Serializable;
 
@@ -17,8 +17,8 @@ import jakarta.persistence.Table;
  */
 @Entity
 @RegisterForReflection
-@Table(name = "checkListeItem")
-public class CheckListeItem extends PanacheEntityBase implements Serializable {
+@Table(name = "checkListeListe")
+public class CheckListeListe extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,15 +26,19 @@ public class CheckListeItem extends PanacheEntityBase implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	public Integer id;
-	@Column(name = "item", nullable = false)
-	public String item;
+	@Column(name = "listenname", nullable = false)
+	public String listenname;
+	@Column(name = "date", nullable = false)
+	public String date;
+	@Column(name = "types", nullable = false)
+	public Integer[] types;
 
 	/**
 	 *
 	 */
 	@Override
 	public String toString() {
-		return "id=" + id + ", data=" + item;
+		return "id=" + id + ", data=" + listenname;
 	}
 
 	/**
@@ -42,10 +46,12 @@ public class CheckListeItem extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			CheckListeItem existingData = CheckListeItem.findById(this.id);
+			CheckListeListe existingData = CheckListeListe.findById(this.id);
 			if (existingData != null) {
 				// Update
-				existingData.item = this.item.trim();
+				existingData.listenname = this.listenname.trim();
+				existingData.date = this.date;
+				existingData.types = this.types;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
@@ -53,7 +59,7 @@ public class CheckListeItem extends PanacheEntityBase implements Serializable {
 			}
 		} else {
 			// Neu
-			this.item = this.item.trim();
+			this.listenname = this.listenname.trim();
 			this.persist();
 		}
 	}
