@@ -174,7 +174,7 @@ export interface WipfImage360 {
 export interface CheckListeListe {
   id?: number;
   date?: string;
-  listename?: string;
+  listenname?: string;
   types?: number[];
 }
 

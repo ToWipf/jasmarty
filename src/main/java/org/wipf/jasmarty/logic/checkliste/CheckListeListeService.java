@@ -3,10 +3,8 @@ package org.wipf.jasmarty.logic.checkliste;
 import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeListe;
-import org.wipf.jasmarty.logic.base.Wipf;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 /**
@@ -15,9 +13,6 @@ import jakarta.transaction.Transactional;
  */
 @ApplicationScoped
 public class CheckListeListeService {
-
-	@Inject
-	Wipf wipf;
 
 	/**
 	 * @param l

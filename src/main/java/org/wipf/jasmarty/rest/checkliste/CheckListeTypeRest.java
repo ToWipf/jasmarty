@@ -19,7 +19,7 @@ import jakarta.ws.rs.core.Response;
  * @author wipf
  *
  */
-@Path("checkliste/liste")
+@Path("checkliste/type")
 @RolesAllowed("admin")
 @Produces(MediaType.APPLICATION_JSON)
 @RequestScoped

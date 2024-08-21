@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Checkliste</h1>
+<mat-dialog-content>
+
+    <mat-form-field>
+        <mat-label>Listenname</mat-label>
+        <input matInput [(ngModel)]="data.listenname">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Datum</mat-label>
+        <input matInput type="date" [(ngModel)]="data.date">
+    </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+</mat-dialog-actions>
