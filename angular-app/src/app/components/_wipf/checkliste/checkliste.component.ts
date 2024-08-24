@@ -23,7 +23,6 @@ export class ChecklisteComponent implements OnInit {
   public dataSourceCheckListeListe;
   public dataSourceCheckListeType;
   public bShowWarning: boolean = false;
-  public checkListetypes: CheckListeType[];
   public displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
   public displayedColumnsCheckListeType = ['id', 'type', 'button'];
   public view = "cl";
@@ -50,7 +49,6 @@ export class ChecklisteComponent implements OnInit {
   public loadCheckListeType(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
-      this.checkListetypes = resdata;
       this.dataSourceCheckListeType = new MatTableDataSource(resdata);
       warten.close();
     });
@@ -84,6 +82,12 @@ export class ChecklisteComponent implements OnInit {
   }
 
   private saveCheckListeListe(item: CheckListeListe): void {
+    // Convert Typen in typ ids
+    item.types = [];
+    item.typesCache.forEach((t: CheckListeType) => {
+      item.types.push(t.id);
+    })
+
     this.rest.post('checkliste/liste/save', item).then((resdata: any) => {
       // this.applyFilterByType();
       // TODO: Reload
@@ -181,21 +185,35 @@ export class CheckListeDialogCheckListe implements OnInit {
     dialogRef.updateSize("70%", "70%");
   }
 
+  public checkListetypes: CheckListeType[];
+
   public ngOnInit(): void {
-    // this.loadTypes();
+    this.data.typesCache = [];
+    // Convert type ids to Types
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
+      this.checkListetypes = resdata;
+
+      if (this.data.types) {
+        this.data.types.forEach((t: number) => {
+          this.checkListetypes.forEach((xt: CheckListeType) => {
+            if (t == xt.id){
+              this.data.typesCache.push(xt);
+            }
+          })
+        })
+      }
+      warten.close();
+    });
   }
 
   public onNoClick(): void {
     this.dialogRef.close();
   }
 
-  // public loadTypes(): void {
-  //   const warten = this.dialog.open(DialogWartenComponent, {});
-  //   this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
-  //     this.listeType = resdata;
-  //     warten.close();
-  //   });
-  // }
+  public selectTypes(): void {
+    console.log(this.data);
+  }
 
 }
 
@@ -203,14 +221,10 @@ export class CheckListeDialogCheckListe implements OnInit {
   selector: 'app-checklistetypes-dialog',
   templateUrl: './checkliste.dialog.type.html',
 })
-export class CheckListeDialogType implements OnInit {
+export class CheckListeDialogType {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
     dialogRef.disableClose = true;
     dialogRef.updateSize("70%", "70%");
-  }
-
-  public ngOnInit(): void {
-    // this.loadTypes();
   }
 
   public onNoClick(): void {

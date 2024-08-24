@@ -176,6 +176,7 @@ export interface CheckListeListe {
   date?: string;
   listenname?: string;
   types?: number[];
+  typesCache?: CheckListeType[];
 }
 
 export interface CheckListeType {
