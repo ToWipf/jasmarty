@@ -1,5 +1,22 @@
-<h1 mat-dialog-title>TODO</h1>
+<h1 mat-dialog-title>Checkliste Item</h1>
 <mat-dialog-content>
+
+    <mat-form-field>
+        <mat-label>Item Name</mat-label>
+        <input matInput [(ngModel)]="data.item">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Prio</mat-label>
+        <input type="number" matInput [(ngModel)]="data.prio">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Typen</mat-label>
+        <mat-select [(value)]="data.checkListeType">
+            <mat-option *ngFor="let itemEvent of checkListetypes" [value]="itemEvent">{{itemEvent.type}}</mat-option>
+        </mat-select>
+    </mat-form-field>
 
 </mat-dialog-content>
 

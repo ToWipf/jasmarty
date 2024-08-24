@@ -85,7 +85,7 @@ import { NgxView360Module } from "@egjs/ngx-view360";
 import { View360Component } from './components/_debug/view360/view360.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
-import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
+import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
 
 @NgModule({
     declarations: [
@@ -96,6 +96,7 @@ import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogType }
         ChecklisteComponent,
         CheckListeDialogCheckListe,
         CheckListeDialogType,
+        CheckListeDialogItem,
         DayLogComponent,
         DaylogComponentDialogDayComponent,
         DaylogComponentDialogEventComponent,

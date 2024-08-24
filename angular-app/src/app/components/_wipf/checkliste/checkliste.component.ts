@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CheckListeListe, CheckListeType, ListeEntry, ListeType } from 'src/app/datatypes';
+import { CheckListeItem, CheckListeListe, CheckListeType, ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -22,9 +22,11 @@ export class ChecklisteComponent implements OnInit {
 
   public dataSourceCheckListeListe;
   public dataSourceCheckListeType;
+  public dataSourceCheckListeItem;
   public bShowWarning: boolean = false;
   public displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
   public displayedColumnsCheckListeType = ['id', 'type', 'button'];
+  public displayedColumnsCheckListeItem = ['id', 'item', 'prio', 'type', 'button'];
   public view = "cl";
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -36,6 +38,7 @@ export class ChecklisteComponent implements OnInit {
   ngOnInit() {
     this.loadCheckListeListe();
     this.loadCheckListeType();
+    this.loadCheckListeItem();
   }
 
   public loadCheckListeListe(): void {
@@ -50,6 +53,14 @@ export class ChecklisteComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
       this.dataSourceCheckListeType = new MatTableDataSource(resdata);
+      warten.close();
+    });
+  }
+
+  public loadCheckListeItem(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('checkliste/item/getAll').then((resdata: CheckListeItem[]) => {
+      this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
       warten.close();
     });
   }
@@ -89,11 +100,6 @@ export class ChecklisteComponent implements OnInit {
     })
 
     this.rest.post('checkliste/liste/save', item).then((resdata: any) => {
-      // this.applyFilterByType();
-      // TODO: Reload
-      // if (!resdata) {
-      //   this.bShowWarning = true;
-      // }
       this.loadCheckListeListe();
     });
   }
@@ -110,8 +116,7 @@ export class ChecklisteComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.rest.delete('checkliste/liste/delete/' + item.id).then((resdata: any) => {
-          // this.applyFilterByType();
-          // TODO: Reload
+          this.loadCheckListeListe();
         });
       }
     });
@@ -145,12 +150,7 @@ export class ChecklisteComponent implements OnInit {
 
   private saveCheckListeType(item: CheckListeType): void {
     this.rest.post('checkliste/type/save', item).then((resdata: any) => {
-      // this.applyFilterByType();
-      // TODO: Reload
-      // if (!resdata) {
-      //   this.bShowWarning = true;
-      // }
-      this.loadCheckListeListe();
+      this.loadCheckListeType();
     });
   }
 
@@ -166,8 +166,58 @@ export class ChecklisteComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.rest.delete('checkliste/type/delete/' + item.id).then((resdata: any) => {
-          // this.applyFilterByType();
-          // TODO: Reload
+          this.loadCheckListeType();
+        });
+      }
+    });
+  }
+
+  ///
+  /// Liste Item
+  ///
+
+  public newItemCheckListeItem(): void {
+    let n: CheckListeItem = {};
+    this.openDialogCheckListeItem(n);
+  }
+
+  public openDialogCheckListeItem(item: CheckListeItem): void {
+    const edititem: CheckListeItem = this.serviceWipf.deepCopy(item);
+
+    const dialogRef = this.dialog.open(CheckListeDialogItem, {
+      data: edititem,
+      autoFocus: true,
+      minWidth: '200px',
+      minHeight: '150px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: CheckListeItem) => {
+      if (result) {
+        this.saveCheckListeItem(result);
+      }
+    });
+  }
+
+  private saveCheckListeItem(item: CheckListeItem): void {
+    //item.checkListeTypeId = item.type.id;
+    this.rest.post('checkliste/item/save', item).then((resdata: any) => {
+      this.loadCheckListeItem();
+    });
+  }
+
+  public deleteItemCheckListeItem(item: any): void {
+    item.infotext = "Wirklich löschen?";
+    item.infotext2 = item.item;
+    const dialogRef = this.dialog.open(DialogJaNeinComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.rest.delete('checkliste/item/delete/' + item.id).then((resdata: any) => {
+          this.loadCheckListeItem();
         });
       }
     });
@@ -180,7 +230,7 @@ export class ChecklisteComponent implements OnInit {
   templateUrl: './checkliste.dialog.checkliste.html',
 })
 export class CheckListeDialogCheckListe implements OnInit {
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<CheckListeDialogCheckListe>, @Inject(MAT_DIALOG_DATA) public data: CheckListeListe) {
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogCheckListe>, @Inject(MAT_DIALOG_DATA) public data: CheckListeListe) {
     dialogRef.disableClose = true;
     dialogRef.updateSize("70%", "70%");
   }
@@ -197,7 +247,7 @@ export class CheckListeDialogCheckListe implements OnInit {
       if (this.data.types) {
         this.data.types.forEach((t: number) => {
           this.checkListetypes.forEach((xt: CheckListeType) => {
-            if (t == xt.id){
+            if (t == xt.id) {
               this.data.typesCache.push(xt);
             }
           })
@@ -210,11 +260,6 @@ export class CheckListeDialogCheckListe implements OnInit {
   public onNoClick(): void {
     this.dialogRef.close();
   }
-
-  public selectTypes(): void {
-    console.log(this.data);
-  }
-
 }
 
 @Component({
@@ -222,7 +267,7 @@ export class CheckListeDialogCheckListe implements OnInit {
   templateUrl: './checkliste.dialog.type.html',
 })
 export class CheckListeDialogType {
-  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
+  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
     dialogRef.disableClose = true;
     dialogRef.updateSize("70%", "70%");
   }
@@ -230,5 +275,45 @@ export class CheckListeDialogType {
   public onNoClick(): void {
     this.dialogRef.close();
   }
+}
 
+@Component({
+  selector: 'app-checklisteitem-dialog',
+  templateUrl: './checkliste.dialog.item.html',
+})
+export class CheckListeDialogItem {
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogItem>, @Inject(MAT_DIALOG_DATA) public data: CheckListeItem) {
+    dialogRef.disableClose = true;
+    dialogRef.updateSize("70%", "70%");
+  }
+
+  public checkListetypes: CheckListeType[];
+
+  public ngOnInit(): void {
+    // Convert type id to Type
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
+      this.checkListetypes = resdata;
+
+      // if (this.data.type) {
+      //   this.checkListetypes.forEach((xt: CheckListeType) => {
+      //     if (this.data.type == xt.id) {
+      //       this.data.type = xt;
+      //     }
+      //   })
+      // }
+      if (this.data.checkListeType) {
+        this.checkListetypes.forEach((xt: CheckListeType) => {
+          if (this.data.checkListeType.id == xt.id) {
+            this.data.checkListeType = xt;
+          }
+        })
+      }
+      warten.close();
+    });
+  }
+
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

@@ -187,7 +187,7 @@ export interface CheckListeType {
 export interface CheckListeItem {
   id?: number;
   item?: string;
-  type?: CheckListeType;
+  checkListeType?: CheckListeType;
   prio?: number;
 }
 

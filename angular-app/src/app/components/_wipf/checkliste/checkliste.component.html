@@ -14,14 +14,18 @@
 
             <div class="box">
                 CheckListen VW:
-                <button class="btn btn-wipf-default btn-for-icon" (click)="setView('cl')">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="setView('listevw')">
                     <mat-icon svgIcon="box" aria-hidden="false" title="Zeige alle Checklisten"></mat-icon>
                 </button>
-
                 <br>
                 Typen VW:
                 <button class="btn btn-wipf-default btn-for-icon" (click)="setView('typevw')">
                     <mat-icon svgIcon="box" aria-hidden="false" title="typevw"></mat-icon>
+                </button>
+                <br>
+                Item VW:
+                <button class="btn btn-wipf-default btn-for-icon" (click)="setView('itemvw')">
+                    <mat-icon svgIcon="box" aria-hidden="false" title="itemvw"></mat-icon>
                 </button>
             </div>
         </div>
@@ -29,7 +33,7 @@
 </ng-scrollbar>
 
 
-<ng-scrollbar class="pscroll" *ngIf="view=='cl'">
+<ng-scrollbar class="pscroll" *ngIf="view=='listevw'">
     <table mat-table [dataSource]="dataSourceCheckListeListe" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
         <ng-container matColumnDef="id">
@@ -115,5 +119,53 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumnsCheckListeType"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumnsCheckListeType;"></tr>
+    </table>
+</ng-scrollbar>
+
+<ng-scrollbar class="pscroll" *ngIf="view=='itemvw'">
+    <table mat-table [dataSource]="dataSourceCheckListeItem" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Item </th>
+            <td mat-cell *matCellDef="let element"> {{element.item}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="prio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Prio </th>
+            <td mat-cell *matCellDef="let element"> {{element.prio}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="button">
+            <th th mat-header-cell *matHeaderCellDef>
+                <div class="tableVW">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="newItemCheckListeItem()">
+                        <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                    </button>
+                    ∑: {{dataSourceCheckListeType?._data?._value?.length}}
+                </div>
+            </th>
+            <td mat-cell *matCellDef="let element">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogCheckListeItem(element)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+                </button>
+
+                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItemCheckListeItem(element)">
+                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsCheckListeItem"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsCheckListeItem;"></tr>
     </table>
 </ng-scrollbar>
