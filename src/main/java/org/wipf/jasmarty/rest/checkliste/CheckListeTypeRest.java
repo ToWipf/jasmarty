@@ -1,7 +1,7 @@
 package org.wipf.jasmarty.rest.checkliste;
 
-import org.wipf.jasmarty.databasetypes.checkliste.CheckListeListe;
-import org.wipf.jasmarty.logic.checkliste.CheckListeListeService;
+import org.wipf.jasmarty.databasetypes.checkliste.CheckListeType;
+import org.wipf.jasmarty.logic.checkliste.CheckListeTypeService;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
@@ -26,11 +26,11 @@ import jakarta.ws.rs.core.Response;
 public class CheckListeTypeRest {
 
 	@Inject
-	CheckListeListeService clservice;
+	CheckListeTypeService clservice;
 
 	@POST
 	@Path("save")
-	public Response save(CheckListeListe l) {
+	public Response save(CheckListeType l) {
 		clservice.save(l);
 		return Response.ok().build();
 	}
