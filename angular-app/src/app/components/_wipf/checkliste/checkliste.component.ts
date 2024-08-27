@@ -25,23 +25,41 @@ export class ChecklisteComponent implements OnInit {
   public dataSourceCheckListeItem;
   public dataSourceCheckListeVerkn;
   public bShowWarning: boolean = false;
-  public displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
-  public displayedColumnsCheckListeType = ['id', 'type', 'button'];
-  public displayedColumnsCheckListeItem = ['id', 'item', 'prio', 'type', 'button'];
-  public displayedColumnsCheckListeVerkn = ['id', 'item', 'prio', 'button'];
+  public bShowAllTableColumns: boolean = true;
+  public displayedColumnsCheckListeListe;
+  public displayedColumnsCheckListeType;
+  public displayedColumnsCheckListeItem;
+  public displayedColumnsCheckListeVerkn;
   public view = "cl";
   public viewCL: CheckListeListe = {};
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
+  ngOnInit() {
+    this.showAllTableColumns();
+    this.loadCheckListeListe();
+    this.loadCheckListeType();
+    this.loadCheckListeItem();
+    this.setView("listevw");
+  }
+
   public setView(val: string): void {
     this.view = val;
   }
 
-  ngOnInit() {
-    this.loadCheckListeListe();
-    this.loadCheckListeType();
-    this.loadCheckListeItem();
+  public showAllTableColumns(): void {
+    this.bShowAllTableColumns = !this.bShowAllTableColumns;
+    if (this.bShowAllTableColumns) {
+      this.displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
+      this.displayedColumnsCheckListeType = ['id', 'type', 'button'];
+      this.displayedColumnsCheckListeItem = ['id', 'item', 'prio', 'type', 'button'];
+      this.displayedColumnsCheckListeVerkn = ['id', 'item', 'prio', 'button'];
+    } else {
+      this.displayedColumnsCheckListeListe = ['listenname', 'date', 'types', 'button'];
+      this.displayedColumnsCheckListeType = ['type', 'button'];
+      this.displayedColumnsCheckListeItem = ['item', 'prio', 'type', 'button'];
+      this.displayedColumnsCheckListeVerkn = ['item', 'button', 'prio'];
+    }
   }
 
   public loadCheckListeListe(): void {
@@ -232,7 +250,7 @@ export class ChecklisteComponent implements OnInit {
   ///
   ///
 
-  public ladeChecklistenView(cl: CheckListeListe): void{
+  public ladeChecklistenView(cl: CheckListeListe): void {
     this.setView("checkliste");
     this.viewCL = cl;
 
@@ -247,9 +265,9 @@ export class ChecklisteComponent implements OnInit {
     iverk.checked = !iverk.checked;
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.post('checkliste/verkn/save', iverk).then((res: any) => {
+      this.ladeChecklistenView(this.viewCL);
       warten.close();
     });
-    this.ladeChecklistenView(this.viewCL);
   }
 
 }

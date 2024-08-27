@@ -86,7 +86,6 @@ public class CheckListeVerknService {
 			if (!added) {
 				// Keinen wert
 				CheckListeVerkn neuerPunkt = new CheckListeVerkn();
-				neuerPunkt.checked = false;
 				neuerPunkt.checkListeListe = cl;
 				neuerPunkt.checkListeItem = item;
 				resultListe.add(neuerPunkt);
