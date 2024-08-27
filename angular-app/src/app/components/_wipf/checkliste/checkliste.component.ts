@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CheckListeItem, CheckListeListe, CheckListeType, ListeEntry, ListeType } from 'src/app/datatypes';
+import { CheckListeItem, CheckListeListe, CheckListeType, CheckListeVerkn, ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -23,11 +23,14 @@ export class ChecklisteComponent implements OnInit {
   public dataSourceCheckListeListe;
   public dataSourceCheckListeType;
   public dataSourceCheckListeItem;
+  public dataSourceCheckListeVerkn;
   public bShowWarning: boolean = false;
   public displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
   public displayedColumnsCheckListeType = ['id', 'type', 'button'];
   public displayedColumnsCheckListeItem = ['id', 'item', 'prio', 'type', 'button'];
+  public displayedColumnsCheckListeVerkn = ['id', 'item', 'prio', 'button'];
   public view = "cl";
+  public viewCL: CheckListeListe = {};
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -223,6 +226,32 @@ export class ChecklisteComponent implements OnInit {
     });
   }
 
+  ///
+  ///
+  /// Checkliste
+  ///
+  ///
+
+  public ladeChecklistenView(cl: CheckListeListe): void{
+    this.setView("checkliste");
+    this.viewCL = cl;
+
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
+      this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
+      warten.close();
+    });
+  }
+
+  public checkItemVerkn(iverk: CheckListeVerkn): void {
+    iverk.checked = !iverk.checked;
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.post('checkliste/verkn/save', iverk).then((res: any) => {
+      warten.close();
+    });
+    this.ladeChecklistenView(this.viewCL);
+  }
+
 }
 
 @Component({
@@ -295,14 +324,8 @@ export class CheckListeDialogItem {
     this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
       this.checkListetypes = resdata;
 
-      // if (this.data.type) {
-      //   this.checkListetypes.forEach((xt: CheckListeType) => {
-      //     if (this.data.type == xt.id) {
-      //       this.data.type = xt;
-      //     }
-      //   })
-      // }
       if (this.data.checkListeType) {
+        // Warum?
         this.checkListetypes.forEach((xt: CheckListeType) => {
           if (this.data.checkListeType.id == xt.id) {
             this.data.checkListeType = xt;

@@ -3,6 +3,7 @@ package org.wipf.jasmarty.databasetypes.checkliste;
 import java.io.Serializable;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,14 +37,14 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 	@JoinColumn(name = "checkListeItem", nullable = false)
 	public CheckListeItem checkListeItem;
 	@Column(name = "checked", nullable = false)
-	public Boolean check;
+	public Boolean checked;
 
 	/**
 	 *
 	 */
 	@Override
 	public String toString() {
-		return "id=" + id + ", data=" + checkListeListe + ", typeid=" + checkListeItem;
+		return "id=" + id + ", data=" + checkListeListe + ", checkListeItem=" + checkListeItem;
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 				// Update
 				existingData.checkListeListe = this.checkListeListe;
 				existingData.checkListeItem = this.checkListeItem;
-				existingData.check = this.check;
+				existingData.checked = this.checked;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
@@ -66,6 +67,14 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 			// Neu
 			this.persist();
 		}
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static PanacheQuery<PanacheEntityBase> getAllByCheckList(CheckListeListe cl) {
+		return find("select e from CheckListeVerkn e where e.checkListeListe =?1", cl);
 	}
 
 }

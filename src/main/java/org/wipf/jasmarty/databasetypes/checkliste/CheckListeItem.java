@@ -3,6 +3,7 @@ package org.wipf.jasmarty.databasetypes.checkliste;
 import java.io.Serializable;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -66,6 +67,14 @@ public class CheckListeItem extends PanacheEntityBase implements Serializable {
 			this.item = this.item.trim();
 			this.persist();
 		}
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public static PanacheQuery<PanacheEntityBase> findByType(CheckListeType t) {
+		return find("select e from CheckListeItem e where e.checkListeType = ?1", t);
 	}
 
 }

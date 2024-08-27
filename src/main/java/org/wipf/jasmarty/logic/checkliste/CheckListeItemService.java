@@ -3,6 +3,7 @@ package org.wipf.jasmarty.logic.checkliste;
 import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeItem;
+import org.wipf.jasmarty.databasetypes.checkliste.CheckListeType;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,14 @@ public class CheckListeItemService {
 	 */
 	public List<CheckListeItem> getAll() {
 		return CheckListeItem.findAll().list();
+	}
+
+	/**
+	 * @param t
+	 * @return
+	 */
+	public List<CheckListeItem> getByType(CheckListeType t) {
+		return CheckListeItem.findByType(t).list();
 	}
 
 }

@@ -39,4 +39,12 @@ public class CheckListeListeService {
 		return CheckListeListe.findAll().list();
 	}
 
+	/**
+	 * @param id
+	 * @return
+	 */
+	public CheckListeListe getById(Integer id) {
+		return CheckListeListe.findById(id);
+	}
+
 }

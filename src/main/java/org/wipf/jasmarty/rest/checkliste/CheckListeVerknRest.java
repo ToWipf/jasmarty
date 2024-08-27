@@ -3,6 +3,7 @@ package org.wipf.jasmarty.rest.checkliste;
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeVerkn;
 import org.wipf.jasmarty.logic.checkliste.CheckListeVerknService;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -46,6 +47,13 @@ public class CheckListeVerknRest {
 	@Path("getAll")
 	public Response getAll() {
 		return Response.ok(clservice.getAll()).build();
+	}
+
+	@GET
+	@Path("getByClID/{id}")
+	@PermitAll
+	public Response getByClID(@PathParam("id") Integer nId) {
+		return Response.ok(clservice.getByClID(nId)).build();
 	}
 
 }
