@@ -175,7 +175,8 @@ export interface CheckListeListe {
   id?: number;
   date?: string;
   listenname?: string;
-  types?: number[];
+  types?: string;
+  typesNummbers?: number[];
   typesCache?: CheckListeType[];
 }
 

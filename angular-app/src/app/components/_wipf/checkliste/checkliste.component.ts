@@ -65,6 +65,14 @@ export class ChecklisteComponent implements OnInit {
   public loadCheckListeListe(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/liste/getAll').then((resdata: CheckListeListe[]) => {
+      resdata.forEach((cl: CheckListeListe) => {
+        cl.typesNummbers = [];
+        if (cl.types) {
+          cl.types.split(",").forEach((tid: string) => {
+            cl.typesNummbers.push(Number(tid));
+          });
+        }
+      });
       this.dataSourceCheckListeListe = new MatTableDataSource(resdata);
       warten.close();
     });
@@ -115,10 +123,14 @@ export class ChecklisteComponent implements OnInit {
 
   private saveCheckListeListe(item: CheckListeListe): void {
     // Convert Typen in typ ids
-    item.types = [];
+    item.types = "";
     item.typesCache.forEach((t: CheckListeType) => {
-      item.types.push(t.id);
-    })
+      if (item.types.length == 0) {
+        item.types = "" + (t.id);
+      } else {
+        item.types = item.types + "," + (t.id);
+      }
+    });
 
     this.rest.post('checkliste/liste/save', item).then((resdata: any) => {
       this.loadCheckListeListe();
@@ -292,7 +304,7 @@ export class CheckListeDialogCheckListe implements OnInit {
       this.checkListetypes = resdata;
 
       if (this.data.types) {
-        this.data.types.forEach((t: number) => {
+        this.data.typesNummbers.forEach((t: number) => {
           this.checkListetypes.forEach((xt: CheckListeType) => {
             if (t == xt.id) {
               this.data.typesCache.push(xt);

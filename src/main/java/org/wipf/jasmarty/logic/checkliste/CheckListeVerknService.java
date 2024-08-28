@@ -62,8 +62,10 @@ public class CheckListeVerknService {
 		CheckListeListe cl = cll.getById(clId);
 		List<CheckListeItem> itemsAlle = new LinkedList<CheckListeItem>();
 		// Alle Items des typen laden
-		for (int tid : cl.types) {
-			itemsAlle.addAll(cli.getByType(clt.getById(tid)));
+		if (cl.types != null) {
+			for (String tid : cl.types.split(",")) {
+				itemsAlle.addAll(cli.getByType(clt.getById((Integer.valueOf(tid)))));
+			}
 		}
 
 		// item hat jetzt alle Möglichkeiten drin

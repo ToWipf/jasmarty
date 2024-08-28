@@ -31,7 +31,7 @@ public class CheckListeListe extends PanacheEntityBase implements Serializable {
 	@Column(name = "date", nullable = false)
 	public String date;
 	@Column(name = "types", nullable = true)
-	public Integer[] types;
+	public String types;
 
 	/**
 	 *
