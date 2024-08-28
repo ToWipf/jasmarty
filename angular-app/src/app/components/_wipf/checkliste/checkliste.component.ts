@@ -40,7 +40,7 @@ export class ChecklisteComponent implements OnInit {
     this.loadCheckListeListe();
     this.loadCheckListeType();
     this.loadCheckListeItem();
-    this.setView("listevw");
+    this.setView("menue");
   }
 
   public setView(val: string): void {
