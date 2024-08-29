@@ -1,6 +1,7 @@
 package org.wipf.jasmarty.rest.checkliste;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeItem;
+import org.wipf.jasmarty.databasetypes.checkliste.CheckListeType;
 import org.wipf.jasmarty.logic.checkliste.CheckListeItemService;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -46,6 +47,13 @@ public class CheckListeItemRest {
 	@Path("getAll")
 	public Response getAll() {
 		return Response.ok(clservice.getAll()).build();
+	}
+
+	@GET
+	@POST
+	@Path("getAllByType")
+	public Response getAllByType(CheckListeType ct) {
+		return Response.ok(clservice.getAllByType(ct)).build();
 	}
 
 }

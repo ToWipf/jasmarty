@@ -32,6 +32,7 @@ export class ChecklisteComponent implements OnInit {
   public displayedColumnsCheckListeVerkn;
   public view = "cl";
   public viewCL: CheckListeListe = {};
+  public selectetType: CheckListeType = {};
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -39,7 +40,6 @@ export class ChecklisteComponent implements OnInit {
     this.showAllTableColumns();
     this.loadCheckListeListe();
     this.loadCheckListeType();
-    this.loadCheckListeItem();
     this.setView("menue");
   }
 
@@ -79,6 +79,7 @@ export class ChecklisteComponent implements OnInit {
   }
 
   public loadCheckListeType(): void {
+    this.displayedColumnsCheckListeItem = ['item', 'prio', 'button'];
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
       this.dataSourceCheckListeType = new MatTableDataSource(resdata);
@@ -86,9 +87,25 @@ export class ChecklisteComponent implements OnInit {
     });
   }
 
-  public loadCheckListeItem(): void {
+  public loadCheckListeItemAll(): void {
+    this.selectetType = {}
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/item/getAll').then((resdata: CheckListeItem[]) => {
+      this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
+      warten.close();
+    });
+  }
+
+  public ladeViewItemsAll(): void {
+    this.setView("itemvw");
+    this.loadCheckListeItemAll();
+  }
+
+  public ladeViewItemsByType(type: CheckListeItem): void {
+    this.setView("itemvw");
+    this.selectetType = type;
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.post('checkliste/item/getAllByType', type).then((resdata: CheckListeItem[]) => {
       this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
       warten.close();
     });
@@ -217,6 +234,13 @@ export class ChecklisteComponent implements OnInit {
   public openDialogCheckListeItem(item: CheckListeItem): void {
     const edititem: CheckListeItem = this.serviceWipf.deepCopy(item);
 
+    if (!edititem.checkListeType) {
+      edititem.checkListeType = this.selectetType;
+    }
+    if (!edititem.prio) {
+      edititem.prio = 5;
+    }
+
     const dialogRef = this.dialog.open(CheckListeDialogItem, {
       data: edititem,
       autoFocus: true,
@@ -234,7 +258,11 @@ export class ChecklisteComponent implements OnInit {
   private saveCheckListeItem(item: CheckListeItem): void {
     //item.checkListeTypeId = item.type.id;
     this.rest.post('checkliste/item/save', item).then((resdata: any) => {
-      this.loadCheckListeItem();
+      if (this.selectetType) {
+        this.ladeViewItemsByType(this.selectetType);
+      } else {
+        this.loadCheckListeItemAll();
+      }
     });
   }
 
@@ -250,7 +278,7 @@ export class ChecklisteComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.rest.delete('checkliste/item/delete/' + item.id).then((resdata: any) => {
-          this.loadCheckListeItem();
+          this.loadCheckListeItemAll();
         });
       }
     });

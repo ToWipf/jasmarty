@@ -44,8 +44,8 @@ public class CheckListeItemService {
 	 * @param t
 	 * @return
 	 */
-	public List<CheckListeItem> getByType(CheckListeType t) {
-		return CheckListeItem.findByType(t).list();
+	public List<CheckListeItem> getAllByType(CheckListeType t) {
+		return CheckListeItem.findAllByType(t).list();
 	}
 
 }

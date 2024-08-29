@@ -64,7 +64,7 @@ public class CheckListeVerknService {
 		// Alle Items des typen laden
 		if (cl.types != null) {
 			for (String tid : cl.types.split(",")) {
-				itemsAlle.addAll(cli.getByType(clt.getById((Integer.valueOf(tid)))));
+				itemsAlle.addAll(cli.getAllByType(clt.getById((Integer.valueOf(tid)))));
 			}
 		}
 

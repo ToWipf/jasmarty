@@ -73,7 +73,7 @@ public class CheckListeItem extends PanacheEntityBase implements Serializable {
 	 * @param t
 	 * @return
 	 */
-	public static PanacheQuery<PanacheEntityBase> findByType(CheckListeType t) {
+	public static PanacheQuery<PanacheEntityBase> findAllByType(CheckListeType t) {
 		return find("select e from CheckListeItem e where e.checkListeType = ?1", t);
 	}
 
