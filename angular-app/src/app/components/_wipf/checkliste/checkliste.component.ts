@@ -2,7 +2,7 @@ import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CheckListeItem, CheckListeListe, CheckListeType, CheckListeVerkn, ListeEntry, ListeType } from 'src/app/datatypes';
+import { CheckListeItem, CheckListeListe, CheckListeType, CheckListeVerkn } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -33,6 +33,7 @@ export class ChecklisteComponent implements OnInit {
   public view = "cl";
   public viewCL: CheckListeListe = {};
   public selectetType: CheckListeType = {};
+  public lastNewPrio: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -88,6 +89,7 @@ export class ChecklisteComponent implements OnInit {
   }
 
   public loadCheckListeItemAll(): void {
+    this.displayedColumnsCheckListeItem = ['item', 'prio', 'type', 'button'];
     this.selectetType = {}
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/item/getAll').then((resdata: CheckListeItem[]) => {
@@ -238,7 +240,8 @@ export class ChecklisteComponent implements OnInit {
       edititem.checkListeType = this.selectetType;
     }
     if (!edititem.prio) {
-      edititem.prio = 5;
+      this.lastNewPrio = this.lastNewPrio +1
+      edititem.prio = this.lastNewPrio;
     }
 
     const dialogRef = this.dialog.open(CheckListeDialogItem, {
@@ -258,7 +261,7 @@ export class ChecklisteComponent implements OnInit {
   private saveCheckListeItem(item: CheckListeItem): void {
     //item.checkListeTypeId = item.type.id;
     this.rest.post('checkliste/item/save', item).then((resdata: any) => {
-      if (this.selectetType) {
+      if (this.selectetType?.id) {
         this.ladeViewItemsByType(this.selectetType);
       } else {
         this.loadCheckListeItemAll();
