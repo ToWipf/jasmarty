@@ -171,6 +171,22 @@ export class ServiceRest {
   }
 
   /**
+   * http post
+   * 
+   * @param path 
+   * @param item 
+   * @returns 
+   */
+  public postNoWartenDialog(path: string, item: any): Promise<any> {
+    return new Promise(
+      resolve => {
+        this.http.post(this.gethost() + path, item, { headers: this.httpOptions }).subscribe((resdata: any) => {
+          resolve(resdata);
+        });
+      });
+  }
+
+  /**
    * http delete
    * 
    * @param path 

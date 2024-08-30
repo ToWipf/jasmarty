@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.logic.checkliste;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -93,6 +94,9 @@ public class CheckListeVerknService {
 				resultListe.add(neuerPunkt);
 			}
 		}
+
+		// Sortieren
+		resultListe.sort(Comparator.comparingInt(o -> o.checkListeItem.prio));
 
 		return resultListe;
 	}

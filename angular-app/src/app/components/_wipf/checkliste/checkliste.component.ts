@@ -46,6 +46,8 @@ export class ChecklisteComponent implements OnInit {
 
   public setView(val: string): void {
     this.view = val;
+    // Rücksetzen von lastPrio
+    this.lastNewPrio = 0;
   }
 
   public showAllTableColumns(): void {
@@ -59,7 +61,7 @@ export class ChecklisteComponent implements OnInit {
       this.displayedColumnsCheckListeListe = ['listenname', 'date', 'types', 'button'];
       this.displayedColumnsCheckListeType = ['type', 'button'];
       this.displayedColumnsCheckListeItem = ['item', 'prio', 'type', 'button'];
-      this.displayedColumnsCheckListeVerkn = ['item', 'button', 'prio'];
+      this.displayedColumnsCheckListeVerkn = ['button', 'item'];
     }
   }
 
@@ -240,7 +242,12 @@ export class ChecklisteComponent implements OnInit {
       edititem.checkListeType = this.selectetType;
     }
     if (!edititem.prio) {
-      this.lastNewPrio = this.lastNewPrio +1
+      if (this.lastNewPrio == 0) {
+        console.log(edititem);
+        this.lastNewPrio = edititem.checkListeType.id * 10;
+      } else {
+        this.lastNewPrio = this.lastNewPrio + 2;
+      }
       edititem.prio = this.lastNewPrio;
     }
 
@@ -297,19 +304,15 @@ export class ChecklisteComponent implements OnInit {
     this.setView("checkliste");
     this.viewCL = cl;
 
-    const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
+    this.rest.getNoWartenDialog('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
       this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
-      warten.close();
     });
   }
 
   public checkItemVerkn(iverk: CheckListeVerkn): void {
     iverk.checked = !iverk.checked;
-    const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.post('checkliste/verkn/save', iverk).then((res: any) => {
+    this.rest.postNoWartenDialog('checkliste/verkn/save', iverk).then((res: any) => {
       this.ladeChecklistenView(this.viewCL);
-      warten.close();
     });
   }
 
