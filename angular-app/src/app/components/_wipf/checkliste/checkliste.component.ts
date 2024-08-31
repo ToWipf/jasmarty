@@ -31,16 +31,18 @@ export class ChecklisteComponent implements OnInit {
   public displayedColumnsCheckListeItem;
   public displayedColumnsCheckListeVerkn;
   public view = "cl";
+  public allTypesCache: CheckListeType[] = [];
   public viewCL: CheckListeListe = {};
   public selectetType: CheckListeType = {};
   public lastNewPrio: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.loadCheckListeType().then(() => {
+      this.loadCheckListeListe();
+    });
     this.showAllTableColumns();
-    this.loadCheckListeListe();
-    this.loadCheckListeType();
     this.setView("menue");
   }
 
@@ -55,12 +57,12 @@ export class ChecklisteComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'button'];
+      this.displayedColumnsCheckListeListe = ['id', 'listenname', 'date', 'types', 'typesNamen', 'button'];
       this.displayedColumnsCheckListeType = ['id', 'type', 'button'];
       this.displayedColumnsCheckListeItem = ['id', 'item', 'prio', 'type', 'button'];
       this.displayedColumnsCheckListeVerkn = ['id', 'item', 'prio', 'button'];
     } else {
-      this.displayedColumnsCheckListeListe = ['listenname', 'date', 'types', 'button'];
+      this.displayedColumnsCheckListeListe = ['listenname', 'date', 'typesNamen', 'button'];
       this.displayedColumnsCheckListeType = ['type', 'button'];
       this.displayedColumnsCheckListeItem = ['item', 'prio', 'type', 'button'];
       this.displayedColumnsCheckListeVerkn = ['button', 'item'];
@@ -72,9 +74,15 @@ export class ChecklisteComponent implements OnInit {
     this.rest.get('checkliste/liste/getAll').then((resdata: CheckListeListe[]) => {
       resdata.forEach((cl: CheckListeListe) => {
         cl.typesNummbers = [];
+        cl.typesCache = [];
         if (cl.types) {
           cl.types.split(",").forEach((tid: string) => {
             cl.typesNummbers.push(Number(tid));
+            this.allTypesCache.forEach((t) => {
+              if (Number(tid) == t.id) {
+                cl.typesCache.push(t);
+              }
+            })
           });
         }
       });
@@ -83,13 +91,18 @@ export class ChecklisteComponent implements OnInit {
     });
   }
 
-  public loadCheckListeType(): void {
-    this.displayedColumnsCheckListeItem = ['item', 'prio', 'button'];
-    const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
-      this.dataSourceCheckListeType = new MatTableDataSource(resdata);
-      warten.close();
-    });
+  public async loadCheckListeType(): Promise<void> {
+    return new Promise(
+      resolve => {
+        this.displayedColumnsCheckListeItem = ['item', 'prio', 'button'];
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.rest.get('checkliste/type/getAll').then((resdata: CheckListeType[]) => {
+          this.dataSourceCheckListeType = new MatTableDataSource(resdata);
+          this.allTypesCache = resdata;
+          warten.close();
+          resolve(null);
+        });
+      });
   }
 
   public loadCheckListeItemAll(): void {
@@ -114,7 +127,7 @@ export class ChecklisteComponent implements OnInit {
     this.rest.post('checkliste/item/getAllByType', type).then((resdata: CheckListeItem[]) => {
       this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
       // Höchsten Priowert ermitteln und merken
-      if (resdata.length > 1){
+      if (resdata.length > 1) {
         this.lastNewPrio = Math.max(...resdata.map(item => item.prio ?? 0));
       }
       warten.close();
@@ -348,8 +361,8 @@ export class CheckListeDialogCheckListe implements OnInit {
             if (t == xt.id) {
               this.data.typesCache.push(xt);
             }
-          })
-        })
+          });
+        });
       }
       warten.close();
     });
