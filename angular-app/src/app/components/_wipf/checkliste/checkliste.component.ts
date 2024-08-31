@@ -46,8 +46,10 @@ export class ChecklisteComponent implements OnInit {
 
   public setView(val: string): void {
     this.view = val;
-    // Rücksetzen von lastPrio
-    this.lastNewPrio = 0;
+    if (val == "menue") {
+      // Rücksetzen von lastPrio
+      this.lastNewPrio = 0;
+    }
   }
 
   public showAllTableColumns(): void {
@@ -111,6 +113,8 @@ export class ChecklisteComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.post('checkliste/item/getAllByType', type).then((resdata: CheckListeItem[]) => {
       this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
+      // Höchsten Priowert ermitteln und merken
+      this.lastNewPrio = Math.max(...resdata.map(item => item.prio ?? 0));
       warten.close();
     });
   }
@@ -243,7 +247,6 @@ export class ChecklisteComponent implements OnInit {
     }
     if (!edititem.prio) {
       if (this.lastNewPrio == 0) {
-        console.log(edititem);
         this.lastNewPrio = edititem.checkListeType.id * 10;
       } else {
         this.lastNewPrio = this.lastNewPrio + 2;
