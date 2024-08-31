@@ -204,13 +204,9 @@ export class ListeComponent implements OnInit {
   }
 
   public convertDateToCount(item: ListeEntry): string {
-    console.log(item.date)
     let dEntry = new Date(item.date);
     let dNow = new Date();
     dNow.setUTCHours(0,0,0);
-    console.log(dEntry);
-    console.log(dNow);
-    console.log(dNow.getTime() - dEntry.getTime() );
     return (((dNow.getTime() - dEntry.getTime()) / (1000 * 60 * 60))/24).toFixed(0);
   }
 

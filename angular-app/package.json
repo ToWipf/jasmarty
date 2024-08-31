@@ -1,6 +1,6 @@
 {
   "name": "jasmarty-app",
-  "version": "2.4.01",
+  "version": "2.4.02",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 3000 --disable-host-check",

@@ -28,32 +28,29 @@
     <button class="btn btn-wipf-default btn-for-icon zuruckbutton" (click)="setView('menue')" *ngIf="view!='menue'">
         <mat-icon svgIcon="pfeil_L" aria-hidden="false" title="Zurück"></mat-icon>
     </button>
-    
-    <div class="gridRow" *ngIf="view=='menue'">
-        <div class="gridCol">
-            <button class="clmenubutton" (click)="setView('listevw')">
-                <mat-icon svgIcon="box" aria-hidden="false" title="Zeige alle Checklisten">
-                </mat-icon>
-                    CheckListen VW
-            </button>
-            <br>
-        </div>
 
-        <div class="gridCol">
-            <button class="clmenubutton" (click)="setView('typevw')">
-                <mat-icon svgIcon="box" aria-hidden="false" title="typevw">
-                </mat-icon>
-                    Typen Verwalten
-            </button>
-            <br>
-        </div>
-        <div class="gridCol">
-            <button class="clmenubutton" (click)="ladeViewItemsAll()">
-                <mat-icon svgIcon="box" aria-hidden="false" title="itemvw">
-                </mat-icon>
-                    Alle Items Verwalten
-            </button>
-        </div>
+    <div class="clMenueListe" *ngIf="view=='menue'">
+
+        <button class="clmenubutton" (click)="setView('listevw')">
+            <mat-icon svgIcon="box" aria-hidden="false" title="Zeige alle Checklisten">
+            </mat-icon>
+            CheckListen VW
+        </button>
+        <br>
+
+        <button class="clmenubutton" (click)="setView('typevw')">
+            <mat-icon svgIcon="box" aria-hidden="false" title="typevw">
+            </mat-icon>
+            Typen Verwalten
+        </button>
+        <br>
+
+        <button class="clmenubutton" (click)="ladeViewItemsAll()">
+            <mat-icon svgIcon="box" aria-hidden="false" title="itemvw">
+            </mat-icon>
+            Alle Items Verwalten
+        </button>
+
     </div>
 
     <ng-scrollbar class="pscroll" *ngIf="view=='listevw'">
