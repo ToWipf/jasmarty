@@ -1,5 +1,6 @@
 package org.wipf.jasmarty.logic.checkliste;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeItem;
@@ -45,7 +46,13 @@ public class CheckListeItemService {
 	 * @return
 	 */
 	public List<CheckListeItem> getAllByType(CheckListeType t) {
-		return CheckListeItem.findAllByType(t).list();
+
+		// Gleich nach prio Sortieren
+		List<CheckListeItem> cli = CheckListeItem.findAllByType(t).list();
+		cli.sort(Comparator.comparingInt(o -> o.prio));
+		return cli;
+
+		// return CheckListeItem.findAllByType(t).list();
 	}
 
 }

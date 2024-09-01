@@ -128,7 +128,7 @@ export class ChecklisteComponent implements OnInit {
     this.rest.post('checkliste/item/getAllByType', type).then((resdata: CheckListeItem[]) => {
       this.dataSourceCheckListeItem = new MatTableDataSource(resdata);
       // Höchsten Priowert ermitteln und merken
-      if (resdata.length > 1) {
+      if (resdata.length > 0) {
         this.lastNewPrio = Math.max(...resdata.map(item => item.prio ?? 0));
       }
       warten.close();
