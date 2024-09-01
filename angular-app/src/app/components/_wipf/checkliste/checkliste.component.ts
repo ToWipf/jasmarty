@@ -35,6 +35,7 @@ export class ChecklisteComponent implements OnInit {
   public viewCL: CheckListeListe = {};
   public selectetType: CheckListeType = {};
   public lastNewPrio: number = 0;
+  public offeneItems: number = 0;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -321,9 +322,16 @@ export class ChecklisteComponent implements OnInit {
   public ladeChecklistenView(cl: CheckListeListe): void {
     this.setView("checkliste");
     this.viewCL = cl;
-
+    
     this.rest.getNoWartenDialog('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
       this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
+      this.offeneItems = resdata.length;
+
+      resdata.forEach((clv) => {
+        if (clv.checked == false || clv.checked == true) {
+          this.offeneItems = this.offeneItems - 1;
+        }
+      });
     });
   }
 
@@ -371,6 +379,10 @@ export class CheckListeDialogCheckListe implements OnInit {
   public onNoClick(): void {
     this.dialogRef.close();
   }
+
+  public saveByEnter(): void {
+    this.dialogRef.close(this.data);
+  }
 }
 
 @Component({
@@ -385,6 +397,10 @@ export class CheckListeDialogType {
 
   public onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  public saveByEnter(): void {
+    this.dialogRef.close(this.data);
   }
 }
 
@@ -420,5 +436,9 @@ export class CheckListeDialogItem {
 
   public onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  public saveByEnter(): void {
+    this.dialogRef.close(this.data);
   }
 }

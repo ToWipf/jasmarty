@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <mat-form-field>
         <mat-label>Typ</mat-label>
-        <input matInput [(ngModel)]="data.type">
+        <input matInput [(ngModel)]="data.type" (keydown.enter)="saveByEnter()">
     </mat-form-field>
 </mat-dialog-content>
 

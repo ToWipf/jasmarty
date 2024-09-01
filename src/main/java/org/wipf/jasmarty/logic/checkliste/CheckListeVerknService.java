@@ -59,19 +59,23 @@ public class CheckListeVerknService {
 		return CheckListeVerkn.getAllByCheckList(cl).list();
 	}
 
+	/**
+	 * @param clId
+	 * @return
+	 */
 	public List<CheckListeVerkn> getByClID(Integer clId) {
 		CheckListeListe cl = cll.getById(clId);
 		List<CheckListeItem> itemsAlle = new LinkedList<CheckListeItem>();
 		// Alle Items des typen laden
 		if (cl.types != null) {
 			for (String tid : cl.types.split(",")) {
-				itemsAlle.addAll(cli.getAllByType(clt.getById((Integer.valueOf(tid)))));
+				if (!tid.isEmpty()) {
+					itemsAlle.addAll(cli.getAllByType(clt.getById((Integer.valueOf(tid)))));
+				}
 			}
 		}
 
-		// item hat jetzt alle Möglichkeiten drin
-
-		// Jetzt alle bisherigen holen
+		// item hat jetzt alle Möglichkeiten drin, Jetzt alle bisherigen holen
 		List<CheckListeVerkn> checkedItemsBisherige = getAllByCheckList(cl);
 
 		List<CheckListeVerkn> resultListe = new LinkedList<CheckListeVerkn>();
@@ -97,7 +101,6 @@ public class CheckListeVerknService {
 
 		// Sortieren
 		resultListe.sort(Comparator.comparingInt(o -> o.checkListeItem.prio));
-
 		return resultListe;
 	}
 

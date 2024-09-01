@@ -217,7 +217,7 @@
             </ng-container>
 
             <ng-container matColumnDef="item">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Items der Liste {{viewCL.listenname}} </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Items der Liste {{viewCL.listenname}} - Offene Punkte: {{offeneItems}} </th>
                 <td mat-cell *matCellDef="let element"> {{element?.checkListeItem?.item}}</td>
             </ng-container>
 

@@ -3,7 +3,7 @@
 
     <mat-form-field>
         <mat-label>Item Name</mat-label>
-        <input matInput [(ngModel)]="data.item">
+        <input matInput [(ngModel)]="data.item" (keydown.enter)="saveByEnter()">
     </mat-form-field>
 
     <mat-form-field>
