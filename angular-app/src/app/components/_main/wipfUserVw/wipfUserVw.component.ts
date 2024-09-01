@@ -71,7 +71,7 @@ export class WipfUserVwComponent implements OnInit {
   }
 
   public deleteUser(item: any): void {
-    item.infotext = "Wirklich löschen?"; 
+    item.infotext = "Wirklich löschen?";
     item.infotext2 = item.username;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',

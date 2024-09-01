@@ -19,10 +19,10 @@ export class ServicAuthKey {
     public loadAuthKey(): void {
         // Set Backend
         document.cookie.split(/\s*;\s*/).forEach((pair) => {
-          var name = decodeURIComponent(pair.substring(0, pair.indexOf('=')));
-          if (name === ServicAuthKey.AUTH_KEY_NAME){
-              this.sAuthKey = decodeURIComponent(pair.substring(pair.indexOf('=') + 1));
-          }
+            var name = decodeURIComponent(pair.substring(0, pair.indexOf('=')));
+            if (name === ServicAuthKey.AUTH_KEY_NAME) {
+                this.sAuthKey = decodeURIComponent(pair.substring(pair.indexOf('=') + 1));
+            }
         });
     }
 
@@ -43,7 +43,7 @@ export class ServicAuthKey {
         var expireTime = time + 1000 * 36000 * 9999;
         xnow.setTime(expireTime);
         var key = this.generateId();
-        document.cookie = ServicAuthKey.AUTH_KEY_NAME + '=' + key+ ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
+        document.cookie = ServicAuthKey.AUTH_KEY_NAME + '=' + key + ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
 
         // neuen Key senden
         this.rest.post("authkey/newkey", key);

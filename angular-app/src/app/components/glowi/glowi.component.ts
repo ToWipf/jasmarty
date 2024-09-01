@@ -54,9 +54,9 @@ export class GlowiComponent implements OnInit {
         for (let y = 0; y < height; y++) {
           for (let x = 0; x < width; x++) {
             const i = (y * 4) * width + x * 4;
-            this.mtttData[y][x].farbe_R = this.calcColor(imgPixels.data[i] -128 + this.nKontrast);
-            this.mtttData[y][x].farbe_G = this.calcColor(imgPixels.data[i + 1] -128 + this.nKontrast);
-            this.mtttData[y][x].farbe_B = this.calcColor(imgPixels.data[i + 2] -128 + this.nKontrast);
+            this.mtttData[y][x].farbe_R = this.calcColor(imgPixels.data[i] - 128 + this.nKontrast);
+            this.mtttData[y][x].farbe_G = this.calcColor(imgPixels.data[i + 1] - 128 + this.nKontrast);
+            this.mtttData[y][x].farbe_B = this.calcColor(imgPixels.data[i + 2] - 128 + this.nKontrast);
             this.mtttData[y][x].funktion = "Pic";
           }
         }

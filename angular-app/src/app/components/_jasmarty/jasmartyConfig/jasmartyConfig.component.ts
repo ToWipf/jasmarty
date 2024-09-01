@@ -8,7 +8,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./jasmartyConfig.component.less'],
 })
 export class JasmartyConfigComponent implements OnInit {
-  constructor( private rest: ServiceRest) { }
+  constructor(private rest: ServiceRest) { }
 
   public jaconfig: Jaconfig = {};
   public ports: [{ name: string }];

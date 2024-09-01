@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -6,10 +6,6 @@ import { CheckListeItem, CheckListeListe, CheckListeType, CheckListeVerkn } from
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-
-@Injectable({
-  providedIn: 'root',
-})
 
 @Component({
   selector: 'app-checkliste',
@@ -322,7 +318,7 @@ export class ChecklisteComponent implements OnInit {
   public ladeChecklistenView(cl: CheckListeListe): void {
     this.setView("checkliste");
     this.viewCL = cl;
-    
+
     this.rest.getNoWartenDialog('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
       this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
       this.offeneItems = resdata.length;

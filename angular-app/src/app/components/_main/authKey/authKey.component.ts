@@ -14,11 +14,11 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
   styleUrls: ['./authKey.component.less']
 })
 export class AuthKeyComponent implements OnInit {
-  
+
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceAuthKey: ServicAuthKey) { }
-  
+
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  
+
   public dataSource;
   public displayedColumns: string[] = ['id', 'key', 'info', 'access', 'button'];
   public sFilter: string = "";
@@ -75,7 +75,7 @@ export class AuthKeyComponent implements OnInit {
   }
 
   public delete(item: any): void {
-    item.infotext = "Wirklich löschen?"; 
+    item.infotext = "Wirklich löschen?";
     item.infotext2 = item.info;
     const dialogRef = this.dialog.open(DialogJaNeinComponent, {
       minWidth: '200px',

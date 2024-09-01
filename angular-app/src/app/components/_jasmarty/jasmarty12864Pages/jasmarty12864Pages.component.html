@@ -30,9 +30,9 @@
         <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
 
         <!-- <button type="button" (click)="fileInput.click()"> -->
-            <span>Hintergrundbild Bild hochladen</span>
-            <!-- <input #fileInput type="file" (change)="imageChangedEvent($event)" style="display:none;" /> -->
-            <input type="file" (change)="fileChangeHandler($event)">
+        <span>Hintergrundbild Bild hochladen</span>
+        <!-- <input #fileInput type="file" (change)="imageChangedEvent($event)" style="display:none;" /> -->
+        <input type="file" (change)="fileChangeHandler($event)">
         <!-- </button> -->
 
         <ng-container *ngIf="imageoutput?.base64">

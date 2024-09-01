@@ -31,8 +31,8 @@ export class ServiceRest {
   }
 
   private setLogin(base64Auth: string) {
-    this.httpOptions = 
-      new HttpHeaders({ "Authorization": "Basic " + base64Auth});
+    this.httpOptions =
+      new HttpHeaders({ "Authorization": "Basic " + base64Auth });
   }
 
   public getHostExpectFromUrl(): string {

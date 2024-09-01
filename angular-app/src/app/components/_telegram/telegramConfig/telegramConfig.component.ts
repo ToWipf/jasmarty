@@ -7,7 +7,7 @@ import { ServiceRest } from 'src/app/service/serviceRest';
   styleUrls: ['./telegramConfig.component.less'],
 })
 export class TelegramConfigComponent implements OnInit {
-  constructor( private rest: ServiceRest) {}
+  constructor(private rest: ServiceRest) { }
 
   public sBotKey: string;
   public bTelegramActive: boolean;

@@ -29,5 +29,4 @@ export class LoginComponent {
   public logoff(): void {
     this.rest.doLogout();
   }
-
 }

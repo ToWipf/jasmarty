@@ -80,10 +80,10 @@ export class ServiceWipf {
    * @param n 
    * @returns 
    */
-  public isNumber(n:any): boolean {
+  public isNumber(n: any): boolean {
     return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
   }
-  
+
   /**
    * 
    * @param str 

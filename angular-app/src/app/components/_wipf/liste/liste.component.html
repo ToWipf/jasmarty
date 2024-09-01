@@ -73,7 +73,7 @@
 
         <ng-container matColumnDef="data">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}"> 
+            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': lsColor.idToColor(element.typeid)}">
                 <!-- Bei "Counter" -->
                 <span *ngIf="element.typeid === -2" class="counter">
                     {{convertDateToCount(element)}} Tage
