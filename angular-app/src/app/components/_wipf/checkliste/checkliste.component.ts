@@ -262,7 +262,7 @@ export class ChecklisteComponent implements OnInit {
     }
     if (!edititem.prio) {
       if (this.lastNewPrio == 0) {
-        this.lastNewPrio = edititem.checkListeType.id * 10;
+        this.lastNewPrio = edititem.checkListeType.id * 100;
       } else {
         this.lastNewPrio = this.lastNewPrio + 2;
       }
