@@ -11,10 +11,10 @@ import org.wipf.jasmarty.datatypes.jasmarty.Lcd12864PageBase.pixelType;
 import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.Wipf;
 
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
-@RequestScoped
+@ApplicationScoped
 public class Lcd12864PageConverter {
 
 	@Inject
@@ -79,28 +79,22 @@ public class Lcd12864PageConverter {
 				case "TEXT":
 					switch (jo.get("font").toString()) {
 					case "FONT_57_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_68_ON":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.ON);
 						break;
 					case "FONT_57_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_68_OFF":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "FONT_57_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_57), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					case "FONT_68_INVERT":
-						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM,
-								searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
+						lp.drawString(new Lcd12864Font(Lcd12864fontType.FONT_68), x, y, lineAlignment.CUSTOM, searchAndReplaceVarsForString(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
@@ -133,8 +127,7 @@ public class Lcd12864PageConverter {
 						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.OFF);
 						break;
 					case "INVERT":
-						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()),
-								pixelType.INVERT);
+						lp.drawCircleFill(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
 						break;
 					default:
 						break;
