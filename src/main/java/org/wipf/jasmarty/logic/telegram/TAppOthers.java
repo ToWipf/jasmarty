@@ -1,16 +1,15 @@
 package org.wipf.jasmarty.logic.telegram;
 
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
@@ -95,26 +94,15 @@ public class TAppOthers {
 	public String getWitz() {
 		try {
 			String sWitz;
-			sWitz = wipf.httpRequest(Wipf.httpRequestType.GET,
-					"https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
+			sWitz = wipf.httpRequest(Wipf.httpRequestType.GET, "https://funny4you.at/webmasterprogramm/zufallswitz.js.php");
 			String s = sWitz.substring(41, sWitz.length() - 3);
-			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\<.*?>", "").replaceAll("\\+", " ")
-					.replaceAll("%22", "\n").replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!")
-					.replaceAll("%3F", "? ").replaceAll("%3A", ": ").replaceAll("%2C", ",").replaceAll("%2E", ". ")
-					.replaceAll("%E2%80%93", ",").replaceAll("%C3%A2%E2%82%AC%CB%9C", "")
-					.replaceAll("%26%238242%3B%21", "\"").replaceAll("%26quot%3B", "").replaceAll("%26%2339%3B", "")
-					.replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "")
-					.replaceAll("%C3%83%E2%80%9E", "Ä").replaceAll("%26Auml%3B", "Ä").replaceAll("%C3%A4", "ä")
-					.replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26auml%3B", "ä").replaceAll("%C3%83%E2%80%93", "Ö")
-					.replaceAll("H%C3%83%C2%B6", "Ö").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26ouml%3B", "ö")
-					.replaceAll("%C3%B6", "ö").replaceAll("%26Uuml%3B", "Ü").replaceAll("%26uuml%3B", "ü")
-					.replaceAll("%C3%BC", "ü").replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C5%B8", "ß")
-					.replaceAll("%26szlig%3B", "ß").replaceAll("%C3%9F", "ß");
+			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\<.*?>", "").replaceAll("\\+", " ").replaceAll("%22", "\n").replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!").replaceAll("%3F", "? ").replaceAll("%3A", ": ").replaceAll("%2C", ",").replaceAll("%2E", ". ").replaceAll("%E2%80%93", ",").replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26%238242%3B%21", "\"").replaceAll("%26quot%3B", "").replaceAll("%26%2339%3B", "").replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "").replaceAll("%C3%83%E2%80%9E", "Ä").replaceAll("%26Auml%3B", "Ä").replaceAll("%C3%A4", "ä").replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26auml%3B", "ä").replaceAll("%C3%83%E2%80%93", "Ö").replaceAll("H%C3%83%C2%B6", "Ö").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26ouml%3B", "ö").replaceAll("%C3%B6", "ö").replaceAll("%26Uuml%3B", "Ü").replaceAll("%26uuml%3B", "ü")
+					.replaceAll("%C3%BC", "ü").replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C5%B8", "ß").replaceAll("%26szlig%3B", "ß").replaceAll("%C3%9F", "ß");
 
 			// TODO
 			return x.substring(0, x.indexOf("Ein Witz von"));
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getWitz: " + e);
 			return "no Witz";
 		}
@@ -127,7 +115,7 @@ public class TAppOthers {
 		try {
 			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:9042");
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getOnline: " + e);
 			return "getOnline failed";
 		}
@@ -140,7 +128,7 @@ public class TAppOthers {
 		try {
 			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.14:80");
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getTemperature: " + e);
 			return "getTemperature failed";
 		}
@@ -153,7 +141,7 @@ public class TAppOthers {
 		try {
 			return wipf.httpRequest(Wipf.httpRequestType.GET, "http://192.168.2.11:80/metrics");
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOGGER.warn("getSystem: " + e);
 			return "getSystem failed";
 		}

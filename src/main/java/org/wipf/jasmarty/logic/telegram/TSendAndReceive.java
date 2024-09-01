@@ -2,12 +2,9 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
-
-import jakarta.annotation.PostConstruct;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
@@ -21,6 +18,10 @@ import org.wipf.jasmarty.logic.base.MultipartUtility;
 import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.listen.RndEventsService;
+
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
@@ -430,7 +431,7 @@ public class TSendAndReceive {
 			String response = multipart.finish();
 			JSONObject jo = new JSONObject(response);
 			return (jo.get("ok").toString());
-		} catch (IOException | WipfException e) {
+		} catch (IOException | WipfException | URISyntaxException e) {
 			e.printStackTrace();
 			return "Fehler 116 " + e;
 		}

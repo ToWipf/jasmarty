@@ -26,8 +26,7 @@ public class PuzzleDraw {
 	public File drawTest() throws IOException {
 		PuzzleFeld pf = new PuzzleFeld();
 
-		PuzzleTeil testteil = new PuzzleTeil(verbindungsart.BUCHSE, verbindungsart.BUCHSE, verbindungsart.STIFT,
-				verbindungsart.STIFT);
+		PuzzleTeil testteil = new PuzzleTeil(verbindungsart.BUCHSE, verbindungsart.BUCHSE, verbindungsart.STIFT, verbindungsart.STIFT);
 
 		pf.setSize(2, 2);
 		pf.addTeil(0, 0, testteil);
@@ -55,7 +54,7 @@ public class PuzzleDraw {
 		for (PuzzleTeil[] pa : fd.getTeile()) {
 			int y = 0;
 			for (PuzzleTeil p : pa) {
-				System.out.println("Teil " + x + " " + y);
+				System.out.println("Teil " + x + " " + y + "TODO: " + p);
 				// Ein Teil zeichnen
 				svg = doDrawVert(svg, (x * scale) + offset, (y * scale) + offset, scale);
 				svg = doDrawHor(svg, (x * scale) + offset, (y * scale) + offset, scale);
@@ -97,7 +96,7 @@ public class PuzzleDraw {
 		aa.drawLine(10, 20, 30, 40);
 		aa.drawLine(21, 20, 80, 60);
 
-		SVGGraphics2D x = new SVGGraphics2D(0, 0);
+		// SVGGraphics2D x = new SVGGraphics2D(0, 0);
 
 		// org.w3c.dom.Document.inp
 

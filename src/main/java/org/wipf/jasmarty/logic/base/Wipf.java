@@ -7,6 +7,8 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.NoRouteToHostException;
 import java.net.SocketTimeoutException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
@@ -120,18 +122,23 @@ public class Wipf {
 	}
 
 	/**
+	 * @param method
 	 * @param sUrl
 	 * @return
 	 * @throws IOException
+	 * @throws UnknownHostException
+	 * @throws SocketTimeoutException
+	 * @throws NoRouteToHostException
+	 * @throws URISyntaxException
 	 */
-	public String httpRequest(httpRequestType method, String sUrl)
-			throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException {
-		URL url = new URL(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
+	public String httpRequest(httpRequestType method, String sUrl) throws IOException, UnknownHostException, SocketTimeoutException, NoRouteToHostException, URISyntaxException {
+		URI uri = new URI(sUrl.substring(0, Math.min(sUrl.length(), 4000)));
+		URL url = uri.toURL();
 
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod(method.name());
 		urlc.setRequestProperty("Accept", "*/*");
-		urlc.setConnectTimeout(5000); // 5 Sek.
+		urlc.setConnectTimeout(10000); // 10 Sek.
 		urlc.setReadTimeout(60000); // 1 Min.
 
 		if (method != httpRequestType.GET) {
@@ -274,7 +281,8 @@ public class Wipf {
 	 */
 	public String getExternalIp() {
 		try {
-			URL whatismyip = new URL("http://checkip.amazonaws.com");
+			URI uri = new URI("http://checkip.amazonaws.com");
+			URL whatismyip = uri.toURL();
 			BufferedReader in;
 			in = new BufferedReader(new InputStreamReader(whatismyip.openStream()));
 			String ip = in.readLine(); // you get the IP as a String

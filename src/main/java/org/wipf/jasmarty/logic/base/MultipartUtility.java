@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -28,14 +30,16 @@ public class MultipartUtility {
 	 * @param requestURL
 	 * @param charset
 	 * @throws IOException
+	 * @throws URISyntaxException
 	 */
-	public MultipartUtility(String requestURL, String charset) throws IOException {
+	public MultipartUtility(String requestURL, String charset) throws IOException, URISyntaxException {
 		this.charset = charset;
 
 		// creates a unique boundary based on time stamp
 		boundary = "===" + System.currentTimeMillis() + "===";
 
-		URL url = new URL(requestURL);
+		URI uri = new URI(requestURL);
+		URL url = uri.toURL();
 		httpConn = (HttpURLConnection) url.openConnection();
 		httpConn.setUseCaches(false);
 		httpConn.setDoOutput(true); // indicates POST method
@@ -72,8 +76,7 @@ public class MultipartUtility {
 	public void addFilePart(String fieldName, File uploadFile) throws IOException {
 		String fileName = uploadFile.getName();
 		writer.append("--" + boundary).append(LINE_FEED);
-		writer.append("Content-Disposition: form-data; name=\"" + fieldName + "\"; filename=\"" + fileName + "\"")
-				.append(LINE_FEED);
+		writer.append("Content-Disposition: form-data; name=\"" + fieldName + "\"; filename=\"" + fileName + "\"").append(LINE_FEED);
 		writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(fileName)).append(LINE_FEED);
 		writer.append("Content-Transfer-Encoding: binary").append(LINE_FEED);
 		writer.append(LINE_FEED);

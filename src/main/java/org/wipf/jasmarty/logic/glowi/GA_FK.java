@@ -44,7 +44,7 @@ public class GA_FK {
 	 */
 	public void doSet(int x, int y) {
 
-		String quellTeilname = this.cache.getByXY(x, y).funktion;
+		// String quellTeilname = this.cache.getByXY(x, y).funktion;
 		GlowiData teil = new GlowiData();
 		teil.setFarbe(farbe.ROT);
 		teil.funktion = "S";

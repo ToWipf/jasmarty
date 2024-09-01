@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
@@ -161,7 +162,8 @@ public class FileVW {
 	public boolean saveFileToDisk(String sUrl, String sFileName) {
 		LOGGER.info("Speichere File " + sUrl + " nach " + sFileName);
 		try {
-			URL urld = new URL(sUrl);
+			URI uri = new URI(sUrl);
+			URL urld = uri.toURL();
 			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
 			FileOutputStream fos = new FileOutputStream("files/" + sFileName);
 			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
