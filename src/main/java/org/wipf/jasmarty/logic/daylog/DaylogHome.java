@@ -95,9 +95,7 @@ public class DaylogHome {
 	 * @return
 	 */
 	public String getAllUniqueEventTextByTyp(Telegram t) {
-
 		List<DaylogEvent> events = daylogEventDB.getAllByTypId(t.getMessageIntPart(1).toString());
-
 		List<String> elist = new LinkedList<String>();
 		for (DaylogEvent ev : events) {
 			if (!elist.contains(ev.text)) {
