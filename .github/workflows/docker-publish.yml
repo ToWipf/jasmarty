@@ -21,8 +21,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+
       - name: Vorbereiten
-        run: echo "Starting..." && cd scripts && chmod +x *.sh
+        run: echo "Starting..." && cd scripts && chmod +x *.sh && java -version
       
       - name: Build jar
         run: echo "Starting..." && cd scripts && ./setup.sh && ./buildAll.sh && ls -lahrt ../target/ && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
