@@ -3,11 +3,11 @@ package org.wipf.jasmarty.logic.telegram;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 /**
  * @author wipf
@@ -79,11 +79,10 @@ public class TReadLoop {
 							nFailconter = 0;
 						}
 						if (bLastFailed) {
-							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist. Info
-							// senden:
+							// Wenn Telegram nicht erreichbar war und nun wieder erreichbar ist.
+							// Info senden:
 							// Das hat keine Prio -> erst wenn keine neuen Nachrichten ausstehen senden
-							sendAndReceive.sendMsgToAdmin(
-									"Telegram online nach: " + nFailconter + ". IP: " + wipf.getExternalIp());
+							sendAndReceive.sendMsgToAdmin("Telegram online nach: " + nFailconter + ". IP: " + wipf.getExternalIp());
 
 							bLastFailed = false;
 							LOGGER.info("Telegram ist erreichbar");
@@ -104,10 +103,9 @@ public class TReadLoop {
 						break;
 
 					default:
-						LOGGER.warn("Telegram unnormales Verhalten");
-						bLastFailed = true;
-						sendAndReceive.sendMsgToAdmin("Abnormales verhalten!");
-						wipf.sleep(20000);
+						LOGGER.warn("Telegram unnormales Verhalten, welches ignoriert wird");
+						// bLastFailed = true;
+						wipf.sleep(60000); // 1 Minute warten
 						break;
 					}
 

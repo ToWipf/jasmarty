@@ -138,8 +138,7 @@ public class Wipf {
 		HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 		urlc.setRequestMethod(method.name());
 		urlc.setRequestProperty("Accept", "*/*");
-		// War Jahrelang 5 Sekunden, auf 30 erhöht
-		urlc.setConnectTimeout(30000); // 30 Sek.
+		urlc.setConnectTimeout(5000); // 5 Sek.
 		urlc.setReadTimeout(60000); // 1 Min.
 
 		if (method != httpRequestType.GET) {

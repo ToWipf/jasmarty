@@ -2,6 +2,7 @@ package org.wipf.jasmarty.logic.telegram;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
@@ -153,6 +154,9 @@ public class TSendAndReceive {
 				// Keine neue Nachrichten
 				return 'o';
 			}
+		} catch (SocketTimeoutException e) {
+			LOGGER.warn("readUpdateFromTelegram fails - SocketTimeoutException: " + e);
+			return 's';
 		} catch (Exception e) {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
 			return 'f';
