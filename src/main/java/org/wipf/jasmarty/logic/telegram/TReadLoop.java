@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
+import org.wipf.jasmarty.logic.telegram.TSendAndReceive.telegramUpdateStatus;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -25,6 +26,9 @@ public class TReadLoop {
 	private boolean bLoopActive = false;
 	private int lastMsgCounter = 4;
 	private int nFailconter = 0;
+
+	private static final int WARTEZEIT_NACH_SCHREIBEN = 15000; // 15 Sec
+	private static final int WARTEZEIT_NORMAL = 60000; // 1 Min
 
 	/**
 	 * 
@@ -67,13 +71,13 @@ public class TReadLoop {
 				while (bLoopActive) {
 
 					switch (sendAndReceive.readUpdateFromTelegram()) {
-					case 'o':
+					case telegramUpdateStatus.FERTIG_NICHTS:
 						// Es gab keine neue Nachrichten
 						if (lastMsgCounter == 0) {
-							wipf.sleep(60000); // warte 60 sec
+							wipf.sleep(WARTEZEIT_NORMAL); // warte 60 sec
 						} else {
 							// warte nur 15 sec, da gerade geschrieben wurde
-							wipf.sleep(15000);
+							wipf.sleep(WARTEZEIT_NACH_SCHREIBEN);
 							lastMsgCounter--;
 							// Failcounter zurücksetzen
 							nFailconter = 0;
@@ -88,16 +92,17 @@ public class TReadLoop {
 							LOGGER.info("Telegram ist erreichbar");
 						}
 						break;
-					case 'n':
+
+					case telegramUpdateStatus.FERTIG_NEUE:
 						// Es gab neue Nachrichten -> warte nur 20s
 						lastMsgCounter = 6;
-						wipf.sleep(20000);
+						wipf.sleep(WARTEZEIT_NACH_SCHREIBEN);
 						break;
 
-					case 'f':
+					case telegramUpdateStatus.FEHLER_ALARM:
 						// Es gab einen Fehler
 						bLastFailed = true;
-						wipf.sleep(60000);
+						wipf.sleep(WARTEZEIT_NORMAL);
 						LOGGER.warn("Telegram hatte einen Fehler -> Warte 1min ");
 						nFailconter++;
 						break;
@@ -105,10 +110,9 @@ public class TReadLoop {
 					default:
 						LOGGER.warn("Telegram unnormales Verhalten, welches ignoriert wird");
 						// bLastFailed = true;
-						wipf.sleep(60000); // 1 Minute warten
+						wipf.sleep(WARTEZEIT_NORMAL); // 1 Minute warten
 						break;
 					}
-
 				}
 
 			}

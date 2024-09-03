@@ -56,6 +56,10 @@ public class TSendAndReceive {
 	private Integer nOffsetID = 0;
 	private String sBotKey;
 
+	public enum telegramUpdateStatus {
+		FERTIG_NICHTS, FERTIG_NEUE, FEHLER_ALARM, FEHLER_IGNORE;
+	};
+
 	/**
 	 * 
 	 */
@@ -90,13 +94,13 @@ public class TSendAndReceive {
 	 * 
 	 */
 	@Metered
-	public char readUpdateFromTelegram() {
+	public telegramUpdateStatus readUpdateFromTelegram() {
 		try {
 			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + getBotKeyFromCache() + "/getUpdates?offset=" + this.nOffsetID));
 
 			if (!jo.getBoolean("ok")) {
 				LOGGER.warn("Telegram nicht 'ok'");
-				return 'f';
+				return telegramUpdateStatus.FEHLER_ALARM;
 			}
 
 			JSONArray ja = jo.getJSONArray("result");
@@ -149,17 +153,17 @@ public class TSendAndReceive {
 					sendTelegram(t);
 				}
 				// Fertig mit neuen Nachrichten
-				return 'n';
+				return telegramUpdateStatus.FERTIG_NEUE;
 			} else {
 				// Keine neue Nachrichten
-				return 'o';
+				return telegramUpdateStatus.FERTIG_NICHTS;
 			}
 		} catch (SocketTimeoutException e) {
-			LOGGER.warn("readUpdateFromTelegram fails - SocketTimeoutException: " + e);
-			return 's';
+			LOGGER.warn("readUpdateFromTelegram fails by SocketTimeoutException: " + e);
+			return telegramUpdateStatus.FEHLER_IGNORE;
 		} catch (Exception e) {
 			LOGGER.warn("readUpdateFromTelegram fails: " + e);
-			return 'f';
+			return telegramUpdateStatus.FEHLER_ALARM;
 		}
 	}
 
