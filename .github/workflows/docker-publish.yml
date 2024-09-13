@@ -33,11 +33,11 @@ jobs:
       - name: Build jar
         run: echo "Starting..." && cd scripts && ./setup.sh && ./buildAll.sh && ls -lahrt ../target/ && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
         
-      - name: Save jar
-        uses: actions/upload-artifact@v2
-        with:
-          name: jasmarty.jar
-          path: scripts/jasmarty.jar
+#      - name: Save jar
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: jasmarty.jar
+#          path: scripts/jasmarty.jar
 
       # - name: Build and Push dockerimage_arm 32
       #   run: |
