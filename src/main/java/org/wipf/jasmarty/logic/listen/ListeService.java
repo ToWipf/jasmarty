@@ -77,4 +77,15 @@ public class ListeService {
 		return l.toString();
 	}
 
+	/**
+	 * Fuer HW Button
+	 */
+	public void saveTime() {
+		Liste l = new Liste();
+		l.data = "saveTime@" + wipf.getTime("HH:mm:ss");
+		l.typeid = 1;
+		l.date = wipf.getTime("yyyy-MM-dd");
+		save(l);
+	}
+
 }

@@ -60,4 +60,12 @@ public class ListeRest {
 		return Response.ok(listeDB.getAllByType(nTypeId)).build();
 	}
 
+	@POST
+	@Path("saveTime")
+	@RolesAllowed({ "listenuser", "admin" })
+	public Response saveTime() {
+		listeDB.saveTime();
+		return Response.ok().build();
+	}
+
 }

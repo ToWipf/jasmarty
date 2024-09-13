@@ -18,6 +18,11 @@
         </mat-select>
     </mat-form-field>
 
+    <mat-form-field>
+        <mat-label>Rolle-Plain</mat-label>
+        <input matInput [(ngModel)]="data.role">
+    </mat-form-field>
+
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
