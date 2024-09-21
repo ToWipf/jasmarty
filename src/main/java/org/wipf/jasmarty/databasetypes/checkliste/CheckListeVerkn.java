@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.checkliste;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -25,6 +27,8 @@ import jakarta.persistence.Table;
 public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final Logger LOGGER = Logger.getLogger("CheckListeVerkn");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +70,23 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 		} else {
 			// Neu
 			this.persist();
+		}
+	}
+
+	/**
+	 * Nur Updaten, keine neue ID vergeben
+	 */
+	public void updateOnly() {
+		if (this.id != null) {
+			CheckListeVerkn existingData = CheckListeVerkn.findById(this.id);
+
+			// Update
+			existingData.checkListeListe = this.checkListeListe;
+			existingData.checkListeItem = this.checkListeItem;
+			existingData.checked = this.checked;
+			existingData.persist();
+		} else {
+			LOGGER.info("updateOnly Fails, Button Spam?");
 		}
 	}
 

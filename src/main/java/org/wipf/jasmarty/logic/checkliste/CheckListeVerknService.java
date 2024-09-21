@@ -31,6 +31,15 @@ public class CheckListeVerknService {
 	 */
 	@Transactional
 	public void save(CheckListeVerkn l) {
+		getAllByCheckList(l.checkListeListe).forEach(vk -> {
+			if (vk.checkListeItem.id == l.checkListeItem.id) {
+				// Das Item gibt es schon, dann updaten und nichts neues erstellen
+				l.id = vk.id;
+				l.updateOnly();
+				return;
+			}
+		});
+
 		l.saveOrUpdate();
 	}
 
