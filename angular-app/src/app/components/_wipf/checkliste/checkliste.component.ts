@@ -51,6 +51,20 @@ export class ChecklisteComponent implements OnInit {
     }
   }
 
+  public elementToColor(e: CheckListeVerkn): string {
+    if (e.checked == null) {
+      return "red";
+    } else {
+      if (e.checked) {
+        // Grün
+        return "#2c6637";
+      } else {
+        // Grau
+        return "#4f4f4f";
+      }
+    }
+  }
+
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {

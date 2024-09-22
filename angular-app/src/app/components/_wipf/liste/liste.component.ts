@@ -113,11 +113,15 @@ export class ListeComponent implements OnInit {
     if (this.selectedTypeFilter) {
       if (this.selectedTypeFilter.id == -99) {
         // Spaltenansichten mit type und ohne Date
-        this.displayedColumns = ['type', 'data', 'button'];
+        if (!this.showAllTableColumns) {
+          this.displayedColumns = ['type', 'data', 'button'];
+        }
         this.loadAll();
       } else {
         // Spaltenansichten ohne type
-        this.displayedColumns = ['data', 'date', 'button'];
+        if (!this.showAllTableColumns) {
+          this.displayedColumns = ['data', 'date', 'button'];
+        }
         this.loadByType();
       }
     } else {
