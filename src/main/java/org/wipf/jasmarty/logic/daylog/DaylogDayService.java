@@ -19,6 +19,10 @@ public class DaylogDayService {
 	 */
 	@Transactional
 	public DaylogDay save(DaylogDay o) {
+		System.out.println("hier" + o);
+		if (o.id == null && getByDateString(o.date) != null) {
+			return null;
+		}
 		o.saveOrUpdate();
 		return o;
 	}
@@ -28,7 +32,7 @@ public class DaylogDayService {
 	 * @return
 	 */
 	@Transactional
-	public DaylogDay get(String sDate) {
+	public DaylogDay getByDateString(String sDate) {
 		List<DaylogDay> l = DaylogDay.findByDate(sDate).list();
 		if (l.size() == 1) {
 			return l.get(0);

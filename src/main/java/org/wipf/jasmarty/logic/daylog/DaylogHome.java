@@ -123,7 +123,7 @@ public class DaylogHome {
 
 		StringBuilder sb = new StringBuilder();
 		try {
-			DaylogDay dday = daylogDayDB.get(sDate);
+			DaylogDay dday = daylogDayDB.getByDateString(sDate);
 			if (dday == null) {
 				ti.sInfo = "Für den Tag " + sDate + " gibt es keine Events";
 				return ti;

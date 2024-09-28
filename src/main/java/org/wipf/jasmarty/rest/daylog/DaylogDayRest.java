@@ -1,5 +1,7 @@
 package org.wipf.jasmarty.rest.daylog;
 
+import java.util.List;
+
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.logic.base.AuthKeyService;
 import org.wipf.jasmarty.logic.base.MainHome;
@@ -35,20 +37,20 @@ public class DaylogDayRest {
 
 	@GET
 	@Path("get/{date}")
-	public Response get(@PathParam("date") String sDate, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+	public DaylogDay get(@PathParam("date") String sDate, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
 		if (aks.isKeyInCache(key)) {
-			return Response.ok(daylogDayDB.get(sDate)).build();
+			return daylogDayDB.getByDateString(sDate);
 		}
-		return Response.status(471).build();
+		return null;
 	}
 
 	@GET
 	@Path("getAllByDateQuery/{dateQuery}")
-	public Response getByDateQuery(@PathParam("dateQuery") String sDateQuery, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+	public List<DaylogDay> getByDateQuery(@PathParam("dateQuery") String sDateQuery, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
 		if (aks.isKeyInCache(key)) {
-			return Response.ok(daylogDayDB.getAllByDateQuery(sDateQuery)).build();
+			return daylogDayDB.getAllByDateQuery(sDateQuery);
 		}
-		return Response.status(471).build();
+		return null;
 	}
 
 //	@GET
@@ -62,11 +64,11 @@ public class DaylogDayRest {
 
 	@POST
 	@Path("save")
-	public Response save(DaylogDay d, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+	public DaylogDay save(DaylogDay d, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
 		if (aks.isKeyInCache(key)) {
-			return Response.ok(daylogDayDB.save(d)).build();
+			return daylogDayDB.save(d);
 		}
-		return Response.status(471).build();
+		return null;
 	}
 
 	@DELETE

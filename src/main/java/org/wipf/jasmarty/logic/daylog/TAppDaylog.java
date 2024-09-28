@@ -224,7 +224,7 @@ public class TAppDaylog {
 	 * @return
 	 */
 	public DaylogDay getDateAndCrateIfDateStringNotExists(String sDate, String sDateTagestext) {
-		DaylogDay d = daylogDayDB.get(sDate);
+		DaylogDay d = daylogDayDB.getByDateString(sDate);
 		if (d == null) {
 			d = new DaylogDay();
 			d.date = sDate;
