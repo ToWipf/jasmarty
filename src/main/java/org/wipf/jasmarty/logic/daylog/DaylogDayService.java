@@ -19,7 +19,6 @@ public class DaylogDayService {
 	 */
 	@Transactional
 	public DaylogDay save(DaylogDay o) {
-		System.out.println("hier" + o);
 		if (o.id == null && getByDateString(o.date) != null) {
 			return null;
 		}
