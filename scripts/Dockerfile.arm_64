@@ -1,4 +1,4 @@
-FROM arm64v8/openjdk:23-bookworm
+FROM arm64v8/openjdk:24-bookworm
 #FROM arm64v8/debian
 
 # Curl ist bereits installiert
