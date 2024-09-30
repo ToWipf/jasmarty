@@ -29,7 +29,7 @@
     "javascript-blowfish": "1.0.4",
     "ngx-color-picker": "17.0.0",
     "ngx-photo-editor": "0.4.4",
-    "ngx-scrollbar": "10.0.1",
+    "ngx-scrollbar": "16.0.0",
     "rxjs": "7.8.1",
     "zone.js": "0.14.10"
   },
