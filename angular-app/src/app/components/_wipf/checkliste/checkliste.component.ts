@@ -57,7 +57,7 @@ export class ChecklisteComponent implements OnInit {
     } else {
       if (e.checked) {
         // Grün
-        return "#2c6637";
+        return "#03fc0f";
       } else {
         // Grau
         return "#4f4f4f";

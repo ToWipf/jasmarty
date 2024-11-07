@@ -4,7 +4,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Pattern;
 
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.Wipf;
@@ -100,10 +99,6 @@ public class TAppOthers {
 
 			if (s.length() > 5000) {
 				return ("Witz zu lang");
-			}
-
-			if (Pattern.matches("^(\\+|-)?(\\d+|(\\d*\\.\\d*))?(E|e)?([-+])?(\\d+)?$", s)) {
-				return ("Witz regex fail");
 			}
 
 			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\<.*?>", "").replaceAll("\\+", " ").replaceAll("%22", "\n").replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!").replaceAll("%3F", "? ").replaceAll("%3A", ": ").replaceAll("%2C", ",").replaceAll("%2E", ". ").replaceAll("%E2%80%93", ",").replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26%238242%3B%21", "\"").replaceAll("%26quot%3B", "").replaceAll("%26%2339%3B", "").replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "").replaceAll("%C3%83%E2%80%9E", "Ä").replaceAll("%26Auml%3B", "Ä").replaceAll("%C3%A4", "ä").replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26auml%3B", "ä").replaceAll("%C3%83%E2%80%93", "Ö").replaceAll("H%C3%83%C2%B6", "Ö").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26ouml%3B", "ö").replaceAll("%C3%B6", "ö").replaceAll("%26Uuml%3B", "Ü").replaceAll("%26uuml%3B", "ü").replaceAll("%3Chr", " ")
