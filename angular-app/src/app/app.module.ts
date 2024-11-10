@@ -55,7 +55,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
@@ -86,6 +86,7 @@ import { View360Component } from './components/_debug/view360/view360.component'
 import { ColorPickerModule } from 'ngx-color-picker';
 import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
 import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
     declarations: [
@@ -202,6 +203,12 @@ import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, 
         AppRoutingModule,
         ColorPickerModule,
         HttpClientModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
     ],
     providers: [
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
