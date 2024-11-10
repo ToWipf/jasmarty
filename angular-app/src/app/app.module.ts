@@ -55,7 +55,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgModule, isDevMode } from '@angular/core';
+import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { PortalModule } from '@angular/cdk/portal';
 import { RndEventComponent, RndEventComponentDialogComponent } from './components/_wipf/rndEvent/rndEvent.component';
@@ -87,6 +87,9 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
 import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { PwaService } from './service/pwa.service';
+
+const initializer = (pwaService: PwaService) => () => pwaService.initPwaPrompt();
 
 @NgModule({
     declarations: [
@@ -146,7 +149,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         View360Component,
     ],
     imports: [
-        BrowserModule,
         NgxPhotoEditorModule,
         NgxChartsModule,
         A11yModule, //TODO:?
@@ -213,6 +215,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     providers: [
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
         HttpClient,
+        {provide: APP_INITIALIZER, useFactory: initializer, deps: [PwaService], multi: true}
     ],
     bootstrap: [AppComponent]
 })
