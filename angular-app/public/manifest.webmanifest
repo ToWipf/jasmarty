@@ -1,8 +1,8 @@
 {
-  "name": "Jasmarty-PWA",
-  "short_name": "Jasmarty-PWA",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Jasmarty-PAW",
+  "short_name": "Jasmarty",
+  "theme_color": "#964900",
+  "background_color": "#2e2d2d",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
