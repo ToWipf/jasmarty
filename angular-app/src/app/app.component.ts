@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -37,10 +37,9 @@ const ICON_PFEIL_R = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
 })
-export class AppComponent {
-  promptEvent: any;
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
 
+export class AppComponent {
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIconLiteral('box', sanitizer.bypassSecurityTrustHtml(ICON_BOX));
     iconRegistry.addSvgIconLiteral('cancel', sanitizer.bypassSecurityTrustHtml(ICON_CANCEL));
     iconRegistry.addSvgIconLiteral('check_all', sanitizer.bypassSecurityTrustHtml(ICON_CHECK_ALL));
@@ -70,23 +69,5 @@ export class AppComponent {
     iconRegistry.addSvgIconLiteral('minus', sanitizer.bypassSecurityTrustHtml(ICON_MINUS));
     iconRegistry.addSvgIconLiteral('pfeil_L', sanitizer.bypassSecurityTrustHtml(ICON_PFEIL_L));
     iconRegistry.addSvgIconLiteral('pfeil_R', sanitizer.bypassSecurityTrustHtml(ICON_PFEIL_R));
-  }
-
-  @HostListener('window:beforeinstallprompt', ['$event'])
-  onbeforeinstallprompt(e) {
-    e.preventDefault();
-    this.promptEvent = e;
-  }
-
-  public installPWA() {
-    this.promptEvent.prompt();
-  }
-
-  public shouldInstall(): boolean {
-    return !this.isRunningStandalone() && this.promptEvent;
-  }
-
-  public isRunningStandalone(): boolean {
-    return (window.matchMedia('(display-mode: standalone)').matches);
   }
 }

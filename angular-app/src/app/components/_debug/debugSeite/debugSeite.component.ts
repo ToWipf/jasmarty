@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -15,6 +15,7 @@ export class DebugSeiteComponent implements OnInit {
   public sSQL_OUT: string;
   public serverTime: number;
   public clientTime: number;
+  public isKeyboardVisible: boolean = false;
 
   public testData = [
     { name: "ABC", value: 2 },
@@ -41,6 +42,16 @@ export class DebugSeiteComponent implements OnInit {
 
   public warten(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
+  }
+
+  @HostListener('window:focusin', ['$event'])
+  onFocusIn(event: FocusEvent): void { 
+    this.isKeyboardVisible = true;
+  }
+
+  @HostListener('window:focusout', ['$event'])
+  nFocusOut(event: FocusEvent): void {
+    this.isKeyboardVisible = false;
   }
 
 }

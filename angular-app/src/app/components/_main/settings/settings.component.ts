@@ -40,6 +40,19 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  public loadPwaManifest(): void {
+    const warten = this.dialog.open(DialogWartenComponent, {});
+    this.rest.get('app/manifest.webmanifest').then((res: any) => {
+      var x = { infotest: "PWA Manifest", infotext2: res };
+      warten.close();
+      this.dialog.open(DialogJaNeinComponent, {
+        minWidth: '200px',
+        minHeight: '150px',
+        data: x,
+      });
+    });
+  }
+
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.dataSource.filter = this.sFilter.trim();
