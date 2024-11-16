@@ -42,8 +42,9 @@ export class SettingsComponent implements OnInit {
 
   public loadPwaManifest(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('app/manifest.webmanifest').then((res: any) => {
-      var x = { infotest: "PWA Manifest", infotext2: JSON.stringify(res) };
+    var rndPart = "?wipf=" + this.serviceWipf.generateId();
+    this.rest.get('app/manifest.webmanifest' + rndPart).then((res: any) => {
+      var x = { infotest: "PWA Manifest" + rndPart, infotext2: JSON.stringify(res) };
       warten.close();
       this.dialog.open(DialogJaNeinComponent, {
         minWidth: '200px',

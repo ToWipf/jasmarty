@@ -42,7 +42,7 @@ export class ServicAuthKey {
         var time = xnow.getTime();
         var expireTime = time + 1000 * 36000 * 9999;
         xnow.setTime(expireTime);
-        var key = this.generateId();
+        var key = this.serviceWipf.generateId();
         document.cookie = ServicAuthKey.AUTH_KEY_NAME + '=' + key + ';expires=' + xnow.toUTCString() + ';path=/;SameSite=Strict';
 
         // neuen Key senden
@@ -51,9 +51,7 @@ export class ServicAuthKey {
         this.loadAuthKey();
     }
 
-    private generateId() {
-        return Math.random().toString(36).substring(2, 15) + '-' + Date.now();
-    }
+
 
 }
 
