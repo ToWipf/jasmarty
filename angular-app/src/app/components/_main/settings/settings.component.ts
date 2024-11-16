@@ -30,7 +30,6 @@ export class SettingsComponent implements OnInit {
 
   public load(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-
     this.rest.get('basesettings/getAll').then((resdata: KeyValEntry[]) => {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
@@ -42,9 +41,8 @@ export class SettingsComponent implements OnInit {
 
   public loadPwaManifest(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    var rndPart = "?wipf=" + this.serviceWipf.generateId();
-    this.rest.get('app/manifest.webmanifest' + rndPart).then((res: any) => {
-      var x = { infotest: "PWA Manifest" + rndPart, infotext2: JSON.stringify(res) };
+    this.rest.get('app/manifest.webmanifest').then((res: any) => {
+      var x = { infotext: "PWA Manifest", infotext2: JSON.stringify(res) };
       warten.close();
       this.dialog.open(DialogJaNeinComponent, {
         minWidth: '200px',
@@ -94,7 +92,6 @@ export class SettingsComponent implements OnInit {
 
   public openDialog(item: KeyValEntry): void {
     const edititem: KeyValEntry = this.serviceWipf.deepCopy(item);
-
     const dialogRef = this.dialog.open(SettingsComponentDialogComponent, {
       data: edititem,
       autoFocus: true,
