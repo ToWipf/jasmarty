@@ -30,6 +30,7 @@ export class DayLogComponent implements OnInit {
   public bShowDayTable: boolean = true;
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: any;
+  public heuteDatum: string = "";
   private filterActiveCache: boolean = false;
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class DayLogComponent implements OnInit {
     this.showAllTableColumns();
     this.loadTypeListForEventFilter();
     this.bShowDayTable = true;
+    this.heuteDatum = new Date(Date.now()).toISOString().split('T')[0];
   }
 
   private initFilter(): void {

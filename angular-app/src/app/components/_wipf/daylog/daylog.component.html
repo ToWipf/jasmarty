@@ -84,13 +84,13 @@
 
                     <ng-container matColumnDef="date">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableDate">Datum</th>
-                        <!-- <td mat-cell *matCellDef="let element">{{element.date * 1000 | date: 'dd.MM.yyyy'}}</td> -->
-                        <td mat-cell *matCellDef="let element">{{element.date}}</td>
+                        <td mat-cell *matCellDef="let element" [ngClass]="{'heuteTag': heuteDatum === element.date}">
+                            {{element.date}}
+                        </td>
                     </ng-container>
 
                     <ng-container matColumnDef="day">
                         <th mat-header-cell *matHeaderCellDef>Tag</th>
-                        <!-- <td mat-cell *matCellDef="let element">{{element.date * 1000 | date: 'dd.MM.yyyy'}}</td> -->
                         <td mat-cell *matCellDef="let element" [ngClass]="{'lightgray': element.extrafeld_wochentag.includes('S')}">
                             {{element.extrafeld_wochentag}}
                         </td>
