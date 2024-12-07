@@ -194,17 +194,17 @@ public class TicTacToe extends Telegram {
 	private boolean logicDreiInEinerReihe(Character check, Character setChar) {
 		// Reihen 1
 		for (int x = 0; x < 3; x++) {
-			if (tttFeld[x][0] == check && check == tttFeld[x][1]) {
+			if (tttFeld[x][0].equals(check) && check.equals(tttFeld[x][1])) {
 				if (setkoordinate(x, 2, setChar)) {
 					return true;
 				}
 			}
-			if (tttFeld[x][1] == check && check == tttFeld[x][2]) {
+			if (tttFeld[x][1].equals(check) && check.equals(tttFeld[x][2])) {
 				if (setkoordinate(x, 0, setChar)) {
 					return true;
 				}
 			}
-			if (tttFeld[x][0] == check && check == tttFeld[x][2]) {
+			if (tttFeld[x][0].equals(check) && check.equals(tttFeld[x][2])) {
 				if (setkoordinate(x, 1, setChar)) {
 					return true;
 				}
@@ -212,50 +212,50 @@ public class TicTacToe extends Telegram {
 		}
 		// Reihen 2
 		for (int y = 0; y < 3; y++) {
-			if (tttFeld[0][y] == check && check == tttFeld[1][y]) {
+			if (tttFeld[0][y].equals(check) && check.equals(tttFeld[1][y])) {
 				if (setkoordinate(2, y, setChar)) {
 					return true;
 				}
 			}
-			if (tttFeld[1][y] == check && check == tttFeld[2][y]) {
+			if (tttFeld[1][y].equals(check) && check.equals(tttFeld[2][y])) {
 				if (setkoordinate(0, y, setChar)) {
 					return true;
 				}
 			}
-			if (tttFeld[0][y] == check && check == tttFeld[2][y]) {
+			if (tttFeld[0][y].equals(check) && check.equals(tttFeld[2][y])) {
 				if (setkoordinate(1, y, setChar)) {
 					return true;
 				}
 			}
 		}
 		// Schräge 1
-		if (tttFeld[0][0] == check && check == tttFeld[1][1]) {
+		if (tttFeld[0][0].equals(check) && check.equals(tttFeld[1][1])) {
 			if (setkoordinate(2, 2, setChar)) {
 				return true;
 			}
 		}
-		if (tttFeld[1][1] == check && check == tttFeld[2][2]) {
+		if (tttFeld[1][1].equals(check) && check.equals(tttFeld[2][2])) {
 			if (setkoordinate(0, 0, setChar)) {
 				return true;
 			}
 		}
-		if (tttFeld[2][2] == check && check == tttFeld[0][0]) {
+		if (tttFeld[2][2].equals(check) && check.equals(tttFeld[0][0])) {
 			if (setkoordinate(1, 1, setChar)) {
 				return true;
 			}
 		}
 		// Schräge 2
-		if (tttFeld[0][2] == check && check == tttFeld[2][0]) {
+		if (tttFeld[0][2].equals(check) && check.equals(tttFeld[2][0])) {
 			if (setkoordinate(1, 1, setChar)) {
 				return true;
 			}
 		}
-		if (tttFeld[1][1] == check && check == tttFeld[2][0]) {
+		if (tttFeld[1][1].equals(check) && check.equals(tttFeld[2][0])) {
 			if (setkoordinate(0, 2, setChar)) {
 				return true;
 			}
 		}
-		if (tttFeld[1][1] == check && check == tttFeld[0][2]) {
+		if (tttFeld[1][1].equals(check) && check.equals(tttFeld[0][2])) {
 			if (setkoordinate(2, 0, setChar)) {
 				return true;
 			}
@@ -313,19 +313,19 @@ public class TicTacToe extends Telegram {
 	public Character auswertung() {
 		// Gewonnen?
 		for (int x = 0; x < 3; x++) {
-			if (tttFeld[x][0] == tttFeld[x][1] && tttFeld[x][0] == tttFeld[x][2]) {
+			if (tttFeld[x][0].equals(tttFeld[x][1]) && tttFeld[x][0].equals(tttFeld[x][2])) {
 				return tttFeld[x][0];
 			}
 		}
 		for (int y = 0; y < 3; y++) {
-			if (tttFeld[0][y] == tttFeld[1][y] && tttFeld[0][y] == tttFeld[2][y]) {
+			if (tttFeld[0][y].equals(tttFeld[1][y]) && tttFeld[0][y].equals(tttFeld[2][y])) {
 				return tttFeld[0][y];
 			}
 		}
-		if (tttFeld[0][0] == tttFeld[1][1] && tttFeld[0][0] == tttFeld[2][2]) {
+		if (tttFeld[0][0].equals(tttFeld[1][1]) && tttFeld[0][0].equals(tttFeld[2][2])) {
 			return tttFeld[0][0];
 		}
-		if (tttFeld[0][2] == tttFeld[1][1] && tttFeld[0][2] == tttFeld[2][0]) {
+		if (tttFeld[0][2].equals(tttFeld[1][1]) && tttFeld[0][2].equals(tttFeld[2][0])) {
 			return tttFeld[0][2];
 		}
 		// Unentschieden testen

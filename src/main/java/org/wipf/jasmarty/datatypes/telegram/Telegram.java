@@ -124,8 +124,11 @@ public class Telegram {
 
 		String sIn = getMessageStringPartLow(0);
 
-		for (String s : sIn.split("\n")) {
-			return s;
+		if (sIn != null && !sIn.isEmpty()) {
+			String[] lines = sIn.split("\n");
+			if (lines.length > 0) {
+				return lines[0];
+			}
 		}
 		return null;
 	}
@@ -202,7 +205,7 @@ public class Telegram {
 	 */
 	public void setMessage(String sMessage) {
 		// Schneide ein führendes '/' weg
-		if (sMessage != null && sMessage != "" && sMessage.length() > 1) {
+		if (sMessage != null && sMessage.length() > 1) {
 			if (sMessage.charAt(0) == '/') {
 				sMessage = sMessage.substring(1);
 			}
