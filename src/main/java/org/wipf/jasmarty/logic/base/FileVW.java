@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.nio.channels.Channels;
@@ -157,17 +156,15 @@ public class FileVW {
 	/**
 	 * @param sUrl
 	 * @param sFileName
-	 * @throws MalformedURLException
 	 */
 	public boolean saveFileToDisk(String sUrl, String sFileName) {
 		LOGGER.info("Speichere File " + sUrl + " nach " + sFileName);
 		try {
 			URI uri = new URI(sUrl);
 			URL urld = uri.toURL();
-			ReadableByteChannel rbc = Channels.newChannel(urld.openStream());
-			FileOutputStream fos = new FileOutputStream("files/" + sFileName);
-			fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
-			fos.close();
+			try (ReadableByteChannel rbc = Channels.newChannel(urld.openStream()); FileOutputStream fos = new FileOutputStream("files/" + sFileName)) {
+				fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+			}
 			return true;
 		} catch (Exception e) {
 			LOGGER.error("Datei konnte nicht gespeichert werden! " + sUrl + " - " + sFileName + " - " + e);
@@ -205,7 +202,7 @@ public class FileVW {
 	 * @param f
 	 */
 	public void saveFile(String sFileName, File f) {
-		String sFN = sFileName.replaceAll("\\.\\.", "").replaceAll("/", "");
+		String sFN = sFileName.replace("..", "").replace("/", "");
 		if (wipf.isFilename(sFN)) {
 			LOGGER.info("Upload - Saveing: " + f.getPath() + " to " + "files/" + sFN);
 			// f.renameTo(new File("files/" + sFN));

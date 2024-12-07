@@ -19,7 +19,6 @@ public class MultipartUtility {
 	private final String boundary;
 	private static final String LINE_FEED = "\r\n";
 	private HttpURLConnection httpConn;
-	private String charset;
 	private OutputStream outputStream;
 	private PrintWriter writer;
 
@@ -33,8 +32,6 @@ public class MultipartUtility {
 	 * @throws URISyntaxException
 	 */
 	public MultipartUtility(String requestURL, String charset) throws IOException, URISyntaxException {
-		this.charset = charset;
-
 		// creates a unique boundary based on time stamp
 		boundary = "===" + System.currentTimeMillis() + "===";
 
@@ -49,21 +46,6 @@ public class MultipartUtility {
 		httpConn.setRequestProperty("Test", "Bonjour");
 		outputStream = httpConn.getOutputStream();
 		writer = new PrintWriter(new OutputStreamWriter(outputStream, charset), true);
-	}
-
-	/**
-	 * Adds a form field to the request
-	 *
-	 * @param name  field name
-	 * @param value field value
-	 */
-	public void addFormField(String name, String value) {
-		writer.append("--" + boundary).append(LINE_FEED);
-		writer.append("Content-Disposition: form-data; name=\"" + name + "\"").append(LINE_FEED);
-		writer.append("Content-Type: text/plain; charset=" + charset).append(LINE_FEED);
-		writer.append(LINE_FEED);
-		writer.append(value).append(LINE_FEED);
-		writer.flush();
 	}
 
 	/**
@@ -92,17 +74,6 @@ public class MultipartUtility {
 		inputStream.close();
 
 		writer.append(LINE_FEED);
-		writer.flush();
-	}
-
-	/**
-	 * Adds a header field to the request.
-	 *
-	 * @param name  - name of the header field
-	 * @param value - value of the header field
-	 */
-	public void addHeaderField(String name, String value) {
-		writer.append(name + ": " + value).append(LINE_FEED);
 		writer.flush();
 	}
 

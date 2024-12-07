@@ -182,13 +182,6 @@ public class TeleMenue {
 				return wipf.getExternalIp();
 			case "doping":
 				return wipf.ping(t.getMessageStringPartLow(1)).toString();
-			case "online":
-			case "scan":
-				return appOthers.getOnline();
-			case "tm":
-			case "temp":
-			case "temperature":
-				return appOthers.getTemperature();
 
 			// System
 			case "kill":
@@ -221,9 +214,12 @@ public class TeleMenue {
 			case "gf":
 			case "fg":
 			case "getfile":
+			case "fileget":
 				return sendAndReceive.sendDocumentToTelegram(t);
 			case "df":
 			case "fl":
+			case "file":
+			case "files":
 			case "filelist":
 			case "fileliste":
 				return fileVw.getFilesForTelegram();
@@ -267,11 +263,6 @@ public class TeleMenue {
 			case "heizung":
 			case "h":
 				return grafana.telegramMenuehHeizung(t);
-
-			// System
-			case "sys":
-			case "system":
-				return appOthers.getSystem();
 
 			case "s":
 			case "solar":

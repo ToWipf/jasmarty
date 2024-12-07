@@ -76,6 +76,8 @@ public final class Base32 {
 		case 3: // 15 bits in subblock: 8 useful bits but 7 discarded
 		case 6: // 30 bits in subblock: 24 useful bits but 6 discarded
 			throw new IllegalArgumentException(ERRORCANONICALLENGTH);
+		default:
+			break;
 		}
 		byte[] bytes = new byte[base32.length() * 5 / 8];
 		int offset = 0, i = 0, lookup;
