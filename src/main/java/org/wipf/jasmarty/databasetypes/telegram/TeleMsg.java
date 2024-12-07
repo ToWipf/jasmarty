@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.telegram;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -22,6 +24,7 @@ import jakarta.persistence.Table;
 public class TeleMsg extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("telegram_msg");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +44,7 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			TeleMsg existingData = PanacheEntityBase.findById(this.id);
+			TeleMsg existingData = TeleMsg.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.frage = this.frage;
@@ -49,7 +52,7 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				LOGGER.warn("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu

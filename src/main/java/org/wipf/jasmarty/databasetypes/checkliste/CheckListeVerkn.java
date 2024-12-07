@@ -27,8 +27,7 @@ import jakarta.persistence.Table;
 public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger LOGGER = Logger.getLogger("CheckListeVerkn");
+	private static final Logger LOGGER = Logger.getLogger("checkListeVerkn");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +55,7 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			CheckListeVerkn existingData = PanacheEntityBase.findById(this.id);
+			CheckListeVerkn existingData = CheckListeVerkn.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.checkListeListe = this.checkListeListe;
@@ -65,7 +64,7 @@ public class CheckListeVerkn extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				LOGGER.warn("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu

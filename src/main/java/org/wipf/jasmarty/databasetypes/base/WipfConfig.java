@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.base;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -20,6 +22,7 @@ import jakarta.persistence.Table;
 public class WipfConfig extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("config");
 
 	@Id
 	@Column(name = "key", nullable = false)
@@ -48,14 +51,14 @@ public class WipfConfig extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.key != null) {
-			WipfConfig existingData = PanacheEntityBase.findById(this.key);
+			WipfConfig existingData = WipfConfig.findById(this.key);
 			if (existingData != null) {
 				// Update
 				existingData.value = this.value;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.out.println("Neue Config: " + this.toString());
+				LOGGER.info("Neue Config: " + this.toString());
 				this.persist();
 			}
 		} else {

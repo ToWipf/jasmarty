@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.daylog;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
@@ -22,6 +24,7 @@ import jakarta.persistence.Table;
 public class DaylogDay extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("daylogDay");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +45,7 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			DaylogDay existingData = PanacheEntityBase.findById(id);
+			DaylogDay existingData = DaylogDay.findById(id);
 			if (existingData != null) {
 				// Update
 				existingData.date = this.date;
@@ -50,7 +53,7 @@ public class DaylogDay extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				LOGGER.warn("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu

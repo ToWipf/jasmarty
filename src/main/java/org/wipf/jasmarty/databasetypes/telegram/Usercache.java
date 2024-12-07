@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.telegram;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Entity;
@@ -18,6 +20,7 @@ import jakarta.persistence.Table;
 public class Usercache extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("telegram_usercache");
 
 	@Id
 	public Long chatid;
@@ -35,7 +38,7 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.chatid != null) {
-			Usercache existingData = PanacheEntityBase.findById(this.chatid);
+			Usercache existingData = Usercache.findById(this.chatid);
 			if (existingData != null) {
 				// Update
 				existingData.msg = this.msg;
@@ -44,7 +47,7 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.out.println("Neuer Telegram User: " + this.toString());
+				LOGGER.info("Neuer Telegram User: " + this.toString());
 				this.persist();
 			}
 		} else {

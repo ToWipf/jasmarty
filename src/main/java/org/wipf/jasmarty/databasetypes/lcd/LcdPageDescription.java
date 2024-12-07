@@ -2,6 +2,7 @@ package org.wipf.jasmarty.databasetypes.lcd;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
 import org.json.JSONArray;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -22,6 +23,7 @@ import jakarta.persistence.Table;
 public class LcdPageDescription extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("lcd_pages");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,7 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			LcdPageDescription existingData = PanacheEntityBase.findById(this.id);
+			LcdPageDescription existingData = LcdPageDescription.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.name = this.name;
@@ -43,7 +45,7 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				LOGGER.warn("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu

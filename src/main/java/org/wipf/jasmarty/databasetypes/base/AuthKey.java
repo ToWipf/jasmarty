@@ -2,6 +2,8 @@ package org.wipf.jasmarty.databasetypes.base;
 
 import java.io.Serializable;
 
+import org.jboss.logging.Logger;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.persistence.Column;
@@ -20,6 +22,7 @@ import jakarta.persistence.Table;
 public class AuthKey extends PanacheEntityBase implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final Logger LOGGER = Logger.getLogger("base_authKey");
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +43,7 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			AuthKey existingData = PanacheEntityBase.findById(this.id);
+			AuthKey existingData = AuthKey.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.id = this.id;
@@ -49,7 +52,7 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
-				System.err.println("ID nicht in DB! " + this.toString());
+				LOGGER.warn("ID nicht in DB! " + this.toString());
 			}
 		} else {
 			// Neu
