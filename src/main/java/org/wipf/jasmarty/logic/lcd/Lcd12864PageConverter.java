@@ -111,7 +111,6 @@ public class Lcd12864PageConverter {
 						break;
 					case "INVERT":
 						lp.drawCircle(x, y, searchAndReplaceVarsForInt(jo.get("data").toString()), pixelType.INVERT);
-
 						break;
 					default:
 						break;

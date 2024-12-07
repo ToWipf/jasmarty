@@ -100,10 +100,46 @@ public class TAppOthers {
 			if (s.length() > 5000) {
 				return ("Witz zu lang");
 			}
-
-			String x = URLEncoder.encode(s, "UTF-8").replaceAll("\\<.*?>", "").replaceAll("\\+", " ").replaceAll("%22", "\n").replaceAll("%28", "(").replaceAll("%29", ")").replaceAll("%21", "!").replaceAll("%3F", "? ").replaceAll("%3A", ": ").replaceAll("%2C", ",").replaceAll("%2E", ". ").replaceAll("%E2%80%93", ",").replaceAll("%C3%A2%E2%82%AC%CB%9C", "").replaceAll("%26%238242%3B%21", "\"").replaceAll("%26quot%3B", "").replaceAll("%26%2339%3B", "").replaceAll("%26%238242%3B", "").replaceAll("%C3%A2%E2%82%AC%C5%BE", "").replaceAll("%C3%83%E2%80%9E", "Ä").replaceAll("%26Auml%3B", "Ä").replaceAll("%C3%A4", "ä").replaceAll("%C3%83%C2%A4", "ä").replaceAll("%26auml%3B", "ä").replaceAll("%C3%83%E2%80%93", "Ö").replaceAll("H%C3%83%C2%B6", "Ö").replaceAll("%C3%83%C2%B6", "ö").replaceAll("%26ouml%3B", "ö").replaceAll("%C3%B6", "ö").replaceAll("%26Uuml%3B", "Ü").replaceAll("%26uuml%3B", "ü").replaceAll("%3Chr", " ")
-					.replaceAll("%3Cbr %2F%3E", " ").replaceAll("%2F%3E%3Csmall%3E", "").replaceAll("%C3%BC", "ü").replaceAll("%C3%83%C2%BC", "ü").replaceAll("%C3%83%C5%B8", "ß").replaceAll("%26szlig%3B", "ß").replaceAll("%C3%9F", "ß");
-
+			// @formatter:off
+			String x = URLEncoder.encode(s, "UTF-8")
+					.replaceAll("\\<.*?>", "")
+					.replace("+", " ")
+					.replace("%22", "\n")
+					.replace("%28", "(")
+					.replace("%29", ")")
+					.replace("%21", "!")
+					.replace("%3F", "? ")
+					.replace("%3A", ": ")
+					.replace("%2C", ",")
+					.replace("%2E", ". ")
+					.replace("%E2%80%93", ",")
+					.replace("%C3%A2%E2%82%AC%CB%9C", "")
+					.replace("%26%238242%3B%21", "\"")
+					.replace("%26quot%3B", "")
+					.replace("%26%2339%3B", "")
+					.replace("%26%238242%3B", "")
+					.replace("%C3%A2%E2%82%AC%C5%BE", "")
+					.replace("%C3%83%E2%80%9E", "Ä")
+					.replace("%26Auml%3B", "Ä")
+					.replace("%C3%A4", "ä")
+					.replace("%C3%83%C2%A4", "ä")
+					.replace("%26auml%3B", "ä")
+					.replace("%C3%83%E2%80%93", "Ö")
+					.replace("H%C3%83%C2%B6", "Ö")
+					.replace("%C3%83%C2%B6", "ö")
+					.replace("%26ouml%3B", "ö")
+					.replace("%C3%B6", "ö")
+					.replace("%26Uuml%3B", "Ü")
+					.replace("%26uuml%3B", "ü")
+					.replace("%3Chr", " ")
+					.replace("%3Cbr %2F%3E", " ")
+					.replace("%2F%3E%3Csm%3E", "")
+					.replace("%C3%BC", "ü")
+					.replace("%C3%83%C2%BC", "ü")
+					.replace("%C3%83%C5%B8", "ß")
+					.replace("%26szlig%3B", "ß")
+					.replace("%C3%9F", "ß");
+			// @formatter:on
 			return x.substring(0, x.indexOf("Ein Witz von"));
 
 		} catch (Exception e) {

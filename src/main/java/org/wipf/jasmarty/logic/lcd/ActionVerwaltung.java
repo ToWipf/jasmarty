@@ -130,8 +130,9 @@ public class ActionVerwaltung {
 				case "toggle":
 					lcdConnect.ledToggle();
 					return;
+				default:
+					return;
 				}
-				return;
 			case "page":
 				switch (sParameter2) {
 				case "next":
@@ -143,8 +144,9 @@ public class ActionVerwaltung {
 				case "select":
 					pageVerwaltung.select(Integer.valueOf(sParameter3));
 					return;
+				default:
+					return;
 				}
-				return;
 			case "volume":
 				switch (sParameter2) {
 				case "up":
@@ -156,8 +158,9 @@ public class ActionVerwaltung {
 				case "mute":
 					lcdConnect.commandVolMute();
 					return;
+				default:
+					return;
 				}
-				return;
 			case "exec":
 			case "system":
 

@@ -312,13 +312,13 @@ public class Wipf {
 	 */
 	public String escapeStringSaveCode(String s) {
 		// @formatter:off
-		return s.replaceAll("\t", " ")
-				.replaceAll("\\|", "_")
-				.replaceAll("'", "_")
-				.replaceAll("\"", "_")
-				.replaceAll("\\{", "(")
-				.replaceAll("\\}", ")")
-				.replaceAll("\\\\", "")
+		return s.replace("\t", " ")
+				.replace("|", "_")
+				.replace("'", "_")
+				.replace("\"", "_")
+				.replace("{", "(")
+				.replace("}", ")")
+				.replace("\\\\", "")
 				.trim();
 		// @formatter:on
 	}
@@ -328,7 +328,7 @@ public class Wipf {
 	 * @return
 	 */
 	public String escapeStringSatzzeichen(String s) {
-		return s.replaceAll("\\?", "").replaceAll("\\!", "").trim();
+		return s.replace("?", "").replace("!", "").trim();
 	}
 
 	/**
