@@ -46,7 +46,7 @@ public class CheckListeListe extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			CheckListeListe existingData = CheckListeListe.findById(this.id);
+			CheckListeListe existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.listenname = this.listenname.trim();

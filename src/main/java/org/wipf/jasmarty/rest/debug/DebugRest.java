@@ -99,7 +99,7 @@ public class DebugRest {
 	@POST
 	@GET
 	@Path("lcd12864/testt")
-	public Response lcd12864testt() {
+	public Response lcd12864testt2() {
 		lcd12864.testDisplayText();
 		return Response.ok().build();
 	}

@@ -42,7 +42,7 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			DaylogEvent existingData = DaylogEvent.findById(this.id);
+			DaylogEvent existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.dateid = this.dateid;

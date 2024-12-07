@@ -34,7 +34,7 @@ public class ButtonAction extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			ButtonAction existingData = ButtonAction.findById(this.id);
+			ButtonAction existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.button = this.button;

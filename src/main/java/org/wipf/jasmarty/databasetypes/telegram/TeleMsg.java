@@ -41,7 +41,7 @@ public class TeleMsg extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			TeleMsg existingData = TeleMsg.findById(this.id);
+			TeleMsg existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.frage = this.frage;

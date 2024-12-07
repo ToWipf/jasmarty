@@ -39,7 +39,7 @@ public class ListeType extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			ListeType existingData = ListeType.findById(this.id);
+			ListeType existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.typename = this.typename;

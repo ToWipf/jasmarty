@@ -46,7 +46,7 @@ public class Medien extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			Medien existingData = Medien.findById(this.id);
+			Medien existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.titel = this.titel;

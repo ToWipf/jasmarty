@@ -49,7 +49,7 @@ public class DaylogType extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			DaylogType existingData = DaylogType.findById(this.id);
+			DaylogType existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.type = this.type;

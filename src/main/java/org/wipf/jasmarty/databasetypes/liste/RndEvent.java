@@ -38,7 +38,7 @@ public class RndEvent extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			RndEvent existingData = RndEvent.findById(this.id);
+			RndEvent existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.eventtext = this.eventtext;

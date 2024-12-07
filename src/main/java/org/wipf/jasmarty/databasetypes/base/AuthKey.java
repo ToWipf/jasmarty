@@ -40,7 +40,7 @@ public class AuthKey extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			AuthKey existingData = AuthKey.findById(this.id);
+			AuthKey existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.id = this.id;

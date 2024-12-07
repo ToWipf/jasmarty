@@ -35,7 +35,7 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.chatid != null) {
-			Usercache existingData = Usercache.findById(this.chatid);
+			Usercache existingData = PanacheEntityBase.findById(this.chatid);
 			if (existingData != null) {
 				// Update
 				existingData.msg = this.msg;

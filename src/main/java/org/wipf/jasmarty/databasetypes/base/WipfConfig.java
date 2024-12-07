@@ -48,7 +48,7 @@ public class WipfConfig extends PanacheEntityBase implements Serializable {
 	 */
 	public void saveOrUpdate() {
 		if (this.key != null) {
-			WipfConfig existingData = WipfConfig.findById(this.key);
+			WipfConfig existingData = PanacheEntityBase.findById(this.key);
 			if (existingData != null) {
 				// Update
 				existingData.value = this.value;

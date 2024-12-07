@@ -33,7 +33,7 @@ public class LcdPageDescription extends PanacheEntityBase implements Serializabl
 
 	public void saveOrUpdate() {
 		if (this.id != null) {
-			LcdPageDescription existingData = LcdPageDescription.findById(this.id);
+			LcdPageDescription existingData = PanacheEntityBase.findById(this.id);
 			if (existingData != null) {
 				// Update
 				existingData.name = this.name;
