@@ -82,7 +82,7 @@ export class ListeComponent implements OnInit {
 
   public loadLast(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('liste/getLast/10').then((resdata: ListeEntry[]) => {
+    this.rest.get('liste/getLast/15').then((resdata: ListeEntry[]) => {
       this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
       this.dataSourceList.sort = this.sort;
