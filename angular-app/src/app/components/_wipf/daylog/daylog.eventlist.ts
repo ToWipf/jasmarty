@@ -241,7 +241,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
 
     ngOnInit(): void {
         this.loadDaylogTypes();
-        // Beim bearbeiten die Vorschläge bereits vorladen
+        // Beim bearbeiten die Vorschläge bereits initial vorladen
         if (this.data.text.length > 2) {
             this.getTextVorschlag();
         }
@@ -272,8 +272,14 @@ export class DaylogComponentDialogEventComponent implements OnInit {
                 this.sListVorschlag = resdata;
             });
         } else {
-            this.sListVorschlag = [];
+            this.loadLastVorschlaege(7);
         }
+    }
+
+    private loadLastVorschlaege(nAnzahl: number): void {
+        this.rest.getNoWartenDialog('daylog/event/getLastByType/' + this.data.typid + '/' + nAnzahl).then((resdata: string[]) => {
+            this.sListVorschlag = resdata;
+        });
     }
 
     public vorschlagToData(sItem: string): void {

@@ -103,4 +103,14 @@ public class DaylogEvent extends PanacheEntityBase implements Serializable {
 		return find("select e from DaylogEvent e where typid IN (?1)", typids);
 	}
 
+	/**
+	 * Das neueste Datum oben
+	 * 
+	 * @param nAnzahl
+	 * @return
+	 */
+	public static PanacheQuery<DaylogEvent> findLastByTypeId(String sType) {
+		return find("select e from DaylogEvent e where typid =?1 ORDER by id DESC", sType);
+	}
+
 }

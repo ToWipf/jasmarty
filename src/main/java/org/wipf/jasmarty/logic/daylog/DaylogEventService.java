@@ -58,6 +58,26 @@ public class DaylogEventService {
 	}
 
 	/**
+	 * @param nAnzahl
+	 * @return
+	 */
+	public LinkedHashSet<String> getLastByTypeId(String sTypId, Integer nAnzahl) {
+		LinkedHashSet<String> o = new LinkedHashSet<>();
+		int count = 0;
+
+		for (DaylogEvent d : DaylogEvent.findLastByTypeId(sTypId).list()) {
+			if (!o.contains(d.text)) {
+				o.add(d.text);
+				count++;
+				if (count > nAnzahl) {
+					return o;
+				}
+			}
+		}
+		return o;
+	}
+
+	/**
 	 * @param nTypId
 	 * @return
 	 */

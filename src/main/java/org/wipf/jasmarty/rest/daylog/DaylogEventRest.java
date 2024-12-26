@@ -63,6 +63,15 @@ public class DaylogEventRest {
 		return Response.status(471).build();
 	}
 
+	@GET
+	@Path("getLastByType/{type}/{anzahl}")
+	public Response getLastByType(@PathParam("type") String sType, @PathParam("anzahl") Integer nAnzahl, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok(daylogEventDB.getLastByTypeId(sType, nAnzahl)).build();
+		}
+		return Response.status(471).build();
+	}
+
 	@POST
 	@Path("save")
 	public Response save(DaylogEvent d, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
