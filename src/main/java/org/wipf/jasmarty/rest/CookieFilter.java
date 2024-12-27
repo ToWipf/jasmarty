@@ -9,6 +9,7 @@ import org.wipf.jasmarty.logic.base.MainHome;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
+import jakarta.ws.rs.core.Cookie;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
@@ -23,14 +24,18 @@ public class CookieFilter implements ContainerRequestFilter {
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		// Überprüfe Cookie
-		String authCookie = requestContext.getCookies().get(MainHome.AUTH_KEY_NAME).getValue();
 		String path = requestContext.getUriInfo().getPath();
+		Cookie cookies = requestContext.getCookies().get(MainHome.AUTH_KEY_NAME);
+		String authCookie = "";
+		if (cookies != null) {
+			authCookie = cookies.getValue();
+		}
 
 		if (path.equals("/wipf/up") || path.equals("/wipf/ver")) {
 			return;
 		}
 
-		if (authCookie == null || !aks.isKeyInCache(authCookie)) {
+		if (authCookie.isEmpty() || !aks.isKeyInCache(authCookie)) {
 			// Wenn Cookie nicht vorhanden oder ungültig ist, Antwort abbrechen
 			LOGGER.warn("Kein Zugriff: " + authCookie);
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
