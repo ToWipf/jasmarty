@@ -66,6 +66,10 @@ public class AuthKeyService {
 	 * @return
 	 */
 	public boolean isKeyInCache(String sKey) {
+		if (keycache.isEmpty()) {
+			LOGGER.warn("Noch kein Auth Key vorhanden! Erlaube Key: " + sKey);
+			return true;
+		}
 		for (String s : keycache) {
 			if (s.equals(sKey)) {
 				return true;

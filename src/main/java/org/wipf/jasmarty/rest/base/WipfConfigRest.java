@@ -1,6 +1,8 @@
 package org.wipf.jasmarty.rest.base;
 
 import org.wipf.jasmarty.databasetypes.base.WipfConfig;
+import org.wipf.jasmarty.logic.base.AuthKeyService;
+import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import jakarta.annotation.security.PermitAll;
@@ -8,6 +10,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -30,32 +33,47 @@ public class WipfConfigRest {
 
 	@Inject
 	WipfConfigVW wipfConfig;
+	@Inject
+	AuthKeyService aks;
 
 	@GET
 	@PermitAll
 	@Path("get/{appname}")
-	public Response getConfig(@PathParam("appname") String sAppname) {
-		return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
+	public Response getConfig(@PathParam("appname") String sAppname, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
+		}
+		return null;
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getConfig() {
-		return Response.ok(wipfConfig.getAll()).build();
+	public Response getConfig(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+
+			return Response.ok(wipfConfig.getAll()).build();
+		}
+		return null;
 	}
 
 	@POST
 	@Path("save")
-	public Response saveItem(WipfConfig wu) {
-		wipfConfig.saveItem(wu);
-		return Response.ok("{}").build();
+	public Response saveItem(WipfConfig wu, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			wipfConfig.saveItem(wu);
+			return Response.ok("{}").build();
+		}
+		return null;
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") String sKey) {
-		wipfConfig.deleteItem(sKey);
-		return Response.ok().build();
+	public Response delete(@PathParam("id") String sKey, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			wipfConfig.deleteItem(sKey);
+			return Response.ok().build();
+		}
+		return null;
 	}
 
 }

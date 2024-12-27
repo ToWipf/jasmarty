@@ -2,12 +2,14 @@ package org.wipf.jasmarty.rest.base;
 
 import org.wipf.jasmarty.databasetypes.base.AuthKey;
 import org.wipf.jasmarty.logic.base.AuthKeyService;
+import org.wipf.jasmarty.logic.base.MainHome;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -30,41 +32,36 @@ public class AuthKeyRest {
 
 	@Inject
 	AuthKeyService authKeyService;
-
-	// @GET
-	// @Path("bla")
-	// @PermitAll
-	// @Produces(MediaType.TEXT_PLAIN)
-	// public String get( RoutingContext routingContext) {
-	// // import io.vertx.ext.web.RoutingContext;
-	// // import io.vertx.core.http.Cookie;
-	// //Cookie cookie = io.vertx.ext.web.routingContext.getCookie("cookieName");
-	// // if (cookie != null) {
-	// // return cookie.getValue();
-	// // } else {
-	// // return "Cookie not found";
-	// // }
-	// //return "";
-	// }
+	@Inject
+	AuthKeyService aks;
 
 	@GET
 	@Path("getAll")
-	public Response getAll() {
-		return Response.ok(authKeyService.getAll()).build();
+	public Response getAll(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok(authKeyService.getAll()).build();
+		}
+		return null;
 	}
 
 	@POST
 	@Path("createOrUpdate")
-	public Response createOrUpdate(AuthKey o) {
-		authKeyService.save(o);
-		return Response.ok().build();
+	public Response createOrUpdate(AuthKey o, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			authKeyService.save(o);
+			return Response.ok().build();
+		}
+		return null;
 	}
 
 	@DELETE
 	@Path("delete/{username}")
-	public Response delete(@PathParam("username") Integer nId) {
-		authKeyService.del(nId);
-		return Response.ok().build();
+	public Response delete(@PathParam("username") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			authKeyService.del(nId);
+			return Response.ok().build();
+		}
+		return null;
 	}
 
 	@POST

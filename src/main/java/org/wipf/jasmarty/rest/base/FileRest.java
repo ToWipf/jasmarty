@@ -2,13 +2,16 @@ package org.wipf.jasmarty.rest.base;
 
 import java.io.File;
 
+import org.wipf.jasmarty.logic.base.AuthKeyService;
 import org.wipf.jasmarty.logic.base.FileVW;
+import org.wipf.jasmarty.logic.base.MainHome;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -31,6 +34,8 @@ public class FileRest {
 
 	@Inject
 	FileVW fileVw;
+	@Inject
+	AuthKeyService aks;
 
 	@GET
 	@PermitAll
@@ -40,42 +45,45 @@ public class FileRest {
 	}
 
 	@GET
-	@PermitAll
+	// @PermitAll
 	@Produces(MediaType.MULTIPART_FORM_DATA)
 	@Path("download/{name}")
-	public Response download(@PathParam("name") String sName) {
-		return Response.ok(fileVw.getFile(sName)).build();
+	public Response download(@PathParam("name") String sName, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok(fileVw.getFile(sName)).build();
+		}
+		return null;
 	}
 
 	@GET
-	@PermitAll
+	// @PermitAll
 	@Produces(MediaType.MULTIPART_FORM_DATA)
 	@Path("downloadScale/{size}/{name}")
-	public File downloadScale(@PathParam("size") Integer size, @PathParam("name") String sName) {
-		return fileVw.getImageBySize(size, sName);
+	public File downloadScale(@PathParam("size") Integer size, @PathParam("name") String sName, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return fileVw.getImageBySize(size, sName);
+		}
+		return null;
 	}
-
-//	@GET
-//	@Produces(MediaType.TEXT_PLAIN)
-//	@Path("downloadScaleB64/{size}/{name}")
-//	public String downloadScaleB64(@PathParam("size") Integer size, @PathParam("name") String sName) throws IOException {
-//
-//		String img = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(fileVw.getImageBySize(size, sName)));
-//		return "data:image/jpg;base64, " + img;
-//	}
 
 	@POST
 	@Path("upload/{filename}")
 	@Consumes(MediaType.WILDCARD)
-	public Response upload(@PathParam("filename") String sName, File f) {
-		fileVw.saveFile(sName, f);
-		return Response.ok().build();
+	public Response upload(@PathParam("filename") String sName, File f, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			fileVw.saveFile(sName, f);
+			return Response.ok().build();
+		}
+		return null;
 	}
 
 	@DELETE
 	@Path("del/{name}")
-	public Response del(@PathParam("name") String sName) {
-		return Response.ok("{\"del\":\"" + fileVw.delFile(sName) + "\"}").build();
+	public Response del(@PathParam("name") String sName, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
+		if (aks.isKeyInCache(key)) {
+			return Response.ok("{\"del\":\"" + fileVw.delFile(sName) + "\"}").build();
+		}
+		return null;
 	}
 
 }
