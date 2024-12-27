@@ -1,14 +1,11 @@
 package org.wipf.jasmarty.rest.wipf;
 
 import org.wipf.jasmarty.databasetypes.liste.RndEvent;
-import org.wipf.jasmarty.logic.base.AuthKeyService;
-import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.listen.RndEventsService;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -30,36 +27,25 @@ public class RndEventRest {
 
 	@Inject
 	RndEventsService rndEvent;
-	@Inject
-	AuthKeyService aks;
 
 	@POST
 	@Path("save")
-	public Response save(RndEvent r, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			rndEvent.save(r);
-			return Response.ok().build();
-		}
-		return Response.status(471).build();
+	public Response save(RndEvent r) {
+		rndEvent.save(r);
+		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			rndEvent.del(nId);
-			return Response.ok().build();
-		}
-		return Response.status(471).build();
+	public Response delete(@PathParam("id") Integer nId) {
+		rndEvent.del(nId);
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getall(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return Response.ok(rndEvent.getAll()).build();
-		}
-		return Response.status(471).build();
+	public Response getall() {
+		return Response.ok(rndEvent.getAll()).build();
 	}
 
 }

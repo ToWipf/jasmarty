@@ -2,14 +2,11 @@ package org.wipf.jasmarty.rest.checkliste;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeItem;
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeType;
-import org.wipf.jasmarty.logic.base.AuthKeyService;
-import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.checkliste.CheckListeItemService;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -31,46 +28,32 @@ public class CheckListeItemRest {
 
 	@Inject
 	CheckListeItemService clservice;
-	@Inject
-	AuthKeyService aks;
 
 	@POST
 	@Path("save")
-	public Response save(CheckListeItem l, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			clservice.save(l);
-			return Response.ok().build();
-		}
-		return null;
+	public Response save(CheckListeItem l) {
+		clservice.save(l);
+		return Response.ok().build();
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			clservice.del(nId);
-			return Response.ok().build();
-		}
-		return null;
+	public Response delete(@PathParam("id") Integer nId) {
+		clservice.del(nId);
+		return Response.ok().build();
 	}
 
 	@GET
 	@Path("getAll")
-	public Response getAll(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return Response.ok(clservice.getAll()).build();
-		}
-		return null;
+	public Response getAll() {
+		return Response.ok(clservice.getAll()).build();
 	}
 
 	@GET
 	@POST
 	@Path("getAllByType")
-	public Response getAllByType(CheckListeType ct, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return Response.ok(clservice.getAllByType(ct)).build();
-		}
-		return null;
+	public Response getAllByType(CheckListeType ct) {
+		return Response.ok(clservice.getAllByType(ct)).build();
 	}
 
 }

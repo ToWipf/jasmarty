@@ -2,7 +2,9 @@ package org.wipf.jasmarty.rest;
 
 import java.io.IOException;
 
+import org.jboss.logging.Logger;
 import org.wipf.jasmarty.logic.base.AuthKeyService;
+import org.wipf.jasmarty.logic.base.MainHome;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.container.ContainerRequestContext;
@@ -16,13 +18,21 @@ public class CookieFilter implements ContainerRequestFilter {
 	@Inject
 	AuthKeyService aks;
 
+	private static final Logger LOGGER = Logger.getLogger("CookieFilter");
+
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		// Überprüfe den Cookie
-		String cookie = requestContext.getCookies().get("authKey").getValue();
+		// Überprüfe Cookie
+		String authCookie = requestContext.getCookies().get(MainHome.AUTH_KEY_NAME).getValue();
+		String path = requestContext.getUriInfo().getPath();
 
-		if (cookie == null || !aks.isKeyInCache(cookie)) {
-			// Wenn der Cookie nicht vorhanden oder ungültig ist, Antwort abbrechen
+		if (path.equals("/wipf/up") || path.equals("/wipf/ver")) {
+			return;
+		}
+
+		if (authCookie == null || !aks.isKeyInCache(authCookie)) {
+			// Wenn Cookie nicht vorhanden oder ungültig ist, Antwort abbrechen
+			LOGGER.warn("Kein Zugriff: " + authCookie);
 			requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED).build());
 		}
 	}

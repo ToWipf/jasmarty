@@ -3,14 +3,11 @@ package org.wipf.jasmarty.rest.daylog;
 import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
-import org.wipf.jasmarty.logic.base.AuthKeyService;
-import org.wipf.jasmarty.logic.base.MainHome;
 import org.wipf.jasmarty.logic.daylog.DaylogDayService;
 
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.CookieParam;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -32,25 +29,17 @@ public class DaylogDayRest {
 
 	@Inject
 	DaylogDayService daylogDayDB;
-	@Inject
-	AuthKeyService aks;
 
 	@GET
 	@Path("get/{date}")
-	public DaylogDay get(@PathParam("date") String sDate, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return daylogDayDB.getByDateString(sDate);
-		}
-		return null;
+	public DaylogDay get(@PathParam("date") String sDate) {
+		return daylogDayDB.getByDateString(sDate);
 	}
 
 	@GET
 	@Path("getAllByDateQuery/{dateQuery}")
-	public List<DaylogDay> getByDateQuery(@PathParam("dateQuery") String sDateQuery, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return daylogDayDB.getAllByDateQuery(sDateQuery);
-		}
-		return null;
+	public List<DaylogDay> getByDateQuery(@PathParam("dateQuery") String sDateQuery) {
+		return daylogDayDB.getAllByDateQuery(sDateQuery);
 	}
 
 //	@GET
@@ -64,21 +53,15 @@ public class DaylogDayRest {
 
 	@POST
 	@Path("save")
-	public DaylogDay save(DaylogDay d, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			return daylogDayDB.save(d);
-		}
-		return null;
+	public DaylogDay save(DaylogDay d) {
+		return daylogDayDB.save(d);
 	}
 
 	@DELETE
 	@Path("delete/{id}")
-	public Response delete(@PathParam("id") Integer nId, @CookieParam(MainHome.AUTH_KEY_NAME) String key) {
-		if (aks.isKeyInCache(key)) {
-			daylogDayDB.del(nId);
-			return Response.ok("{}").build();
-		}
-		return Response.status(471).build();
+	public Response delete(@PathParam("id") Integer nId) {
+		daylogDayDB.del(nId);
+		return Response.ok("{}").build();
 	}
 
 }

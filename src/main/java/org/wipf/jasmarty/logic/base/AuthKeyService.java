@@ -75,7 +75,6 @@ public class AuthKeyService {
 				return true;
 			}
 		}
-		LOGGER.info("Zugriffsverletzung: " + sKey);
 		return false;
 	}
 
