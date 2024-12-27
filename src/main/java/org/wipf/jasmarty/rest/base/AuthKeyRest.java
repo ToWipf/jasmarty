@@ -41,7 +41,7 @@ public class AuthKeyRest {
 		if (aks.isKeyInCache(key)) {
 			return Response.ok(authKeyService.getAll()).build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@POST
@@ -51,7 +51,7 @@ public class AuthKeyRest {
 			authKeyService.save(o);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@DELETE
@@ -61,7 +61,7 @@ public class AuthKeyRest {
 			authKeyService.del(nId);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@POST

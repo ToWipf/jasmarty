@@ -43,7 +43,7 @@ public class WipfConfigRest {
 		if (aks.isKeyInCache(key)) {
 			return Response.ok("{\"active\":" + wipfConfig.isAppActive(sAppname) + "}").build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@GET
@@ -53,7 +53,7 @@ public class WipfConfigRest {
 
 			return Response.ok(wipfConfig.getAll()).build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@POST
@@ -63,7 +63,7 @@ public class WipfConfigRest {
 			wipfConfig.saveItem(wu);
 			return Response.ok("{}").build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@DELETE
@@ -73,7 +73,7 @@ public class WipfConfigRest {
 			wipfConfig.deleteItem(sKey);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 }

@@ -52,7 +52,7 @@ public class FileRest {
 		if (aks.isKeyInCache(key)) {
 			return Response.ok(fileVw.getFile(sName)).build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@GET
@@ -74,7 +74,7 @@ public class FileRest {
 			fileVw.saveFile(sName, f);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@DELETE
@@ -83,7 +83,7 @@ public class FileRest {
 		if (aks.isKeyInCache(key)) {
 			return Response.ok("{\"del\":\"" + fileVw.delFile(sName) + "\"}").build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 }

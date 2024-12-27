@@ -44,7 +44,7 @@ public class WipfUserVwRest {
 		if (aks.isKeyInCache(key)) {
 			return Response.ok(wipfUserVW.getAll()).build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@POST
@@ -54,7 +54,7 @@ public class WipfUserVwRest {
 			wipfUserVW.addOrUpdateUser(wu);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@DELETE
@@ -64,7 +64,7 @@ public class WipfUserVwRest {
 			wipfUserVW.deleteUser(sUsername);
 			return Response.ok().build();
 		}
-		return null;
+		return Response.status(471).build();
 	}
 
 	@GET
