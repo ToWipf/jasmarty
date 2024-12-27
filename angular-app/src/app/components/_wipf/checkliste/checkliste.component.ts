@@ -32,15 +32,31 @@ export class ChecklisteComponent implements OnInit {
   public selectetType: CheckListeType = {};
   public lastNewPrio: number = 0;
   public offeneItems: number = 0;
+  public sFilter: string = "";
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   async ngOnInit() {
+
+    this.dataSourceCheckListeListe = [];
+    this.dataSourceCheckListeType = [];
+    this.dataSourceCheckListeItem = [];
+    this.dataSourceCheckListeVerkn = [];
+
     this.loadCheckListeType().then(() => {
       this.loadCheckListeListe();
     });
     this.showAllTableColumns();
-    this.setView("menue");
+    this.setView("listevw");
+  }
+
+  public applyFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.dataSourceCheckListeListe.filter = this.sFilter.trim();
+      this.dataSourceCheckListeType.filter = this.sFilter.trim();
+      this.dataSourceCheckListeItem.filter = this.sFilter.trim();
+      this.dataSourceCheckListeVerkn.filter = this.sFilter.trim();
+    });
   }
 
   public setView(val: string): void {

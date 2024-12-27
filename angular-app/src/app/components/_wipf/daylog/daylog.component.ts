@@ -148,11 +148,15 @@ export class DayLogComponent implements OnInit {
 
   public changeMonat(vorRueck: boolean) {
     if (vorRueck) {
-      if (this.sFilterMON > 1) {
+      if (this.sFilterMON == 1) {
+        this.sFilterMON = 12;
+      } else if (this.sFilterMON > 1) {
         this.sFilterMON--;
       }
     } else {
-      if (this.sFilterMON < 12) {
+      if (this.sFilterMON == 12) {
+        this.sFilterMON = 1;
+      } else if (this.sFilterMON < 12) {
         this.sFilterMON++;
       }
     }
