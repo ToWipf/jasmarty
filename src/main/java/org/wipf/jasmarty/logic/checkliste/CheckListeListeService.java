@@ -36,7 +36,7 @@ public class CheckListeListeService {
 	 * @return
 	 */
 	public List<CheckListeListe> getAll() {
-		return CheckListeListe.findAll().list();
+		return CheckListeListe.findAllDESC().list();
 	}
 
 	/**

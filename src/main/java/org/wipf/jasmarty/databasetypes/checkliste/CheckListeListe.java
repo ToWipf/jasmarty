@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.jboss.logging.Logger;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,6 +66,14 @@ public class CheckListeListe extends PanacheEntityBase implements Serializable {
 			this.listenname = this.listenname.trim();
 			this.persist();
 		}
+	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public static PanacheQuery<CheckListeListe> findAllDESC() {
+		return find("select e from CheckListeListe e ORDER by id DESC");
 	}
 
 }
