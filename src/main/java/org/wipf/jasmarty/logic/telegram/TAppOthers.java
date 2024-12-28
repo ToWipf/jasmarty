@@ -101,8 +101,9 @@ public class TAppOthers {
 				return ("Witz zu lang");
 			}
 			// @formatter:off
-			String x = URLEncoder.encode(s, "UTF-8")
+			String x = URLEncoder.encode(s.replace("<", " "), "UTF-8")
 					.replaceAll("\\<.*?>", "")
+					.replace(">", " ")
 					.replace("+", " ")
 					.replace("%22", "\n")
 					.replace("%28", "(")

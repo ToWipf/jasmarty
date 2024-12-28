@@ -5,6 +5,7 @@ import org.wipf.jasmarty.logic.lcd.JasmartyHome;
 import org.wipf.jasmarty.logic.tasks.CronDaily;
 import org.wipf.jasmarty.logic.telegram.TAppGrafana;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -45,6 +46,16 @@ public class DebugRest {
 	@Path("test")
 	public Response test() {
 		return Response.ok("{\"test\": \"ok\"}").build();
+	}
+
+	@GET
+	@PUT
+	@POST
+	@DELETE
+	@PermitAll
+	@Path("testPub")
+	public Response testPub() {
+		return Response.ok("{\"testPub\": \"ok\"}").build();
 	}
 
 	@POST
