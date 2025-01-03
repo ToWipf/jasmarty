@@ -214,6 +214,14 @@ export class ListeComponent implements OnInit {
     return (((dNow.getTime() - dEntry.getTime()) / (1000 * 60 * 60)) / 24).toFixed(0);
   }
 
+  public getTypeColor(typeid: number): string {
+    if (this.listeTypeForFilter) {
+      const type = this.listeTypeForFilter.find(type => type.id === typeid);
+      return type ? type.color : "";
+    }
+    return "";
+  }
+
 }
 
 @Component({
@@ -232,7 +240,7 @@ export class ListeComponentDialogComponent implements OnInit {
   public ngOnInit(): void {
     this.loadTypes();
   }
-  
+
   public onNoClick(): void {
     this.dialogRef.close();
   }
@@ -256,10 +264,10 @@ export class ListeComponentDialogComponent implements OnInit {
   }
 
   private setSelectedTypeColor(): void {
-      const selectedType = this.listeType.find(type => type.id === this.data.typeid);
-      if (selectedType) {
-        this.selectedTypeColor = selectedType.color;
-      }
+    const selectedType = this.listeType.find(type => type.id === this.data.typeid);
+    if (selectedType) {
+      this.selectedTypeColor = selectedType.color;
+    }
   }
 
 }
