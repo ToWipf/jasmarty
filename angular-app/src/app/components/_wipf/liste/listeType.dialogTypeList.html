@@ -15,13 +15,23 @@
 
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
             <td mat-cell *matCellDef="let element">{{ element.id }}</td>
         </ng-container>
 
         <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
             <td mat-cell *matCellDef="let element">{{ element.typename }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="color">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Farbe</th>
+            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': element.color}">{{ element.color }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="showOverview">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Vorschauliste</th>
+            <td mat-cell *matCellDef="let element">{{ element.showOverview }}</td>
         </ng-container>
 
         <ng-container matColumnDef="button">

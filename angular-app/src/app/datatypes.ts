@@ -152,6 +152,8 @@ export interface ListeEntry {
 export interface ListeType {
   id?: number;
   typename?: string;
+  color?: string;
+  showOverview?: boolean;
 }
 
 export interface DialogInfoContent {

@@ -17,7 +17,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
     constructor(public dialogRef: MatDialogRef<ListeTypeComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
     public dataSource;
-    public eventlistDisplayedColumns: string[] = ['id', 'type', 'button'];
+    public eventlistDisplayedColumns: string[] = ['id', 'type', 'color', 'showOverview', 'button'];
     public sFilter: string = "";
     public bShowWarning: boolean = false;
     @ViewChild(MatSort, { static: true }) sortType: MatSort;

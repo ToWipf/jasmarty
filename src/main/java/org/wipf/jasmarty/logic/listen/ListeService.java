@@ -1,8 +1,10 @@
 package org.wipf.jasmarty.logic.listen;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.wipf.jasmarty.databasetypes.liste.Liste;
+import org.wipf.jasmarty.databasetypes.liste.ListeType;
 import org.wipf.jasmarty.logic.base.Wipf;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,6 +20,8 @@ public class ListeService {
 
 	@Inject
 	Wipf wipf;
+	@Inject
+	ListeTypeService listeTypeService;
 
 	/**
 	 * @param l
@@ -57,11 +61,22 @@ public class ListeService {
 	 * @return
 	 */
 	public List<Liste> getLast(Integer nAnzahl) {
-		List<Liste> res = (Liste.findLast().list());
-		if (res.size() < nAnzahl) {
-			return res;
+		List<ListeType> types = listeTypeService.getAll();
+		List<Liste> res = Liste.findLast().list();
+		List<Liste> out = new LinkedList<>();
+
+		for (Liste item : res) {
+			for (ListeType typ : types) {
+				if (item.typeid == typ.id && (typ.showOverview == null || typ.showOverview)) {
+					out.add(item);
+				}
+				if (out.size() == nAnzahl) {
+					return out;
+				}
+			}
 		}
-		return res.subList(0, nAnzahl);
+
+		return out;
 	}
 
 	/**

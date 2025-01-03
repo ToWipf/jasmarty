@@ -31,6 +31,10 @@ public class ListeType extends PanacheEntityBase implements Serializable {
 	public Integer id;
 	@Column(name = "typename", nullable = false, unique = true)
 	public String typename;
+	@Column(name = "color", nullable = true)
+	public String color;
+	@Column(name = "showOverview", nullable = true)
+	public Boolean showOverview;
 
 	@Override
 	public String toString() {
@@ -46,6 +50,8 @@ public class ListeType extends PanacheEntityBase implements Serializable {
 			if (existingData != null) {
 				// Update
 				existingData.typename = this.typename;
+				existingData.color = this.color;
+				existingData.showOverview = this.showOverview;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id

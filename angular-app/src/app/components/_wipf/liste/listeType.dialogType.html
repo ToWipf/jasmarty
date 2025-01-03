@@ -5,6 +5,16 @@
         <input matInput [(ngModel)]="data.typename">
     </mat-form-field>
 </mat-dialog-content>
+<br>
+
+<mat-form-field>
+    <mat-label>Farbe</mat-label>
+    <input matInput [(ngModel)]="data.color">
+    <input [(colorPicker)]="data.color" [style.background]="data.color" />
+</mat-form-field>
+<br>
+
+<mat-checkbox [(ngModel)]="data.showOverview">In Vorschauliste zeigen</mat-checkbox>
 
 <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
