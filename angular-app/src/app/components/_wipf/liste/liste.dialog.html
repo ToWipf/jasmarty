@@ -1,9 +1,9 @@
-<h1 mat-dialog-title [ngStyle]="{ 'background': lsColor.idToColor(data.typeid)}">Id: {{data.id}}</h1>
+<h1 mat-dialog-title [ngStyle]="{ 'background': selectedTypeColor }">Id: {{data.id}}</h1> 
 <mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Type</mat-label>
-        <mat-select [(value)]="data.typeid">
-            <mat-option *ngFor="let type of listeType" [(value)]="type.id" [ngStyle]="{ 'background': lsColor.idToColor(type.id)}">
+        <mat-select (selectionChange)="onTypeSelectionChange($event)" [(value)]="data.typeid">
+            <mat-option *ngFor="let type of listeType" [(value)]="type.id" [ngStyle]="{ 'background': type.color}">
                 {{type.typename}}
             </mat-option>
         </mat-select>

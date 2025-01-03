@@ -6,9 +6,9 @@ import { ListeEntry, ListeType } from 'src/app/datatypes';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { ListeServiceColor } from './liste.service.color';
 import { ListeCryptComponentDialogComponent } from './listeCrypt.component';
 import { ListeTypeComponentDialogTypeListComponent } from './listeType.component';
+import { MatSelectChange } from '@angular/material/select';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +21,7 @@ import { ListeTypeComponentDialogTypeListComponent } from './listeType.component
 })
 export class ListeComponent implements OnInit {
 
-  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -64,8 +64,8 @@ export class ListeComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeTypeForFilter = resdata;
-      this.listeTypeForFilter.push({ id: -1, typename: "crypt" });
-      this.listeTypeForFilter.push({ id: -2, typename: "counter" });
+      this.listeTypeForFilter.push({ id: -1, typename: "crypt", color: "gray", showOverview: false });
+      this.listeTypeForFilter.push({ id: -2, typename: "counter", color: "lightgray", showOverview: false });
       warten.close();
     });
   }
@@ -221,17 +221,18 @@ export class ListeComponent implements OnInit {
   templateUrl: './liste.dialog.html',
 })
 export class ListeComponentDialogComponent implements OnInit {
-  constructor(public lsColor: ListeServiceColor, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
+  constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
     dialogRef.disableClose = true;
     dialogRef.updateSize("70%", "70%");
   }
 
   public listeType: ListeType[];
+  public selectedTypeColor: string = "";
 
   public ngOnInit(): void {
     this.loadTypes();
   }
-
+  
   public onNoClick(): void {
     this.dialogRef.close();
   }
@@ -240,10 +241,25 @@ export class ListeComponentDialogComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
       this.listeType = resdata;
-      this.listeType.push({ id: -1, typename: "crypt" });
-      this.listeType.push({ id: -2, typename: "counter" });
+      this.listeType.push({ id: -1, typename: "crypt", color: "gray", showOverview: false });
+      this.listeType.push({ id: -2, typename: "counter", color: "lightgray", showOverview: false });
       warten.close();
+      this.setSelectedTypeColor();
     });
+  }
+
+  public onTypeSelectionChange(event: MatSelectChange): void {
+    const selectedType = this.listeType.find(type => type.id === event.value);
+    if (selectedType) {
+      this.selectedTypeColor = selectedType.color;
+    }
+  }
+
+  private setSelectedTypeColor(): void {
+      const selectedType = this.listeType.find(type => type.id === this.data.typeid);
+      if (selectedType) {
+        this.selectedTypeColor = selectedType.color;
+      }
   }
 
 }
