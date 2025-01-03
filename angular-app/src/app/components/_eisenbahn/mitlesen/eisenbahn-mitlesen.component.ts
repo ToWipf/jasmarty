@@ -8,9 +8,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-eisenbahn-mitlesen',
-  templateUrl: './eisenbahn-mitlesen.component.html',
-  styleUrls: ['./eisenbahn-mitlesen.component.less'],
+    selector: 'app-eisenbahn-mitlesen',
+    templateUrl: './eisenbahn-mitlesen.component.html',
+    styleUrls: ['./eisenbahn-mitlesen.component.less'],
+    standalone: false
 })
 export class EisenbahnMitlesenComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

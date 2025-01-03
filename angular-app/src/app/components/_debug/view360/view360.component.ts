@@ -8,9 +8,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-view360',
-  templateUrl: './view360.component.html',
-  styleUrls: ['./view360.component.less']
+    selector: 'app-view360',
+    templateUrl: './view360.component.html',
+    styleUrls: ['./view360.component.less'],
+    standalone: false
 })
 export class View360Component implements OnInit {
 

@@ -3,9 +3,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-jasmarty12864panel',
-  templateUrl: './jasmarty12864Panel.component.html',
-  styleUrls: ['./jasmarty12864Panel.component.less'],
+    selector: 'app-jasmarty12864panel',
+    templateUrl: './jasmarty12864Panel.component.html',
+    styleUrls: ['./jasmarty12864Panel.component.less'],
+    standalone: false
 })
 export class Jasmarty12864PanelComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf) {

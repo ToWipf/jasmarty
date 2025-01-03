@@ -8,9 +8,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-daylog',
-  templateUrl: './daylog.component.html',
-  styleUrls: ['./daylog.component.less'],
+    selector: 'app-daylog',
+    templateUrl: './daylog.component.html',
+    styleUrls: ['./daylog.component.less'],
+    standalone: false
 })
 export class DayLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -232,8 +233,9 @@ export class DayLogComponent implements OnInit {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Component({
-  selector: 'app-daylog-dialogday',
-  templateUrl: './daylog.dialogDay.html',
+    selector: 'app-daylog-dialogday',
+    templateUrl: './daylog.dialogDay.html',
+    standalone: false
 })
 export class DaylogComponentDialogDayComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) {
@@ -254,9 +256,10 @@ export class DaylogComponentDialogDayComponent {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Component({
-  selector: 'app-daylog-dialogtypelist',
-  templateUrl: './daylog.dialogTypeList.html',
-  styleUrls: ['./daylog.component.less']
+    selector: 'app-daylog-dialogtypelist',
+    templateUrl: './daylog.dialogTypeList.html',
+    styleUrls: ['./daylog.component.less'],
+    standalone: false
 })
 
 export class DaylogComponentDialogTypeListComponent implements OnInit {
@@ -354,8 +357,9 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @Component({
-  selector: 'app-daylog-dialogtype',
-  templateUrl: './daylog.dialogType.html',
+    selector: 'app-daylog-dialogtype',
+    templateUrl: './daylog.dialogType.html',
+    standalone: false
 })
 export class DaylogComponentDialogTypeComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogType) { }

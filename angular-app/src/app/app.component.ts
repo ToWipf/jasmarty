@@ -33,9 +33,10 @@ const ICON_PFEIL_L = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24
 const ICON_PFEIL_R = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path d="M 12.524577,1.5081077 23.037708,12.23994 12.524577,22.971773 V 17.605856 H 0.71491305 V 6.8740233 H 12.524577 V 1.5081077"/></svg>`
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.less'],
+    standalone: false
 })
 
 export class AppComponent {

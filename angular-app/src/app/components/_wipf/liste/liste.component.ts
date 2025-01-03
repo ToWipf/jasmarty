@@ -15,9 +15,10 @@ import { MatSelectChange } from '@angular/material/select';
 })
 
 @Component({
-  selector: 'app-liste',
-  templateUrl: './liste.component.html',
-  styleUrls: ['./liste.component.less']
+    selector: 'app-liste',
+    templateUrl: './liste.component.html',
+    styleUrls: ['./liste.component.less'],
+    standalone: false
 })
 export class ListeComponent implements OnInit {
 
@@ -225,8 +226,9 @@ export class ListeComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-liste-dialog',
-  templateUrl: './liste.dialog.html',
+    selector: 'app-liste-dialog',
+    templateUrl: './liste.dialog.html',
+    standalone: false
 })
 export class ListeComponentDialogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {

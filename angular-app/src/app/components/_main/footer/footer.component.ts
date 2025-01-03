@@ -5,9 +5,10 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
 import { ServicAuthKey } from 'src/app/service/serviceAuthKey';
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.less'],
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.less'],
+    standalone: false
 })
 export class FooterComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceVersion: ServiceVersion, public serviceAuthKey: ServicAuthKey) { }

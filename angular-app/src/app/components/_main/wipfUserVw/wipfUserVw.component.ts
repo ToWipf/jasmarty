@@ -8,9 +8,10 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-wipfuservw',
-  templateUrl: './wipfUserVw.component.html',
-  styleUrls: ['./wipfUserVw.component.less'],
+    selector: 'app-wipfuservw',
+    templateUrl: './wipfUserVw.component.html',
+    styleUrls: ['./wipfUserVw.component.less'],
+    standalone: false
 })
 export class WipfUserVwComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -91,8 +92,9 @@ export class WipfUserVwComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-wipfuservw-dialog',
-  templateUrl: './wipfUserVw.dialog.html',
+    selector: 'app-wipfuservw-dialog',
+    templateUrl: './wipfUserVw.dialog.html',
+    standalone: false
 })
 export class WipfUserVWComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<WipfUserVWComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: WipfUser) { }

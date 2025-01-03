@@ -8,9 +8,10 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-medien',
-  templateUrl: './medien.component.html',
-  styleUrls: ['./medien.component.less'],
+    selector: 'app-medien',
+    templateUrl: './medien.component.html',
+    styleUrls: ['./medien.component.less'],
+    standalone: false
 })
 export class MedienComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -115,8 +116,9 @@ export class MedienComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-medien-dialog',
-  templateUrl: './medien.dialog.html',
+    selector: 'app-medien-dialog',
+    templateUrl: './medien.dialog.html',
+    standalone: false
 })
 export class MedienComponentDialog {
   constructor(public dialogRef: MatDialogRef<MedienComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: MedienEntry) { }

@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-debugSeite',
-  templateUrl: './debugSeite.component.html',
-  styleUrls: ['./debugSeite.component.less'],
+    selector: 'app-debugSeite',
+    templateUrl: './debugSeite.component.html',
+    styleUrls: ['./debugSeite.component.less'],
+    standalone: false
 })
 export class DebugSeiteComponent implements OnInit {
   constructor(private rest: ServiceRest, public dialog: MatDialog) { }

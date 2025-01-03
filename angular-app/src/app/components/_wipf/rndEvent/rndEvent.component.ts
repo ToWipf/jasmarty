@@ -8,9 +8,10 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-rndEvent',
-  templateUrl: './rndEvent.component.html',
-  styleUrls: ['./rndEvent.component.less'],
+    selector: 'app-rndEvent',
+    templateUrl: './rndEvent.component.html',
+    styleUrls: ['./rndEvent.component.less'],
+    standalone: false
 })
 export class RndEventComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -95,8 +96,9 @@ export class RndEventComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-rndEvent-dialog',
-  templateUrl: './rndEvent.dialog.html',
+    selector: 'app-rndEvent-dialog',
+    templateUrl: './rndEvent.dialog.html',
+    standalone: false
 })
 export class RndEventComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<RndEventComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: RndEvent) { }
