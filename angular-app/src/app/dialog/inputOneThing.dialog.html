@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>{{data.infotext}}</h1>
+
+<ng-container *ngIf="data.type === 'number'">
+    <mat-form-field>
+        <mat-label>{{data.infotext2}}</mat-label>
+        <input type="number" matInput [(ngModel)]="data.data">
+    </mat-form-field>
+</ng-container>
+
+<ng-container *ngIf="data.type === 'string'">
+    <mat-form-field>
+        <mat-label>{{data.infotext2}}</mat-label>
+        <input matInput [(ngModel)]="data.data">
+    </mat-form-field>
+</ng-container>
+
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Nein</button>
+    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Ja</button>
+</mat-dialog-actions>

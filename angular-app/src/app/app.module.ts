@@ -10,7 +10,7 @@ import { CryptComponent } from './components/_debug/crypt/crypt.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/_wipf/daylog/daylog.component';
 import { DaylogComponentEventlist, DaylogComponentDialogEventComponent } from './components/_wipf/daylog/daylog.eventlist';
 import { DebugSeiteComponent } from './components/_debug/debugSeite/debugSeite.component';
-import { DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
+import { DialogInputOneThingComponent, DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FileVwComponent } from './components/_main/fileVw/fileVw.component';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
@@ -110,6 +110,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         DialogJaNeinComponent,
         DialogVariablenHilfeComponent,
         DialogWartenComponent,
+        DialogInputOneThingComponent,
         EisenbahnMitlesenComponent,
         FileVwComponent,
         MedienComponent,

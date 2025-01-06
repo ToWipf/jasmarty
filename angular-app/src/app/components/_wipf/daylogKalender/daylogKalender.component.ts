@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DaylogDay, DaylogEvent, DaylogType, KeyValEntry } from 'src/app/datatypes';
-import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DaylogDay, DaylogEvent, DaylogType, DialogInputOneThingContent } from 'src/app/datatypes';
+import { DialogInputOneThingComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
@@ -104,7 +104,7 @@ export class DaylogKalenderComponent implements OnInit {
         if (zelle.daylogEvent) {
           zelle.daylogEvent.forEach((de: DaylogEvent) => {
             const eventTypeMatch = this.typelistForEventFilter.find(tl => tl.id.toString() === de.typid.toString());
-            const filterMatch = this.sFilter.trim().length === 0 || de.text.includes(this.sFilter.trim());
+            const filterMatch = this.sFilter.trim().length === 0 || de.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase().trim());
 
             if (eventTypeMatch && filterMatch) {
               if (this.selectedEventTypeFilter.length > 0) {
@@ -176,7 +176,7 @@ export class DaylogKalenderComponent implements OnInit {
     this.kalenderRawArray.push(kd);
   }
 
-  public changeMonat(vorRueck: boolean) {
+  public changeMonat(vorRueck: boolean): void {
     if (vorRueck) {
       if (this.sFilterMON == 1) {
         this.sFilterMON = 12;
@@ -193,7 +193,7 @@ export class DaylogKalenderComponent implements OnInit {
     this.loadDays();
   }
 
-  public changeYYYY(vorRueck: boolean) {
+  public changeYYYY(vorRueck: boolean): void {
     if (vorRueck) {
       this.sFilterYYYY--;
     }
@@ -201,6 +201,52 @@ export class DaylogKalenderComponent implements OnInit {
       this.sFilterYYYY++;
     }
     this.loadDays();
+  }
+
+  public setMonat(): void {
+    let datenfeld: DialogInputOneThingContent = {
+      type: "number",
+      infotext: "Monat einstellen",
+      infotext2: "Monat",
+      data: this.sFilterMON
+    };
+
+    const dialogRef = this.dialog.open(DialogInputOneThingComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: datenfeld,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogInputOneThingContent) => {
+      if (result) {
+        if (result.data > 0 && result.data < 13){
+          this.sFilterMON = result.data;
+          this.loadDays();
+        }
+      }
+    });
+  }
+
+  public setYYYY(): void {
+    let datenfeld: DialogInputOneThingContent = {
+      type: "number",
+      infotext: "Jahr einstellen",
+      infotext2: "Jahr",
+      data: this.sFilterYYYY
+    };
+
+    const dialogRef = this.dialog.open(DialogInputOneThingComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: datenfeld,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogInputOneThingContent) => {
+      if (result) {
+        this.sFilterYYYY = result.data;
+        this.loadDays();
+      }
+    });
   }
 
   public loadTypeListForEventFilter(): void {

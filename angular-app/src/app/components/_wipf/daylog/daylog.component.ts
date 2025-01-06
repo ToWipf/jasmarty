@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { DaylogDay, DaylogEvent, DaylogType } from 'src/app/datatypes';
-import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DaylogDay, DaylogEvent, DaylogType, DialogInputOneThingContent } from 'src/app/datatypes';
+import { DialogInputOneThingComponent, DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 
@@ -79,7 +79,7 @@ export class DayLogComponent implements OnInit {
     }
   }
 
-  public openDialogTypeVW() {
+  public openDialogTypeVW(): void {
     const dialogRef = this.dialog.open(DaylogComponentDialogTypeListComponent, {
       width: '550px',
       height: '550px',
@@ -134,7 +134,7 @@ export class DayLogComponent implements OnInit {
     });
   }
 
-  public dayFilter() {
+  public dayFilter(): void {
     if (!this.filterActiveCache) {
       this.filterActiveCache = true;
       this.serviceWipf.delay(500).then(() => {
@@ -146,7 +146,7 @@ export class DayLogComponent implements OnInit {
     }
   }
 
-  public changeMonat(vorRueck: boolean) {
+  public changeMonat(vorRueck: boolean): void {
     if (vorRueck) {
       if (this.sFilterMON == 1) {
         this.sFilterMON = 12;
@@ -163,7 +163,7 @@ export class DayLogComponent implements OnInit {
     this.reloadDayFilter();
   }
 
-  public changeYYYY(vorRueck: boolean) {
+  public changeYYYY(vorRueck: boolean): void {
     if (vorRueck) {
       this.sFilterYYYY--;
     }
@@ -173,7 +173,53 @@ export class DayLogComponent implements OnInit {
     this.reloadDayFilter();
   }
 
-  public applyFilter() {
+  public setMonat(): void {
+    let datenfeld: DialogInputOneThingContent = {
+      type: "number",
+      infotext: "Monat einstellen",
+      infotext2: "Monat",
+      data: this.sFilterMON
+    };
+
+    const dialogRef = this.dialog.open(DialogInputOneThingComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: datenfeld,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogInputOneThingContent) => {
+      if (result) {
+        if (result.data > 0 && result.data < 13){
+          this.sFilterMON = result.data;
+          this.reloadDayFilter();
+        }
+      }
+    });
+  }
+
+  public setYYYY(): void {
+    let datenfeld: DialogInputOneThingContent = {
+      type: "number",
+      infotext: "Jahr einstellen",
+      infotext2: "Jahr",
+      data: this.sFilterYYYY
+    };
+
+    const dialogRef = this.dialog.open(DialogInputOneThingComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: datenfeld,
+    });
+
+    dialogRef.afterClosed().subscribe((result: DialogInputOneThingContent) => {
+      if (result) {
+        this.sFilterYYYY = result.data;
+        this.reloadDayFilter();
+      }
+    });
+  }
+
+  public applyFilter(): void {
     this.serviceWipf.delay(200).then(() => {
       this.daylistDataSource.filter = this.sFilterDay.trim();
     });

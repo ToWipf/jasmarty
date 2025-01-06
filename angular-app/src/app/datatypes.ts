@@ -161,6 +161,13 @@ export interface DialogInfoContent {
   infotext2?: string;
 }
 
+export interface DialogInputOneThingContent {
+  infotext?: string;
+  infotext2?: string;
+  data?: any;
+  type?: string;
+}
+
 export interface AuthKey {
   id?: number;
   key?: string;

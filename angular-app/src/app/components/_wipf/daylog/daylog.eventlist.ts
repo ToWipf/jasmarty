@@ -74,11 +74,11 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         else if (this.dateForLoad.date === "Alle-Events") {
             this.loadAllEvents();
             this.applyFilter();
-            this.applyFilterByType(); // TODO: geht nicht -> Edit mit Filter -> Filter weg
+            this.applyFilterByType();
         } else {
             this.loadEventsByDay(this.dateForLoad);
             this.applyFilter();
-            this.applyFilterByType(); // TODO: geht nicht -> Edit mit Filter -> Filter weg
+            this.applyFilterByType();
         }
     }
 
@@ -106,7 +106,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     public applyFilter() {
         this.serviceWipf.delay(200).then(() => {
             this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
-            this.eventlistDataSource.sort = this.sortEvent; // TODO: für Filtern nötig?
+            this.eventlistDataSource.sort = this.sortEvent;
         });
     }
 
@@ -120,13 +120,13 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
                 }
             });
             this.eventlistDataSource = new MatTableDataSource(eventlistToShow);
-            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
-            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
+            this.eventlistDataSource.sort = this.sortEvent;
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
         } else {
             // Wie Normal -> alles anzeigen
             this.eventlistDataSource = new MatTableDataSource(this.eventlist);
-            this.eventlistDataSource.sort = this.sortEvent;// TODO: für Filtern nötig?
-            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();// TODO: für Filtern nötig?
+            this.eventlistDataSource.sort = this.sortEvent;
+            this.eventlistDataSource.filter = this.sFilterTextEvent.trim();
         }
 
     }
@@ -181,8 +181,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     }
 
     public newEvent(dayitem: DaylogDay): void {
-        // Tag speicher um später die Liste neu laden zu können
-        //this.dateCacheForLoad = dayitem; TODO nötig?
         let e: DaylogEvent = {};
         e.dateid = dayitem.id;
         e.text = "";

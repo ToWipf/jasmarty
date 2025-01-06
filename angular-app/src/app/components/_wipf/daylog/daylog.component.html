@@ -45,11 +45,11 @@
 
         <div class="iconbox monYYYYSchalter" *ngIf="bShowDayTable">
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
-            Jahr: {{sFilterYYYY}}
+            <button class="btn btun-wipf-default monyyyButton" (click)="setYYYY()"> Jahr: {{sFilterYYYY}}</button>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
             <br>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
-            Monat: {{sFilterMON}}
+            <button class="btn btun-wipf-default monyyyButton" (click)="setMonat()"> Monat: {{sFilterMON}}</button>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
         </div>
 
