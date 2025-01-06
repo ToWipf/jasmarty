@@ -31,6 +31,13 @@
                 </mat-select>
             </mat-form-field>
         </div>
+
+        <div class="box">
+            <mat-form-field>
+                <mat-label>Filtern</mat-label>
+                <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
+            </mat-form-field>
+        </div>
     </div>
 </ng-scrollbar>
 

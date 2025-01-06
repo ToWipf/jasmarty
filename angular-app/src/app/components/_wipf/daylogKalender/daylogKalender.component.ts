@@ -21,6 +21,7 @@ export class DaylogKalenderComponent implements OnInit {
   public kalenderShowArray: KalShowZelle[] = [];
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: DaylogType[] = [];
+  public sFilter: string = "";
 
   ngOnInit(): void {
     this.initFilter();
@@ -31,6 +32,12 @@ export class DaylogKalenderComponent implements OnInit {
   private initFilter(): void {
     this.sFilterYYYY = (new Date(Date.now()).getFullYear());
     this.sFilterMON = (new Date(Date.now()).getMonth() + 1);
+  }
+
+  public applyTextFilter() {
+    this.serviceWipf.delay(200).then(() => {
+      this.renderKalender();
+    });
   }
 
   public loadDays(): void {
@@ -93,12 +100,54 @@ export class DaylogKalenderComponent implements OnInit {
 
       if (zelle.daylogDayday) {
         kdShowDay.tagestext = zelle.daylogDayday.tagestext;
+
+        if (zelle.daylogEvent) {
+          zelle.daylogEvent.forEach((de: DaylogEvent) => {
+            const eventTypeMatch = this.typelistForEventFilter.find(tl => tl.id.toString() === de.typid.toString());
+            const filterMatch = this.sFilter.trim().length === 0 || de.text.includes(this.sFilter.trim());
+
+            if (eventTypeMatch && filterMatch) {
+              if (this.selectedEventTypeFilter.length > 0) {
+                this.selectedEventTypeFilter.forEach((fi: DaylogType) => {
+                  if (de.typid.toString() === fi.id.toString()) {
+                    kdShowDay.eventKV.push({ value: de.text, key: eventTypeMatch.type, color: eventTypeMatch.color });
+                  }
+                });
+              } else {
+                kdShowDay.eventKV.push({ value: de.text, key: eventTypeMatch.type, color: eventTypeMatch.color });
+              }
+            }
+          });
+        }
+      } else {
+        kdShowDay.tagestext = "-";
+      }
+      this.kalenderShowArray[zelle.zellenID] = kdShowDay;
+    });
+  }
+
+
+  public renderKalenderOLD(): void {
+    this.kalenderShowArray = new Array(37).fill({ tagestext: "-" });
+
+    this.kalenderRawArray.forEach((zelle: KalDay) => {
+      var kdShowDay: KalShowZelle = {};
+      kdShowDay.eventKV = [];
+      kdShowDay.dayNr = zelle.dayNr;
+
+      if (zelle.daylogDayday) {
+        kdShowDay.tagestext = zelle.daylogDayday.tagestext;
         if (zelle.daylogEvent) {
 
           this.typelistForEventFilter.forEach((tl: DaylogType) => {
             zelle.daylogEvent.forEach((de: DaylogEvent) => {
 
               if (de.typid.toString() === tl.id.toString()) {
+                if (this.sFilter.trim().length > 0) {
+                  if (de.text.includes(this.sFilter.trim())) {
+                    //TODO
+                  }
+                }
                 // Typ passt dazu
                 if (this.selectedEventTypeFilter.length > 0) {
                   // Mit Filter
@@ -129,11 +178,15 @@ export class DaylogKalenderComponent implements OnInit {
 
   public changeMonat(vorRueck: boolean) {
     if (vorRueck) {
-      if (this.sFilterMON > 1) {
+      if (this.sFilterMON == 1) {
+        this.sFilterMON = 12;
+      } else if (this.sFilterMON > 1) {
         this.sFilterMON--;
       }
     } else {
-      if (this.sFilterMON < 12) {
+      if (this.sFilterMON == 12) {
+        this.sFilterMON = 1;
+      } else if (this.sFilterMON < 12) {
         this.sFilterMON++;
       }
     }
