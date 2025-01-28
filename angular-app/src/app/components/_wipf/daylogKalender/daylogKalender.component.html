@@ -1,6 +1,6 @@
 <!-- <h3>Daylog Kalender</h3> -->
 
-<ng-scrollbar class="pscrollConfigline" track="horizontal">
+<ng-scrollbar class="pscrollConfigline" track="horizontal" *ngIf="hideNoMenues">
     <div class="configline">
         <div class="iconbox">
             Neu Laden:
@@ -10,7 +10,7 @@
             <br>
             Neu Zeigen:
             <button class="btn btn-wipf-default btn-for-icon" (click)="renderKalender()">
-                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+                <mat-icon svgIcon="picture" aria-hidden="false" title="neu zeigen"></mat-icon>
             </button>
         </div>
 
@@ -38,10 +38,17 @@
                 <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
             </mat-form-field>
         </div>
+
+        <div class="iconbox">
+            Vollbild:
+            <button class="btn btn-wipf-default btn-for-icon" (click)="hideNoMenues=false">
+                <mat-icon svgIcon="extern_link" aria-hidden="false" title="vollbildmodus"></mat-icon>
+            </button>
+        </div>
     </div>
 </ng-scrollbar>
 
-<ng-scrollbar track="all" class="pscroll" [ngClass]="{'hide' : !kalenderShowArray}">
+<ng-scrollbar track="all" [ngClass]="{'hide' : !kalenderShowArray}" [ngStyle]="{ 'height': table_size + 'vh' }">
     <div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
     <table>
         <tr>
@@ -73,6 +80,17 @@
         </tr>
     </table>
 </ng-scrollbar>
-<hr>
 
-Ladestatus: {{kalenderShowArray.length}} - {{kalenderRawArray.length}}
+<div *ngIf="hideNoMenues">
+    <hr>
+    Ladestatus: {{kalenderShowArray.length}} - {{kalenderRawArray.length}}
+</div>
+
+<div class="abulutebuttons">
+    <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(+1)">
+        <mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon>
+    </button>
+    <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(-1)">
+        <mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon>
+    </button>
+</div>

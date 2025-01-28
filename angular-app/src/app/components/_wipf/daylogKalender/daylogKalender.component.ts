@@ -22,6 +22,8 @@ export class DaylogKalenderComponent implements OnInit {
   public typelistForEventFilter: DaylogType[] = [];
   public selectedEventTypeFilter: DaylogType[] = [];
   public sFilter: string = "";
+  public hideNoMenues: boolean = true;
+  public table_size: number = 76;
 
   ngOnInit(): void {
     this.initFilter();
@@ -32,6 +34,13 @@ export class DaylogKalenderComponent implements OnInit {
   private initFilter(): void {
     this.sFilterYYYY = (new Date(Date.now()).getFullYear());
     this.sFilterMON = (new Date(Date.now()).getMonth() + 1);
+  }
+
+  public changeTableHeight(delta: number):void {
+    const newHeight = this.table_size + delta;
+    if (newHeight >= 0 && newHeight <= 100) {
+      this.table_size = newHeight;
+    }
   }
 
   public applyTextFilter() {
@@ -117,51 +126,6 @@ export class DaylogKalenderComponent implements OnInit {
                 kdShowDay.eventKV.push({ value: de.text, key: eventTypeMatch.type, color: eventTypeMatch.color });
               }
             }
-          });
-        }
-      } else {
-        kdShowDay.tagestext = "-";
-      }
-      this.kalenderShowArray[zelle.zellenID] = kdShowDay;
-    });
-  }
-
-
-  public renderKalenderOLD(): void {
-    this.kalenderShowArray = new Array(37).fill({ tagestext: "-" });
-
-    this.kalenderRawArray.forEach((zelle: KalDay) => {
-      var kdShowDay: KalShowZelle = {};
-      kdShowDay.eventKV = [];
-      kdShowDay.dayNr = zelle.dayNr;
-
-      if (zelle.daylogDayday) {
-        kdShowDay.tagestext = zelle.daylogDayday.tagestext;
-        if (zelle.daylogEvent) {
-
-          this.typelistForEventFilter.forEach((tl: DaylogType) => {
-            zelle.daylogEvent.forEach((de: DaylogEvent) => {
-
-              if (de.typid.toString() === tl.id.toString()) {
-                if (this.sFilter.trim().length > 0) {
-                  if (de.text.includes(this.sFilter.trim())) {
-                    //TODO
-                  }
-                }
-                // Typ passt dazu
-                if (this.selectedEventTypeFilter.length > 0) {
-                  // Mit Filter
-                  this.selectedEventTypeFilter.forEach((fi: DaylogType) => {
-                    if (de.typid.toString() === fi.id.toString()) {
-                      kdShowDay.eventKV.push({ value: de.text, key: tl.type, color: tl.color });
-                    }
-                  })
-                } else {
-                  // Ohne Filter
-                  kdShowDay.eventKV.push({ value: de.text, key: tl.type, color: tl.color });
-                }
-              }
-            });
           });
         }
       } else {
