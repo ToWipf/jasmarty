@@ -41,7 +41,7 @@ public class MainHome {
 	AuthKeyService authKeyService;
 
 	private static final Logger LOGGER = Logger.getLogger("_MainHome_");
-	public static final String VERSION = "2.4.49";
+	public static final String VERSION = "2.4.50";
 	public static final String AUTH_KEY_NAME = "authKey";
 
 	/**
@@ -68,7 +68,6 @@ public class MainHome {
 		if (wipfConfig.isAppActive("wipf")) {
 			wipfConfig.checkAppWorkId();
 		}
-
 		if (wipfConfig.isAppActive("jasmarty")) {
 			jasmartyHome.jasmartyStart();
 		}
@@ -96,10 +95,9 @@ public class MainHome {
 	}
 
 	/**
-	 * 
+	 * Fileorder erstellen
 	 */
 	private void createFileFolder() {
-		// Fileorder erstellen
 		try {
 			Path path = Paths.get(Paths.get("").toAbsolutePath().toString() + "/files");
 			Files.createDirectories(path);

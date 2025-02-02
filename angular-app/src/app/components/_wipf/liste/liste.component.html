@@ -124,6 +124,10 @@
                     <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
                 </button>
 
+                <button class="btn btn-wipf-default btn-for-icon" (click)="copyToClipboard(element)">
+                    <mat-icon svgIcon="copy" aria-hidden="false" title="Kopieren"></mat-icon>
+                </button>
+
                 <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
                     <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                 </button>
@@ -131,6 +135,6 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row (click)="copyToClipboard(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 </ng-scrollbar>

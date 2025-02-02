@@ -29,6 +29,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
     public newType(): void {
         let e: ListeType = {};
         e.typename = "";
+        e.showOverview = true;
         this.openDialogType(e);
     }
 
