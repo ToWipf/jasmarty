@@ -270,7 +270,8 @@ export class DaylogComponentDialogEventComponent implements OnInit {
                 this.sListVorschlag = resdata;
             });
         } else {
-            this.loadLastVorschlaege(7);
+            // TODO: In Localstorage speichern
+            this.loadLastVorschlaege(8);
         }
     }
 
