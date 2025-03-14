@@ -65,6 +65,7 @@ export class TelegramMsgComponent implements OnInit {
   }
 
   private saveItem(t: TeleMsg): void {
+    t.frage = t.frage.toLowerCase();
     this.rest.post('telemsg/save', t).then((resdata: any) => {
       this.loadAllItems();
     });
@@ -77,6 +78,7 @@ export class TelegramMsgComponent implements OnInit {
       this.dataSource = new MatTableDataSource(resdata);
       this.dataSource.sort = this.sort;
       warten.close();
+      this.applyFilter();
     });
   }
 

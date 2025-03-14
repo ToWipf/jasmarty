@@ -134,6 +134,7 @@ public class DaylogEventService {
 		// Sortieren nach länge
 		List<String> l = new ArrayList<String>(o);
 		l.sort(Comparator.comparingInt(String::length));
+		l.removeIf(s -> s.startsWith("^"));
 
 		return l;
 	}

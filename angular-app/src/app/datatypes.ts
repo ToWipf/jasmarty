@@ -127,7 +127,7 @@ export interface TelegramUserCache {
 
 export interface TeleMsg {
   id?: number;
-  frage?: number;
+  frage?: string;
   antwort?: string;
 }
 
