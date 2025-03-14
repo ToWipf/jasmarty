@@ -29,9 +29,9 @@
                 </mat-form-field>
             </div>
 
-            <div class="iconbox">
+            <div class="iconbox" *ngIf="view =='checkliste'">
                 Liste zurücksezten:
-                <button class="btn btn-wipf-default btn-for-icon" *ngIf="view =='checkliste'" (click)="resetListe()">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="resetListe()">
                     <mat-icon svgIcon="trash" aria-hidden="false" title="Reset Liste"></mat-icon>
                 </button>
             </div>
