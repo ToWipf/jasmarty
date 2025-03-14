@@ -66,8 +66,8 @@
                         <td mat-cell *matCellDef="let element"> {{element.frist_typid}} </td>
                     </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-header-row *matHeaderRowDef="statsDisplayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: statsDisplayedColumns;"></tr>
                 </table>
             </ng-scrollbar>
         </div>
@@ -89,4 +89,38 @@
             [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
         </ngx-charts-bar-vertical>
     </div>
+
+     <ng-scrollbar class="pscrollInside">
+         <table mat-table [dataSource]="vorkomnisseDataSource" matSort class="mat-elevation-z8">
+
+             <ng-container matColumnDef="datum">
+                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+                 <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="dateid">
+                 <th mat-header-cell *matHeaderCellDef mat-sort-header> dateid </th>
+                 <td mat-cell *matCellDef="let element"> {{element.dateid}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="id">
+                 <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="text">
+                 <th mat-header-cell *matHeaderCellDef mat-sort-header> text </th>
+                 <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="typid">
+                 <th mat-header-cell *matHeaderCellDef mat-sort-header> typid </th>
+                 <td mat-cell *matCellDef="let element"> {{element.typid}} </td>
+             </ng-container>
+
+             <tr mat-header-row *matHeaderRowDef="vorkomnisseDisplayedColumns"></tr>
+             <tr mat-row *matRowDef="let row; columns: vorkomnisseDisplayedColumns;"></tr>
+         </table>
+     </ng-scrollbar>
+
 </ng-scrollbar>

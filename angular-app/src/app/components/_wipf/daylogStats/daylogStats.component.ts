@@ -18,8 +18,10 @@ export class DaylogStatsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   public statsDataSource;
+  public vorkomnisseDataSource;
   public sFilter: string = "";
-  public displayedColumns: string[] = [];
+  public statsDisplayedColumns: string[] = [];
+  public vorkomnisseDisplayedColumns: string[] = [];
   public bShowAllTableColumns: boolean = true;
   public bvDataForDateChart = [];
   public bvDataForWochentagVorkomnisseChart = [];
@@ -40,9 +42,11 @@ export class DaylogStatsComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typid'];
+      this.statsDisplayedColumns = ['text', 'anz', 'first_id', 'first_dateid', 'frist_typid'];
+      this.vorkomnisseDisplayedColumns = ['id', 'datum', 'text', 'typid', 'dateid'];
     } else {
-      this.displayedColumns = ['anz', 'text'];
+      this.statsDisplayedColumns = ['anz', 'text'];
+      this.vorkomnisseDisplayedColumns = ['datum', 'text'];
     }
   }
 
@@ -63,9 +67,15 @@ export class DaylogStatsComponent implements OnInit {
 
   public loadDiagramme(): void {
     if (this.getSelectedTypes().length > 0) {
+      const warten = this.dialog.open(DialogWartenComponent, {});
       this.rest.get('daylog/event/getAllById/' + this.getSelectedTypes()).then((resdata: any[]) => {
         this.diagramRawData = resdata;
         this.genDiagramme(this.diagramRawData);
+        this.vorkomnisseDataSource = new MatTableDataSource(resdata);
+        this.vorkomnisseDataSource.sort = this.sort;
+        this.vorkomnisseDataSource.filter = this.sFilter.trim();
+        this.applyFilter();
+        warten.close();
       });
     } else {
       // Diagramme nur leeren
@@ -112,6 +122,7 @@ export class DaylogStatsComponent implements OnInit {
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
+      this.vorkomnisseDataSource.filter = this.sFilter.trim();
       if (this.diagramRawData) {
         var fileredDate = this.diagramRawData.filter((i) => {
           if (i.text) {
