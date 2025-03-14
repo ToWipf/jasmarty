@@ -113,4 +113,17 @@ public class CheckListeVerknService {
 		return resultListe;
 	}
 
+	/**
+	 * Alle dieser Liste zurücksetzen
+	 * 
+	 * @param nCheckListId
+	 */
+	@Transactional
+	public void resetFullList(Integer nCheckListId) {
+
+		getAllByCheckList(cll.getById(nCheckListId)).forEach(vkn -> {
+			vkn.delete();
+		});
+	}
+
 }

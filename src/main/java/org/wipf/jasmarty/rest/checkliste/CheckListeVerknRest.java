@@ -54,4 +54,11 @@ public class CheckListeVerknRest {
 		return Response.ok(clservice.getByClID(nId)).build();
 	}
 
+	@DELETE
+	@Path("reset/{id}")
+	public Response reset(@PathParam("id") Integer nId) {
+		clservice.resetFullList(nId);
+		return Response.ok().build();
+	}
+
 }

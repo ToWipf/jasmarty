@@ -28,6 +28,13 @@
                     <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
                 </mat-form-field>
             </div>
+
+            <div class="iconbox">
+                Liste zurücksezten:
+                <button class="btn btn-wipf-default btn-for-icon" *ngIf="view =='checkliste'" (click)="resetListe()">
+                    <mat-icon svgIcon="trash" aria-hidden="false" title="Reset Liste"></mat-icon>
+                </button>
+            </div>
         </div>
     </ng-scrollbar>
 

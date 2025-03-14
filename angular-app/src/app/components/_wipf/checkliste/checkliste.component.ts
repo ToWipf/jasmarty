@@ -33,6 +33,7 @@ export class ChecklisteComponent implements OnInit {
   public lastNewPrio: number = 0;
   public offeneItems: number = 0;
   public sFilter: string = "";
+  private selectedClID: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -348,6 +349,7 @@ export class ChecklisteComponent implements OnInit {
   public ladeChecklistenView(cl: CheckListeListe): void {
     this.setView("checkliste");
     this.viewCL = cl;
+    this.selectedClID = cl.id;
 
     this.rest.getNoWartenDialog('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
       this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
@@ -364,6 +366,14 @@ export class ChecklisteComponent implements OnInit {
   public checkItemVerkn(iverk: CheckListeVerkn): void {
     iverk.checked = !iverk.checked;
     this.rest.postNoWartenDialog('checkliste/verkn/save', iverk).then((res: any) => {
+      this.ladeChecklistenView(this.viewCL);
+    });
+  }
+
+  /// Reset der Liste
+
+  public resetListe(): void {
+    this.rest.delete('checkliste/verkn/reset/' + this.selectedClID).then((res: any) => {
       this.ladeChecklistenView(this.viewCL);
     });
   }
