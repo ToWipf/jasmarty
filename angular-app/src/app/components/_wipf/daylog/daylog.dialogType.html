@@ -21,10 +21,17 @@
         <input matInput [(ngModel)]="data.color">
         <input [(colorPicker)]="data.color" [style.background]="data.color" />
     </mat-form-field>
+
     <br>
     <mat-form-field>
         <mat-label>Prio</mat-label>
         <input matInput type="number" [(ngModel)]="data.prio">
+    </mat-form-field>
+
+    <br>
+    <mat-form-field>
+        <mat-label>Angezeite Vorschläge</mat-label>
+        <input matInput type="number" [(ngModel)]="data.preview">
     </mat-form-field>
 
 </mat-dialog-content>

@@ -116,6 +116,7 @@ export interface DaylogType {
   art?: string;
   color?: string;
   prio?: number;
+  preview?: number;
 }
 
 export interface TelegramUserCache {

@@ -236,6 +236,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     public daylogTypes: DaylogType[] = [];
     public sListVorschlag: string[] = [];
     private bSucheAktiv: boolean = false;
+    private mehrladenCounter: number = 0;
 
     ngOnInit(): void {
         this.loadDaylogTypes();
@@ -270,9 +271,13 @@ export class DaylogComponentDialogEventComponent implements OnInit {
                 this.sListVorschlag = resdata;
             });
         } else {
-            // TODO: In Localstorage speichern
-            this.loadLastVorschlaege(8);
+            this.loadLastVorschlaege(this.daylogTypes.find(item => item.id === Number(this.data.typid)).preview + this.mehrladenCounter);
         }
+    }
+
+    public vorschlagMehrLaden(): void {
+        this.mehrladenCounter = this.mehrladenCounter + 10;
+        this.loadTextVorschlag();
     }
 
     private loadLastVorschlaege(nAnzahl: number): void {

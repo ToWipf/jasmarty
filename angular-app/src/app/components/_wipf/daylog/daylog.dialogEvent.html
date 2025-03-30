@@ -37,6 +37,7 @@
         <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
             <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
         </div>
+        <button *ngIf="data.text.length < 1" class="vorschlagButton mehrladenButton" (click)="vorschlagMehrLaden()"> Mehr laden...</button>
     </div>
 </mat-dialog-content>
 

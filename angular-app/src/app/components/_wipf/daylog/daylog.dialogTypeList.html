@@ -39,6 +39,11 @@
             <td mat-cell *matCellDef="let element"><b>{{ element.prio }}</b></td>
         </ng-container>
 
+        <ng-container matColumnDef="preview">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Angezeite Vorschläge</th>
+            <td mat-cell *matCellDef="let element"><b>{{ element.preview }}</b></td>
+        </ng-container>
+
         <ng-container matColumnDef="button">
             <th th mat-header-cell *matHeaderCellDef>
                 <div class="tableVW">

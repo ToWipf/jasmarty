@@ -69,7 +69,7 @@ public class DaylogEventService {
 			if (!o.contains(d.text)) {
 				o.add(d.text);
 				count++;
-				if (count > nAnzahl) {
+				if (count >= nAnzahl) {
 					return o;
 				}
 			}
