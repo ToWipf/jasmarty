@@ -24,11 +24,12 @@ export class DaylogKalenderComponent implements OnInit {
   public sFilter: string = "";
   public hideNoMenues: boolean = true;
   public table_size: number = 76;
+  public jetztLadenZeigen: boolean = true;
 
   ngOnInit(): void {
     this.initFilter();
     this.loadTypeListForEventFilter();
-    this.loadDays();
+    this.jetztLadenZeigen = true;
   }
 
   private initFilter(): void {
@@ -36,7 +37,7 @@ export class DaylogKalenderComponent implements OnInit {
     this.sFilterMON = (new Date(Date.now()).getMonth() + 1);
   }
 
-  public changeTableHeight(delta: number):void {
+  public changeTableHeight(delta: number): void {
     const newHeight = this.table_size + delta;
     if (newHeight >= 0 && newHeight <= 100) {
       this.table_size = newHeight;
@@ -50,6 +51,7 @@ export class DaylogKalenderComponent implements OnInit {
   }
 
   public loadDays(): void {
+    this.jetztLadenZeigen = false;
     this.kalenderRawArray = new Array(37);
     this.kalenderShowArray = [];
     const warten = this.dialog.open(DialogWartenComponent, {});
@@ -144,17 +146,21 @@ export class DaylogKalenderComponent implements OnInit {
     if (vorRueck) {
       if (this.sFilterMON == 1) {
         this.sFilterMON = 12;
+        this.changeYYYY(true);
       } else if (this.sFilterMON > 1) {
         this.sFilterMON--;
       }
     } else {
       if (this.sFilterMON == 12) {
         this.sFilterMON = 1;
+        this.changeYYYY(false);
       } else if (this.sFilterMON < 12) {
         this.sFilterMON++;
       }
     }
-    this.loadDays();
+    this.jetztLadenZeigen = true;
+    this.kalenderRawArray = new Array(37);
+    this.kalenderShowArray = [];
   }
 
   public changeYYYY(vorRueck: boolean): void {
@@ -183,7 +189,7 @@ export class DaylogKalenderComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: DialogInputOneThingContent) => {
       if (result) {
-        if (result.data > 0 && result.data < 13){
+        if (result.data > 0 && result.data < 13) {
           this.sFilterMON = result.data;
           this.loadDays();
         }

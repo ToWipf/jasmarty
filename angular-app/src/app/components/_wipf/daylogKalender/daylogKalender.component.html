@@ -48,6 +48,13 @@
     </div>
 </ng-scrollbar>
 
+<div class="nichtgeladen" *ngIf="jetztLadenZeigen">
+    Kalender nicht geladen, jetzt laden?
+    <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
+        <mat-icon svgIcon="restart" aria-hidden="false" title="Laden"></mat-icon>
+    </button>
+</div>
+
 <ng-scrollbar track="all" [ngClass]="{'hide' : !kalenderShowArray}" [ngStyle]="{ 'height': table_size + 'vh' }">
     <div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
     <table>

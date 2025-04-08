@@ -150,12 +150,14 @@ export class DayLogComponent implements OnInit {
     if (vorRueck) {
       if (this.sFilterMON == 1) {
         this.sFilterMON = 12;
+        this.changeYYYY(true);
       } else if (this.sFilterMON > 1) {
         this.sFilterMON--;
       }
     } else {
       if (this.sFilterMON == 12) {
         this.sFilterMON = 1;
+        this.changeYYYY(false);
       } else if (this.sFilterMON < 12) {
         this.sFilterMON++;
       }
