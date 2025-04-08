@@ -170,7 +170,9 @@ export class DaylogKalenderComponent implements OnInit {
     else {
       this.sFilterYYYY++;
     }
-    this.loadDays();
+    this.jetztLadenZeigen = true;
+    this.kalenderRawArray = new Array(37);
+    this.kalenderShowArray = [];
   }
 
   public setMonat(): void {
