@@ -9,6 +9,7 @@ import org.wipf.jasmarty.logic.base.Wipf.httpRequestType;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 
 /**
@@ -29,6 +30,7 @@ public class DiscordHome {
 	 * @param sId
 	 * @return
 	 */
+	@ActivateRequestContext
 	public Discord getById(String sId) {
 		Discord d = new Discord();
 		if (!wipf.isValid(sId)) {
@@ -36,8 +38,7 @@ public class DiscordHome {
 		}
 		try {
 			d.setDisId(sId);
-			String sRes = wipf.httpRequest(httpRequestType.GET,
-					"https://discord.com/api/guilds/" + sId + "/widget.json");
+			String sRes = wipf.httpRequest(httpRequestType.GET, "https://discord.com/api/guilds/" + sId + "/widget.json");
 
 			JSONObject jo = new JSONObject(sRes);
 			JSONArray ja = (JSONArray) jo.get("members");
