@@ -163,6 +163,7 @@ export class DayLogComponent implements OnInit {
         this.sFilterMON++;
       }
     }
+    this.dateForLoad = {};
     this.reloadDayFilter();
   }
 
@@ -173,6 +174,7 @@ export class DayLogComponent implements OnInit {
     else {
       this.sFilterYYYY++;
     }
+    this.dateForLoad = {};
     this.reloadDayFilter();
   }
 
