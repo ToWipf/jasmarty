@@ -51,7 +51,22 @@ export class ServicAuthKey {
         this.loadAuthKey();
     }
 
-
+    /**
+     * Alle Cookies um ein Jahr verlängern
+     */
+    public updateCookieExpiry(): void {
+        const cookies = document.cookie.split('; '); // Leerzeichen nach Semikolon entfernen
+        const expiryDate = new Date();
+        expiryDate.setTime(expiryDate.getTime() + (356 * 24 * 60 * 60 * 1000)); // Neue Laufzeit in Tagen
+    
+        cookies.forEach(cookie => {
+            const [name, ...valueParts] = cookie.split('=');
+            const value = valueParts.join('='); // Falls der Wert '=' enthält
+    
+            // Das Cookie neu setzen
+            document.cookie = `${name}=${value}; expires=${expiryDate.toUTCString()}; path=/`;
+        });
+    }
 
 }
 

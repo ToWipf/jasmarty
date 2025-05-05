@@ -17,5 +17,6 @@ export class FooterComponent implements OnInit {
     if (!this.serviceAuthKey.getAuthKey()) {
       this.serviceAuthKey.setRndAuthKey();
     }
+    this.serviceAuthKey.updateCookieExpiry();
   }
 }
