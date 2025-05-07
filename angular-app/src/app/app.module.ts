@@ -10,7 +10,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { CookieAddDialogComponent, CookieDialogComponent } from './components/_main/cookieVW/cookie.dialog';
+import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookieVW/cookie.dialog';
 import { CryptComponent } from './components/_debug/crypt/crypt.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/_wipf/daylog/daylog.component';
 import { DaylogComponentEventlist, DaylogComponentDialogEventComponent } from './components/_wipf/daylog/daylog.eventlist';
@@ -33,7 +33,7 @@ import { JasmartyConfigComponent } from './components/_jasmarty/jasmartyConfig/j
 import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
 import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
 import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
-import { LocalStorageVWAddDialogComponent, LocalStorageDialogComponent } from './components/_main/localStorageVW/localStorageVW.dialog';
+import { LocalStorageVWAddDialogComponent, LocalStorageDialogComponent } from './dialog/localStorageVW/localStorageVW.dialog';
 import { LoginComponent } from './components/_main/login/login.component';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';

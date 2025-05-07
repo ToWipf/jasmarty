@@ -3,8 +3,8 @@ import { ServiceRest } from './serviceRest';
 import { ServiceWipf } from './serviceWipf';
 import packageJson from '../../../package.json';
 import { MatDialog } from '@angular/material/dialog';
-import { CookieDialogComponent } from '../components/_main/cookieVW/cookie.dialog';
-import { LocalStorageDialogComponent } from '../components/_main/localStorageVW/localStorageVW.dialog';
+import { CookieDialogComponent } from '../dialog/cookieVW/cookie.dialog';
+import { LocalStorageDialogComponent } from '../dialog/localStorageVW/localStorageVW.dialog';
 
 @Injectable({
     providedIn: 'root',
