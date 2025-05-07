@@ -116,7 +116,9 @@
                                 <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
                                     <mat-icon svgIcon="plus" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
                                 </button>
-                                ∑: {{daylistDataSource?._data?._value?.length}}
+                                <ng-container *ngIf="bShowAllTableColumns">
+                                    ∑: {{daylistDataSource?._data?._value?.length}}
+                                </ng-container>
                             </div>
                         </th>
                         <td mat-cell *matCellDef="let element">
