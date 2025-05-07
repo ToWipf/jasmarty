@@ -88,6 +88,7 @@ import { TelegramLogComponent } from './components/_telegram/telegramLog/telegra
 import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './components/_telegram/telegramMsg/telegramMsg.component';
 import { View360Component } from './components/_debug/view360/view360.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
+import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.component';
 
 @NgModule({
     declarations: [
@@ -114,6 +115,7 @@ import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './compo
         DialogJaNeinComponent,
         DialogVariablenHilfeComponent,
         DialogWartenComponent,
+        DynButtonComponent,
         EisenbahnMitlesenComponent,
         ElementSetServerDialog,
         FileVwComponent,

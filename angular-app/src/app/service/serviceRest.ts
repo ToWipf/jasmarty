@@ -214,4 +214,15 @@ export class ServiceRest {
     return this.http.get<Blob>(this.gethost() + path, { headers: this.httpOptions, observe: 'response', responseType: 'blob' as 'json' });
   }
 
+  public getExternalDomain(fullpath: string): Promise<any> {
+    return new Promise(
+      resolve => {
+        const warten = this.dialog.open(DialogWartenComponent, {});
+        this.http.get(fullpath, { headers: this.httpOptions }).subscribe((resdata: any) => {
+          warten.close();
+          resolve(resdata);
+        });
+      });
+  }
+
 }

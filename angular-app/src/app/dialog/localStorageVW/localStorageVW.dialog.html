@@ -23,6 +23,9 @@
                 </div>
             </th>
             <td mat-cell *matCellDef="let element">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="editItem(element)">
+                    <mat-icon svgIcon="edit" aria-hidden="false" title="Edit"></mat-icon>
+                </button>
                 <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element.key)">
                     <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
                 </button>

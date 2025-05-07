@@ -58,6 +58,10 @@ export class LocalStorageDialogComponent implements OnInit {
     this.openDialog(e);
   }
 
+  public editItem(e: KeyValEntry): void {
+    this.openDialog(e);
+  }
+
   public setLocalStorageItem(cname: string, value: string): void {
     localStorage.setItem(cname, value);
     this.loadLocalStorage();
