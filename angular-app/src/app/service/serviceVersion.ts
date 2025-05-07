@@ -4,6 +4,7 @@ import { ServiceWipf } from './serviceWipf';
 import packageJson from '../../../package.json';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieDialogComponent } from '../components/_main/cookieVW/cookie.dialog';
+import { LocalStorageDialogComponent } from '../components/_main/localStorageVW/localStorageVW.dialog';
 
 @Injectable({
     providedIn: 'root',
@@ -53,6 +54,14 @@ export class ServiceVersion {
      */
     public openCookieDialog(): void {
         this.dialog.open(CookieDialogComponent, {
+            autoFocus: true,
+            minWidth: '200px',
+            minHeight: '150px',
+        });
+    }
+
+    public openLocalStorageDialog(): void {
+        this.dialog.open(LocalStorageDialogComponent, {
             autoFocus: true,
             minWidth: '200px',
             minHeight: '150px',

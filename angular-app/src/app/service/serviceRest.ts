@@ -1,5 +1,5 @@
-import { HttpClient, HttpClientModule, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from '../dialog/main.dialog';
 import { ElementSetServerDialog } from '../dialog/setServer.dialog';
@@ -18,6 +18,7 @@ export class ServiceRest {
   private sHost: string = 'http://localhost:8080/';
   private httpOptions: HttpHeaders = new HttpHeaders();
   private bLoginOk: string = "false";
+  private PWCRYPTKEY: string = "TODO:KEY"
 
   public setLoginData(user: string, passwort: string): void {
     // this.sAuth = Buffer.from(user + ":" + passwort, 'base64').toString();
@@ -27,7 +28,7 @@ export class ServiceRest {
 
     // Anmeldedaten speichern
 
-    localStorage.setItem('auth', this.serviceWipf.crypt(sAuth, "TODO:KEY"));
+    localStorage.setItem('auth', this.serviceWipf.crypt(sAuth, this.PWCRYPTKEY));
   }
 
   private setLogin(base64Auth: string) {
@@ -55,7 +56,7 @@ export class ServiceRest {
     }
 
     // den letzen auth laden, wenn vorhanden
-    const lastAuth = this.serviceWipf.decrypt(localStorage.getItem('auth'), "TODO:KEY");
+    const lastAuth = this.serviceWipf.decrypt(localStorage.getItem('auth'), this.PWCRYPTKEY);
     if (lastAuth) {
       this.setLogin(lastAuth);
       this.setLoginOk("may");

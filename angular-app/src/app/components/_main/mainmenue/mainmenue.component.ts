@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceVersion } from 'src/app/service/serviceVersion';
-// import { ListeComponent } from '../../_wipf/liste/liste.component';
 import { ListeComponent } from 'src/app/components/_wipf/liste/liste.component';
 
 @Component({
