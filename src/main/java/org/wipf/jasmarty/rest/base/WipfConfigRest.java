@@ -32,6 +32,12 @@ public class WipfConfigRest {
 	WipfConfigVW wipfConfig;
 
 	@GET
+	@Path("{param}")
+	public Response getaConfig(@PathParam("param") String sParam) {
+		return Response.ok("{\"param\": \"" + wipfConfig.getConfParamString(sParam) + "\"}").build();
+	}
+
+	@GET
 	@PermitAll
 	@Path("get/{appname}")
 	public Response getConfig(@PathParam("appname") String sAppname) {

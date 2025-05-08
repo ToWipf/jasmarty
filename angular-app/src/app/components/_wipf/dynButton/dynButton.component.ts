@@ -12,20 +12,19 @@ export class DynButtonComponent implements OnInit {
 
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-  public buttobez: string = "dynButtonName";
-  private BUTTONNAME: string = "dynButtonName";
-  private BUTTONDOMAIN: string = "dynButtonDomain";
+  public buttodomain: string = "";
+  private BUTTONDOMAINALIAS: string = "dynButtonDomain";
 
-  ngOnInit(): void {
-    if (localStorage.getItem(this.BUTTONNAME).length < 0) {
-      localStorage.setItem(this.BUTTONNAME, "");
-      localStorage.setItem(this.BUTTONDOMAIN, "https://");
+  async ngOnInit(): Promise<void> {
+    if (!localStorage.getItem(this.BUTTONDOMAINALIAS)) {
+      // Initiale Config laden
+      localStorage.setItem(this.BUTTONDOMAINALIAS, await this.rest.getConfigParam(this.BUTTONDOMAINALIAS));
     } else {
-      this.buttobez = localStorage.getItem(this.BUTTONNAME);
+      this.buttodomain = localStorage.getItem(this.BUTTONDOMAINALIAS);
     }
   }
 
   public doClickButton(): void {
-    this.rest.getExternalDomain(localStorage.getItem(this.BUTTONDOMAIN));
+    this.rest.getExternalDomain(this.buttodomain);
   }
 }

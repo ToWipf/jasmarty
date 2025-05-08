@@ -214,6 +214,11 @@ export class ServiceRest {
     return this.http.get<Blob>(this.gethost() + path, { headers: this.httpOptions, observe: 'response', responseType: 'blob' as 'json' });
   }
 
+  /**
+   * 
+   * @param fullpath 
+   * @returns 
+   */
   public getExternalDomain(fullpath: string): Promise<any> {
     return new Promise(
       resolve => {
@@ -221,6 +226,20 @@ export class ServiceRest {
         this.http.get(fullpath, { headers: this.httpOptions }).subscribe((resdata: any) => {
           warten.close();
           resolve(resdata);
+        });
+      });
+  }
+
+  /**
+   * 
+   * @param param 
+   * @returns 
+   */
+  public getConfigParam(param: string): Promise<string> {
+    return new Promise(
+      resolve => {
+        this.getNoWartenDialog('basesettings/' + param).then((resdata: any) => {
+          resolve(resdata.param);
         });
       });
   }
