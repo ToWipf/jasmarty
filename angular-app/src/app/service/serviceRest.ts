@@ -216,22 +216,6 @@ export class ServiceRest {
 
   /**
    * 
-   * @param fullpath 
-   * @returns 
-   */
-  public getExternalDomain(fullpath: string): Promise<any> {
-    return new Promise(
-      resolve => {
-        const warten = this.dialog.open(DialogWartenComponent, {});
-        this.http.get(fullpath, { headers: this.httpOptions }).subscribe((resdata: any) => {
-          warten.close();
-          resolve(resdata);
-        });
-      });
-  }
-
-  /**
-   * 
    * @param param 
    * @returns 
    */

@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -10,7 +11,7 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 })
 export class DynButtonComponent implements OnInit {
 
-  constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
+  constructor(private http: HttpClient, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
   public buttodomain: string = "";
   private BUTTONDOMAINALIAS: string = "dynButtonDomain";
@@ -25,6 +26,17 @@ export class DynButtonComponent implements OnInit {
   }
 
   public doClickButton(): void {
-    this.rest.getExternalDomain(this.buttodomain);
+    // Cookies explizit setzen
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'plain/text',
+        'Cookie': document.cookie
+      }),
+      withCredentials: true // Wichtig, wenn Cookies benötigt werden
+    };
+
+    this.http.get(this.buttodomain, httpOptions).subscribe((resdata: any) => {
+    });
   }
+
 }
