@@ -16,7 +16,7 @@ export class DynButtonComponent implements OnInit {
   private BUTTONDOMAINALIAS: string = "dynButtonDomain";
 
   async ngOnInit(): Promise<void> {
-    if (!localStorage.getItem(this.BUTTONDOMAINALIAS)) {
+    if (!localStorage.getItem(this.BUTTONDOMAINALIAS) || localStorage.getItem(this.BUTTONDOMAINALIAS) == "null") {
       // Initiale Config laden
       localStorage.setItem(this.BUTTONDOMAINALIAS, await this.rest.getConfigParam(this.BUTTONDOMAINALIAS));
     } else {
