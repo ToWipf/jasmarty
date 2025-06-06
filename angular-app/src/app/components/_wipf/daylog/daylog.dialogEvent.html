@@ -2,7 +2,7 @@
 <mat-dialog-content>
     <mat-form-field appearance="fill">
         <mat-label>Typ</mat-label>
-        <mat-select [(value)]="data.typid" (selectionChange)="getTextVorschlag()">
+        <mat-select [(value)]="data.typid" (selectionChange)="changeTypeSelect()">
             <ng-container *ngFor="let type of daylogTypes">
                 <mat-option value='{{type.id}}' [ngStyle]="{ 'background': type.color}">{{type.type}}</mat-option>
             </ng-container>

@@ -252,6 +252,12 @@ export class DaylogComponentDialogEventComponent implements OnInit {
         });
     }
 
+    public changeTypeSelect(): void {
+        this.mehrladenCounter = 0;
+        this.sListVorschlag = [];
+        this.getTextVorschlag();
+    }
+
     public getTextVorschlag(): void {
         if (!this.bSucheAktiv) {
             this.bSucheAktiv = true;

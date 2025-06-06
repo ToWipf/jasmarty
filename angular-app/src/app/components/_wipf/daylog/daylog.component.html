@@ -36,13 +36,6 @@
             </button>
         </div>
 
-        <div class="box" *ngIf="bShowDayTable">
-            <mat-form-field>
-                <mat-label>Tag Filtern</mat-label>
-                <input matInput (ngModelChange)="dayFilter()" [(ngModel)]="sFilterDay">
-            </mat-form-field>
-        </div>
-
         <div class="iconbox monYYYYSchalter" *ngIf="bShowDayTable">
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
             <button class="btn btun-wipf-default monyyyButton" (click)="setYYYY()"> Jahr: {{sFilterYYYY}}</button>
