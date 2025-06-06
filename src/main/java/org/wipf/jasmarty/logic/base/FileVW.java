@@ -13,6 +13,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -138,7 +140,26 @@ public class FileVW {
 	 */
 	public File getDataBaseAsFile() {
 		LOGGER.info("Get Database");
-		return new File("jasmarty.db");
+
+		File originalDb = new File("jasmarty.db");
+		if (!originalDb.exists()) {
+			LOGGER.error("Database file not found!");
+			return null;
+		}
+
+		// Format: jasmarty_2025-06-06_142503.db
+		String timestamp = new SimpleDateFormat("yyyy-MM-dd_HHmmss").format(new Date());
+		File copiedDb = new File("jasmarty_" + timestamp + ".db");
+
+		try {
+			Files.copy(originalDb.toPath(), copiedDb.toPath());
+			LOGGER.info("Database copied to: " + copiedDb.getName());
+		} catch (IOException e) {
+			LOGGER.error("Failed to copy database: " + e.getMessage());
+			return null;
+		}
+
+		return copiedDb;
 	}
 
 	/**
