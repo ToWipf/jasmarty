@@ -35,8 +35,7 @@ public class DaylogEventService {
 	}
 
 	/**
-	 * @param sDate
-	 * @param nUserId
+	 * @param nId
 	 * @return
 	 */
 	@Transactional
@@ -102,7 +101,6 @@ public class DaylogEventService {
 	}
 
 	/**
-	 * @param nUserId
 	 * @return
 	 */
 	public List<DaylogEvent> getAll() {

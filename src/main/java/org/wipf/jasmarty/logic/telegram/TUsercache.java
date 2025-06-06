@@ -90,8 +90,7 @@ public class TUsercache {
 	}
 
 	/**
-	 * @param sDate
-	 * @param nUserId
+	 * @param nChatid
 	 * @return
 	 */
 	@Transactional
@@ -108,7 +107,6 @@ public class TUsercache {
 	}
 
 	/**
-	 * @param nUserId
 	 * @return
 	 */
 	public List<Usercache> getAll() {

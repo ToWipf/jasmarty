@@ -57,7 +57,6 @@ public class DaylogDayService {
 	}
 
 	/**
-	 * @param nUserId
 	 * @return
 	 */
 	public List<DaylogDay> getAll() {

@@ -74,7 +74,7 @@ export class DayLogComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'userid', 'button'];
+      this.daylistDisplayedColumns = ['id', 'date', 'day', 'tagestext', 'button'];
     } else {
       this.daylistDisplayedColumns = ['day', 'date', 'tagestext', 'button'];
     }

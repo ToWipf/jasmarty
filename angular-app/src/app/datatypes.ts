@@ -88,7 +88,6 @@ export interface Lcd12864PageDescriptionDynamic {
 
 export interface DaylogDay {
   id?: number;
-  userid?: number;
   date?: string;
   tagestext?: string;
   extrafeld_wochentag?: string;

@@ -148,7 +148,6 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         this.eventlist = [];
         this.isLoadAllEvents = true;
 
-        // keine userid möglich -> unsicher!
         this.rest.get('daylog/event/getAll').then((resdata: DaylogEvent[]) => {
             this.eventlist = resdata;
 
@@ -193,8 +192,8 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     }
 
     public deleteEvent(item: any): void {
-        item.infotext = "Wirklich löschen?";
-        item.infotext2 = item.id;
+        item.infotext = "Wirklich löschen?" + item.id + " - " + item.dateid;
+        item.infotext2 = item.text;
         const dialogRef = this.dialog.open(DialogJaNeinComponent, {
             minWidth: '200px',
             minHeight: '150px',
