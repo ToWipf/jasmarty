@@ -1,8 +1,11 @@
 package org.wipf.jasmarty.logic.checkliste;
 
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeItem;
 import org.wipf.jasmarty.databasetypes.checkliste.CheckListeListe;
@@ -83,14 +86,18 @@ public class CheckListeVerknService {
 				}
 			}
 		}
+		// Doppelte Einträge rausnehmen
+		Set<String> dopplungsCheckListe = new HashSet<String>();
+		List<CheckListeItem> itemsAlleFilterd = itemsAlle.stream().filter(obi -> dopplungsCheckListe.add(obi.item)).collect(Collectors.toList());
 
 		// item hat jetzt alle Möglichkeiten drin, Jetzt alle bisherigen holen
 		List<CheckListeVerkn> checkedItemsBisherige = getAllByCheckList(cl);
 
+		// Neue Leere Liste anlegen
 		List<CheckListeVerkn> resultListe = new LinkedList<CheckListeVerkn>();
 
 		// Matchen
-		for (CheckListeItem item : itemsAlle) {
+		for (CheckListeItem item : itemsAlleFilterd) {
 			boolean added = false;
 			for (CheckListeVerkn checkItems : checkedItemsBisherige) {
 				if (item.id == checkItems.checkListeItem.id) {
