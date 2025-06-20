@@ -45,3 +45,10 @@ export class DialogVariablenHilfeComponent {
     this.dialogRef.close();
   }
 }
+
+@Component({
+  templateUrl: './infobox.dialog.html',
+})
+export class DialogInfoboxComponent {
+  constructor(public dialogRef: MatDialogRef<DialogInfoboxComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogInfoContent) { }
+}

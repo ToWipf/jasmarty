@@ -17,7 +17,7 @@ import { DaylogComponentEventlist, DaylogComponentDialogEventComponent } from '.
 import { DaylogKalenderComponent } from './components/_wipf/daylogKalender/daylogKalender.component';
 import { DaylogStatsComponent } from './components/_wipf/daylogStats/daylogStats.component';
 import { DebugSeiteComponent } from './components/_debug/debugSeite/debugSeite.component';
-import { DialogInputOneThingComponent, DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
+import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinComponent, DialogVariablenHilfeComponent, DialogWartenComponent } from './dialog/main.dialog';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EisenbahnMitlesenComponent } from './components/_eisenbahn/mitlesen/eisenbahn-mitlesen.component';
 import { ElementSetServerDialog } from './dialog/setServer.dialog';
@@ -112,6 +112,7 @@ import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.compo
         DaylogStatsComponent,
         DebugSeiteComponent,
         DialogInputOneThingComponent,
+        DialogInfoboxComponent,
         DialogJaNeinComponent,
         DialogVariablenHilfeComponent,
         DialogWartenComponent,

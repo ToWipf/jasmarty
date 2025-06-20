@@ -5,7 +5,7 @@ import { DialogInfoContent } from 'src/app/datatypes';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
+import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
   selector: 'app-telegram-log',
@@ -125,7 +125,25 @@ export class TelegramLogComponent implements OnInit {
           this.loadAll();
         }
       });
-
     });
+  }
+
+  public openItemInfoBox(e: any): void {
+    e.type = "string";
+    e.infotext = e.antwort;
+    e.infotext2 = `
+Antwort: ${e.antwort}
+ChatID: ${e.chatid}
+Date: ${e.date}
+Frage: ${e.frage}
+ID: ${e.id}
+Von: ${e.msgfrom}
+msgid: ${e.msgid}`;
+    this.dialog.open(DialogInfoboxComponent, {
+      minWidth: '200px',
+      minHeight: '150px',
+      data: e
+    });
+
   }
 }
