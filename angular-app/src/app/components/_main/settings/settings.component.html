@@ -78,6 +78,9 @@
         <button type="button" class="btn btn-wipf-default sysbutton" (click)="serviceVersion.redirectToApiFrontend()">Frontend von Api laden</button>
     </div>
     <div class="box">
+        <button type="button" class="btn btn-wipf-default sysbutton" (click)="serviceVersion.reloadToNewVersion()">Reload zur neuen Version</button>
+    </div>
+    <div class="box">
         <button type="button" class="btn btn-danger sysbutton" (click)="stopApp()"><span *ngIf="bSicherheitNochmalKlicken">SICHER? </span>System Beenden!</button>
     </div>
 </div>

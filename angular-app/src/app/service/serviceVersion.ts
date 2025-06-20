@@ -81,4 +81,14 @@ export class ServiceVersion {
     public redirectToApiFrontend(): void {
         window.location.href = this.rest.gethost();
     }
+
+    /**
+     * 
+     */
+    public reloadToNewVersion() {
+        const url = window.location.href.split('?')[0]; // Basis-URL ohne Parameter
+        const timestamp = new Date().getTime();
+        window.location.href = `${url}?nocache=${timestamp}`;
+
+    }
 }
