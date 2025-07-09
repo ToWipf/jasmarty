@@ -23,7 +23,7 @@
     "@angular/router": "19.2.14",
     "@angular/service-worker": "19.2.14",
     "@egjs/ngx-view360": "4.0.0-beta.7",
-    "@ng-bootstrap/ng-bootstrap": "17.0.1",
+    "@ng-bootstrap/ng-bootstrap": "18.0.0",
     "@popperjs/core": "2.11.8",
     "@swimlane/ngx-charts": "20.5.0",
     "bootstrap": "5.3.3",
