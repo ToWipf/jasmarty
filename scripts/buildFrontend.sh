@@ -10,7 +10,7 @@ fi
 cd ..
 rm -rf src/main/resources/META-INF/resources/app
 mkdir src/main/resources/META-INF/resources/app
-mv angular-app/dist/* src/main/resources/META-INF/resources/
+mv angular-app/dist/app/browser/* src/main/resources/META-INF/resources/app
 if [ $? -eq 0 ]; then
   echo "move App OK"
 else
