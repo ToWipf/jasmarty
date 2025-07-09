@@ -5,9 +5,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-glowi',
-  templateUrl: './glowi.component.html',
-  styleUrls: ['./glowi.component.less']
+    selector: 'app-glowi',
+    templateUrl: './glowi.component.html',
+    styleUrls: ['./glowi.component.less'],
+    standalone: false
 })
 export class GlowiComponent implements OnInit {
 

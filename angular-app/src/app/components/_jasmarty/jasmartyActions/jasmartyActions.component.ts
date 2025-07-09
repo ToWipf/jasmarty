@@ -8,9 +8,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-jasmartyActions',
-  templateUrl: './jasmartyActions.component.html',
-  styleUrls: ['./jasmartyActions.component.less'],
+    selector: 'app-jasmartyActions',
+    templateUrl: './jasmartyActions.component.html',
+    styleUrls: ['./jasmartyActions.component.less'],
+    standalone: false
 })
 export class JasmartyActionsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) { }
@@ -111,9 +112,10 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'app-jasmartyActions-dialog',
-  templateUrl: './jasmartyActions.dialog.html',
-  styleUrls: ['./jasmartyActions.component.less'],
+    selector: 'app-jasmartyActions-dialog',
+    templateUrl: './jasmartyActions.dialog.html',
+    styleUrls: ['./jasmartyActions.component.less'],
+    standalone: false
 })
 export class JasmartyActionsComponentDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) { }

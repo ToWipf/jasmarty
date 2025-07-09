@@ -4,9 +4,10 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { CryptItem } from 'src/app/datatypes';
 
 @Component({
-  selector: 'app-crypt',
-  templateUrl: './crypt.component.html',
-  styleUrls: ['./crypt.component.less'],
+    selector: 'app-crypt',
+    templateUrl: './crypt.component.html',
+    styleUrls: ['./crypt.component.less'],
+    standalone: false
 })
 export class CryptComponent {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

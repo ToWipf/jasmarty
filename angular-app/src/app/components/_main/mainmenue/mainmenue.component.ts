@@ -5,9 +5,10 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
 import { ListeComponent } from 'src/app/components/_wipf/liste/liste.component';
 
 @Component({
-  selector: 'app-mainmenue',
-  templateUrl: './mainmenue.component.html',
-  styleUrls: ['./mainmenue.component.less']
+    selector: 'app-mainmenue',
+    templateUrl: './mainmenue.component.html',
+    styleUrls: ['./mainmenue.component.less'],
+    standalone: false
 })
 export class MainmenueComponent implements OnInit {
 

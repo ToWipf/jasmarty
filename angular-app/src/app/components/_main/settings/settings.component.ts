@@ -9,9 +9,10 @@ import { MatSort } from '@angular/material/sort';
 import { ServiceVersion } from 'src/app/service/serviceVersion';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.less'],
+    selector: 'app-settings',
+    templateUrl: './settings.component.html',
+    styleUrls: ['./settings.component.less'],
+    standalone: false
 })
 export class SettingsComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceVersion: ServiceVersion) { }
@@ -118,8 +119,9 @@ export class SettingsComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-settings-dialog',
-  templateUrl: './settings.dialog.html',
+    selector: 'app-settings-dialog',
+    templateUrl: './settings.dialog.html',
+    standalone: false
 })
 export class SettingsComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<SettingsComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }

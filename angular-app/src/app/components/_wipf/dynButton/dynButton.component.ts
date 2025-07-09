@@ -5,9 +5,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-dynButton',
-  templateUrl: './dynButton.component.html',
-  styleUrls: ['./dynButton.component.less']
+    selector: 'app-dynButton',
+    templateUrl: './dynButton.component.html',
+    styleUrls: ['./dynButton.component.less'],
+    standalone: false
 })
 export class DynButtonComponent implements OnInit {
 

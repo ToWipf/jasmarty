@@ -5,9 +5,10 @@ import { KeyValEntry } from 'src/app/datatypes';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-cookie',
-  templateUrl: './cookie.dialog.html',
-  styleUrls: ['./cookie.dialog.less']
+    selector: 'app-cookie',
+    templateUrl: './cookie.dialog.html',
+    styleUrls: ['./cookie.dialog.less'],
+    standalone: false
 })
 export class CookieDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CookieDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
@@ -80,8 +81,9 @@ export class CookieDialogComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-cookie-add-dialog',
-  templateUrl: './cookie.add.dialog.html',
+    selector: 'app-cookie-add-dialog',
+    templateUrl: './cookie.add.dialog.html',
+    standalone: false
 })
 export class CookieAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<CookieAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }

@@ -9,9 +9,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-authKey',
-  templateUrl: './authKey.component.html',
-  styleUrls: ['./authKey.component.less']
+    selector: 'app-authKey',
+    templateUrl: './authKey.component.html',
+    styleUrls: ['./authKey.component.less'],
+    standalone: false
 })
 export class AuthKeyComponent implements OnInit {
 
@@ -94,8 +95,9 @@ export class AuthKeyComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-authkey-dialog',
-  templateUrl: './authKey.dialog.html',
+    selector: 'app-authkey-dialog',
+    templateUrl: './authKey.dialog.html',
+    standalone: false
 })
 export class AuthKeyComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<AuthKeyComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AuthKey) { }

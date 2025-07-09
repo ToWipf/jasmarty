@@ -8,9 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { take } from 'rxjs';
 
 @Component({
-  selector: 'app-file-vw',
-  templateUrl: './fileVw.component.html',
-  styleUrls: ['./fileVw.component.less'],
+    selector: 'app-file-vw',
+    templateUrl: './fileVw.component.html',
+    styleUrls: ['./fileVw.component.less'],
+    standalone: false
 })
 export class FileVwComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }

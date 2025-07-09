@@ -1,6 +1,6 @@
 {
   "name": "jasmarty-app",
-  "version": "2.4.67",
+  "version": "2.4.68",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 3000 --disable-host-check",
@@ -10,18 +10,18 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "18.2.4",
+    "@angular/animations": "19.2.14",
     "@angular/cdk": "18.2.4",
-    "@angular/common": "18.2.4",
-    "@angular/compiler": "18.2.4",
-    "@angular/core": "18.2.4",
-    "@angular/forms": "18.2.4",
-    "@angular/localize": "18.2.4",
+    "@angular/common": "19.2.14",
+    "@angular/compiler": "19.2.14",
+    "@angular/core": "19.2.14",
+    "@angular/forms": "19.2.14",
+    "@angular/localize": "19.2.14",
     "@angular/material": "18.2.4",
-    "@angular/platform-browser": "18.2.4",
-    "@angular/platform-browser-dynamic": "18.2.4",
-    "@angular/router": "18.2.4",
-    "@angular/service-worker": "18.2.4",
+    "@angular/platform-browser": "19.2.14",
+    "@angular/platform-browser-dynamic": "19.2.14",
+    "@angular/router": "19.2.14",
+    "@angular/service-worker": "19.2.14",
     "@egjs/ngx-view360": "4.0.0-beta.7",
     "@ng-bootstrap/ng-bootstrap": "17.0.1",
     "@popperjs/core": "2.11.8",
@@ -32,12 +32,12 @@
     "ngx-photo-editor": "0.4.4",
     "ngx-scrollbar": "10.0.1",
     "rxjs": "7.8.1",
-    "zone.js": "0.14.10"
+    "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "18.2.4",
-    "@angular/cli": "18.2.11",
-    "@angular/compiler-cli": "18.2.4",
+    "@angular-devkit/build-angular": "19.2.15",
+    "@angular/cli": "19.2.15",
+    "@angular/compiler-cli": "19.2.14",
     "@types/node": "20.14.9",
     "typescript": "5.5.4"
   }

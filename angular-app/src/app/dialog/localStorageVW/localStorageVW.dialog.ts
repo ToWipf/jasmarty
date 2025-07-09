@@ -5,9 +5,10 @@ import { KeyValEntry } from 'src/app/datatypes';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-localStorageVW',
-  templateUrl: './localStorageVW.dialog.html',
-  styleUrls: ['./localStorageVW.dialog.less']
+    selector: 'app-localStorageVW',
+    templateUrl: './localStorageVW.dialog.html',
+    styleUrls: ['./localStorageVW.dialog.less'],
+    standalone: false
 })
 export class LocalStorageDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<LocalStorageDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
@@ -75,8 +76,9 @@ export class LocalStorageDialogComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-localStorageVW-add-dialog',
-  templateUrl: './localStorageVW.add.dialog.html',
+    selector: 'app-localStorageVW-add-dialog',
+    templateUrl: './localStorageVW.add.dialog.html',
+    standalone: false
 })
 export class LocalStorageVWAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<LocalStorageVWAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }

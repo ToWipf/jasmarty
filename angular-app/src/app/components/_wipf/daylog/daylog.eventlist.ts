@@ -10,7 +10,8 @@ import { MatSort } from '@angular/material/sort';
 @Component({
     selector: 'app-daylog-eventlist',
     templateUrl: './daylog.eventlist.html',
-    styleUrls: ['./daylog.component.less']
+    styleUrls: ['./daylog.component.less'],
+    standalone: false
 })
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -225,6 +226,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     selector: 'app-daylog-dialogevent',
     templateUrl: './daylog.dialogEvent.html',
     styleUrls: ['./daylog.component.less'],
+    standalone: false
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {

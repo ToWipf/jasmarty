@@ -3,9 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.less'],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest) { }

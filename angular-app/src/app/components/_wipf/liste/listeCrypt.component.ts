@@ -8,7 +8,8 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
 @Component({
     selector: 'app-listecrypt-dialog',
     templateUrl: './listeCrypt.dialog.html',
-    styleUrls: ['./liste.component.less']
+    styleUrls: ['./liste.component.less'],
+    standalone: false
 })
 
 export class ListeCryptComponentDialogComponent implements OnInit {

@@ -8,9 +8,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-checkliste',
-  templateUrl: './checkliste.component.html',
-  styleUrls: ['./checkliste.component.less']
+    selector: 'app-checkliste',
+    templateUrl: './checkliste.component.html',
+    styleUrls: ['./checkliste.component.less'],
+    standalone: false
 })
 export class ChecklisteComponent implements OnInit {
 
@@ -381,8 +382,9 @@ export class ChecklisteComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-checklisteliste-dialog',
-  templateUrl: './checkliste.dialog.checkliste.html',
+    selector: 'app-checklisteliste-dialog',
+    templateUrl: './checkliste.dialog.checkliste.html',
+    standalone: false
 })
 export class CheckListeDialogCheckListe implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogCheckListe>, @Inject(MAT_DIALOG_DATA) public data: CheckListeListe) {
@@ -422,8 +424,9 @@ export class CheckListeDialogCheckListe implements OnInit {
 }
 
 @Component({
-  selector: 'app-checklistetypes-dialog',
-  templateUrl: './checkliste.dialog.type.html',
+    selector: 'app-checklistetypes-dialog',
+    templateUrl: './checkliste.dialog.type.html',
+    standalone: false
 })
 export class CheckListeDialogType {
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
@@ -441,8 +444,9 @@ export class CheckListeDialogType {
 }
 
 @Component({
-  selector: 'app-checklisteitem-dialog',
-  templateUrl: './checkliste.dialog.item.html',
+    selector: 'app-checklisteitem-dialog',
+    templateUrl: './checkliste.dialog.item.html',
+    standalone: false
 })
 export class CheckListeDialogItem {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogItem>, @Inject(MAT_DIALOG_DATA) public data: CheckListeItem) {

@@ -8,9 +8,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-telegramMsg',
-  templateUrl: './telegramMsg.component.html',
-  styleUrls: ['./telegramMsg.component.less'],
+    selector: 'app-telegramMsg',
+    templateUrl: './telegramMsg.component.html',
+    styleUrls: ['./telegramMsg.component.less'],
+    standalone: false
 })
 export class TelegramMsgComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -107,8 +108,9 @@ export class TelegramMsgComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-telegramMsg-dialog',
-  templateUrl: './telegramMsg.dialog.html',
+    selector: 'app-telegramMsg-dialog',
+    templateUrl: './telegramMsg.dialog.html',
+    standalone: false
 })
 export class TelegramMsgComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<TelegramMsgComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TeleMsg) { }

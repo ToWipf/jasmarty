@@ -3,8 +3,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceRest } from '../service/serviceRest';
 
 @Component({
-  selector: 'app-setServer',
-  templateUrl: './setServer.dialog.html',
+    selector: 'app-setServer',
+    templateUrl: './setServer.dialog.html',
+    standalone: false
 })
 export class ElementSetServerDialog {
   constructor(public dialogRef: MatDialogRef<ElementSetServerDialog>, @Inject(MAT_DIALOG_DATA) public data: string, private rest: ServiceRest) { }

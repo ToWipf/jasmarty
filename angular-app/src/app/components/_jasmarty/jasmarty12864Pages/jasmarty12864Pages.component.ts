@@ -7,9 +7,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-jasmarty12864pages',
-  templateUrl: './jasmarty12864Pages.component.html',
-  styleUrls: ['./jasmarty12864Pages.component.less'],
+    selector: 'app-jasmarty12864pages',
+    templateUrl: './jasmarty12864Pages.component.html',
+    styleUrls: ['./jasmarty12864Pages.component.less'],
+    standalone: false
 })
 export class Jasmarty12864PagesComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog, private ngxPhotoEditorService: NgxPhotoEditorService) {

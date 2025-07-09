@@ -10,7 +10,8 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
 @Component({
     selector: 'app-listetype-dialogtypelist',
     templateUrl: './listeType.dialogTypeList.html',
-    styleUrls: ['./liste.component.less']
+    styleUrls: ['./liste.component.less'],
+    standalone: false
 })
 
 export class ListeTypeComponentDialogTypeListComponent implements OnInit {
@@ -107,6 +108,7 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
 @Component({
     selector: 'app-listeType-dialogtype',
     templateUrl: './listeType.dialogType.html',
+    standalone: false
 })
 export class ListeTypeComponentDialogTypeComponent {
     constructor(public dialogRef: MatDialogRef<ListeTypeComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeType) { }

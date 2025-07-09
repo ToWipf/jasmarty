@@ -3,9 +3,10 @@ import { Jaconfig } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: 'app-jasmartyConfig',
-  templateUrl: './jasmartyConfig.component.html',
-  styleUrls: ['./jasmartyConfig.component.less'],
+    selector: 'app-jasmartyConfig',
+    templateUrl: './jasmartyConfig.component.html',
+    styleUrls: ['./jasmartyConfig.component.less'],
+    standalone: false
 })
 export class JasmartyConfigComponent implements OnInit {
   constructor(private rest: ServiceRest) { }

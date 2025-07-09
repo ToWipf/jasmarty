@@ -8,9 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-  selector: 'app-telegram-log',
-  templateUrl: './telegramLog.component.html',
-  styleUrls: ['./telegramLog.component.less'],
+    selector: 'app-telegram-log',
+    templateUrl: './telegramLog.component.html',
+    styleUrls: ['./telegramLog.component.less'],
+    standalone: false
 })
 export class TelegramLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

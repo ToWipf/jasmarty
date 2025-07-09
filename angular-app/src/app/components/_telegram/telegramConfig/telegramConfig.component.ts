@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
-  selector: 'app-telegram-config',
-  templateUrl: './telegramConfig.component.html',
-  styleUrls: ['./telegramConfig.component.less'],
+    selector: 'app-telegram-config',
+    templateUrl: './telegramConfig.component.html',
+    styleUrls: ['./telegramConfig.component.less'],
+    standalone: false
 })
 export class TelegramConfigComponent implements OnInit {
   constructor(private rest: ServiceRest) { }

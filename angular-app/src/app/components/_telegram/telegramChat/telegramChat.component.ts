@@ -8,9 +8,10 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-telegram-chat',
-  templateUrl: './telegramChat.component.html',
-  styleUrls: ['./telegramChat.component.less'],
+    selector: 'app-telegram-chat',
+    templateUrl: './telegramChat.component.html',
+    styleUrls: ['./telegramChat.component.less'],
+    standalone: false
 })
 export class TelegramChatComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {

@@ -3,7 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogInfoContent, DialogInputOneThingContent } from "../datatypes";
 
 @Component({
-  templateUrl: './jaNein.dialog.html',
+    templateUrl: './jaNein.dialog.html',
+    standalone: false
 })
 export class DialogJaNeinComponent {
   constructor(public dialogRef: MatDialogRef<DialogJaNeinComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogInfoContent) { }
@@ -14,7 +15,8 @@ export class DialogJaNeinComponent {
 }
 
 @Component({
-  templateUrl: './warten.dialog.html',
+    templateUrl: './warten.dialog.html',
+    standalone: false
 })
 export class DialogWartenComponent {
   constructor(public dialogRef: MatDialogRef<DialogWartenComponent>, @Inject(MAT_DIALOG_DATA) public data: null) { }
@@ -25,7 +27,8 @@ export class DialogWartenComponent {
 }
 
 @Component({
-  templateUrl: './inputOneThing.dialog.html',
+    templateUrl: './inputOneThing.dialog.html',
+    standalone: false
 })
 export class DialogInputOneThingComponent {
   constructor(public dialogRef: MatDialogRef<DialogInputOneThingComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogInputOneThingContent) { }
@@ -36,7 +39,8 @@ export class DialogInputOneThingComponent {
 }
 
 @Component({
-  templateUrl: './variablen.hilfe.dialog.html',
+    templateUrl: './variablen.hilfe.dialog.html',
+    standalone: false
 })
 export class DialogVariablenHilfeComponent {
   constructor(public dialogRef: MatDialogRef<DialogVariablenHilfeComponent>, @Inject(MAT_DIALOG_DATA) public data: null) { }
@@ -47,7 +51,8 @@ export class DialogVariablenHilfeComponent {
 }
 
 @Component({
-  templateUrl: './infobox.dialog.html',
+    templateUrl: './infobox.dialog.html',
+    standalone: false
 })
 export class DialogInfoboxComponent {
   constructor(public dialogRef: MatDialogRef<DialogInfoboxComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogInfoContent) { }

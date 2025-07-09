@@ -8,9 +8,10 @@ import { MatSort } from '@angular/material/sort';
 import { DaylogType } from 'src/app/datatypes';
 
 @Component({
-  selector: 'app-daylogStats',
-  templateUrl: './daylogStats.component.html',
-  styleUrls: ['./daylogStats.component.less']
+    selector: 'app-daylogStats',
+    templateUrl: './daylogStats.component.html',
+    styleUrls: ['./daylogStats.component.less'],
+    standalone: false
 })
 export class DaylogStatsComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

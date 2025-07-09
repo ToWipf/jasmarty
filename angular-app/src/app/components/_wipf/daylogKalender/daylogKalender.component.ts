@@ -6,9 +6,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-  selector: 'app-daylogKalender',
-  templateUrl: './daylogKalender.component.html',
-  styleUrls: ['./daylogKalender.component.less']
+    selector: 'app-daylogKalender',
+    templateUrl: './daylogKalender.component.html',
+    styleUrls: ['./daylogKalender.component.less'],
+    standalone: false
 })
 export class DaylogKalenderComponent implements OnInit {
 
