@@ -1,4 +1,4 @@
-FROM openjdk:24
+FROM openjdk:26
 
 COPY jasmarty.jar /app/jasmarty.jar
 CMD ["java", "--add-opens", "java.base/java.lang=ALL-UNNAMED", "-Xmx128m", "-Dlog4j2.formatMsgNoLookups=True", "-jar", "/app/jasmarty.jar"]
