@@ -31,7 +31,10 @@
 
         <ng-container matColumnDef="showOverview">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Vorschauliste</th>
-            <td mat-cell *matCellDef="let element">{{ element.showOverview }}</td>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon *ngIf="!element.showOverview" svgIcon="round" aria-hidden="false" title="Nein"></mat-icon>
+                <mat-icon *ngIf="element.showOverview" svgIcon="ok" aria-hidden="false" title="Ja"></mat-icon>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="button">

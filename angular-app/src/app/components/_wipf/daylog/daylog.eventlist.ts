@@ -286,9 +286,11 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadLastVorschlaege(nAnzahl: number): void {
-        this.rest.getNoWartenDialog('daylog/event/getLastByType/' + this.data.typid + '/' + nAnzahl).then((resdata: string[]) => {
-            this.sListVorschlag = resdata;
-        });
+        if (nAnzahl > 0) {
+            this.rest.getNoWartenDialog('daylog/event/getLastByType/' + this.data.typid + '/' + nAnzahl).then((resdata: string[]) => {
+                this.sListVorschlag = resdata;
+            });
+        }
     }
 
     public vorschlagToData(sItem: string): void {

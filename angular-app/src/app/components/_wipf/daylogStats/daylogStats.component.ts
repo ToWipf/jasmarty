@@ -119,6 +119,11 @@ export class DaylogStatsComponent implements OnInit {
     }
   }
 
+  public setFilter(f: string): void {
+    this.sFilter = f;
+    this.applyFilter();
+  }
+
   public applyFilter() {
     this.serviceWipf.delay(200).then(() => {
       this.statsDataSource.filter = this.sFilter.trim();
