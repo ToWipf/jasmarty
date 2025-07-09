@@ -1,130 +1,140 @@
 <h3>Statistiken</h3>
 <ng-scrollbar class="pscrollFullSite" track="all">
 
-    <div class="configline">
-        <div class="iconbox">
-            Neu Laden:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
-                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
+  <div class="configline">
+    <div class="iconbox">
+      Neu Laden:
+      <button class="btn btn-wipf-default btn-for-icon" (click)="load()">
+        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+      </button>
 
-            <br>
-            Zeige Alles:
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-        </div>
+      <br>
+        Zeige Alles:
+        @if (bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+        @if (!bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+      </div>
 
-        <div class="box">
-            <mat-form-field>
-                <mat-label>Filtern</mat-label>
-                <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-            </mat-form-field>
-        </div>
+      <div class="box">
+        <mat-form-field>
+          <mat-label>Filtern</mat-label>
+          <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+        </mat-form-field>
+      </div>
 
-        <div class="box">
-            <mat-form-field appearance="fill">
-                <mat-label>Event Typ Filtern</mat-label>
-                <mat-select [(value)]="selectedTypes" multiple (selectionChange)="load()">
-                    <mat-option *ngFor="let itemEvent of typelistForSelect" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div class="box">
+        <mat-form-field appearance="fill">
+          <mat-label>Event Typ Filtern</mat-label>
+          <mat-select [(value)]="selectedTypes" multiple (selectionChange)="load()">
+            @for (itemEvent of typelistForSelect; track itemEvent) {
+              <mat-option [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="gridRow">
-        <div class="gridCol">
-            <ng-scrollbar class="pscrollInside">
-                <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
+      <div class="gridCol">
+        <ng-scrollbar class="pscrollInside">
+          <table mat-table [dataSource]="statsDataSource" matSort class="mat-elevation-z8">
 
-                    <ng-container matColumnDef="anz">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </th>
-                        <td mat-cell *matCellDef="let element">{{element.anz}}</td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="text">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{element.text}}
-                            <button class="btn btn-wipf-default btn-for-icon" (click)="setFilter(element.text)">
-                                <mat-icon svgIcon="search" aria-hidden="false" title="Filtern"></mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="first_id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first_id </th>
-                        <td mat-cell *matCellDef="let element"> {{element.first_id}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="first_dateid">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> first_dateid </th>
-                        <td mat-cell *matCellDef="let element"> {{element.first_dateid}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="frist_typid">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> frist_typid </th>
-                        <td mat-cell *matCellDef="let element"> {{element.frist_typid}} </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="statsDisplayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: statsDisplayedColumns;"></tr>
-                </table>
-            </ng-scrollbar>
-        </div>
-
-        <div class="gridCol">
-            Anzahl einzigartiger Events: {{statsDataSource?._data?._value?.length}}
-            <hr>
-            <div class="chartWT">
-                Vorkomnisse pro Wochentag
-                <ngx-charts-advanced-pie-chart *ngIf="bvDataForWochentagVorkomnisseChart.length > 0" [results]="bvDataForWochentagVorkomnisseChart" [gradient]="false">
-                </ngx-charts-advanced-pie-chart>
-            </div>
-        </div>
-    </div>
-
-    Vorkomnisse Zeitsteifen (Wert)
-    <div class="chart">
-        <ngx-charts-bar-vertical *ngIf="bvDataForDateChart.length > 0" [results]="bvDataForDateChart" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false"
-            [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
-        </ngx-charts-bar-vertical>
-    </div>
-
-    <ng-scrollbar class="pscrollInside">
-        <table mat-table [dataSource]="vorkomnisseDataSource" matSort class="mat-elevation-z8">
-
-            <ng-container matColumnDef="datum">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="dateid">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> dateid </th>
-                <td mat-cell *matCellDef="let element"> {{element.dateid}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            <ng-container matColumnDef="anz">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Anzahl </th>
+              <td mat-cell *matCellDef="let element">{{element.anz}}</td>
             </ng-container>
 
             <ng-container matColumnDef="text">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> text </th>
-                <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Text </th>
+              <td mat-cell *matCellDef="let element">
+                {{element.text}}
+                <button class="btn btn-wipf-default btn-for-icon" (click)="setFilter(element.text)">
+                  <mat-icon svgIcon="search" aria-hidden="false" title="Filtern"></mat-icon>
+                </button>
+              </td>
             </ng-container>
 
-            <ng-container matColumnDef="typid">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> typid </th>
-                <td mat-cell *matCellDef="let element"> {{element.typid}} </td>
+            <ng-container matColumnDef="first_id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> first_id </th>
+              <td mat-cell *matCellDef="let element"> {{element.first_id}} </td>
             </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="vorkomnisseDisplayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: vorkomnisseDisplayedColumns;"></tr>
+            <ng-container matColumnDef="first_dateid">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> first_dateid </th>
+              <td mat-cell *matCellDef="let element"> {{element.first_dateid}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="frist_typid">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> frist_typid </th>
+              <td mat-cell *matCellDef="let element"> {{element.frist_typid}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="statsDisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: statsDisplayedColumns;"></tr>
+          </table>
+        </ng-scrollbar>
+      </div>
+
+      <div class="gridCol">
+        Anzahl einzigartiger Events: {{statsDataSource?._data?._value?.length}}
+        <hr>
+          <div class="chartWT">
+            Vorkomnisse pro Wochentag
+            @if (bvDataForWochentagVorkomnisseChart.length > 0) {
+              <ngx-charts-advanced-pie-chart [results]="bvDataForWochentagVorkomnisseChart" [gradient]="false">
+              </ngx-charts-advanced-pie-chart>
+            }
+          </div>
+        </div>
+      </div>
+
+      Vorkomnisse Zeitsteifen (Wert)
+      <div class="chart">
+        @if (bvDataForDateChart.length > 0) {
+          <ngx-charts-bar-vertical [results]="bvDataForDateChart" [xAxisLabel]="'Datum'" [legendTitle]="'Titel'" [yAxisLabel]="'Wert'" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="false"
+            [barPadding]="1" [roundEdges]="false" [customColors]="getNamedColor">
+          </ngx-charts-bar-vertical>
+        }
+      </div>
+
+      <ng-scrollbar class="pscrollInside">
+        <table mat-table [dataSource]="vorkomnisseDataSource" matSort class="mat-elevation-z8">
+
+          <ng-container matColumnDef="datum">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Datum </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> dateid </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateid}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="text">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> text </th>
+            <td mat-cell *matCellDef="let element"> {{element.text}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="typid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> typid </th>
+            <td mat-cell *matCellDef="let element"> {{element.typid}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="vorkomnisseDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: vorkomnisseDisplayedColumns;"></tr>
         </table>
-    </ng-scrollbar>
+      </ng-scrollbar>
 
-</ng-scrollbar>
+    </ng-scrollbar>

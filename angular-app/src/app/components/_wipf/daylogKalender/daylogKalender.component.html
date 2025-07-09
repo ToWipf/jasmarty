@@ -1,103 +1,114 @@
 <!-- <h3>Daylog Kalender</h3> -->
 
-<ng-scrollbar class="pscrollConfigline" track="horizontal" *ngIf="hideNoMenues">
+@if (hideNoMenues) {
+  <ng-scrollbar class="pscrollConfigline" track="horizontal">
     <div class="configline">
-        <div class="iconbox">
-            Neu Laden:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
-                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-            <br>
-            Neu Zeigen:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="renderKalender()">
-                <mat-icon svgIcon="picture" aria-hidden="false" title="neu zeigen"></mat-icon>
-            </button>
+      <div class="iconbox">
+        Neu Laden:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
+          <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+        </button>
+        <br>
+          Neu Zeigen:
+          <button class="btn btn-wipf-default btn-for-icon" (click)="renderKalender()">
+            <mat-icon svgIcon="picture" aria-hidden="false" title="neu zeigen"></mat-icon>
+          </button>
         </div>
-
         <div class="iconbox mySchalter">
-            <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
-            <button class="btn btun-wipf-default monyyyButton" (click)="setYYYY()"> Jahr: {{sFilterYYYY}}</button>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
-            <br>
+          <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+          <button class="btn btun-wipf-default monyyyButton" (click)="setYYYY()"> Jahr: {{sFilterYYYY}}</button>
+          <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+          <br>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
             <button class="btn btun-wipf-default monyyyButton" (click)="setMonat()"> Monat: {{sFilterMON}}</button>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
-        </div>
-        <div class="box">
+          </div>
+          <div class="box">
             <mat-form-field appearance="fill">
-                <mat-label>Event Typ Filtern</mat-label>
-                <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()" multiple>
-                    <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
-                </mat-select>
+              <mat-label>Event Typ Filtern</mat-label>
+              <mat-select [(value)]="selectedEventTypeFilter" (selectionChange)="renderKalender()" multiple>
+                @for (itemEvent of typelistForEventFilter; track itemEvent) {
+                  <mat-option [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+                }
+              </mat-select>
             </mat-form-field>
-        </div>
-
-        <div class="box">
+          </div>
+          <div class="box">
             <mat-form-field>
-                <mat-label>Filtern</mat-label>
-                <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
+              <mat-label>Filtern</mat-label>
+              <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
             </mat-form-field>
-        </div>
-
-        <div class="iconbox">
+          </div>
+          <div class="iconbox">
             Vollbild:
             <button class="btn btn-wipf-default btn-for-icon" (click)="hideNoMenues=false">
-                <mat-icon svgIcon="extern_link" aria-hidden="false" title="vollbildmodus"></mat-icon>
+              <mat-icon svgIcon="extern_link" aria-hidden="false" title="vollbildmodus"></mat-icon>
             </button>
+          </div>
         </div>
-    </div>
-</ng-scrollbar>
+      </ng-scrollbar>
+    }
 
-<div class="nichtgeladen" *ngIf="jetztLadenZeigen">
-    Kalender nicht geladen, jetzt laden?
-    <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
-        <mat-icon svgIcon="restart" aria-hidden="false" title="Laden"></mat-icon>
-    </button>
-</div>
+    @if (jetztLadenZeigen) {
+      <div class="nichtgeladen">
+        Kalender nicht geladen, jetzt laden?
+        <button class="btn btn-wipf-default btn-for-icon" (click)="loadDays()">
+          <mat-icon svgIcon="restart" aria-hidden="false" title="Laden"></mat-icon>
+        </button>
+      </div>
+    }
 
-<ng-scrollbar track="all" [ngClass]="{'hide' : !kalenderShowArray}" [ngStyle]="{ 'height': table_size + 'vh' }">
-    <div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
-    <table>
+    <ng-scrollbar track="all" [ngClass]="{'hide' : !kalenderShowArray}" [ngStyle]="{ 'height': table_size + 'vh' }">
+      <div class="kaTitle"><span class="middlTitle">{{sFilerMONasText}} {{sFilterYYYY}}</span></div>
+      <table>
         <tr>
-            <th>Montag</th>
-            <th>Dienstag</th>
-            <th>Mittwoch</th>
-            <th>Donnerstag</th>
-            <th>Freitag</th>
-            <th>Samstag</th>
-            <th>Sonntag</th>
+          <th>Montag</th>
+          <th>Dienstag</th>
+          <th>Mittwoch</th>
+          <th>Donnerstag</th>
+          <th>Freitag</th>
+          <th>Samstag</th>
+          <th>Sonntag</th>
         </tr>
-        <tr *ngFor="let item of [0,1,2,3,4,5]">
-            <td *ngFor="let item2 of [0,1,2,3,4,5,6]" class="oneDay">
-                <ng-container *ngIf="kalenderShowArray[item*7+item2]?.dayNr">
-                    <span class="dayHeader">
-                        <span class="dayNr"> {{kalenderShowArray[item*7+item2]?.dayNr}}</span>
-                        {{kalenderShowArray[item*7+item2]?.tagestext}}
-                    </span>
-                    <table>
-                        <tr *ngFor="let ev of kalenderShowArray[item*7+item2]?.eventKV">
-                            <td>
-                                <div class="zelleKey" [ngStyle]="{'background': ev.color}">{{ev.key}}</div>
-                            </td>
-                            <td> {{ev.value}} </td>
-                        </tr>
-                    </table>
-                </ng-container>
-            </td>
-        </tr>
-    </table>
-</ng-scrollbar>
+        @for (item of [0,1,2,3,4,5]; track item) {
+          <tr>
+            @for (item2 of [0,1,2,3,4,5,6]; track item2) {
+              <td class="oneDay">
+                @if (kalenderShowArray[item*7+item2]?.dayNr) {
+                  <span class="dayHeader">
+                    <span class="dayNr"> {{kalenderShowArray[item*7+item2]?.dayNr}}</span>
+                    {{kalenderShowArray[item*7+item2]?.tagestext}}
+                  </span>
+                  <table>
+                    @for (ev of kalenderShowArray[item*7+item2]?.eventKV; track ev) {
+                      <tr>
+                        <td>
+                          <div class="zelleKey" [ngStyle]="{'background': ev.color}">{{ev.key}}</div>
+                        </td>
+                        <td> {{ev.value}} </td>
+                      </tr>
+                    }
+                  </table>
+                }
+              </td>
+            }
+          </tr>
+        }
+      </table>
+    </ng-scrollbar>
 
-<div *ngIf="hideNoMenues">
-    <hr>
-    Ladestatus: {{kalenderShowArray.length}} - {{kalenderRawArray.length}}
-</div>
+    @if (hideNoMenues) {
+      <div>
+        <hr>
+          Ladestatus: {{kalenderShowArray.length}} - {{kalenderRawArray.length}}
+        </div>
+      }
 
-<div class="abulutebuttons">
-    <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(+1)">
-        <mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon>
-    </button>
-    <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(-1)">
-        <mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon>
-    </button>
-</div>
+      <div class="abulutebuttons">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(+1)">
+          <mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon>
+        </button>
+        <button class="btn btn-wipf-default btn-for-icon" (click)="changeTableHeight(-1)">
+          <mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon>
+        </button>
+      </div>

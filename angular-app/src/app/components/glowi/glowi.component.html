@@ -1,27 +1,33 @@
 <h1>Glowi</h1>
 <table>
-    <tr *ngFor="let xA of mtttData; let x = index">
-        <td *ngFor="let yA of xA; let y = index" title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}" class="led-box" (click)="doClick(x,y)">
-            <div>
-                {{mtttData[x][y].funktion}}
-            </div>
+  @for (xA of mtttData; track xA; let x = $index) {
+    <tr>
+      @for (yA of xA; track yA; let y = $index) {
+        <td title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}" class="led-box" (click)="doClick(x,y)">
+          <div>
+            {{mtttData[x][y].funktion}}
+          </div>
         </td>
+      }
     </tr>
+  }
 </table>
 
 <button class="btn btn-wipf-default" (click)="start()">Start</button>
-<button class="btn btn-wipf-default" *ngIf="bLoopStop" (click)="startAutoload()">Starte Autoladen</button>
-<button class="btn btn-wipf-default" *ngIf="!bLoopStop" (click)="bLoopStop=true">Stoppe Autoladen</button>
+@if (bLoopStop) {
+  <button class="btn btn-wipf-default" (click)="startAutoload()">Starte Autoladen</button>
+}
+@if (!bLoopStop) {
+  <button class="btn btn-wipf-default" (click)="bLoopStop=true">Stoppe Autoladen</button>
+}
 <button class="btn btn-wipf-default" (click)="cls()">CLS</button>
 
 
 <input type="file" (change)="fileChangeHandler($event)">
-<ng-container *ngIf="imageoutput?.base64">
-
-    <mat-slider min="0" max="256" step="1" aria-label="units">
-        <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
-    </mat-slider>
-    Kontrast: {{nKontrast}}/256
-
-</ng-container>
+@if (imageoutput?.base64) {
+  <mat-slider min="0" max="256" step="1" aria-label="units">
+    <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
+  </mat-slider>
+  Kontrast: {{nKontrast}}/256
+}
 <button class="btn btn-wipf-default" (click)="saveFull()">Bild Speichern</button>

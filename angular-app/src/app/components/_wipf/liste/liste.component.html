@@ -1,140 +1,152 @@
 <h3>Liste</h3>
 <ng-scrollbar class="pscrollConfigline" track="horizontal">
-    <ng-container *ngIf="bShowWarning">
-        Es ist ein Fehler aufgetreten!
-        <input type="checkbox" [(ngModel)]="bShowWarning">
-    </ng-container>
+  @if (bShowWarning) {
+    Es ist ein Fehler aufgetreten!
+    <input type="checkbox" [(ngModel)]="bShowWarning">
+  }
 
-    <div class="configline">
-        <div class="iconbox">
-            Neu Laden:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="applyFilterByType()">
-                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
+  <div class="configline">
+    <div class="iconbox">
+      Neu Laden:
+      <button class="btn btn-wipf-default btn-for-icon" (click)="applyFilterByType()">
+        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+      </button>
 
-            <br>
-            Zeige Alles:
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-        </div>
+      <br>
+        Zeige Alles:
+        @if (bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+        @if (!bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+      </div>
 
-        <div class="box">
-            <mat-form-field appearance="fill">
-                <mat-label>Event Typ Filtern
-                    <mat-icon svgIcon="search" aria-hidden="false" title="Farbe" [ngStyle]="{ 'color': selectedTypeFilter?.color}"></mat-icon>
-                </mat-label>
-                <mat-select [(value)]="selectedTypeFilter" (closed)="applyFilterByType()">
-                    <mat-option [value]="{id:-99}"><b>Kein Filter</b></mat-option>
-                    <mat-option *ngFor="let itemTypeL of listeTypeForFilter" [value]="itemTypeL" [ngStyle]="{ 'background': itemTypeL.color}">
-                        {{itemTypeL.typename}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div class="box">
+        <mat-form-field appearance="fill">
+          <mat-label>Event Typ Filtern
+            <mat-icon svgIcon="search" aria-hidden="false" title="Farbe" [ngStyle]="{ 'color': selectedTypeFilter?.color}"></mat-icon>
+          </mat-label>
+          <mat-select [(value)]="selectedTypeFilter" (closed)="applyFilterByType()">
+            <mat-option [value]="{id:-99}"><b>Kein Filter</b></mat-option>
+            @for (itemTypeL of listeTypeForFilter; track itemTypeL) {
+              <mat-option [value]="itemTypeL" [ngStyle]="{ 'background': itemTypeL.color}">
+                {{itemTypeL.typename}}
+              </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div class="box">
-            <mat-form-field>
-                <mat-label>Filtern</mat-label>
-                <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
-            </mat-form-field>
-        </div>
+      <div class="box">
+        <mat-form-field>
+          <mat-label>Filtern</mat-label>
+          <input matInput (ngModelChange)="applyTextFilter()" [(ngModel)]="sFilter">
+        </mat-form-field>
+      </div>
 
-        <div class="box">
-            Typenverwaltung:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
-                <mat-icon svgIcon="box" aria-hidden="false" title="Typenverwaltung"></mat-icon>
-            </button>
-        </div>
+      <div class="box">
+        Typenverwaltung:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
+          <mat-icon svgIcon="box" aria-hidden="false" title="Typenverwaltung"></mat-icon>
+        </button>
+      </div>
 
     </div>
-</ng-scrollbar>
+  </ng-scrollbar>
 
-<div *ngIf="!dataSourceList">
-    <hr>
-    <b>Um Inhalte zu laden, muss ein Filter gewählt werden</b>
-    <br>
-    Neuer Eintrag:
-    <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-        <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
-    </button>
-</div>
+  @if (!dataSourceList) {
+    <div>
+      <hr>
+        <b>Um Inhalte zu laden, muss ein Filter gewählt werden</b>
+        <br>
+          Neuer Eintrag:
+          <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+            <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
+          </button>
+        </div>
+      }
 
-<ng-scrollbar class="pscroll" [ngClass]="{'hide' : !dataSourceList}">
-    <table mat-table [dataSource]="dataSourceList" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
+      <ng-scrollbar class="pscroll" [ngClass]="{'hide' : !dataSourceList}">
+        <table mat-table [dataSource]="dataSourceList" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="id">
+          <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
-                {{element.id}}
+              {{element.id}}
             </td>
-        </ng-container>
+          </ng-container>
 
-        <ng-container matColumnDef="data">
+          <ng-container matColumnDef="data">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
-                <!-- Bei "Counter" -->
-                <span *ngIf="element.typeid === -2" class="counter">
-                    {{convertDateToCount(element)}} Tage
+              <!-- Bei "Counter" -->
+              @if (element.typeid === -2) {
+                <span class="counter">
+                  {{convertDateToCount(element)}} Tage
                 </span>
-                {{element.data}}
+              }
+              {{element.data}}
             </td>
-        </ng-container>
+          </ng-container>
 
-        <ng-container matColumnDef="date">
+          <ng-container matColumnDef="date">
             <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableDate"> Datum </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
-                {{element.date}}
+              {{element.date}}
             </td>
-        </ng-container>
+          </ng-container>
 
-        <ng-container matColumnDef="type">
+          <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef> Type </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
-                <ng-container *ngFor="let type of listeTypeForFilter;">
-                    <ng-container *ngIf='type.id.toString()==element.typeid'>
-                        <b>
-                            {{type.typename}}
-                        </b>
-                    </ng-container>
-                </ng-container>
+              @for (type of listeTypeForFilter; track type) {
+                @if (type.id.toString()==element.typeid) {
+                  <b>
+                    {{type.typename}}
+                  </b>
+                }
+              }
             </td>
-        </ng-container>
+          </ng-container>
 
-        <ng-container matColumnDef="button">
+          <ng-container matColumnDef="button">
             <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
             <th th mat-header-cell *matHeaderCellDef>
-                <div class="tableVW">
-                    <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                        <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
-                    </button>
-                    ∑: {{dataSourceList?._data?._value?.length}}
-                </div>
+              <div class="tableVW">
+                <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+                  <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
+                </button>
+                ∑: {{dataSourceList?._data?._value?.length}}
+              </div>
             </th>
             <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
-                <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                </button>
+              <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
+                <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+              </button>
 
-                <!-- Bei "crpyt" -->
-                <button *ngIf="element.typeid === -1" class="btn btn-wipf-default btn-for-icon" (click)="openCryptDialog(element)">
-                    <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
+              <!-- Bei "crpyt" -->
+              @if (element.typeid === -1) {
+                <button class="btn btn-wipf-default btn-for-icon" (click)="openCryptDialog(element)">
+                  <mat-icon svgIcon="puzzle" aria-hidden="false" title="Crypt"></mat-icon>
                 </button>
+              }
 
-                <button class="btn btn-wipf-default btn-for-icon" (click)="copyToClipboard(element)">
-                    <mat-icon svgIcon="copy" aria-hidden="false" title="Kopieren"></mat-icon>
-                </button>
+              <button class="btn btn-wipf-default btn-for-icon" (click)="copyToClipboard(element)">
+                <mat-icon svgIcon="copy" aria-hidden="false" title="Kopieren"></mat-icon>
+              </button>
 
-                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
-                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                </button>
+              <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+                <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+              </button>
             </td>
-        </ng-container>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</ng-scrollbar>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </ng-scrollbar>

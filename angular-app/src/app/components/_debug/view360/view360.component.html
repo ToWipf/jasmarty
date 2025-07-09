@@ -1,44 +1,51 @@
-<div class="configline" *ngIf="!oneBigView">
+@if (!oneBigView) {
+  <div class="configline">
     <h1> Galerie 360 </h1>
     <div class="iconbox">
-        Neu Laden:
-        <button class="btn btn-wipf-default btn-for-icon" (click)="getBilderliste()">
-            <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-        </button>
-        <br>
-
+      Neu Laden:
+      <button class="btn btn-wipf-default btn-for-icon" (click)="getBilderliste()">
+        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+      </button>
+      <br>
         Beenden:
         <button class="btn btn-wipf-default btn-for-icon" (click)="exit()">
-            <mat-icon svgIcon="cancel" aria-hidden="false" title="Exit"></mat-icon>
+          <mat-icon svgIcon="cancel" aria-hidden="false" title="Exit"></mat-icon>
         </button>
-    </div>
-
-    <mat-form-field>
+      </div>
+      <mat-form-field>
         <mat-label>Skalierung beim anschauen</mat-label>
         <input matInput type="number" [(ngModel)]="scale">
-    </mat-form-field>
-</div>
+      </mat-form-field>
+    </div>
+  }
 
-<div *ngIf="oneBigView">
-    <ngx-view360 class="v360Big" [options]="big360pic"></ngx-view360>
-</div>
+  @if (oneBigView) {
+    <div>
+      <ngx-view360 class="v360Big" [options]="big360pic"></ngx-view360>
+    </div>
+  }
 
-<ng-scrollbar class="pscroll" [ngClass]="{'hide': oneBigView}">
-    <div *ngIf="!oneBigView" class="galerie">
-        <div *ngFor="let p3 of pic360List" class="galerie_item" title="{{p3.name}}">
+  <ng-scrollbar class="pscroll" [ngClass]="{'hide': oneBigView}">
+    @if (!oneBigView) {
+      <div class="galerie">
+        @for (p3 of pic360List; track p3) {
+          <div class="galerie_item" title="{{p3.name}}">
             <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
-
             <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
-                <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
+              <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
             </button>
             <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name)">
-                <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
+              <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
             </button>
-        </div>
-    </div>
-</ng-scrollbar>
+          </div>
+        }
+      </div>
+    }
+  </ng-scrollbar>
 
 
-<button *ngIf="oneBigView" class="btn btn-wipf-default btn-for-icon v360back" (click)="oneBigView=false">
-    <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
-</button>
+  @if (oneBigView) {
+    <button class="btn btn-wipf-default btn-for-icon v360back" (click)="oneBigView=false">
+      <mat-icon svgIcon="home" aria-hidden="false" title="zurück"></mat-icon>
+    </button>
+  }

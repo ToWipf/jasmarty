@@ -1,69 +1,69 @@
 <h1 mat-dialog-title>Typenverwaltung</h1>
 
 <mat-dialog-content>
-    <ng-container *ngIf="bShowWarning">
-        Es ist ein Fehler aufgetreten!
-        <input type="checkbox" [(ngModel)]="bShowWarning" />
+  @if (bShowWarning) {
+    Es ist ein Fehler aufgetreten!
+    <input type="checkbox" [(ngModel)]="bShowWarning" />
+  }
+
+  <div class="box">
+    <mat-form-field>
+      <mat-label>Filtern</mat-label>
+      <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+    </mat-form-field>
+  </div>
+
+  <table mat-table [dataSource]="daylogTypeDataSource" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
     </ng-container>
 
-    <div class="box">
-        <mat-form-field>
-            <mat-label>Filtern</mat-label>
-            <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-        </mat-form-field>
-    </div>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
 
-    <table mat-table [dataSource]="daylogTypeDataSource" matSort class="mat-elevation-z8">
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-        </ng-container>
+    <ng-container matColumnDef="art">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Art</th>
+      <td mat-cell *matCellDef="let element">{{ element.art }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-            <td mat-cell *matCellDef="let element">{{ element.type }}</td>
-        </ng-container>
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Farbe</th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': element.color}">{{ element.color }}</td>
+    </ng-container>
 
-        <ng-container matColumnDef="art">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Art</th>
-            <td mat-cell *matCellDef="let element">{{ element.art }}</td>
-        </ng-container>
+    <ng-container matColumnDef="prio">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Prio</th>
+      <td mat-cell *matCellDef="let element"><b>{{ element.prio }}</b></td>
+    </ng-container>
 
-        <ng-container matColumnDef="color">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Farbe</th>
-            <td mat-cell *matCellDef="let element" [ngStyle]="{ 'background': element.color}">{{ element.color }}</td>
-        </ng-container>
+    <ng-container matColumnDef="preview">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Angezeite Vorschläge</th>
+      <td mat-cell *matCellDef="let element"><b>{{ element.preview }}</b></td>
+    </ng-container>
 
-        <ng-container matColumnDef="prio">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Prio</th>
-            <td mat-cell *matCellDef="let element"><b>{{ element.prio }}</b></td>
-        </ng-container>
+    <ng-container matColumnDef="button">
+      <th th mat-header-cell *matHeaderCellDef>
+        <div class="tableVW">
+          <button class="btn btn-wipf-default btn-for-icon" (click)="newType()">
+            <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Eintrag erstellen"></mat-icon>
+          </button>
+          ∑: {{ typelist.length }}
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="editType(element)">
+          <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+        </button>
+        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteType(element)">
+          <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="preview">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Angezeite Vorschläge</th>
-            <td mat-cell *matCellDef="let element"><b>{{ element.preview }}</b></td>
-        </ng-container>
-
-        <ng-container matColumnDef="button">
-            <th th mat-header-cell *matHeaderCellDef>
-                <div class="tableVW">
-                    <button class="btn btn-wipf-default btn-for-icon" (click)="newType()">
-                        <mat-icon svgIcon="document" aria-hidden="false" title="Neuen Eintrag erstellen"></mat-icon>
-                    </button>
-                    ∑: {{ typelist.length }}
-                </div>
-            </th>
-            <td mat-cell *matCellDef="let element">
-                <button class="btn btn-wipf-default btn-for-icon" (click)="editType(element)">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                </button>
-                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteType(element)">
-                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                </button>
-            </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
-    </table>
+    <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
+  </table>
 </mat-dialog-content>

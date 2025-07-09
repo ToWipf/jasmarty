@@ -1,40 +1,38 @@
 <h3>Jasmarty Einstellungen</h3>
 <hr>
-<div class="gridRow">
+  <div class="gridRow">
     <div class="gridCol">
-        <h4>Grundeinstellungen</h4>
-        <hr>
+      <h4>Grundeinstellungen</h4>
+      <hr>
         <div class="form-group">
-            <ng-container *ngIf="jaconfig">
-
-                <span class="title">Port</span>
-                <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
-
-                <span class="title">Baud Rate</span> (9600, 57600)
-                <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
-
-                <span class="title">Refesh Rate</span>
-                <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
-
-            </ng-container>
+          @if (jaconfig) {
+            <span class="title">Port</span>
+            <input type="text" class="form-control inbutton" [(ngModel)]="jaconfig.port" placeholder="Bitte eintragen">
+            <span class="title">Baud Rate</span> (9600, 57600)
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.baudrate" placeholder="Bitte eintragen">
+            <span class="title">Refesh Rate</span>
+            <input type="number" class="form-control inbutton" [(ngModel)]="jaconfig.refreshrate" placeholder="Bitte eintragen">
+          }
         </div>
         <button type="button" class="btn btn-wipf-default" (click)="save()">Speichern und Neu laden</button>
-    </div>
-    <div class="gridCol">
+      </div>
+      <div class="gridCol">
         <h4>Verfügbare Ports</h4>
         <hr>
-        <div *ngFor="let p of ports;">
-            <code>{{p.name}}</code>
-        </div>
+          @for (p of ports; track p) {
+            <div>
+              <code>{{p.name}}</code>
+            </div>
+          }
 
-    </div>
-    <div class="gridCol">
-        <h4>Hauptfunktionen</h4>
-        <hr>
-        <button type="button" class="btn btn-wipf-default" (click)="refreshOn()">Refesh LCD An</button>
-        <button type="button" class="btn btn-wipf-default" (click)="refreshOff()">Refesh LCD Aus</button>
-        <hr>
-        <button type="button" class="btn btn-wipf-default" (click)="start()">Starte Verbindung</button>
-        <button type="button" class="btn btn-wipf-default" (click)="stop()">Stoppe Verbindung</button>
-    </div>
-</div>
+        </div>
+        <div class="gridCol">
+          <h4>Hauptfunktionen</h4>
+          <hr>
+            <button type="button" class="btn btn-wipf-default" (click)="refreshOn()">Refesh LCD An</button>
+            <button type="button" class="btn btn-wipf-default" (click)="refreshOff()">Refesh LCD Aus</button>
+            <hr>
+              <button type="button" class="btn btn-wipf-default" (click)="start()">Starte Verbindung</button>
+              <button type="button" class="btn btn-wipf-default" (click)="stop()">Stoppe Verbindung</button>
+            </div>
+          </div>

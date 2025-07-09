@@ -1,91 +1,103 @@
-<ng-container *ngIf="bShowWarning">
-    Es ist ein Fehler aufgetreten!
-    <input type="checkbox" [(ngModel)]="bShowWarning" />
-</ng-container>
+@if (bShowWarning) {
+  Es ist ein Fehler aufgetreten!
+  <input type="checkbox" [(ngModel)]="bShowWarning" />
+}
 
 <table mat-table [dataSource]="eventlistDataSource" matSort matSortActive="typ" matSortDirection="asc" class="mat-elevation-z8">
-    <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-    </ng-container>
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="dateid">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>DateId</th>
-        <td mat-cell *matCellDef="let element">{{ element.dateid }}</td>
-    </ng-container>
+  <ng-container matColumnDef="dateid">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>DateId</th>
+    <td mat-cell *matCellDef="let element">{{ element.dateid }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="typ">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
-        <td mat-cell *matCellDef="let element">
-            <ng-container *ngFor="let type of daylogTypes;">
-                <ng-container *ngIf='type.id.toString()==element.typid'>
-                    <ng-container *ngIf='type?.color'>
-                        <div class="typestyle" [ngStyle]="{ 'background': type.color}">
-                            {{type.type}}
-                        </div>
-                    </ng-container>
-                    <ng-container *ngIf='!(type?.color)'>
-                        {{type.type}}
-                    </ng-container>
-                </ng-container>
-            </ng-container>
-        </td>
-    </ng-container>
-
-    <ng-container matColumnDef="data">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
-        <td mat-cell *matCellDef="let element">
-            <div *ngIf="element.text === 'Y^'">
-                <mat-icon svgIcon="check_circle" aria-hidden="false" title="Ja"></mat-icon>
+  <ng-container matColumnDef="typ">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
+    <td mat-cell *matCellDef="let element">
+      @for (type of daylogTypes; track type) {
+        @if (type.id.toString()==element.typid) {
+          @if (type?.color) {
+            <div class="typestyle" [ngStyle]="{ 'background': type.color}">
+              {{type.type}}
             </div>
-            <div *ngIf="element.text === 'N^'">
-                <mat-icon svgIcon="cancel" aria-hidden="false" title="Nein"></mat-icon>
-            </div>
-            <div *ngIf="element.text === ''">
-                <mat-icon svgIcon="unavailable" aria-hidden="false" title="Leer"></mat-icon>
-            </div>
-            <div *ngIf="element.text !== 'Y^'">
-                <div *ngIf="element.text !== 'N^'">
-                    {{ element.text }}
-                </div>
-            </div>
-        </td>
-    </ng-container>
+          }
+          @if (!(type?.color)) {
+            {{type.type}}
+          }
+        }
+      }
+    </td>
+  </ng-container>
 
-    <ng-container matColumnDef="button">
-        <th th mat-header-cell *matHeaderCellDef>
-            <div class="tableVW">
-                <button *ngIf="dateForLoad.id" class="btn btn-wipf-default  btn-for-icon" (click)="newEventBySelectedDay()">
-                    <mat-icon svgIcon="plus" aria-hidden="false" title="Event erstellen"></mat-icon>
-                </button>
-                ∑: {{ eventlist.length }}
+  <ng-container matColumnDef="data">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+    <td mat-cell *matCellDef="let element">
+      @if (element.text === 'Y^') {
+        <div>
+          <mat-icon svgIcon="check_circle" aria-hidden="false" title="Ja"></mat-icon>
+        </div>
+      }
+      @if (element.text === 'N^') {
+        <div>
+          <mat-icon svgIcon="cancel" aria-hidden="false" title="Nein"></mat-icon>
+        </div>
+      }
+      @if (element.text === '') {
+        <div>
+          <mat-icon svgIcon="unavailable" aria-hidden="false" title="Leer"></mat-icon>
+        </div>
+      }
+      @if (element.text !== 'Y^') {
+        <div>
+          @if (element.text !== 'N^') {
+            <div>
+              {{ element.text }}
             </div>
-        </th>
-        <td mat-cell *matCellDef="let element">
-            <button class="btn btn-wipf-default btn-for-icon" (click)="editEvent(element)">
-                <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-            </button>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="deleteEvent(element)">
-                <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-            </button>
-        </td>
-    </ng-container>
+          }
+        </div>
+      }
+    </td>
+  </ng-container>
 
-    <tr *matNoDataRow>
-        <td class="nodatarow">
-            <ng-container *ngIf="dateForLoad.date === ''">
-                Kein Tag gewählt
-            </ng-container>
-            <ng-container *ngIf="dateForLoad.date != ''">
-                <ng-container *ngIf="eventlist.length == 0">
-                    Keine Daten für den Tag {{dateForLoad.date}}
-                </ng-container>
-            </ng-container>
-        </td>
-    </tr>
+  <ng-container matColumnDef="button">
+    <th th mat-header-cell *matHeaderCellDef>
+      <div class="tableVW">
+        @if (dateForLoad.id) {
+          <button class="btn btn-wipf-default  btn-for-icon" (click)="newEventBySelectedDay()">
+            <mat-icon svgIcon="plus" aria-hidden="false" title="Event erstellen"></mat-icon>
+          </button>
+        }
+        ∑: {{ eventlist.length }}
+      </div>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <button class="btn btn-wipf-default btn-for-icon" (click)="editEvent(element)">
+        <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+      </button>
+      <button class="btn btn-wipf-default btn-for-icon" (click)="deleteEvent(element)">
+        <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+      </button>
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
-    <!-- <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
-    <!-- <tr mat-row (click)="editEvent(row)" *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
-    <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
+  <tr *matNoDataRow>
+    <td class="nodatarow">
+      @if (dateForLoad.date === '') {
+        Kein Tag gewählt
+      }
+      @if (dateForLoad.date != '') {
+        @if (eventlist.length == 0) {
+          Keine Daten für den Tag {{dateForLoad.date}}
+        }
+      }
+    </td>
+  </tr>
+
+  <tr mat-header-row *matHeaderRowDef="eventlistDisplayedColumns"></tr>
+  <!-- <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
+  <!-- <tr mat-row (click)="editEvent(row)" *matRowDef="let row; columns: eventlistDisplayedColumns"></tr> -->
+  <tr mat-row *matRowDef="let row; columns: eventlistDisplayedColumns"></tr>
 </table>

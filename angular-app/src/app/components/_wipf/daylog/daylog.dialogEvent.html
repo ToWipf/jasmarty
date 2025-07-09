@@ -1,47 +1,51 @@
 <h1 mat-dialog-title>Id: {{data.id}} / TypId: {{data.typid}}</h1>
 <mat-dialog-content>
-    <mat-form-field appearance="fill">
-        <mat-label>Typ</mat-label>
-        <mat-select [(value)]="data.typid" (selectionChange)="changeTypeSelect()">
-            <ng-container *ngFor="let type of daylogTypes">
-                <mat-option value='{{type.id}}' [ngStyle]="{ 'background': type.color}">{{type.type}}</mat-option>
-            </ng-container>
-        </mat-select>
-    </mat-form-field>
-    <br>
-    <ng-container *ngFor="let type of daylogTypes">
-        <ng-container *ngIf="data.typid.toString()==type.id.toString()">
-            <ng-container *ngIf="type.art==='TEXT'">
-                <mat-form-field>
-                    <mat-label>Text</mat-label>
-                    <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
-                </mat-form-field>
-            </ng-container>
-
-            <ng-container *ngIf="type.art==='NUMBER'">
-                <mat-form-field>
-                    <mat-label>Nummer</mat-label>
-                    <input matInput type="number" [(ngModel)]="data.text">
-                </mat-form-field>
-            </ng-container>
-
-            <ng-container *ngIf="type.art==='BOOL'">
-                <br>Ja/Nein<br>
-                <input type="checkbox" [checked]="(data.text === 'Y^') ? true : false" (change)="data.text = convertBool($event.target.checked)" />
-            </ng-container>
-        </ng-container>
-    </ng-container>
-    <div class="vorschlagContainer" *ngIf="sListVorschlag.length != 0">
+  <mat-form-field appearance="fill">
+    <mat-label>Typ</mat-label>
+    <mat-select [(value)]="data.typid" (selectionChange)="changeTypeSelect()">
+      @for (type of daylogTypes; track type) {
+        <mat-option value='{{type.id}}' [ngStyle]="{ 'background': type.color}">{{type.type}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <br>
+    @for (type of daylogTypes; track type) {
+      @if (data.typid.toString()==type.id.toString()) {
+        @if (type.art==='TEXT') {
+          <mat-form-field>
+            <mat-label>Text</mat-label>
+            <input (ngModelChange)="getTextVorschlag()" matInput [(ngModel)]="data.text">
+          </mat-form-field>
+        }
+        @if (type.art==='NUMBER') {
+          <mat-form-field>
+            <mat-label>Nummer</mat-label>
+            <input matInput type="number" [(ngModel)]="data.text">
+          </mat-form-field>
+        }
+        @if (type.art==='BOOL') {
+          <br>Ja/Nein<br>
+          <input type="checkbox" [checked]="(data.text === 'Y^') ? true : false" (change)="data.text = convertBool($event.target.checked)" />
+        }
+      }
+    }
+    @if (sListVorschlag.length != 0) {
+      <div class="vorschlagContainer">
         Vorschläge ({{sListVorschlag.length}}):
         <br>
-        <div class="vorschlagList" *ngFor="let sItem of sListVorschlag">
-            <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
+          @for (sItem of sListVorschlag; track sItem) {
+            <div class="vorschlagList">
+              <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
+            </div>
+          }
+          @if (data.text.length < 1) {
+            <button class="vorschlagButton mehrladenButton" (click)="vorschlagMehrLaden()"> Mehr laden...</button>
+          }
         </div>
-        <button *ngIf="data.text.length < 1" class="vorschlagButton mehrladenButton" (click)="vorschlagMehrLaden()"> Mehr laden...</button>
-    </div>
-</mat-dialog-content>
+      }
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!(data.text.toString().length > 0)">Speichern</button>
-</mat-dialog-actions>
+    <mat-dialog-actions align="end">
+      <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+      <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!(data.text.toString().length > 0)">Speichern</button>
+    </mat-dialog-actions>

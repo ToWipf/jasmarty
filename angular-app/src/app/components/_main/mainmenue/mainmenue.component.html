@@ -1,222 +1,247 @@
 <div class="fullsize">
-    <div *ngIf="bShowMenue" class="fullsize blocker" (click)="bShowMenue=false">
+  @if (bShowMenue) {
+    <div class="fullsize blocker" (click)="bShowMenue=false">
+    </div>
+  }
+
+  @if (bShowMenue) {
+    <div class="sidebarmenue background2">
+      <ng-scrollbar class="sidebar">
+        @if (bWipfActive) {
+          <div class="titlemenue">Wipf</div>
+        }
+        @if (bWipfActive) {
+          <ul class="menueli">
+            <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
+              <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
+              <span class="buttonInhalt"> Liste </span>
+            </li>
+            <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
+              <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
+              <span class="buttonInhalt"> DayLog </span>
+            </li>
+            <li (click)="selectSite('daylogKalender')" [ngClass]="{'isSelected' : selectedSite == 'daylogKalender'}">
+              <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
+              <span class="buttonInhalt"> DL Kalender </span>
+            </li>
+            <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
+              <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
+              <span class="buttonInhalt"> DL Stats </span>
+            </li>
+            <li (click)="selectSite('medien')" [ngClass]="{'isSelected' : selectedSite == 'medien'}">
+              <mat-icon svgIcon="document" aria-hidden="false" title="Medien"></mat-icon>
+              <span class="buttonInhalt"> Medien </span>
+            </li>
+            <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
+              <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
+              <span class="buttonInhalt"> Dateien </span>
+            </li>
+            <li (click)="selectSite('checkliste')" [ngClass]="{'isSelected' : selectedSite == 'checkliste'}">
+              <mat-icon svgIcon="box" aria-hidden="false" title="Checkliste"></mat-icon>
+              <span class="buttonInhalt"> CheckListe </span>
+            </li>
+          </ul>
+        }
+        <ul class="menueli">
+          <li (click)="selectSite('glowi')" [ngClass]="{'isSelected' : selectedSite == 'glowi'}">
+            <mat-icon svgIcon="picture" aria-hidden="false" title="Glowi"></mat-icon>
+            <span class="buttonInhalt"> Glowi </span>
+          </li>
+          <li (click)="selectSite('view360')" [ngClass]="{'isSelected' : selectedSite == 'view360'}">
+            <mat-icon svgIcon="picture" aria-hidden="false" title="view360"></mat-icon>
+            <span class="buttonInhalt"> View360 </span>
+          </li>
+        </ul>
+        @if (bJasmartyActive) {
+          <div class="titlemenue">LCD</div>
+        }
+        @if (bJasmartyActive) {
+          <ul class="menueli">
+            <li (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
+              <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
+              <span class="buttonInhalt"> Seiten </span>
+            </li>
+            <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
+              <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
+              <span class="buttonInhalt"> Funktionen </span>
+            </li>
+            <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
+              <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+              <span class="buttonInhalt"> Einstellungen </span>
+            </li>
+            @if (bDevActive) {
+              <li (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
+                <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
+                <span class="buttonInhalt"> Panel </span>
+              </li>
+            }
+          </ul>
+        }
+        @if (bEisenbahnMitlesenActive) {
+          <div class="titlemenue">Eisenbahn</div>
+        }
+        @if (bEisenbahnMitlesenActive) {
+          <ul class="menueli">
+            <li (click)="selectSite('eisenbahnMitlesen')" [ngClass]="{'isSelected' : selectedSite == 'eisenbahnMitlesen'}">
+              <mat-icon svgIcon="search" aria-hidden="false" title="Eisenbahn Mitlesen"></mat-icon>
+              <span class="buttonInhalt"> Mitlesen </span>
+            </li>
+          </ul>
+        }
+        @if (bTelegramActive) {
+          <div class="titlemenue">Telegram</div>
+        }
+        @if (bTelegramActive) {
+          <ul class="menueli">
+            <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
+              <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
+              <span class="buttonInhalt"> Test Chat </span>
+            </li>
+            <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
+              <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
+              <span class="buttonInhalt"> Nachrichten </span>
+            </li>
+            <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
+              <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
+              <span class="buttonInhalt"> RndEvent </span>
+            </li>
+            <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
+              <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
+              <span class="buttonInhalt"> Logs </span>
+            </li>
+            <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
+              <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
+              <span class="buttonInhalt"> Einstellungen </span>
+            </li>
+          </ul>
+        }
+        <div class="titlemenue">Syste<span (click)="showAll()">m</span>
+      </div>
+      <ul class="menueli">
+        <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
+          <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
+          <span class="buttonInhalt"> An/Abmelden </span>
+        </li>
+        <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
+          <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
+          <span class="buttonInhalt"> Wipf User </span>
+        </li>
+        <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
+          <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
+          <span class="buttonInhalt"> Einstellungen </span>
+        </li>
+        <li (click)="getActiveModules()">
+          <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
+          <span class="buttonInhalt"> Menü laden </span>
+        </li>
+        @if (bDevActive) {
+          <li (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
+            <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
+            <span class="buttonInhalt"> Debug Seite</span>
+          </li>
+        }
+      </ul>
+    </ng-scrollbar>
+  </div>
+}
+
+<div class="inhaltsseite background1">
+  @if (selectedSite==='actions') {
+    <app-jasmartyActions></app-jasmartyActions>
+  }
+  @if (selectedSite==='config') {
+    <app-jasmartyConfig></app-jasmartyConfig>
+  }
+  @if (selectedSite==='configtele') {
+    <app-telegram-config></app-telegram-config>
+  }
+  @if (selectedSite==='medien') {
+    <app-medien></app-medien>
+  }
+  @if (selectedSite==='chat') {
+    <app-telegram-chat></app-telegram-chat>
+  }
+  @if (selectedSite==='tlog') {
+    <app-telegram-log></app-telegram-log>
+  }
+  @if (selectedSite==='tmsg') {
+    <app-telegramMsg></app-telegramMsg>
+  }
+  @if (selectedSite==='wipfuservw') {
+    <app-wipfuservw></app-wipfuservw>
+    <app-authKey></app-authKey>
+  }
+  @if (selectedSite==='12864panel') {
+    <app-jasmarty12864panel></app-jasmarty12864panel>
+  }
+  @if (selectedSite==='12864pages') {
+    <app-jasmarty12864pages></app-jasmarty12864pages>
+  }
+  @if (selectedSite==='debug') {
+    <app-debugSeite></app-debugSeite>
+  }
+  @if (selectedSite==='daylog') {
+    <app-daylog></app-daylog>
+  }
+  @if (selectedSite==='filevw') {
+    <app-file-vw></app-file-vw>
+  }
+  @if (selectedSite==='settings') {
+    <app-settings></app-settings>
+  }
+  @if (selectedSite==='rndEvent') {
+    <app-rndEvent></app-rndEvent>
+  }
+  @if (selectedSite==='daylogStats') {
+    <app-daylogStats></app-daylogStats>
+  }
+  @if (selectedSite==='login') {
+    <app-login></app-login>
+    <hr>
+      <h1>QuickLinks</h1>
+      @if (bWipfActive) {
+        <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">
+          <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
+          DayLog öffnen
+        </button>
+      }
+      @if (bWipfActive) {
+        <button class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
+          <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
+          Zur Liste hinzufügen
+        </button>
+      }
+      <br>
+        <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
+        <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
+      }
+      @if (selectedSite==='eisenbahnMitlesen') {
+        <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
+      }
+      @if (selectedSite==='liste') {
+        <app-liste></app-liste>
+      }
+      @if (selectedSite==='glowi') {
+        <app-glowi></app-glowi>
+      }
+      @if (selectedSite==='view360') {
+        <app-view360></app-view360>
+      }
+      @if (selectedSite==='daylogKalender') {
+        <app-daylogKalender></app-daylogKalender>
+      }
+      @if (selectedSite==='checkliste') {
+        <app-checkliste></app-checkliste>
+      }
     </div>
 
-    <div *ngIf="bShowMenue" class="sidebarmenue background2">
-        <ng-scrollbar class="sidebar">
-            <div *ngIf="bWipfActive" class="titlemenue">Wipf</div>
-            <ul *ngIf="bWipfActive" class="menueli">
-                <li (click)="selectSite('liste')" [ngClass]="{'isSelected' : selectedSite == 'liste'}">
-                    <mat-icon svgIcon="check_all" aria-hidden="false" title="Liste"></mat-icon>
-                    <span class="buttonInhalt"> Liste </span>
-                </li>
-                <li (click)="selectSite('daylog')" [ngClass]="{'isSelected' : selectedSite == 'daylog'}">
-                    <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
-                    <span class="buttonInhalt"> DayLog </span>
-                </li>
-                <li (click)="selectSite('daylogKalender')" [ngClass]="{'isSelected' : selectedSite == 'daylogKalender'}">
-                    <mat-icon svgIcon="uhr" aria-hidden="false" title="daylogKalender"></mat-icon>
-                    <span class="buttonInhalt"> DL Kalender </span>
-                </li>
-                <li (click)="selectSite('daylogStats')" [ngClass]="{'isSelected' : selectedSite == 'daylogStats'}">
-                    <mat-icon svgIcon="search" aria-hidden="false" title="TagesLog"></mat-icon>
-                    <span class="buttonInhalt"> DL Stats </span>
-                </li>
-                <li (click)="selectSite('medien')" [ngClass]="{'isSelected' : selectedSite == 'medien'}">
-                    <mat-icon svgIcon="document" aria-hidden="false" title="Medien"></mat-icon>
-                    <span class="buttonInhalt"> Medien </span>
-                </li>
-                <li (click)="selectSite('filevw')" [ngClass]="{'isSelected' : selectedSite == 'filevw'}">
-                    <mat-icon svgIcon="picture" aria-hidden="false" title="File VW"></mat-icon>
-                    <span class="buttonInhalt"> Dateien </span>
-                </li>
-                <li (click)="selectSite('checkliste')" [ngClass]="{'isSelected' : selectedSite == 'checkliste'}">
-                    <mat-icon svgIcon="box" aria-hidden="false" title="Checkliste"></mat-icon>
-                    <span class="buttonInhalt"> CheckListe </span>
-                </li>
-            </ul>
-
-            <ul class="menueli">
-                <li (click)="selectSite('glowi')" [ngClass]="{'isSelected' : selectedSite == 'glowi'}">
-                    <mat-icon svgIcon="picture" aria-hidden="false" title="Glowi"></mat-icon>
-                    <span class="buttonInhalt"> Glowi </span>
-                </li>
-                <li (click)="selectSite('view360')" [ngClass]="{'isSelected' : selectedSite == 'view360'}">
-                    <mat-icon svgIcon="picture" aria-hidden="false" title="view360"></mat-icon>
-                    <span class="buttonInhalt"> View360 </span>
-                </li>
-            </ul>
-
-            <div *ngIf="bJasmartyActive" class="titlemenue">LCD</div>
-            <ul *ngIf="bJasmartyActive" class="menueli">
-                <li (click)="selectSite('12864pages')" [ngClass]="{'isSelected' : selectedSite == '12864pages'}">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Seiten"></mat-icon>
-                    <span class="buttonInhalt"> Seiten </span>
-                </li>
-                <li (click)="selectSite('actions')" [ngClass]="{'isSelected' : selectedSite == 'actions'}">
-                    <mat-icon svgIcon="services" aria-hidden="false" title="Funktionen"></mat-icon>
-                    <span class="buttonInhalt"> Funktionen </span>
-                </li>
-                <li (click)="selectSite('config')" [ngClass]="{'isSelected' : selectedSite == 'config'}">
-                    <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                    <span class="buttonInhalt"> Einstellungen </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="selectSite('12864panel')" [ngClass]="{'isSelected' : selectedSite == '12864panel'}">
-                    <mat-icon svgIcon="box" aria-hidden="false" title="Startseite"></mat-icon>
-                    <span class="buttonInhalt"> Panel </span>
-                </li>
-            </ul>
-
-            <div *ngIf="bEisenbahnMitlesenActive" class="titlemenue">Eisenbahn</div>
-            <ul *ngIf="bEisenbahnMitlesenActive" class="menueli">
-                <li (click)="selectSite('eisenbahnMitlesen')" [ngClass]="{'isSelected' : selectedSite == 'eisenbahnMitlesen'}">
-                    <mat-icon svgIcon="search" aria-hidden="false" title="Eisenbahn Mitlesen"></mat-icon>
-                    <span class="buttonInhalt"> Mitlesen </span>
-                </li>
-            </ul>
-
-            <div *ngIf="bTelegramActive" class="titlemenue">Telegram</div>
-            <ul *ngIf="bTelegramActive" class="menueli">
-                <li (click)="selectSite('chat')" [ngClass]="{'isSelected' : selectedSite == 'chat'}">
-                    <mat-icon svgIcon="puzzle" aria-hidden="false" title="Logs"></mat-icon>
-                    <span class="buttonInhalt"> Test Chat </span>
-                </li>
-                <li (click)="selectSite('tmsg')" [ngClass]="{'isSelected' : selectedSite == 'tmsg'}">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Logs"></mat-icon>
-                    <span class="buttonInhalt"> Nachrichten </span>
-                </li>
-                <li (click)="selectSite('rndEvent')" [ngClass]="{'isSelected' : selectedSite == 'rndEvent'}">
-                    <mat-icon svgIcon="info" aria-hidden="false" title="RndEvent"></mat-icon>
-                    <span class="buttonInhalt"> RndEvent </span>
-                </li>
-                <li (click)="selectSite('tlog')" [ngClass]="{'isSelected' : selectedSite == 'tlog'}">
-                    <mat-icon svgIcon="search" aria-hidden="false" title="Logs"></mat-icon>
-                    <span class="buttonInhalt"> Logs </span>
-                </li>
-                <li (click)="selectSite('configtele')" [ngClass]="{'isSelected' : selectedSite == 'configtele'}">
-                    <mat-icon svgIcon="settings" aria-hidden="false" title="Einstellungen"></mat-icon>
-                    <span class="buttonInhalt"> Einstellungen </span>
-                </li>
-            </ul>
-
-            <div class="titlemenue">Syste<span (click)="showAll()">m</span>
-            </div>
-            <ul class="menueli">
-                <li (click)="selectSite('login')" [ngClass]="{'isSelected' : selectedSite == 'login'}">
-                    <mat-icon svgIcon="user" aria-hidden="false" title="login"></mat-icon>
-                    <span class="buttonInhalt"> An/Abmelden </span>
-                </li>
-                <li (click)="selectSite('wipfuservw')" [ngClass]="{'isSelected' : selectedSite == 'wipfuservw'}">
-                    <mat-icon svgIcon="user" aria-hidden="false" title="Wipf User"></mat-icon>
-                    <span class="buttonInhalt"> Wipf User </span>
-                </li>
-                <li (click)="selectSite('settings')" [ngClass]="{'isSelected' : selectedSite == 'settings'}">
-                    <mat-icon svgIcon="settings" aria-hidden="false" title="Roheinstellungen"></mat-icon>
-                    <span class="buttonInhalt"> Einstellungen </span>
-                </li>
-                <li (click)="getActiveModules()">
-                    <mat-icon svgIcon="restart" aria-hidden="false" title="Menü neu Laden"></mat-icon>
-                    <span class="buttonInhalt"> Menü laden </span>
-                </li>
-                <li *ngIf="bDevActive" (click)="selectSite('debug')" [ngClass]="{'isSelected' : selectedSite == 'debug'}">
-                    <mat-icon svgIcon="support" aria-hidden="false" title="Debug"></mat-icon>
-                    <span class="buttonInhalt"> Debug Seite</span>
-                </li>
-            </ul>
-        </ng-scrollbar>
-    </div>
-
-    <div class="inhaltsseite background1">
-        <ng-container *ngIf="selectedSite==='actions'">
-            <app-jasmartyActions></app-jasmartyActions>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='config'">
-            <app-jasmartyConfig></app-jasmartyConfig>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='configtele'">
-            <app-telegram-config></app-telegram-config>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='medien'">
-            <app-medien></app-medien>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='chat'">
-            <app-telegram-chat></app-telegram-chat>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='tlog'">
-            <app-telegram-log></app-telegram-log>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='tmsg'">
-            <app-telegramMsg></app-telegramMsg>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='wipfuservw'">
-            <app-wipfuservw></app-wipfuservw>
-            <app-authKey></app-authKey>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='12864panel'">
-            <app-jasmarty12864panel></app-jasmarty12864panel>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='12864pages'">
-            <app-jasmarty12864pages></app-jasmarty12864pages>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='debug'">
-            <app-debugSeite></app-debugSeite>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='daylog'">
-            <app-daylog></app-daylog>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='filevw'">
-            <app-file-vw></app-file-vw>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='settings'">
-            <app-settings></app-settings>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='rndEvent'">
-            <app-rndEvent></app-rndEvent>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='daylogStats'">
-            <app-daylogStats></app-daylogStats>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='login'">
-
-            <app-login></app-login>
-            <hr>
-            <h1>QuickLinks</h1>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='daylog'">
-                <mat-icon svgIcon="uhr" aria-hidden="false" title="TagesLog"></mat-icon>
-                DayLog öffnen
-            </button>
-            <button *ngIf="bWipfActive" class="btn btn-wipf-default loginseitebutton" (click)="addThingToList()">
-                <mat-icon svgIcon="plus" aria-hidden="false" title="Add Liste"></mat-icon>
-                Zur Liste hinzufügen
-            </button>
-            <br>
-            <button class="btn btn-wipf-default loginseitebutton" (click)="useQuickLink('view360')">View360</button>
-            <button class="btn btn-wipf-default loginseitebutton" (click)="selectedSite='glowi'">Glowi</button>
-
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='eisenbahnMitlesen'">
-            <app-eisenbahn-mitlesen></app-eisenbahn-mitlesen>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='liste'">
-            <app-liste></app-liste>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='glowi'">
-            <app-glowi></app-glowi>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='view360'">
-            <app-view360></app-view360>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='daylogKalender'">
-            <app-daylogKalender></app-daylogKalender>
-        </ng-container>
-        <ng-container *ngIf="selectedSite==='checkliste'">
-            <app-checkliste></app-checkliste>
-        </ng-container>
-    </div>
-
-    <app-footer *ngIf="!bHideMenueButtonAndFooter" class="myfooter"></app-footer>
-    <button *ngIf="!bHideMenueButtonAndFooter" class="mainMenueHButton" (click)="bShowMenue=!bShowMenue">
+    @if (!bHideMenueButtonAndFooter) {
+      <app-footer class="myfooter"></app-footer>
+    }
+    @if (!bHideMenueButtonAndFooter) {
+      <button class="mainMenueHButton" (click)="bShowMenue=!bShowMenue">
         <mat-icon svgIcon="home" aria-hidden="false" title="Menü"></mat-icon>
-    </button>
+      </button>
+    }
 
-</div>
+  </div>

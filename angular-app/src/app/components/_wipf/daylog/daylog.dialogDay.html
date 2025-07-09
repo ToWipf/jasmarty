@@ -1,26 +1,28 @@
 <h1 mat-dialog-title>Id: {{data.id}}</h1>
 <mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Datum</mat-label>
+    <input matInput type="date" [(ngModel)]="data.date">
+  </mat-form-field>
+  <br>
     <mat-form-field>
-        <mat-label>Datum</mat-label>
-        <input matInput type="date" [(ngModel)]="data.date">
-    </mat-form-field>
-    <br>
-    <mat-form-field>
-        <mat-label>Tagestext</mat-label>
-        <input matInput [(ngModel)]="data.tagestext">
+      <mat-label>Tagestext</mat-label>
+      <input matInput [(ngModel)]="data.tagestext">
     </mat-form-field>
 
-    <div *ngIf="data?.tagestext?.length === 0" style="margin-bottom: 4px;">
+    @if (data?.tagestext?.length === 0) {
+      <div style="margin-bottom: 4px;">
         <!-- TODO: ausbauen, laden von DB -->
         <button class="btn btn-wipf-mini" (click)="setText('A HO')">HO</button>
         <button class="btn btn-wipf-mini" (click)="setText('A NM')">NM</button>
         <button class="btn btn-wipf-mini" (click)="setText('Urlaub')">U</button>
         <button class="btn btn-wipf-mini" (click)="setText('Feiertag')">F</button>
         <button class="btn btn-wipf-mini" (click)="setText('Krank')">K</button>
-    </div>
+      </div>
+    }
 
-</mat-dialog-content>
-<mat-dialog-actions align="end">
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
     <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
     <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-</mat-dialog-actions>
+  </mat-dialog-actions>

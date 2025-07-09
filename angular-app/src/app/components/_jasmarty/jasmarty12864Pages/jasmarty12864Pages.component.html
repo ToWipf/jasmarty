@@ -1,141 +1,118 @@
-<ng-container *ngIf="lcdDescription">
-    <h1> Seite: {{lcdDescription.id}} - {{lcdDescription.name}}</h1>
-
-    <button type="button" class="btn btn-wipf-default pfeile" (click)="pageLast()" title="Letzte Seite">←</button>
-    <button type="button" class="btn btn-wipf-default pfeile" (click)="pageNext()" title="Nächste Seite">→</button>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Seitenname</mat-label>
-        <input matInput [(ngModel)]="lcdDescription.name">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill">
-        <mat-label>Timeout Zeit</mat-label>
-        <input matInput type="number" min="0" [(ngModel)]="lcdDescription.timeoutTime">
-    </mat-form-field>
-
-    <button type="button" class="btn btn-wipf-default" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
-    <button type="button" class="btn btn-green" (click)="sendSelectedPage()" title="Speichern und zeigen">
-        <mat-icon svgIcon="check_circle" aria-hidden="false"></mat-icon>
-    </button>
-
-    <button type="button" class="btn btn-wipf-default" (click)="openariablenHilfeDialog()" title="Variablen anzeigen">
-        <mat-icon svgIcon="info" aria-hidden="false"></mat-icon>
-    </button>
-    <hr>
-
+@if (lcdDescription) {
+  <h1> Seite: {{lcdDescription.id}} - {{lcdDescription.name}}</h1>
+  <button type="button" class="btn btn-wipf-default pfeile" (click)="pageLast()" title="Letzte Seite">←</button>
+  <button type="button" class="btn btn-wipf-default pfeile" (click)="pageNext()" title="Nächste Seite">→</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Seitenname</mat-label>
+    <input matInput [(ngModel)]="lcdDescription.name">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Timeout Zeit</mat-label>
+    <input matInput type="number" min="0" [(ngModel)]="lcdDescription.timeoutTime">
+  </mat-form-field>
+  <button type="button" class="btn btn-wipf-default" (click)="addDynLine()">Dynamische Anweisung hinzufügen</button>
+  <button type="button" class="btn btn-green" (click)="sendSelectedPage()" title="Speichern und zeigen">
+    <mat-icon svgIcon="check_circle" aria-hidden="false"></mat-icon>
+  </button>
+  <button type="button" class="btn btn-wipf-default" (click)="openariablenHilfeDialog()" title="Variablen anzeigen">
+    <mat-icon svgIcon="info" aria-hidden="false"></mat-icon>
+  </button>
+  <hr>
     <div class="images">
-
-        <!-- Hintergrundbild Bild hochladen: -->
-        <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
-
-        <!-- <button type="button" (click)="fileInput.click()"> -->
-        <span>Hintergrundbild Bild hochladen</span>
-        <!-- <input #fileInput type="file" (change)="imageChangedEvent($event)" style="display:none;" /> -->
-        <input type="file" (change)="fileChangeHandler($event)">
-        <!-- </button> -->
-
-        <ng-container *ngIf="imageoutput?.base64">
-            <img [src]="imageoutput?.base64" alt="" height="128" width="256">
-
-            <!-- <mat-form-field appearance="fill">
-                <mat-label>Kontrast</mat-label>
-                <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
-            </mat-form-field> -->
-            <!-- TODO: https://stackoverflow.com/questions/48254696/angular-slider-with-scroll -->
-
-            <!-- <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider> -->
-            <mat-slider min="0" max="256" step="1" aria-label="units">
-                <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
-            </mat-slider>
-            Kontrast: {{nKontrast}}/256
-
-        </ng-container>
-
-        <ng-container *ngIf="lcdDescription.staticData">
-            Aktelles Bild:
-
-            <table>
-                <div *ngFor="let xA of lcdDescription.staticData; let x = index">
-                    <tr>
-                        <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.staticData[x][y] , 'off': !lcdDescription.staticData[x][y] }">
-                        </td>
-                    </tr>
-                </div>
-            </table>
-            Aktelles Bild löschen:
-            <button class="btn btn-danger" (click)="clearPic()">löschen</button>
-        </ng-container>
-    </div>
-
-    <hr>
-    <h3>Inhalt</h3>
-
-    <ng-scrollbar class="pscroll" track="all">
-        <div *ngFor="let dy of lcdDescription.dynamicData; let i = index" class="dyConfig">
-
-            <mat-form-field appearance="fill">
-                <mat-label>Typ</mat-label>
-                <mat-select [(value)]="lcdDescription.dynamicData[i].type">
-                    <mat-option value="TEXT">Text</mat-option>
-                    <mat-option value="CIRCLE_EMPTY">Kreis</mat-option>
-                    <mat-option value="CIRCLE_FILL">Kreis gefüllt</mat-option>
-                    <mat-option value="LINE_H">Linie horizontal</mat-option>
-                    <mat-option value="LINE_V">Linie vertikal</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <ng-container *ngIf="lcdDescription.dynamicData[i].type === 'TEXT'">
-                <mat-form-field appearance="fill">
-                    <mat-label>Schriftart</mat-label>
-                    <mat-select [(value)]="lcdDescription.dynamicData[i].font">
-                        <mat-option value="FONT_57_ON">57 an</mat-option>
-                        <mat-option value="FONT_68_ON">68 an</mat-option>
-                        <mat-option value="FONT_57_OFF">57 aus</mat-option>
-                        <mat-option value="FONT_68_OFF">68 aus</mat-option>
-                        <mat-option value="FONT_57_INVERT">57 invers</mat-option>
-                        <mat-option value="FONT_68_INVERT">68 invers</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Data</mat-label>
-                    <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
-                </mat-form-field>
-            </ng-container>
-
-            <ng-container *ngIf="lcdDescription.dynamicData[i].type !== 'TEXT'">
-                <mat-form-field appearance="fill">
-                    <mat-label>Art</mat-label>
-                    <mat-select [(value)]="lcdDescription.dynamicData[i].font">
-                        <mat-option value="ON">an</mat-option>
-                        <mat-option value="OFF">aus</mat-option>
-                        <mat-option value="INVERT">invers</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Parameter</mat-label>
-                    <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
-                </mat-form-field>
-            </ng-container>
-
-
-            <mat-form-field appearance="fill">
-                <mat-label>x</mat-label>
-                <input matInput [(ngModel)]="lcdDescription.dynamicData[i].x">
-            </mat-form-field>
-
-            <mat-form-field appearance="fill">
-                <mat-label>y</mat-label>
-                <input matInput [(ngModel)]="lcdDescription.dynamicData[i].y">
-            </mat-form-field>
-
-            <button (click)="delDynLine(i)">Zeile Löschen</button>
+      <!-- Hintergrundbild Bild hochladen: -->
+      <!-- <input type="file" (change)="fileChangeEvent($event)" /> -->
+      <!-- <button type="button" (click)="fileInput.click()"> -->
+      <span>Hintergrundbild Bild hochladen</span>
+      <!-- <input #fileInput type="file" (change)="imageChangedEvent($event)" style="display:none;" /> -->
+      <input type="file" (change)="fileChangeHandler($event)">
+    <!-- </button> -->
+    @if (imageoutput?.base64) {
+      <img [src]="imageoutput?.base64" alt="" height="128" width="256">
+      <!-- <mat-form-field appearance="fill">
+      <mat-label>Kontrast</mat-label>
+      <input matInput type="number" max="256" min="0" (ngModelChange)="convertImgToArray()" [(ngModel)]="nKontrast" placeholder="128">
+    </mat-form-field> -->
+    <!-- TODO: https://stackoverflow.com/questions/48254696/angular-slider-with-scroll -->
+    <!-- <mat-slider thumbLabel [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()" min="1" max="256" step="1" value="128" aria-label="units"></mat-slider> -->
+    <mat-slider min="0" max="256" step="1" aria-label="units">
+      <input matSliderThumb [(ngModel)]="nKontrast" (ngModelChange)="convertImgToArray()">
+    </mat-slider>
+    Kontrast: {{nKontrast}}/256
+  }
+  @if (lcdDescription.staticData) {
+    Aktelles Bild:
+    <table>
+      @for (xA of lcdDescription.staticData; track xA; let x = $index) {
+        <div>
+          <tr>
+            @for (yA of xA; track yA; let y = $index) {
+              <td title="X:{{x}} Y:{{y}}" [ngClass]="{ 'on': lcdDescription.staticData[x][y] , 'off': !lcdDescription.staticData[x][y] }">
+              </td>
+            }
+          </tr>
         </div>
-    </ng-scrollbar>
-
-
-
-</ng-container>
+      }
+    </table>
+    Aktelles Bild löschen:
+    <button class="btn btn-danger" (click)="clearPic()">löschen</button>
+  }
+</div>
+<hr>
+  <h3>Inhalt</h3>
+  <ng-scrollbar class="pscroll" track="all">
+    @for (dy of lcdDescription.dynamicData; track dy; let i = $index) {
+      <div class="dyConfig">
+        <mat-form-field appearance="fill">
+          <mat-label>Typ</mat-label>
+          <mat-select [(value)]="lcdDescription.dynamicData[i].type">
+            <mat-option value="TEXT">Text</mat-option>
+            <mat-option value="CIRCLE_EMPTY">Kreis</mat-option>
+            <mat-option value="CIRCLE_FILL">Kreis gefüllt</mat-option>
+            <mat-option value="LINE_H">Linie horizontal</mat-option>
+            <mat-option value="LINE_V">Linie vertikal</mat-option>
+          </mat-select>
+        </mat-form-field>
+        @if (lcdDescription.dynamicData[i].type === 'TEXT') {
+          <mat-form-field appearance="fill">
+            <mat-label>Schriftart</mat-label>
+            <mat-select [(value)]="lcdDescription.dynamicData[i].font">
+              <mat-option value="FONT_57_ON">57 an</mat-option>
+              <mat-option value="FONT_68_ON">68 an</mat-option>
+              <mat-option value="FONT_57_OFF">57 aus</mat-option>
+              <mat-option value="FONT_68_OFF">68 aus</mat-option>
+              <mat-option value="FONT_57_INVERT">57 invers</mat-option>
+              <mat-option value="FONT_68_INVERT">68 invers</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Data</mat-label>
+            <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
+          </mat-form-field>
+        }
+        @if (lcdDescription.dynamicData[i].type !== 'TEXT') {
+          <mat-form-field appearance="fill">
+            <mat-label>Art</mat-label>
+            <mat-select [(value)]="lcdDescription.dynamicData[i].font">
+              <mat-option value="ON">an</mat-option>
+              <mat-option value="OFF">aus</mat-option>
+              <mat-option value="INVERT">invers</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Parameter</mat-label>
+            <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
+          </mat-form-field>
+        }
+        <mat-form-field appearance="fill">
+          <mat-label>x</mat-label>
+          <input matInput [(ngModel)]="lcdDescription.dynamicData[i].x">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>y</mat-label>
+          <input matInput [(ngModel)]="lcdDescription.dynamicData[i].y">
+        </mat-form-field>
+        <button (click)="delDynLine(i)">Zeile Löschen</button>
+      </div>
+    }
+  </ng-scrollbar>
+}

@@ -1,133 +1,145 @@
 <h3>Daylog {{dateForLoad?.date}}</h3>
 
 <ng-scrollbar class="pscrollConfigline" track="horizontal">
-    <ng-container *ngIf="bShowWarning">
-        Es ist ein Fehler aufgetreten!
-        <input type="checkbox" [(ngModel)]="bShowWarning" />
-    </ng-container>
+  @if (bShowWarning) {
+    Es ist ein Fehler aufgetreten!
+    <input type="checkbox" [(ngModel)]="bShowWarning" />
+  }
 
-    <div class="configline">
-        <div class="iconbox">
-            Neu Laden:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
-                <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
+  <div class="configline">
+    <div class="iconbox">
+      Neu Laden:
+      <button class="btn btn-wipf-default btn-for-icon" (click)="ngOnInit()">
+        <mat-icon svgIcon="restart" aria-hidden="false" title="neu Laden"></mat-icon>
+      </button>
 
-            <br>
-            Zeige Alles:
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
-            <button class="btn btn-wipf-default btn-for-icon" *ngIf="!bShowAllTableColumns" (click)="showAllTableColumns()">
-                <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
-            </button>
+      <br>
+        Zeige Alles:
+        @if (bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="ok" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+        @if (!bShowAllTableColumns) {
+          <button class="btn btn-wipf-default btn-for-icon" (click)="showAllTableColumns()">
+            <mat-icon svgIcon="round" aria-hidden="false" title="neu Laden"></mat-icon>
+          </button>
+        }
+      </div>
+
+      <div class="iconbox">
+        Typ VW:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
+          <mat-icon svgIcon="support" aria-hidden="false" title="Typenverwaltung öffnen"></mat-icon>
+        </button>
+
+        <br>
+          Alle Events:
+          <button class="btn btn-wipf-default btn-for-icon" (click)="loadAllEventsViaVar()">
+            <mat-icon svgIcon="download" aria-hidden="false" title="Lade alle Events"></mat-icon>
+          </button>
         </div>
 
-        <div class="iconbox">
-            Typ VW:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="openDialogTypeVW()">
-                <mat-icon svgIcon="support" aria-hidden="false" title="Typenverwaltung öffnen"></mat-icon>
-            </button>
-
-            <br>
-            Alle Events:
-            <button class="btn btn-wipf-default btn-for-icon" (click)="loadAllEventsViaVar()">
-                <mat-icon svgIcon="download" aria-hidden="false" title="Lade alle Events"></mat-icon>
-            </button>
-        </div>
-
-        <div class="iconbox monYYYYSchalter" *ngIf="bShowDayTable">
+        @if (bShowDayTable) {
+          <div class="iconbox monYYYYSchalter">
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
             <button class="btn btun-wipf-default monyyyButton" (click)="setYYYY()"> Jahr: {{sFilterYYYY}}</button>
             <button class="btn btn-wipf-default btn-for-icon" (click)="changeYYYY(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
             <br>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
-            <button class="btn btun-wipf-default monyyyButton" (click)="setMonat()"> Monat: {{sFilterMON}}</button>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
-        </div>
+              <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(true)"><mat-icon svgIcon="minus" aria-hidden="false" title="minus"></mat-icon></button>
+              <button class="btn btun-wipf-default monyyyButton" (click)="setMonat()"> Monat: {{sFilterMON}}</button>
+              <button class="btn btn-wipf-default btn-for-icon" (click)="changeMonat(false)"><mat-icon svgIcon="plus" aria-hidden="false" title="plus"></mat-icon></button>
+            </div>
+          }
 
-        <div class="box">
+          <div class="box">
             <mat-form-field>
-                <mat-label>Event Filtern</mat-label>
-                <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilterTextEvent">
+              <mat-label>Event Filtern</mat-label>
+              <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilterTextEvent">
             </mat-form-field>
-        </div>
+          </div>
 
-        <div class="box" *ngIf="!bShowDayTable">
-            <mat-form-field appearance="fill">
+          @if (!bShowDayTable) {
+            <div class="box">
+              <mat-form-field appearance="fill">
                 <mat-label>Event Typ Filtern</mat-label>
                 <mat-select [(value)]="selectedEventTypeFilter">
-                    <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
-                    <mat-option *ngFor="let itemEvent of typelistForEventFilter" [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+                  <mat-option [value]="undefined"><b>Kein Filter</b></mat-option>
+                  @for (itemEvent of typelistForEventFilter; track itemEvent) {
+                    <mat-option [value]="itemEvent" [ngStyle]="{ 'background': itemEvent.color}">{{itemEvent.type}}</mat-option>
+                  }
                 </mat-select>
-            </mat-form-field>
+              </mat-form-field>
+            </div>
+          }
         </div>
-    </div>
-</ng-scrollbar>
+      </ng-scrollbar>
 
-<ng-scrollbar class="pscrollTabellen" track="horizontal">
-    <div class="gridRow_ohne_rand">
-        <div class="tabelleR" [ngClass]="{'hide': !bShowDayTable, 'tabelleRBig': !dateForLoad.date}">
+      <ng-scrollbar class="pscrollTabellen" track="horizontal">
+        <div class="gridRow_ohne_rand">
+          <div class="tabelleR" [ngClass]="{'hide': !bShowDayTable, 'tabelleRBig': !dateForLoad.date}">
             <ng-scrollbar class="pscroll" track="vertical">
-                <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
-                    <ng-container matColumnDef="id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-                        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-                    </ng-container>
+              <table mat-table [dataSource]="daylistDataSource" matSort matSortActive="date" matSortDirection="desc" class="mat-elevation-z8">
+                <ng-container matColumnDef="id">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                  <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+                </ng-container>
 
-                    <ng-container matColumnDef="date">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableDate">Datum</th>
-                        <td mat-cell *matCellDef="let element" [ngClass]="{'heuteTag': heuteDatum === element.date}">
-                            {{element.date}}
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="date">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="tableDate">Datum</th>
+                  <td mat-cell *matCellDef="let element" [ngClass]="{'heuteTag': heuteDatum === element.date}">
+                    {{element.date}}
+                  </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="day">
-                        <th mat-header-cell *matHeaderCellDef>Tag</th>
-                        <td mat-cell *matCellDef="let element" [ngClass]="{'lightgray': element.extrafeld_wochentag.includes('S')}">
-                            {{element.extrafeld_wochentag}}
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="day">
+                  <th mat-header-cell *matHeaderCellDef>Tag</th>
+                  <td mat-cell *matCellDef="let element" [ngClass]="{'lightgray': element.extrafeld_wochentag.includes('S')}">
+                    {{element.extrafeld_wochentag}}
+                  </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="tagestext">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                            Tagestext
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            {{ element.tagestext }}
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="tagestext">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Tagestext
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.tagestext }}
+                  </td>
+                </ng-container>
 
-                    <ng-container matColumnDef="button">
-                        <th th mat-header-cell *matHeaderCellDef>
-                            <div class="tableVW">
-                                <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
-                                    <mat-icon svgIcon="plus" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
-                                </button>
-                                <ng-container *ngIf="bShowAllTableColumns">
-                                    ∑: {{daylistDataSource?._data?._value?.length}}
-                                </ng-container>
-                            </div>
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
-                                <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                            </button>
-                            <button *ngIf="bShowAllTableColumns" class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
-                                <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                            </button>
-                        </td>
-                    </ng-container>
+                <ng-container matColumnDef="button">
+                  <th th mat-header-cell *matHeaderCellDef>
+                    <div class="tableVW">
+                      <button class="btn btn-wipf-default btn-for-icon" (click)="newDay()">
+                        <mat-icon svgIcon="plus" aria-hidden="false" title="Neuen Tag erstellen"></mat-icon>
+                      </button>
+                      @if (bShowAllTableColumns) {
+                        ∑: {{daylistDataSource?._data?._value?.length}}
+                      }
+                    </div>
+                  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="btn btn-wipf-default btn-for-icon" (click)="editDay(element)">
+                      <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+                    </button>
+                    @if (bShowAllTableColumns) {
+                      <button class="btn btn-wipf-default btn-for-icon" (click)="deleteDay(element)">
+                        <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+                      </button>
+                    }
+                  </td>
+                </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="daylistDisplayedColumns"></tr>
-                    <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="this.dateForLoad.id == (row.id)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
-                </table>
+                <tr mat-header-row *matHeaderRowDef="daylistDisplayedColumns"></tr>
+                <tr mat-row (click)="loadEventsByDaySetVar(row)" [class.day-row-is-clicked]="this.dateForLoad.id == (row.id)" *matRowDef="let row; columns: daylistDisplayedColumns"></tr>
+              </table>
             </ng-scrollbar>
-        </div>
-        <div class="tabelleL">
+          </div>
+          <div class="tabelleL">
             <ng-scrollbar class="pscroll" track="vertical">
-                <app-daylog-eventlist [filterEventType]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTableColumns" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
+              <app-daylog-eventlist [filterEventType]="selectedEventTypeFilter" [filterTextEvent]="sFilterTextEvent" [showAllTableColumns]="bShowAllTableColumns" [dateForLoad]="dateForLoad" [daylogTypes]="daylogTypes"></app-daylog-eventlist>
             </ng-scrollbar>
+          </div>
         </div>
-    </div>
-</ng-scrollbar>
+      </ng-scrollbar>

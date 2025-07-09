@@ -1,59 +1,63 @@
 <h3>RndEvent Liste</h3>
 
 <div class="configline">
-    <div class="box">
-        <mat-form-field>
-            <mat-label>Filtern</mat-label>
-            <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
-        </mat-form-field>
-    </div>
+  <div class="box">
+    <mat-form-field>
+      <mat-label>Filtern</mat-label>
+      <input matInput (ngModelChange)="applyFilter()" [(ngModel)]="sFilter">
+    </mat-form-field>
+  </div>
 </div>
 
 <ng-scrollbar class="pscroll">
-    <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
 
-        <ng-container matColumnDef="eventtext">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Event Text </th>
-            <td mat-cell *matCellDef="let element">
-                {{element.eventtext}}
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="eventtext">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Event Text </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.eventtext}}
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="active">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktiv </th>
-            <td mat-cell *matCellDef="let element">
-                <mat-icon *ngIf="!element.active" svgIcon="round" aria-hidden="false" title="Nein"></mat-icon>
-                <mat-icon *ngIf="element.active" svgIcon="ok" aria-hidden="false" title="Ja"></mat-icon>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Aktiv </th>
+      <td mat-cell *matCellDef="let element">
+        @if (!element.active) {
+          <mat-icon svgIcon="round" aria-hidden="false" title="Nein"></mat-icon>
+        }
+        @if (element.active) {
+          <mat-icon svgIcon="ok" aria-hidden="false" title="Ja"></mat-icon>
+        }
+      </td>
+    </ng-container>
 
-        <ng-container matColumnDef="button">
-            <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
-            <th th mat-header-cell *matHeaderCellDef>
-                <div class="tableVW">
-                    <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
-                        <mat-icon svgIcon="plus" aria-hidden="false" title="Neu"></mat-icon>
-                    </button>
-                    ∑: {{dataSource?._data?._value?.length}}
-                </div>
-            </th>
-            <td mat-cell *matCellDef="let element">
-                <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
-                    <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
-                </button>
-                <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
-                    <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
-                </button>
-            </td>
-        </ng-container>
+    <ng-container matColumnDef="button">
+      <!-- <th mat-header-cell *matHeaderCellDef><button class="btn btn-wipf-default" (click)="newItem()">Neu</button></th> -->
+      <th th mat-header-cell *matHeaderCellDef>
+        <div class="tableVW">
+          <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
+            <mat-icon svgIcon="plus" aria-hidden="false" title="Neu"></mat-icon>
+          </button>
+          ∑: {{dataSource?._data?._value?.length}}
+        </div>
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button class="btn btn-wipf-default btn-for-icon" (click)="openDialog(element)">
+          <mat-icon svgIcon="edit" aria-hidden="false" title="Bearbeiten"></mat-icon>
+        </button>
+        <button class="btn btn-wipf-default btn-for-icon" (click)="deleteItem(element)">
+          <mat-icon svgIcon="trash" aria-hidden="false" title="Löschen"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row (click)="openDialog(row)" *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </ng-scrollbar>

@@ -10,6 +10,9 @@ npm install
 # perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/color-picker.component.d.ts
 # perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/color-picker.directive.d.ts
 
+# #TODO Fix ngx-photo-editor
+perl -pi -e 's/~//g' node_modules/ngx-photo-editor/photo-editor.css
+
 echo "Setup end"
 
 # install ng

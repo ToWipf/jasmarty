@@ -1,14 +1,17 @@
-<ng-container *ngIf="screen">
-    <table>
-        <div *ngFor="let xA of screen; let x = index">
-            <tr>
-                <td *ngFor="let yA of xA; let y = index" title="X:{{x}} Y:{{y}}" (click)="setBlock(x,y)" [ngClass]="{ 'on': screen[x][y] , 'off': !screen[x][y] }">
-
-                </td>
-            </tr>
-        </div>
-    </table>
-</ng-container>
+@if (screen) {
+  <table>
+    @for (xA of screen; track xA; let x = $index) {
+      <div>
+        <tr>
+          @for (yA of xA; track yA; let y = $index) {
+            <td title="X:{{x}} Y:{{y}}" (click)="setBlock(x,y)" [ngClass]="{ 'on': screen[x][y] , 'off': !screen[x][y] }">
+            </td>
+          }
+        </tr>
+      </div>
+    }
+  </table>
+}
 
 <button (click)="send()">Senden</button>
 
