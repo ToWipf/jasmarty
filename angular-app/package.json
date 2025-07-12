@@ -1,6 +1,6 @@
 {
   "name": "jasmarty-app",
-  "version": "2.4.69",
+  "version": "2.4.70",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 3000",
@@ -25,7 +25,7 @@
     "@egjs/ngx-view360": "4.0.0-beta.7",
     "@ng-bootstrap/ng-bootstrap": "19.0.1",
     "@popperjs/core": "2.11.8",
-    "@swimlane/ngx-charts": "20.5.0",
+    "@swimlane/ngx-charts": "23.0.0-alpha.0",
     "bootstrap": "5.3.7",
     "javascript-blowfish": "1.0.4",
     "ngx-color-picker": "17.0.0",
@@ -38,7 +38,6 @@
     "@angular/build": "^20.0.5",
     "@angular/cli": "20.0.5",
     "@angular/compiler-cli": "20.0.6",
-    "@types/node": "20.14.9",
     "less": "^4.2.0",
     "typescript": "5.8.3"
   }
