@@ -68,7 +68,7 @@ export class DayLogComponent implements OnInit {
   }
 
   public loadEventsByDaySetVar(ddl: DaylogDay): void {
-    this.daylistDisplayedColumns = ['date', 'tagestext', 'button'];
+    this.daylistDisplayedColumns = ['day', 'date', 'tagestext', 'button'];
     this.dateForLoad = ddl;
   }
 
