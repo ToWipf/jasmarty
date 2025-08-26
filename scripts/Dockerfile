@@ -1,5 +1,16 @@
-FROM openjdk:24
+FROM openjdk:24-jdk-slim
 
+# Non-root user einrichten
+RUN addgroup --system app && adduser --system --ingroup app app
+USER app
+
+# App kopieren
+WORKDIR /app
 COPY jasmarty.jar /app/jasmarty.jar
-CMD ["java", "--add-opens", "java.base/java.lang=ALL-UNNAMED", "-Xmx128m", "-Dlog4j2.formatMsgNoLookups=True", "-jar", "/app/jasmarty.jar"]
-HEALTHCHECK --interval=120s --timeout=10s --retries=3 --start-period=30s CMD curl --user check:check --fail http://localhost:8080/wipf/up || kill 1
+
+# Startkommando
+CMD ["java", "--enable-native-access=io.quarkiverse.jdbc.sqlite,com.fazecast.jSerialComm", "-Xmx128m", "-jar", "/app/jasmarty.jar"]
+
+# Healthcheck
+HEALTHCHECK --interval=120s --timeout=10s --retries=3 --start-period=30s \
+    CMD curl --user check:check --fail http://localhost:8080/wipf/up || kill 1
