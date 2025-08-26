@@ -9,7 +9,7 @@ WORKDIR /app
 COPY jasmarty.jar /app/jasmarty.jar
 
 # Startkommando
-CMD ["java", "--enable-native-access=io.quarkiverse.jdbc.sqlite,com.fazecast.jSerialComm", "-Xmx128m", "-jar", "/app/jasmarty.jar"]
+CMD ["java", "--enable-native-access=ALL-UNNAMED", "-Xmx128m", "-jar", "/app/jasmarty.jar"]
 
 # Healthcheck
 HEALTHCHECK --interval=120s --timeout=10s --retries=3 --start-period=30s \
