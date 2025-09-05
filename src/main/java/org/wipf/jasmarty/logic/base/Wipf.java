@@ -554,7 +554,7 @@ public class Wipf {
 	 * @return
 	 */
 	public boolean isFilename(String sFileName) {
-		return sFileName.matches("^[äöüÄÖÜ()\\w,\\s-]+\\.[A-Za-z]{1,4}$");
+		return sFileName.matches("^(?!\\s)(?!.*[. ]$)[A-Za-z0-9äöüÄÖÜ(),\\s_-]+\\.[A-Za-z0-9]{1,8}$");
 	}
 
 }
