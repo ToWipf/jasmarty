@@ -31,7 +31,7 @@ jobs:
         run: echo "Starting..." && cd scripts && chmod +x *.sh && java -version
       
       - name: Build jar
-        run: echo "Starting..." && cd scripts && ./setup.sh && ./buildAll.sh && ls -lahrt ../target/ && cp ../target/jasmarty-1.0-SNAPSHOT-runner.jar jasmarty.jar
+        run: echo "Starting..." && cd scripts && ./setup.sh && ./buildAll.sh && ls -lahrt ../target/ && cp ../target/jasmarty*-runner.jar jasmarty.jar
 
       - name: Build and Push dockerimage
         run: |

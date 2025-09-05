@@ -1,9 +1,5 @@
 const proxyConfig = [{
-    context: [
-      '^/(?!app).*',          // kein /app
-      '^/(?!assets).*',       // kein /assets
-      '^/(?!favicon\\.ico).*' // kein favicon.ico
-    ],
+    context: ['^/(?!app).*'],
     target: 'http://localhost:8080',
     changeOrigin: true,
     secure: false
