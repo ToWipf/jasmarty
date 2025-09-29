@@ -27,7 +27,7 @@
     "@ng-bootstrap/ng-bootstrap": "19.0.1",
     "@popperjs/core": "2.11.8",
     "@swimlane/ngx-charts": "23.0.0-alpha.0",
-    "bootstrap": "5.3.7",
+    "bootstrap": "5.3.8",
     "javascript-blowfish": "1.0.4",
     "ngx-color-picker": "17.0.0",
     "ngx-photo-editor": "0.4.4",
