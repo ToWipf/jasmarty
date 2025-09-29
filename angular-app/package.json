@@ -29,7 +29,7 @@
     "@swimlane/ngx-charts": "23.0.0-alpha.0",
     "bootstrap": "5.3.7",
     "javascript-blowfish": "1.0.4",
-    "ngx-color-picker": "17.0.0",
+    "ngx-color-picker": "20.1.1",
     "ngx-photo-editor": "0.4.4",
     "ngx-scrollbar": "10.0.1",
     "rxjs": "7.8.2",
