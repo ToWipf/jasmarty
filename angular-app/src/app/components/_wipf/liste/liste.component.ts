@@ -15,10 +15,10 @@ import { MatSelectChange } from '@angular/material/select';
 })
 
 @Component({
-    selector: 'app-liste',
-    templateUrl: './liste.component.html',
-    styleUrls: ['./liste.component.less'],
-    standalone: false
+  selector: 'app-liste',
+  templateUrl: './liste.component.html',
+  styleUrls: ['./liste.component.less'],
+  standalone: false
 })
 export class ListeComponent implements OnInit {
 
@@ -145,7 +145,12 @@ export class ListeComponent implements OnInit {
 
   private save(item: ListeEntry): void {
     this.rest.post('liste/save', item).then((resdata: any) => {
-      this.applyFilterByType();
+      this.listeTypeForFilter.forEach((lty: ListeType) => {
+        if (lty.id == item.typeid) {
+          this.selectedTypeFilter = lty;
+          this.applyFilterByType();
+        }
+      })
       if (!resdata) {
         this.bShowWarning = true;
       }
@@ -226,9 +231,9 @@ export class ListeComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-liste-dialog',
-    templateUrl: './liste.dialog.html',
-    standalone: false
+  selector: 'app-liste-dialog',
+  templateUrl: './liste.dialog.html',
+  standalone: false
 })
 export class ListeComponentDialogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {
