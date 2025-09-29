@@ -8,6 +8,7 @@ import org.wipf.jasmarty.databasetypes.daylog.DaylogDay;
 import org.wipf.jasmarty.databasetypes.daylog.DaylogEvent;
 import org.wipf.jasmarty.datatypes.daylog.DaylogStatsDiagram;
 import org.wipf.jasmarty.datatypes.telegram.Telegram;
+import org.wipf.jasmarty.logic.base.WipfConfigVW;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -25,6 +26,8 @@ public class DaylogHome {
 	DaylogEventService daylogEventDB;
 	@Inject
 	DaylogTypeService daylogTypeDB;
+	@Inject
+	WipfConfigVW wipfConfigVW;
 
 	/**
 	 * Hilfsklasse für etliche Ausgaben
@@ -52,6 +55,45 @@ public class DaylogHome {
 	}
 
 	/**
+	 * @param sDate
+	 * @return
+	 */
+	private TagesInfo getTagesinfoByDate(String sDate) {
+		TagesInfo ti = new TagesInfo();
+		ti.nAnzahlEvents = 0;
+
+		StringBuilder sb = new StringBuilder();
+		try {
+			DaylogDay dday = daylogDayDB.getByDateString(sDate);
+			if (dday == null) {
+				ti.sInfo = "Für den Tag " + sDate + " gibt es keine Events";
+				return ti;
+			}
+			List<DaylogEvent> dEvents = daylogEventDB.getByDateId(dday.id);
+
+			sb.append("Events für " + sDate + "\n-----------\n");
+			if (dday.tagestext != null) {
+				sb.append(dday.tagestext + "\n\n");
+			}
+
+			for (DaylogEvent dEvent : dEvents) {
+				// Typ Text:
+				sb.append(daylogTypeDB.get(Integer.valueOf(dEvent.typid)).type);
+				sb.append(": \n");
+				sb.append(dEvent.text);
+				sb.append("\n\n");
+				ti.nAnzahlEvents++;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			sb.append("Fehler getTagesinfo: " + e);
+		}
+		ti.sInfo = sb.toString();
+		return ti;
+	}
+
+	/**
 	 * Inhalt wenn morgen ein oder mehr Events vorhanden
 	 * 
 	 * Inhalt wenn gestern weniger als 4 einträge da sind
@@ -68,7 +110,14 @@ public class DaylogHome {
 			sb.append("\n\n");
 		}
 
-		if (tiGestern.nAnzahlEvents < 4) {
+		Integer maxEvents = wipfConfigVW.getConfParamInteger("dayLog_Telegram_Info_Maxwert");
+		if (maxEvents == null) {
+			// Default Wert 4
+			wipfConfigVW.setConfParam("dayLog_Telegram_Info_Maxwert", 4);
+			maxEvents = 4;
+		}
+
+		if (tiGestern.nAnzahlEvents < maxEvents) {
 			sb.append(tiGestern.sInfo);
 		}
 
@@ -111,45 +160,6 @@ public class DaylogHome {
 			sb.append(s);
 		}
 		return sb.toString();
-	}
-
-	/**
-	 * @param sDate
-	 * @return
-	 */
-	private TagesInfo getTagesinfoByDate(String sDate) {
-		TagesInfo ti = new TagesInfo();
-		ti.nAnzahlEvents = 0;
-
-		StringBuilder sb = new StringBuilder();
-		try {
-			DaylogDay dday = daylogDayDB.getByDateString(sDate);
-			if (dday == null) {
-				ti.sInfo = "Für den Tag " + sDate + " gibt es keine Events";
-				return ti;
-			}
-			List<DaylogEvent> dEvents = daylogEventDB.getByDateId(dday.id);
-
-			sb.append("Events für " + sDate + "\n-----------\n");
-			if (dday.tagestext != null) {
-				sb.append(dday.tagestext + "\n\n");
-			}
-
-			for (DaylogEvent dEvent : dEvents) {
-				// Typ Text:
-				sb.append(daylogTypeDB.get(Integer.valueOf(dEvent.typid)).type);
-				sb.append(": \n");
-				sb.append(dEvent.text);
-				sb.append("\n\n");
-				ti.nAnzahlEvents++;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			sb.append("Fehler getTagesinfo: " + e);
-		}
-		ti.sInfo = sb.toString();
-		return ti;
 	}
 
 	/**

@@ -60,7 +60,7 @@ public class TAppDaylog {
 			userCache.usercache = ("");
 			tUsercache.save(userCache);
 			return "Bitte das Datum eingeben:" + "\n" + "h für heute" + "\n" + "Format: yyyy-MM-dd" + "\n" + "Optional kann ein Tagestext angegeben werden";
-		} else if (userCache.usercache.equals("")) {
+		} else if (userCache.usercache == null || userCache.usercache.equals("")) {
 			// Schritt 1
 			// Datum wählen
 			DaylogDay ddate = waehleDatum(t.getMessageFullWithoutFirstWord());
