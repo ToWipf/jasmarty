@@ -1,4 +1,4 @@
-package org.wipf.jasmarty.rest.main;
+package org.wipf.jasmarty.rest.wipf;
 
 import java.io.IOException;
 
