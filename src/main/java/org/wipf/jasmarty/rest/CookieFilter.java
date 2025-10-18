@@ -31,7 +31,7 @@ public class CookieFilter implements ContainerRequestFilter {
 			authCookie = cookies.getValue();
 		}
 
-		if (path.equals("/wipf/up") || path.equals("/wipf/ver") || path.startsWith("/telegram/sendMsgTo/")) {
+		if (path.equals("/wipf/up") || path.equals("/wipf/ver") || path.startsWith("/telegram/sendMsgTo/") || path.startsWith("/authkey/newkey")) {
 			return;
 		}
 
