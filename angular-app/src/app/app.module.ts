@@ -9,7 +9,6 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { ChecklisteComponent, CheckListeDialogCheckListe, CheckListeDialogItem, CheckListeDialogType } from './components/_wipf/checkliste/checkliste.component';
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { CookieAddDialogComponent, CookieDialogComponent } from './dialog/cookieVW/cookie.dialog';
 import { CryptComponent } from './components/_debug/crypt/crypt.component';
 import { DayLogComponent, DaylogComponentDialogDayComponent, DaylogComponentDialogTypeComponent, DaylogComponentDialogTypeListComponent } from './components/_wipf/daylog/daylog.component';
@@ -36,7 +35,7 @@ import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeList
 import { LocalStorageVWAddDialogComponent, LocalStorageDialogComponent } from './dialog/localStorageVW/localStorageVW.dialog';
 import { LoginComponent } from './components/_main/login/login.component';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
@@ -89,6 +88,8 @@ import { TelegramMsgComponent, TelegramMsgComponentDialogComponent } from './com
 import { View360Component } from './components/_debug/view360/view360.component';
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.component';
+import { CommonModule } from '@angular/common';
+import { ColorPickerDirective } from 'ngx-color-picker';
 
 @NgModule({
     declarations: [
@@ -156,13 +157,21 @@ import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.compo
         A11yModule, //TODO:?
         AppRoutingModule,
         BrowserAnimationsModule,
+        CommonModule,
+        FormsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTableModule,
+        MatSortModule,
         BrowserModule,
-        BrowserModule,
+        ColorPickerDirective,
         CdkStepperModule,
         CdkTableModule,
         CdkTreeModule,
         ClipboardModule,
-        ColorPickerModule,
         DragDropModule,
         FormsModule,
         HttpClientModule,
@@ -211,10 +220,10 @@ import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.compo
         ReactiveFormsModule,
         ScrollingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
-          enabled: !isDevMode(),
-          // Register the ServiceWorker as soon as the application is stable
-          // or after 30 seconds (whichever comes first).
-          registrationStrategy: 'registerWhenStable:30000'
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
         }),
     ],
     providers: [
