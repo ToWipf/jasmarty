@@ -8,10 +8,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-    selector: 'app-telegram-log',
-    templateUrl: './telegramLog.component.html',
-    styleUrls: ['./telegramLog.component.less'],
-    standalone: false
+  selector: 'app-telegram-log',
+  templateUrl: './telegramLog.component.html',
+  styleUrls: ['./telegramLog.component.less'],
+  standalone: false
 })
 export class TelegramLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -75,23 +75,7 @@ export class TelegramLogComponent implements OnInit {
 
   private cleanLog(): void {
     this.rest.delete('telelog/cleanLog').then((resdata: any) => {
-      var dic: DialogInfoContent = {
-        infotext: 'Löschen abgeschlossen',
-        infotext2: ' Liste jetzt laden?'
-      };
-
-      const dialogRef = this.dialog.open(DialogJaNeinComponent, {
-        minWidth: '200px',
-        minHeight: '150px',
-        data: dic,
-      });
-
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.loadAll();
-        }
-      });
-
+      this.loadAll();
     });
   }
 
