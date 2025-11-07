@@ -12,5 +12,5 @@ COPY jasmarty.jar /app/jasmarty.jar
 CMD ["java", "--enable-native-access=ALL-UNNAMED", "-Xmx128m", "-jar", "/app/jasmarty.jar"]
 
 # Healthcheck
-HEALTHCHECK --interval=120s --timeout=10s --retries=3 --start-period=30s \
-    CMD curl --user check:check --fail http://localhost:8080/wipf/up || kill 1
+#HEALTHCHECK --interval=120s --timeout=10s --retries=3 --start-period=30s \
+#    CMD curl --user check:check --fail http://localhost:8080/wipf/up || kill 1
