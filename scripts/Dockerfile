@@ -1,4 +1,4 @@
-FROM openjdk:26-jdk-slim
+FROM openjdk:26-ea-1-jdk-slim
 
 # Non-root user einrichten
 RUN addgroup --system app && adduser --system --ingroup app app
