@@ -1,4 +1,4 @@
-FROM openjdk:24-ea-1-jdk-slim
+FROM eclipse-temurin:24-jre
 
 # Non-root user einrichten
 RUN addgroup --system app && adduser --system --ingroup app app
