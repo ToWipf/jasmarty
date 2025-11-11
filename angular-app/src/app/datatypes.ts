@@ -147,6 +147,7 @@ export interface ListeEntry {
   data?: string;
   typeid?: number;
   date?: string;
+  prio?: number;
 }
 
 export interface ListeType {

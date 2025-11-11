@@ -43,7 +43,7 @@ export class ListeComponent implements OnInit {
   public showAllTableColumns(): void {
     this.bShowAllTableColumns = !this.bShowAllTableColumns;
     if (this.bShowAllTableColumns) {
-      this.displayedColumns = ['id', 'type', 'data', 'date', 'button'];
+      this.displayedColumns = ['id', 'type', 'data', 'prio', 'date', 'button'];
     } else {
       this.displayedColumns = ['type', 'data', 'button'];
     }
@@ -101,16 +101,29 @@ export class ListeComponent implements OnInit {
     });
   }
 
-  public applyTextFilter() {
+  public applyTextFilter(): void {
     this.serviceWipf.delay(200).then(() => {
       this.dataSourceList.filter = this.sFilter.trim();
     });
   }
 
+  public showInTable(name: string): void {
+    if (this.displayedColumns.includes(name)) {
+      this.displayedColumns = this.displayedColumns.filter(col => col !== name);
+    } else {
+      this.displayedColumns.push(name);
+    }
+    // Sicherstellen, dass "button" immer am Ende steht
+    this.displayedColumns = [
+      ...this.displayedColumns.filter(col => col !== 'button'),
+      'button'
+    ];
+  }
+
   /**
    * Darüber wird die Liste überhaupt geladen
    */
-  public applyFilterByType() {
+  public applyFilterByType(): void {
     if (this.selectedTypeFilter) {
       if (this.selectedTypeFilter.id == -99) {
         // Spaltenansichten mit type und ohne Date

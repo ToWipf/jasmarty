@@ -1,30 +1,38 @@
 <h1 mat-dialog-title [ngStyle]="{ 'background': selectedTypeColor }">Id: {{data.id}}</h1>
+<div class="">
+
+</div>
 <mat-dialog-content>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" style="width: 70% !important">
     <mat-label>Type</mat-label>
     <mat-select (selectionChange)="onTypeSelectionChange($event)" [(value)]="data.typeid">
       @for (type of listeType; track type) {
-        <mat-option [(value)]="type.id" [ngStyle]="{ 'background': type.color}">
-          {{type.typename}}
-        </mat-option>
+      <mat-option [(value)]="type.id" [ngStyle]="{ 'background': type.color}">
+        {{type.typename}}
+      </mat-option>
       }
     </mat-select>
   </mat-form-field>
-  <br>
 
-    <mat-form-field>
-      <mat-label>Inhalt</mat-label>
-      <textarea [(ngModel)]="data.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
-    </mat-form-field>
-    <br>
+  <mat-form-field style="width: 20% !important;margin-left: 8px; min-width: 62px;">
+    <mat-label>Prio</mat-label>
+    <input matInput type="number" [(ngModel)]="data.prio">
+  </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Datum</mat-label>
-        <input matInput type="date" [(ngModel)]="data.date">
-      </mat-form-field>
-    </mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Datum</mat-label>
+    <input matInput type="date" [(ngModel)]="data.date">
+  </mat-form-field>
+  <hr>
 
-    <mat-dialog-actions align="end">
-      <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-      <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-    </mat-dialog-actions>
+  <mat-form-field>
+    <mat-label>Inhalt</mat-label>
+    <textarea [(ngModel)]="data.data" matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="10" cdkAutosizeMaxRows="20"></textarea>
+  </mat-form-field>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+  <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!data.data">Speichern</button>
+</mat-dialog-actions>

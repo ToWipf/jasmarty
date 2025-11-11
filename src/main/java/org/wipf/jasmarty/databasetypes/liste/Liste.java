@@ -36,6 +36,8 @@ public class Liste extends PanacheEntityBase implements Serializable {
 	public Integer typeid;
 	@Column(name = "date", nullable = false)
 	public String date;
+	@Column(name = "prio", nullable = true)
+	public Integer prio;
 
 	/**
 	 *
@@ -56,6 +58,7 @@ public class Liste extends PanacheEntityBase implements Serializable {
 				existingData.data = this.data.trim();
 				existingData.typeid = this.typeid;
 				existingData.date = this.date;
+				existingData.prio = this.prio;
 				existingData.persist();
 			} else {
 				// Neu mit unbekannter id
