@@ -10,7 +10,7 @@
       <input matInput [(ngModel)]="data.tagestext">
     </mat-form-field>
 
-    @if (data?.tagestext?.length === 0) {
+    @if (data?.tagestext?.length === 0 || data?.tagestext === "TODO") {
       <div style="margin-bottom: 4px;">
         <!-- TODO: ausbauen, laden von DB -->
         <button class="btn btn-wipf-mini" (click)="setText('A HO')">HO</button>

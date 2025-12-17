@@ -4,10 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-    selector: 'app-debugSeite',
-    templateUrl: './debugSeite.component.html',
-    styleUrls: ['./debugSeite.component.less'],
-    standalone: false
+  selector: 'app-debugSeite',
+  templateUrl: './debugSeite.component.html',
+  styleUrls: ['./debugSeite.component.less'],
+  standalone: false
 })
 export class DebugSeiteComponent implements OnInit {
   constructor(private rest: ServiceRest, public dialog: MatDialog) { }
@@ -41,12 +41,18 @@ export class DebugSeiteComponent implements OnInit {
     });
   }
 
+  public startDailyTask(): void {
+    this.rest.post('debug/dailyTask', {}).then((resdata: any) => {
+      this.serverTime = resdata.time;
+    });
+  }
+
   public warten(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
   }
 
   @HostListener('window:focusin', ['$event'])
-  onFocusIn(event: FocusEvent): void { 
+  onFocusIn(event: FocusEvent): void {
     this.isKeyboardVisible = true;
   }
 

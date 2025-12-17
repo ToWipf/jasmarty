@@ -59,7 +59,6 @@ public class DebugRest {
 	}
 
 	@POST
-	@GET
 	@Path("dailyTask")
 	public Response dailyTask() {
 		cronDaily.dailyTask();

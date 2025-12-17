@@ -36,6 +36,7 @@ public class DaylogHome {
 	class TagesInfo {
 		public String sInfo;
 		public Integer nAnzahlEvents;
+		public boolean dayAngelegt;
 	}
 
 	/**
@@ -65,7 +66,8 @@ public class DaylogHome {
 		StringBuilder sb = new StringBuilder();
 		try {
 			DaylogDay dday = daylogDayDB.getByDateString(sDate);
-			if (dday == null) {
+			ti.dayAngelegt = dday != null;
+			if (!ti.dayAngelegt) {
 				ti.sInfo = "Für den Tag " + sDate + " gibt es keine Events";
 				return ti;
 			}
@@ -110,15 +112,22 @@ public class DaylogHome {
 			sb.append("\n\n");
 		}
 
-		Integer maxEvents = wipfConfigVW.getConfParamInteger("dayLog_Telegram_Info_Maxwert");
+		Integer maxEvents = wipfConfigVW.getConfParamInteger("dayLog_Telegram_Info_Min_Wert");
 		if (maxEvents == null) {
 			// Default Wert 4
-			wipfConfigVW.setConfParam("dayLog_Telegram_Info_Maxwert", 4);
+			wipfConfigVW.setConfParam("dayLog_Telegram_Info_Min_Wert", 4);
 			maxEvents = 4;
 		}
 
 		if (tiGestern.nAnzahlEvents < maxEvents) {
 			sb.append(tiGestern.sInfo);
+		}
+
+		if (!tiGestern.dayAngelegt) {
+			DaylogDay yday = new DaylogDay();
+			yday.date = LocalDate.now().minusDays(1).toString();
+			yday.tagestext = "TODO";
+			this.daylogDayDB.save(yday);
 		}
 
 		return sb.toString();
