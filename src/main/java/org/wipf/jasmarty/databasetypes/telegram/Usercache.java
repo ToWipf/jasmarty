@@ -30,7 +30,9 @@ public class Usercache extends PanacheEntityBase implements Serializable {
 
 	@Override
 	public String toString() {
-		return "chatid=" + chatid + ", msg=" + msg + ", usercache=" + usercache + ", counter=" + counter;
+		return "Chatid=" + chatid;
+		// return "chatid=" + chatid + ", msg=" + msg + ", usercache=" + usercache + ",
+		// counter=" + counter;
 	}
 
 	/**
