@@ -130,6 +130,12 @@ public class DaylogHome {
 			this.daylogDayDB.save(yday);
 		}
 
+		// den neuen "heute" Tag anlegen
+		DaylogDay nextday = new DaylogDay();
+		nextday.date = LocalDate.now().toString();
+		nextday.tagestext = "TODO";
+		this.daylogDayDB.save(nextday);
+
 		return sb.toString();
 	}
 
