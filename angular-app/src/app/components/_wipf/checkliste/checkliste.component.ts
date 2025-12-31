@@ -8,10 +8,10 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-    selector: 'app-checkliste',
-    templateUrl: './checkliste.component.html',
-    styleUrls: ['./checkliste.component.less'],
-    standalone: false
+  selector: 'app-checkliste',
+  templateUrl: './checkliste.component.html',
+  styleUrls: ['./checkliste.component.less'],
+  standalone: false
 })
 export class ChecklisteComponent implements OnInit {
 
@@ -34,6 +34,8 @@ export class ChecklisteComponent implements OnInit {
   public lastNewPrio: number = 0;
   public offeneItems: number = 0;
   public sFilter: string = "";
+  public bFilterDone: boolean = false;
+  public verkListBackupForFilter;
   private selectedClID: number;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -365,6 +367,8 @@ export class ChecklisteComponent implements OnInit {
   }
 
   public checkItemVerkn(iverk: CheckListeVerkn): void {
+    this.bFilterDone = false;
+    this.verkListBackupForFilter = [];
     iverk.checked = !iverk.checked;
     this.rest.postNoWartenDialog('checkliste/verkn/save', iverk).then((res: any) => {
       this.ladeChecklistenView(this.viewCL);
@@ -379,12 +383,31 @@ export class ChecklisteComponent implements OnInit {
     });
   }
 
+  public filterDone(): void {
+    this.bFilterDone = !this.bFilterDone;
+
+    if (this.bFilterDone) {
+      this.verkListBackupForFilter = [...this.dataSourceCheckListeVerkn.data];
+      // this.dataSourceCheckListeVerkn.data = this.dataSourceCheckListeVerkn.data.filter((clv: CheckListeVerkn) => {
+      // !clv.checked;
+      // });
+      this.dataSourceCheckListeVerkn.data =
+        this.dataSourceCheckListeVerkn.data.filter(
+          clv => !clv.checked
+        );
+    }
+    else {
+      this.dataSourceCheckListeVerkn.data = [...this.verkListBackupForFilter];
+    }
+
+    this.applyFilter();
+  }
 }
 
 @Component({
-    selector: 'app-checklisteliste-dialog',
-    templateUrl: './checkliste.dialog.checkliste.html',
-    standalone: false
+  selector: 'app-checklisteliste-dialog',
+  templateUrl: './checkliste.dialog.checkliste.html',
+  standalone: false
 })
 export class CheckListeDialogCheckListe implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogCheckListe>, @Inject(MAT_DIALOG_DATA) public data: CheckListeListe) {
@@ -424,9 +447,9 @@ export class CheckListeDialogCheckListe implements OnInit {
 }
 
 @Component({
-    selector: 'app-checklistetypes-dialog',
-    templateUrl: './checkliste.dialog.type.html',
-    standalone: false
+  selector: 'app-checklistetypes-dialog',
+  templateUrl: './checkliste.dialog.type.html',
+  standalone: false
 })
 export class CheckListeDialogType {
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
@@ -444,9 +467,9 @@ export class CheckListeDialogType {
 }
 
 @Component({
-    selector: 'app-checklisteitem-dialog',
-    templateUrl: './checkliste.dialog.item.html',
-    standalone: false
+  selector: 'app-checklisteitem-dialog',
+  templateUrl: './checkliste.dialog.item.html',
+  standalone: false
 })
 export class CheckListeDialogItem {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogItem>, @Inject(MAT_DIALOG_DATA) public data: CheckListeItem) {

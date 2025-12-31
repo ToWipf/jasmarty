@@ -35,6 +35,16 @@
 
       @if (view =='checkliste') {
       <div class="iconbox">
+        Zeige nur offenes:
+        <button class="btn btn-wipf-default btn-for-icon" (click)="filterDone()">
+          @if (bFilterDone){
+            <mat-icon svgIcon="ok" aria-hidden="false" title="Zeige Offenes"></mat-icon>
+          }
+          @else {
+            <mat-icon svgIcon="round" aria-hidden="false" title="Zeige Offenes"></mat-icon>
+          }
+        </button>
+        <br>
         Liste zurücksezten:
         <button class="btn btn-wipf-default btn-for-icon" (click)="resetListe()">
           <mat-icon svgIcon="trash" aria-hidden="false" title="Reset Liste"></mat-icon>
