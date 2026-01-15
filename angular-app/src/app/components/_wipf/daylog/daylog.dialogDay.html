@@ -5,24 +5,30 @@
     <input matInput type="date" [(ngModel)]="data.date">
   </mat-form-field>
   <br>
-    <mat-form-field>
-      <mat-label>Tagestext</mat-label>
-      <input matInput [(ngModel)]="data.tagestext">
-    </mat-form-field>
-
-    @if (data?.tagestext?.length === 0 || data?.tagestext === "TODO") {
-      <div style="margin-bottom: 4px;">
-        <!-- TODO: ausbauen, laden von DB -->
-        <button class="btn btn-wipf-mini" (click)="setText('A HO')">HO</button>
-        <button class="btn btn-wipf-mini" (click)="setText('A NM')">NM</button>
-        <button class="btn btn-wipf-mini" (click)="setText('Urlaub')">U</button>
-        <button class="btn btn-wipf-mini" (click)="setText('Feiertag')">F</button>
-        <button class="btn btn-wipf-mini" (click)="setText('Krank')">K</button>
-      </div>
+  <mat-form-field>
+    <mat-label>Tagestext</mat-label>
+    <input matInput [(ngModel)]="data.tagestext">
+    @if(data?.tagestext?.length > 0){
+    <button class="btn btn-for-icon" (click)="setText('')">
+      <mat-icon svgIcon="trash" aria-hidden="false" title="trash"></mat-icon>
+    </button>
     }
+  </mat-form-field>
 
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-    <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
-  </mat-dialog-actions>
+  @if (data?.tagestext?.length === 0 || data?.tagestext === "TODO") {
+  <div style="margin-bottom: 4px;">
+    <!-- TODO: ausbauen, laden von DB -->
+    <button class="btn btn-wipf-mini" (click)="setText('A HO')">HO</button>
+    <button class="btn btn-wipf-mini" (click)="setText('A NM')">NM</button>
+    <button class="btn btn-wipf-mini" (click)="setText('Urlaub')">U</button>
+    <button class="btn btn-wipf-mini" (click)="setText('Feiertag')">F</button>
+    <button class="btn btn-wipf-mini" (click)="setText('Krank')">K</button>
+  </div>
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
+  <button class="btn btn-wipf-dialog" [mat-dialog-close]="data">Speichern</button>
+</mat-dialog-actions>
