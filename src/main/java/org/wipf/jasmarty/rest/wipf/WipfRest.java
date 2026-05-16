@@ -60,7 +60,7 @@ public class WipfRest {
 	@GET
 	@Path("up")
 	@Produces(MediaType.TEXT_PLAIN)
-	@RolesAllowed({ "admin", "check", "user" })
+	@PermitAll
 	public Response up() {
 		return Response.ok(1).build();
 	}
@@ -107,7 +107,7 @@ public class WipfRest {
 	}
 
 	@GET
-	@Path("/me")
+	@Path("me")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
 	public String me(@Context SecurityContext securityContext) {
@@ -115,7 +115,7 @@ public class WipfRest {
 	}
 
 	@GET
-	@Path("/cotest")
+	@Path("cotest")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
 	public Boolean cotest(@CookieParam(MainHome.AUTH_KEY_NAME) String key) {
