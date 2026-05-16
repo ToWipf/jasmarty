@@ -1,4 +1,4 @@
-FROM eclipse-temurin:24-jre
+FROM eclipse-temurin:25-jre
 
 # Non-root user einrichten
 RUN addgroup --system app && adduser --system --ingroup app app
