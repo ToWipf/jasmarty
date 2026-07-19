@@ -42,7 +42,7 @@ public class GlowiService {
 	WipfConfigVW wipfConfig;
 
 	@PostConstruct
-	private void setInitialSize() {
+	void setInitialSize() {
 		this.size = wipfConfig.getConfParamInteger("glowi_size");
 		if (this.size == null) {
 			LOGGER.info("Keine Size, lege 16 fest");

@@ -7,7 +7,6 @@ import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,6 +19,7 @@ import org.wipf.jasmarty.logic.base.Wipf;
 import org.wipf.jasmarty.logic.base.WipfConfigVW;
 import org.wipf.jasmarty.logic.listen.RndEventsService;
 
+import io.micrometer.core.instrument.Metrics;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -93,8 +93,8 @@ public class TSendAndReceive {
 	/**
 	 * 
 	 */
-	@Metered
 	public telegramUpdateStatus readUpdateFromTelegram() {
+		Metrics.counter("application_org_wipf_jasmarty_logic_telegram_SendAndReceive_readUpdateFromTelegram_total").increment();
 		try {
 			JSONObject jo = new JSONObject(wipf.httpRequest(Wipf.httpRequestType.POST, "https://api.telegram.org/" + getBotKeyFromCache() + "/getUpdates?offset=" + this.nOffsetID));
 
@@ -322,12 +322,11 @@ public class TSendAndReceive {
 	}
 
 	/**
-	 * nur public das @Metered funktioniert
 	 * 
 	 * @param t
 	 */
-	@Metered
-	public void sendToTelegram(Telegram t) {
+	private void sendToTelegram(Telegram t) {
+		Metrics.counter("application_org_wipf_jasmarty_logic_telegram_SendAndReceive_sendToTelegram_total").increment();
 		tLog.saveTelegramToLog(t);
 		String sAntwort = t.getAntwort();
 		if (sAntwort == null || sAntwort.equals("")) {

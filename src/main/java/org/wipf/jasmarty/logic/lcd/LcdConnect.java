@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import jakarta.enterprise.context.ApplicationScoped;
-
-import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.jboss.logging.Logger;
 import org.wipf.jasmarty.datatypes.jasmarty.LcdConfig;
 
 import com.fazecast.jSerialComm.SerialPort;
+
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * @author wipf
@@ -167,7 +166,7 @@ public class LcdConnect {
 	 * @param s
 	 * @return
 	 */
-	@Metered
+	// @Metered
 	public void write(Integer n) {
 		try {
 			sp.getOutputStream().write(n.byteValue());
