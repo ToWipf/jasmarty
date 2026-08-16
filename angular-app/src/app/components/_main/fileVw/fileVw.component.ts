@@ -16,9 +16,9 @@ import { take } from 'rxjs';
 export class FileVwComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<string> = new MatTableDataSource();
   public displayedColumns: string[] = ['name', 'button'];
   public sFilter: string = "";
 
@@ -65,8 +65,9 @@ export class FileVwComponent implements OnInit {
 
   public async downloadItem(name: string): Promise<void> {
     this.rest.downloadFile('../file/download/' + name).pipe(take(1)).subscribe((response) => {
+      const body = response.body ?? new Blob([], { type: 'application/octet-stream' });
       const downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(new Blob([response.body], { type: response.body.type }));
+      downloadLink.href = URL.createObjectURL(new Blob([body], { type: body.type || 'application/octet-stream' }));
 
       downloadLink.download = name;
       downloadLink.click();
@@ -74,8 +75,10 @@ export class FileVwComponent implements OnInit {
   }
 
   public uploadFile(files: FileList) {
-    var fileToUpload: File | null = null;
-    fileToUpload = files.item(0);
+    const fileToUpload = files.item(0);
+    if (!fileToUpload) {
+      return;
+    }
 
     this.rest.post('file/upload/' + fileToUpload.name, fileToUpload).then((resdata: any) => {
       this.load();

@@ -26,7 +26,9 @@ export class View360Component implements OnInit {
     this.getBilderliste();
     // Get Max Pic Size
     const gl = document.createElement("canvas").getContext("webgl");
-    this.scale = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    if (gl) {
+      this.scale = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    }
   }
 
   public getBilderliste(): void {
@@ -44,13 +46,15 @@ export class View360Component implements OnInit {
     });
   }
 
-  public selectPicSize(e: String): void {
-    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/" + this.scale + "/" + e }) };
+  public selectPicSize(e: string | undefined): void {
+    const name = e ?? "";
+    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/downloadScale/" + this.scale + "/" + name }) };
     this.oneBigView = true;
   }
 
-  public selectPicOrg(e: String): void {
-    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/download/" + e }) };
+  public selectPicOrg(e: string | undefined): void {
+    const name = e ?? "";
+    this.big360pic = { autoplay: true, projection: new EquirectProjection({ src: "../file/download/" + name }) };
     this.oneBigView = true;
   }
 

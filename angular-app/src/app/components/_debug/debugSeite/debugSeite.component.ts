@@ -12,10 +12,10 @@ import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 export class DebugSeiteComponent implements OnInit {
   constructor(private rest: ServiceRest, public dialog: MatDialog) { }
 
-  public sSQL_IN: string;
-  public sSQL_OUT: string;
-  public serverTime: number;
-  public clientTime: number;
+  public sSQL_IN: string = "";
+  public sSQL_OUT: string = "";
+  public serverTime: number = 0;
+  public clientTime: number = 0;
   public isKeyboardVisible: boolean = false;
 
   public testData = [

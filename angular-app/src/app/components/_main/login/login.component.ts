@@ -36,9 +36,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  public sUsername: string;
-  public sPasswort: string;
-  public lastVisitToNow: string;
+  public sUsername: string = "";
+  public sPasswort: string = "";
+  public lastVisitToNow: string = "";
 
   public login(): void {
     this.rest.setLoginData(this.sUsername.trim(), this.sPasswort);

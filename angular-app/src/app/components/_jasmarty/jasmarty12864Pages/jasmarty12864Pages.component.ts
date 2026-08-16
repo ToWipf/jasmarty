@@ -44,11 +44,14 @@ export class Jasmarty12864PagesComponent implements OnInit {
   }
 
   public convertImgToArray(): void {
-    if (this.imageoutput.base64) {
+    if (this.imageoutput?.base64) {
       const myimage = new Image();
       myimage.src = this.imageoutput.base64;
 
       const cnx = document.createElement('canvas').getContext('2d');
+      if (!cnx) {
+        return;
+      }
 
       cnx.drawImage(myimage, 0, 0);
       const width = myimage.width;

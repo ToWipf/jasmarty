@@ -30,11 +30,11 @@
       <div class="galerie">
         @for (p3 of pic360List; track p3) {
           <div class="galerie_item" title="{{p3.name}}">
-            <ngx-view360 class="v360" [options]="p3.pic"></ngx-view360>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name)">
+            <ngx-view360 class="v360" [options]="p3.pic ?? {}"></ngx-view360>
+            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicSize(p3.name ?? '')">
               <mat-icon svgIcon="picture" aria-hidden="false" title="Size"></mat-icon>
             </button>
-            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name)">
+            <button class="btn btn-wipf-default btn-for-icon" (click)="selectPicOrg(p3.name ?? '')">
               <mat-icon svgIcon="download" aria-hidden="false" title="Original"></mat-icon>
             </button>
           </div>

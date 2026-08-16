@@ -104,14 +104,16 @@ export class ChecklisteComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/liste/getAll').then((resdata: CheckListeListe[]) => {
       resdata.forEach((cl: CheckListeListe) => {
-        cl.typesNummbers = cl.typesNummbers ?? [];
-        cl.typesCache = cl.typesCache ?? [];
+        const numbers = cl.typesNummbers ?? [];
+        const cache = cl.typesCache ?? [];
+        cl.typesNummbers = numbers;
+        cl.typesCache = cache;
         if (cl.types) {
           cl.types.split(",").forEach((tid: string) => {
-            cl.typesNummbers.push(Number(tid));
+            numbers.push(Number(tid));
             this.allTypesCache.forEach((t) => {
               if (Number(tid) == t.id) {
-                cl.typesCache.push(t);
+                cache.push(t);
               }
             });
           });
@@ -194,7 +196,8 @@ export class ChecklisteComponent implements OnInit {
 
   private saveCheckListeListe(item: CheckListeListe): void {
     // Convert Typen in typ ids
-    item.types = "";
+    const itemTypes = item.types ?? "";
+    item.types = itemTypes;
     item.typesCache = item.typesCache ?? [];
     item.typesCache.forEach((t: CheckListeType) => {
       if (item.types.length == 0) {
@@ -427,12 +430,14 @@ export class CheckListeDialogCheckListe implements OnInit {
       this.checkListetypes = resdata;
 
       if (this.data.types) {
-        this.data.typesNummbers = this.data.typesNummbers ?? [];
-        this.data.typesCache = this.data.typesCache ?? [];
-        this.data.typesNummbers.forEach((t: number) => {
+        const numbers = this.data.typesNummbers ?? [];
+        const cache = this.data.typesCache ?? [];
+        this.data.typesNummbers = numbers;
+        this.data.typesCache = cache;
+        numbers.forEach((t: number) => {
           this.checkListetypes.forEach((xt: CheckListeType) => {
             if (t == xt.id) {
-              this.data.typesCache.push(xt);
+              cache.push(xt);
             }
           });
         });

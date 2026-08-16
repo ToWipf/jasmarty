@@ -16,9 +16,9 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
 export class WipfUserVwComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<WipfUser> = new MatTableDataSource();
   public displayedColumns: string[] = ['id', 'username', 'role', 'button'];
   public sFilter: string = "";
 

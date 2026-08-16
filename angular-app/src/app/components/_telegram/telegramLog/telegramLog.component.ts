@@ -16,10 +16,10 @@ import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinCompo
 export class TelegramLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
-  public displayedColumns: string[];
+  public dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  public displayedColumns: string[] = [];
   public sFilter: string = "";
   public bShowAllTableColumns: Boolean = true;
 

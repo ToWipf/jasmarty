@@ -14,7 +14,7 @@ export class MainmenueComponent implements OnInit {
 
   constructor(private rest: ServiceRest, private serviceVersion: ServiceVersion, public listevw: ListeComponent) { }
 
-  @ViewChild(MatDrawer, { static: true }) drawer: MatDrawer;
+  @ViewChild(MatDrawer, { static: true }) drawer!: MatDrawer;
 
   public bTelegramActive: boolean = false;
   public bJasmartyActive: boolean = false;

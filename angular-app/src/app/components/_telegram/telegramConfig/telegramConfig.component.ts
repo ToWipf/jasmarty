@@ -10,8 +10,8 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 export class TelegramConfigComponent implements OnInit {
   constructor(private rest: ServiceRest) { }
 
-  public sBotKey: string;
-  public bTelegramActive: boolean;
+  public sBotKey: string = "";
+  public bTelegramActive: boolean = false;
 
   ngOnInit() {
     this.getBotKey();

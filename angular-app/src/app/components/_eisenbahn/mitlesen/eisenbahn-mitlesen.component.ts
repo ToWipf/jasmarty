@@ -16,9 +16,9 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 export class EisenbahnMitlesenComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<KeyValEntry> = new MatTableDataSource();
   public displayedColumns: string[] = ['key', 'val'];
   public itemarry: KeyValEntry[] = [];
   public sFilter: string = "";
@@ -74,7 +74,7 @@ export class EisenbahnMitlesenComponent implements OnInit {
 
       let tmpAnz = 0;
       this.itemarry.forEach((i) => {
-        tmpAnz = tmpAnz + parseInt(i.value);
+        tmpAnz = tmpAnz + Number.parseInt(i.value ?? "0", 10);
       });
       this.nAnzahlEvents = tmpAnz;
 

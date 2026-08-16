@@ -17,9 +17,9 @@ import { ServiceVersion } from 'src/app/service/serviceVersion';
 export class SettingsComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceWipf: ServiceWipf, public serviceVersion: ServiceVersion) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<KeyValEntry> = new MatTableDataSource();
   public displayedColumns: string[] = ['key', 'value', 'button'];
   public bShowWarning: boolean = false;
   public sFilter: string = "";

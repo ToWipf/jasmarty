@@ -60,11 +60,11 @@
 <hr>
   <h3>Inhalt</h3>
   <ng-scrollbar class="pscroll" track="all">
-    @for (dy of lcdDescription.dynamicData; track dy; let i = $index) {
+    @for (dy of lcdDescription.dynamicData ?? []; track dy; let i = $index) {
       <div class="dyConfig">
         <mat-form-field appearance="fill">
           <mat-label>Typ</mat-label>
-          <mat-select [(value)]="lcdDescription.dynamicData[i].type">
+          <mat-select [(value)]="lcdDescription.dynamicData?.[i]?.type">
             <mat-option value="TEXT">Text</mat-option>
             <mat-option value="CIRCLE_EMPTY">Kreis</mat-option>
             <mat-option value="CIRCLE_FILL">Kreis gefüllt</mat-option>
@@ -72,10 +72,10 @@
             <mat-option value="LINE_V">Linie vertikal</mat-option>
           </mat-select>
         </mat-form-field>
-        @if (lcdDescription.dynamicData[i].type === 'TEXT') {
+        @if ((lcdDescription.dynamicData?.[i]?.type ?? '') === 'TEXT') {
           <mat-form-field appearance="fill">
             <mat-label>Schriftart</mat-label>
-            <mat-select [(value)]="lcdDescription.dynamicData[i].font">
+            <mat-select [(value)]="lcdDescription.dynamicData?.[i]?.font">
               <mat-option value="FONT_57_ON">57 an</mat-option>
               <mat-option value="FONT_68_ON">68 an</mat-option>
               <mat-option value="FONT_57_OFF">57 aus</mat-option>
@@ -86,13 +86,13 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Data</mat-label>
-            <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
+            <input matInput [(ngModel)]="lcdDescription.dynamicData?.[i]?.data">
           </mat-form-field>
         }
-        @if (lcdDescription.dynamicData[i].type !== 'TEXT') {
+        @if ((lcdDescription.dynamicData?.[i]?.type ?? '') !== 'TEXT') {
           <mat-form-field appearance="fill">
             <mat-label>Art</mat-label>
-            <mat-select [(value)]="lcdDescription.dynamicData[i].font">
+            <mat-select [(value)]="lcdDescription.dynamicData?.[i]?.font">
               <mat-option value="ON">an</mat-option>
               <mat-option value="OFF">aus</mat-option>
               <mat-option value="INVERT">invers</mat-option>
@@ -100,16 +100,16 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>Parameter</mat-label>
-            <input matInput [(ngModel)]="lcdDescription.dynamicData[i].data">
+            <input matInput [(ngModel)]="lcdDescription.dynamicData?.[i]?.data">
           </mat-form-field>
         }
         <mat-form-field appearance="fill">
           <mat-label>x</mat-label>
-          <input matInput [(ngModel)]="lcdDescription.dynamicData[i].x">
+          <input matInput [(ngModel)]="lcdDescription.dynamicData?.[i]?.x">
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>y</mat-label>
-          <input matInput [(ngModel)]="lcdDescription.dynamicData[i].y">
+          <input matInput [(ngModel)]="lcdDescription.dynamicData?.[i]?.y">
         </mat-form-field>
         <button (click)="delDynLine(i)">Zeile Löschen</button>
       </div>

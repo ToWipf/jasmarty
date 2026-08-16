@@ -17,15 +17,15 @@ export class TelegramChatComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {
 
   }
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<TelegramUserCache> = new MatTableDataSource();
   public displayedColumns: string[] = [];
   public tMsg: Telegram = { chatid: 0, message: '', type: 'website', editby: 'website' };
   public textOut: string = '-';
   public sFilter: string = "";
-  public sTextOnlineTelegram: string;
-  public sStatus: string;
+  public sTextOnlineTelegram: string = "";
+  public sStatus: string = "";
   public bShowAllTableColumns: boolean = true;
 
   ngOnInit(): void {
@@ -92,7 +92,7 @@ export class TelegramChatComponent implements OnInit {
     if (this.sTextOnlineTelegram) {
       this.rest.post('telegram/sendMsgToAdmin', this.sTextOnlineTelegram,).then((resdata) => {
         this.sStatus = resdata.toString();
-        this.sTextOnlineTelegram = null;
+        this.sTextOnlineTelegram = "";
       });
     }
   }
