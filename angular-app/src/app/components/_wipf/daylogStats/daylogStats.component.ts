@@ -26,6 +26,8 @@ export class DaylogStatsComponent implements OnInit {
   public bShowAllTableColumns: boolean = true;
   public bvDataForDateChart = [];
   public bvDataForWochentagVorkomnisseChart = [];
+  public dateBarOption: any;
+  public weekPieOption: any;
   public typelistForSelect: DaylogType[] = [];
   public selectedTypes: DaylogType[] = [];
   public diagramRawData: any[];
@@ -100,6 +102,29 @@ export class DaylogStatsComponent implements OnInit {
       let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
       this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
     });
+
+    // build echarts options
+    this.buildChartOptions();
+  }
+
+  private buildChartOptions(): void {
+    // date bar
+    const categories = this.bvDataForDateChart.map(d => d.name);
+    const values = this.bvDataForDateChart.map(d => d.value);
+    this.dateBarOption = {
+      title: { text: 'Vorkommnisse nach Datum' },
+      tooltip: {},
+      xAxis: { type: 'category', data: categories },
+      yAxis: { type: 'value' },
+      series: [{ type: 'bar', data: values }]
+    };
+
+    // week pie
+    this.weekPieOption = {
+      title: { text: 'Vorkommnisse pro Wochentag' },
+      tooltip: { trigger: 'item' },
+      series: [{ type: 'pie', radius: '50%', data: this.bvDataForWochentagVorkomnisseChart }]
+    };
   }
 
   private textToDigNumber(input: any): number {

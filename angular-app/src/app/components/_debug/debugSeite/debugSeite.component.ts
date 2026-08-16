@@ -26,8 +26,38 @@ export class DebugSeiteComponent implements OnInit {
     { name: "20.20.20", value: 10 }
   ];
 
+  public barOption: any;
+  public pieOption: any;
+  public advancedPieOption: any;
+  public pieGridOption: any;
+
   ngOnInit() {
     this.loadUhr();
+    this.buildChartOptions();
+  }
+
+  private buildChartOptions(): void {
+    const names = this.testData.map((d) => d.name);
+    const values = this.testData.map((d) => d.value);
+
+    this.barOption = {
+      title: { text: 'Test Bar' },
+      tooltip: {},
+      xAxis: { type: 'category', data: names },
+      yAxis: { type: 'value' },
+      series: [{ type: 'bar', data: values }]
+    };
+
+    this.pieOption = {
+      title: { text: 'Test Pie' },
+      tooltip: { trigger: 'item' },
+      legend: { top: '5%' },
+      series: [{ type: 'pie', radius: '50%', data: this.testData.map(d => ({ name: d.name, value: d.value })) }]
+    };
+
+    this.advancedPieOption = this.pieOption;
+
+    this.pieGridOption = this.pieOption;
   }
 
   public loadUhr(): void {

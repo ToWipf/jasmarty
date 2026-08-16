@@ -63,22 +63,18 @@ Fokus: {{isKeyboardVisible}}
 <app-crypt></app-crypt>
 
 <ng-scrollbar class="barbox" track="all">
-    <h1>ngx-charts-bar-vertical</h1>
-    <ngx-charts-bar-vertical [view]="[1000,400]" [results]="testData" [xAxisLabel]="'Testing'" [legendTitle]="'Titel'" [yAxisLabel]="'xxx'" [legend]="true" [showXAxisLabel]="true" [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
-    </ngx-charts-bar-vertical>
+    <h1>Bar (echarts)</h1>
+    <div echarts [options]="barOption" style="width:100%;height:400px;"></div>
 
     <hr>
-    <h1>ngx-charts-pie-chart</h1>
-    <ngx-charts-pie-chart [results]="testData" [legend]="true" [legendTitle]="'Test Report'" [view]="[1000,300]" [labels]="true">
-    </ngx-charts-pie-chart>
+    <h1>Pie (echarts)</h1>
+    <div echarts [options]="pieOption" style="width:100%;height:300px;"></div>
 
     <hr>
-    <h1>ngx-charts-advanced-pie-chart</h1>
-    <ngx-charts-advanced-pie-chart [results]="testData" [gradient]="true">
-    </ngx-charts-advanced-pie-chart>
+    <h1>Advanced Pie (echarts)</h1>
+    <div echarts [options]="advancedPieOption" style="width:100%;height:300px;"></div>
 
     <hr>
-    <h1>ngx-charts-pie-grid</h1>
-    <ngx-charts-pie-grid [results]="testData">
-    </ngx-charts-pie-grid>
+    <h1>Pie Grid (echarts)</h1>
+    <div echarts [options]="pieGridOption" style="width:100%;height:300px;"></div>
 </ng-scrollbar>

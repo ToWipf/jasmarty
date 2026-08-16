@@ -73,7 +73,8 @@ import { MedienComponent, MedienComponentDialog } from './components/_wipf/medie
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule, isDevMode } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts/core';
 import { NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { NgxView360Module } from "@egjs/ngx-view360";
 import { PortalModule } from '@angular/cdk/portal';
@@ -212,7 +213,7 @@ import { ColorPickerDirective } from 'ngx-color-picker';
         MatTreeModule,
         NgbModule,
         NgScrollbarModule,
-        NgxChartsModule,
+        NgxEchartsModule.forRoot({ echarts }),
         NgxPhotoEditorModule,
         NgxPhotoEditorModule,
         NgxView360Module,
