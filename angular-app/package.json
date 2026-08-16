@@ -10,6 +10,7 @@
     "buildq": "ng build --base-href /app/"
   },
   "private": true,
+  "type": "module",
   "dependencies": {
     "@angular/animations": "22.0.0",
     "@angular/cdk": "22.0.0",
@@ -42,6 +43,6 @@
     "@angular/cli": "22.0.0",
     "@angular/compiler-cli": "22.0.0",
     "less": "^4.2.0",
-    "typescript": "^6.0.0"
+    "typescript": "^6.0.3"
   }
 }
