@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { ListeEntry } from "src/app/datatypes";
@@ -9,7 +11,8 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
     selector: 'app-listecrypt-dialog',
     templateUrl: './listeCrypt.dialog.html',
     styleUrls: ['./liste.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 
 export class ListeCryptComponentDialogComponent implements OnInit {

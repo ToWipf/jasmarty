@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -8,7 +10,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
     selector: 'app-dynButton',
     templateUrl: './dynButton.component.html',
     styleUrls: ['./dynButton.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class DynButtonComponent implements OnInit {
 

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
+import { NgxView360Module } from '@egjs/ngx-view360';
 import { MatDialog } from '@angular/material/dialog';
 import { View360Options, EquirectProjection } from '@egjs/ngx-view360';
 import { retry, take } from 'rxjs';
@@ -11,7 +14,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
     selector: 'app-view360',
     templateUrl: './view360.component.html',
     styleUrls: ['./view360.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, NgxView360Module]
 })
 export class View360Component implements OnInit {
 

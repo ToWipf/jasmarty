@@ -1,14 +1,33 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { KeyValEntry } from 'src/app/datatypes';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @Component({
     selector: 'app-localStorageVW',
     templateUrl: './localStorageVW.dialog.html',
     styleUrls: ['./localStorageVW.dialog.less'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatDialogModule,
+      MatButtonModule,
+      MatIconModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FormsModule,
+      MatTableModule,
+      MatSortModule
+    ]
 })
 export class LocalStorageDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<LocalStorageDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
@@ -76,9 +95,10 @@ export class LocalStorageDialogComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-localStorageVW-add-dialog',
-    templateUrl: './localStorageVW.add.dialog.html',
-    standalone: false
+  selector: 'app-localStorageVW-add-dialog',
+  templateUrl: './localStorageVW.add.dialog.html',
+  standalone: true,
+  imports: [CommonModule, MatDialogModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule]
 })
 export class LocalStorageVWAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<LocalStorageVWAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }

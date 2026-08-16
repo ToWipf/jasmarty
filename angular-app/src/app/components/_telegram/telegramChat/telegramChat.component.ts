@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { Telegram, TelegramUserCache } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -11,7 +13,8 @@ import { MatDialog } from '@angular/material/dialog';
     selector: 'app-telegram-chat',
     templateUrl: './telegramChat.component.html',
     styleUrls: ['./telegramChat.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class TelegramChatComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) {

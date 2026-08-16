@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { WipfUser } from 'src/app/datatypes';
@@ -11,7 +13,8 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
     selector: 'app-wipfuservw',
     templateUrl: './wipfUserVw.component.html',
     styleUrls: ['./wipfUserVw.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class WipfUserVwComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -92,9 +95,10 @@ export class WipfUserVwComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-wipfuservw-dialog',
-    templateUrl: './wipfUserVw.dialog.html',
-    standalone: false
+  selector: 'app-wipfuservw-dialog',
+  templateUrl: './wipfUserVw.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class WipfUserVWComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<WipfUserVWComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: WipfUser) { }

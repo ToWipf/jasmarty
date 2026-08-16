@@ -1,14 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { KeyValEntry } from 'src/app/datatypes';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
+import { SharedMaterialModule } from '../../shared/shared-material.module';
 
 @Component({
-    selector: 'app-cookie',
-    templateUrl: './cookie.dialog.html',
-    styleUrls: ['./cookie.dialog.less'],
-    standalone: false
+  selector: 'app-cookie',
+  templateUrl: './cookie.dialog.html',
+  styleUrls: ['./cookie.dialog.less'],
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class CookieDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CookieDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
@@ -84,9 +87,10 @@ export class CookieDialogComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-cookie-add-dialog',
-    templateUrl: './cookie.add.dialog.html',
-    standalone: false
+  selector: 'app-cookie-add-dialog',
+  templateUrl: './cookie.add.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class CookieAddDialogComponent {
   constructor(public dialogRef: MatDialogRef<CookieAddDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: KeyValEntry) { }

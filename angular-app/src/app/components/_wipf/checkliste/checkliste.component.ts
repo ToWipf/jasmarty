@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +13,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
   selector: 'app-checkliste',
   templateUrl: './checkliste.component.html',
   styleUrls: ['./checkliste.component.less'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class ChecklisteComponent implements OnInit {
 
@@ -412,7 +415,8 @@ export class ChecklisteComponent implements OnInit {
 @Component({
   selector: 'app-checklisteliste-dialog',
   templateUrl: './checkliste.dialog.checkliste.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class CheckListeDialogCheckListe implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogCheckListe>, @Inject(MAT_DIALOG_DATA) public data: CheckListeListe) {
@@ -458,7 +462,8 @@ export class CheckListeDialogCheckListe implements OnInit {
 @Component({
   selector: 'app-checklistetypes-dialog',
   templateUrl: './checkliste.dialog.type.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class CheckListeDialogType {
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<CheckListeDialogType>, @Inject(MAT_DIALOG_DATA) public data: CheckListeType) {
@@ -478,7 +483,8 @@ export class CheckListeDialogType {
 @Component({
   selector: 'app-checklisteitem-dialog',
   templateUrl: './checkliste.dialog.item.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class CheckListeDialogItem {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public dialogRef: MatDialogRef<CheckListeDialogItem>, @Inject(MAT_DIALOG_DATA) public data: CheckListeItem) {

@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { TeleMsg } from 'src/app/datatypes';
@@ -11,7 +13,8 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
     selector: 'app-telegramMsg',
     templateUrl: './telegramMsg.component.html',
     styleUrls: ['./telegramMsg.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class TelegramMsgComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -108,9 +111,10 @@ export class TelegramMsgComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-telegramMsg-dialog',
-    templateUrl: './telegramMsg.dialog.html',
-    standalone: false
+  selector: 'app-telegramMsg-dialog',
+  templateUrl: './telegramMsg.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class TelegramMsgComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<TelegramMsgComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: TeleMsg) { }

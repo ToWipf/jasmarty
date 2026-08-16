@@ -1,4 +1,6 @@
 import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -11,7 +13,8 @@ import { MatSort } from '@angular/material/sort';
     selector: 'app-daylog-eventlist',
     templateUrl: './daylog.eventlist.html',
     styleUrls: ['./daylog.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -225,7 +228,8 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     selector: 'app-daylog-dialogevent',
     templateUrl: './daylog.dialogEvent.html',
     styleUrls: ['./daylog.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class DaylogComponentDialogEventComponent implements OnInit {
     constructor(public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<DaylogComponentDialogEventComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogEvent, private rest: ServiceRest) {

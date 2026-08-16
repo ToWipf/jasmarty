@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceVersion } from 'src/app/service/serviceVersion';
@@ -8,7 +10,8 @@ import { ServicAuthKey } from 'src/app/service/serviceAuthKey';
     selector: 'app-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class FooterComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest, public serviceVersion: ServiceVersion, public serviceAuthKey: ServicAuthKey) { }

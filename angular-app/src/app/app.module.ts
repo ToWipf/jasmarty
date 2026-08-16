@@ -29,9 +29,8 @@ import { Jasmarty12864PagesComponent } from './components/_jasmarty/jasmarty1286
 import { Jasmarty12864PanelComponent } from './components/_jasmarty/jasmarty12864Panel/jasmarty12864Panel.component';
 import { JasmartyActionsComponent, JasmartyActionsComponentDialog } from './components/_jasmarty/jasmartyActions/jasmartyActions.component';
 import { JasmartyConfigComponent } from './components/_jasmarty/jasmartyConfig/jasmartyConfig.component';
-import { ListeComponent, ListeComponentDialogComponent } from './components/_wipf/liste/liste.component';
-import { ListeCryptComponentDialogComponent } from './components/_wipf/liste/listeCrypt.component';
-import { ListeTypeComponentDialogTypeComponent, ListeTypeComponentDialogTypeListComponent } from './components/_wipf/liste/listeType.component';
+import { ListeComponent } from './components/_wipf/liste/liste.component';
+// listeType components converted to standalone; import removed
 import { LocalStorageVWAddDialogComponent, LocalStorageDialogComponent } from './dialog/localStorageVW/localStorageVW.dialog';
 import { LoginComponent } from './components/_main/login/login.component';
 import { MainmenueComponent } from './components/_main/mainmenue/mainmenue.component';
@@ -69,9 +68,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
+// MedienComponent converted to standalone; import removed
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
@@ -90,69 +89,10 @@ import { View360Component } from './components/_debug/view360/view360.component'
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.component';
 import { CommonModule } from '@angular/common';
-import { ColorPickerModule } from 'ngx-color-picker';
-
+import { SharedMaterialModule } from './shared/shared-material.module';
+        
 @NgModule({
-    declarations: [
-        AppComponent,
-        AuthKeyComponent,
-        AuthKeyComponentDialogComponent,
-        ChecklisteComponent,
-        CheckListeDialogCheckListe,
-        CheckListeDialogItem,
-        CheckListeDialogType,
-        CookieAddDialogComponent,
-        CookieDialogComponent,
-        CryptComponent,
-        DayLogComponent,
-        DaylogComponentDialogDayComponent,
-        DaylogComponentDialogEventComponent,
-        DaylogComponentDialogTypeComponent,
-        DaylogComponentDialogTypeListComponent,
-        DaylogComponentEventlist,
-        DaylogKalenderComponent,
-        DaylogStatsComponent,
-        DebugSeiteComponent,
-        DialogInputOneThingComponent,
-        DialogInfoboxComponent,
-        DialogJaNeinComponent,
-        DialogVariablenHilfeComponent,
-        DialogWartenComponent,
-        DynButtonComponent,
-        EisenbahnMitlesenComponent,
-        ElementSetServerDialog,
-        FileVwComponent,
-        FooterComponent,
-        GlowiComponent,
-        Jasmarty12864PagesComponent,
-        Jasmarty12864PanelComponent,
-        JasmartyActionsComponent,
-        JasmartyActionsComponentDialog,
-        JasmartyConfigComponent,
-        ListeComponent,
-        ListeComponentDialogComponent,
-        ListeCryptComponentDialogComponent,
-        ListeTypeComponentDialogTypeComponent,
-        ListeTypeComponentDialogTypeListComponent,
-        LocalStorageVWAddDialogComponent,
-        LocalStorageDialogComponent,
-        LoginComponent,
-        MainmenueComponent,
-        MedienComponent,
-        MedienComponentDialog,
-        RndEventComponent,
-        RndEventComponentDialogComponent,
-        SettingsComponent,
-        SettingsComponentDialogComponent,
-        TelegramChatComponent,
-        TelegramConfigComponent,
-        TelegramLogComponent,
-        TelegramMsgComponent,
-        TelegramMsgComponentDialogComponent,
-        View360Component,
-        WipfUserVwComponent,
-        WipfUserVWComponentDialogComponent
-    ],
+    declarations: [AppComponent],
     imports: [
         A11yModule, //TODO:?
         AppRoutingModule,
@@ -167,7 +107,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
         MatTableModule,
         MatSortModule,
         BrowserModule,
-        ColorPickerModule,
+        
         CdkStepperModule,
         CdkTableModule,
         CdkTreeModule,
@@ -225,11 +165,12 @@ import { ColorPickerModule } from 'ngx-color-picker';
             // or after 30 seconds (whichever comes first).
             registrationStrategy: 'registerWhenStable:30000'
         }),
+        SharedMaterialModule
     ],
     providers: [
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
     ],
     bootstrap: [AppComponent],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }

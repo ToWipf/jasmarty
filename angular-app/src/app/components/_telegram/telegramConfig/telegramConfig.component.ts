@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
 @Component({
     selector: 'app-telegram-config',
     templateUrl: './telegramConfig.component.html',
     styleUrls: ['./telegramConfig.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class TelegramConfigComponent implements OnInit {
   constructor(private rest: ServiceRest) { }

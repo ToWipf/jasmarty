@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
@@ -11,7 +14,8 @@ import { DaylogType } from 'src/app/datatypes';
     selector: 'app-daylogStats',
     templateUrl: './daylogStats.component.html',
     styleUrls: ['./daylogStats.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, NgxEchartsModule]
 })
 export class DaylogStatsComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

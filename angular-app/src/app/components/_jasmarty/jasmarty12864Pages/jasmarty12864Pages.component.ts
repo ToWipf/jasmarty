@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
-import { NgxCroppedEvent, NgxPhotoEditorService } from 'ngx-photo-editor';
+import { NgxCroppedEvent, NgxPhotoEditorService, NgxPhotoEditorModule } from 'ngx-photo-editor';
 import { Lcd12864PageDescription, Lcd12864PageDescriptionDynamic } from 'src/app/datatypes';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -10,7 +12,8 @@ import { DialogVariablenHilfeComponent, DialogWartenComponent } from 'src/app/di
     selector: 'app-jasmarty12864pages',
     templateUrl: './jasmarty12864Pages.component.html',
     styleUrls: ['./jasmarty12864Pages.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, NgxPhotoEditorModule]
 })
 export class Jasmarty12864PagesComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog, private ngxPhotoEditorService: NgxPhotoEditorService) {

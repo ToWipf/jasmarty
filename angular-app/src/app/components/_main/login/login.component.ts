@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { ServiceRest } from 'src/app/service/serviceRest';
+import { DynButtonComponent } from 'src/app/components/_wipf/dynButton/dynButton.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, DynButtonComponent]
 })
 export class LoginComponent implements OnInit {
   constructor(public dialog: MatDialog, public rest: ServiceRest) { }

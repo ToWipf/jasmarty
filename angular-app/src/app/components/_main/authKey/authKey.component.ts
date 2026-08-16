@@ -1,4 +1,6 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -9,10 +11,11 @@ import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-    selector: 'app-authKey',
-    templateUrl: './authKey.component.html',
-    styleUrls: ['./authKey.component.less'],
-    standalone: false
+  selector: 'app-authKey',
+  templateUrl: './authKey.component.html',
+  styleUrls: ['./authKey.component.less'],
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class AuthKeyComponent implements OnInit {
 
@@ -95,9 +98,10 @@ export class AuthKeyComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-authkey-dialog',
-    templateUrl: './authKey.dialog.html',
-    standalone: false
+  selector: 'app-authkey-dialog',
+  templateUrl: './authKey.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class AuthKeyComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<AuthKeyComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: AuthKey) { }

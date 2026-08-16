@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { Jaconfig } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 
@@ -6,7 +8,8 @@ import { ServiceRest } from 'src/app/service/serviceRest';
     selector: 'app-jasmartyConfig',
     templateUrl: './jasmartyConfig.component.html',
     styleUrls: ['./jasmartyConfig.component.less'],
-    standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class JasmartyConfigComponent implements OnInit {
   constructor(private rest: ServiceRest) { }

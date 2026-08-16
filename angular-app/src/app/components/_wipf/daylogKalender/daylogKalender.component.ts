@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { DaylogDay, DaylogEvent, DaylogType, DialogInputOneThingContent } from 'src/app/datatypes';
 import { DialogInputOneThingComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -9,7 +11,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
     selector: 'app-daylogKalender',
     templateUrl: './daylogKalender.component.html',
     styleUrls: ['./daylogKalender.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class DaylogKalenderComponent implements OnInit {
 

@@ -1,4 +1,6 @@
 import { Component, Inject, Injectable, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -18,7 +20,8 @@ import { MatSelectChange } from '@angular/material/select';
   selector: 'app-liste',
   templateUrl: './liste.component.html',
   styleUrls: ['./liste.component.less'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class ListeComponent implements OnInit {
 
@@ -254,7 +257,8 @@ export class ListeComponent implements OnInit {
 @Component({
   selector: 'app-liste-dialog',
   templateUrl: './liste.dialog.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class ListeComponentDialogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialogRef: MatDialogRef<ListeComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeEntry) {

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,7 +13,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
     selector: 'app-eisenbahn-mitlesen',
     templateUrl: './eisenbahn-mitlesen.component.html',
     styleUrls: ['./eisenbahn-mitlesen.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class EisenbahnMitlesenComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

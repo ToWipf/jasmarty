@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MedienEntry } from 'src/app/datatypes';
@@ -8,10 +10,11 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-    selector: 'app-medien',
-    templateUrl: './medien.component.html',
-    styleUrls: ['./medien.component.less'],
-    standalone: false
+  selector: 'app-medien',
+  templateUrl: './medien.component.html',
+  styleUrls: ['./medien.component.less'],
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class MedienComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -116,9 +119,10 @@ export class MedienComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-medien-dialog',
-    templateUrl: './medien.dialog.html',
-    standalone: false
+  selector: 'app-medien-dialog',
+  templateUrl: './medien.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class MedienComponentDialog {
   constructor(public dialogRef: MatDialogRef<MedienComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: MedienEntry) { }

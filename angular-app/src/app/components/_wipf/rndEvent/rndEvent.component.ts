@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { RndEvent } from 'src/app/datatypes';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -8,10 +10,11 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/main.dialog';
 
 @Component({
-    selector: 'app-rndEvent',
-    templateUrl: './rndEvent.component.html',
-    styleUrls: ['./rndEvent.component.less'],
-    standalone: false
+  selector: 'app-rndEvent',
+  templateUrl: './rndEvent.component.html',
+  styleUrls: ['./rndEvent.component.less'],
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class RndEventComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -96,9 +99,10 @@ export class RndEventComponent implements OnInit {
 }
 
 @Component({
-    selector: 'app-rndEvent-dialog',
-    templateUrl: './rndEvent.dialog.html',
-    standalone: false
+  selector: 'app-rndEvent-dialog',
+  templateUrl: './rndEvent.dialog.html',
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class RndEventComponentDialogComponent {
   constructor(public dialogRef: MatDialogRef<RndEventComponentDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: RndEvent) { }

@@ -1,4 +1,8 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { CryptComponent } from '../crypt/crypt.component';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
@@ -7,7 +11,8 @@ import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
   selector: 'app-debugSeite',
   templateUrl: './debugSeite.component.html',
   styleUrls: ['./debugSeite.component.less'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule, NgxEchartsModule, CryptComponent]
 })
 export class DebugSeiteComponent implements OnInit {
   constructor(private rest: ServiceRest, public dialog: MatDialog) { }

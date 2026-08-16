@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +13,8 @@ import { take } from 'rxjs';
     selector: 'app-file-vw',
     templateUrl: './fileVw.component.html',
     styleUrls: ['./fileVw.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class FileVwComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }

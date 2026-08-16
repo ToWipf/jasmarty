@@ -1,4 +1,8 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
+import { ColorPickerDirective } from 'ngx-color-picker';
+import { DaylogComponentEventlist } from './daylog.eventlist';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
@@ -11,7 +15,8 @@ import { MatSort } from '@angular/material/sort';
     selector: 'app-daylog',
     templateUrl: './daylog.component.html',
     styleUrls: ['./daylog.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, DaylogComponentEventlist]
 })
 export class DayLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
@@ -286,7 +291,8 @@ export class DayLogComponent implements OnInit {
 @Component({
     selector: 'app-daylog-dialogday',
     templateUrl: './daylog.dialogDay.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class DaylogComponentDialogDayComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogDayComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogDay) {
@@ -310,7 +316,8 @@ export class DaylogComponentDialogDayComponent {
     selector: 'app-daylog-dialogtypelist',
     templateUrl: './daylog.dialogTypeList.html',
     styleUrls: ['./daylog.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 
 export class DaylogComponentDialogTypeListComponent implements OnInit {
@@ -413,7 +420,8 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
 @Component({
     selector: 'app-daylog-dialogtype',
     templateUrl: './daylog.dialogType.html',
-    standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule, ColorPickerDirective]
 })
 export class DaylogComponentDialogTypeComponent {
   constructor(public dialogRef: MatDialogRef<DaylogComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: DaylogType) { }

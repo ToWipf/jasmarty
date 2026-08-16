@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, Inject, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { Buttonaction } from 'src/app/datatypes';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +13,8 @@ import { DialogWartenComponent } from 'src/app/dialog/main.dialog';
     selector: 'app-jasmartyActions',
     templateUrl: './jasmartyActions.component.html',
     styleUrls: ['./jasmartyActions.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class JasmartyActionsComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog, public serviceWipf: ServiceWipf, private rest: ServiceRest) { }
@@ -115,7 +118,8 @@ export class JasmartyActionsComponent implements OnInit, OnDestroy {
     selector: 'app-jasmartyActions-dialog',
     templateUrl: './jasmartyActions.dialog.html',
     styleUrls: ['./jasmartyActions.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class JasmartyActionsComponentDialog {
   constructor(public dialogRef: MatDialogRef<JasmartyActionsComponentDialog>, @Inject(MAT_DIALOG_DATA) public data: Buttonaction) { }

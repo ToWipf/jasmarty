@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 import { DialogInfoContent } from 'src/app/datatypes';
@@ -11,7 +13,8 @@ import { DialogInfoboxComponent, DialogInputOneThingComponent, DialogJaNeinCompo
   selector: 'app-telegram-log',
   templateUrl: './telegramLog.component.html',
   styleUrls: ['./telegramLog.component.less'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class TelegramLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }

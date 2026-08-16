@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from 'src/app/shared/shared-material.module';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
@@ -6,7 +8,8 @@ import { ServiceWipf } from 'src/app/service/serviceWipf';
     selector: 'app-jasmarty12864panel',
     templateUrl: './jasmarty12864Panel.component.html',
     styleUrls: ['./jasmarty12864Panel.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule]
 })
 export class Jasmarty12864PanelComponent implements OnInit {
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf) {

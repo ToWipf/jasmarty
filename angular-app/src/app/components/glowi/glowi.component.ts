@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedMaterialModule } from '../../shared/shared-material.module';
 import { NgxCroppedEvent, NgxPhotoEditorService } from 'ngx-photo-editor';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceWipf } from 'src/app/service/serviceWipf';
 
 @Component({
-    selector: 'app-glowi',
-    templateUrl: './glowi.component.html',
-    styleUrls: ['./glowi.component.less'],
-    standalone: false
+  selector: 'app-glowi',
+  templateUrl: './glowi.component.html',
+  styleUrls: ['./glowi.component.less'],
+  standalone: true,
+  imports: [CommonModule, SharedMaterialModule]
 })
 export class GlowiComponent implements OnInit {
 

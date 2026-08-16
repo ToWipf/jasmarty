@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewChild, Inject } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { SharedMaterialModule } from '../../../shared/shared-material.module';
+import { ColorPickerDirective } from 'ngx-color-picker';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -11,7 +14,8 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
     selector: 'app-listetype-dialogtypelist',
     templateUrl: './listeType.dialogTypeList.html',
     styleUrls: ['./liste.component.less'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, ColorPickerDirective]
 })
 
 export class ListeTypeComponentDialogTypeListComponent implements OnInit {
@@ -108,7 +112,8 @@ export class ListeTypeComponentDialogTypeListComponent implements OnInit {
 @Component({
     selector: 'app-listeType-dialogtype',
     templateUrl: './listeType.dialogType.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedMaterialModule, ColorPickerDirective]
 })
 export class ListeTypeComponentDialogTypeComponent {
     constructor(public dialogRef: MatDialogRef<ListeTypeComponentDialogTypeComponent>, @Inject(MAT_DIALOG_DATA) public data: ListeType) { }
