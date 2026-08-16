@@ -11,18 +11,18 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "20.3.2",
+    "@angular/animations": "21.2.20",
     "@angular/cdk": "20.0.5",
-    "@angular/common": "20.3.2",
-    "@angular/compiler": "20.3.2",
-    "@angular/core": "20.3.2",
-    "@angular/forms": "20.3.2",
-    "@angular/localize": "20.3.2",
+    "@angular/common": "21.2.20",
+    "@angular/compiler": "21.2.20",
+    "@angular/core": "21.2.20",
+    "@angular/forms": "21.2.20",
+    "@angular/localize": "21.2.20",
     "@angular/material": "20.0.5",
-    "@angular/platform-browser-dynamic": "20.3.2",
-    "@angular/platform-browser": "20.3.2",
-    "@angular/router": "20.3.2",
-    "@angular/service-worker": "20.3.2",
+    "@angular/platform-browser-dynamic": "21.2.20",
+    "@angular/platform-browser": "21.2.20",
+    "@angular/router": "21.2.20",
+    "@angular/service-worker": "21.2.20",
     "@egjs/ngx-view360": "4.0.0-beta.7",
     "@ng-bootstrap/ng-bootstrap": "19.0.1",
     "@popperjs/core": "2.11.8",
@@ -36,10 +36,10 @@
     "zone.js": "0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.3",
-    "@angular/cli": "20.3.3",
-    "@angular/compiler-cli": "20.3.2",
+    "@angular/build": "^21.2.21",
+    "@angular/cli": "21.2.21",
+    "@angular/compiler-cli": "21.2.20",
     "less": "^4.2.0",
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   }
 }
