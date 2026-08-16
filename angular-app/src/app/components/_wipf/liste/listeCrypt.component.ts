@@ -18,7 +18,7 @@ export class ListeCryptComponentDialogComponent implements OnInit {
     public sDecrypt: string = "";
     public sKey: string = "";
 
-    @ViewChild(MatSort, { static: true }) sortType: MatSort;
+    @ViewChild(MatSort, { static: true }) sortType!: MatSort;
 
     public ngOnInit() {
     }
@@ -29,7 +29,7 @@ export class ListeCryptComponentDialogComponent implements OnInit {
 
     public changeKey(): void {
         this.serviceWipf.delay(300).then(() => {
-            this.sDecrypt = this.serviceWipf.decrypt(this.data.data, this.sKey);
+            this.sDecrypt = this.serviceWipf.decrypt(this.data.data ?? null, this.sKey);
         });
     }
 

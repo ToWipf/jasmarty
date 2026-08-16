@@ -13,7 +13,7 @@ import { LocalStorageDialogComponent } from '../dialog/localStorageVW/localStora
 export class ServiceVersion {
     constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-    private sBackend: string;
+    private sBackend: string = '';
 
     /**
      * 

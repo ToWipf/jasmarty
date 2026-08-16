@@ -8,7 +8,7 @@
   <mat-form-field>
     <mat-label>Tagestext</mat-label>
     <input matInput [(ngModel)]="data.tagestext">
-    @if(data?.tagestext?.length > 0){
+    @if((data?.tagestext ?? '').length > 0){
     <button class="btn btn-for-icon" (click)="setText('')">
       <mat-icon svgIcon="trash" aria-hidden="false" title="trash"></mat-icon>
     </button>

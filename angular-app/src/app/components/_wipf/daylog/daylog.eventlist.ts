@@ -16,15 +16,15 @@ import { MatSort } from '@angular/material/sort';
 export class DaylogComponentEventlist implements OnChanges, OnInit {
     constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-    @Input("filterTextEvent") public sFilterTextEvent: string;
-    @Input("showAllTableColumns") public bShowAllTableColumns: Boolean;
-    @Input("dateForLoad") public dateForLoad: DaylogDay;
-    @Input("daylogTypes") public daylogTypes: DaylogType[];
-    @Input("filterEventType") public filterEventType: DaylogType;
+    @Input("filterTextEvent") public sFilterTextEvent: string = '';
+    @Input("showAllTableColumns") public bShowAllTableColumns: boolean = false;
+    @Input("dateForLoad") public dateForLoad: DaylogDay = {};
+    @Input("daylogTypes") public daylogTypes: DaylogType[] = [];
+    @Input("filterEventType") public filterEventType: DaylogType | null = null;
 
-    @ViewChild(MatSort, { static: true }) sortEvent: MatSort;
+    @ViewChild(MatSort, { static: true }) sortEvent!: MatSort;
     public bShowWarning: boolean = false;
-    public eventlistDataSource;
+    public eventlistDataSource: MatTableDataSource<DaylogEvent> = new MatTableDataSource();
     public eventlistDisplayedColumns: string[] = [];
     public eventlist: DaylogEvent[] = [];
     public isLoadAllEvents: boolean = false;
@@ -47,8 +47,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
         if (changes?.filterEventType) {
             this.applyFilterByType();
         } else {
-            // Filter leeren
-            this.filterEventType = undefined;
+            this.filterEventType = null;
         }
     }
 
@@ -112,11 +111,11 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     }
 
     public applyFilterByType() {
-        if (this.filterEventType != undefined) {
-            let eventlistToShow: DaylogEvent[] = [];
+        if (this.filterEventType != null && this.filterEventType != undefined) {
+            const eventlistToShow: DaylogEvent[] = [];
 
             this.eventlist.forEach((event: DaylogEvent) => {
-                if (event.typid == this.filterEventType.id.toString()) {
+                if (event.typid == (this.filterEventType?.id ?? '').toString()) {
                     eventlistToShow.push(event);
                 }
             });
@@ -181,7 +180,7 @@ export class DaylogComponentEventlist implements OnChanges, OnInit {
     }
 
     public newEvent(dayitem: DaylogDay): void {
-        let e: DaylogEvent = {};
+        const e: DaylogEvent = {};
         e.dateid = dayitem.id;
         e.text = "";
         e.typid = "";
@@ -242,7 +241,7 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     ngOnInit(): void {
         this.loadDaylogTypes();
         // Beim bearbeiten die Vorschläge bereits initial vorladen
-        if (this.data.text.length > 2) {
+        if ((this.data.text ?? '').length > 2) {
             this.getTextVorschlag();
         }
     }
@@ -272,13 +271,15 @@ export class DaylogComponentDialogEventComponent implements OnInit {
     }
 
     private loadTextVorschlag(): void {
-        var suchetext = this.data.text.trim().replace('/', "%2F").replace("  ", " ");
-        if (this.data.text.length > 1) {
+        const suchetext = (this.data.text ?? '').trim().replace('/', "%2F").replace("  ", " ");
+        if ((this.data.text ?? '').length > 1) {
             this.rest.getNoWartenDialog('daylog/event/getTextBySearchAndType/' + suchetext + '/' + this.data.typid).then((resdata: string[]) => {
                 this.sListVorschlag = resdata;
             });
         } else {
-            this.loadLastVorschlaege(this.daylogTypes.find(item => item.id === Number(this.data.typid)).preview + this.mehrladenCounter);
+            const selectedType = this.daylogTypes.find(item => item.id === Number(this.data.typid ?? 0));
+            const preview = selectedType?.preview ?? 0;
+            this.loadLastVorschlaege(preview + this.mehrladenCounter);
         }
     }
 

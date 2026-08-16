@@ -18,7 +18,7 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ</th>
     <td mat-cell *matCellDef="let element">
       @for (type of daylogTypes; track type) {
-        @if (type.id.toString()==element.typid) {
+        @if ((type.id ?? -1).toString() === (element.typid ?? '').toString()) {
           @if (type?.color) {
             <div class="typestyle" [ngStyle]="{ 'background': type.color}">
               {{type.type}}

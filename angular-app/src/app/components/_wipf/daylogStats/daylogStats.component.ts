@@ -16,21 +16,21 @@ import { DaylogType } from 'src/app/datatypes';
 export class DaylogStatsComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public statsDataSource;
-  public vorkomnisseDataSource;
+  public statsDataSource: MatTableDataSource<StatsEntry> = new MatTableDataSource();
+  public vorkomnisseDataSource: MatTableDataSource<any> = new MatTableDataSource();
   public sFilter: string = "";
   public statsDisplayedColumns: string[] = [];
   public vorkomnisseDisplayedColumns: string[] = [];
   public bShowAllTableColumns: boolean = true;
-  public bvDataForDateChart = [];
-  public bvDataForWochentagVorkomnisseChart = [];
+  public bvDataForDateChart: Array<{ name: string; value: number; wtag: string }> = [];
+  public bvDataForWochentagVorkomnisseChart: Array<{ name: string; value: number }> = [];
   public dateBarOption: any;
   public weekPieOption: any;
   public typelistForSelect: DaylogType[] = [];
   public selectedTypes: DaylogType[] = [];
-  public diagramRawData: any[];
+  public diagramRawData: any[] = [];
 
   ngOnInit(): void {
     this.showAllTableColumns();
@@ -91,15 +91,15 @@ export class DaylogStatsComponent implements OnInit {
     this.bvDataForDateChart = [];
     this.bvDataForWochentagVorkomnisseChart = [];
     indata.forEach((element: any) => {
-      let wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
-      let nVal = this.textToDigNumber(element.text);
-      this.bvDataForDateChart.push({ name: element.date, value: nVal, wtag: wochentag });
+      const wochentag = new Date(element.date).toLocaleDateString('de-de', { weekday: 'short' });
+      const nVal = this.textToDigNumber(element.text);
+      this.bvDataForDateChart.push({ name: String(element.date), value: nVal, wtag: wochentag });
     });
 
     // Zweites Diagramm
-    let aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+    const aWochentage = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
     aWochentage.forEach((wotag) => {
-      let i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
+      const i = this.bvDataForDateChart.filter((val) => val.wtag === wotag).length;
       this.bvDataForWochentagVorkomnisseChart.push({ name: wotag, value: i });
     });
 
@@ -136,10 +136,10 @@ export class DaylogStatsComponent implements OnInit {
       return 0;
     } else if (this.serviceWipf.isNumber(input)) {
       // Wenn es eine Zahl ist
-      return input;
+      return Number(input);
     } else if (this.serviceWipf.startsWithNumber(input)) {
       // Keine Zahl - bei text mit Zahl zu beginn - nur die Zahl ausgeben
-      return input.match(/\d+/)[0]; // Nur die erste Zahl ausgeben
+      return Number(String(input).match(/\d+/)?.[0] ?? 0); // Nur die erste Zahl ausgeben
     } else {
       return -1;
     }

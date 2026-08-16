@@ -24,15 +24,15 @@ export class ListeComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSourceList;
+  public dataSourceList: MatTableDataSource<ListeEntry> = new MatTableDataSource();
   public bShowWarning: boolean = false;
   public displayedColumns: string[] = [];
   public sFilter: string = "";
   public bShowAllTableColumns: boolean = true;
-  public listeTypeForFilter: ListeType[];
-  public selectedTypeFilter: ListeType;
+  public listeTypeForFilter: ListeType[] = [];
+  public selectedTypeFilter: ListeType | null = null;
 
   ngOnInit() {
     this.loadTypes();
@@ -93,7 +93,14 @@ export class ListeComponent implements OnInit {
 
   private loadByType(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
-    this.rest.get('liste/getAllByType/' + this.selectedTypeFilter.id).then((resdata: ListeEntry[]) => {
+    const selectedTypeId = this.selectedTypeFilter?.id;
+    if (selectedTypeId === undefined || selectedTypeId === null) {
+      this.loadLast();
+      warten.close();
+      return;
+    }
+
+    this.rest.get('liste/getAllByType/' + selectedTypeId).then((resdata: ListeEntry[]) => {
       this.dataSourceList = new MatTableDataSource(resdata);
       this.applyTextFilter();
       this.dataSourceList.sort = this.sort;
@@ -223,12 +230,13 @@ export class ListeComponent implements OnInit {
   }
 
   public copyToClipboard(item: ListeEntry): void {
-    navigator.clipboard.writeText(item.data);
+    navigator.clipboard.writeText(item.data ?? '');
   }
 
   public convertDateToCount(item: ListeEntry): string {
-    let dEntry = new Date(item.date);
-    let dNow = new Date();
+    const dateValue = item.date ?? new Date().toISOString().split('T')[0];
+    const dEntry = new Date(dateValue);
+    const dNow = new Date();
     dNow.setUTCHours(0, 0, 0);
     return (((dNow.getTime() - dEntry.getTime()) / (1000 * 60 * 60)) / 24).toFixed(0);
   }
@@ -236,7 +244,7 @@ export class ListeComponent implements OnInit {
   public getTypeColor(typeid: number): string {
     if (this.listeTypeForFilter) {
       const type = this.listeTypeForFilter.find(type => type.id === typeid);
-      return type ? type.color : "";
+      return type?.color ?? "";
     }
     return "";
   }
@@ -254,7 +262,7 @@ export class ListeComponentDialogComponent implements OnInit {
     dialogRef.updateSize("70%", "70%");
   }
 
-  public listeType: ListeType[];
+  public listeType: ListeType[] = [];
   public selectedTypeColor: string = "";
 
   public ngOnInit(): void {
@@ -268,7 +276,7 @@ export class ListeComponentDialogComponent implements OnInit {
   public loadTypes(): void {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('listeType/getAll').then((resdata: ListeType[]) => {
-      this.listeType = resdata;
+      this.listeType = resdata ?? [];
       this.listeType.push({ id: -1, typename: "crypt", color: "gray", showOverview: false });
       this.listeType.push({ id: -2, typename: "counter", color: "lightgray", showOverview: false });
       warten.close();
@@ -277,16 +285,16 @@ export class ListeComponentDialogComponent implements OnInit {
   }
 
   public onTypeSelectionChange(event: MatSelectChange): void {
-    const selectedType = this.listeType.find(type => type.id === event.value);
+    const selectedType = this.listeType.find(type => type.id === Number(event.value));
     if (selectedType) {
-      this.selectedTypeColor = selectedType.color;
+      this.selectedTypeColor = selectedType.color ?? "";
     }
   }
 
   private setSelectedTypeColor(): void {
     const selectedType = this.listeType.find(type => type.id === this.data.typeid);
     if (selectedType) {
-      this.selectedTypeColor = selectedType.color;
+      this.selectedTypeColor = selectedType.color ?? "";
     }
   }
 

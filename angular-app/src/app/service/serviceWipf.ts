@@ -42,10 +42,10 @@ export class ServiceWipf {
    * @param size 
    * @returns 
    */
-  public pad(num, size): any {
-    num = num.toString();
-    while (num.length < size) num = "0" + num;
-    return num;
+  public pad(num: number | string, size: number): string {
+    let value = num.toString();
+    while (value.length < size) value = "0" + value;
+    return value;
   }
 
   /**
@@ -55,10 +55,11 @@ export class ServiceWipf {
    * @returns 
    */
   public crypt(str: string, key: string): string {
-    if (str) {
-      var bf = new Blowfish(key);
+    if (str && key) {
+      const bf = new Blowfish(key);
       return bf.encrypt(str);
     }
+    return '';
   }
 
   /**
@@ -67,11 +68,12 @@ export class ServiceWipf {
    * @param key 
    * @returns 
    */
-  public decrypt(str: string, key: string): string {
-    if (str) {
-      var bf = new Blowfish(key);
+  public decrypt(str: string | null, key: string): string {
+    if (str && key) {
+      const bf = new Blowfish(key);
       return bf.trimZeros(bf.decrypt(str));
     }
+    return '';
   }
 
   /**

@@ -16,9 +16,9 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
 export class MedienComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<MedienEntry> = new MatTableDataSource();
   public bShowAllTableColumns: boolean = true;
   public displayedColumns: string[] = [];
   public sFilter: string = "";

@@ -15,8 +15,8 @@ export class DaylogKalenderComponent implements OnInit {
 
   constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-  public sFilterYYYY: number = undefined;
-  public sFilterMON: number = undefined;
+  public sFilterYYYY: number = new Date(Date.now()).getFullYear();
+  public sFilterMON: number = new Date(Date.now()).getMonth() + 1;
   public sFilerMONasText: string = "";
   public kalenderRawArray: KalDay[] = [];
   public kalenderShowArray: KalShowZelle[] = [];
@@ -77,19 +77,19 @@ export class DaylogKalenderComponent implements OnInit {
         if (resdata.length != 0) {
           for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
             resdata.forEach((d: DaylogDay) => {
-              if (new Date(d.date).getDate() === dayNr) {
+              if (d.date && new Date(d.date).getDate() === dayNr) {
                 // Tag vorhanden
                 this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, d);
               } else {
                 // Tag gibt es nicht
-                this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
+                this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null as unknown as DaylogDay);
               }
             })
           }
         } else {
           // Wenn kein Tag vorhanden ist - leer füllen
           for (var dayNr = 1; dayNr <= tageImMonat; dayNr++) {
-            this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null);
+            this.addToInhaltsarray(dayNr + erstWochentag - 1, dayNr, null as unknown as DaylogDay);
           }
         }
 
@@ -106,40 +106,44 @@ export class DaylogKalenderComponent implements OnInit {
     this.kalenderShowArray = new Array(37).fill({ tagestext: "-" });
 
     this.kalenderRawArray.forEach((zelle: KalDay) => {
-      var kdShowDay: KalShowZelle = {};
-      kdShowDay.eventKV = [];
-      kdShowDay.dayNr = zelle.dayNr;
+      const kdShowDay: KalShowZelle = { dayNr: zelle.dayNr, tagestext: '-', eventKV: [] };
 
       if (zelle.daylogDayday) {
-        kdShowDay.tagestext = zelle.daylogDayday.tagestext;
+        kdShowDay.tagestext = zelle.daylogDayday.tagestext ?? '-';
 
         if (zelle.daylogEvent) {
           zelle.daylogEvent.forEach((de: DaylogEvent) => {
-            const eventTypeMatch = this.typelistForEventFilter.find(tl => tl.id.toString() === de.typid.toString());
-            const filterMatch = this.sFilter.trim().length === 0 || de.text.toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase().trim());
+            const deTypeId = de.typid ?? '';
+            const eventTypeMatch = this.typelistForEventFilter.find(tl => (tl.id ?? -1).toString() === deTypeId.toString());
+            const filterMatch = this.sFilter.trim().length === 0 || (de.text ?? '').toLocaleLowerCase().includes(this.sFilter.toLocaleLowerCase().trim());
 
             if (eventTypeMatch && filterMatch) {
               if (this.selectedEventTypeFilter.length > 0) {
                 this.selectedEventTypeFilter.forEach((fi: DaylogType) => {
-                  if (de.typid.toString() === fi.id.toString()) {
-                    kdShowDay.eventKV.push({ value: de.text, key: eventTypeMatch.type, color: eventTypeMatch.color });
+                  const fiId = fi.id ?? -1;
+                  if (deTypeId.toString() === fiId.toString()) {
+                    kdShowDay.eventKV = kdShowDay.eventKV ?? [];
+                    kdShowDay.eventKV.push({ value: de.text ?? '', key: eventTypeMatch.type ?? '', color: eventTypeMatch.color ?? '' });
                   }
                 });
               } else {
-                kdShowDay.eventKV.push({ value: de.text, key: eventTypeMatch.type, color: eventTypeMatch.color });
+                kdShowDay.eventKV = kdShowDay.eventKV ?? [];
+                kdShowDay.eventKV.push({ value: de.text ?? '', key: eventTypeMatch.type ?? '', color: eventTypeMatch.color ?? '' });
               }
             }
           });
         }
-      } else {
-        kdShowDay.tagestext = "-";
       }
-      this.kalenderShowArray[zelle.zellenID] = kdShowDay;
+
+      if (typeof zelle.zellenID === 'number') {
+        this.kalenderShowArray[zelle.zellenID] = kdShowDay;
+      }
     });
   }
 
-  public async addToInhaltsarray(zellenID: number, dayNr: number, dd: DaylogDay): Promise<void> {
-    var kd: KalDay = { dayNr: dayNr, daylogDayday: dd, daylogEvent: await this.loadEventsByDay(dd), zellenID: zellenID };
+  public async addToInhaltsarray(zellenID: number, dayNr: number, dd: DaylogDay | null): Promise<void> {
+    const loadedEvents = dd ? await this.loadEventsByDay(dd) : [];
+    const kd: KalDay = { dayNr: dayNr, daylogDayday: dd ?? undefined, daylogEvent: loadedEvents, zellenID: zellenID };
     this.kalenderRawArray.push(kd);
   }
 

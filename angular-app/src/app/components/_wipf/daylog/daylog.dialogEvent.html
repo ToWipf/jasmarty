@@ -10,7 +10,7 @@
   </mat-form-field>
   <br>
     @for (type of daylogTypes; track type) {
-      @if (data.typid.toString()==type.id.toString()) {
+      @if (((data.typid ?? '') + '') === ((type.id ?? -1) + '')) {
         @if (type.art==='TEXT') {
           <mat-form-field>
             <mat-label>Text</mat-label>
@@ -38,7 +38,7 @@
               <button class="vorschlagButton" (click)="vorschlagToData(sItem)" [ngClass]="{'vorschlagtMatch': sItem==data.text}"> {{sItem}}</button>
             </div>
           }
-          @if (data.text.length < 1) {
+          @if ((data.text ?? '').length < 1) {
             <button class="vorschlagButton mehrladenButton" (click)="vorschlagMehrLaden()"> Mehr laden...</button>
           }
         </div>
@@ -47,5 +47,5 @@
 
     <mat-dialog-actions align="end">
       <button class="btn btn-wipf-dialog" (click)="onNoClick()">Abbrechen</button>
-      <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!(data.text.toString().length > 0)">Speichern</button>
+      <button class="btn btn-wipf-dialog" [mat-dialog-close]="data" [disabled]="!((data.text ?? '').length > 0)">Speichern</button>
     </mat-dialog-actions>

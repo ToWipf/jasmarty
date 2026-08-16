@@ -124,7 +124,7 @@
       <th mat-header-cell *matHeaderCellDef> Typ </th>
       <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">
         @for (type of listeTypeForFilter; track type) {
-        @if (type.id.toString()==element.typeid) {
+        @if (((type.id ?? -1) + '') === ((element.typeid ?? '') + '')) {
         <b>
           {{type.typename}}
         </b>
@@ -140,7 +140,7 @@
           <button class="btn btn-wipf-default btn-for-icon" (click)="newItem()">
             <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
           </button>
-          ∑: {{dataSourceList?._data?._value?.length}}
+          ∑: {{dataSourceList.data.length}}
         </div>
       </th>
       <td mat-cell *matCellDef="let element" [ngStyle]="{'background-color': getTypeColor(element.typeid)}">

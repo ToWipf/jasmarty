@@ -14,12 +14,12 @@ export class GlowiComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf, private ngxPhotoEditorService: NgxPhotoEditorService) { }
 
-  public size: Number;
+  public size: number = 0;
   public bLoopStop: boolean = true;
-  public mtttData: MtttData[][];
+  public mtttData: MtttData[][] = [];
 
   public imageChangedEvent: any;
-  public imageoutput?: NgxCroppedEvent;
+  public imageoutput?: NgxCroppedEvent | null;
   public nKontrast: number = 70;
 
   ngOnInit(): void {
@@ -41,25 +41,35 @@ export class GlowiComponent implements OnInit {
   }
 
   public convertImgToArray(): void {
-    if (this.imageoutput.base64) {
-      const myimage = new Image();
-      myimage.src = this.imageoutput.base64;
+    if (!this.imageoutput?.base64) {
+      return;
+    }
 
-      const cnx = document.createElement('canvas').getContext('2d');
+    const myimage = new Image();
+    myimage.src = this.imageoutput.base64;
 
-      cnx.drawImage(myimage, 0, 0);
-      const width = myimage.width;
-      const height = myimage.height;
-      if (width != 0) {
-        const imgPixels = cnx.getImageData(0, 0, width, height);
-        for (let y = 0; y < height; y++) {
-          for (let x = 0; x < width; x++) {
-            const i = (y * 4) * width + x * 4;
-            this.mtttData[y][x].farbe_R = this.calcColor(imgPixels.data[i] - 128 + this.nKontrast);
-            this.mtttData[y][x].farbe_G = this.calcColor(imgPixels.data[i + 1] - 128 + this.nKontrast);
-            this.mtttData[y][x].farbe_B = this.calcColor(imgPixels.data[i + 2] - 128 + this.nKontrast);
-            this.mtttData[y][x].funktion = "Pic";
+    const cnx = document.createElement('canvas').getContext('2d');
+    if (!cnx) {
+      return;
+    }
+
+    cnx.drawImage(myimage, 0, 0);
+    const width = myimage.width;
+    const height = myimage.height;
+    if (width != 0) {
+      const imgPixels = cnx.getImageData(0, 0, width, height);
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          const i = (y * 4) * width + x * 4;
+          const current = this.mtttData[y]?.[x];
+          if (!current) {
+            continue;
           }
+
+          current.farbe_R = this.calcColor(imgPixels.data[i] - 128 + this.nKontrast);
+          current.farbe_G = this.calcColor(imgPixels.data[i + 1] - 128 + this.nKontrast);
+          current.farbe_B = this.calcColor(imgPixels.data[i + 2] - 128 + this.nKontrast);
+          current.funktion = "Pic";
         }
       }
     }
@@ -81,15 +91,15 @@ export class GlowiComponent implements OnInit {
 
   public getCache(): void {
     this.rest.getNoWartenDialog('glowi/getCache').then((resdata: MtttData[][]) => {
-      this.mtttData = resdata;
+      this.mtttData = resdata ?? [];
       // fix farben
       this.mtttData.forEach((da: MtttData[]) => {
         da.forEach((d: MtttData) => {
           if (d.funktion != "Pic") {
             // Farben verstärken
-            d.farbe_R = d.farbe_R * 2;
-            d.farbe_G = d.farbe_G * 2;
-            d.farbe_B = d.farbe_B * 2;
+            d.farbe_R = (d.farbe_R ?? 0) * 2;
+            d.farbe_G = (d.farbe_G ?? 0) * 2;
+            d.farbe_B = (d.farbe_B ?? 0) * 2;
           }
         });
       });

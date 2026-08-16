@@ -14,7 +14,7 @@ export class LocalStorageDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<LocalStorageDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
 
-  public dataSource;
+  public dataSource: MatTableDataSource<KeyValEntry> = new MatTableDataSource();
   public displayedColumns: string[] = ['key', 'value', 'button'];
   public inData: KeyValEntry = { key: "", value: "" };
 
@@ -27,11 +27,11 @@ export class LocalStorageDialogComponent implements OnInit {
   }
 
   public loadLocalStorage(): void {
-    let output = [];
+    const output: KeyValEntry[] = [];
     for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
+      const key = localStorage.key(i);
       if (key) {
-        let value = localStorage.getItem(key);
+        const value = localStorage.getItem(key) ?? '';
         output.push({ key: key, value: value });
       }
     }
@@ -50,7 +50,7 @@ export class LocalStorageDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: KeyValEntry) => {
       if (result) {
-        this.setLocalStorageItem(result.key, result.value);
+        this.setLocalStorageItem(result.key ?? '', result.value ?? '');
       }
     });
   }

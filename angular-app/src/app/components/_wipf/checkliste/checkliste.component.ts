@@ -17,16 +17,16 @@ export class ChecklisteComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  public dataSourceCheckListeListe;
-  public dataSourceCheckListeType;
-  public dataSourceCheckListeItem;
-  public dataSourceCheckListeVerkn;
+  public dataSourceCheckListeListe: MatTableDataSource<CheckListeListe> = new MatTableDataSource();
+  public dataSourceCheckListeType: MatTableDataSource<CheckListeType> = new MatTableDataSource();
+  public dataSourceCheckListeItem: MatTableDataSource<CheckListeItem> = new MatTableDataSource();
+  public dataSourceCheckListeVerkn: MatTableDataSource<CheckListeVerkn> = new MatTableDataSource();
   public bShowWarning: boolean = false;
   public bShowAllTableColumns: boolean = true;
-  public displayedColumnsCheckListeListe;
-  public displayedColumnsCheckListeType;
-  public displayedColumnsCheckListeItem;
-  public displayedColumnsCheckListeVerkn;
+  public displayedColumnsCheckListeListe: string[] = [];
+  public displayedColumnsCheckListeType: string[] = [];
+  public displayedColumnsCheckListeItem: string[] = [];
+  public displayedColumnsCheckListeVerkn: string[] = [];
   public view = "cl";
   public allTypesCache: CheckListeType[] = [];
   public viewCL: CheckListeListe = {};
@@ -35,17 +35,17 @@ export class ChecklisteComponent implements OnInit {
   public offeneItems: number = 0;
   public sFilter: string = "";
   public bFilterDone: boolean = false;
-  public verkListBackupForFilter;
-  private selectedClID: number;
+  public verkListBackupForFilter: CheckListeVerkn[] = [];
+  private selectedClID: number = 0;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
   async ngOnInit() {
 
-    this.dataSourceCheckListeListe = [];
-    this.dataSourceCheckListeType = [];
-    this.dataSourceCheckListeItem = [];
-    this.dataSourceCheckListeVerkn = [];
+    this.dataSourceCheckListeListe = new MatTableDataSource();
+    this.dataSourceCheckListeType = new MatTableDataSource();
+    this.dataSourceCheckListeItem = new MatTableDataSource();
+    this.dataSourceCheckListeVerkn = new MatTableDataSource();
 
     this.loadCheckListeType().then(() => {
       this.loadCheckListeListe();
@@ -104,8 +104,8 @@ export class ChecklisteComponent implements OnInit {
     const warten = this.dialog.open(DialogWartenComponent, {});
     this.rest.get('checkliste/liste/getAll').then((resdata: CheckListeListe[]) => {
       resdata.forEach((cl: CheckListeListe) => {
-        cl.typesNummbers = [];
-        cl.typesCache = [];
+        cl.typesNummbers = cl.typesNummbers ?? [];
+        cl.typesCache = cl.typesCache ?? [];
         if (cl.types) {
           cl.types.split(",").forEach((tid: string) => {
             cl.typesNummbers.push(Number(tid));
@@ -113,7 +113,7 @@ export class ChecklisteComponent implements OnInit {
               if (Number(tid) == t.id) {
                 cl.typesCache.push(t);
               }
-            })
+            });
           });
         }
       });
@@ -123,7 +123,7 @@ export class ChecklisteComponent implements OnInit {
   }
 
   public async loadCheckListeType(): Promise<void> {
-    return new Promise(
+    return new Promise<void>(
       resolve => {
         this.displayedColumnsCheckListeItem = ['item', 'prio', 'button'];
         const warten = this.dialog.open(DialogWartenComponent, {});
@@ -131,7 +131,7 @@ export class ChecklisteComponent implements OnInit {
           this.dataSourceCheckListeType = new MatTableDataSource(resdata);
           this.allTypesCache = resdata;
           warten.close();
-          resolve(null);
+          resolve();
         });
       });
   }
@@ -195,6 +195,7 @@ export class ChecklisteComponent implements OnInit {
   private saveCheckListeListe(item: CheckListeListe): void {
     // Convert Typen in typ ids
     item.types = "";
+    item.typesCache = item.typesCache ?? [];
     item.typesCache.forEach((t: CheckListeType) => {
       if (item.types.length == 0) {
         item.types = "" + (t.id);
@@ -292,8 +293,9 @@ export class ChecklisteComponent implements OnInit {
       edititem.checkListeType = this.selectetType;
     }
     if (!edititem.prio) {
+      const typeId = edititem.checkListeType?.id ?? 0;
       if (this.lastNewPrio == 0) {
-        this.lastNewPrio = edititem.checkListeType.id * 100;
+        this.lastNewPrio = typeId * 100;
       } else {
         this.lastNewPrio = this.lastNewPrio + 2;
       }
@@ -352,7 +354,7 @@ export class ChecklisteComponent implements OnInit {
   public ladeChecklistenView(cl: CheckListeListe): void {
     this.setView("checkliste");
     this.viewCL = cl;
-    this.selectedClID = cl.id;
+    this.selectedClID = cl.id ?? 0;
 
     this.rest.getNoWartenDialog('checkliste/verkn/getByClID/' + cl.id).then((resdata: CheckListeVerkn[]) => {
       this.dataSourceCheckListeVerkn = new MatTableDataSource(resdata);
@@ -415,7 +417,7 @@ export class CheckListeDialogCheckListe implements OnInit {
     dialogRef.updateSize("70%", "70%");
   }
 
-  public checkListetypes: CheckListeType[];
+  public checkListetypes: CheckListeType[] = [];
 
   public ngOnInit(): void {
     this.data.typesCache = [];
@@ -425,6 +427,8 @@ export class CheckListeDialogCheckListe implements OnInit {
       this.checkListetypes = resdata;
 
       if (this.data.types) {
+        this.data.typesNummbers = this.data.typesNummbers ?? [];
+        this.data.typesCache = this.data.typesCache ?? [];
         this.data.typesNummbers.forEach((t: number) => {
           this.checkListetypes.forEach((xt: CheckListeType) => {
             if (t == xt.id) {
@@ -477,7 +481,7 @@ export class CheckListeDialogItem {
     dialogRef.updateSize("70%", "70%");
   }
 
-  public checkListetypes: CheckListeType[];
+  public checkListetypes: CheckListeType[] = [];
 
   public ngOnInit(): void {
     // Convert type id to Type
@@ -488,10 +492,10 @@ export class CheckListeDialogItem {
       if (this.data.checkListeType) {
         // Warum?
         this.checkListetypes.forEach((xt: CheckListeType) => {
-          if (this.data.checkListeType.id == xt.id) {
+          if ((this.data.checkListeType?.id ?? -1) == xt.id) {
             this.data.checkListeType = xt;
           }
-        })
+        });
       }
       warten.close();
     });

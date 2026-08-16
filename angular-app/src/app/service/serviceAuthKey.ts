@@ -10,7 +10,7 @@ import { ServiceWipf } from "./serviceWipf";
 export class ServicAuthKey {
     constructor(private rest: ServiceRest, public serviceWipf: ServiceWipf, public dialog: MatDialog) { }
 
-    private sAuthKey: string;
+    private sAuthKey: string = '';
     private static AUTH_KEY_NAME: string = "authKey";
 
     /**
@@ -31,7 +31,7 @@ export class ServicAuthKey {
      * @returns 
      */
     public getAuthKey(): string {
-        return this.sAuthKey;
+        return this.sAuthKey ?? '';
     }
 
     /**

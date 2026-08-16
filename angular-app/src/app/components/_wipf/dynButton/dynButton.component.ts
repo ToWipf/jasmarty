@@ -21,18 +21,20 @@ export class DynButtonComponent implements OnInit {
   public nowTOTPkey: string = "";
 
   async ngOnInit(): Promise<void> {
-    if (!localStorage.getItem(this.BUTTONDOMAINALIAS) || localStorage.getItem(this.BUTTONDOMAINALIAS) == "null") {
+    const storedDomain = localStorage.getItem(this.BUTTONDOMAINALIAS) ?? null;
+    if (!storedDomain || storedDomain === "null") {
       // Initiale Config laden
       localStorage.setItem(this.BUTTONDOMAINALIAS, await this.rest.getConfigParam(this.BUTTONDOMAINALIAS));
     } else {
-      this.buttodomain = localStorage.getItem(this.BUTTONDOMAINALIAS);
+      this.buttodomain = storedDomain;
     }
 
-    if (!localStorage.getItem(this.BUTTONTOTPKEY) || localStorage.getItem(this.BUTTONTOTPKEY) == "null") {
+    const storedTOTP = localStorage.getItem(this.BUTTONTOTPKEY) ?? null;
+    if (!storedTOTP || storedTOTP === "null") {
       // Initiale Config laden
       localStorage.setItem(this.BUTTONTOTPKEY, await this.rest.getConfigParam(this.BUTTONTOTPKEY));
     } else {
-      this.totpkey = localStorage.getItem(this.BUTTONTOTPKEY);
+      this.totpkey = storedTOTP;
     }
   }
 
@@ -85,7 +87,7 @@ export class DynButtonComponent implements OnInit {
 
     const cryptoKey = await crypto.subtle.importKey(
       'raw',
-      key,
+      key as Uint8Array<ArrayBuffer> as any,
       { name: 'HMAC', hash: { name: 'SHA-1' } },
       false,
       ['sign']

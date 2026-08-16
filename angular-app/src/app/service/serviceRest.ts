@@ -56,10 +56,13 @@ export class ServiceRest {
     }
 
     // den letzen auth laden, wenn vorhanden
-    const lastAuth = this.serviceWipf.decrypt(localStorage.getItem('auth'), this.PWCRYPTKEY);
-    if (lastAuth) {
-      this.setLogin(lastAuth);
-      this.setLoginOk("may");
+    const storedAuth = localStorage.getItem('auth');
+    if (storedAuth) {
+      const lastAuth = this.serviceWipf.decrypt(storedAuth, this.PWCRYPTKEY);
+      if (lastAuth) {
+        this.setLogin(lastAuth);
+        this.setLoginOk("may");
+      }
     }
   }
 

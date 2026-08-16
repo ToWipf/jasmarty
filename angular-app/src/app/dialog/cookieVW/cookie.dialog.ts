@@ -14,7 +14,7 @@ export class CookieDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<CookieDialogComponent>, public dialog: MatDialog, public serviceWipf: ServiceWipf) { }
 
 
-  public dataSource;
+  public dataSource: MatTableDataSource<KeyValEntry> = new MatTableDataSource();
   public pageurl: string = "";
   public displayedColumns: string[] = ['key', 'value', 'button'];
   public inData: KeyValEntry = { key: "", value: "" };
@@ -30,10 +30,13 @@ export class CookieDialogComponent implements OnInit {
 
   public loadCookies(): void {
 
-    let output = [];
+    const output: KeyValEntry[] = [];
     document.cookie.split(/\s*;\s*/).forEach((pair) => {
-      var name = decodeURIComponent(pair.substring(0, pair.indexOf('=')));
-      var value = decodeURIComponent(pair.substring(pair.indexOf('=') + 1));
+      if (!pair.includes('=')) {
+        return;
+      }
+      const name = decodeURIComponent(pair.substring(0, pair.indexOf('=')));
+      const value = decodeURIComponent(pair.substring(pair.indexOf('=') + 1));
       output.push({ key: name, value: value });
     });
 
@@ -57,12 +60,12 @@ export class CookieDialogComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: KeyValEntry) => {
       if (result) {
-        this.setCookie(result.key, result.value);
+        this.setCookie(result.key ?? '', result.value ?? '');
       }
     });
   }
 
-  public setCookie(cname: String, value: String): void {
+  public setCookie(cname: string, value: string): void {
     var xnow = new Date();
     var time = xnow.getTime();
     var expireTime = time + 1000 * 36000 * 9999;

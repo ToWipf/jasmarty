@@ -16,9 +16,9 @@ import { DialogJaNeinComponent, DialogWartenComponent } from 'src/app/dialog/mai
 export class RndEventComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
 
-  public dataSource;
+  public dataSource: MatTableDataSource<RndEvent> = new MatTableDataSource();
   public displayedColumns: string[] = ['id', 'eventtext', 'active', 'button'];
   public sFilter: string = "";
 

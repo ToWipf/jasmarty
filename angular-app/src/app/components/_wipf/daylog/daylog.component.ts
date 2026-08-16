@@ -16,12 +16,12 @@ import { MatSort } from '@angular/material/sort';
 export class DayLogComponent implements OnInit {
   constructor(public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-  @ViewChild(MatSort, { static: true }) sortDay: MatSort;
+  @ViewChild(MatSort, { static: true }) sortDay!: MatSort;
 
-  public daylistDataSource;
+  public daylistDataSource: MatTableDataSource<DaylogDay> = new MatTableDataSource();
   public daylistDisplayedColumns: string[] = [];
-  public sFilterYYYY: number = undefined;
-  public sFilterMON: number = undefined;
+  public sFilterYYYY: number = new Date(Date.now()).getFullYear();
+  public sFilterMON: number = new Date(Date.now()).getMonth() + 1;
   public sFilterDay: string = "";
   public sFilterTextEvent: string = "";
   public bShowWarning: boolean = false;
@@ -108,7 +108,7 @@ export class DayLogComponent implements OnInit {
 
     this.rest.get('daylog/day/getAllByDateQuery/' + this.sFilterDay).then((resdata: DaylogDay[]) => {
       resdata.forEach((d: DaylogDay) => {
-        d.extrafeld_wochentag = new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' });
+        d.extrafeld_wochentag = d.date ? new Date(d.date).toLocaleDateString('de-de', { weekday: 'short' }) : '';
       });
 
       this.daylistDataSource = new MatTableDataSource(resdata);
@@ -319,9 +319,9 @@ export class DaylogComponentDialogTypeListComponent implements OnInit {
   public eventlistDisplayedColumns: string[] = ['id', 'prio', 'type', 'art', 'color', 'preview', 'button'];
   public sFilter: string = "";
   public bShowWarning: boolean = false;
-  public daylogTypeDataSource;
+  public daylogTypeDataSource: MatTableDataSource<DaylogType> = new MatTableDataSource();
   public typelist: DaylogType[] = [];
-  @ViewChild(MatSort, { static: true }) sortType: MatSort;
+  @ViewChild(MatSort, { static: true }) sortType!: MatSort;
 
   ngOnInit() {
     this.loadType();

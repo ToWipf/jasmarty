@@ -7,7 +7,7 @@
     <mat-label>Type</mat-label>
     <mat-select (selectionChange)="onTypeSelectionChange($event)" [(value)]="data.typeid">
       @for (type of listeType; track type) {
-      <mat-option [(value)]="type.id" [ngStyle]="{ 'background': type.color}">
+      <mat-option [value]="type.id" [ngStyle]="{ 'background': type.color ?? 'transparent'}">
         {{type.typename}}
       </mat-option>
       }

@@ -17,11 +17,11 @@ import { ServiceWipf } from "src/app/service/serviceWipf";
 export class ListeTypeComponentDialogTypeListComponent implements OnInit {
     constructor(public dialogRef: MatDialogRef<ListeTypeComponentDialogTypeListComponent>, public dialog: MatDialog, private rest: ServiceRest, public serviceWipf: ServiceWipf) { }
 
-    public dataSource;
+    public dataSource: MatTableDataSource<ListeType> = new MatTableDataSource();
     public eventlistDisplayedColumns: string[] = ['id', 'type', 'color', 'showOverview', 'button'];
     public sFilter: string = "";
     public bShowWarning: boolean = false;
-    @ViewChild(MatSort, { static: true }) sortType: MatSort;
+    @ViewChild(MatSort, { static: true }) sortType!: MatSort;
 
     ngOnInit() {
         this.loadType();

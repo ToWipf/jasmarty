@@ -10,7 +10,7 @@
 <mat-form-field>
     <mat-label>Farbe</mat-label>
     <input matInput [(ngModel)]="data.color">
-    <input [(colorPicker)]="data.color" [style.background]="data.color" />
+    <input [ngModel]="data.color ?? '#ffffff'" (ngModelChange)="data.color = $event" [colorPicker]="data.color ?? '#ffffff'" [style.background]="data.color ?? '#ffffff'" />
 </mat-form-field>
 <br>
 

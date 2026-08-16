@@ -118,7 +118,7 @@
             <button class="btn btn-wipf-default btn-for-icon" (click)="newItemCheckListeListe()">
               <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
             </button>
-            ∑: {{dataSourceCheckListeListe?._data?._value?.length}}
+            ∑: {{dataSourceCheckListeListe.data.length}}
           </div>
         </th>
         <td mat-cell *matCellDef="let element">
@@ -156,7 +156,7 @@
             <button class="btn btn-wipf-default btn-for-icon" (click)="newItemCheckListeType()">
               <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
             </button>
-            ∑: {{dataSourceCheckListeType?._data?._value?.length}}
+            ∑: {{dataSourceCheckListeType.data.length}}
           </div>
         </th>
         <td mat-cell *matCellDef="let element">
@@ -202,7 +202,7 @@
             <button class="btn btn-wipf-default btn-for-icon" (click)="newItemCheckListeItem()">
               <mat-icon svgIcon="plus" aria-hidden="false" title="Neu erstellen"></mat-icon>
             </button>
-            ∑: {{dataSourceCheckListeItem?._data?._value?.length}}
+            ∑: {{dataSourceCheckListeItem.data.length}}
           </div>
         </th>
         <td mat-cell *matCellDef="let element">
@@ -238,7 +238,7 @@
       <ng-container matColumnDef="button">
         <th th mat-header-cell *matHeaderCellDef>
           <div class="tableVW">
-            ∑: {{dataSourceCheckListeVerkn?._data?._value?.length}}
+            ∑: {{dataSourceCheckListeVerkn.data.length}}
           </div>
         </th>
         <td class="clButtonListe" mat-cell *matCellDef="let element" [ngStyle]="{ 'background': elementToColor(element)}">
