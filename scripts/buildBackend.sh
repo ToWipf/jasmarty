@@ -1,8 +1,10 @@
 #!/bin/bash
-cd ..
+set -e
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+
+cd "${PROJECT_ROOT}"
 mvn package
-if [ $? -eq 0 ]; then
-	echo "mvn OK"
-else
-	exit 1
-fi
+
+echo "mvn OK"

@@ -1,18 +1,14 @@
 #!/bin/bash
+set -e
+
 echo "start build All"
 
-./buildFrontend.sh
-if [ $? -eq 0 ]; then
-	echo "app OK"
-else
-	exit 1
-fi
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 
-./buildBackend.sh
-if [ $? -eq 0 ]; then
-	echo "mvn OK"
-else
-	exit 1
-fi
+"${SCRIPT_DIR}/buildFrontend.sh"
+echo "app OK"
+
+"${SCRIPT_DIR}/buildBackend.sh"
+echo "mvn OK"
 
 echo "end build All"

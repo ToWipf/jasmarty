@@ -1,7 +1,13 @@
 #!/bin/bash
+set -e
+
 echo "Setup start"
-rm -rf ../target
-cd ../angular-app
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd)"
+
+rm -rf "${PROJECT_ROOT}/target"
+cd "${PROJECT_ROOT}/angular-app"
 npm install
 
 # #TODO Fix 360 Viewer
@@ -11,7 +17,9 @@ npm install
 # perl -pi -e 's/false, never>/false >/g' node_modules/ngx-color-picker/lib/color-picker.directive.d.ts
 
 # #TODO Fix ngx-photo-editor
-perl -pi -e 's/~//g' node_modules/ngx-photo-editor/photo-editor.css
+if [ -f "node_modules/ngx-photo-editor/photo-editor.css" ]; then
+  perl -pi -e 's/~//g' node_modules/ngx-photo-editor/photo-editor.css
+fi
 
 echo "Setup end"
 

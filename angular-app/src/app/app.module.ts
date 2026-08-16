@@ -71,7 +71,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MedienComponent, MedienComponentDialog } from './components/_wipf/medien/medien.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgModule, isDevMode } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts/core';
@@ -90,7 +90,7 @@ import { View360Component } from './components/_debug/view360/view360.component'
 import { WipfUserVwComponent, WipfUserVWComponentDialogComponent } from './components/_main/wipfUserVw/wipfUserVw.component';
 import { DynButtonComponent } from './components/_wipf/dynButton/dynButton.component';
 import { CommonModule } from '@angular/common';
-import { ColorPickerDirective } from 'ngx-color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
     declarations: [
@@ -127,7 +127,6 @@ import { ColorPickerDirective } from 'ngx-color-picker';
         Jasmarty12864PagesComponent,
         Jasmarty12864PanelComponent,
         JasmartyActionsComponent,
-        JasmartyActionsComponentDialog,
         JasmartyActionsComponentDialog,
         JasmartyConfigComponent,
         ListeComponent,
@@ -168,7 +167,7 @@ import { ColorPickerDirective } from 'ngx-color-picker';
         MatTableModule,
         MatSortModule,
         BrowserModule,
-        ColorPickerDirective,
+        ColorPickerModule,
         CdkStepperModule,
         CdkTableModule,
         CdkTreeModule,
@@ -229,8 +228,8 @@ import { ColorPickerDirective } from 'ngx-color-picker';
     ],
     providers: [
         { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-        HttpClient,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
