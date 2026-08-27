@@ -1,11 +1,11 @@
 <h1>Glowi</h1>
 <table>
-  @for (xA of mtttData; track xA; let x = $index) {
+  @for (xA of mtttData(); track xA; let x = $index) {
     <tr>
       @for (yA of xA; track yA; let y = $index) {
-        <td title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData[x][y].farbe_R)+','+(mtttData[x][y].farbe_G)+','+(mtttData[x][y].farbe_B)+')'}" class="led-box" (click)="doClick(x,y)">
+        <td title="{{x}}/{{y}}" [ngStyle]="{'background-color': 'rgba('+(mtttData()[x][y].farbe_R)+','+(mtttData()[x][y].farbe_G)+','+(mtttData()[x][y].farbe_B)+')'}" class="led-box" (click)="doClick(x,y)">
           <div>
-            {{mtttData[x][y].funktion}}
+            {{mtttData()[x][y].funktion}}
           </div>
         </td>
       }

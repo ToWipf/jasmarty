@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ServiceRest } from 'src/app/service/serviceRest';
 import { ServiceVersion } from 'src/app/service/serviceVersion';
@@ -50,7 +50,7 @@ export class MainmenueComponent implements OnInit {
   public bHideMenueButtonAndFooter: boolean = false;
   public bShowMenue: boolean = false;
   public bEisenbahnMitlesenActive: boolean = false;
-  public selectedSite: string = 'login';
+  public selectedSite: WritableSignal<string> = signal('login');
 
   ngOnInit(): void {
     this.rest.setHostExpect();
@@ -60,11 +60,11 @@ export class MainmenueComponent implements OnInit {
 
   public selectSite(s: string): void {
     this.bShowMenue = false;
-    this.selectedSite = s;
+    this.selectedSite.set(s);
   }
 
   public useQuickLink(s: string): void {
-    this.selectedSite = s;
+    this.selectedSite.set(s);
     this.bHideMenueButtonAndFooter = true;
   }
 

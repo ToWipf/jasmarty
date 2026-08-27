@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedMaterialModule } from '../../shared/shared-material.module';
@@ -19,7 +19,7 @@ export class GlowiComponent implements OnInit {
 
   public size: number = 0;
   public bLoopStop: boolean = true;
-  public mtttData: MtttData[][] = [];
+  public mtttData: WritableSignal<MtttData[][]> = signal([]);
 
   public imageChangedEvent: any;
   public imageoutput?: NgxCroppedEvent | null;
@@ -32,7 +32,7 @@ export class GlowiComponent implements OnInit {
   fileChangeHandler($event: any) {
     this.ngxPhotoEditorService.open($event, {
       aspectRatio: 1 / 1,
-      resizeToHeight: this.mtttData.length,
+      resizeToHeight: this.mtttData().length,
       autoCropArea: 1
     }).subscribe(data => {
       this.imageoutput = data;
@@ -64,7 +64,7 @@ export class GlowiComponent implements OnInit {
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
           const i = (y * 4) * width + x * 4;
-          const current = this.mtttData[y]?.[x];
+          const current = this.mtttData()[y]?.[x];
           if (!current) {
             continue;
           }
@@ -89,14 +89,14 @@ export class GlowiComponent implements OnInit {
   }
 
   public saveFull(): void {
-    this.rest.post('glowi/setFull', this.mtttData).then(() => this.getCache())
+    this.rest.post('glowi/setFull', this.mtttData()).then(() => this.getCache())
   }
 
   public getCache(): void {
     this.rest.getNoWartenDialog('glowi/getCache').then((resdata: MtttData[][]) => {
-      this.mtttData = resdata ?? [];
+      this.mtttData.set(resdata ?? []);
       // fix farben
-      this.mtttData.forEach((da: MtttData[]) => {
+      this.mtttData().forEach((da: MtttData[]) => {
         da.forEach((d: MtttData) => {
           if (d.funktion != "Pic") {
             // Farben verstärken

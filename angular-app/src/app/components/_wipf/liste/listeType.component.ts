@@ -1,21 +1,21 @@
 import { Component, OnInit, ViewChild, Inject } from "@angular/core";
 import { CommonModule } from '@angular/common';
-import { SharedMaterialModule } from '../../../shared/shared-material.module';
 import { ColorPickerDirective } from 'ngx-color-picker';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
-import { ListeType } from "src/app/datatypes";
-import { DialogWartenComponent, DialogJaNeinComponent } from "src/app/dialog/main.dialog";
-import { ServiceRest } from "src/app/service/serviceRest";
-import { ServiceWipf } from "src/app/service/serviceWipf";
+import { ServiceRest } from "src/app/service/serviceRest.js";
+import { SharedMaterialModule } from "src/app/shared/shared-material.module.js";
+import { ServiceWipf } from "src/app/service/serviceWipf.js";
+import { ListeType } from "src/app/datatypes.js";
+import { DialogWartenComponent, DialogJaNeinComponent } from "src/app/dialog/main.dialog.js";
 
 @Component({
     selector: 'app-listetype-dialogtypelist',
     templateUrl: './listeType.dialogTypeList.html',
     styleUrls: ['./liste.component.less'],
     standalone: true,
-    imports: [CommonModule, SharedMaterialModule, ColorPickerDirective]
+    imports: [CommonModule, SharedMaterialModule]
 })
 
 export class ListeTypeComponentDialogTypeListComponent implements OnInit {
